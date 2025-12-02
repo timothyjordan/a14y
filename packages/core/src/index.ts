@@ -14,7 +14,7 @@ export async function validate(url: string, options: ValidationOptions): Promise
   };
 
   // Phase 1: LLMs.txt validation
-  const llmsCheck = await validateLllmsTxt(url);
+  const llmsCheck = await validateLllmsTxt(url, options.onProgress);
   result.checks.push(...llmsCheck);
 
   const robotsCheck = await validateRobotsTxt(url);

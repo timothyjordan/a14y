@@ -22,7 +22,8 @@ program
       console.log(chalk.blue(`Analyzing ${url}...`));
       
       const result = await validate(url, {
-        depth: options.depth
+        depth: options.depth,
+        onProgress: (msg) => console.log(chalk.gray(`[Progress] ${msg}`))
       });
 
       if (options.output === 'json') {

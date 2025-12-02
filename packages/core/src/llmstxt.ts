@@ -1,6 +1,6 @@
 import { CheckResult } from './types';
 
-export async function validateLllmsTxt(baseUrl: string): Promise<CheckResult[]> {
+export async function validateLllmsTxt(baseUrl: string, onProgress?: (msg: string) => void): Promise<CheckResult[]> {
   const results: CheckResult[] = [];
   const paths = ['/llms.txt', '/.well-known/llms.txt'];
   
@@ -93,19 +93,27 @@ export async function validateLllmsTxt(baseUrl: string): Promise<CheckResult[]> 
 
   if (urlsToCheck.length > 0) {
       const brokenLinks: string[] = [];
+      const batchSize = 5;
       
-      // Check up to 5 links for now to be polite and fast in this alpha
-      for (const link of urlsToCheck.slice(0, 5)) {
-          try {
-              // Handle relative URLs
-              const absoluteLink = new URL(link, baseUrl).toString();
-              const linkResp = await fetch(absoluteLink, { method: 'HEAD' });
-              if (!linkResp.ok) {
-                  brokenLinks.push(`${link} (${linkResp.status})`);
+      if (onProgress) onProgress(`Found ${urlsToCheck.length} links in llms.txt. Verifying...`);
+      
+      for (let i = 0; i < urlsToCheck.length; i += batchSize) {
+          const batch = urlsToCheck.slice(i, i + batchSize);
+          
+          if (onProgress) onProgress(`Checking links ${i + 1}-${Math.min(i + batchSize, urlsToCheck.length)} of ${urlsToCheck.length}...`);
+
+          await Promise.all(batch.map(async (link) => {
+              try {
+                  // Handle relative URLs
+                  const absoluteLink = new URL(link, baseUrl).toString();
+                  const linkResp = await fetch(absoluteLink, { method: 'HEAD' });
+                  if (!linkResp.ok) {
+                      brokenLinks.push(`${link} (${linkResp.status})`);
+                  }
+              } catch (e) {
+                  brokenLinks.push(`${link} (Network Error)`);
               }
-          } catch (e) {
-              brokenLinks.push(`${link} (Network Error)`);
-          }
+          }));
       }
 
       if (brokenLinks.length === 0) {
@@ -113,14 +121,14 @@ export async function validateLllmsTxt(baseUrl: string): Promise<CheckResult[]> 
               id: 'FR-CORE-003',
               name: 'llms.txt Links',
               status: 'pass',
-              message: `Checked ${Math.min(urlsToCheck.length, 5)} links, all valid.`
+              message: `Checked ${urlsToCheck.length} links, all valid.`
           });
       } else {
           results.push({
               id: 'FR-CORE-003',
               name: 'llms.txt Links',
               status: 'fail',
-              message: `Found broken links: ${brokenLinks.join(', ')}`
+              message: `Found ${brokenLinks.length} broken links out of ${urlsToCheck.length}: ${brokenLinks.join(', ')}`
           });
       }
   }

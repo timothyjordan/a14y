@@ -1,6 +1,7 @@
 export interface ValidationOptions {
   depth?: number;
   checkExternalLinks?: boolean;
+  onProgress?: (message: string) => void;
 }
 
 export interface CheckResult {
