@@ -1,9 +1,11 @@
 import { CheckResult } from '../types';
 import { FetchedPage } from '../utils';
 
-export async function checkFormat(page: FetchedPage): Promise<CheckResult[]> {
+export async function checkFormat(page: FetchedPage, onProgress?: (msg: string) => void): Promise<CheckResult[]> {
   const results: CheckResult[] = [];
   
+  if (onProgress) onProgress('Checking format availability...');
+
   // FR-CORE-101: Suffix Check
   // Try to replace extension with .md or .mdx
   let urlWithoutExt = page.url;

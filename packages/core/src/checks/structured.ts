@@ -1,9 +1,11 @@
 import { CheckResult } from '../types';
 import { FetchedPage } from '../utils';
 
-export function checkStructured(page: FetchedPage): CheckResult[] {
+export function checkStructured(page: FetchedPage, onProgress?: (msg: string) => void): CheckResult[] {
   const results: CheckResult[] = [];
   const $ = page.$;
+
+  if (onProgress) onProgress('Running structured data checks...');
 
   // FR-CORE-201: Machine-readable endpoints
   const apiLinks = $('a').filter((i, el) => {

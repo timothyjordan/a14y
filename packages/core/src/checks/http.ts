@@ -1,8 +1,10 @@
 import { CheckResult } from '../types';
 import { FetchedPage } from '../utils';
 
-export function checkHttp(page: FetchedPage): CheckResult[] {
+export function checkHttp(page: FetchedPage, onProgress?: (msg: string) => void): CheckResult[] {
   const results: CheckResult[] = [];
+
+  if (onProgress) onProgress('Running HTTP header checks...');
 
   // FR-CORE-006: Redirect chains: None should exceed 1 hop.
   if (page.redirectChain.length > 1) {

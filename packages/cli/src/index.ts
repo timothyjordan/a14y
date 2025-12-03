@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import { validate } from '@agentready/core';
 import chalk from 'chalk';
+import ora from 'ora';
 
 const program = new Command();
 
@@ -17,14 +18,27 @@ program
   .option('-d, --depth <number>', 'Crawl depth', parseInt)
   .option('-o, --output <format>', 'Output format (json, text, table)', 'text')
   .option('--fail-under <score>', 'Exit with code 1 if score is below threshold', parseInt)
+  .option('-v, --verbose', 'Show detailed progress logs')
   .action(async (url, options) => {
     try {
-      console.log(chalk.blue(`Analyzing ${url}...`));
+      const spinner = options.verbose || options.output === 'json' ? null : ora(`Analyzing ${url}...`).start();
       
+      if (options.verbose && options.output !== 'json') {
+          console.log(chalk.blue(`Analyzing ${url}...`));
+      }
+
       const result = await validate(url, {
         depth: options.depth,
-        onProgress: (msg) => console.log(chalk.gray(`[Progress] ${msg}`))
+        onProgress: (msg) => {
+            if (spinner) {
+                spinner.text = msg;
+            } else if (options.verbose && options.output !== 'json') {
+                console.log(chalk.gray(`[Progress] ${msg}`));
+            }
+        }
       });
+
+      if (spinner) spinner.succeed('Analysis complete');
 
       if (options.output === 'json') {
         console.log(JSON.stringify(result, null, 2));

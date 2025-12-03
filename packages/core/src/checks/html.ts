@@ -1,9 +1,11 @@
 import { CheckResult } from '../types';
 import { FetchedPage } from '../utils';
 
-export function checkHtml(page: FetchedPage): CheckResult[] {
+export function checkHtml(page: FetchedPage, onProgress?: (msg: string) => void): CheckResult[] {
   const results: CheckResult[] = [];
   const $ = page.$;
+
+  if (onProgress) onProgress('Running HTML content checks...');
 
   // FR-CORE-005: Canonical link
   const canonical = $('link[rel="canonical"]').attr('href');

@@ -35,12 +35,12 @@ export async function validate(url: string, options: ValidationOptions): Promise
       const page = await fetchPage(url);
       
       if (options.onProgress) options.onProgress('Running HTTP & HTML checks...');
-      result.checks.push(...checkHttp(page));
-      result.checks.push(...checkHtml(page));
-      result.checks.push(...checkStructured(page));
+      result.checks.push(...checkHttp(page, options.onProgress));
+      result.checks.push(...checkHtml(page, options.onProgress));
+      result.checks.push(...checkStructured(page, options.onProgress));
       
       if (options.onProgress) options.onProgress('Checking for Markdown availability...');
-      const formatChecks = await checkFormat(page);
+      const formatChecks = await checkFormat(page, options.onProgress);
       result.checks.push(...formatChecks);
 
   } catch (e: any) {
