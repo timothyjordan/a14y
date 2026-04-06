@@ -8,9 +8,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "fast-xml-parser": "^5.5.10",
+    "marked": "^17.0.6",
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
+    "@types/marked": "^5.0.2",
     "@types/node": "^20.10.0",
     "typescript": "^5.3.3",
     "vitest": "^1.6.1"

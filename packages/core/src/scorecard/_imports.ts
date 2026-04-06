@@ -8,8 +8,12 @@
  * `registerCheck`, and check files call it at top level.
  */
 
-// Site-level checks — populated by TJ-96.
-// (placeholder; intentionally empty until check files exist)
+// Site-level checks (TJ-96).
+import '../checks/site/llmsTxt';
+import '../checks/site/robotsTxt';
+import '../checks/site/sitemapXml';
+import '../checks/site/sitemapMd';
+import '../checks/site/agentsMd';
 
 // Page-level checks — populated by TJ-97.
 // (placeholder; intentionally empty until check files exist)

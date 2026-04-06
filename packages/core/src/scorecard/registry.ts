@@ -1,4 +1,4 @@
-import type { CheckSpec } from './types';
+import type { CheckSpec, PageCheckSpec, SiteCheckSpec } from './types';
 
 /**
  * Master registry of every check that has ever existed in any scorecard,
@@ -16,11 +16,15 @@ import type { CheckSpec } from './types';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const _registry: Record<string, CheckSpec<any>> = {};
 
-export function registerCheck(spec: CheckSpec): void {
+export function registerCheck(spec: SiteCheckSpec | PageCheckSpec): void {
   if (_registry[spec.id] && _registry[spec.id] !== spec) {
     throw new Error(`Duplicate check registration for id "${spec.id}"`);
   }
-  _registry[spec.id] = spec;
+  // Variance: a SiteCheckSpec/PageCheckSpec is stored under a loose type so
+  // the resolver in scorecard/index.ts can iterate uniformly. The runner
+  // narrows by `scope` before invoking `run`.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _registry[spec.id] = spec as CheckSpec<any>;
 }
 
 export function getCheck(id: string): CheckSpec | undefined {
@@ -35,7 +39,3 @@ export function listCheckIds(): string[] {
 export function _resetRegistry(): void {
   for (const k of Object.keys(_registry)) delete _registry[k];
 }
-
-// Side-effect imports: every check file calls registerCheck() at module load.
-// As checks are implemented they get appended below. Order does not matter.
-import './_imports';
