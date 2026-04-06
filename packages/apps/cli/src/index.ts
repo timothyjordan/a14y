@@ -27,15 +27,16 @@ program
           console.log(chalk.blue(`Analyzing ${url}...`));
       }
 
-      const result = await validate(url, {
-        depth: options.depth,
-        onProgress: (msg) => {
-            if (spinner) {
-                spinner.text = msg;
-            } else if (options.verbose && options.output !== 'json') {
-                console.log(chalk.gray(`[Progress] ${msg}`));
-            }
-        }
+      const result = await validate({
+        url,
+        mode: 'page',
+        onProgress: (event) => {
+          if (spinner && event.type === 'page-discovered') {
+            spinner.text = `Visiting ${event.url}`;
+          } else if (options.verbose && options.output !== 'json') {
+            console.log(chalk.gray(`[Progress] ${event.type}`));
+          }
+        },
       });
 
       if (spinner) spinner.succeed('Analysis complete');
@@ -44,18 +45,14 @@ program
         console.log(JSON.stringify(result, null, 2));
       } else {
         console.log(chalk.bold('\nResults:'));
-        console.log(`Agentic Score: ${result.score}/100`);
-        
-        console.log('\nChecks:');
-        result.checks.forEach(check => {
-          const icon = check.status === 'pass' ? '✅' : check.status === 'warn' ? '⚠️' : '❌';
-          console.log(`${icon} ${check.name}: ${check.message}`);
-        });
+        console.log(`Agentic Score: ${result.summary.score}/100`);
       }
 
-      if (options.failUnder && result.score < options.failUnder) {
-          console.error(chalk.red('\nScore ' + result.score + ' is under threshold ' + options.failUnder));
-          process.exit(1);
+      if (options.failUnder && result.summary.score < options.failUnder) {
+        console.error(
+          chalk.red('\nScore ' + result.summary.score + ' is under threshold ' + options.failUnder),
+        );
+        process.exit(1);
       }
 
     } catch (error: any) {

@@ -1,0 +1,167 @@
+import { describe, expect, it } from 'vitest';
+import { fakeHttpClient, type FakeRoute } from './_helpers';
+import { validate } from '../src/runner/runSite';
+import { summarize, type CheckResult } from '../src/score/compute';
+
+const BASE = 'https://example.com';
+
+const fullHtml = `<!doctype html>
+<html lang="en">
+<head>
+  <link rel="canonical" href="https://example.com/">
+  <link rel="alternate" type="text/markdown" href="/index.md">
+  <meta name="description" content="A long enough description that comfortably exceeds the fifty character minimum for this check.">
+  <meta property="og:title" content="Example">
+  <meta property="og:description" content="OG desc">
+  <script type="application/ld+json">
+    {
+      "@type": "Article",
+      "dateModified": "2026-04-01",
+      "@graph": [{"@type":"BreadcrumbList","itemListElement":[]}]
+    }
+  </script>
+</head>
+<body>
+  <h1>One</h1><h2>Two</h2><h3>Three</h3>
+  <p>${'word '.repeat(40)}</p>
+  <p><a href="/glossary">Glossary</a></p>
+  <pre><code class="language-ts">x</code></pre>
+</body>
+</html>`;
+
+const llmsTxt = '[Index](/index.md)\n';
+const sitemap = `<urlset><url><loc>https://example.com/</loc><lastmod>2026-04-01</lastmod></url></urlset>`;
+const sitemapMd = '# Site\n## Pages\n- [home](/)\n';
+const agentsMd = '# Project\n## Installation\nrun foo\n## Usage\nimport bar\n';
+const indexMd = `---\ntitle: Home\ndescription: home page\ndoc_version: 1\nlast_updated: 2026-04-01\n---\n\n# Home\n\n## Sitemap\n[index](/sitemap.md)\n`;
+
+function buildRoutes(): Record<string, FakeRoute> {
+  return {
+    'https://example.com/': {
+      body: fullHtml,
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    },
+    'https://example.com/llms.txt': {
+      body: llmsTxt,
+      headers: { 'content-type': 'text/plain' },
+    },
+    'https://example.com/robots.txt': { body: '' },
+    'https://example.com/sitemap.xml': { body: sitemap },
+    'https://example.com/sitemap.md': { body: sitemapMd },
+    'https://example.com/AGENTS.md': { body: agentsMd },
+    'https://example.com/index.md': {
+      body: indexMd,
+      headers: {
+        'content-type': 'text/markdown',
+        link: '<https://example.com/>; rel="canonical"',
+      },
+    },
+  };
+}
+
+describe('summarize', () => {
+  it('computes score from passed / applicable', () => {
+    const results: CheckResult[] = [
+      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass' },
+      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass' },
+      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail' },
+      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na' },
+    ];
+    const s = summarize(results);
+    expect(s.total).toBe(4);
+    expect(s.applicable).toBe(3);
+    expect(s.passed).toBe(2);
+    expect(s.failed).toBe(1);
+    expect(s.na).toBe(1);
+    // 2/3 = 66.66... → 67
+    expect(s.score).toBe(67);
+  });
+
+  it('returns 0 when nothing is applicable', () => {
+    expect(summarize([]).score).toBe(0);
+  });
+});
+
+describe('validate (single page mode)', () => {
+  it('runs the full scorecard against a single URL and produces a score', async () => {
+    const http = fakeHttpClient(buildRoutes());
+    const run = await validate({ url: 'https://example.com/', mode: 'page', http });
+    expect(run.scorecardVersion).toBe('0.2.0');
+    expect(run.mode).toBe('page');
+    expect(run.siteChecks).toHaveLength(14);
+    expect(run.pages).toHaveLength(1);
+    expect(run.pages[0].checks).toHaveLength(24);
+    // Most things should pass on this happy-path fixture.
+    expect(run.summary.score).toBeGreaterThanOrEqual(70);
+  });
+
+  it('emits progress events as the audit proceeds', async () => {
+    const http = fakeHttpClient(buildRoutes());
+    const events: string[] = [];
+    await validate({
+      url: 'https://example.com/',
+      mode: 'page',
+      http,
+      onProgress: (e) => events.push(e.type),
+    });
+    expect(events[0]).toBe('started');
+    expect(events).toContain('site-check-done');
+    expect(events).toContain('page-done');
+    expect(events[events.length - 1]).toBe('finished');
+  });
+});
+
+describe('validate (site mode)', () => {
+  it('crawls multiple pages and aggregates the score across them', async () => {
+    const routes = buildRoutes();
+    const sitemapWithMore = `<urlset>
+      <url><loc>https://example.com/</loc><lastmod>2026-04-01</lastmod></url>
+      <url><loc>https://example.com/about</loc><lastmod>2026-04-01</lastmod></url>
+    </urlset>`;
+    routes['https://example.com/sitemap.xml'] = { body: sitemapWithMore };
+    routes['https://example.com/about'] = {
+      body: fullHtml,
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    };
+    const http = fakeHttpClient(routes);
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http,
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const urls = run.pages.map((p) => p.finalUrl).sort();
+    expect(urls).toContain('https://example.com/');
+    expect(urls).toContain('https://example.com/about');
+    expect(run.pages.length).toBeGreaterThanOrEqual(2);
+    // Aggregate covers site checks + every page's page checks.
+    const expectedTotal = run.siteChecks.length + run.pages.length * 24;
+    expect(run.summary.total).toBe(expectedTotal);
+  });
+
+  it('marks crawl-discovered pages as orphaned when not announced', async () => {
+    const routes = buildRoutes();
+    // sitemap announces only `/`; the link crawl picks up `/about`.
+    routes['https://example.com/'] = {
+      body: fullHtml.replace('href="/glossary"', 'href="/about"'),
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    };
+    routes['https://example.com/about'] = {
+      body: '<html lang="en"><body>x</body></html>',
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    };
+    const http = fakeHttpClient(routes);
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http,
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const aboutPage = run.pages.find((p) => p.finalUrl === 'https://example.com/about');
+    expect(aboutPage).toBeDefined();
+    const indexed = aboutPage!.checks.find((c) => c.id === 'discovery.indexed')!;
+    expect(indexed.status).toBe('fail');
+  });
+});
