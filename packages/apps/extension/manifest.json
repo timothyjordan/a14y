@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Agent Readability",
+  "version": "0.2.0",
+  "description": "Score how well a documentation site is consumable by AI agents.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "Agent Readability"
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "options_page": "src/options.html"
+}

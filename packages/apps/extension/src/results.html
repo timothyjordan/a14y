@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Agent Readability — Report</title>
+    <link rel="stylesheet" href="popup.css" />
+    <style>
+      body { width: 720px; max-width: 100%; }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; }
+      th, td { padding: 6px 8px; border-bottom: 1px solid #e5e5ea; text-align: left; }
+      th { font-size: 11px; text-transform: uppercase; color: #6e6e73; letter-spacing: 0.04em; }
+      .pass { color: #34c759; }
+      .fail { color: #ff3b30; }
+      .warn { color: #ff9500; }
+      .na { color: #8e8e93; }
+      .error { color: #ff3b30; font-weight: 600; }
+      details { margin-bottom: 12px; }
+      summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+      .group-title { font-weight: 600; margin: 12px 0 4px; color: #1d1d1f; }
+      h2 { font-size: 16px; margin: 18px 0 8px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Agent Readability Report</h1>
+    </header>
+    <main>
+      <div id="empty" hidden>
+        <p>No audits yet. Open the popup on any docs site and click <strong>Check this page</strong>.</p>
+      </div>
+      <div id="report" hidden>
+        <div class="row">
+          <span class="label">URL</span>
+          <code id="report-url"></code>
+        </div>
+        <div class="row">
+          <span class="label">Score</span>
+          <strong id="report-score"></strong>
+          <span id="report-meta" class="status"></span>
+        </div>
+        <h2>Site checks</h2>
+        <table id="site-table"><tbody></tbody></table>
+        <h2 id="page-section-title">Page checks</h2>
+        <div id="pages-container"></div>
+        <button id="export-json" type="button" style="margin-top: 16px;">Download JSON</button>
+      </div>
+      <h2>History</h2>
+      <table id="history">
+        <thead><tr><th>Score</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </main>
+    <script type="module" src="results.ts"></script>
+  </body>
+</html>
