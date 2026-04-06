@@ -7,6 +7,10 @@ import type {
 } from './types';
 import { getCheck } from './registry';
 import { SCORECARD_0_2_0 } from './v0_2';
+// Side-effect import: every check file registers itself with the registry
+// as it loads. Must come after the `./registry` import so registerCheck
+// has been initialised by the time the check files reference it.
+import './_imports';
 
 /**
  * Every scorecard version that has ever shipped, keyed by semver. New
