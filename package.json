@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/core",
+    "packages/apps/*"
   ],
   "scripts": {
     "test": "npm test --workspaces",
