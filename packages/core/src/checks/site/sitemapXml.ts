@@ -9,7 +9,7 @@ interface SitemapEntry {
   lastmod?: string;
 }
 
-interface SitemapXmlResource {
+export interface SitemapXmlResource {
   found: boolean;
   url?: string;
   raw?: string;
@@ -26,53 +26,87 @@ const parser = new XMLParser({
   isArray: (name) => name === 'url' || name === 'sitemap',
 });
 
-async function fetchSitemapAt(ctx: SiteCheckContext, url: string): Promise<SitemapXmlResource> {
-  try {
-    const resp = await ctx.http.fetch(url);
-    if (resp.status < 200 || resp.status >= 300) return { found: false };
-    return parseSitemap(resp.url, resp.body);
-  } catch {
-    return { found: false };
-  }
+interface ParsedSitemap {
+  ok: boolean;
+  kind?: 'urlset' | 'sitemapindex';
+  entries: SitemapEntry[];
+  /** For sitemapindex: child sitemap URLs to follow. */
+  childSitemaps: string[];
 }
 
-function parseSitemap(url: string, body: string): SitemapXmlResource {
+function parseSitemapBody(body: string): ParsedSitemap {
   let xml: unknown;
   try {
     xml = parser.parse(body);
   } catch {
-    return { found: true, url, raw: body, parsed: false };
+    return { ok: false, entries: [], childSitemaps: [] };
   }
   const root = (xml as { urlset?: unknown; sitemapindex?: unknown }) ?? {};
   if (root.urlset) {
     const urls = ((root.urlset as { url?: Array<{ loc?: string; lastmod?: string }> }).url ?? [])
       .filter((u) => typeof u.loc === 'string')
       .map((u) => ({ loc: u.loc as string, lastmod: u.lastmod }));
-    return {
-      found: true,
-      url,
-      raw: body,
-      parsed: true,
-      isIndex: false,
-      entries: urls,
-      urls: urls.map((u) => u.loc),
-    };
+    return { ok: true, kind: 'urlset', entries: urls, childSitemaps: [] };
   }
   if (root.sitemapindex) {
-    return {
-      found: true,
-      url,
-      raw: body,
-      parsed: true,
-      isIndex: true,
-      entries: [],
-      urls: [],
-    };
+    const children = ((root.sitemapindex as { sitemap?: Array<{ loc?: string }> }).sitemap ?? [])
+      .map((s) => s.loc)
+      .filter((s): s is string => typeof s === 'string');
+    return { ok: true, kind: 'sitemapindex', entries: [], childSitemaps: children };
   }
-  return { found: true, url, raw: body, parsed: false };
+  return { ok: false, entries: [], childSitemaps: [] };
 }
 
-async function loadSitemapXml(ctx: SiteCheckContext): Promise<SitemapXmlResource> {
+async function fetchSitemapAt(ctx: SiteCheckContext, url: string): Promise<SitemapXmlResource> {
+  try {
+    const resp = await ctx.http.fetch(url);
+    if (resp.status < 200 || resp.status >= 300) return { found: false };
+    const parsed = parseSitemapBody(resp.body);
+    if (!parsed.ok) {
+      return { found: true, url: resp.url, raw: resp.body, parsed: false };
+    }
+    if (parsed.kind === 'urlset') {
+      return {
+        found: true,
+        url: resp.url,
+        raw: resp.body,
+        parsed: true,
+        isIndex: false,
+        entries: parsed.entries,
+        urls: parsed.entries.map((e) => e.loc),
+      };
+    }
+    // sitemapindex — follow children sequentially. We deliberately don't use
+    // the crawler queue here so this loader stays usable from a check that
+    // runs without a configured queue.
+    const allEntries: SitemapEntry[] = [];
+    for (const childUrl of parsed.childSitemaps) {
+      try {
+        const childResp = await ctx.http.fetch(childUrl);
+        if (childResp.status < 200 || childResp.status >= 300) continue;
+        const child = parseSitemapBody(childResp.body);
+        if (child.ok && child.kind === 'urlset') {
+          for (const e of child.entries) allEntries.push(e);
+        }
+      } catch {
+        // skip unreachable child sitemaps
+      }
+    }
+    return {
+      found: true,
+      url: resp.url,
+      raw: resp.body,
+      parsed: true,
+      isIndex: true,
+      entries: allEntries,
+      urls: allEntries.map((e) => e.loc),
+    };
+  } catch {
+    return { found: false };
+  }
+}
+
+export async function loadSitemapXml(ctx: SiteCheckContext): Promise<SitemapXmlResource> {
   const cached = ctx.shared.get(SHARED_KEY) as SitemapXmlResource | undefined;
   if (cached) return cached;
 
@@ -141,7 +175,8 @@ export const sitemapXmlHasLastmod: SiteCheckSpec = {
       run: async (ctx) => {
         const r = await loadSitemapXml(ctx as SiteCheckContext);
         if (!r.found || !r.parsed) return { status: 'na', message: 'sitemap.xml unavailable' };
-        if (r.isIndex) return { status: 'na', message: 'sitemap is an index, not a urlset' };
+        // For sitemapindex, the loader followed children and merged their
+        // <url> entries; we evaluate lastmod against the merged set.
         const entries = r.entries ?? [];
         if (entries.length === 0) {
           return { status: 'warn', message: 'sitemap.xml has no <url> entries' };

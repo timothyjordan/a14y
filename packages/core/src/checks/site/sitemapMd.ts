@@ -5,7 +5,7 @@ const SHARED_KEY = 'site:sitemap-md';
 
 const PATHS = ['/sitemap.md', '/docs/sitemap.md', '/.well-known/sitemap.md'];
 
-interface SitemapMdResource {
+export interface SitemapMdResource {
   found: boolean;
   url?: string;
   body?: string;
@@ -13,7 +13,7 @@ interface SitemapMdResource {
   linkCount?: number;
 }
 
-async function loadSitemapMd(ctx: SiteCheckContext): Promise<SitemapMdResource> {
+export async function loadSitemapMd(ctx: SiteCheckContext): Promise<SitemapMdResource> {
   const cached = ctx.shared.get(SHARED_KEY) as SitemapMdResource | undefined;
   if (cached) return cached;
 

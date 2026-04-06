@@ -6,7 +6,7 @@ const SHARED_KEY = 'site:llms-txt';
 const PRIMARY_PATHS = ['/llms.txt', '/.well-known/llms.txt', '/docs/llms.txt'];
 const FULL_PATHS = ['/llms-full.txt', '/.well-known/llms-full.txt', '/docs/llms-full.txt'];
 
-interface LlmsTxtResource {
+export interface LlmsTxtResource {
   found: boolean;
   /** Final URL where the file was located. */
   url?: string;
@@ -18,7 +18,7 @@ interface LlmsTxtResource {
   links?: string[];
 }
 
-async function loadLlmsTxt(ctx: SiteCheckContext): Promise<LlmsTxtResource> {
+export async function loadLlmsTxt(ctx: SiteCheckContext): Promise<LlmsTxtResource> {
   const cached = ctx.shared.get(SHARED_KEY) as LlmsTxtResource | undefined;
   if (cached) return cached;
 
