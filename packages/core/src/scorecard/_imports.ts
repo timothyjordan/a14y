@@ -15,7 +15,14 @@ import '../checks/site/sitemapXml';
 import '../checks/site/sitemapMd';
 import '../checks/site/agentsMd';
 
-// Page-level checks — populated by TJ-97.
-// (placeholder; intentionally empty until check files exist)
+// Page-level checks (TJ-97).
+import '../checks/page/http';
+import '../checks/page/meta';
+import '../checks/page/jsonLd';
+import '../checks/page/structure';
+import '../checks/page/markdown';
+import '../checks/page/code';
+import '../checks/page/api';
+import '../checks/page/discovery';
 
 export {};
