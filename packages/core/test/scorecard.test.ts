@@ -32,10 +32,16 @@ describe('scorecard registry', () => {
     expect(() => getScorecard('9.9.9')).toThrow(/Unknown scorecard/);
   });
 
-  it('throws when a manifest references a check not in the registry', () => {
-    // None of the v0.2.0 checks are registered yet (TJ-96 / TJ-97 will add
-    // them). The resolver MUST surface a loud error rather than silently
-    // dropping the missing check, otherwise frozen scorecards could drift.
-    expect(() => getScorecard('0.2.0')).toThrow(/unknown check id/);
+  it('resolves v0.2.0 to a runnable scorecard with 14 site + 24 page checks', () => {
+    const resolved = getScorecard('0.2.0');
+    expect(resolved.version).toBe('0.2.0');
+    expect(resolved.siteChecks).toHaveLength(14);
+    expect(resolved.pageChecks).toHaveLength(24);
+    // Every resolved check carries its implementation version so reports
+    // can show exactly which behavior was exercised.
+    for (const c of [...resolved.siteChecks, ...resolved.pageChecks]) {
+      expect(c.implementationVersion).toBe('1.0.0');
+      expect(typeof c.run).toBe('function');
+    }
   });
 });

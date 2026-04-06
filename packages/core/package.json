@@ -10,7 +10,9 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "fast-xml-parser": "^5.5.10",
+    "gray-matter": "^4.0.3",
     "marked": "^17.0.6",
+    "p-queue": "^7.4.1",
     "robots-parser": "^3.0.1"
   },
   "devDependencies": {
