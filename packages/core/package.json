@@ -5,13 +5,14 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
+    "@types/node": "^20.10.0",
     "typescript": "^5.3.3",
-    "@types/node": "^20.10.0"
+    "vitest": "^1.6.1"
   }
 }
