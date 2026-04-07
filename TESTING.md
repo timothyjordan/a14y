@@ -105,3 +105,44 @@ Vite + crxjs will rebuild on save; click the reload icon in `chrome://extensions
 - First run on each new domain may prompt for host permission — accept it.
 - Some sites set CORS that blocks the `Accept: text/markdown` content-negotiation request; that single check will return `warn` rather than crashing the audit.
 - The crawler defaults to 250 ms politeness delay and 8 concurrent fetches — bump them down in Options if you're hitting a rate limit.
+
+---
+
+## Testing the docs site
+
+**Build it:**
+```
+npm run build --workspace @agentready/core
+npm run build --workspace @agentready/docs
+```
+
+This produces 41 static pages under `packages/apps/docs/dist/` — a landing page, a scorecards index, one overview per shipped scorecard, and one detail page per check (38 of them for v0.2.0).
+
+**Local preview:**
+```
+npm run dev --workspace @agentready/docs
+```
+Opens at `http://localhost:4321/agentready/`. The base path matches the GitHub Pages deploy, so links work identically in dev and prod.
+
+**Smoke test the rendered site:**
+1. Visit `/agentready/` — landing page should show "v0.2.0" as the latest scorecard
+2. Click through to `/agentready/scorecards/0.2.0/` — should list 38 checks grouped by site/page and then by category
+3. Open any check detail page (e.g. `/agentready/scorecards/0.2.0/checks/html.canonical-link/`) and verify the frontmatter metadata (impl version, group, scope) matches what `@agentready/core` exports
+4. Open the **Scorecard** dropdown in the header — switching versions should change the URL to `/agentready/scorecards/<new>/...` preserving the deep link
+
+**Run the coverage test:**
+```
+npm test --workspace @agentready/docs
+```
+This asserts that every stable check id pinned in any shipped scorecard has a corresponding markdown file under `src/content/checks/`. If this test fails, the docs build will also fail — they share the same `assertCoverage()` helper.
+
+**Add a new check to the docs:**
+1. Add the check to `@agentready/core` (registry + scorecard manifest)
+2. Create `packages/apps/docs/src/content/checks/<stable-id>.md` with the frontmatter schema from `src/content/config.ts` and the standard prose sections (How it decides, How to implement, Pass/Fail, References)
+3. `npm test --workspace @agentready/docs` must pass
+4. `npm run build --workspace @agentready/docs` must generate a new detail page for the id
+
+**Deployment:**
+Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://timothyjordan.github.io/agentready/`.
+
+For the first deploy, the Pages source in the repo settings must be set to **GitHub Actions** (Settings → Pages → Source → GitHub Actions).
