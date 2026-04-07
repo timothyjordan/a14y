@@ -6,39 +6,141 @@ import {
   type ProgressEvent,
   type SiteRun,
 } from '@agentready/core';
-import type { RunRequest, RunResponse, RunStreamMessage } from './bridge';
+import {
+  CURRENT_RUN_KEY,
+  STALE_PROGRESS_MS,
+  type CurrentRunState,
+  type RunRequest,
+  type RunResponse,
+  type StartRunResponse,
+} from './bridge';
 
+const RUN_HISTORY_KEY = 'agentready:run-history';
+const HISTORY_LIMIT = 20;
+const KEEPALIVE_ALARM = 'agentready-keepalive';
 /**
- * Single in-flight audit. The popup connects via chrome.runtime.connect to
- * receive streaming progress events; only one audit runs at a time per
- * extension instance to keep the service worker memory bounded.
+ * Service worker idle timeout is ~30s. Setting the alarm under that keeps
+ * the SW from being terminated mid-audit, up to Chrome's hard 5min cap.
+ * Anything longer needs an offscreen document — tracked as a follow-up.
  */
-let inFlight: Promise<SiteRun> | null = null;
+const KEEPALIVE_PERIOD_MIN = 0.4;
 
-chrome.runtime.onConnect.addListener((port) => {
-  if (port.name !== 'agentready-run') return;
+// =========================================================================
+// Message router
+// =========================================================================
 
-  port.onMessage.addListener(async (msg: RunRequest) => {
-    if (msg.type !== 'run') return;
-    if (inFlight) {
-      port.postMessage({
-        type: 'error',
-        error: 'Another audit is already running. Wait for it to finish.',
-      } satisfies RunStreamMessage);
-      return;
-    }
+chrome.runtime.onMessage.addListener((msg: RunRequest, _sender, sendResponse) => {
+  if (msg.type === 'start-run') {
+    void startRun(msg).then((resp) => sendResponse(resp));
+    return true; // async response
+  }
+  if (msg.type === 'get-recent-runs') {
+    void getRecentRuns().then((runs) => {
+      sendResponse({ type: 'recent-runs', runs } satisfies RunResponse);
+    });
+    return true;
+  }
+  return false;
+});
 
-    const send = (m: RunStreamMessage) => {
-      try {
-        port.postMessage(m);
-      } catch {
-        // port disconnected; ignore
-      }
+// =========================================================================
+// Run lifecycle
+// =========================================================================
+
+async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartRunResponse> {
+  const existing = await readCurrentRun();
+  if (
+    existing &&
+    existing.status === 'running' &&
+    Date.now() - new Date(existing.lastProgressAt).getTime() < STALE_PROGRESS_MS
+  ) {
+    return {
+      ok: false,
+      reason: 'busy',
+      message: `An audit of ${existing.url} is already in progress.`,
     };
+  }
 
-    const onProgress = (event: ProgressEvent) => send({ type: 'progress', event });
+  const now = new Date().toISOString();
+  const initial: CurrentRunState = {
+    status: 'running',
+    url: msg.url,
+    mode: msg.mode,
+    scorecardVersion: msg.scorecardVersion ?? LATEST_SCORECARD,
+    startedAt: now,
+    lastProgressAt: now,
+    progress: { phase: `Starting ${msg.mode} audit…`, visited: 0, pct: 0 },
+  };
+  await writeCurrentRun(initial);
+  startKeepalive();
 
-    inFlight = validate({
+  // Run the audit in the background. We deliberately don't await it from
+  // the message handler — sendResponse fires immediately so the popup can
+  // close cleanly. The audit progresses through storage from here on.
+  void runAuditToCompletion(msg, initial).catch(async (e) => {
+    await writeCurrentRun({
+      ...initial,
+      status: 'error',
+      error: (e as Error).message,
+      lastProgressAt: new Date().toISOString(),
+    });
+    stopKeepalive();
+  });
+
+  return { ok: true };
+}
+
+async function runAuditToCompletion(
+  msg: RunRequest & { type: 'start-run' },
+  initial: CurrentRunState,
+): Promise<void> {
+  // Throttle progress writes — chrome.storage has a quota of ~120 writes/min
+  // and onProgress can fire dozens of times per second on a fast crawl.
+  let pendingPhase = initial.progress.phase;
+  let pendingVisited = 0;
+  let pendingPct = 0;
+  let lastFlush = 0;
+  const FLUSH_MS = 250;
+
+  const flush = async (force = false) => {
+    const now = Date.now();
+    if (!force && now - lastFlush < FLUSH_MS) return;
+    lastFlush = now;
+    await writeCurrentRun({
+      ...initial,
+      status: 'running',
+      lastProgressAt: new Date().toISOString(),
+      progress: { phase: pendingPhase, visited: pendingVisited, pct: pendingPct },
+    });
+  };
+
+  const onProgress = (event: ProgressEvent) => {
+    switch (event.type) {
+      case 'started':
+        pendingPhase = `Auditing (${event.mode})…`;
+        break;
+      case 'site-check-done':
+        pendingPhase = `Site check: ${event.result.id}`;
+        break;
+      case 'page-discovered':
+        pendingVisited = event.visited;
+        pendingPhase = `Visited ${event.visited} pages — ${event.url}`;
+        // Indeterminate-ish bar; the crawler doesn't know the total upfront.
+        pendingPct = Math.min(95, event.visited * 2);
+        break;
+      case 'page-done':
+        pendingPhase = `Checked ${event.url} (${event.passed}/${event.total})`;
+        break;
+      case 'finished':
+        pendingPct = 100;
+        pendingPhase = `Score ${event.summary.score}`;
+        break;
+    }
+    void flush();
+  };
+
+  try {
+    const run = await validate({
       url: msg.url,
       mode: msg.mode,
       scorecardVersion: msg.scorecardVersion ?? LATEST_SCORECARD,
@@ -47,32 +149,32 @@ chrome.runtime.onConnect.addListener((port) => {
       politeDelayMs: msg.politeDelayMs,
       onProgress,
     });
+    await flush(true);
+    await persistRun(run);
+    await writeCurrentRun({
+      ...initial,
+      status: 'done',
+      lastProgressAt: new Date().toISOString(),
+      progress: { phase: `Score ${run.summary.score}`, visited: run.pages.length, pct: 100 },
+      result: run,
+    });
+  } finally {
+    stopKeepalive();
+  }
+}
 
-    try {
-      const run = await inFlight;
-      await persistRun(run);
-      send({ type: 'done', run } satisfies RunStreamMessage);
-    } catch (e) {
-      send({ type: 'error', error: (e as Error).message });
-    } finally {
-      inFlight = null;
-      port.disconnect();
-    }
-  });
-});
+// =========================================================================
+// Storage helpers
+// =========================================================================
 
-// One-shot listener used by the results page to fetch the most recent run
-// without re-running the audit.
-chrome.runtime.onMessage.addListener((msg: RunRequest, _sender, sendResponse) => {
-  if (msg.type !== 'get-recent-runs') return false;
-  void getRecentRuns().then((runs) => {
-    sendResponse({ type: 'recent-runs', runs } satisfies RunResponse);
-  });
-  return true; // keep the channel open for async response
-});
+async function readCurrentRun(): Promise<CurrentRunState | null> {
+  const data = await chrome.storage.local.get(CURRENT_RUN_KEY);
+  return (data[CURRENT_RUN_KEY] as CurrentRunState | undefined) ?? null;
+}
 
-const RUN_HISTORY_KEY = 'agentready:run-history';
-const HISTORY_LIMIT = 20;
+async function writeCurrentRun(state: CurrentRunState): Promise<void> {
+  await chrome.storage.local.set({ [CURRENT_RUN_KEY]: state });
+}
 
 async function persistRun(run: SiteRun): Promise<void> {
   const history = await getRecentRuns();
@@ -80,7 +182,6 @@ async function persistRun(run: SiteRun): Promise<void> {
     key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
     run,
   });
-  // Cap to keep storage small. Newest first.
   await chrome.storage.local.set({
     [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
   });
@@ -91,7 +192,48 @@ async function getRecentRuns(): Promise<Array<{ key: string; run: SiteRun }>> {
   return (data[RUN_HISTORY_KEY] as Array<{ key: string; run: SiteRun }>) ?? [];
 }
 
-// Mark service worker as alive on install for diagnostics.
+// =========================================================================
+// Keepalive: prevent the SW from being terminated mid-audit
+// =========================================================================
+
+function startKeepalive(): void {
+  chrome.alarms.create(KEEPALIVE_ALARM, { periodInMinutes: KEEPALIVE_PERIOD_MIN });
+}
+
+function stopKeepalive(): void {
+  void chrome.alarms.clear(KEEPALIVE_ALARM);
+}
+
+chrome.alarms.onAlarm.addListener((a) => {
+  if (a.name !== KEEPALIVE_ALARM) return;
+  // Touching storage is enough to count as activity and reset the SW idle
+  // timer. The work itself is intentionally trivial.
+  void chrome.storage.local.get(CURRENT_RUN_KEY);
+});
+
+// =========================================================================
+// Stale-state recovery on extension startup / install
+// =========================================================================
+
+async function recoverStaleRunOnStartup(): Promise<void> {
+  const existing = await readCurrentRun();
+  if (!existing || existing.status !== 'running') return;
+  const age = Date.now() - new Date(existing.lastProgressAt).getTime();
+  if (age < STALE_PROGRESS_MS) return;
+  await writeCurrentRun({
+    ...existing,
+    status: 'error',
+    error: 'Audit interrupted (extension was restarted).',
+    lastProgressAt: new Date().toISOString(),
+  });
+  stopKeepalive();
+}
+
+chrome.runtime.onStartup.addListener(() => {
+  void recoverStaleRunOnStartup();
+});
+
 chrome.runtime.onInstalled.addListener(() => {
   console.log(`agentready extension installed (scorecard ${LATEST_SCORECARD})`);
+  void recoverStaleRunOnStartup();
 });
