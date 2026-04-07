@@ -14,6 +14,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     implementation — older versions stay reproducible forever so historical scores
     can be trended consistently.
   </p>
+
+  <h2>How scorecards work</h2>
+  <p>
+    A scorecard is a frozen manifest pinning each stable check id to an
+    implementation version. Once shipped, a scorecard never changes — when
+    a check's behaviour evolves, a new scorecard is published that points
+    at the new implementation version while older scorecards keep pointing
+    at the old one.
+  </p>
+  <p>
+    This means historical audits stay reproducible: if you measured your
+    site against v0.2.0 last month, re-running v0.2.0 today gives the same
+    score even after the engine ships new check versions.
+  </p>
+
+  <h2>Shipped versions</h2>
   <ul class="check-list">
     {cards.map((card) => (
       <li>
@@ -27,4 +43,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </li>
     ))}
   </ul>
+
+  <h2>Pinning a scorecard</h2>
+  <p>
+    Use <code>--scorecard &lt;version&gt;</code> on the CLI or the dropdown
+    in the extension popup to evaluate against a specific scorecard. The
+    default is always the latest version.
+  </p>
 </BaseLayout>

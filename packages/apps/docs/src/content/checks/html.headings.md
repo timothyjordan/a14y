@@ -35,3 +35,11 @@ Break long pages into sections with descriptive `<h2>` or `<h3>` headings. If yo
 <h1>Install agentready</h1>
 <p>Run npm install agentready.</p>
 ```
+
+## Common gotchas
+
+The check counts `<h1>`, `<h2>`, and `<h3>` only — `<h4>` through `<h6>` don't count. Most embeddings models care about the top three levels because deeper levels rarely give meaningful semantic boundaries. If you've structured a page with one h1 followed by a flat list of h4s, the check will fail despite the page being well-organised.
+
+Don't pad the page with empty headings just to clear the threshold. If a page genuinely has fewer than three sections, the right move is to either combine it with a sibling page or expand the content so each heading carries its own substantive sub-section. The threshold is a smell test for "is this page navigable", not a checkbox to game.
+
+Frameworks that auto-generate a "Table of Contents" sidebar from headings (Docusaurus, Astro Starlight, Vitepress) inherently encourage authors to use headings well — adopting one of those is often a faster fix than retrofitting headings into existing prose by hand.
