@@ -40,3 +40,7 @@ coverage/
 .npmrc
 .yarnrc
 .tool-versions
+
+# Astro generated (docs workspace)
+packages/apps/docs/.astro/
+packages/apps/docs/src/env.d.ts
