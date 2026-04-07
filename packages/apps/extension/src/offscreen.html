@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>agentready offscreen</title>
+  </head>
+  <body>
+    <!--
+      This page is never shown. It exists so the extension can host
+      long-running audits in a normal HTML context, which is not subject
+      to the MV3 service worker's 5-minute lifetime cap. The popup never
+      opens or interacts with this page directly — it talks to the
+      background service worker, which forwards run requests here.
+    -->
+    <script type="module" src="offscreen.ts"></script>
+  </body>
+</html>
