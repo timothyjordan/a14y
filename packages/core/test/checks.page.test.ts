@@ -251,6 +251,54 @@ describe('page/api', () => {
   });
 });
 
+describe('html-only guard on non-HTML responses', () => {
+  // Site-mode crawlers can discover .md mirror URLs and run page checks
+  // against them. The HTML-content checks must return na (not fail) on
+  // those responses so we don't penalise sites for having markdown
+  // mirrors that don't carry an HTML head.
+  function makeMarkdownCtx(body: string) {
+    const ctx = makePageCtx(BASE, 'https://example.com/foo.md', body);
+    ctx.page.headers = new Headers({ 'content-type': 'text/markdown; charset=utf-8' });
+    return ctx;
+  }
+
+  const md = '---\ntitle: foo\n---\n# Foo\n\nBody.';
+
+  it('returns na on every HTML-content page check', async () => {
+    const ctx = makeMarkdownCtx(md);
+    const checks = [
+      htmlCanonicalLink,
+      htmlMetaDescription,
+      htmlOgTitle,
+      htmlOgDescription,
+      htmlLangAttribute,
+      htmlJsonLd,
+      htmlJsonLdDateModified,
+      htmlJsonLdBreadcrumb,
+      htmlHeadings,
+      htmlTextRatio,
+      htmlGlossaryLink,
+      codeLanguageTags,
+      markdownMirrorSuffix,
+      markdownAlternateLink,
+      markdownContentNegotiation,
+    ];
+    for (const c of checks) {
+      const r = await run(c, ctx);
+      expect(r.status, `${c.id} should be na on non-HTML response`).toBe('na');
+    }
+  });
+
+  it('still runs transport-layer checks on non-HTML responses', async () => {
+    // http.status-200 / http.redirect-chain / http.no-noindex-noai
+    // evaluate meaningfully on any response, not just HTML.
+    const ctx = makeMarkdownCtx(md);
+    expect((await run(httpStatus200, ctx)).status).toBe('pass');
+    expect((await run(httpRedirectChain, ctx)).status).toBe('pass');
+    expect((await run(httpNoNoindexNoai, ctx)).status).toBe('pass');
+  });
+});
+
 describe('page/discovery', () => {
   it('returns na in single-page mode (no shared index set)', async () => {
     const ctx = makePageCtx(BASE, 'https://example.com/page', RICH_HTML);
