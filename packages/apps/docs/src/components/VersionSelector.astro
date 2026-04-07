@@ -1,0 +1,49 @@
+---
+import { listAllScorecards, getLatestScorecardVersion } from '~/lib/scorecard-data';
+
+interface Props {
+  /** Currently-selected scorecard version (controls which option is highlighted). */
+  current?: string;
+}
+
+const { current = getLatestScorecardVersion() } = Astro.props;
+const scorecards = listAllScorecards();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<label class="version-selector">
+  <span>Scorecard</span>
+  <select
+    data-version-selector
+    data-base={base}
+    aria-label="Scorecard version"
+  >
+    {scorecards.map((card) => (
+      <option value={card.version} selected={card.version === current}>
+        v{card.version}{card.version === current ? '' : ''}
+      </option>
+    ))}
+  </select>
+</label>
+
+<script>
+  // Simple client-side redirect when the user switches scorecard versions.
+  // Pages whose URL contains `/scorecards/<version>/` jump to the matching
+  // path under the newly chosen version; any other page jumps to that
+  // scorecard's overview.
+  const el = document.querySelector<HTMLSelectElement>('[data-version-selector]');
+  if (el) {
+    const base = el.dataset.base || '';
+    el.addEventListener('change', () => {
+      const next = el.value;
+      const current = window.location.pathname;
+      const match = current.match(/\/scorecards\/([^/]+)(\/.*)?$/);
+      if (match) {
+        const tail = match[2] ?? '/';
+        window.location.href = `${base}/scorecards/${next}${tail}`;
+      } else {
+        window.location.href = `${base}/scorecards/${next}/`;
+      }
+    });
+  }
+</script>

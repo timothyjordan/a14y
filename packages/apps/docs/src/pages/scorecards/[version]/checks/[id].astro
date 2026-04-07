@@ -1,0 +1,81 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import {
+  listAllScorecards,
+  getScorecardByVersion,
+  getCheckSummary,
+} from '~/lib/scorecard-data';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('checks');
+  const paths: Array<{
+    params: { version: string; id: string };
+    props: { entrySlug: string };
+  }> = [];
+  for (const card of listAllScorecards()) {
+    const scorecard = getScorecardByVersion(card.version);
+    const allIds = new Set([
+      ...scorecard.siteChecks.map((c) => c.id),
+      ...scorecard.pageChecks.map((c) => c.id),
+    ]);
+    for (const entry of entries) {
+      if (!allIds.has(entry.data.id)) continue;
+      paths.push({
+        params: { version: card.version, id: entry.data.id },
+        props: { entrySlug: entry.slug },
+      });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { version, id } = Astro.params;
+const { entrySlug } = Astro.props;
+const entry = await getEntry('checks', entrySlug);
+if (!entry) throw new Error(`Missing content entry for slug ${entrySlug}`);
+
+const summary = getCheckSummary(version!, id!);
+if (!summary) {
+  throw new Error(`Check ${id} not found in scorecard v${version}`);
+}
+
+const { Content } = await entry.render();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title={`${entry.data.title} · v${version}`}
+  description={entry.data.why}
+  scorecardVersion={version}
+>
+  <p class="lead">
+    <a href={`${base}/scorecards/${version}/`}>← Scorecard v{version}</a>
+  </p>
+
+  <h1>{entry.data.title}</h1>
+  <p class="lead">{entry.data.why}</p>
+
+  <div class="meta-row">
+    <span class={`chip ${summary.scope}`}>{summary.scope}</span>
+    <span class="chip">{entry.data.group}</span>
+    <span class="chip">impl {summary.implementationVersion}</span>
+    <span class="chip"><code>{summary.id}</code></span>
+  </div>
+
+  <div class="check-detail">
+    <Content />
+
+    {entry.data.references && entry.data.references.length > 0 && (
+      <aside class="references">
+        <h3>References</h3>
+        <ul>
+          {entry.data.references.map((ref) => (
+            <li><a href={ref.url} rel="noopener">{ref.title}</a></li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+</BaseLayout>
