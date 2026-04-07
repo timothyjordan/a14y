@@ -147,6 +147,42 @@ describe('crawler/crawlSite', () => {
     expect(cPage.sources.has('crawl')).toBe(true);
   });
 
+  it('seeds from entryUrl when provided so subpath-hosted sites are reachable', async () => {
+    // Subpath-hosted site at /docs/. The origin root 404s (typical for
+    // shared github.io domains where the user doesn't own the top
+    // level). Without entryUrl the crawler used to bounce off /, so
+    // every page-level check ran against a 404 body.
+    const subpathHtml = `<html lang="en"><body>
+      <a href="/docs/install">install</a>
+    </body></html>`;
+    const installHtml = `<html lang="en"><body>installed</body></html>`;
+
+    const ctx = siteCtx({
+      'https://example.com/docs/': { body: subpathHtml },
+      'https://example.com/docs/install': { body: installHtml },
+      // origin root deliberately omitted -> 404 in the fake fetch
+    });
+
+    const pages = await crawlSiteToArray({
+      baseUrl: BASE,
+      http: ctx.http,
+      siteCtx: ctx,
+      entryUrl: 'https://example.com/docs/',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const urls = pages.map((p) => p.url).sort();
+    // The crawler should visit the subpath entry AND follow the link
+    // to /docs/install. Origin root is NOT visited because we
+    // explicitly told the crawler where to start.
+    expect(urls).toEqual([
+      'https://example.com/docs/',
+      'https://example.com/docs/install',
+    ]);
+    const root = pages.find((p) => p.url === 'https://example.com/docs/')!;
+    expect(root.sources.has('crawl')).toBe(true);
+  });
+
   it('respects maxPages and stops crawling beyond the cap', async () => {
     const routes: Record<string, FakeRoute> = {
       'https://example.com/sitemap.xml': {
