@@ -153,6 +153,10 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
       baseUrl,
       http,
       siteCtx,
+      // Seed the crawl from the user-provided URL so subpath-hosted
+      // sites (`https://host/docs/`) actually start at /docs/ instead
+      // of bouncing off the origin root.
+      entryUrl: opts.url,
       maxPages: opts.maxPages,
       concurrency: opts.concurrency,
       politeDelayMs: opts.politeDelayMs,
