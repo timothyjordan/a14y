@@ -1,6 +1,7 @@
 import robotsParser from 'robots-parser';
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
+import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:robots-txt';
 
@@ -17,22 +18,22 @@ async function loadRobotsTxt(ctx: SiteCheckContext): Promise<RobotsTxtResource> 
   const cached = ctx.shared.get(SHARED_KEY) as RobotsTxtResource | undefined;
   if (cached) return cached;
 
-  const url = new URL('/robots.txt', ctx.baseUrl).toString();
-  let result: RobotsTxtResource;
-  try {
-    const resp = await ctx.http.fetch(url);
-    if (resp.status >= 200 && resp.status < 300) {
-      result = {
-        found: true,
-        url: resp.url,
-        body: resp.body,
-        parser: robotsParser(resp.url, resp.body),
-      };
-    } else {
-      result = { found: false };
+  let result: RobotsTxtResource = { found: false };
+  for (const url of wellKnownCandidates(ctx, ['/robots.txt'])) {
+    try {
+      const resp = await ctx.http.fetch(url);
+      if (resp.status >= 200 && resp.status < 300) {
+        result = {
+          found: true,
+          url: resp.url,
+          body: resp.body,
+          parser: robotsParser(resp.url, resp.body),
+        };
+        break;
+      }
+    } catch {
+      // ignore network errors and try next path
     }
-  } catch {
-    result = { found: false };
   }
 
   ctx.shared.set(SHARED_KEY, result);

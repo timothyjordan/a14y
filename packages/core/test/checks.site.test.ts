@@ -84,6 +84,39 @@ describe('site/llmsTxt', () => {
     });
     expect((await run(llmsTxtMdExtensions, ctx)).status).toBe('fail');
   });
+
+  it('finds llms.txt under the audited subpath when sitePrefix is set', async () => {
+    // Subpath-hosted site at /agentready/. Origin root has no llms.txt
+    // (it would belong to a different repo or owner). The user-relative
+    // llms.txt lives at /agentready/llms.txt. With sitePrefix the
+    // loader should prefer the subpath copy and pass.
+    const ctx = makeSiteCtx(
+      BASE,
+      {
+        'https://example.com/agentready/llms.txt': {
+          body: '[Index](/agentready/index.md)\n',
+          headers: { 'content-type': 'text/plain' },
+        },
+      },
+      '/agentready',
+    );
+    const r = await run(llmsTxtExists, ctx);
+    expect(r.status).toBe('pass');
+    expect(r.message).toContain('/agentready/llms.txt');
+  });
+
+  it('still finds llms.txt at the origin root when sitePrefix is empty', async () => {
+    // Backward-compat: every existing test passes ctx without a
+    // sitePrefix, behaviour must be unchanged. This explicit test
+    // documents the invariant.
+    const ctx = makeSiteCtx(BASE, {
+      'https://example.com/llms.txt': {
+        body: '[Index](https://example.com/index.md)\n',
+        headers: { 'content-type': 'text/plain' },
+      },
+    });
+    expect((await run(llmsTxtExists, ctx)).status).toBe('pass');
+  });
 });
 
 describe('site/robotsTxt', () => {

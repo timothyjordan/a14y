@@ -1,6 +1,7 @@
 import { XMLParser } from 'fast-xml-parser';
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
+import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:sitemap-xml';
 
@@ -110,10 +111,14 @@ export async function loadSitemapXml(ctx: SiteCheckContext): Promise<SitemapXmlR
   const cached = ctx.shared.get(SHARED_KEY) as SitemapXmlResource | undefined;
   if (cached) return cached;
 
-  const candidates = ['/sitemap.xml', '/sitemap_index.xml', '/sitemap-index.xml'];
+  const candidates = wellKnownCandidates(ctx, [
+    '/sitemap.xml',
+    '/sitemap_index.xml',
+    '/sitemap-index.xml',
+  ]);
   let result: SitemapXmlResource = { found: false };
-  for (const path of candidates) {
-    const tried = await fetchSitemapAt(ctx, new URL(path, ctx.baseUrl).toString());
+  for (const url of candidates) {
+    const tried = await fetchSitemapAt(ctx, url);
     if (tried.found) {
       result = tried;
       break;

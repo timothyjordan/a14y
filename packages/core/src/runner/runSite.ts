@@ -78,7 +78,13 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   const scorecardVersion = opts.scorecardVersion ?? LATEST_SCORECARD;
   const scorecard = getScorecard(scorecardVersion);
   const http = opts.http ?? createHttpClient();
-  const baseUrl = new URL(opts.url).origin + '/';
+  const parsedInput = new URL(opts.url);
+  const baseUrl = parsedInput.origin + '/';
+  // Pathname prefix the site is hosted under, e.g. `/agentready` for
+  // `https://timothyjordan.github.io/agentready/`. Empty for sites at
+  // the origin root. Trailing slash stripped so loaders can join it
+  // cleanly with leading-slash well-known paths.
+  const sitePrefix = parsedInput.pathname.replace(/\/$/, '');
   const shared = new Map<string, unknown>();
   const startedAt = new Date().toISOString();
 
@@ -89,6 +95,7 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     baseUrl,
     http,
     shared,
+    sitePrefix,
   };
 
   // Site checks fan out independently of page checks. Kick them off in
@@ -153,6 +160,10 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
       baseUrl,
       http,
       siteCtx,
+      // Seed the crawl from the user-provided URL so subpath-hosted
+      // sites (`https://host/docs/`) actually start at /docs/ instead
+      // of bouncing off the origin root.
+      entryUrl: opts.url,
       maxPages: opts.maxPages,
       concurrency: opts.concurrency,
       politeDelayMs: opts.politeDelayMs,

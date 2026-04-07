@@ -26,6 +26,16 @@ export interface BaseCheckContext {
 
 export interface SiteCheckContext extends BaseCheckContext {
   scope: 'site';
+  /**
+   * Pathname prefix the audited site is hosted under, derived from the
+   * user-provided URL. Empty string for sites at the origin root,
+   * `"/agentready"` (no trailing slash) for subpath-hosted sites.
+   * Site-level loaders use this to look for well-known files at both
+   * `<origin>/<prefix>/well-known.ext` AND `<origin>/well-known.ext`,
+   * preferring the subpath-rooted hit so the right file wins on shared
+   * domains where the user doesn't control the top level.
+   */
+  sitePrefix?: string;
 }
 
 export interface PageCheckContext extends BaseCheckContext {
