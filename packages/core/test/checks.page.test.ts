@@ -251,6 +251,53 @@ describe('page/api', () => {
   });
 });
 
+describe('markdown.frontmatter end-to-end against a fake mirror', () => {
+  // Regression for TJ-149: the extension was reporting all four
+  // frontmatter fields as missing even when the .md mirror at the
+  // canonical location had them, because the Vite/rollup bundle
+  // wrapped gray-matter's default export as { default: fn } instead
+  // of fn. The CLI's CJS build was unaffected.
+  //
+  // This test exercises the FULL check path — fetch the mirror,
+  // parse it with gray-matter, run markdownFrontmatter — using a
+  // realistic .md body. If gray-matter ever stops being callable
+  // (because of a future bundler / interop regression) this fails.
+  it('parses a real-shaped .md mirror and reports all four fields present', async () => {
+    const mirrorBody = `---
+title: My docs page
+description: A short summary of the page contents that runs over fifty characters in length.
+doc_version: 0.2.0
+last_updated: 2026-04-07T12:00:00.000Z
+---
+
+# My docs page
+
+Body content here.
+`;
+    const html = `<!doctype html><html lang="en"><head>
+      <link rel="alternate" type="text/markdown" href="/page.md">
+    </head><body><h1>x</h1><h2>y</h2><h3>z</h3></body></html>`;
+    const ctx = makePageCtx(
+      BASE,
+      'https://example.com/page',
+      html,
+      {},
+      {
+        'https://example.com/page.md': {
+          body: mirrorBody,
+          headers: { 'content-type': 'text/markdown; charset=utf-8' },
+        },
+      },
+    );
+    const r = await run(markdownFrontmatter, ctx);
+    // Defends against bundler interop regressions: if gray-matter's
+    // default export comes through as a namespace instead of the
+    // function, this will fail with "missing: title, description,
+    // doc_version, last_updated" instead of passing.
+    expect(r.status, `expected pass but got ${r.status}: ${r.message}`).toBe('pass');
+  });
+});
+
 describe('html-only guard on non-HTML responses', () => {
   // Site-mode crawlers can discover .md mirror URLs and run page checks
   // against them. The HTML-content checks must return na (not fail) on
