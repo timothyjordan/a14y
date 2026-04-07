@@ -1,0 +1,66 @@
+name: Deploy docs site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/apps/docs/**'
+      - 'packages/core/**'
+      - '.github/workflows/deploy-docs.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one in-flight deploy at a time; newer pushes cancel older ones.
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # @agentready/core must be built first so the docs site can
+      # import its dist at build time (scorecard manifests, type
+      # definitions, etc. come from @agentready/core directly).
+      - name: Build @agentready/core
+        run: npm run build --workspace @agentready/core
+
+      - name: Build @agentready/docs
+        run: npm run build --workspace @agentready/docs
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/apps/docs/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

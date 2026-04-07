@@ -1,0 +1,70 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import CheckCard from '~/components/CheckCard.astro';
+import {
+  listAllScorecards,
+  getScorecardByVersion,
+  getChecksGroupedByCategory,
+} from '~/lib/scorecard-data';
+
+export const getStaticPaths = (() => {
+  return listAllScorecards().map((card) => ({
+    params: { version: card.version },
+  }));
+}) satisfies GetStaticPaths;
+
+const { version } = Astro.params;
+const scorecard = getScorecardByVersion(version!);
+const groups = getChecksGroupedByCategory(version!);
+const siteGroups = groups.filter((g) => g.scope === 'site');
+const pageGroups = groups.filter((g) => g.scope === 'page');
+const totalChecks = scorecard.siteChecks.length + scorecard.pageChecks.length;
+---
+
+<BaseLayout title={`Scorecard v${version} · agentready`} scorecardVersion={version}>
+  <h1>Scorecard v{scorecard.version}</h1>
+  <p class="lead">{scorecard.description}</p>
+  <div class="meta-row">
+    <span class="chip">released {scorecard.releasedAt}</span>
+    <span class="chip">{totalChecks} checks</span>
+    <span class="chip site">{scorecard.siteChecks.length} site-level</span>
+    <span class="chip page">{scorecard.pageChecks.length} page-level</span>
+  </div>
+
+  <h2>Site checks</h2>
+  <p class="lead">
+    Evaluated once per audit against the site's origin. These cover discoverability
+    surfaces — llms.txt, robots.txt, sitemaps, and agent skill files.
+  </p>
+  {siteGroups.map((group) => (
+    <section class="group-section">
+      <h2>
+        {group.group} <span class="count">· {group.checks.length} check{group.checks.length === 1 ? '' : 's'}</span>
+      </h2>
+      <ul class="check-list">
+        {group.checks.map((check) => (
+          <li><CheckCard check={check} scorecardVersion={version!} /></li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <h2>Page checks</h2>
+  <p class="lead">
+    Evaluated for every discovered page. These cover HTTP basics, HTML metadata,
+    structured data, content structure, markdown mirrors, code blocks, and APIs.
+  </p>
+  {pageGroups.map((group) => (
+    <section class="group-section">
+      <h2>
+        {group.group} <span class="count">· {group.checks.length} check{group.checks.length === 1 ? '' : 's'}</span>
+      </h2>
+      <ul class="check-list">
+        {group.checks.map((check) => (
+          <li><CheckCard check={check} scorecardVersion={version!} /></li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>
