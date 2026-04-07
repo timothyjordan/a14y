@@ -1,4 +1,5 @@
 import { crawlSite, type DiscoveredPage, type DiscoverySource } from '../crawler';
+import { ConcurrentQueue } from '../crawler/queue';
 import { collectSeeds } from '../crawler/sources';
 import { DISCOVERY_INDEXED_KEY } from '../checks/page/discovery';
 import { createHttpClient } from '../fetch/httpClient';
@@ -22,8 +23,16 @@ export interface RunOptions {
   scorecardVersion?: string;
   http?: HttpClient;
   maxPages?: number;
+  /** Crawler fetch concurrency (page discovery). */
   concurrency?: number;
   politeDelayMs?: number;
+  /**
+   * Page-level check fan-out concurrency. Bounds how many pages have their
+   * checks running at once, which is what bounds peak memory: each in-flight
+   * page holds its cheerio DOM tree until its checks finish. Default 4 keeps
+   * peak heap well under typical renderer caps even on large doc sites.
+   */
+  pageCheckConcurrency?: number;
   onProgress?: (event: ProgressEvent) => void;
 }
 
@@ -82,52 +91,26 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     shared,
   };
 
-  // Discover seeds first so site-level resources are cached and the
-  // discovery.indexed page check has the announced URL set available.
-  let pageInputs: DiscoveredPage[] = [];
-  if (mode === 'site') {
-    const seeds = await collectSeeds(siteCtx);
-    shared.set(DISCOVERY_INDEXED_KEY, seeds.urls);
-
-    const collected: DiscoveredPage[] = [];
-    for await (const page of crawlSite({
-      baseUrl,
-      http,
-      siteCtx,
-      maxPages: opts.maxPages,
-      concurrency: opts.concurrency,
-      politeDelayMs: opts.politeDelayMs,
-    })) {
-      collected.push(page);
-      opts.onProgress?.({
-        type: 'page-discovered',
-        url: page.url,
-        visited: collected.length,
-      });
-    }
-    pageInputs = collected;
-  } else {
-    // Single-page mode: still call collectSeeds so any cached resources are
-    // available to checks, but don't publish DISCOVERY_INDEXED_KEY (the
-    // discovery.indexed check returns na in that case).
-    await collectSeeds(siteCtx);
-    const fetched = await http.fetchPage(opts.url);
-    pageInputs = [
-      { url: fetched.url, page: fetched, sources: new Set(['crawl']) },
-    ];
-  }
-
-  // Run site checks once per audit. Each check is independent, so fan them
-  // out in parallel.
-  const siteChecks = await Promise.all(
+  // Site checks fan out independently of page checks. Kick them off in
+  // parallel with page processing so they're ready by the time the crawl
+  // finishes.
+  const siteChecksPromise = Promise.all(
     scorecard.siteChecks.map((c) => runSiteCheck(c, siteCtx)),
   );
-  for (const r of siteChecks) opts.onProgress?.({ type: 'site-check-done', result: r });
 
-  // Run page checks for every discovered page in parallel. Each page run
-  // already fans out its own checks internally; we then summarize each.
-  const pages: PageReport[] = await Promise.all(
-    pageInputs.map(async (input) => {
+  // Page checks now stream directly from the crawler into a bounded
+  // queue. The previous implementation buffered every DiscoveredPage
+  // (each holding a cheerio DOM tree) in an array first, then fanned
+  // every check out simultaneously — that meant peak memory grew
+  // linearly with the page count and OOM'd the offscreen renderer at
+  // ~300 doc pages. Streaming caps peak memory at
+  // pageCheckConcurrency × pageSize (default 4 × ~5MB ≈ 20MB) instead.
+  const pageCheckConcurrency = opts.pageCheckConcurrency ?? 4;
+  const pageCheckQueue = new ConcurrentQueue({ concurrency: pageCheckConcurrency });
+  const pages: PageReport[] = [];
+
+  const handlePage = (input: DiscoveredPage): Promise<void> =>
+    pageCheckQueue.add(async () => {
       const pageRun = await runPage({
         scorecard,
         http,
@@ -136,22 +119,69 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
         page: input.page,
       });
       const summary = summarize(pageRun.checks);
-      opts.onProgress?.({
-        type: 'page-done',
-        url: pageRun.finalUrl,
-        passed: summary.passed,
-        total: summary.total,
-      });
-      return {
+      pages.push({
         url: pageRun.url,
         finalUrl: pageRun.finalUrl,
         status: pageRun.status,
         sources: [...input.sources],
         checks: pageRun.checks,
         summary,
-      };
-    }),
-  );
+      });
+      opts.onProgress?.({
+        type: 'page-done',
+        url: pageRun.finalUrl,
+        passed: summary.passed,
+        total: summary.total,
+      });
+
+      // Release the FetchedPage so cheerio + the body string can be
+      // garbage-collected before the next page's checks claim a slot.
+      // Also drop this page's per-page cache entries from the shared
+      // map (jsonLd parse + markdown mirror body) — they're only ever
+      // used by the checks for this same URL.
+      (input as { page: unknown }).page = null;
+      shared.delete(`page:json-ld:${pageRun.finalUrl}`);
+      shared.delete(`page:md-mirror:${pageRun.finalUrl}`);
+    });
+
+  if (mode === 'site') {
+    const seeds = await collectSeeds(siteCtx);
+    shared.set(DISCOVERY_INDEXED_KEY, seeds.urls);
+
+    let visited = 0;
+    for await (const page of crawlSite({
+      baseUrl,
+      http,
+      siteCtx,
+      maxPages: opts.maxPages,
+      concurrency: opts.concurrency,
+      politeDelayMs: opts.politeDelayMs,
+    })) {
+      visited++;
+      opts.onProgress?.({
+        type: 'page-discovered',
+        url: page.url,
+        visited,
+      });
+      void handlePage(page);
+    }
+    await pageCheckQueue.onIdle();
+  } else {
+    // Single-page mode: still call collectSeeds so any cached resources are
+    // available to checks, but don't publish DISCOVERY_INDEXED_KEY (the
+    // discovery.indexed check returns na in that case).
+    await collectSeeds(siteCtx);
+    const fetched = await http.fetchPage(opts.url);
+    await handlePage({
+      url: fetched.url,
+      page: fetched,
+      sources: new Set(['crawl']),
+    });
+    await pageCheckQueue.onIdle();
+  }
+
+  const siteChecks = await siteChecksPromise;
+  for (const r of siteChecks) opts.onProgress?.({ type: 'site-check-done', result: r });
 
   // Aggregate every check (site + all pages) into the run-wide score.
   const allChecks: CheckResult[] = [

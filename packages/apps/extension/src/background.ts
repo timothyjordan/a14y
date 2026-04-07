@@ -91,6 +91,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
     scorecardVersion: msg.scorecardVersion ?? LATEST_SCORECARD,
     maxPages: msg.maxPages,
     concurrency: msg.concurrency,
+    pageCheckConcurrency: msg.pageCheckConcurrency,
     politeDelayMs: msg.politeDelayMs,
     startedAt: now,
     lastProgressAt: now,
@@ -139,6 +140,7 @@ async function onOffscreenReady(): Promise<OffscreenReadyResponse> {
       scorecardVersion: state.scorecardVersion,
       maxPages: state.maxPages,
       concurrency: state.concurrency,
+      pageCheckConcurrency: state.pageCheckConcurrency,
       politeDelayMs: state.politeDelayMs,
     },
   };
@@ -241,12 +243,35 @@ function stopKeepalive(): void {
 
 chrome.alarms.onAlarm.addListener((a) => {
   if (a.name !== KEEPALIVE_ALARM) return;
-  // Touching storage is enough to count as activity and reset the SW idle
-  // timer. The SW only needs to stay awake long enough to keep relaying
-  // offscreen-progress messages — the audit itself runs in the offscreen
-  // doc and is not bound by the SW lifetime.
-  void chrome.storage.local.get(CURRENT_RUN_KEY);
+  void onKeepaliveTick();
 });
+
+async function onKeepaliveTick(): Promise<void> {
+  // Touching storage counts as SW activity and resets the idle timer.
+  const state = await readCurrentRun();
+  if (state?.status !== 'running') return;
+  // Watchdog: if the offscreen renderer was killed (typically by an OOM
+  // on a very large site), no offscreen-done / offscreen-error message
+  // will ever land. The popup would otherwise wait the full 60s before
+  // falling back to the stale-banner. Detect the missing document and
+  // surface a clear error within one alarm period (~24s).
+  let hasDoc = false;
+  try {
+    hasDoc = await chrome.offscreen.hasDocument();
+  } catch {
+    hasDoc = false;
+  }
+  if (!hasDoc) {
+    await writeCurrentRun({
+      ...state,
+      status: 'error',
+      error:
+        'Audit host crashed (renderer out of memory). Try a smaller --max-pages, or run the audit from the CLI for very large sites.',
+      lastProgressAt: new Date().toISOString(),
+    });
+    stopKeepalive();
+  }
+}
 
 // =========================================================================
 // Stale-state recovery on extension startup / install
