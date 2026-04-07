@@ -1,25 +1,6 @@
-import grayMatter from 'gray-matter';
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
 import { htmlOnly } from './_htmlOnly';
-
-// gray-matter is a CJS module whose `module.exports` is the matter
-// function itself. Different runtimes / bundlers normalise the default
-// export differently:
-//
-//   - Node ESM and tsc emitting CJS hand us the function directly
-//     (the CLI build uses dist/cjs and works correctly)
-//   - rollup's @rollup/plugin-commonjs (used by Vite to bundle the
-//     Chrome extension) sometimes wraps it as { default: function }
-//     so `matter` is the namespace object, not the function
-//
-// Calling the namespace object errors silently and parsed.data is
-// empty, which makes every page on the docs site fail
-// markdown.frontmatter even though the source files are correct.
-// Detect both shapes and unwrap when needed.
-type MatterFn = typeof grayMatter;
-const matter: MatterFn =
-  (grayMatter as unknown as { default?: MatterFn }).default ?? grayMatter;
 
 const SHARED_KEY_PREFIX = 'page:md-mirror:';
 const GROUP = 'Markdown mirror';
@@ -30,7 +11,39 @@ interface MarkdownMirror {
   body?: string;
   contentType?: string;
   linkHeader?: string;
-  frontmatter?: Record<string, unknown>;
+  frontmatterKeys?: Set<string>;
+}
+
+/**
+ * Detect top-level YAML frontmatter keys without pulling in a full
+ * YAML parser. The markdown.frontmatter check only needs to know
+ * whether each required key is present — it never reads the parsed
+ * values. Avoiding gray-matter eliminates a CJS-only dependency that
+ * didn't survive rollup's @rollup/plugin-commonjs interop in the
+ * extension bundle.
+ */
+export function detectFrontmatterKeys(body: string): Set<string> {
+  if (!body || (!body.startsWith('---\n') && !body.startsWith('---\r\n'))) {
+    return new Set();
+  }
+  // Skip past the opening `---` line.
+  const afterOpen = body.indexOf('\n', 3) + 1;
+  if (afterOpen <= 0) return new Set();
+  // Find the closing `---` line.
+  const closeMatch = body.slice(afterOpen).match(/(^|\n)---\s*(\n|$)/);
+  if (!closeMatch || closeMatch.index === undefined) return new Set();
+  const fmText = body.slice(afterOpen, afterOpen + closeMatch.index);
+
+  const keys = new Set<string>();
+  for (const line of fmText.split(/\r?\n/)) {
+    // Top-level keys only: lines that start with `<name>:` and are
+    // NOT indented (indented lines are children of the previous
+    // top-level key in YAML's block-mapping syntax).
+    if (/^[ \t]/.test(line)) continue;
+    const m = line.match(/^([a-zA-Z_][\w-]*)\s*:/);
+    if (m) keys.add(m[1]);
+  }
+  return keys;
 }
 
 /**
@@ -49,20 +62,13 @@ async function loadMirror(ctx: PageCheckContext): Promise<MarkdownMirror> {
     try {
       const resp = await ctx.http.fetch(candidate);
       if (resp.status >= 200 && resp.status < 300) {
-        let frontmatter: Record<string, unknown> | undefined;
-        try {
-          const parsed = matter(resp.body);
-          frontmatter = parsed.data as Record<string, unknown>;
-        } catch {
-          frontmatter = undefined;
-        }
         result = {
           found: true,
           url: resp.url,
           body: resp.body,
           contentType: resp.headers.get('content-type') ?? undefined,
           linkHeader: resp.headers.get('link') ?? undefined,
-          frontmatter,
+          frontmatterKeys: detectFrontmatterKeys(resp.body),
         };
         break;
       }
@@ -155,9 +161,9 @@ export const markdownFrontmatter: PageCheckSpec = {
         if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
-        const fm = r.frontmatter ?? {};
+        const have = r.frontmatterKeys ?? new Set<string>();
         const required = ['title', 'description', 'doc_version', 'last_updated'];
-        const missing = required.filter((k) => !(k in fm));
+        const missing = required.filter((k) => !have.has(k));
         return missing.length === 0
           ? { status: 'pass' }
           : { status: 'fail', message: `missing: ${missing.join(', ')}` };
