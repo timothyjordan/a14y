@@ -2,6 +2,7 @@
 
 import type { CheckResult, PageReport, SiteRun } from '@agentready/core';
 import type { RunRequest, RunResponse } from './bridge';
+import { runToMarkdown } from './lib/markdown';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const empty = $<HTMLElement>('empty');
@@ -13,6 +14,7 @@ const siteTable = $<HTMLTableElement>('site-table').querySelector('tbody')!;
 const pagesContainer = $<HTMLElement>('pages-container');
 const pageSectionTitle = $<HTMLElement>('page-section-title');
 const exportBtn = $<HTMLButtonElement>('export-json');
+const exportMdBtn = $<HTMLButtonElement>('export-markdown');
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
 
 async function init() {
@@ -60,16 +62,32 @@ function renderRun(run: SiteRun) {
     for (const p of run.pages) pagesContainer.appendChild(renderPage(p));
   }
 
-  exportBtn.onclick = () => {
-    const blob = new Blob([JSON.stringify(run, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `agentready-${new Date(run.startedAt).toISOString().replace(/[:.]/g, '-')}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+  exportBtn.onclick = () => downloadBlob(
+    JSON.stringify(run, null, 2),
+    'application/json',
+    `agentready-${filenameTimestamp(run)}.json`,
+  );
+  exportMdBtn.onclick = () => downloadBlob(
+    runToMarkdown(run),
+    'text/markdown',
+    `agentready-${filenameTimestamp(run)}.md`,
+  );
 }
+
+function filenameTimestamp(run: SiteRun): string {
+  return new Date(run.startedAt).toISOString().replace(/[:.]/g, '-');
+}
+
+function downloadBlob(content: string, mimeType: string, filename: string): void {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 
 function renderPage(p: PageReport): HTMLElement {
   const wrap = document.createElement('details');
