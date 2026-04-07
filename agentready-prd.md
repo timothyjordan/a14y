@@ -69,6 +69,8 @@ v0.2.0 contains 14 site-level checks and 24 page-level checks (38 total) coverin
 
 The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://timothyjordan.github.io/agentready/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
 
+**Static-host limitation:** the docs site is itself audited by agentready, and on GitHub Pages two checks (`markdown.content-negotiation` and `markdown.canonical-header`) are physically un-passable because they require server-side behaviour (Accept-based response branching, per-response `Link` headers) that static hosts cannot provide. They are documented as wontfix-on-static; the realistic scorecard ceiling on the current host is ~95–97%. Migrating to a host with edge functions (Vercel / Netlify / Cloudflare Pages) would unlock both checks.
+
 ## 6. Core engine requirements
 
 The shared engine in `@agentready/core` exports a single `validate()` entrypoint and is responsible for everything below.

@@ -146,3 +146,14 @@ This asserts that every stable check id pinned in any shipped scorecard has a co
 Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://timothyjordan.github.io/agentready/`.
 
 For the first deploy, the Pages source in the repo settings must be set to **GitHub Actions** (Settings → Pages → Source → GitHub Actions).
+
+**Score ceiling on static hosting (the two accept-fails):**
+
+The docs site dogfoods the agentready scorecard against itself. On GitHub Pages — a fully static host — two checks cannot pass for fundamental hosting reasons:
+
+- **`markdown.content-negotiation`** — requires the server to honour `Accept: text/markdown` and return a different response body. Static hosts can't branch on request headers.
+- **`markdown.canonical-header`** — requires setting a per-response `Link: <…>; rel="canonical"` header on the `.md` mirror. Static hosts can't set custom per-file response headers.
+
+Both checks are documented as **wontfix on static hosting**. If we ever migrate the docs site to Vercel / Netlify / Cloudflare Pages, both become fixable in ~10 lines of edge function code each. For now, the realistic ceiling on the scorecard is `(applicable − 2) / applicable` per page, which works out to roughly **95–97%** depending on the number of N/A checks per page.
+
+When running `agentready check https://timothyjordan.github.io/agentready/ --mode site` for verification, expect exactly these two ids in the per-page failures and nothing else. Anything else is a regression.
