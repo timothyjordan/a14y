@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@agentready/core": "*",
+    "@astrojs/sitemap": "^3.7.2",
     "astro": "^4.16.0"
   },
   "devDependencies": {
