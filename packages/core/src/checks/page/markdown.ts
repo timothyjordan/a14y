@@ -1,7 +1,25 @@
-import matter from 'gray-matter';
+import grayMatter from 'gray-matter';
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
 import { htmlOnly } from './_htmlOnly';
+
+// gray-matter is a CJS module whose `module.exports` is the matter
+// function itself. Different runtimes / bundlers normalise the default
+// export differently:
+//
+//   - Node ESM and tsc emitting CJS hand us the function directly
+//     (the CLI build uses dist/cjs and works correctly)
+//   - rollup's @rollup/plugin-commonjs (used by Vite to bundle the
+//     Chrome extension) sometimes wraps it as { default: function }
+//     so `matter` is the namespace object, not the function
+//
+// Calling the namespace object errors silently and parsed.data is
+// empty, which makes every page on the docs site fail
+// markdown.frontmatter even though the source files are correct.
+// Detect both shapes and unwrap when needed.
+type MatterFn = typeof grayMatter;
+const matter: MatterFn =
+  (grayMatter as unknown as { default?: MatterFn }).default ?? grayMatter;
 
 const SHARED_KEY_PREFIX = 'page:md-mirror:';
 const GROUP = 'Markdown mirror';
