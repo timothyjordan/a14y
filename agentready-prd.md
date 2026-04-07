@@ -32,6 +32,7 @@ Documentation is historically built for human eyeballs — sticky headers, JavaS
 | :--- | :--- | :--- |
 | Chrome extension (`@agentready/extension`) | Browser-based ad-hoc audits, single page or whole site | Loaded unpacked from `packages/apps/extension/dist`; Chrome Web Store later |
 | CLI (`agentready`) | Local pre-commit, CI gating, JSON pipelines | Published to npm |
+| Docs site (`@agentready/docs`) | Public reference for every scorecard version — detection rules, implementation notes, pass/fail examples | Astro + GitHub Pages at https://timothyjordan.github.io/agentready/ |
 
 ## 5. Scorecard
 
@@ -66,7 +67,7 @@ v0.2.0 contains 14 site-level checks and 24 page-level checks (38 total) coverin
 - **Code & API:** `language-*` class on every `<pre><code>` block; API pages link to `openapi.json` / `swagger.json` / `swagger.yaml` / `schema.json`.
 - **Discovery:** the page is announced by `sitemap.xml`, `llms.txt`, or `sitemap.md` (orphan detection — only meaningful in site mode).
 
-The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`.
+The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://timothyjordan.github.io/agentready/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
 
 ## 6. Core engine requirements
 
