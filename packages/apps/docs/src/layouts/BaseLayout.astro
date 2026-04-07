@@ -62,17 +62,26 @@ const breadcrumbItems = [
 // which is exactly the freshness signal agents want.
 const dateModified = new Date().toISOString();
 
+// Use @graph so the BreadcrumbList sits as a sibling of the WebPage
+// node rather than nested under `breadcrumb:`. The agentready
+// json-ld.breadcrumb check walks JSON-LD nodes following @graph; the
+// nested breadcrumb shape was invisible to it. Standard Schema.org
+// pattern, both nodes are equally discoverable to any consumer.
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: title,
-  description,
-  url: canonicalUrl,
-  dateModified,
-  breadcrumb: {
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbItems,
-  },
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: title,
+      description,
+      url: canonicalUrl,
+      dateModified,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbItems,
+    },
+  ],
 };
 ---
 
