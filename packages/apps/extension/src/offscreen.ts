@@ -8,47 +8,80 @@ import {
 import {
   CURRENT_RUN_KEY,
   type CurrentRunState,
-  type OffscreenResultMessage,
-  type OffscreenRunMessage,
 } from './bridge';
 
 const RUN_HISTORY_KEY = 'agentready:run-history';
 const HISTORY_LIMIT = 20;
 
 /**
- * The offscreen document is the audit's actual host. It receives an
- * `offscreen-run` message from the background SW, runs `validate()` to
- * completion (which can take many minutes for a large site), writes
- * progress to chrome.storage.local as it goes, and then notifies the
- * background to close the document.
+ * The offscreen document is the audit's actual host. It loads as soon as
+ * the background calls `chrome.offscreen.createDocument`, reads the run
+ * config out of `chrome.storage.local`, and immediately starts the audit.
  *
- * The popup keeps reading chrome.storage.local exactly as before; it
- * doesn't know whether the work is happening in the SW or here.
+ * We deliberately do NOT wait for an incoming message: there is no way to
+ * guarantee that this module's `chrome.runtime.onMessage` listener is
+ * registered before the background tries to send the message, and missed
+ * messages just resolve `sendMessage` with undefined rather than rejecting
+ * — leaving the audit silently dead.
+ *
+ * The popup keeps reading `CURRENT_RUN_KEY` exactly as before; it doesn't
+ * know whether the work is happening in the SW or here.
  */
-chrome.runtime.onMessage.addListener((msg: OffscreenRunMessage, _sender, sendResponse) => {
-  if (msg.type !== 'offscreen-run') return false;
-  void runHere(msg)
-    .then(() => {
-      reply({ type: 'offscreen-done' });
-    })
-    .catch((e) => {
-      reply({ type: 'offscreen-error', error: (e as Error).message });
-    });
-  // Acknowledge synchronously; the result is delivered via reply() above.
-  sendResponse({ ok: true });
-  return false;
-});
 
-function reply(msg: OffscreenResultMessage): void {
-  void chrome.runtime.sendMessage(msg).catch(() => {
-    // The background may already be tearing us down; ignore.
+void main();
+
+async function main(): Promise<void> {
+  const state = await readCurrentRun();
+  if (!state) {
+    console.warn('[agentready offscreen] loaded with no current run; nothing to do');
+    return;
+  }
+  if (state.status !== 'running') {
+    console.warn(
+      `[agentready offscreen] loaded with status=${state.status}; nothing to do`,
+    );
+    return;
+  }
+
+  // Stamp a fresh "Auditing started" entry so the popup can see the
+  // offscreen doc came alive even before validate() emits its first event.
+  await writeCurrentRun({
+    ...state,
+    lastProgressAt: new Date().toISOString(),
+    progress: {
+      ...state.progress,
+      phase: `Auditing ${state.url} (${state.mode})…`,
+    },
   });
+
+  try {
+    const run = await runAudit(state);
+    await persistRun(run);
+    await writeCurrentRun({
+      ...state,
+      status: 'done',
+      lastProgressAt: new Date().toISOString(),
+      progress: {
+        phase: `Score ${run.summary.score}`,
+        visited: run.pages.length,
+        pct: 100,
+      },
+      result: run,
+    });
+  } catch (e) {
+    await writeCurrentRun({
+      ...state,
+      status: 'error',
+      lastProgressAt: new Date().toISOString(),
+      error: (e as Error).message,
+    });
+  }
 }
 
-async function runHere(msg: OffscreenRunMessage): Promise<void> {
+async function runAudit(state: CurrentRunState): Promise<SiteRun> {
   // Throttle progress writes — chrome.storage has a write quota and
   // onProgress can fire dozens of times per second on a fast crawl.
-  let pendingPhase = msg.initial.progress.phase;
+  let pendingPhase = state.progress.phase;
   let pendingVisited = 0;
   let pendingPct = 0;
   let lastFlush = 0;
@@ -58,13 +91,12 @@ async function runHere(msg: OffscreenRunMessage): Promise<void> {
     const now = Date.now();
     if (!force && now - lastFlush < FLUSH_MS) return;
     lastFlush = now;
-    const next: CurrentRunState = {
-      ...msg.initial,
+    await writeCurrentRun({
+      ...state,
       status: 'running',
       lastProgressAt: new Date().toISOString(),
       progress: { phase: pendingPhase, visited: pendingVisited, pct: pendingPct },
-    };
-    await chrome.storage.local.set({ [CURRENT_RUN_KEY]: next });
+    });
   };
 
   const onProgress = (event: ProgressEvent) => {
@@ -93,26 +125,26 @@ async function runHere(msg: OffscreenRunMessage): Promise<void> {
   };
 
   const run = await validate({
-    url: msg.url,
-    mode: msg.mode,
-    scorecardVersion: msg.scorecardVersion,
-    maxPages: msg.maxPages,
-    concurrency: msg.concurrency,
-    politeDelayMs: msg.politeDelayMs,
+    url: state.url,
+    mode: state.mode,
+    scorecardVersion: state.scorecardVersion,
+    maxPages: state.maxPages,
+    concurrency: state.concurrency,
+    politeDelayMs: state.politeDelayMs,
     onProgress,
   });
 
   await flush(true);
-  await persistRun(run);
+  return run;
+}
 
-  const done: CurrentRunState = {
-    ...msg.initial,
-    status: 'done',
-    lastProgressAt: new Date().toISOString(),
-    progress: { phase: `Score ${run.summary.score}`, visited: run.pages.length, pct: 100 },
-    result: run,
-  };
-  await chrome.storage.local.set({ [CURRENT_RUN_KEY]: done });
+async function readCurrentRun(): Promise<CurrentRunState | null> {
+  const data = await chrome.storage.local.get(CURRENT_RUN_KEY);
+  return (data[CURRENT_RUN_KEY] as CurrentRunState | undefined) ?? null;
+}
+
+async function writeCurrentRun(state: CurrentRunState): Promise<void> {
+  await chrome.storage.local.set({ [CURRENT_RUN_KEY]: state });
 }
 
 async function persistRun(run: SiteRun): Promise<void> {
