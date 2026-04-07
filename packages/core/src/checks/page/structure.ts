@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
+import { htmlOnly } from './_htmlOnly';
 
 const GROUP = 'Content structure';
 
@@ -13,6 +14,8 @@ export const htmlHeadings: PageCheckSpec = {
       version: '1.0.0',
       description: 'Pass if the page contains 3 or more <h1>/<h2>/<h3> headings.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const count = (ctx as PageCheckContext).page.$('h1, h2, h3').length;
         return count >= 3
           ? { status: 'pass', message: `${count} headings` }
@@ -33,6 +36,8 @@ export const htmlTextRatio: PageCheckSpec = {
       description:
         'Pass if visible body text takes up more than 15% of the raw HTML byte length.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const page = (ctx as PageCheckContext).page;
         const text = page.$('body').text().replace(/\s+/g, ' ').trim().length;
         const htmlLen = page.body.length || 1;
@@ -57,6 +62,8 @@ export const htmlGlossaryLink: PageCheckSpec = {
       description:
         'Pass if the page contains an <a> whose text mentions glossary or terminology.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const page = (ctx as PageCheckContext).page;
         const found = page
           .$('a')

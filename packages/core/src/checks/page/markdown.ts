@@ -1,6 +1,7 @@
 import matter from 'gray-matter';
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
+import { htmlOnly } from './_htmlOnly';
 
 const SHARED_KEY_PREFIX = 'page:md-mirror:';
 const GROUP = 'Markdown mirror';
@@ -77,6 +78,8 @@ export const markdownMirrorSuffix: PageCheckSpec = {
       version: '1.0.0',
       description: 'Pass if the corresponding <page>.md or <page>.mdx URL returns 2xx.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         return r.found
           ? { status: 'pass', message: r.url }
@@ -96,6 +99,8 @@ export const markdownAlternateLink: PageCheckSpec = {
       version: '1.0.0',
       description: 'Pass if the HTML page advertises a markdown alternate via <link rel="alternate">.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const href = (ctx as PageCheckContext).page
           .$('link[rel="alternate"][type="text/markdown"]')
           .attr('href');
@@ -118,6 +123,8 @@ export const markdownFrontmatter: PageCheckSpec = {
       description:
         'Pass if the markdown mirror has YAML frontmatter declaring title, description, doc_version, and last_updated.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
         const fm = r.frontmatter ?? {};
@@ -142,6 +149,8 @@ export const markdownCanonicalHeader: PageCheckSpec = {
       description:
         'Pass if the markdown mirror response includes a Link header with rel="canonical".',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
         const link = r.linkHeader ?? '';
@@ -164,6 +173,8 @@ export const markdownContentNegotiation: PageCheckSpec = {
       description:
         'Pass if refetching the page URL with Accept: text/markdown returns a text/markdown response.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const c = ctx as PageCheckContext;
         try {
           const resp = await c.http.fetch(c.url, {
@@ -191,6 +202,8 @@ export const markdownSitemapSection: PageCheckSpec = {
       version: '1.0.0',
       description: 'Pass if the markdown mirror body contains a "## Sitemap" heading.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
         return /^##\s+Sitemap\b/m.test(r.body ?? '')
