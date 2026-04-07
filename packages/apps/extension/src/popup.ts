@@ -1,7 +1,13 @@
 /// <reference types="chrome" />
 
 import { LATEST_SCORECARD, listScorecards, type RunMode, type SiteRun } from '@agentready/core';
-import type { RunRequest, RunStreamMessage } from './bridge';
+import {
+  CURRENT_RUN_KEY,
+  STALE_PROGRESS_MS,
+  type CurrentRunState,
+  type RunRequest,
+  type StartRunResponse,
+} from './bridge';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -15,8 +21,7 @@ const resultEl = $<HTMLElement>('result');
 const scoreEl = $<HTMLElement>('score');
 const openResultsLink = $<HTMLAnchorElement>('open-results');
 
-let currentUrl = '';
-let lastRun: SiteRun | null = null;
+let activeTabUrl = '';
 
 async function init() {
   for (const card of listScorecards()) {
@@ -28,72 +33,99 @@ async function init() {
   scorecardEl.value = LATEST_SCORECARD;
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  currentUrl = tab?.url ?? '';
-  urlEl.textContent = currentUrl || '(no active tab)';
-  if (!currentUrl) {
-    checkPageBtn.disabled = true;
-    checkSiteBtn.disabled = true;
-  }
+  activeTabUrl = tab?.url ?? '';
 
-  checkPageBtn.addEventListener('click', () => runAudit('page'));
-  checkSiteBtn.addEventListener('click', () => runAudit('site'));
+  checkPageBtn.addEventListener('click', () => startRun('page'));
+  checkSiteBtn.addEventListener('click', () => startRun('site'));
   openResultsLink.addEventListener('click', (e) => {
     e.preventDefault();
     chrome.tabs.create({ url: chrome.runtime.getURL('src/results.html') });
   });
+
+  // Render whatever the background last persisted, then keep the popup in
+  // sync with storage so progress updates appear live AND a popup that's
+  // reopened mid-audit immediately reflects the in-flight state.
+  const initial = await readCurrentRun();
+  render(initial);
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') return;
+    if (!(CURRENT_RUN_KEY in changes)) return;
+    render((changes[CURRENT_RUN_KEY].newValue ?? null) as CurrentRunState | null);
+  });
 }
 
-function runAudit(mode: RunMode) {
-  if (!currentUrl) return;
-  setBusy(true);
-  resultEl.hidden = true;
-  lastRun = null;
-  statusEl.textContent = `Starting ${mode} audit…`;
-  progressEl.hidden = false;
-  progressEl.value = 0;
+async function readCurrentRun(): Promise<CurrentRunState | null> {
+  const data = await chrome.storage.local.get(CURRENT_RUN_KEY);
+  return (data[CURRENT_RUN_KEY] as CurrentRunState | undefined) ?? null;
+}
 
-  const port = chrome.runtime.connect({ name: 'agentready-run' });
-  port.postMessage({
-    type: 'run',
-    url: currentUrl,
-    mode,
-    scorecardVersion: scorecardEl.value,
-  } satisfies RunRequest);
+function render(state: CurrentRunState | null) {
+  // Always show the URL the popup is currently pointed at — either the
+  // running audit's URL (so the user can see what's in flight) or the
+  // active tab when idle.
+  if (state && (state.status === 'running' || state.status === 'done')) {
+    urlEl.textContent = state.url;
+  } else {
+    urlEl.textContent = activeTabUrl || '(no active tab)';
+  }
 
-  let pagesSeen = 0;
-  port.onMessage.addListener((msg: RunStreamMessage) => {
-    if (msg.type === 'progress') {
-      const e = msg.event;
-      if (e.type === 'started') statusEl.textContent = `Auditing (${e.mode})…`;
-      else if (e.type === 'site-check-done') statusEl.textContent = `Site check: ${e.result.id}`;
-      else if (e.type === 'page-discovered') {
-        pagesSeen = e.visited;
-        statusEl.textContent = `Visited ${pagesSeen} pages — ${e.url}`;
-        // Indeterminate-ish progress: nudge the bar.
-        progressEl.value = Math.min(95, pagesSeen * 2);
-      } else if (e.type === 'page-done') {
-        statusEl.textContent = `Checked ${e.url} (${e.passed}/${e.total})`;
-      } else if (e.type === 'finished') {
-        progressEl.value = 100;
-      }
-    } else if (msg.type === 'done') {
-      lastRun = msg.run;
-      showResult(msg.run);
-      setBusy(false);
-    } else if (msg.type === 'error') {
-      statusEl.textContent = `Error: ${msg.error}`;
+  // Buttons need an active tab to start a new run.
+  const canStart = !state || state.status === 'idle' || state.status === 'done' || state.status === 'error';
+  const haveTab = activeTabUrl.length > 0;
+  checkPageBtn.disabled = !canStart || !haveTab;
+  checkSiteBtn.disabled = !canStart || !haveTab;
+
+  if (!state || state.status === 'idle') {
+    progressEl.hidden = true;
+    resultEl.hidden = true;
+    statusEl.textContent = '';
+    statusEl.className = 'status';
+    return;
+  }
+
+  if (state.status === 'running') {
+    const stale = Date.now() - new Date(state.lastProgressAt).getTime() > STALE_PROGRESS_MS;
+    if (stale) {
+      // The SW probably died. Let the user retry without forcing them to
+      // wait on a stuck progress bar.
       progressEl.hidden = true;
-      setBusy(false);
+      resultEl.hidden = true;
+      statusEl.className = 'status stale';
+      statusEl.textContent = 'Audit may have stalled. Click a button above to retry.';
+      checkPageBtn.disabled = !haveTab;
+      checkSiteBtn.disabled = !haveTab;
+      return;
     }
-  });
+    progressEl.hidden = false;
+    progressEl.value = state.progress.pct;
+    resultEl.hidden = true;
+    statusEl.className = 'status';
+    statusEl.textContent = state.progress.phase;
+    return;
+  }
+
+  if (state.status === 'done' && state.result) {
+    progressEl.hidden = true;
+    showResult(state.result);
+    return;
+  }
+
+  if (state.status === 'error') {
+    progressEl.hidden = true;
+    resultEl.hidden = true;
+    statusEl.className = 'status error';
+    statusEl.textContent = `Error: ${state.error ?? 'unknown'}`;
+    return;
+  }
 }
 
 function showResult(run: SiteRun) {
   resultEl.hidden = false;
   scoreEl.textContent = `${run.summary.score}/100`;
   scoreEl.className = 'score ' + scoreClass(run.summary.score);
+  statusEl.className = 'status';
   statusEl.textContent = `Scorecard v${run.scorecardVersion} · ${run.summary.passed}/${run.summary.applicable} checks passed`;
-  progressEl.hidden = true;
 }
 
 function scoreClass(score: number): string {
@@ -102,13 +134,34 @@ function scoreClass(score: number): string {
   return 'poor';
 }
 
-function setBusy(busy: boolean) {
-  checkPageBtn.disabled = busy;
-  checkSiteBtn.disabled = busy;
+async function startRun(mode: RunMode) {
+  if (!activeTabUrl) return;
+  // Optimistically clear any prior result so the UI doesn't flash stale
+  // data while waiting for the background to write its first running state.
+  resultEl.hidden = true;
+  statusEl.className = 'status';
+  statusEl.textContent = `Starting ${mode} audit…`;
+  progressEl.hidden = false;
+  progressEl.value = 0;
+  checkPageBtn.disabled = true;
+  checkSiteBtn.disabled = true;
+
+  const req: RunRequest = {
+    type: 'start-run',
+    url: activeTabUrl,
+    mode,
+    scorecardVersion: scorecardEl.value,
+  };
+  const resp = (await chrome.runtime.sendMessage(req)) as StartRunResponse;
+  if (!resp.ok) {
+    statusEl.className = 'status error';
+    statusEl.textContent = resp.message;
+    progressEl.hidden = true;
+    checkPageBtn.disabled = !activeTabUrl;
+    checkSiteBtn.disabled = !activeTabUrl;
+  }
+  // On success, the storage.onChanged listener will take over rendering
+  // as the background writes progress updates.
 }
 
 void init();
-
-// Persist the last run pointer for the results page even before the link is
-// clicked, so the user can close the popup and still find their results.
-chrome.storage.session?.set({ 'agentready:popup-last-run': lastRun }).catch(() => {});
