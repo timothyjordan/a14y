@@ -1,171 +1,179 @@
-# **Product Requirements Document (PRD)**
+# Product Requirements Document — agentready
 
-## **Project Name: Agentic Docs Validator (Project "ReadMe.ai")**
+| Metadata | Value |
+| :--- | :--- |
+| **Document version** | 2.0 |
+| **Status** | Active |
+| **Owner** | Timothy Jordan |
+| **Initial scorecard** | v0.2.0 |
 
-| Metadata | Details |
-| :---- | :---- |
-| **Document Version** | 1.1 |
-| **Status** | Draft |
-| **Date** | November 30, 2025 |
-| **Author** | Timothy Jordan |
+## 1. Summary
 
-## **Table of Contents**
+**agentready** is a tool suite that audits documentation websites for *agent readability* — how cleanly an AI agent (LLM context window or RAG ingester) can consume the site's content. It ships in two interchangeable forms backed by a single shared engine:
 
-1. [Executive Summary](#executive-summary)  
-2. [Problem Statement](#problem-statement)  
-3. [User Personas](#user-personas)  
-4. [Build Targets Overview](#build-targets-overview)  
-5. [Core Functional Requirements (Shared Engine)](#core-functional-requirements-shared-engine)  
-6. [Target-Specific Requirements](#target-specific-requirements)  
-7. [Non-Functional Requirements](#non-functional-requirements)  
-8. [Technical Implementation Details](#technical-implementation-details)  
-9. [Roadmap](#roadmap)
+1. A **Chrome extension** for ad-hoc audits from inside the browser.
+2. A **CLI** for local development, scripting, and CI use.
 
-## Executive Summary
+Both call the same `validate()` function in `@agentready/core`, so a given URL produces the **same score** regardless of which target ran the audit.
 
-The **Agentic Docs Validator** is a comprehensive tool suite designed to audit technical documentation websites for "Agentic Readiness." As software development shifts toward AI-assisted coding, documentation must be consumable by LLMs via context windows or RAG systems.  
-This project will deliver the validator across three distinct interfaces:
+## 2. Problem
 
-1. **Web App:** For ad-hoc scanning and visual reporting.  
-2. **CLI Utility:** For local development and scripting.  
-3. **GitHub Action:** For continuous integration and quality gating in PRs.
+Documentation is historically built for human eyeballs — sticky headers, JavaScript-rendered content, no machine-readable mirrors. AI agents either hallucinate or fail when they can't ingest a page cleanly. There is no standard way for a maintainer to verify that their site exposes the raw, semantic surface modern coding agents need.
 
-## Problem Statement
+## 3. Personas
 
-Technical documentation is historically designed for human eyeballs (HTML, CSS, sticky headers). These features create noise for AI agents.
+- **Library maintainer** — wants their docs to be "agent-ready" before each release; needs an at-a-glance score plus actionable failures.
+- **DevOps engineer** — wants to gate pull requests on the score; needs an exit-code-driven CLI.
+- **Technical writer** — wants to spot-check a page they just edited from inside the browser; needs the extension popup.
 
-* **The Pain:** Agents hallucinate or fail when they cannot ingest clean context.  
-* **The Gap:** No standard tool exists to verify if a documentation site exposes the raw, semantic data required by modern AI coding tools.
+## 4. Targets
 
-## User Personas
+| Target | Use case | Distribution |
+| :--- | :--- | :--- |
+| Chrome extension (`@agentready/extension`) | Browser-based ad-hoc audits, single page or whole site | Loaded unpacked from `packages/apps/extension/dist`; Chrome Web Store later |
+| CLI (`agentready`) | Local pre-commit, CI gating, JSON pipelines | Published to npm |
 
-1. **The Library Maintainer:** Wants to ensure their docs are "AI-ready" before every release.  
-2. **The DevOps Engineer:** Wants to block PRs that break llms.txt or introduce 404s.  
-3. **The AI Engineer:** Uses the CLI to bulk-validate sources before adding them to a training set.
+## 5. Scorecard
 
-## Build Targets Overview
+The scoring rules live in **versioned scorecards**, separate from the version of the apps. A scorecard is a frozen manifest pinning a stable check id (e.g. `html.canonical-link`) to a specific check implementation version (e.g. `1.0.0`). New scorecards are released as new files (`v0_3.ts`, ...); existing scorecards are never edited.
 
-To maximize adoption, the core analysis engine will be packaged into three targets:
+This means a scorecard release can:
 
-| Target | Primary Use Case | Key Feature |
-| :---- | :---- | :---- |
-| **Target 1: Web App** | Ad-hoc audit by humans. | Visual dashboard, "Quick Fix" code generation. |
-| **Target 2: CLI** | Local testing & pre-commit hooks. | JSON/Text output, exit codes for piping. |
-| **Target 3: GitHub Action** | CI/CD pipelines. | Automated PR comments, build blocking. |
+- **Add** a new check (introduce a new id in the manifest)
+- **Remove** a check (omit an existing id)
+- **Update** a check's behavior (pin the existing id to a new implementation version)
 
-## Core Functional Requirements (Shared Engine)
+…all without breaking historical comparability. Users can re-run an old scorecard against a fresh audit at any time, so trend data stays consistent across changes to the rules.
 
-*These requirements apply to the underlying analysis logic used by ALL three targets.*
+### Score formula
 
-### Analysis Pillar A: Discoverability (llms.txt)
+```
+score = round(passed / applicable * 100)
+```
 
-* **FR-CORE-001:** Check existence of /llms.txt and /.well-known/llms.txt and MIME type is text/plain.
-* **FR-CORE-002:** Validate llms.txt Markdown syntax against [official specs](https://llmstxt.org/).  
-* **FR-CORE-003:** Extract all URLs in llms.txt and verify they return 200 OK.
-* **FR-CORE-004:** Check robots.txt for AI-specific blocks (GPTBot, ClaudeBot), doesn't conflict with llms.txt.
-* **FR-CORE-005:** Each page should have a <link rel="canonical">.
-* **FR-CORE-006:** Redirect chains: Non should exceed 1 hop.
-* **FR-CORE-007:** Glossery available for key terms, linked where appropriate throughout documentation.
+Where `applicable = total - na`. Only `pass` counts toward the numerator. `fail`, `warn`, and `error` are reported but treated identically as "not passed" for scoring. `na` (not applicable, e.g. the API schema check on a non-API page) is excluded from both halves.
 
-### Analysis Pillar B: Format Availability (Markdown)
+### v0.2.0 — initial scorecard
 
-* **FR-CORE-101:** **Suffix Check:** Check if page.html has a corresponding page.md or page.mdx, has a title, description, and tags. Ideally also has llm_summary and last_updated. 
-* **FR-CORE-102:** **Content Negotiation:** Check responses to Accept: text/markdown.  
-* **FR-CORE-103:** **Noise Ratio:** Calculate signal-to-noise ratio of HTML content if no Markdown is found.
+v0.2.0 contains 14 site-level checks and 24 page-level checks (38 total) covering:
 
-### Analysis Pillar C: Structured Data
+- **Discoverability:** llms.txt / llms-full.txt presence, content type, link format; robots.txt presence and AI bot allowance; sitemap.xml validity and lastmod; sitemap.md structure; AGENTS.md (or `.cursorrules`, `CLAUDE.md`, etc.) presence and minimum sections.
+- **HTTP basics:** 200 status, ≤1 redirect hop, `text/html; charset=utf-8`, no `noindex`/`noai`/`noimageai` in `x-robots-tag`.
+- **HTML metadata:** `<link rel="canonical">`, `<meta name="description">` ≥50 chars, `og:title`, `og:description`, `<html lang>`.
+- **Structured data:** parseable JSON-LD, `dateModified`, `BreadcrumbList`.
+- **Content structure:** ≥3 headings, text-to-HTML ratio >15%, glossary link.
+- **Markdown mirrors:** `<page>.md` / `<page>.mdx` mirror, `<link rel="alternate" type="text/markdown">`, frontmatter (`title`, `description`, `doc_version`, `last_updated`), canonical `Link` header on the mirror, `Accept: text/markdown` content negotiation, `## Sitemap` heading inside the mirror.
+- **Code & API:** `language-*` class on every `<pre><code>` block; API pages link to `openapi.json` / `swagger.json` / `swagger.yaml` / `schema.json`.
+- **Discovery:** the page is announced by `sitemap.xml`, `llms.txt`, or `sitemap.md` (orphan detection — only meaningful in site mode).
 
-* **FR-CORE-201:** Docs with APIs should include machine-readable endpoints (openapi.json, schema.json, or swagger.yaml). Ensure that any found are complete and valid.
-* **FR-CORE-202:** Verify code blocks utilize language fencing (e.g., \`\`\`python).
-* **FR-CORE-203:** Schema.org metadata is included such as TechArticle or HowTo markup for core guides.
-* **FR-CORE-204:** Ensure proper fenced code blocks with language identifiers ( ```bash, ```js).
-* **FR-CORE-205:** Long pages have clear section demarcations for embeddings retrieval.
-* **FR-CORE-206:** Summaries are included for long articles.
+The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`.
 
-### Analysis Pillar D: HTTP & SEO Metadata
-* **FR-CORE-301:** Response headers: Content-Type = text/html; charset=utf-8, Robots-Tag not disallowing AI access, Cache-Control properly set, no unintentional noindex or noai headers.
-* **FR-CORE-302:** Meta tags: <meta name="description"> exists, <meta property="og:title"> and <meta property="og:description"> valid, lang attribute set correctly (<html lang="en">).
+## 6. Core engine requirements
 
-### The Scoring Engine
+The shared engine in `@agentready/core` exports a single `validate()` entrypoint and is responsible for everything below.
 
-* **FR-CORE-501:** Calculate "Agentic Score" (0-100) based on weighted criteria (e.g., \+30 for llms.txt, \+30 for Markdown mirrors).
+### CR-1 — Two modes
+- **Page mode**: audit a single URL. Site-level checks still run against the URL's origin so the discoverability story is reflected; the orphan check returns `na` because no site-wide index is available.
+- **Site mode**: crawl the entire site and audit every discovered page.
 
-## Target-Specific Requirements
+### CR-2 — Discovery
+In site mode, seed URLs are collected in parallel from `sitemap.xml` (sitemap-index aware), `llms.txt`, `llms-full.txt`, and `sitemap.md`. The crawler then expands by following same-origin `<a href>` links from each fetched HTML page until `maxPages` is reached.
 
-### Target 1: Web Application
+### CR-3 — Parallelism
+The crawler fetches up to `concurrency` pages at a time through a hand-rolled work queue with an optional politeness delay between starts. Site-level checks fan out in parallel, and so do per-page checks within a single page. The runner streams `DiscoveredPage` records as soon as they finish so reports can update live.
 
-* **FR-WEB-001:** Public-facing input field for URL entry.  
-* **FR-WEB-002:** Interactive "Scorecard" UI visualizing the Agentic Score.  
-* **FR-WEB-003:** **Remediation Wizard:** Generate copy-paste snippets for users (e.g., a sample llms.txt based on their sitemap).  
-* **FR-WEB-004:** Shareable results link (e.g., readme.ai/report?url=...).
+### CR-4 — Determinism
+Two runs of the same URL against the same scorecard MUST produce a byte-identical `SiteRun` (excluding wallclock timestamps). This is enforced by the parity contract test in `packages/core/test/parity.test.ts`.
 
-### Target 2: Command Line Interface (CLI)
+### CR-5 — Environment portability
+The engine depends only on `globalThis.fetch`, `cheerio`, `fast-xml-parser`, `robots-parser`, and `gray-matter`. It runs unchanged in Node 18+ and inside an MV3 service worker. Core ships dual builds (`dist/cjs` and `dist/esm`) so the CLI can `require()` it and Vite can bundle the ESM entry into the extension.
 
-* **FR-CLI-001:** Command structure: agentic-validator check \<url\> \[options\].  
-* **FR-CLI-002:** Support flags:  
-  * \--depth \<int\>: Crawl depth.  
-  * \--output \<json|text|table\>: Output format.  
-  * \--fail-under \<score\>: Exit with code 1 if score is below threshold.  
-* **FR-CLI-003:** **Standard IO:** Output results to stdout for piping into other tools (e.g., jq).  
-* **FR-CLI-004:** **Local Mode:** Support validating a local directory of files, not just a live URL (useful for testing before deployment).
+### CR-6 — Versioned scorecards
+`getScorecard(version)` resolves a manifest into runnable checks. It throws a loud error if any pinned id or implementation version is missing from the registry — frozen scorecards can never silently drift. `listScorecards()` enumerates every version.
 
-### Target 3: GitHub Actions Workflow
+## 7. CLI requirements
 
-* **FR-GHA-001:** Action inputs via with::  
-  * url: (Optional) Live URL to test.  
-  * build-dir: (Optional) Directory of static site assets to test locally.  
-  * threshold: Score threshold to fail the workflow.  
-* **FR-GHA-002:** **PR Commenter:** Automatically post a comment on the Pull Request with a summary table of the Agentic Score and any broken links found.  
-* **FR-GHA-003:** **Status Check:** Report a "Success" or "Failure" status back to the GitHub Commit Status API.
+### CLI-1 — Commands
+```
+agentready check <url> [options]
+agentready scorecards [options]
+```
 
-## Non-Functional Requirements
+### CLI-2 — `check` flags
+- `--mode <page|site>` — default `page`
+- `--scorecard <version>` — default latest
+- `--max-pages <n>` — default 500
+- `--concurrency <n>` — default 8
+- `--polite-delay <ms>` — default 250
+- `--output <text|json>` — default `text`
+- `--fail-under <score>` — exit 1 if final score is below threshold
+- `--verbose` — stream progress events to stderr
 
-* **NFR-001 (Performance):** Analysis should complete in \<10s for typical sites.  
-* **NFR-002 (Politeness):** Respect robots.txt and rate limits (max 2 req/sec).  
-* **NFR-003 (Portability):** CLI must run on Linux, macOS, and Windows. GitHub Action must be Docker-based or a pure JS action for speed.
+### CLI-3 — Output
+- `text` mode prints the score, scorecard metadata, grouped check results, and a per-page roll-up table when in site mode.
+- `json` mode emits the full `SiteRun` shape on stdout — the same shape the extension stores in `chrome.storage.local`. This is the documented programmatic surface for downstream tools (jq, dashboards, custom CI).
 
-## Technical Implementation Details
+### CLI-4 — Exit codes
+- `0` — audit completed (and met `--fail-under` if set)
+- `1` — audit completed but score below threshold, or audit errored
+- `2` — invalid arguments
 
-### Package Architecture (Monorepo Strategy)
+## 8. Chrome extension requirements
 
-To support three targets without code duplication, the codebase will be structured as a monorepo (e.g., Nx or Turbo):
+### EXT-1 — Manifest
+MV3 service worker, `host_permissions: ["<all_urls>"]`, `permissions: ["storage", "activeTab"]`, `action.default_popup` → popup, `options_page` → settings.
 
-1. **packages/core**: The shared logic.  
-   * Contains the Crawler, the llms.txt parser, and the Scoring Engine.  
-   * Exports a TypeScript function: validate(url: string, options: Config): Promise\<Result\>.  
-2. **apps/web**: Next.js application.  
-   * Will be deployed to Vercel
-   * Uses useworkflow.dev, tailwindcss
-   * Handles UI/UX and server-side API routes.
-3. **packages/cli**: Node.js CLI tool.  
-   * Uses useworkflow.dev
-   * Uses commander or yargs for argument parsing.  
-   * Published to npm as agentready.  
-4. **packages/action**: GitHub Action wrapper.  
-   * Uses useworkflow.dev
-   * Uses @actions/core and @actions/github to interact with PRs.
+### EXT-2 — Popup
+- Shows the active tab URL.
+- Scorecard dropdown (defaults to latest, lists every shipped version so users can pin trend comparisons).
+- Two buttons: **Check this page** and **Scan whole site**.
+- Live progress while the audit runs (current site check, per-page progress).
+- Final score badge with a link to the full report tab.
 
-### Tech Stack
+### EXT-3 — Background runner
+The popup connects via `chrome.runtime.connect({ name: 'agentready-run' })` and posts a `RunRequest`. The service worker runs `validate()` and streams `RunStreamMessage` events back over the same port. Only one audit may be in flight at once. Completed runs are persisted to `chrome.storage.local` (cap 20).
 
-* **Language:** TypeScript (Node.js) for all packages.  
-* **HTTP Client:** fetch or axios with retry logic.  
-* **HTML Parsing:** cheerio (lightweight, fast) preferred over Puppeteer unless SPA rendering is strictly required.  
-* **Markdown Parsing:** remark or unified to validate syntax.
+### EXT-4 — Results page
+Full audit report in a tab: site-check breakdown, per-page checks (collapsible when there are multiple pages), JSON export download, and a clickable history table that loads any previous run from storage.
 
-## Roadmap
+### EXT-5 — Options page
+Persistent crawl settings: max pages, concurrency, polite delay.
 
-### Phase 1: Core & CLI (Alpha)
+## 9. Non-functional requirements
 
-* Build packages/core with llms.txt validation.  
-* Release agentic-docs-cli to npm.  
-* Allow users to run npx agentic-docs-cli check https://mysite.com.
+- **Politeness:** the crawler defaults to ≥250 ms between request starts and limits concurrency to 8.
+- **Score parity:** the CLI and the extension MUST produce identical scores for the same URL + scorecard version. Enforced by `parity.test.ts`.
+- **Portability:** the CLI runs on macOS, Linux, and Windows; the extension runs on Chromium-based browsers with MV3 support.
+- **Test coverage:** every check has at least one passing/failing fixture in `packages/core/test`.
 
-### Phase 2: Web MVP
+## 10. Repository layout
 
-* Deploy apps/web to Vercel.  
-* Basic UI wrapping the core engine.
+```
+packages/
+  core/                  Shared engine (@agentready/core)
+    src/scorecard/       Scorecard manifests and registry
+    src/checks/site/     Site-level checks
+    src/checks/page/     Page-level checks
+    src/crawler/         Discovery + parallel queue
+    src/runner/          validate(), runPage(), scoring orchestration
+    src/fetch/           HttpClient abstraction
+    test/                Vitest unit + parity tests
+  apps/
+    cli/                 Node CLI (`agentready`)
+    extension/           Chrome MV3 extension (@agentready/extension)
+npm-placeholders/        Reserved npm package names
+```
 
-### Phase 3: CI/CD Integration
+## 11. Roadmap
 
-* Package the CLI into a GitHub Action (action.yml).  
-* Implement PR commenting logic.
+### v0.2 (current release)
+Core engine + CLI + extension shipping the v0.2.0 scorecard.
+
+### v0.3 (next)
+- Publish the CLI to npm and the extension to the Chrome Web Store.
+- Add more checks based on real-world audit feedback (publish as scorecard v0.3.0).
+- Per-page caching across runs in the extension for trend visualization.
+
+### Future
+- Linting hints / "Quick Fix" snippets in the extension results page.
+- A separate `@agentready/scorecards` package so third parties can publish custom scorecards.
