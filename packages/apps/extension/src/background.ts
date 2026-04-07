@@ -1,44 +1,52 @@
 /// <reference types="chrome" />
 
-import {
-  LATEST_SCORECARD,
-  validate,
-  type ProgressEvent,
-  type SiteRun,
-} from '@agentready/core';
+import { LATEST_SCORECARD } from '@agentready/core';
 import {
   CURRENT_RUN_KEY,
   STALE_PROGRESS_MS,
   type CurrentRunState,
+  type OffscreenResultMessage,
+  type OffscreenRunMessage,
   type RunRequest,
   type RunResponse,
   type StartRunResponse,
 } from './bridge';
 
-const RUN_HISTORY_KEY = 'agentready:run-history';
-const HISTORY_LIMIT = 20;
 const KEEPALIVE_ALARM = 'agentready-keepalive';
-/**
- * Service worker idle timeout is ~30s. Setting the alarm under that keeps
- * the SW from being terminated mid-audit, up to Chrome's hard 5min cap.
- * Anything longer needs an offscreen document — tracked as a follow-up.
- */
 const KEEPALIVE_PERIOD_MIN = 0.4;
+
+const OFFSCREEN_PATH = 'src/offscreen.html';
+const OFFSCREEN_REASONS: chrome.offscreen.Reason[] = ['DOM_SCRAPING'];
+const OFFSCREEN_JUSTIFICATION =
+  'Run agent-readability audits in a long-lived HTML context so site crawls can outlast the service worker lifetime.';
 
 // =========================================================================
 // Message router
 // =========================================================================
 
-chrome.runtime.onMessage.addListener((msg: RunRequest, _sender, sendResponse) => {
-  if (msg.type === 'start-run') {
-    void startRun(msg).then((resp) => sendResponse(resp));
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  // Popup → background
+  if ((msg as RunRequest).type === 'start-run') {
+    void startRun(msg as RunRequest & { type: 'start-run' }).then((resp) => sendResponse(resp));
     return true; // async response
   }
-  if (msg.type === 'get-recent-runs') {
-    void getRecentRuns().then((runs) => {
-      sendResponse({ type: 'recent-runs', runs } satisfies RunResponse);
+  if ((msg as RunRequest).type === 'get-recent-runs') {
+    void chrome.storage.local.get('agentready:run-history').then((data) => {
+      sendResponse({
+        type: 'recent-runs',
+        runs: (data['agentready:run-history'] as RunResponse['runs']) ?? [],
+      } satisfies RunResponse);
     });
     return true;
+  }
+  // Offscreen → background
+  if ((msg as OffscreenResultMessage).type === 'offscreen-done') {
+    void onOffscreenFinished();
+    return false;
+  }
+  if ((msg as OffscreenResultMessage).type === 'offscreen-error') {
+    void onOffscreenError((msg as { error: string }).error);
+    return false;
   }
   return false;
 });
@@ -74,92 +82,74 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   await writeCurrentRun(initial);
   startKeepalive();
 
-  // Run the audit in the background. We deliberately don't await it from
-  // the message handler — sendResponse fires immediately so the popup can
-  // close cleanly. The audit progresses through storage from here on.
-  void runAuditToCompletion(msg, initial).catch(async (e) => {
-    await writeCurrentRun({
-      ...initial,
-      status: 'error',
-      error: (e as Error).message,
-      lastProgressAt: new Date().toISOString(),
+  try {
+    await ensureOffscreenDocument();
+    const offscreenMsg: OffscreenRunMessage = {
+      type: 'offscreen-run',
+      url: msg.url,
+      mode: msg.mode,
+      scorecardVersion: initial.scorecardVersion,
+      maxPages: msg.maxPages,
+      concurrency: msg.concurrency,
+      politeDelayMs: msg.politeDelayMs,
+      initial,
+    };
+    // Fire-and-forget. Progress lands in chrome.storage; completion or
+    // error comes back via the offscreen-done / offscreen-error router
+    // above. We deliberately don't await the audit here so the SW can
+    // sleep between progress events without holding a long Promise.
+    void chrome.runtime.sendMessage(offscreenMsg).catch(async (e) => {
+      await onOffscreenError(`Failed to dispatch audit: ${(e as Error).message}`);
     });
-    stopKeepalive();
-  });
+  } catch (e) {
+    await onOffscreenError((e as Error).message);
+  }
 
   return { ok: true };
 }
 
-async function runAuditToCompletion(
-  msg: RunRequest & { type: 'start-run' },
-  initial: CurrentRunState,
-): Promise<void> {
-  // Throttle progress writes — chrome.storage has a quota of ~120 writes/min
-  // and onProgress can fire dozens of times per second on a fast crawl.
-  let pendingPhase = initial.progress.phase;
-  let pendingVisited = 0;
-  let pendingPct = 0;
-  let lastFlush = 0;
-  const FLUSH_MS = 250;
+async function onOffscreenFinished(): Promise<void> {
+  // Storage was already updated to status='done' by the offscreen doc.
+  stopKeepalive();
+  await closeOffscreenDocument();
+}
 
-  const flush = async (force = false) => {
-    const now = Date.now();
-    if (!force && now - lastFlush < FLUSH_MS) return;
-    lastFlush = now;
+async function onOffscreenError(error: string): Promise<void> {
+  const existing = await readCurrentRun();
+  if (existing) {
     await writeCurrentRun({
-      ...initial,
-      status: 'running',
+      ...existing,
+      status: 'error',
+      error,
       lastProgressAt: new Date().toISOString(),
-      progress: { phase: pendingPhase, visited: pendingVisited, pct: pendingPct },
     });
-  };
+  }
+  stopKeepalive();
+  await closeOffscreenDocument();
+}
 
-  const onProgress = (event: ProgressEvent) => {
-    switch (event.type) {
-      case 'started':
-        pendingPhase = `Auditing (${event.mode})…`;
-        break;
-      case 'site-check-done':
-        pendingPhase = `Site check: ${event.result.id}`;
-        break;
-      case 'page-discovered':
-        pendingVisited = event.visited;
-        pendingPhase = `Visited ${event.visited} pages — ${event.url}`;
-        // Indeterminate-ish bar; the crawler doesn't know the total upfront.
-        pendingPct = Math.min(95, event.visited * 2);
-        break;
-      case 'page-done':
-        pendingPhase = `Checked ${event.url} (${event.passed}/${event.total})`;
-        break;
-      case 'finished':
-        pendingPct = 100;
-        pendingPhase = `Score ${event.summary.score}`;
-        break;
-    }
-    void flush();
-  };
+// =========================================================================
+// Offscreen document lifecycle
+// =========================================================================
 
+async function ensureOffscreenDocument(): Promise<void> {
+  // chrome.offscreen.hasDocument() returns boolean; older Chrome versions
+  // expose it as a Promise. We support both.
+  const has = await chrome.offscreen.hasDocument();
+  if (has) return;
+  await chrome.offscreen.createDocument({
+    url: OFFSCREEN_PATH,
+    reasons: OFFSCREEN_REASONS,
+    justification: OFFSCREEN_JUSTIFICATION,
+  });
+}
+
+async function closeOffscreenDocument(): Promise<void> {
   try {
-    const run = await validate({
-      url: msg.url,
-      mode: msg.mode,
-      scorecardVersion: msg.scorecardVersion ?? LATEST_SCORECARD,
-      maxPages: msg.maxPages,
-      concurrency: msg.concurrency,
-      politeDelayMs: msg.politeDelayMs,
-      onProgress,
-    });
-    await flush(true);
-    await persistRun(run);
-    await writeCurrentRun({
-      ...initial,
-      status: 'done',
-      lastProgressAt: new Date().toISOString(),
-      progress: { phase: `Score ${run.summary.score}`, visited: run.pages.length, pct: 100 },
-      result: run,
-    });
-  } finally {
-    stopKeepalive();
+    const has = await chrome.offscreen.hasDocument();
+    if (has) await chrome.offscreen.closeDocument();
+  } catch {
+    // Already closed; nothing to do.
   }
 }
 
@@ -176,24 +166,8 @@ async function writeCurrentRun(state: CurrentRunState): Promise<void> {
   await chrome.storage.local.set({ [CURRENT_RUN_KEY]: state });
 }
 
-async function persistRun(run: SiteRun): Promise<void> {
-  const history = await getRecentRuns();
-  history.unshift({
-    key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
-    run,
-  });
-  await chrome.storage.local.set({
-    [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
-  });
-}
-
-async function getRecentRuns(): Promise<Array<{ key: string; run: SiteRun }>> {
-  const data = await chrome.storage.local.get(RUN_HISTORY_KEY);
-  return (data[RUN_HISTORY_KEY] as Array<{ key: string; run: SiteRun }>) ?? [];
-}
-
 // =========================================================================
-// Keepalive: prevent the SW from being terminated mid-audit
+// Keepalive: keep the SW awake while the offscreen doc is auditing
 // =========================================================================
 
 function startKeepalive(): void {
@@ -207,7 +181,9 @@ function stopKeepalive(): void {
 chrome.alarms.onAlarm.addListener((a) => {
   if (a.name !== KEEPALIVE_ALARM) return;
   // Touching storage is enough to count as activity and reset the SW idle
-  // timer. The work itself is intentionally trivial.
+  // timer. The SW only needs to stay awake long enough to receive the
+  // final offscreen-done message; the audit itself runs in the offscreen
+  // doc and is not bound by the SW lifetime.
   void chrome.storage.local.get(CURRENT_RUN_KEY);
 });
 
@@ -227,6 +203,7 @@ async function recoverStaleRunOnStartup(): Promise<void> {
     lastProgressAt: new Date().toISOString(),
   });
   stopKeepalive();
+  await closeOffscreenDocument();
 }
 
 chrome.runtime.onStartup.addListener(() => {

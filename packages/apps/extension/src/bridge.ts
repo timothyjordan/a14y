@@ -62,3 +62,26 @@ export type RunResponse = {
 
 /** A run is considered stale if no progress event has landed within this window. */
 export const STALE_PROGRESS_MS = 60_000;
+
+/**
+ * Wire format for the background ↔ offscreen channel. The offscreen
+ * document hosts the actual `validate()` call so audits can outlast the
+ * service worker's 5-minute lifetime cap. Distinct message `type` values
+ * keep these from being confused with the popup → background protocol —
+ * `chrome.runtime.sendMessage` broadcasts to every extension context.
+ */
+export interface OffscreenRunMessage {
+  type: 'offscreen-run';
+  url: string;
+  mode: RunMode;
+  scorecardVersion: string;
+  maxPages?: number;
+  concurrency?: number;
+  politeDelayMs?: number;
+  /** Snapshot of the storage state the background already initialised. */
+  initial: CurrentRunState;
+}
+
+export type OffscreenResultMessage =
+  | { type: 'offscreen-done' }
+  | { type: 'offscreen-error'; error: string };
