@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
+import { htmlOnly } from './_htmlOnly';
 
 const SHARED_KEY_PREFIX = 'page:json-ld:';
 
@@ -67,6 +68,8 @@ export const htmlJsonLd: PageCheckSpec = {
       description:
         'Pass if the page has at least one <script type="application/ld+json"> block whose content parses as JSON.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = parseJsonLd(ctx as PageCheckContext);
         return r.blocks.length > 0
           ? { status: 'pass', message: `${r.blocks.length} block(s)` }
@@ -86,6 +89,8 @@ export const htmlJsonLdDateModified: PageCheckSpec = {
       version: '1.0.0',
       description: 'Pass if any JSON-LD node on the page contains a non-empty dateModified field.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = parseJsonLd(ctx as PageCheckContext);
         if (r.blocks.length === 0) return { status: 'na', message: 'no JSON-LD on page' };
         const found = r.flat.find((n) => typeof n.dateModified === 'string' && n.dateModified);
@@ -108,6 +113,8 @@ export const htmlJsonLdBreadcrumb: PageCheckSpec = {
       description:
         'Pass if any JSON-LD node on the page has @type "BreadcrumbList".',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const r = parseJsonLd(ctx as PageCheckContext);
         if (r.blocks.length === 0) return { status: 'na', message: 'no JSON-LD on page' };
         const found = r.flat.some((n) => nodeType(n).includes('BreadcrumbList'));

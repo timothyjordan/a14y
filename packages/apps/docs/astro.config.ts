@@ -25,6 +25,30 @@ export default defineConfig({
     // count). Forcing external stylesheets keeps the head lean.
     inlineStylesheets: 'never',
   },
+  markdown: {
+    shikiConfig: {
+      // Shiki by default emits <pre class="astro-code …" data-language="ts">
+      // which is fine for syntax highlighting but doesn't carry the
+      // class="language-*" attribute that agentready's
+      // code.language-tags check looks for. This transformer just
+      // appends the missing class to <pre> so both conventions are
+      // satisfied without disturbing the existing astro-code class
+      // or the data-language attribute.
+      transformers: [
+        {
+          pre(node) {
+            const lang = (this as { options: { lang?: string } }).options.lang;
+            if (!lang) return;
+            const existing =
+              typeof node.properties.class === 'string'
+                ? node.properties.class
+                : '';
+            node.properties.class = `${existing} language-${lang}`.trim();
+          },
+        },
+      ],
+    },
+  },
   integrations: [
     assertCoverageIntegration(),
     markdownMirrorsIntegration(),

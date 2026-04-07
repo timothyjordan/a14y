@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
+import { htmlOnly } from './_htmlOnly';
 
 export const codeLanguageTags: PageCheckSpec = {
   id: 'code.language-tags',
@@ -12,6 +13,8 @@ export const codeLanguageTags: PageCheckSpec = {
       description:
         'Pass if every <pre><code> block has a language-* or lang-* class on either the <code> or its parent <pre>.',
       run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
         const $ = (ctx as PageCheckContext).page.$;
         const blocks = $('pre code').toArray();
         if (blocks.length === 0) return { status: 'na', message: 'no code blocks on page' };
