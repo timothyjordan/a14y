@@ -32,6 +32,7 @@ import {
   markdownCanonicalHeader,
   markdownContentNegotiation,
   markdownSitemapSection,
+  detectFrontmatterKeys,
 } from '../src/checks/page/markdown';
 import { codeLanguageTags } from '../src/checks/page/code';
 import { apiSchemaLink } from '../src/checks/page/api';
@@ -252,16 +253,15 @@ describe('page/api', () => {
 });
 
 describe('markdown.frontmatter end-to-end against a fake mirror', () => {
-  // Regression for TJ-149: the extension was reporting all four
-  // frontmatter fields as missing even when the .md mirror at the
-  // canonical location had them, because the Vite/rollup bundle
-  // wrapped gray-matter's default export as { default: fn } instead
-  // of fn. The CLI's CJS build was unaffected.
-  //
-  // This test exercises the FULL check path — fetch the mirror,
-  // parse it with gray-matter, run markdownFrontmatter — using a
-  // realistic .md body. If gray-matter ever stops being callable
-  // (because of a future bundler / interop regression) this fails.
+  // Regression for TJ-149/TJ-150: the extension was reporting all
+  // four frontmatter fields as missing even when the .md mirror at
+  // the canonical location had them, because the Vite/rollup bundle
+  // mishandled gray-matter's CJS default export. The fix was to
+  // drop gray-matter entirely and detect top-level YAML keys with
+  // a small regex helper. This test exercises the FULL check path
+  // — fetch the mirror, run detectFrontmatterKeys, run
+  // markdownFrontmatter — against a realistic .md body. If the
+  // detector ever regresses on real-shaped frontmatter this fails.
   it('parses a real-shaped .md mirror and reports all four fields present', async () => {
     const mirrorBody = `---
 title: My docs page
@@ -343,6 +343,63 @@ describe('html-only guard on non-HTML responses', () => {
     expect((await run(httpStatus200, ctx)).status).toBe('pass');
     expect((await run(httpRedirectChain, ctx)).status).toBe('pass');
     expect((await run(httpNoNoindexNoai, ctx)).status).toBe('pass');
+  });
+});
+
+describe('detectFrontmatterKeys', () => {
+  it('returns the set of top-level keys for a well-formed block', () => {
+    const body = `---
+title: Hello
+description: A page
+doc_version: 1.0
+last_updated: 2026-04-01
+---
+
+# Hello
+`;
+    const keys = detectFrontmatterKeys(body);
+    expect([...keys].sort()).toEqual(
+      ['description', 'doc_version', 'last_updated', 'title'],
+    );
+  });
+
+  it('does not count indented child lines as top-level keys', () => {
+    const body = `---
+title: Hello
+author:
+  name: Jane
+  email: jane@example.com
+---
+
+body
+`;
+    const keys = detectFrontmatterKeys(body);
+    expect(keys.has('title')).toBe(true);
+    expect(keys.has('author')).toBe(true);
+    expect(keys.has('name')).toBe(false);
+    expect(keys.has('email')).toBe(false);
+  });
+
+  it('returns an empty set when there is no frontmatter block', () => {
+    expect(detectFrontmatterKeys('# Just a heading\n\nbody').size).toBe(0);
+    expect(detectFrontmatterKeys('').size).toBe(0);
+  });
+
+  it('returns an empty set when the closing delimiter is missing', () => {
+    const body = `---
+title: Hello
+description: never closes
+
+# Body starts here without a --- terminator
+`;
+    expect(detectFrontmatterKeys(body).size).toBe(0);
+  });
+
+  it('handles CRLF line endings', () => {
+    const body = '---\r\ntitle: Hello\r\ndoc_version: 1\r\n---\r\n\r\nbody';
+    const keys = detectFrontmatterKeys(body);
+    expect(keys.has('title')).toBe(true);
+    expect(keys.has('doc_version')).toBe(true);
   });
 });
 
