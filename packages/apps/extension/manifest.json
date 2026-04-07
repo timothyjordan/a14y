@@ -3,7 +3,7 @@
   "name": "Agent Readability",
   "version": "0.2.0",
   "description": "Score how well a documentation site is consumable by AI agents.",
-  "permissions": ["storage", "activeTab", "alarms"],
+  "permissions": ["storage", "activeTab", "alarms", "offscreen"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "src/popup.html",
