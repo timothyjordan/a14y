@@ -15,6 +15,13 @@ export interface CurrentRunState {
   url: string;
   mode: RunMode;
   scorecardVersion: string;
+  /** Crawl knobs forwarded from the popup. The offscreen doc reads these
+   * directly from the storage entry on load, so the background doesn't
+   * have to send them in a separate message that could race with the
+   * offscreen module finishing its initial load. */
+  maxPages?: number;
+  concurrency?: number;
+  politeDelayMs?: number;
   /** ISO timestamp of when the audit was kicked off. */
   startedAt: string;
   /** ISO timestamp of the last progress write — used by stale detection. */
@@ -64,24 +71,14 @@ export type RunResponse = {
 export const STALE_PROGRESS_MS = 60_000;
 
 /**
- * Wire format for the background ↔ offscreen channel. The offscreen
- * document hosts the actual `validate()` call so audits can outlast the
- * service worker's 5-minute lifetime cap. Distinct message `type` values
- * keep these from being confused with the popup → background protocol —
- * `chrome.runtime.sendMessage` broadcasts to every extension context.
+ * The background ↔ offscreen channel is intentionally NOT a runtime
+ * message. The offscreen document reads `CURRENT_RUN_KEY` from
+ * `chrome.storage.local` on load and starts the audit from whatever the
+ * background already wrote. The background then watches storage with
+ * `chrome.storage.onChanged` to learn when the offscreen doc has flipped
+ * status to `done` or `error`, at which point it closes the document.
+ *
+ * This avoids the race where `chrome.runtime.sendMessage` is called
+ * before the offscreen module's listener has registered — which silently
+ * resolves with `undefined` and never delivers the run config.
  */
-export interface OffscreenRunMessage {
-  type: 'offscreen-run';
-  url: string;
-  mode: RunMode;
-  scorecardVersion: string;
-  maxPages?: number;
-  concurrency?: number;
-  politeDelayMs?: number;
-  /** Snapshot of the storage state the background already initialised. */
-  initial: CurrentRunState;
-}
-
-export type OffscreenResultMessage =
-  | { type: 'offscreen-done' }
-  | { type: 'offscreen-error'; error: string };
