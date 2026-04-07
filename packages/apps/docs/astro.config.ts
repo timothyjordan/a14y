@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { assertCoverageIntegration } from './src/lib/assert-coverage';
 import { markdownMirrorsIntegration } from './src/integrations/markdown-mirrors';
+import { discoveryFilesIntegration } from './src/integrations/discovery-files';
 
 // Astro config for the agentready scorecard documentation site.
 //
@@ -24,5 +25,9 @@ export default defineConfig({
     // count). Forcing external stylesheets keeps the head lean.
     inlineStylesheets: 'never',
   },
-  integrations: [assertCoverageIntegration(), markdownMirrorsIntegration()],
+  integrations: [
+    assertCoverageIntegration(),
+    markdownMirrorsIntegration(),
+    discoveryFilesIntegration(),
+  ],
 });
