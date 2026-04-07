@@ -3,158 +3,128 @@
 import {
   validate,
   type ProgressEvent,
-  type SiteRun,
 } from '@agentready/core';
-import {
-  CURRENT_RUN_KEY,
-  type CurrentRunState,
+import type {
+  OffscreenDoneMessage,
+  OffscreenErrorMessage,
+  OffscreenProgressMessage,
+  OffscreenReadyMessage,
+  OffscreenReadyResponse,
 } from './bridge';
 
-const RUN_HISTORY_KEY = 'agentready:run-history';
-const HISTORY_LIMIT = 20;
-
 /**
- * The offscreen document is the audit's actual host. It loads as soon as
- * the background calls `chrome.offscreen.createDocument`, reads the run
- * config out of `chrome.storage.local`, and immediately starts the audit.
+ * The offscreen document is the audit's actual host. It outlives the
+ * service worker's 5-minute lifetime cap so even very long site crawls
+ * can complete.
  *
- * We deliberately do NOT wait for an incoming message: there is no way to
- * guarantee that this module's `chrome.runtime.onMessage` listener is
- * registered before the background tries to send the message, and missed
- * messages just resolve `sendMessage` with undefined rather than rejecting
- * — leaving the audit silently dead.
- *
- * The popup keeps reading `CURRENT_RUN_KEY` exactly as before; it doesn't
- * know whether the work is happening in the SW or here.
+ * Offscreen documents only get chrome.runtime / chrome.i18n / chrome.dom
+ * — chrome.storage is NOT available — so this module cannot touch
+ * chrome.storage.local at all. It talks to the background via runtime
+ * messages, and the background owns every storage write.
  */
 
 void main();
 
 async function main(): Promise<void> {
-  const state = await readCurrentRun();
-  if (!state) {
-    console.warn('[agentready offscreen] loaded with no current run; nothing to do');
+  // Announce readiness AFTER this module has finished loading. The
+  // background's reply (via sendResponse) carries the run config.
+  let resp: OffscreenReadyResponse;
+  try {
+    resp = (await chrome.runtime.sendMessage({
+      type: 'offscreen-ready',
+    } satisfies OffscreenReadyMessage)) as OffscreenReadyResponse;
+  } catch (e) {
+    console.error('[agentready offscreen] failed to reach background:', e);
     return;
   }
-  if (state.status !== 'running') {
+  if (!resp || !resp.ok) {
     console.warn(
-      `[agentready offscreen] loaded with status=${state.status}; nothing to do`,
+      '[agentready offscreen] background declined to start a run:',
+      resp?.ok === false ? resp.reason : 'no response',
     );
     return;
   }
 
-  // Stamp a fresh "Auditing started" entry so the popup can see the
-  // offscreen doc came alive even before validate() emits its first event.
-  await writeCurrentRun({
-    ...state,
-    lastProgressAt: new Date().toISOString(),
-    progress: {
-      ...state.progress,
-      phase: `Auditing ${state.url} (${state.mode})…`,
-    },
-  });
+  const cfg = resp.config;
 
-  try {
-    const run = await runAudit(state);
-    await persistRun(run);
-    await writeCurrentRun({
-      ...state,
-      status: 'done',
-      lastProgressAt: new Date().toISOString(),
-      progress: {
-        phase: `Score ${run.summary.score}`,
-        visited: run.pages.length,
-        pct: 100,
-      },
-      result: run,
-    });
-  } catch (e) {
-    await writeCurrentRun({
-      ...state,
-      status: 'error',
-      lastProgressAt: new Date().toISOString(),
-      error: (e as Error).message,
-    });
-  }
-}
-
-async function runAudit(state: CurrentRunState): Promise<SiteRun> {
-  // Throttle progress writes — chrome.storage has a write quota and
+  // Throttle progress messages — chrome.storage has a write quota and
   // onProgress can fire dozens of times per second on a fast crawl.
-  let pendingPhase = state.progress.phase;
-  let pendingVisited = 0;
-  let pendingPct = 0;
+  // Throttling on the SEND side means the background's storage write
+  // count is naturally bounded.
+  let pending: OffscreenProgressMessage = {
+    type: 'offscreen-progress',
+    phase: `Auditing ${cfg.url} (${cfg.mode})…`,
+    visited: 0,
+    pct: 0,
+  };
   let lastFlush = 0;
   const FLUSH_MS = 250;
 
-  const flush = async (force = false) => {
+  const flush = (force = false) => {
     const now = Date.now();
     if (!force && now - lastFlush < FLUSH_MS) return;
     lastFlush = now;
-    await writeCurrentRun({
-      ...state,
-      status: 'running',
-      lastProgressAt: new Date().toISOString(),
-      progress: { phase: pendingPhase, visited: pendingVisited, pct: pendingPct },
+    void chrome.runtime.sendMessage(pending).catch(() => {
+      // SW may be temporarily asleep; the next progress event will
+      // wake it. Best-effort delivery is fine because we always send
+      // a final offscreen-done at the end.
     });
   };
+
+  // Send the initial "Auditing started" snapshot so the popup sees the
+  // doc came alive even before validate() emits its first event.
+  flush(true);
 
   const onProgress = (event: ProgressEvent) => {
     switch (event.type) {
       case 'started':
-        pendingPhase = `Auditing (${event.mode})…`;
+        pending = { ...pending, phase: `Auditing (${event.mode})…` };
         break;
       case 'site-check-done':
-        pendingPhase = `Site check: ${event.result.id}`;
+        pending = { ...pending, phase: `Site check: ${event.result.id}` };
         break;
       case 'page-discovered':
-        pendingVisited = event.visited;
-        pendingPhase = `Visited ${event.visited} pages — ${event.url}`;
-        // Indeterminate-ish bar; the crawler doesn't know the total upfront.
-        pendingPct = Math.min(95, event.visited * 2);
+        pending = {
+          ...pending,
+          visited: event.visited,
+          phase: `Visited ${event.visited} pages — ${event.url}`,
+          // Indeterminate-ish bar; the crawler doesn't know the total upfront.
+          pct: Math.min(95, event.visited * 2),
+        };
         break;
       case 'page-done':
-        pendingPhase = `Checked ${event.url} (${event.passed}/${event.total})`;
+        pending = {
+          ...pending,
+          phase: `Checked ${event.url} (${event.passed}/${event.total})`,
+        };
         break;
       case 'finished':
-        pendingPct = 100;
-        pendingPhase = `Score ${event.summary.score}`;
+        pending = { ...pending, phase: `Score ${event.summary.score}`, pct: 100 };
         break;
     }
-    void flush();
+    flush();
   };
 
-  const run = await validate({
-    url: state.url,
-    mode: state.mode,
-    scorecardVersion: state.scorecardVersion,
-    maxPages: state.maxPages,
-    concurrency: state.concurrency,
-    politeDelayMs: state.politeDelayMs,
-    onProgress,
-  });
-
-  await flush(true);
-  return run;
-}
-
-async function readCurrentRun(): Promise<CurrentRunState | null> {
-  const data = await chrome.storage.local.get(CURRENT_RUN_KEY);
-  return (data[CURRENT_RUN_KEY] as CurrentRunState | undefined) ?? null;
-}
-
-async function writeCurrentRun(state: CurrentRunState): Promise<void> {
-  await chrome.storage.local.set({ [CURRENT_RUN_KEY]: state });
-}
-
-async function persistRun(run: SiteRun): Promise<void> {
-  const data = await chrome.storage.local.get(RUN_HISTORY_KEY);
-  const history = (data[RUN_HISTORY_KEY] as Array<{ key: string; run: SiteRun }>) ?? [];
-  history.unshift({
-    key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
-    run,
-  });
-  await chrome.storage.local.set({
-    [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
-  });
+  try {
+    const run = await validate({
+      url: cfg.url,
+      mode: cfg.mode,
+      scorecardVersion: cfg.scorecardVersion,
+      maxPages: cfg.maxPages,
+      concurrency: cfg.concurrency,
+      politeDelayMs: cfg.politeDelayMs,
+      onProgress,
+    });
+    flush(true);
+    void chrome.runtime
+      .sendMessage({ type: 'offscreen-done', result: run } satisfies OffscreenDoneMessage)
+      .catch((e) => console.error('[agentready offscreen] failed to send done:', e));
+  } catch (e) {
+    void chrome.runtime
+      .sendMessage({
+        type: 'offscreen-error',
+        error: (e as Error).message,
+      } satisfies OffscreenErrorMessage)
+      .catch((err) => console.error('[agentready offscreen] failed to send error:', err));
+  }
 }
