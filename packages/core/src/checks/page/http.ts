@@ -39,6 +39,13 @@ export const httpRedirectChain: PageCheckSpec = {
   },
 };
 
+// URLs ending in one of these extensions are clearly not meant to be
+// HTML pages, so http.content-type-html returns na on them rather than
+// failing. Common case: site-mode crawlers find .md mirror URLs in
+// llms.txt and run page checks against them; the .md responses
+// shouldn't be penalised for not being text/html.
+const NON_HTML_EXTENSIONS_RE = /\.(md|mdx|json|xml|txt|css|js|svg|png|jpe?g|gif|webp|pdf)$/i;
+
 export const httpContentTypeHtml: PageCheckSpec = {
   id: 'http.content-type-html',
   scope: 'page',
@@ -48,9 +55,14 @@ export const httpContentTypeHtml: PageCheckSpec = {
     '1.0.0': {
       version: '1.0.0',
       description:
-        'Pass if the response Content-Type is text/html and declares utf-8 charset.',
+        'Pass if the response Content-Type is text/html and declares utf-8 charset. N/A on URLs with non-HTML extensions (.md, .json, .xml, etc.).',
       run: async (ctx) => {
-        const ct = ((ctx as PageCheckContext).page.headers.get('content-type') ?? '').toLowerCase();
+        const c = ctx as PageCheckContext;
+        const path = new URL(c.page.url).pathname;
+        if (NON_HTML_EXTENSIONS_RE.test(path)) {
+          return { status: 'na', message: 'non-HTML resource by extension' };
+        }
+        const ct = (c.page.headers.get('content-type') ?? '').toLowerCase();
         const ok = ct.includes('text/html') && ct.includes('utf-8');
         return ok
           ? { status: 'pass', message: ct }

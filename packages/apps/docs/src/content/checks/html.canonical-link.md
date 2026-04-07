@@ -37,3 +37,11 @@ Add a `<link rel="canonical">` to every page's `<head>` pointing at the URL you 
   <!-- no canonical link -->
 </head>
 ```
+
+## Common gotchas
+
+The canonical URL must be **absolute** — a relative href like `/docs/intro` is technically valid HTML but defeats the deduplication purpose because agents see different `href` values from different page contexts. Always emit the fully-qualified URL.
+
+If your site is reachable on both `www` and apex domains, or both `http` and `https`, the canonical href should always point at the version you want indexed. Pick one and stick to it across every page.
+
+Most modern frameworks (Next.js, Astro, Hugo, Docusaurus) emit canonical links automatically once you configure the site URL. If you're hand-rolling templates, add the canonical to your shared `<head>` partial so every page picks it up without per-page boilerplate.

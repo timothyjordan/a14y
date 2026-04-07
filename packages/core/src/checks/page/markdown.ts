@@ -61,10 +61,20 @@ function mirrorCandidates(pageUrl: string): string[] {
   const path = u.pathname;
   // Strip a trailing slash and any .html extension before appending .md/.mdx
   let base = path;
-  if (base.endsWith('/')) base = base.slice(0, -1);
+  const hadTrailingSlash = base.endsWith('/');
+  if (hadTrailingSlash) base = base.slice(0, -1);
   if (base.endsWith('.html')) base = base.slice(0, -5);
   if (base === '') base = '/index';
-  const out = [`${base}.md`, `${base}.mdx`];
+  const out: string[] = [`${base}.md`, `${base}.mdx`];
+  // For trailing-slash URLs (Astro / Hugo / many SSGs default), also
+  // try the in-directory mirror at <path>/index.md. The plain
+  // `<path>.md` can resolve to a parent directory the site doesn't
+  // own — for example `https://timothyjordan.github.io/agentready/`
+  // would otherwise look for `/agentready.md` which lives outside
+  // the docs site's subpath.
+  if (hadTrailingSlash) {
+    out.push(`${base}/index.md`, `${base}/index.mdx`);
+  }
   return out.map((p) => new URL(p, `${u.protocol}//${u.host}`).toString());
 }
 
