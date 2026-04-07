@@ -15,12 +15,12 @@ export interface CurrentRunState {
   url: string;
   mode: RunMode;
   scorecardVersion: string;
-  /** Crawl knobs forwarded from the popup. The offscreen doc reads these
-   * directly from the storage entry on load, so the background doesn't
-   * have to send them in a separate message that could race with the
-   * offscreen module finishing its initial load. */
+  /** Crawl knobs forwarded from the popup. */
   maxPages?: number;
   concurrency?: number;
+  /** Bounded fan-out for per-page checks; smaller values cap peak
+   * memory in the offscreen renderer on large site audits. */
+  pageCheckConcurrency?: number;
   politeDelayMs?: number;
   /** ISO timestamp of when the audit was kicked off. */
   startedAt: string;
@@ -54,6 +54,7 @@ export type RunRequest =
       scorecardVersion?: string;
       maxPages?: number;
       concurrency?: number;
+      pageCheckConcurrency?: number;
       politeDelayMs?: number;
     }
   | { type: 'get-recent-runs' };
@@ -98,6 +99,7 @@ export interface OffscreenRunConfig {
   scorecardVersion: string;
   maxPages?: number;
   concurrency?: number;
+  pageCheckConcurrency?: number;
   politeDelayMs?: number;
 }
 
