@@ -1,15 +1,22 @@
 /// <reference types="chrome" />
 
-import { LATEST_SCORECARD } from '@agentready/core';
+import { LATEST_SCORECARD, type SiteRun } from '@agentready/core';
 import {
   CURRENT_RUN_KEY,
   STALE_PROGRESS_MS,
   type CurrentRunState,
+  type OffscreenDoneMessage,
+  type OffscreenErrorMessage,
+  type OffscreenInbound,
+  type OffscreenProgressMessage,
+  type OffscreenReadyResponse,
   type RunRequest,
   type RunResponse,
   type StartRunResponse,
 } from './bridge';
 
+const RUN_HISTORY_KEY = 'agentready:run-history';
+const HISTORY_LIMIT = 20;
 const KEEPALIVE_ALARM = 'agentready-keepalive';
 const KEEPALIVE_PERIOD_MIN = 0.4;
 
@@ -19,28 +26,47 @@ const OFFSCREEN_JUSTIFICATION =
   'Run agent-readability audits in a long-lived HTML context so site crawls can outlast the service worker lifetime.';
 
 // =========================================================================
-// Message router (popup → background)
+// Message router
 // =========================================================================
 
-chrome.runtime.onMessage.addListener((msg: RunRequest, _sender, sendResponse) => {
-  if (msg.type === 'start-run') {
-    void startRun(msg).then((resp) => sendResponse(resp));
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  // Popup → background
+  if ((msg as RunRequest).type === 'start-run') {
+    void startRun(msg as RunRequest & { type: 'start-run' }).then((resp) => sendResponse(resp));
     return true; // async response
   }
-  if (msg.type === 'get-recent-runs') {
-    void chrome.storage.local.get('agentready:run-history').then((data) => {
+  if ((msg as RunRequest).type === 'get-recent-runs') {
+    void chrome.storage.local.get(RUN_HISTORY_KEY).then((data) => {
       sendResponse({
         type: 'recent-runs',
-        runs: (data['agentready:run-history'] as RunResponse['runs']) ?? [],
+        runs: (data[RUN_HISTORY_KEY] as RunResponse['runs']) ?? [],
       } satisfies RunResponse);
     });
     return true;
+  }
+
+  // Offscreen → background
+  if ((msg as OffscreenInbound).type === 'offscreen-ready') {
+    void onOffscreenReady().then((resp) => sendResponse(resp));
+    return true;
+  }
+  if ((msg as OffscreenInbound).type === 'offscreen-progress') {
+    void onOffscreenProgress(msg as OffscreenProgressMessage);
+    return false;
+  }
+  if ((msg as OffscreenInbound).type === 'offscreen-done') {
+    void onOffscreenDone((msg as OffscreenDoneMessage).result);
+    return false;
+  }
+  if ((msg as OffscreenInbound).type === 'offscreen-error') {
+    void onOffscreenError((msg as OffscreenErrorMessage).error);
+    return false;
   }
   return false;
 });
 
 // =========================================================================
-// Run lifecycle
+// Run lifecycle (popup-initiated)
 // =========================================================================
 
 async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartRunResponse> {
@@ -70,16 +96,13 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
     lastProgressAt: now,
     progress: { phase: `Starting ${msg.mode} audit…`, visited: 0, pct: 0 },
   };
-  // The storage entry IS the message to the offscreen document. It MUST be
-  // written before the document is created, because the document reads
-  // CURRENT_RUN_KEY in its module's top-level main() function.
   await writeCurrentRun(initial);
   startKeepalive();
 
   try {
     // Force a fresh module load every run by closing any prior offscreen
-    // doc first. The offscreen entrypoint only runs once per page load,
-    // so reusing an existing doc would silently skip new runs.
+    // doc first. The offscreen module's main() only runs once per page
+    // load, so reusing an existing doc would silently skip new runs.
     await closeOffscreenDocument();
     await chrome.offscreen.createDocument({
       url: OFFSCREEN_PATH,
@@ -100,21 +123,68 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
 }
 
 // =========================================================================
-// Storage watcher: closes the offscreen doc when the audit finishes
+// Offscreen → background handlers
 // =========================================================================
 
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'local') return;
-  const change = changes[CURRENT_RUN_KEY];
-  if (!change) return;
-  const next = change.newValue as CurrentRunState | undefined;
-  if (!next) return;
-  if (next.status === 'done' || next.status === 'error') {
-    void onAuditFinished();
+async function onOffscreenReady(): Promise<OffscreenReadyResponse> {
+  const state = await readCurrentRun();
+  if (!state || state.status !== 'running') {
+    return { ok: false, reason: 'no run pending' };
   }
-});
+  return {
+    ok: true,
+    config: {
+      url: state.url,
+      mode: state.mode,
+      scorecardVersion: state.scorecardVersion,
+      maxPages: state.maxPages,
+      concurrency: state.concurrency,
+      politeDelayMs: state.politeDelayMs,
+    },
+  };
+}
 
-async function onAuditFinished(): Promise<void> {
+async function onOffscreenProgress(msg: OffscreenProgressMessage): Promise<void> {
+  const state = await readCurrentRun();
+  if (!state) return;
+  await writeCurrentRun({
+    ...state,
+    status: 'running',
+    lastProgressAt: new Date().toISOString(),
+    progress: { phase: msg.phase, visited: msg.visited, pct: msg.pct },
+  });
+}
+
+async function onOffscreenDone(run: SiteRun): Promise<void> {
+  const state = await readCurrentRun();
+  if (state) {
+    await writeCurrentRun({
+      ...state,
+      status: 'done',
+      lastProgressAt: new Date().toISOString(),
+      progress: {
+        phase: `Score ${run.summary.score}`,
+        visited: run.pages.length,
+        pct: 100,
+      },
+      result: run,
+    });
+  }
+  await persistRun(run);
+  stopKeepalive();
+  await closeOffscreenDocument();
+}
+
+async function onOffscreenError(error: string): Promise<void> {
+  const state = await readCurrentRun();
+  if (state) {
+    await writeCurrentRun({
+      ...state,
+      status: 'error',
+      error,
+      lastProgressAt: new Date().toISOString(),
+    });
+  }
   stopKeepalive();
   await closeOffscreenDocument();
 }
@@ -145,8 +215,20 @@ async function writeCurrentRun(state: CurrentRunState): Promise<void> {
   await chrome.storage.local.set({ [CURRENT_RUN_KEY]: state });
 }
 
+async function persistRun(run: SiteRun): Promise<void> {
+  const data = await chrome.storage.local.get(RUN_HISTORY_KEY);
+  const history = (data[RUN_HISTORY_KEY] as Array<{ key: string; run: SiteRun }>) ?? [];
+  history.unshift({
+    key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
+    run,
+  });
+  await chrome.storage.local.set({
+    [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
+  });
+}
+
 // =========================================================================
-// Keepalive: keep the SW awake long enough to receive the storage events
+// Keepalive
 // =========================================================================
 
 function startKeepalive(): void {
@@ -160,9 +242,9 @@ function stopKeepalive(): void {
 chrome.alarms.onAlarm.addListener((a) => {
   if (a.name !== KEEPALIVE_ALARM) return;
   // Touching storage is enough to count as activity and reset the SW idle
-  // timer. The SW only needs to stay awake long enough to receive the
-  // storage event that flips status away from 'running'; the audit itself
-  // runs in the offscreen doc and is not bound by the SW lifetime.
+  // timer. The SW only needs to stay awake long enough to keep relaying
+  // offscreen-progress messages — the audit itself runs in the offscreen
+  // doc and is not bound by the SW lifetime.
   void chrome.storage.local.get(CURRENT_RUN_KEY);
 });
 
