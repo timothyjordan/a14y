@@ -1,14 +1,56 @@
 ---
-// Stub landing page. The real layouts and routes are added in TJ-124.
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import {
+  getLatestScorecardVersion,
+  listAllScorecards,
+  getCheckSummariesForScorecard,
+} from '~/lib/scorecard-data';
+
+const latest = getLatestScorecardVersion();
+const scorecards = listAllScorecards();
+const latestChecks = getCheckSummariesForScorecard(latest);
+const siteCount = latestChecks.filter((c) => c.scope === 'site').length;
+const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>agentready docs (scaffold)</title>
-  </head>
-  <body>
-    <h1>agentready docs</h1>
-    <p>Scaffold only — full site lands in TJ-124.</p>
-  </body>
-</html>
+
+<BaseLayout title="agentready — agent readability scorecard docs">
+  <h1>Agent readability scorecard</h1>
+  <p class="lead">
+    Documentation for the rules that <strong>agentready</strong> uses to score how well
+    a documentation site can be consumed by AI agents. Every check has detection
+    mechanics, implementation notes, pass/fail examples, and links to the underlying
+    specs.
+  </p>
+
+  <section>
+    <h2>Latest scorecard</h2>
+    <p>
+      <a href={`${base}/scorecards/${latest}/`}>
+        <strong>v{latest}</strong></a> covers {latestChecks.length} checks across
+      {siteCount} site-level and {pageCount} page-level requirements.
+    </p>
+  </section>
+
+  <section>
+    <h2>All scorecards</h2>
+    <ul>
+      {scorecards.map((card) => (
+        <li>
+          <a href={`${base}/scorecards/${card.version}/`}>v{card.version}</a>
+          <span class="chip">released {card.releasedAt}</span>
+          — {Object.keys(card.checks).length} checks
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Run the scorecard yourself</h2>
+    <p>
+      agentready ships a CLI and a Chrome extension that both evaluate sites against
+      the scorecard versions listed here. Source and install instructions are on
+      <a href="https://github.com/timothyjordan/agentready">GitHub</a>.
+    </p>
+  </section>
+</BaseLayout>
