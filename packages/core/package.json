@@ -1,17 +1,33 @@
 {
   "name": "@agentready/core",
-  "version": "0.1.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "0.2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/cjs/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
+    "test": "vitest run"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "fast-xml-parser": "^5.5.10",
+    "gray-matter": "^4.0.3",
+    "marked": "^17.0.6",
+    "p-queue": "^7.4.1",
+    "robots-parser": "^3.0.1"
   },
   "devDependencies": {
+    "@types/marked": "^5.0.2",
+    "@types/node": "^20.10.0",
     "typescript": "^5.3.3",
-    "@types/node": "^20.10.0"
+    "vitest": "^1.6.1"
   }
 }
