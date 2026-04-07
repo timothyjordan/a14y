@@ -1,7 +1,12 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
 
-const API_PATH_RE = /\/(api|reference|endpoints?|swagger|openapi)\b/i;
+// Match path segments that ARE one of these words, not paths that
+// merely START with one. The previous regex used `\b` which let
+// `/checks/api.schema-link/` match because `.` is a word boundary —
+// the doc page describing api.schema-link was getting tagged as an
+// API page and failing the schema-link check.
+const API_PATH_RE = /\/(api|reference|endpoints?|swagger|openapi)(?:\/|$)/i;
 const SCHEMA_FILES = ['openapi.json', 'swagger.json', 'swagger.yaml', 'schema.json'];
 
 export const apiSchemaLink: PageCheckSpec = {
