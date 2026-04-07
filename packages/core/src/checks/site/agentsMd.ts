@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
+import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:agents-md';
 
@@ -43,9 +44,9 @@ async function loadAgentsMd(ctx: SiteCheckContext): Promise<AgentsMdResource> {
   if (cached) return cached;
 
   let result: AgentsMdResource = { found: false };
-  for (const path of PATHS) {
+  for (const url of wellKnownCandidates(ctx, PATHS)) {
     try {
-      const resp = await ctx.http.fetch(new URL(path, ctx.baseUrl).toString());
+      const resp = await ctx.http.fetch(url);
       if (resp.status >= 200 && resp.status < 300) {
         result = {
           found: true,
