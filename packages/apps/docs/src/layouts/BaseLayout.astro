@@ -1,0 +1,48 @@
+---
+import '~/styles/global.css';
+import VersionSelector from '~/components/VersionSelector.astro';
+import { getLatestScorecardVersion } from '~/lib/scorecard-data';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Active scorecard version — passed to the VersionSelector. */
+  scorecardVersion?: string;
+}
+
+const {
+  title,
+  description = 'Agent readability scorecard — documentation, detection rules, and implementation notes.',
+  scorecardVersion = getLatestScorecardVersion(),
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href={`${base}/`}>agentready</a>
+        <nav class="site-nav">
+          <a href={`${base}/scorecards/`}>Scorecards</a>
+          <a href="https://github.com/timothyjordan/agentready">GitHub</a>
+          <VersionSelector current={scorecardVersion} />
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      agentready scorecard docs · <a href="https://timothyjordan.com/blog/2026/03/23/agent-readability-spec.html">spec</a> · <a href="https://github.com/timothyjordan/agentready">source</a>
+    </footer>
+  </body>
+</html>
