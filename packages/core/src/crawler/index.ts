@@ -24,6 +24,14 @@ export interface CrawlOptions {
    * them.
    */
   siteCtx: SiteCheckContext;
+  /**
+   * URL the crawler should always visit even if no seed source mentions
+   * it. Defaults to the origin root of `baseUrl` (`https://host/`). Pass
+   * the user-provided audit URL here so subpath-hosted sites
+   * (`https://host/docs/`) actually get crawled instead of bouncing off
+   * a 404 at the origin root.
+   */
+  entryUrl?: string;
   maxPages?: number;
   concurrency?: number;
   /** Minimum delay between successive request starts (politeness). */
@@ -62,11 +70,17 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
   const seen = new Set<string>();
   const seedSources: Map<string, Set<DiscoverySource>> = new Map(seeds.bySource);
 
-  // Always include the base URL itself so single-page-or-no-seed sites
-  // still produce at least one DiscoveredPage.
-  const baseUrlNormalized = new URL('/', opts.baseUrl).toString();
-  if (!seedSources.has(baseUrlNormalized)) {
-    seedSources.set(baseUrlNormalized, new Set(['crawl']));
+  // Always include the entry URL so single-page-or-no-seed sites still
+  // produce at least one DiscoveredPage. For subpath-hosted sites the
+  // entry URL preserves the user's pathname (e.g. `/agentready/`) so
+  // the crawler doesn't bounce off the origin root, which may 404 if
+  // the audited subpath isn't owned at the top-level domain.
+  const entryUrl =
+    opts.entryUrl !== undefined
+      ? new URL(opts.entryUrl).toString()
+      : new URL('/', opts.baseUrl).toString();
+  if (!seedSources.has(entryUrl)) {
+    seedSources.set(entryUrl, new Set(['crawl']));
   }
 
   // Buffer + signal pattern to bridge the queue's task callbacks into the

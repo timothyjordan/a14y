@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
+import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:sitemap-md';
 
@@ -18,9 +19,9 @@ export async function loadSitemapMd(ctx: SiteCheckContext): Promise<SitemapMdRes
   if (cached) return cached;
 
   let result: SitemapMdResource = { found: false };
-  for (const path of PATHS) {
+  for (const url of wellKnownCandidates(ctx, PATHS)) {
     try {
-      const resp = await ctx.http.fetch(new URL(path, ctx.baseUrl).toString());
+      const resp = await ctx.http.fetch(url);
       if (resp.status >= 200 && resp.status < 300) {
         const headings = (resp.body.match(/^#+\s/gm) ?? []).length;
         const links = (resp.body.match(/\[[^\]]+\]\([^)]+\)/g) ?? []).length;
