@@ -147,13 +147,26 @@ Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.gi
 
 For the first deploy, the Pages source in the repo settings must be set to **GitHub Actions** (Settings → Pages → Source → GitHub Actions).
 
-**Score ceiling on static hosting (the two accept-fails):**
+**Final score on static hosting:**
 
-The docs site dogfoods the agentready scorecard against itself. On GitHub Pages — a fully static host — two checks cannot pass for fundamental hosting reasons:
+The docs site dogfoods the agentready scorecard against itself. After all the docs-site-to-100 work merged, the deployed score is:
+
+```
+agentready check https://timothyjordan.github.io/agentready/ --mode site --max-pages 60
+→ 92/100  (passed=962, failed=84, na=408, applicable=1046, total=1454, pages=60)
+```
+
+All 14 site-level checks pass. The 84 remaining failures are exactly two checks repeated across every crawled page (42 × `markdown.canonical-header` + 42 × `markdown.content-negotiation`), and both are intentional accept-fails that GitHub Pages physically cannot satisfy:
 
 - **`markdown.content-negotiation`** — requires the server to honour `Accept: text/markdown` and return a different response body. Static hosts can't branch on request headers.
 - **`markdown.canonical-header`** — requires setting a per-response `Link: <…>; rel="canonical"` header on the `.md` mirror. Static hosts can't set custom per-file response headers.
 
-Both checks are documented as **wontfix on static hosting**. If we ever migrate the docs site to Vercel / Netlify / Cloudflare Pages, both become fixable in ~10 lines of edge function code each. For now, the realistic ceiling on the scorecard is `(applicable − 2) / applicable` per page, which works out to roughly **95–97%** depending on the number of N/A checks per page.
+If the docs site migrates to Vercel / Netlify / Cloudflare Pages in the future, both checks become fixable in ~10 lines of edge function code each, and the score should climb from 92 to ~100. Until then, **92 is the ceiling on GitHub Pages** and any per-page failure other than those two ids is a regression worth investigating.
 
-When running `agentready check https://timothyjordan.github.io/agentready/ --mode site` for verification, expect exactly these two ids in the per-page failures and nothing else. Anything else is a regression.
+When running the verification scan locally, expect exactly:
+
+```
+=== REMAINING PAGE FAILURES ===
+   42  markdown.canonical-header
+   42  markdown.content-negotiation
+```
