@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
+import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:llms-txt';
 
@@ -23,9 +24,9 @@ export async function loadLlmsTxt(ctx: SiteCheckContext): Promise<LlmsTxtResourc
   if (cached) return cached;
 
   const tryPaths = async (paths: string[], isFull: boolean): Promise<LlmsTxtResource | null> => {
-    for (const path of paths) {
+    for (const url of wellKnownCandidates(ctx, paths)) {
       try {
-        const resp = await ctx.http.fetch(new URL(path, ctx.baseUrl).toString());
+        const resp = await ctx.http.fetch(url);
         if (resp.status >= 200 && resp.status < 300) {
           return {
             found: true,

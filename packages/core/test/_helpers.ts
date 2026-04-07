@@ -45,12 +45,17 @@ export function fakeHttpClient(routes: Record<string, FakeRoute>): HttpClient {
   };
 }
 
-export function makeSiteCtx(baseUrl: string, routes: Record<string, FakeRoute>): SiteCheckContext {
+export function makeSiteCtx(
+  baseUrl: string,
+  routes: Record<string, FakeRoute>,
+  sitePrefix?: string,
+): SiteCheckContext {
   return {
     scope: 'site',
     baseUrl,
     http: fakeHttpClient(routes),
     shared: new Map(),
+    sitePrefix,
   };
 }
 
