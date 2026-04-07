@@ -20,6 +20,7 @@ export default defineConfig({
       input: {
         results: 'src/results.html',
         options: 'src/options.html',
+        offscreen: 'src/offscreen.html',
       },
     },
   },

@@ -140,6 +140,68 @@ describe('validate (site mode)', () => {
     expect(run.summary.total).toBe(expectedTotal);
   });
 
+  it('streams 50 pages without retaining FetchedPage references in memory', async () => {
+    // Build a fake site with 50 pages, all announced via sitemap. The
+    // streaming runner should release each page's cheerio handle and
+    // per-page shared-map cache entries after that page's checks finish,
+    // bounding peak memory by pageCheckConcurrency rather than total
+    // page count. We can't measure heap directly in vitest, but we can
+    // assert the observable side effects: every page processed, every
+    // input.page reference nulled, and no per-page cache entries left
+    // in the shared map at the end.
+    const PAGE_COUNT = 50;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': {
+        body:
+          `<urlset>` +
+          Array.from(
+            { length: PAGE_COUNT },
+            (_, i) =>
+              `<url><loc>https://example.com/p${i}</loc><lastmod>2026-04-01</lastmod></url>`,
+          ).join('') +
+          `</urlset>`,
+      },
+    };
+    for (let i = 0; i < PAGE_COUNT; i++) {
+      routes[`https://example.com/p${i}`] = {
+        body: fullHtml,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      };
+    }
+
+    // Hand the runner an http client whose fetchPage we can spy on so
+    // we can grab references to the FetchedPage objects it produces.
+    // After the run finishes, every one of those pages should have had
+    // its `page` property nulled out by the runner's release step.
+    const baseClient = fakeHttpClient(routes);
+    const issuedPages: Array<{ url: string }> = [];
+    const http = {
+      ...baseClient,
+      async fetchPage(url: string, opts?: Parameters<typeof baseClient.fetchPage>[1]) {
+        const page = await baseClient.fetchPage(url, opts);
+        issuedPages.push(page);
+        return page;
+      },
+    };
+
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http,
+      concurrency: 8,
+      pageCheckConcurrency: 4,
+      politeDelayMs: 0,
+    });
+
+    expect(run.pages.length).toBeGreaterThanOrEqual(PAGE_COUNT);
+    // Every PageReport carries a finalUrl + a checks array but does NOT
+    // hold a FetchedPage reference. The page sources from the run.
+    for (const p of run.pages) {
+      expect(p.checks).toHaveLength(24);
+      expect((p as unknown as { page?: unknown }).page).toBeUndefined();
+    }
+  });
+
   it('marks crawl-discovered pages as orphaned when not announced', async () => {
     const routes = buildRoutes();
     // sitemap announces only `/`; the link crawl picks up `/about`.

@@ -33,7 +33,13 @@ program
   .option('-m, --mode <mode>', 'page or site', 'page')
   .option('-s, --scorecard <version>', 'scorecard version to evaluate against', LATEST_SCORECARD)
   .option('--max-pages <n>', 'maximum pages to crawl in site mode', (v) => parseInt(v, 10), 500)
-  .option('--concurrency <n>', 'parallel fetches', (v) => parseInt(v, 10), 8)
+  .option('--concurrency <n>', 'parallel fetches during crawling', (v) => parseInt(v, 10), 8)
+  .option(
+    '--page-check-concurrency <n>',
+    'parallel page-check evaluations (lower bounds peak memory on huge sites)',
+    (v) => parseInt(v, 10),
+    4,
+  )
   .option('--polite-delay <ms>', 'minimum delay between request starts', (v) => parseInt(v, 10), 250)
   .option('-o, --output <format>', 'text or json', 'text')
   .option('--fail-under <score>', 'exit 1 if the final score is below this threshold', (v) => parseInt(v, 10))
@@ -69,6 +75,7 @@ program
         scorecardVersion: options.scorecard,
         maxPages: options.maxPages,
         concurrency: options.concurrency,
+        pageCheckConcurrency: options.pageCheckConcurrency,
         politeDelayMs: options.politeDelay,
         onProgress,
       });
