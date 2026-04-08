@@ -5,6 +5,7 @@ import type {
   ResolvedScorecard,
 } from '../scorecard/types';
 import type { CheckResult } from '../score/compute';
+import { buildCheckDocsUrl } from '../scorecard/docsUrl';
 
 export interface RunPageOptions {
   scorecard: ResolvedScorecard;
@@ -39,7 +40,9 @@ export async function runPage(opts: RunPageOptions): Promise<PageRunResult> {
     page: opts.page,
   };
 
-  const checkPromises = opts.scorecard.pageChecks.map((c) => runOne(c, ctx));
+  const checkPromises = opts.scorecard.pageChecks.map((c) =>
+    runOne(c, ctx, opts.scorecard.version),
+  );
   const checks = await Promise.all(checkPromises);
 
   return {
@@ -50,7 +53,12 @@ export async function runPage(opts: RunPageOptions): Promise<PageRunResult> {
   };
 }
 
-async function runOne(check: ResolvedCheck, ctx: PageCheckContext): Promise<CheckResult> {
+async function runOne(
+  check: ResolvedCheck,
+  ctx: PageCheckContext,
+  scorecardVersion: string,
+): Promise<CheckResult> {
+  const docsUrl = buildCheckDocsUrl(scorecardVersion, check.id);
   try {
     const outcome = await check.run(ctx);
     return {
@@ -62,6 +70,7 @@ async function runOne(check: ResolvedCheck, ctx: PageCheckContext): Promise<Chec
       status: outcome.status,
       message: outcome.message,
       details: outcome.details,
+      docsUrl,
     };
   } catch (e) {
     return {
@@ -72,6 +81,7 @@ async function runOne(check: ResolvedCheck, ctx: PageCheckContext): Promise<Chec
       implementationVersion: check.implementationVersion,
       status: 'error',
       message: (e as Error).message,
+      docsUrl,
     };
   }
 }

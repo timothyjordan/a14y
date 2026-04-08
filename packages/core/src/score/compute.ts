@@ -9,6 +9,10 @@ export interface CheckResult {
   status: CheckStatus;
   message?: string;
   details?: unknown;
+  /** Link to the docs detail page for this check id in the scorecard version that
+   *  produced the result. Populated by the runner so every renderer (JSON, HTML,
+   *  markdown) sees it consistently. */
+  docsUrl: string;
 }
 
 export interface ScoreSummary {

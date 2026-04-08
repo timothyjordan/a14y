@@ -37,6 +37,7 @@ function check(
   group: string,
   message?: string,
   scope: 'site' | 'page' = 'site',
+  scorecardVersion = '0.2.0',
 ): CheckResult {
   return {
     id,
@@ -46,6 +47,7 @@ function check(
     implementationVersion: '1.0.0',
     status,
     message,
+    docsUrl: `https://timothyjordan.github.io/agentready/scorecards/${scorecardVersion}/checks/${id}/`,
   };
 }
 
@@ -130,8 +132,12 @@ describe('runToMarkdown', () => {
     );
     expect(md).toContain('## Site checks');
     expect(md).toContain('**Discoverability**');
-    expect(md).toContain('- ✅ `llms-txt.exists` (pass) — https://example.com/llms.txt');
-    expect(md).toContain('- ❌ `robots-txt.exists` (fail) — /robots.txt not reachable');
+    expect(md).toContain(
+      '- ✅ [`llms-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/llms-txt.exists/) (pass) — https://example.com/llms.txt',
+    );
+    expect(md).toContain(
+      '- ❌ [`robots-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/robots-txt.exists/) (fail) — /robots.txt not reachable',
+    );
   });
 
   it('renders a single-page run with a merged page-checks heading', () => {
@@ -147,7 +153,9 @@ describe('runToMarkdown', () => {
       }),
     );
     expect(md).toContain('## Page checks — https://example.com/');
-    expect(md).toContain('- ✅ `html.canonical-link` (pass) — https://example.com/');
+    expect(md).toContain(
+      '- ✅ [`html.canonical-link`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/html.canonical-link/) (pass) — https://example.com/',
+    );
     // No "Pages (1)" header in single-page mode.
     expect(md).not.toContain('## Pages (');
   });
@@ -191,10 +199,35 @@ describe('runToMarkdown', () => {
         ],
       }),
     );
-    expect(md).toContain('✅ `p`');
-    expect(md).toContain('❌ `f`');
-    expect(md).toContain('⚠️ `w`');
-    expect(md).toContain('🛑 `e`');
-    expect(md).toContain('➖ `n`');
+    expect(md).toContain('✅ [`p`](');
+    expect(md).toContain('❌ [`f`](');
+    expect(md).toContain('⚠️ [`w`](');
+    expect(md).toContain('🛑 [`e`](');
+    expect(md).toContain('➖ [`n`](');
+  });
+
+  it('embeds the scorecard version in every check link', () => {
+    // Regression for TJ-129. The link should always point at the docs
+    // page for the scorecard version that produced the result, so a
+    // historical run against an older scorecard keeps linking to the
+    // matching historical docs.
+    const md = runToMarkdown(
+      makeSiteRun({
+        siteChecks: [check('llms-txt.exists', 'pass', 'Discoverability')],
+        pages: [
+          page(
+            'https://example.com/',
+            [check('html.canonical-link', 'pass', 'HTML metadata', undefined, 'page')],
+            100,
+          ),
+        ],
+      }),
+    );
+    expect(md).toContain(
+      '[`llms-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/llms-txt.exists/)',
+    );
+    expect(md).toContain(
+      '[`html.canonical-link`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/html.canonical-link/)',
+    );
   });
 });
