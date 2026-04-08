@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 
-import type { CheckResult, PageReport, SiteRun } from '@agentready/core';
+import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@agentready/core';
 import type { RunRequest, RunResponse } from './bridge';
 import { runToMarkdown } from './lib/markdown';
 
@@ -15,6 +15,7 @@ const pagesContainer = $<HTMLElement>('pages-container');
 const pageSectionTitle = $<HTMLElement>('page-section-title');
 const exportBtn = $<HTMLButtonElement>('export-json');
 const exportMdBtn = $<HTMLButtonElement>('export-markdown');
+const exportPromptBtn = $<HTMLButtonElement>('export-prompt');
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
 
 async function init() {
@@ -71,6 +72,11 @@ function renderRun(run: SiteRun) {
     runToMarkdown(run),
     'text/markdown',
     `agentready-${filenameTimestamp(run)}.md`,
+  );
+  exportPromptBtn.onclick = () => downloadBlob(
+    runToAgentPrompt(run),
+    'text/markdown',
+    `agentready-fixes-${filenameTimestamp(run)}.md`,
   );
 }
 

@@ -31,6 +31,12 @@ node packages/apps/cli/dist/index.js check https://docs.anthropic.com \
   --output json | jq '.summary'
 ```
 
+**Generate a fix-prompt for a coding agent** (de-duplicates failures across pages, links each one to the docs detail page):
+```
+node packages/apps/cli/dist/index.js check https://docs.anthropic.com \
+  --mode site --output agent-prompt > fixes.md
+```
+
 **Use it as a CI gate:**
 ```
 node packages/apps/cli/dist/index.js check https://example.com --fail-under 80
@@ -80,7 +86,8 @@ This produces `packages/apps/extension/dist/`.
 
 **View the full report:**
 - Click **View full report** in the popup → opens `results.html` in a new tab
-- You'll see site checks, per-page checks (collapsible if multiple), a **Download JSON** button, and a clickable **History** table of recent runs (capped at 20, persisted in `chrome.storage.local`)
+- You'll see site checks, per-page checks (collapsible if multiple), three export buttons (**Download JSON**, **Download Markdown**, **Download fix prompt**), and a clickable **History** table of recent runs (capped at 20, persisted in `chrome.storage.local`)
+- The **Download fix prompt** button generates a markdown file structured for a coding agent: failing checks de-duplicated by id, sorted by impact, each linking to its docs detail page
 
 **Try the options page:**
 - Right-click the extension icon → **Options**

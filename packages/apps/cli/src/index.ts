@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import {
   LATEST_SCORECARD,
   listScorecards,
+  runToAgentPrompt,
   validate,
   type CheckResult,
   type ProgressEvent,
@@ -41,7 +42,7 @@ program
     4,
   )
   .option('--polite-delay <ms>', 'minimum delay between request starts', (v) => parseInt(v, 10), 250)
-  .option('-o, --output <format>', 'text or json', 'text')
+  .option('-o, --output <format>', 'text, json, or agent-prompt', 'text')
   .option('--fail-under <score>', 'exit 1 if the final score is below this threshold', (v) => parseInt(v, 10))
   .option('-v, --verbose', 'stream progress events to stderr')
   .action(async (url: string, options) => {
@@ -49,8 +50,16 @@ program
       console.error(chalk.red(`Invalid --mode "${options.mode}", expected "page" or "site"`));
       process.exit(2);
     }
-    if (options.output !== 'text' && options.output !== 'json') {
-      console.error(chalk.red(`Invalid --output "${options.output}", expected "text" or "json"`));
+    if (
+      options.output !== 'text' &&
+      options.output !== 'json' &&
+      options.output !== 'agent-prompt'
+    ) {
+      console.error(
+        chalk.red(
+          `Invalid --output "${options.output}", expected "text", "json", or "agent-prompt"`,
+        ),
+      );
       process.exit(2);
     }
 
@@ -90,6 +99,10 @@ program
     if (options.output === 'json') {
       // JSON output goes to stdout so it can be piped into jq.
       console.log(JSON.stringify(result, null, 2));
+    } else if (options.output === 'agent-prompt') {
+      // Markdown fix-prompt for a coding agent. De-duplicates failures
+      // by check id and links each entry to its docs detail page.
+      console.log(runToAgentPrompt(result));
     } else {
       printTextReport(result);
     }
