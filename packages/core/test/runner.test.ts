@@ -61,11 +61,12 @@ function buildRoutes(): Record<string, FakeRoute> {
 
 describe('summarize', () => {
   it('computes score from passed / applicable', () => {
+    const docsUrl = 'https://example.test/docs';
     const results: CheckResult[] = [
-      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass' },
-      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass' },
-      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail' },
-      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na' },
+      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail', docsUrl },
+      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na', docsUrl },
     ];
     const s = summarize(results);
     expect(s.total).toBe(4);
@@ -93,6 +94,18 @@ describe('validate (single page mode)', () => {
     expect(run.pages[0].checks).toHaveLength(24);
     // Most things should pass on this happy-path fixture.
     expect(run.summary.score).toBeGreaterThanOrEqual(70);
+  });
+
+  it('populates docsUrl on every CheckResult with the active scorecard version (TJ-129)', async () => {
+    const http = fakeHttpClient(buildRoutes());
+    const run = await validate({ url: 'https://example.com/', mode: 'page', http });
+    const allChecks = [...run.siteChecks, ...run.pages.flatMap((p) => p.checks)];
+    expect(allChecks.length).toBeGreaterThan(0);
+    for (const c of allChecks) {
+      expect(c.docsUrl).toBe(
+        `https://timothyjordan.github.io/agentready/scorecards/${run.scorecardVersion}/checks/${c.id}/`,
+      );
+    }
   });
 
   it('emits progress events as the audit proceeds', async () => {

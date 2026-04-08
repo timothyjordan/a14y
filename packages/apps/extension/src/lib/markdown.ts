@@ -76,7 +76,10 @@ function renderChecksAsMarkdown(checks: CheckResult[]): string[] {
     for (const c of items) {
       const icon = statusIcon(c.status);
       const msg = c.message ? ` — ${escapeMarkdown(c.message)}` : '';
-      out.push(`- ${icon} \`${c.id}\` (${c.status})${msg}`);
+      // Wrap the id in a markdown link to its docs detail page so the
+      // exported report can be opened directly in a browser without
+      // making the row visibly longer.
+      out.push(`- ${icon} [\`${c.id}\`](${c.docsUrl}) (${c.status})${msg}`);
     }
     out.push('');
   }

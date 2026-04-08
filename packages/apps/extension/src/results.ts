@@ -106,7 +106,7 @@ function appendCheckRow(tbody: HTMLTableSectionElement, c: CheckResult) {
   const tr = document.createElement('tr');
   tr.innerHTML = `
     <td class="${c.status}">${c.status.toUpperCase()}</td>
-    <td>${escapeHtml(c.id)}</td>
+    <td><a href="${escapeHtml(c.docsUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.id)}</a></td>
     <td>${escapeHtml(c.message ?? '')}</td>
   `;
   tbody.appendChild(tr);

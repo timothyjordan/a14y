@@ -5,6 +5,7 @@ import { DISCOVERY_INDEXED_KEY } from '../checks/page/discovery';
 import { createHttpClient } from '../fetch/httpClient';
 import type { HttpClient } from '../fetch/types';
 import { getScorecard, LATEST_SCORECARD } from '../scorecard';
+import { buildCheckDocsUrl } from '../scorecard/docsUrl';
 import type {
   ResolvedCheck,
   ResolvedScorecard,
@@ -102,7 +103,7 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   // parallel with page processing so they're ready by the time the crawl
   // finishes.
   const siteChecksPromise = Promise.all(
-    scorecard.siteChecks.map((c) => runSiteCheck(c, siteCtx)),
+    scorecard.siteChecks.map((c) => runSiteCheck(c, siteCtx, scorecard.version)),
   );
 
   // Page checks now stream directly from the crawler into a bounded
@@ -218,7 +219,12 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   };
 }
 
-async function runSiteCheck(check: ResolvedCheck, ctx: SiteCheckContext): Promise<CheckResult> {
+async function runSiteCheck(
+  check: ResolvedCheck,
+  ctx: SiteCheckContext,
+  scorecardVersion: string,
+): Promise<CheckResult> {
+  const docsUrl = buildCheckDocsUrl(scorecardVersion, check.id);
   try {
     const outcome = await check.run(ctx);
     return {
@@ -230,6 +236,7 @@ async function runSiteCheck(check: ResolvedCheck, ctx: SiteCheckContext): Promis
       status: outcome.status,
       message: outcome.message,
       details: outcome.details,
+      docsUrl,
     };
   } catch (e) {
     return {
@@ -240,6 +247,7 @@ async function runSiteCheck(check: ResolvedCheck, ctx: SiteCheckContext): Promis
       implementationVersion: check.implementationVersion,
       status: 'error',
       message: (e as Error).message,
+      docsUrl,
     };
   }
 }

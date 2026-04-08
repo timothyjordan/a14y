@@ -18,6 +18,7 @@ export {
   LATEST_SCORECARD,
   SCORECARDS,
 } from './scorecard';
+export { buildCheckDocsUrl, DOCS_BASE_URL } from './scorecard/docsUrl';
 export type {
   ScorecardManifest,
   ResolvedScorecard,
