@@ -47,5 +47,28 @@ describe('agentready CLI', () => {
     expect(stdout).toContain('--max-pages');
     expect(stdout).toContain('--concurrency');
     expect(stdout).toContain('--fail-under');
+    // Documents the new agent-prompt output format from TJ-151.
+    expect(stdout).toContain('agent-prompt');
+  });
+
+  it('rejects unknown --output values', async () => {
+    // Regression for TJ-151: the validator should know about
+    // text/json/agent-prompt and reject anything else with a clear
+    // message.
+    try {
+      await exec('node', [
+        CLI,
+        'check',
+        'https://example.com',
+        '--output',
+        'yaml',
+      ]);
+      throw new Error('expected non-zero exit');
+    } catch (e) {
+      const err = e as { code?: number; stderr?: string };
+      expect(err.code).toBe(2);
+      expect(err.stderr).toContain('Invalid --output');
+      expect(err.stderr).toContain('agent-prompt');
+    }
   });
 });
