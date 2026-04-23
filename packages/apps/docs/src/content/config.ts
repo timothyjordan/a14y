@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 /**
  * Schema for the per-check authoring content. The id MUST match a stable
- * check id registered in @agentready/core; the build-time coverage
+ * check id registered in @a14y/core; the build-time coverage
  * assertion in src/lib/assert-coverage.ts walks every shipped scorecard
  * and fails if any id is missing a content file.
  */

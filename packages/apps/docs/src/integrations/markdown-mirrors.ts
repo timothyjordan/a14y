@@ -16,7 +16,7 @@ import { listAllScorecards } from '../lib/scorecard-data';
  * integration, agentready's docs site fails its own checks.
  *
  * Strategy:
- * - For each check id (from `@agentready/core`'s scorecard registry),
+ * - For each check id (from `@a14y/core`'s scorecard registry),
  *   read the source markdown body from
  *   `src/content/checks/<id>.md`, prepend the four required
  *   frontmatter fields (`title`, `description`, `doc_version`,
@@ -131,7 +131,7 @@ function parseFrontmatter(raw: string): ParsedFrontmatter {
   // Minimal YAML frontmatter parser — only handles the shapes we
   // emit in src/content/checks/*.md (key: value, key: > with a
   // following indented block, and key: list of objects). We use
-  // gray-matter via @agentready/core for the runtime check, but
+  // gray-matter via @a14y/core for the runtime check, but
   // pulling it into an Astro build integration creates a CJS/ESM
   // interop headache, so this hand-roll is the simpler path.
   if (!raw.startsWith('---')) return { frontmatter: {}, body: raw };

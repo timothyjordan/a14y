@@ -37,14 +37,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # @agentready/core must be built first so the docs site can
+      # @a14y/core must be built first so the docs site can
       # import its dist at build time (scorecard manifests, type
-      # definitions, etc. come from @agentready/core directly).
-      - name: Build @agentready/core
-        run: npm run build --workspace @agentready/core
+      # definitions, etc. come from @a14y/core directly).
+      - name: Build @a14y/core
+        run: npm run build --workspace @a14y/core
 
-      - name: Build @agentready/docs
-        run: npm run build --workspace @agentready/docs
+      - name: Build @a14y/docs
+        run: npm run build --workspace @a14y/docs
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -3,7 +3,7 @@
 import {
   validate,
   type ProgressEvent,
-} from '@agentready/core';
+} from '@a14y/core';
 import type {
   OffscreenDoneMessage,
   OffscreenErrorMessage,

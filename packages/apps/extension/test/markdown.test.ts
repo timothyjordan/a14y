@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import type { CheckResult, PageReport, SiteRun } from '@agentready/core';
+import type { CheckResult, PageReport, SiteRun } from '@a14y/core';
 import { runToMarkdown } from '../src/lib/markdown';
 
 /**
  * Small helper to build a SiteRun fixture for testing without pulling
- * in the full @agentready/core runner.
+ * in the full @a14y/core runner.
  */
 function makeSiteRun(overrides: Partial<SiteRun> = {}): SiteRun {
   return {

@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentready/core": "*",
+    "@a14y/core": "*",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"

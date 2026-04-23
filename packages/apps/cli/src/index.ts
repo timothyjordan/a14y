@@ -9,7 +9,7 @@ import {
   type CheckResult,
   type ProgressEvent,
   type SiteRun,
-} from '@agentready/core';
+} from '@a14y/core';
 import chalk from 'chalk';
 import ora, { type Ora } from 'ora';
 

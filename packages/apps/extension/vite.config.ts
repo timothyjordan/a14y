@@ -8,13 +8,13 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'dist',
     emptyOutDir: true,
-    // @agentready/core is a CJS workspace package (the CLI consumes it via
+    // @a14y/core is a CJS workspace package (the CLI consumes it via
     // `node dist/index.js`). Tell rollup to detect its named exports so we
-    // can `import { validate } from '@agentready/core'` from the service
+    // can `import { validate } from '@a14y/core'` from the service
     // worker without bundling a separate ESM build of core.
     commonjsOptions: {
       transformMixedEsModules: true,
-      include: [/@agentready\/core/, /node_modules/],
+      include: [/@a14y\/core/, /node_modules/],
     },
     rollupOptions: {
       input: {
@@ -25,6 +25,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['@agentready/core'],
+    include: ['@a14y/core'],
   },
 });

@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 
-import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@agentready/core';
+import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@a14y/core';
 import type { RunRequest, RunResponse } from './bridge';
 import { runToMarkdown } from './lib/markdown';
 

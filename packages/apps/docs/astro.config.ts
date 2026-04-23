@@ -10,7 +10,7 @@ import { discoveryFilesIntegration } from './src/integrations/discovery-files';
 // content-coverage assertion at `astro:build:start`, so any check id
 // shipped in a frozen scorecard manifest that lacks a corresponding
 // markdown file will fail the build loudly — matching the runtime
-// guarantee in @agentready/core's getScorecard().
+// guarantee in @a14y/core's getScorecard().
 export default defineConfig({
   site: 'https://timothyjordan.github.io',
   base: '/agentready',

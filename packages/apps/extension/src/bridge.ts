@@ -1,4 +1,4 @@
-import type { RunMode, SiteRun } from '@agentready/core';
+import type { RunMode, SiteRun } from '@a14y/core';
 
 /**
  * The popup, the results page, and the background SW all share state via
