@@ -1,10 +1,11 @@
 {
-  "name": "agentready-monorepo",
+  "name": "a14y-monorepo",
   "version": "1.0.0",
   "private": true,
   "workspaces": [
     "packages/core",
-    "packages/apps/*"
+    "packages/apps/*",
+    "packages/aliases/*"
   ],
   "scripts": {
     "test": "npm test --workspaces",
