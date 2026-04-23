@@ -138,7 +138,17 @@ program
     }
   });
 
-program.parseAsync().catch((e) => {
+// Default to the `check` subcommand when the first positional is neither a
+// known command nor a flag. `a14y example.com` should behave the same as
+// `a14y check example.com`.
+const KNOWN_COMMANDS = new Set(['check', 'scorecards', 'help']);
+const argv = process.argv.slice();
+const firstPositional = argv.findIndex((a, i) => i >= 2 && !a.startsWith('-'));
+if (firstPositional !== -1 && !KNOWN_COMMANDS.has(argv[firstPositional])) {
+  argv.splice(firstPositional, 0, 'check');
+}
+
+program.parseAsync(argv).catch((e) => {
   console.error(chalk.red('Fatal:'), (e as Error).message);
   process.exit(1);
 });
