@@ -1,4 +1,4 @@
-# Testing agentready
+# Testing a14y
 
 ## Testing the CLI
 
@@ -48,16 +48,16 @@ echo "exit code: $?"
 node packages/apps/cli/dist/index.js check https://example.com --scorecard 0.2.0
 ```
 
-**Install it globally as `agentready` from this checkout:**
+**Install it globally as `a14y` from this checkout:**
 ```
-npm link --workspace agentready
-agentready check https://example.com
+npm link --workspace a14y
+a14y check https://example.com
 ```
 
 **Run the unit tests:**
 ```
-npm test --workspace @agentready/core   # 67 engine tests
-npm test --workspace agentready         # 3 CLI smoke tests
+npm test --workspace @a14y/core   # 67 engine tests
+npm test --workspace a14y         # 3 CLI smoke tests
 ```
 
 ---
@@ -66,7 +66,7 @@ npm test --workspace agentready         # 3 CLI smoke tests
 
 **Build it:**
 ```
-npm run build --workspace @agentready/extension
+npm run build --workspace @a14y/extension
 ```
 This produces `packages/apps/extension/dist/`.
 
@@ -100,7 +100,7 @@ This produces `packages/apps/extension/dist/`.
 
 **Iterate during development:**
 ```
-npm run dev --workspace @agentready/extension
+npm run dev --workspace @a14y/extension
 ```
 Vite + crxjs will rebuild on save; click the reload icon in `chrome://extensions` to pick up changes.
 
@@ -119,47 +119,47 @@ Vite + crxjs will rebuild on save; click the reload icon in `chrome://extensions
 
 **Build it:**
 ```
-npm run build --workspace @agentready/core
-npm run build --workspace @agentready/docs
+npm run build --workspace @a14y/core
+npm run build --workspace @a14y/docs
 ```
 
 This produces 41 static pages under `packages/apps/docs/dist/` — a landing page, a scorecards index, one overview per shipped scorecard, and one detail page per check (38 of them for v0.2.0).
 
 **Local preview:**
 ```
-npm run dev --workspace @agentready/docs
+npm run dev --workspace @a14y/docs
 ```
-Opens at `http://localhost:4321/agentready/`. The base path matches the GitHub Pages deploy, so links work identically in dev and prod.
+Opens at `http://localhost:4321/a14y/`. The base path matches the GitHub Pages deploy, so links work identically in dev and prod.
 
 **Smoke test the rendered site:**
-1. Visit `/agentready/` — landing page should show "v0.2.0" as the latest scorecard
-2. Click through to `/agentready/scorecards/0.2.0/` — should list 38 checks grouped by site/page and then by category
-3. Open any check detail page (e.g. `/agentready/scorecards/0.2.0/checks/html.canonical-link/`) and verify the frontmatter metadata (impl version, group, scope) matches what `@agentready/core` exports
-4. Open the **Scorecard** dropdown in the header — switching versions should change the URL to `/agentready/scorecards/<new>/...` preserving the deep link
+1. Visit `/a14y/` — landing page should show "v0.2.0" as the latest scorecard
+2. Click through to `/a14y/scorecards/0.2.0/` — should list 38 checks grouped by site/page and then by category
+3. Open any check detail page (e.g. `/a14y/scorecards/0.2.0/checks/html.canonical-link/`) and verify the frontmatter metadata (impl version, group, scope) matches what `@a14y/core` exports
+4. Open the **Scorecard** dropdown in the header — switching versions should change the URL to `/a14y/scorecards/<new>/...` preserving the deep link
 
 **Run the coverage test:**
 ```
-npm test --workspace @agentready/docs
+npm test --workspace @a14y/docs
 ```
 This asserts that every stable check id pinned in any shipped scorecard has a corresponding markdown file under `src/content/checks/`. If this test fails, the docs build will also fail — they share the same `assertCoverage()` helper.
 
 **Add a new check to the docs:**
-1. Add the check to `@agentready/core` (registry + scorecard manifest)
+1. Add the check to `@a14y/core` (registry + scorecard manifest)
 2. Create `packages/apps/docs/src/content/checks/<stable-id>.md` with the frontmatter schema from `src/content/config.ts` and the standard prose sections (How it decides, How to implement, Pass/Fail, References)
-3. `npm test --workspace @agentready/docs` must pass
-4. `npm run build --workspace @agentready/docs` must generate a new detail page for the id
+3. `npm test --workspace @a14y/docs` must pass
+4. `npm run build --workspace @a14y/docs` must generate a new detail page for the id
 
 **Deployment:**
-Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://timothyjordan.github.io/agentready/`.
+Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://timothyjordan.github.io/a14y/`.
 
 For the first deploy, the Pages source in the repo settings must be set to **GitHub Actions** (Settings → Pages → Source → GitHub Actions).
 
 **Final score on static hosting:**
 
-The docs site dogfoods the agentready scorecard against itself. After all the docs-site-to-100 work merged, the deployed score is:
+The docs site dogfoods the a14y scorecard against itself. After all the docs-site-to-100 work merged, the deployed score is:
 
 ```
-agentready check https://timothyjordan.github.io/agentready/ --mode site --max-pages 60
+a14y check https://timothyjordan.github.io/a14y/ --mode site --max-pages 60
 → 92/100  (passed=962, failed=84, na=408, applicable=1046, total=1454, pages=60)
 ```
 

@@ -1,4 +1,4 @@
-# Product Requirements Document — agentready
+# Product Requirements Document — a14y
 
 | Metadata | Value |
 | :--- | :--- |
@@ -9,12 +9,12 @@
 
 ## 1. Summary
 
-**agentready** is a tool suite that audits documentation websites for *agent readability* — how cleanly an AI agent (LLM context window or RAG ingester) can consume the site's content. It ships in two interchangeable forms backed by a single shared engine:
+**a14y** is a tool suite that audits documentation websites for *agent readability* — how cleanly an AI agent (LLM context window or RAG ingester) can consume the site's content. It ships in two interchangeable forms backed by a single shared engine:
 
 1. A **Chrome extension** for ad-hoc audits from inside the browser.
 2. A **CLI** for local development, scripting, and CI use.
 
-Both call the same `validate()` function in `@agentready/core`, so a given URL produces the **same score** regardless of which target ran the audit.
+Both call the same `validate()` function in `@a14y/core`, so a given URL produces the **same score** regardless of which target ran the audit.
 
 ## 2. Problem
 
@@ -30,9 +30,9 @@ Documentation is historically built for human eyeballs — sticky headers, JavaS
 
 | Target | Use case | Distribution |
 | :--- | :--- | :--- |
-| Chrome extension (`@agentready/extension`) | Browser-based ad-hoc audits, single page or whole site | Loaded unpacked from `packages/apps/extension/dist`; Chrome Web Store later |
-| CLI (`agentready`) | Local pre-commit, CI gating, JSON pipelines | Published to npm |
-| Docs site (`@agentready/docs`) | Public reference for every scorecard version — detection rules, implementation notes, pass/fail examples | Astro + GitHub Pages at https://timothyjordan.github.io/agentready/ |
+| Chrome extension (`@a14y/extension`) | Browser-based ad-hoc audits, single page or whole site | Loaded unpacked from `packages/apps/extension/dist`; Chrome Web Store later |
+| CLI (`a14y`) | Local pre-commit, CI gating, JSON pipelines | Published to npm |
+| Docs site (`@a14y/docs`) | Public reference for every scorecard version — detection rules, implementation notes, pass/fail examples | Astro + GitHub Pages at https://timothyjordan.github.io/a14y/ |
 
 ## 5. Scorecard
 
@@ -67,13 +67,13 @@ v0.2.0 contains 14 site-level checks and 24 page-level checks (38 total) coverin
 - **Code & API:** `language-*` class on every `<pre><code>` block; API pages link to `openapi.json` / `swagger.json` / `swagger.yaml` / `schema.json`.
 - **Discovery:** the page is announced by `sitemap.xml`, `llms.txt`, or `sitemap.md` (orphan detection — only meaningful in site mode).
 
-The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://timothyjordan.github.io/agentready/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
+The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://timothyjordan.github.io/a14y/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
 
-**Static-host limitation:** the docs site is itself audited by agentready, and on GitHub Pages two checks (`markdown.content-negotiation` and `markdown.canonical-header`) are physically un-passable because they require server-side behaviour (Accept-based response branching, per-response `Link` headers) that static hosts cannot provide. They are documented as wontfix-on-static; the realistic scorecard ceiling on the current host is ~95–97%. Migrating to a host with edge functions (Vercel / Netlify / Cloudflare Pages) would unlock both checks.
+**Static-host limitation:** the docs site is itself audited by a14y, and on GitHub Pages two checks (`markdown.content-negotiation` and `markdown.canonical-header`) are physically un-passable because they require server-side behaviour (Accept-based response branching, per-response `Link` headers) that static hosts cannot provide. They are documented as wontfix-on-static; the realistic scorecard ceiling on the current host is ~95–97%. Migrating to a host with edge functions (Vercel / Netlify / Cloudflare Pages) would unlock both checks.
 
 ## 6. Core engine requirements
 
-The shared engine in `@agentready/core` exports a single `validate()` entrypoint and is responsible for everything below.
+The shared engine in `@a14y/core` exports a single `validate()` entrypoint and is responsible for everything below.
 
 ### CR-1 — Two modes
 - **Page mode**: audit a single URL. Site-level checks still run against the URL's origin so the discoverability story is reflected; the orphan check returns `na` because no site-wide index is available.
@@ -98,8 +98,8 @@ The engine depends only on `globalThis.fetch`, `cheerio`, `fast-xml-parser`, `ro
 
 ### CLI-1 — Commands
 ```
-agentready check <url> [options]
-agentready scorecards [options]
+a14y check <url> [options]
+a14y scorecards [options]
 ```
 
 ### CLI-2 — `check` flags
@@ -134,7 +134,7 @@ MV3 service worker, `host_permissions: ["<all_urls>"]`, `permissions: ["storage"
 - Final score badge with a link to the full report tab.
 
 ### EXT-3 — Background runner
-The popup connects via `chrome.runtime.connect({ name: 'agentready-run' })` and posts a `RunRequest`. The service worker runs `validate()` and streams `RunStreamMessage` events back over the same port. Only one audit may be in flight at once. Completed runs are persisted to `chrome.storage.local` (cap 20).
+The popup connects via `chrome.runtime.connect({ name: 'a14y-run' })` and posts a `RunRequest`. The service worker runs `validate()` and streams `RunStreamMessage` events back over the same port. Only one audit may be in flight at once. Completed runs are persisted to `chrome.storage.local` (cap 20).
 
 ### EXT-4 — Results page
 Full audit report in a tab: site-check breakdown, per-page checks (collapsible when there are multiple pages), JSON export download, and a clickable history table that loads any previous run from storage.
@@ -153,7 +153,7 @@ Persistent crawl settings: max pages, concurrency, polite delay.
 
 ```
 packages/
-  core/                  Shared engine (@agentready/core)
+  core/                  Shared engine (@a14y/core)
     src/scorecard/       Scorecard manifests and registry
     src/checks/site/     Site-level checks
     src/checks/page/     Page-level checks
@@ -162,8 +162,8 @@ packages/
     src/fetch/           HttpClient abstraction
     test/                Vitest unit + parity tests
   apps/
-    cli/                 Node CLI (`agentready`)
-    extension/           Chrome MV3 extension (@agentready/extension)
+    cli/                 Node CLI (`a14y`)
+    extension/           Chrome MV3 extension (@a14y/extension)
 npm-placeholders/        Reserved npm package names
 ```
 
@@ -179,4 +179,4 @@ Core engine + CLI + extension shipping the v0.2.0 scorecard.
 
 ### Future
 - Linting hints / "Quick Fix" snippets in the extension results page.
-- A separate `@agentready/scorecards` package so third parties can publish custom scorecards.
+- A separate `@a14y/scorecards` package so third parties can publish custom scorecards.
