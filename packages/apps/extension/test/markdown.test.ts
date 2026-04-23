@@ -47,7 +47,7 @@ function check(
     implementationVersion: '1.0.0',
     status,
     message,
-    docsUrl: `https://timothyjordan.github.io/agentready/scorecards/${scorecardVersion}/checks/${id}/`,
+    docsUrl: `https://timothyjordan.github.io/a14y/scorecards/${scorecardVersion}/checks/${id}/`,
   };
 }
 
@@ -133,10 +133,10 @@ describe('runToMarkdown', () => {
     expect(md).toContain('## Site checks');
     expect(md).toContain('**Discoverability**');
     expect(md).toContain(
-      '- ✅ [`llms-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/llms-txt.exists/) (pass) — https://example.com/llms.txt',
+      '- ✅ [`llms-txt.exists`](https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.exists/) (pass) — https://example.com/llms.txt',
     );
     expect(md).toContain(
-      '- ❌ [`robots-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/robots-txt.exists/) (fail) — /robots.txt not reachable',
+      '- ❌ [`robots-txt.exists`](https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.exists/) (fail) — /robots.txt not reachable',
     );
   });
 
@@ -154,7 +154,7 @@ describe('runToMarkdown', () => {
     );
     expect(md).toContain('## Page checks — https://example.com/');
     expect(md).toContain(
-      '- ✅ [`html.canonical-link`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/html.canonical-link/) (pass) — https://example.com/',
+      '- ✅ [`html.canonical-link`](https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/) (pass) — https://example.com/',
     );
     // No "Pages (1)" header in single-page mode.
     expect(md).not.toContain('## Pages (');
@@ -224,10 +224,10 @@ describe('runToMarkdown', () => {
       }),
     );
     expect(md).toContain(
-      '[`llms-txt.exists`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/llms-txt.exists/)',
+      '[`llms-txt.exists`](https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.exists/)',
     );
     expect(md).toContain(
-      '[`html.canonical-link`](https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/html.canonical-link/)',
+      '[`html.canonical-link`](https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/)',
     );
   });
 });

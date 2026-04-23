@@ -9,7 +9,7 @@
 // Astro is configured with `trailingSlash: 'always'`, so the trailing
 // slash is preserved here to avoid a redirect on every click.
 
-export const DOCS_BASE_URL = 'https://timothyjordan.github.io/agentready';
+export const DOCS_BASE_URL = 'https://timothyjordan.github.io/a14y';
 
 export function buildCheckDocsUrl(scorecardVersion: string, checkId: string): string {
   return `${DOCS_BASE_URL}/scorecards/${scorecardVersion}/checks/${checkId}/`;

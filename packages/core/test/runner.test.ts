@@ -103,7 +103,7 @@ describe('validate (single page mode)', () => {
     expect(allChecks.length).toBeGreaterThan(0);
     for (const c of allChecks) {
       expect(c.docsUrl).toBe(
-        `https://timothyjordan.github.io/agentready/scorecards/${run.scorecardVersion}/checks/${c.id}/`,
+        `https://timothyjordan.github.io/a14y/scorecards/${run.scorecardVersion}/checks/${c.id}/`,
       );
     }
   });
