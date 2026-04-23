@@ -1,0 +1,215 @@
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: #e5e5ea;
+  --text: #1d1d1f;
+  --text-muted: #6e6e73;
+  --link: #0066cc;
+  --link-hover: #004a99;
+  --scope-site: #007aff;
+  --scope-page: #34c759;
+  --max-width: 900px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0c;
+    --surface: #161618;
+    --border: #2a2a2c;
+    --text: #f2f2f5;
+    --text-muted: #98989f;
+    --link: #4d9bff;
+    --link-hover: #82b8ff;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover { color: var(--link-hover); text-decoration: underline; }
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+code {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.site-header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.site-header a.brand {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+.site-header a.brand:hover { text-decoration: none; }
+
+.site-nav a {
+  margin-left: 18px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.site-nav a:hover { color: var(--text); }
+
+main.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+h1 { font-size: 28px; margin: 0 0 8px; line-height: 1.25; }
+h2 { font-size: 20px; margin: 32px 0 12px; }
+h3 { font-size: 16px; margin: 24px 0 8px; }
+
+.lead {
+  color: var(--text-muted);
+  font-size: 16px;
+  margin: 0 0 24px;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 20px;
+  font-size: 13px;
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.chip.site { color: var(--scope-site); border-color: var(--scope-site); }
+.chip.page { color: var(--scope-page); border-color: var(--scope-page); }
+
+.group-section { margin-top: 32px; }
+.group-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.group-section h2 .count {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.check-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: block;
+}
+.check-card:hover {
+  border-color: var(--link);
+  text-decoration: none;
+}
+.check-card .id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.check-card .name {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 2px;
+}
+.check-card .desc {
+  display: block;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.version-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.version-selector select {
+  font: inherit;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.check-detail h2:first-of-type { margin-top: 24px; }
+.check-detail .references {
+  margin: 24px 0 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.check-detail .references h3 { margin: 0 0 8px; font-size: 14px; }
+.check-detail .references ul { margin: 0; padding-left: 18px; }
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 48px;
+}

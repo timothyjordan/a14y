@@ -1,0 +1,12 @@
+{
+  "name": "groundable",
+  "version": "0.0.1",
+  "description": "Placeholder for upcoming grounding checking utility.",
+  "license": "Apache-2.0",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  }
+}

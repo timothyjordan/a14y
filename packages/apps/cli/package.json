@@ -1,0 +1,24 @@
+{
+  "name": "a14y",
+  "version": "0.2.0",
+  "main": "./dist/index.js",
+  "bin": {
+    "a14y": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@a14y/core": "*",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  }
+}

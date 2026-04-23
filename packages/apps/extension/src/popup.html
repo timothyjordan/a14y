@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Agent Readability</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Agent Readability</h1>
+    </header>
+    <main>
+      <div class="row">
+        <span class="label">URL</span>
+        <code id="current-url">…</code>
+      </div>
+      <div class="row">
+        <label for="scorecard">Scorecard</label>
+        <select id="scorecard"></select>
+      </div>
+      <div class="actions">
+        <button id="check-page" type="button">Check this page</button>
+        <button id="check-site" type="button">Scan whole site</button>
+      </div>
+      <progress id="progress" value="0" max="100" hidden></progress>
+      <p id="status" class="status"></p>
+      <section id="result" hidden>
+        <div class="score" id="score"></div>
+        <a id="open-results" href="#">View full report</a>
+      </section>
+    </main>
+    <script type="module" src="popup.ts"></script>
+  </body>
+</html>

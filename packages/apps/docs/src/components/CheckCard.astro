@@ -1,0 +1,18 @@
+---
+import type { CheckSummary } from '~/lib/scorecard-data';
+
+interface Props {
+  check: CheckSummary;
+  scorecardVersion: string;
+}
+
+const { check, scorecardVersion } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = `${base}/scorecards/${scorecardVersion}/checks/${check.id}/`;
+---
+
+<a class="check-card" href={href}>
+  <span class="id">{check.id}</span>
+  <span class="name">{check.name}</span>
+  <span class="desc">{check.description}</span>
+</a>

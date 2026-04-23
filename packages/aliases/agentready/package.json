@@ -1,0 +1,23 @@
+{
+  "name": "agentready",
+  "version": "0.2.0",
+  "description": "Legacy alias for a14y. Installs the same CLI under the agentready command name.",
+  "bin": {
+    "agentready": "./bin.js"
+  },
+  "files": [
+    "bin.js",
+    "README.md"
+  ],
+  "dependencies": {
+    "a14y": "0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "vitest": "^1.6.1"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "license": "Apache-2.0"
+}
