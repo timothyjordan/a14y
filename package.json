@@ -8,8 +8,8 @@
     "packages/aliases/*"
   ],
   "scripts": {
-    "test": "npm test --workspaces",
-    "build": "npm run build --workspaces"
+    "test": "npm test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
   },
   "author": "Timothy Jordan",
   "license": "ISC"

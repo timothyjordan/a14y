@@ -29,7 +29,7 @@ export interface SiteCheckContext extends BaseCheckContext {
   /**
    * Pathname prefix the audited site is hosted under, derived from the
    * user-provided URL. Empty string for sites at the origin root,
-   * `"/agentready"` (no trailing slash) for subpath-hosted sites.
+   * `"/a14y"` (no trailing slash) for subpath-hosted sites.
    * Site-level loaders use this to look for well-known files at both
    * `<origin>/<prefix>/well-known.ext` AND `<origin>/well-known.ext`,
    * preferring the subpath-rooted hit so the right file wins on shared

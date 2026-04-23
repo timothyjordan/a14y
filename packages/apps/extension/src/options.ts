@@ -7,7 +7,7 @@ interface Settings {
 }
 
 const DEFAULTS: Settings = { maxPages: 500, concurrency: 8, politeDelayMs: 250 };
-const STORAGE_KEY = 'agentready:settings';
+const STORAGE_KEY = 'a14y:settings';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const maxPages = $<HTMLInputElement>('max-pages');
