@@ -72,7 +72,7 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
 
   // Always include the entry URL so single-page-or-no-seed sites still
   // produce at least one DiscoveredPage. For subpath-hosted sites the
-  // entry URL preserves the user's pathname (e.g. `/agentready/`) so
+  // entry URL preserves the user's pathname (e.g. `/a14y/`) so
   // the crawler doesn't bounce off the origin root, which may 404 if
   // the audited subpath isn't owned at the top-level domain.
   const entryUrl =

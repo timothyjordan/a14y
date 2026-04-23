@@ -23,7 +23,7 @@ When generating the markdown mirror, append a `## Sitemap` section near the bott
 ### Pass
 
 ```markdown
-# Install agentready
+# Install a14y
 
 ...content...
 
@@ -34,7 +34,7 @@ When generating the markdown mirror, append a `## Sitemap` section near the bott
 ### Fail
 
 ```markdown
-# Install agentready
+# Install a14y
 
 ...content...
 ```

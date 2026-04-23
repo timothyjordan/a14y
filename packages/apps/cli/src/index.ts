@@ -9,7 +9,7 @@ import {
   type CheckResult,
   type ProgressEvent,
   type SiteRun,
-} from '@agentready/core';
+} from '@a14y/core';
 import chalk from 'chalk';
 import ora, { type Ora } from 'ora';
 
@@ -24,7 +24,7 @@ const STATUS_ICON: Record<CheckResult['status'], string> = {
 const program = new Command();
 
 program
-  .name('agentready')
+  .name('a14y')
   .description('Agent readability scorer for documentation sites')
   .version('0.2.0');
 

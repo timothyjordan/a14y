@@ -8,8 +8,8 @@ import type { SiteCheckContext } from '../../scorecard/types';
  * relative to `baseUrl`. Existing tests against origin-rooted fixtures
  * keep passing unchanged.
  *
- * For subpath-hosted sites (`sitePrefix === '/agentready'`), the helper
- * tries the subpath-rooted variant first (`<origin>/agentready/llms.txt`)
+ * For subpath-hosted sites (`sitePrefix === '/a14y'`), the helper
+ * tries the subpath-rooted variant first (`<origin>/a14y/llms.txt`)
  * and only falls back to the origin-rooted variant if the subpath copy
  * is missing. This matches how a user typically publishes well-known
  * files on shared domains: under their own subpath, where they control

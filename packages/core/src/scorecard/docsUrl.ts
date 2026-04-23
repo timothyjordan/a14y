@@ -1,5 +1,5 @@
 // Builds canonical links from a CheckResult back to the matching docs
-// detail page on the published agentready docs site. Renderers that
+// detail page on the published a14y docs site. Renderers that
 // support hyperlinks (markdown report, HTML extension report) wrap the
 // check id in a link; the JSON output carries it as a `docsUrl` field
 // for machine consumers. Stdout text output ignores it.
@@ -9,7 +9,7 @@
 // Astro is configured with `trailingSlash: 'always'`, so the trailing
 // slash is preserved here to avoid a redirect on every click.
 
-export const DOCS_BASE_URL = 'https://timothyjordan.github.io/agentready';
+export const DOCS_BASE_URL = 'https://timothyjordan.github.io/a14y';
 
 export function buildCheckDocsUrl(scorecardVersion: string, checkId: string): string {
   return `${DOCS_BASE_URL}/scorecards/${scorecardVersion}/checks/${checkId}/`;

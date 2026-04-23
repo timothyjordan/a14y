@@ -21,7 +21,7 @@ export interface CreateHttpClientOptions {
   userAgent?: string;
 }
 
-const DEFAULT_USER_AGENT = 'agentready/0.2 (+https://github.com/timjordan/agentready)';
+const DEFAULT_USER_AGENT = 'a14y/0.2 (+https://github.com/timothyjordan/a14y)';
 
 export function createHttpClient(opts: CreateHttpClientOptions = {}): HttpClient {
   const fetchImpl: FetchImpl | undefined = opts.fetchImpl ?? (globalThis as { fetch?: FetchImpl }).fetch;

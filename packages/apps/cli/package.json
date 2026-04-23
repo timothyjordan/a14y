@@ -1,9 +1,9 @@
 {
-  "name": "agentready",
+  "name": "a14y",
   "version": "0.2.0",
+  "main": "./dist/index.js",
   "bin": {
-    "agentready": "./dist/index.js",
-    "agentic-docs-cli": "./dist/index.js"
+    "a14y": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentready/core": "*",
+    "@a14y/core": "*",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"

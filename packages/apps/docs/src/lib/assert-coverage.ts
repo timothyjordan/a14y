@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { listScorecards, getScorecard } from '@agentready/core';
+import { listScorecards, getScorecard } from '@a14y/core';
 import type { AstroIntegration } from 'astro';
 
 /**
@@ -13,7 +13,7 @@ import type { AstroIntegration } from 'astro';
  * error listing every missing id so the author can fix them all in one
  * pass instead of playing whack-a-mole.
  *
- * This mirrors the runtime guarantee in @agentready/core's
+ * This mirrors the runtime guarantee in @a14y/core's
  * `getScorecard()`: a frozen scorecard cannot silently drift if a
  * documentation file is renamed, deleted, or never created.
  */
@@ -49,7 +49,7 @@ export function assertCoverage(contentDir?: string): void {
 /** Astro integration wrapper that runs the assertion at build start. */
 export function assertCoverageIntegration(): AstroIntegration {
   return {
-    name: 'agentready-assert-coverage',
+    name: 'a14y-assert-coverage',
     hooks: {
       'astro:build:start': () => {
         assertCoverage();

@@ -1,4 +1,4 @@
-import type { CheckResult, SiteRun } from '@agentready/core';
+import type { CheckResult, SiteRun } from '@a14y/core';
 
 /**
  * Serialize a SiteRun as a human-readable markdown report. The shape is

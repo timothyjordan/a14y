@@ -1,4 +1,4 @@
-// Public API for @agentready/core. Both the CLI and the Chrome extension
+// Public API for @a14y/core. Both the CLI and the Chrome extension
 // import everything they need from here.
 
 export {

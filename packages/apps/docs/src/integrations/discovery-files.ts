@@ -6,7 +6,7 @@ import { listAllScorecards } from '../lib/scorecard-data';
 
 /**
  * Astro integration that emits the five site-level discovery files
- * the agentready scorecard expects:
+ * the a14y scorecard expects:
  *
  * - `llms.txt` — markdown index of every check page, grouped by
  *   scorecard version. Each link is a `.md` URL so the
@@ -23,20 +23,20 @@ import { listAllScorecards } from '../lib/scorecard-data';
  *   Configuration sections to satisfy `agents-md.has-min-sections`.
  *
  * All files land at the docs-site root in `dist/` (which becomes
- * `/agentready/<file>` once GitHub Pages serves it under the
- * `base`). The Phase 1-B engine change makes the agentready
+ * `/a14y/<file>` once GitHub Pages serves it under the
+ * `base`). The Phase 1-B engine change makes the a14y
  * site-level loaders look for files at the subpath, so they find
  * these copies even though `timothyjordan.github.io` is a shared
  * domain whose top-level root the user doesn't control.
  */
 export function discoveryFilesIntegration(): AstroIntegration {
   return {
-    name: 'agentready-discovery-files',
+    name: 'a14y-discovery-files',
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
         const distDir = fileURLToPath(dir);
         const origin = 'https://timothyjordan.github.io';
-        const base = '/agentready';
+        const base = '/a14y';
         const sitemapXmlUrl = `${origin}${base}/sitemap.xml`;
         const lastmodIso = new Date().toISOString().slice(0, 10);
 
@@ -59,7 +59,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
         // ---- llms.txt -------------------------------------------------
         const scorecards = listAllScorecards();
         const llmsLines: string[] = [];
-        llmsLines.push('# agentready scorecard documentation');
+        llmsLines.push('# a14y scorecard documentation');
         llmsLines.push('');
         llmsLines.push(
           'Markdown-first documentation for the agent readability scorecard. Every check page below has a `.md` mirror that agents can fetch directly.',
@@ -117,9 +117,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
           bucket.push(url);
         }
         const smdLines: string[] = [];
-        smdLines.push('# agentready docs sitemap');
+        smdLines.push('# a14y docs sitemap');
         smdLines.push('');
-        smdLines.push('Every page on the agentready scorecard documentation site, with `.md` mirror links agents can ingest directly.');
+        smdLines.push('Every page on the a14y scorecard documentation site, with `.md` mirror links agents can ingest directly.');
         smdLines.push('');
         for (const [group, urls] of groups) {
           smdLines.push(`## ${humanize(group)}`);
@@ -138,14 +138,14 @@ export function discoveryFilesIntegration(): AstroIntegration {
         // families (install / usage / config) to satisfy
         // `agents-md.has-min-sections`.
         const agentsMd = [
-          '# agentready',
+          '# a14y',
           '',
           'Score how well a documentation site can be consumed by AI agents. Two interchangeable surfaces back the same scorecard engine: a Node CLI and a Chrome extension.',
           '',
           '## Installation',
           '',
           '```sh',
-          'npm install -g agentready',
+          'npm install -g a14y',
           '```',
           '',
           'Or load the Chrome extension unpacked from the latest release.',
@@ -154,16 +154,16 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '',
           '```sh',
           '# Single page',
-          'agentready check https://example.com/',
+          'a14y check https://example.com/',
           '',
           '# Whole site',
-          'agentready check https://example.com/ --mode site --max-pages 200',
+          'a14y check https://example.com/ --mode site --max-pages 200',
           '',
           '# JSON for scripting',
-          'agentready check https://example.com/ --output json | jq .summary',
+          'a14y check https://example.com/ --output json | jq .summary',
           '```',
           '',
-          'See `agentready check --help` for the full flag list.',
+          'See `a14y check --help` for the full flag list.',
           '',
           '## Configuration',
           '',
@@ -179,7 +179,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '',
           '## Reference',
           '',
-          'Full per-check documentation lives at https://timothyjordan.github.io/agentready/. Source: https://github.com/timothyjordan/agentready.',
+          'Full per-check documentation lives at https://timothyjordan.github.io/a14y/. Source: https://github.com/timothyjordan/a14y.',
           '',
         ].join('\n');
         await fs.writeFile(path.join(distDir, 'AGENTS.md'), agentsMd, 'utf8');

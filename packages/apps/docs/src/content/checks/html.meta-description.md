@@ -24,7 +24,7 @@ Author a one- or two-sentence description for every page. 50 characters is a low
 
 ```html
 <meta name="description"
-      content="Install agentready in under a minute and audit your first documentation site against scorecard v0.2.0.">
+      content="Install a14y in under a minute and audit your first documentation site against scorecard v0.2.0.">
 ```
 
 ### Fail

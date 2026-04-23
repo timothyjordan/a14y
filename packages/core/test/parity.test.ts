@@ -6,7 +6,7 @@ import { validate } from '../src/runner/runSite';
  * CLI/extension parity contract test.
  *
  * The CLI and the Chrome extension both call `validate()` from
- * @agentready/core. As long as the underlying HttpClient returns identical
+ * @a14y/core. As long as the underlying HttpClient returns identical
  * responses, the engine MUST produce a byte-identical SiteRun — same score,
  * same per-check breakdown, same ordering. Both targets ship the same
  * compiled module, so this test exercises the contract by running validate

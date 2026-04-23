@@ -16,7 +16,7 @@ function check(
     implementationVersion: '1.0.0',
     status,
     message: opts.message,
-    docsUrl: `https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/${id}/`,
+    docsUrl: `https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/${id}/`,
   };
 }
 
@@ -91,7 +91,7 @@ describe('runToAgentPrompt', () => {
     expect(md).toContain('### 1. `html.canonical-link` — failed on 1 page(s)');
     expect(md).toContain('- **Sample message:** `no canonical`');
     expect(md).toContain(
-      '- **Docs:** https://timothyjordan.github.io/agentready/scorecards/0.2.0/checks/html.canonical-link/',
+      '- **Docs:** https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/',
     );
     expect(md).toContain('- **Affected pages (1):**');
     expect(md).toContain('  - https://example.com/a');

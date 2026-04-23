@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 
-import { LATEST_SCORECARD, listScorecards, type RunMode, type SiteRun } from '@agentready/core';
+import { LATEST_SCORECARD, listScorecards, type RunMode, type SiteRun } from '@a14y/core';
 import {
   CURRENT_RUN_KEY,
   STALE_PROGRESS_MS,

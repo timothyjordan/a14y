@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 
-import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@agentready/core';
+import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@a14y/core';
 import type { RunRequest, RunResponse } from './bridge';
 import { runToMarkdown } from './lib/markdown';
 
@@ -66,17 +66,17 @@ function renderRun(run: SiteRun) {
   exportBtn.onclick = () => downloadBlob(
     JSON.stringify(run, null, 2),
     'application/json',
-    `agentready-${filenameTimestamp(run)}.json`,
+    `a14y-${filenameTimestamp(run)}.json`,
   );
   exportMdBtn.onclick = () => downloadBlob(
     runToMarkdown(run),
     'text/markdown',
-    `agentready-${filenameTimestamp(run)}.md`,
+    `a14y-${filenameTimestamp(run)}.md`,
   );
   exportPromptBtn.onclick = () => downloadBlob(
     runToAgentPrompt(run),
     'text/markdown',
-    `agentready-fixes-${filenameTimestamp(run)}.md`,
+    `a14y-fixes-${filenameTimestamp(run)}.md`,
   );
 }
 

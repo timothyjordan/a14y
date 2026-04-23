@@ -5,7 +5,7 @@ group: Discoverability
 scope: site
 why: >
   sitemap.xml is the universal answer to "what URLs exist on this site". Agents and search
-  engines both use it as the seed list for crawling, and the agentready crawler will use
+  engines both use it as the seed list for crawling, and the a14y crawler will use
   it as the first source of pages to score.
 references:
   - title: "sitemaps.org spec"

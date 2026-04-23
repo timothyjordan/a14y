@@ -23,7 +23,7 @@ Break long pages into sections with descriptive `<h2>` or `<h3>` headings. If yo
 ### Pass
 
 ```html
-<h1>Install agentready</h1>
+<h1>Install a14y</h1>
 <h2>Prerequisites</h2>
 <h2>From npm</h2>
 <h2>From source</h2>
@@ -32,8 +32,8 @@ Break long pages into sections with descriptive `<h2>` or `<h3>` headings. If yo
 ### Fail
 
 ```html
-<h1>Install agentready</h1>
-<p>Run npm install agentready.</p>
+<h1>Install a14y</h1>
+<p>Run npm install a14y.</p>
 ```
 
 ## Common gotchas

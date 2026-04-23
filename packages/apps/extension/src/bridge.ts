@@ -1,4 +1,4 @@
-import type { RunMode, SiteRun } from '@agentready/core';
+import type { RunMode, SiteRun } from '@a14y/core';
 
 /**
  * The popup, the results page, and the background SW all share state via
@@ -6,7 +6,7 @@ import type { RunMode, SiteRun } from '@agentready/core';
  * Storage survives popup close and SW termination, which is exactly what
  * the popup needs to recover from a blur-induced close mid-audit.
  */
-export const CURRENT_RUN_KEY = 'agentready:current-run';
+export const CURRENT_RUN_KEY = 'a14y:current-run';
 
 export type RunStatus = 'idle' | 'running' | 'done' | 'error';
 

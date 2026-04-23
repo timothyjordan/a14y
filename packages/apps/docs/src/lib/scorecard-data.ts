@@ -1,7 +1,7 @@
 /**
- * Thin wrapper around @agentready/core that exposes everything the Astro
+ * Thin wrapper around @a14y/core that exposes everything the Astro
  * page templates need at build time. Pages and components import from
- * here, never from @agentready/core directly, so the boundary is clean
+ * here, never from @a14y/core directly, so the boundary is clean
  * and the registry shape can change without rippling through templates.
  */
 import {
@@ -11,7 +11,7 @@ import {
   type ResolvedCheck,
   type ResolvedScorecard,
   type ScorecardManifest,
-} from '@agentready/core';
+} from '@a14y/core';
 
 export interface CheckSummary {
   id: string;

@@ -29,7 +29,7 @@ Add at least one `<script type="application/ld+json">` to your `<head>` declarin
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Install agentready",
+  "headline": "Install a14y",
   "dateModified": "2026-04-01"
 }
 </script>

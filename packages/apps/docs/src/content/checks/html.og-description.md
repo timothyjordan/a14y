@@ -24,7 +24,7 @@ Add `<meta property="og:description">` to every page's `<head>`. It's fine for i
 
 ```html
 <meta property="og:description"
-      content="Install agentready in under a minute and audit your first site.">
+      content="Install a14y in under a minute and audit your first site.">
 ```
 
 ### Fail

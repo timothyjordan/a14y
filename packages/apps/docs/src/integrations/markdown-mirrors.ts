@@ -8,20 +8,20 @@ import { listAllScorecards } from '../lib/scorecard-data';
  * Astro integration that emits a `.md` mirror for every generated
  * HTML page on the docs site.
  *
- * Why: agentready's `markdown.mirror-suffix` check fetches
+ * Why: a14y's `markdown.mirror-suffix` check fetches
  * `<page>.md` for every audited page and expects a 2xx response with
  * markdown content. The dependent checks `markdown.frontmatter` and
  * `markdown.sitemap-section` then evaluate the body for the required
  * frontmatter fields and a `## Sitemap` section. Without this
- * integration, agentready's docs site fails its own checks.
+ * integration, a14y's docs site fails its own checks.
  *
  * Strategy:
- * - For each check id (from `@agentready/core`'s scorecard registry),
+ * - For each check id (from `@a14y/core`'s scorecard registry),
  *   read the source markdown body from
  *   `src/content/checks/<id>.md`, prepend the four required
  *   frontmatter fields (`title`, `description`, `doc_version`,
  *   `last_updated`), append a `## Sitemap` footer linking to
- *   `/agentready/sitemap.md`, and emit
+ *   `/a14y/sitemap.md`, and emit
  *   `dist/scorecards/0.2.0/checks/<id>.md`.
  * - For non-check pages (landing, scorecards index, scorecard
  *   overview, glossary), emit a small auto-generated mirror with
@@ -32,13 +32,13 @@ import { listAllScorecards } from '../lib/scorecard-data';
  *   frontmatter the scorecard requires.
  *
  * Output paths follow Astro's `trailingSlash: 'always'` convention:
- * `/agentready/scorecards/0.2.0/checks/html.canonical-link/` becomes
+ * `/a14y/scorecards/0.2.0/checks/html.canonical-link/` becomes
  * a mirror at
- * `/agentready/scorecards/0.2.0/checks/html.canonical-link.md`.
+ * `/a14y/scorecards/0.2.0/checks/html.canonical-link.md`.
  */
 export function markdownMirrorsIntegration(): AstroIntegration {
   return {
-    name: 'agentready-markdown-mirrors',
+    name: 'a14y-markdown-mirrors',
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
         const distDir = fileURLToPath(dir);
@@ -51,7 +51,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
         const checksContentDir = path.join(docsRoot, 'src/content/checks');
 
         const lastUpdated = new Date().toISOString();
-        const sitemapHref = '/agentready/sitemap.md';
+        const sitemapHref = '/a14y/sitemap.md';
 
         const scorecard = listAllScorecards()[0]; // current = v0.2.0
         const docVersion = scorecard?.version ?? '0.2.0';
@@ -96,9 +96,9 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             body = parsed.body;
           } else {
             // Non-check page. Use a short stub keyed off the URL.
-            title = humanizeSegment(cleanPath || 'agentready');
-            description = `agentready scorecard documentation — ${title}`;
-            const canonicalPath = `/agentready${cleanPath === '' ? '' : '/' + cleanPath}/`;
+            title = humanizeSegment(cleanPath || 'a14y');
+            description = `a14y scorecard documentation — ${title}`;
+            const canonicalPath = `/a14y${cleanPath === '' ? '' : '/' + cleanPath}/`;
             body = `# ${title}\n\nThis is the markdown mirror of [${canonicalPath}](${canonicalPath}). Open the canonical page for the full rendered version with navigation, code blocks, and the version selector.\n`;
           }
 
@@ -131,7 +131,7 @@ function parseFrontmatter(raw: string): ParsedFrontmatter {
   // Minimal YAML frontmatter parser — only handles the shapes we
   // emit in src/content/checks/*.md (key: value, key: > with a
   // following indented block, and key: list of objects). We use
-  // gray-matter via @agentready/core for the runtime check, but
+  // gray-matter via @a14y/core for the runtime check, but
   // pulling it into an Astro build integration creates a CJS/ESM
   // interop headache, so this hand-roll is the simpler path.
   if (!raw.startsWith('---')) return { frontmatter: {}, body: raw };
@@ -199,7 +199,7 @@ function escapeYamlScalar(value: string): string {
 }
 
 function humanizeSegment(segmentPath: string): string {
-  if (!segmentPath) return 'agentready docs';
+  if (!segmentPath) return 'a14y docs';
   const last = segmentPath.split('/').filter(Boolean).pop() ?? segmentPath;
   return last
     .replace(/[-_]/g, ' ')

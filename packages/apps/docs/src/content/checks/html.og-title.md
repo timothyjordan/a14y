@@ -23,7 +23,7 @@ Add `<meta property="og:title">` to every page's `<head>`. Most frameworks expos
 ### Pass
 
 ```html
-<meta property="og:title" content="Install agentready">
+<meta property="og:title" content="Install a14y">
 ```
 
 ### Fail

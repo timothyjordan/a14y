@@ -86,23 +86,23 @@ describe('site/llmsTxt', () => {
   });
 
   it('finds llms.txt under the audited subpath when sitePrefix is set', async () => {
-    // Subpath-hosted site at /agentready/. Origin root has no llms.txt
+    // Subpath-hosted site at /a14y/. Origin root has no llms.txt
     // (it would belong to a different repo or owner). The user-relative
-    // llms.txt lives at /agentready/llms.txt. With sitePrefix the
+    // llms.txt lives at /a14y/llms.txt. With sitePrefix the
     // loader should prefer the subpath copy and pass.
     const ctx = makeSiteCtx(
       BASE,
       {
-        'https://example.com/agentready/llms.txt': {
-          body: '[Index](/agentready/index.md)\n',
+        'https://example.com/a14y/llms.txt': {
+          body: '[Index](/a14y/index.md)\n',
           headers: { 'content-type': 'text/plain' },
         },
       },
-      '/agentready',
+      '/a14y',
     );
     const r = await run(llmsTxtExists, ctx);
     expect(r.status).toBe('pass');
-    expect(r.message).toContain('/agentready/llms.txt');
+    expect(r.message).toContain('/a14y/llms.txt');
   });
 
   it('still finds llms.txt at the origin root when sitePrefix is empty', async () => {

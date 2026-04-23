@@ -3,7 +3,7 @@
 import {
   validate,
   type ProgressEvent,
-} from '@agentready/core';
+} from '@a14y/core';
 import type {
   OffscreenDoneMessage,
   OffscreenErrorMessage,
@@ -34,12 +34,12 @@ async function main(): Promise<void> {
       type: 'offscreen-ready',
     } satisfies OffscreenReadyMessage)) as OffscreenReadyResponse;
   } catch (e) {
-    console.error('[agentready offscreen] failed to reach background:', e);
+    console.error('[a14y offscreen] failed to reach background:', e);
     return;
   }
   if (!resp || !resp.ok) {
     console.warn(
-      '[agentready offscreen] background declined to start a run:',
+      '[a14y offscreen] background declined to start a run:',
       resp?.ok === false ? resp.reason : 'no response',
     );
     return;
@@ -118,13 +118,13 @@ async function main(): Promise<void> {
     flush(true);
     void chrome.runtime
       .sendMessage({ type: 'offscreen-done', result: run } satisfies OffscreenDoneMessage)
-      .catch((e) => console.error('[agentready offscreen] failed to send done:', e));
+      .catch((e) => console.error('[a14y offscreen] failed to send done:', e));
   } catch (e) {
     void chrome.runtime
       .sendMessage({
         type: 'offscreen-error',
         error: (e as Error).message,
       } satisfies OffscreenErrorMessage)
-      .catch((err) => console.error('[agentready offscreen] failed to send error:', err));
+      .catch((err) => console.error('[a14y offscreen] failed to send error:', err));
   }
 }

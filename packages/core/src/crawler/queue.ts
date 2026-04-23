@@ -1,6 +1,6 @@
 /**
  * Lightweight concurrent task queue with a fixed worker pool. We hand-roll
- * this instead of pulling p-queue's ESM-only build because @agentready/core
+ * this instead of pulling p-queue's ESM-only build because @a14y/core
  * compiles to CJS for the CLI and bundles to a service worker for the
  * extension; either consumer would otherwise need ESM interop config.
  *
