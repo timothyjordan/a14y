@@ -26,7 +26,7 @@ const program = new Command();
 program
   .name('a14y')
   .description('Agent readability scorer for documentation sites')
-  .version('0.2.0');
+  .version('0.3.0');
 
 program
   .command('check <url>')

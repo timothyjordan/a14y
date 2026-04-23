@@ -1,6 +1,6 @@
 {
   "name": "agentreadability",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Full-word alias for a14y. Installs the same CLI under the agentreadability command name.",
   "bin": {
     "agentreadability": "./bin.js"
@@ -10,7 +10,7 @@
     "README.md"
   ],
   "dependencies": {
-    "a14y": "0.2.0"
+    "a14y": "0.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

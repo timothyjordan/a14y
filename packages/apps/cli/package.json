@@ -1,6 +1,6 @@
 {
   "name": "a14y",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Agent readability scorer for documentation sites. Audits pages and whole sites against the a14y scorecard.",
   "license": "Apache-2.0",
   "repository": {
@@ -24,7 +24,7 @@
     "prepack": "node ../../../scripts/build-readmes.mjs"
   },
   "dependencies": {
-    "@a14y/core": "0.2.0",
+    "@a14y/core": "0.3.0",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"
