@@ -8,8 +8,10 @@
     "packages/aliases/*"
   ],
   "scripts": {
-    "test": "npm test --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "test": "npm test --workspaces --if-present && node --test scripts/build-readmes.test.mjs",
+    "build": "npm run build --workspaces --if-present",
+    "docs": "node scripts/build-readmes.mjs",
+    "docs:check": "node scripts/build-readmes.mjs --check"
   },
   "author": "Timothy Jordan",
   "license": "ISC"

@@ -17,7 +17,8 @@
     "vitest": "^1.6.1"
   },
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepack": "node ../../../scripts/build-readmes.mjs"
   },
   "license": "Apache-2.0"
 }

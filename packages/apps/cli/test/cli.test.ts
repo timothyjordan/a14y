@@ -40,6 +40,22 @@ describe('a14y CLI', () => {
     }
   });
 
+  it('top-level --help lists every command and its options', async () => {
+    // TJ-185: `a14y --help` must surface the flag lists inline and point
+    // users at `a14y help <command>` for the full detail view, so that
+    // option discoverability doesn't require reading the source or the
+    // README.
+    const { stdout } = await exec('node', [CLI, '--help']);
+    expect(stdout).toContain('Commands in detail');
+    expect(stdout).toContain('check <url>');
+    expect(stdout).toContain('--max-pages');
+    expect(stdout).toContain('--page-check-concurrency');
+    expect(stdout).toContain('scorecards');
+    expect(stdout).toContain("a14y help <command>");
+    // And the tip about the default-command shortcut introduced in TJ-184.
+    expect(stdout).toContain("'check' is the default");
+  });
+
   it('shows help with --mode and --scorecard flags documented', async () => {
     const { stdout } = await exec('node', [CLI, 'check', '--help']);
     expect(stdout).toContain('--mode');
@@ -49,6 +65,40 @@ describe('a14y CLI', () => {
     expect(stdout).toContain('--fail-under');
     // Documents the new agent-prompt output format from TJ-151.
     expect(stdout).toContain('agent-prompt');
+  });
+
+  it('treats a bare URL as `check <url>`', async () => {
+    // TJ-184: `a14y example.com` should behave like `a14y check example.com`.
+    // Use an invalid --output to force a validation error without a network
+    // round-trip; the error text is produced by the `check` handler, so its
+    // presence proves argv was rewritten to the check path.
+    try {
+      await exec('node', [CLI, 'https://example.com', '--output', 'yaml']);
+      throw new Error('expected non-zero exit');
+    } catch (e) {
+      const err = e as { code?: number; stderr?: string };
+      expect(err.code).toBe(2);
+      expect(err.stderr).toContain('Invalid --output');
+    }
+  });
+
+  it('leaves `scorecards` untouched when used as the first positional', async () => {
+    // TJ-184: the argv rewrite must not prepend `check` to a known command.
+    const { stdout } = await exec('node', [CLI, 'scorecards', '--output', 'json']);
+    const cards = JSON.parse(stdout);
+    expect(Array.isArray(cards)).toBe(true);
+  });
+
+  it('still accepts the explicit `check` form', async () => {
+    // TJ-184: guard against accidentally inserting a second `check`.
+    try {
+      await exec('node', [CLI, 'check', 'https://example.com', '--output', 'yaml']);
+      throw new Error('expected non-zero exit');
+    } catch (e) {
+      const err = e as { code?: number; stderr?: string };
+      expect(err.code).toBe(2);
+      expect(err.stderr).toContain('Invalid --output');
+    }
   });
 
   it('rejects unknown --output values', async () => {
