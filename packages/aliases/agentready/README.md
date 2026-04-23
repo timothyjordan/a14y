@@ -1,9 +1,18 @@
+<!-- THIS FILE IS GENERATED. Edit docs/templates/ or docs/fragments/ and run `npm run docs`. -->
+
 # agentready
 
 Legacy alias for [`a14y`](https://www.npmjs.com/package/a14y). Installing this package gives you the same CLI under the `agentready` command name.
 
+> 📖 **Full documentation & source:** <https://github.com/timothyjordan/a14y>
+> 🌐 **Docs site:** <https://timothyjordan.github.io/a14y/>
+
 ```bash
-npx agentready check https://example.com
+npx agentready https://example.com
 ```
 
-For documentation and examples, see the `a14y` package.
+Everything the `a14y` CLI does, `agentready` does — same binary, same flags. For full documentation and the command reference, see the [a14y package on npm](https://www.npmjs.com/package/a14y) or the [project README on GitHub](https://github.com/timothyjordan/a14y).
+
+## License
+
+Apache-2.0 © Timothy Jordan
