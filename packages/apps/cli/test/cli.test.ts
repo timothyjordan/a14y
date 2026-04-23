@@ -14,12 +14,12 @@ beforeAll(async () => {
     await import('node:fs').then((fs) => fs.promises.stat(CLI));
   } catch {
     throw new Error(
-      `CLI is not built. Run \`npm run build --workspace agentready\` before running tests.`,
+      `CLI is not built. Run \`npm run build --workspace a14y\` before running tests.`,
     );
   }
 });
 
-describe('agentready CLI', () => {
+describe('a14y CLI', () => {
   it('prints --version', async () => {
     const { stdout } = await exec('node', [CLI, '--version']);
     expect(stdout.trim()).toMatch(/^\d+\.\d+\.\d+$/);

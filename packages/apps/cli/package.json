@@ -1,9 +1,9 @@
 {
-  "name": "agentready",
+  "name": "a14y",
   "version": "0.2.0",
+  "main": "./dist/index.js",
   "bin": {
-    "agentready": "./dist/index.js",
-    "agentic-docs-cli": "./dist/index.js"
+    "a14y": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

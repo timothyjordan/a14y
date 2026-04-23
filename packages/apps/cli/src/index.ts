@@ -24,7 +24,7 @@ const STATUS_ICON: Record<CheckResult['status'], string> = {
 const program = new Command();
 
 program
-  .name('agentready')
+  .name('a14y')
   .description('Agent readability scorer for documentation sites')
   .version('0.2.0');
 
