@@ -51,7 +51,7 @@ export function runToAgentPrompt(run: SiteRun, opts: AgentPromptOptions = {}): s
 
   if (entries.length === 0) {
     lines.push(
-      `The agentready scorecard ran against ${run.url} on ${run.finishedAt} ` +
+      `The a14y scorecard ran against ${run.url} on ${run.finishedAt} ` +
         `and found **no failing checks**. Score: **${run.summary.score}/100**.`,
     );
     lines.push('');
@@ -65,7 +65,7 @@ export function runToAgentPrompt(run: SiteRun, opts: AgentPromptOptions = {}): s
   }
 
   lines.push(
-    `You are an autonomous coding agent. The agentready scorecard ran against ` +
+    `You are an autonomous coding agent. The a14y scorecard ran against ` +
       `${run.url} on ${run.finishedAt} and identified **${entries.length}** distinct ` +
       `failing checks across **${totalAffectedPages}** affected page(s). ` +
       `Score: **${run.summary.score}/100**.`,
@@ -82,7 +82,7 @@ export function runToAgentPrompt(run: SiteRun, opts: AgentPromptOptions = {}): s
   lines.push('After applying fixes, re-run the audit to verify:');
   lines.push('');
   lines.push('```');
-  lines.push(`agentready check ${run.url} --mode ${run.mode}`);
+  lines.push(`a14y check ${run.url} --mode ${run.mode}`);
   lines.push('```');
   lines.push('');
 
