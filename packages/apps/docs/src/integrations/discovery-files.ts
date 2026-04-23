@@ -22,12 +22,11 @@ import { listAllScorecards } from '../lib/scorecard-data';
  * - `AGENTS.md` — agent skill file with Installation + Usage +
  *   Configuration sections to satisfy `agents-md.has-min-sections`.
  *
- * All files land at the docs-site root in `dist/` (which becomes
- * `/a14y/<file>` once GitHub Pages serves it under the
- * `base`). The Phase 1-B engine change makes the a14y
- * site-level loaders look for files at the subpath, so they find
- * these copies even though `timothyjordan.github.io` is a shared
- * domain whose top-level root the user doesn't control.
+ * All files land at the docs-site root in `dist/`, which GitHub
+ * Pages then serves at `https://a14y.dev/<file>` via the CNAME in
+ * public/. The a14y site-level loaders discover these at the site
+ * root — no subpath fallback needed now that the docs run on their
+ * own apex domain.
  */
 export function discoveryFilesIntegration(): AstroIntegration {
   return {
@@ -35,9 +34,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
         const distDir = fileURLToPath(dir);
-        const origin = 'https://timothyjordan.github.io';
-        const base = '/a14y';
-        const sitemapXmlUrl = `${origin}${base}/sitemap.xml`;
+        const origin = 'https://a14y.dev';
+        const base = '';
+        const sitemapXmlUrl = `${origin}/sitemap.xml`;
         const lastmodIso = new Date().toISOString().slice(0, 10);
 
         // ---- sitemap.xml ---------------------------------------------
@@ -179,7 +178,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '',
           '## Reference',
           '',
-          'Full per-check documentation lives at https://timothyjordan.github.io/a14y/. Source: https://github.com/timothyjordan/a14y.',
+          'Full per-check documentation lives at https://a14y.dev/. Source: https://github.com/timothyjordan/a14y.',
           '',
         ].join('\n');
         await fs.writeFile(path.join(distDir, 'AGENTS.md'), agentsMd, 'utf8');
