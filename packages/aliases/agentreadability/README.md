@@ -5,7 +5,7 @@
 Full-word alias for [`a14y`](https://www.npmjs.com/package/a14y). Installing this package gives you the same CLI under the `agentreadability` command name.
 
 > 📖 **Full documentation & source:** <https://github.com/timothyjordan/a14y>
-> 🌐 **Docs site:** <https://timothyjordan.github.io/a14y/>
+> 🌐 **Docs site:** <https://a14y.dev>
 
 ```bash
 npx agentreadability https://example.com
