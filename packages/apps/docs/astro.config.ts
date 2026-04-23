@@ -3,17 +3,16 @@ import { assertCoverageIntegration } from './src/lib/assert-coverage';
 import { markdownMirrorsIntegration } from './src/integrations/markdown-mirrors';
 import { discoveryFilesIntegration } from './src/integrations/discovery-files';
 
-// Astro config for the a14y scorecard documentation site.
+// Astro config for the a14y documentation site.
 //
-// `site` and `base` are configured for GitHub Pages serving from
-// https://<owner>.github.io/a14y/. The custom integration runs the
-// content-coverage assertion at `astro:build:start`, so any check id
-// shipped in a frozen scorecard manifest that lacks a corresponding
-// markdown file will fail the build loudly — matching the runtime
-// guarantee in @a14y/core's getScorecard().
+// Served from the custom domain a14y.dev (GitHub Pages picks up the
+// CNAME in public/). The content-coverage integration runs at
+// `astro:build:start`, so any check id shipped in a frozen scorecard
+// manifest that lacks a corresponding markdown file will fail the
+// build loudly — matching the runtime guarantee in @a14y/core's
+// getScorecard().
 export default defineConfig({
-  site: 'https://timothyjordan.github.io',
-  base: '/a14y',
+  site: 'https://a14y.dev',
   output: 'static',
   trailingSlash: 'always',
   build: {
