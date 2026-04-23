@@ -15,9 +15,9 @@ import {
   type StartRunResponse,
 } from './bridge';
 
-const RUN_HISTORY_KEY = 'agentready:run-history';
+const RUN_HISTORY_KEY = 'a14y:run-history';
 const HISTORY_LIMIT = 20;
-const KEEPALIVE_ALARM = 'agentready-keepalive';
+const KEEPALIVE_ALARM = 'a14y-keepalive';
 const KEEPALIVE_PERIOD_MIN = 0.4;
 
 const OFFSCREEN_PATH = 'src/offscreen.html';
@@ -297,6 +297,6 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log(`agentready extension installed (scorecard ${LATEST_SCORECARD})`);
+  console.log(`a14y extension installed (scorecard ${LATEST_SCORECARD})`);
   void recoverStaleRunOnStartup();
 });
