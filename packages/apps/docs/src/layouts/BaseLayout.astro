@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Canonical URL for this page. Astro.site is the deployment origin
 // (e.g. https://timothyjordan.github.io), Astro.url.pathname includes
-// the configured `base` (e.g. /agentready/scorecards/0.2.0/), so the
+// the configured `base` (e.g. /a14y/scorecards/0.2.0/), so the
 // concatenation gives the fully-qualified canonical address. Used by
 // html.canonical-link, html.json-ld breadcrumb anchors, and the
 // markdown alternate link below.
@@ -43,7 +43,7 @@ const breadcrumbItems = [
   {
     '@type': 'ListItem',
     position: 1,
-    name: 'agentready',
+    name: 'a14y',
     item: new URL(`${base}/`, Astro.site).toString(),
   },
   ...trailingSegments.map((segment, i) => {
@@ -63,7 +63,7 @@ const breadcrumbItems = [
 const dateModified = new Date().toISOString();
 
 // Use @graph so the BreadcrumbList sits as a sibling of the WebPage
-// node rather than nested under `breadcrumb:`. The agentready
+// node rather than nested under `breadcrumb:`. The a14y
 // json-ld.breadcrumb check walks JSON-LD nodes following @graph; the
 // nested breadcrumb shape was invisible to it. Standard Schema.org
 // pattern, both nodes are equally discoverable to any consumer.
@@ -103,11 +103,11 @@ const jsonLd = {
   <body>
     <header class="site-header">
       <div class="site-header-inner">
-        <a class="brand" href={`${base}/`}>agentready</a>
+        <a class="brand" href={`${base}/`}>a14y</a>
         <nav class="site-nav">
           <a href={`${base}/scorecards/`}>Scorecards</a>
           <a href={`${base}/glossary/`}>Glossary</a>
-          <a href="https://github.com/timothyjordan/agentready">GitHub</a>
+          <a href="https://github.com/timothyjordan/a14y">GitHub</a>
           <VersionSelector current={scorecardVersion} />
         </nav>
       </div>
@@ -116,7 +116,7 @@ const jsonLd = {
       <slot />
     </main>
     <footer class="site-footer">
-      agentready scorecard docs · <a href={`${base}/glossary/`}>glossary</a> · <a href="https://timothyjordan.com/blog/2026/03/23/agent-readability-spec.html">spec</a> · <a href="https://github.com/timothyjordan/agentready">source</a>
+      a14y scorecard docs · <a href={`${base}/glossary/`}>glossary</a> · <a href="https://timothyjordan.com/blog/2026/03/23/agent-readability-spec.html">spec</a> · <a href="https://github.com/timothyjordan/a14y">source</a>
     </footer>
   </body>
 </html>

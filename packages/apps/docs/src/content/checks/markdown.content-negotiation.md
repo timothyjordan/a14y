@@ -29,7 +29,7 @@ Accept: text/markdown
 HTTP/1.1 200 OK
 Content-Type: text/markdown; charset=utf-8
 
-# Install agentready
+# Install a14y
 ...
 ```
 

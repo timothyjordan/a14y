@@ -27,7 +27,7 @@ HTTP/1.1 200 OK
 Content-Type: text/markdown; charset=utf-8
 Link: <https://example.com/docs/install>; rel="canonical"
 
-# Install agentready
+# Install a14y
 ...
 ```
 
@@ -37,6 +37,6 @@ Link: <https://example.com/docs/install>; rel="canonical"
 HTTP/1.1 200 OK
 Content-Type: text/markdown; charset=utf-8
 
-# Install agentready
+# Install a14y
 ...
 ```

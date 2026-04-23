@@ -18,7 +18,7 @@ After following any redirects, the check inspects the final response status. Pas
 
 ## How to implement it
 
-Make sure every URL listed in your sitemap or linked from your pages resolves to a 200. Audit your site for broken internal links periodically — `agentready check --mode site` will surface every non-200 page in one pass.
+Make sure every URL listed in your sitemap or linked from your pages resolves to a 200. Audit your site for broken internal links periodically — `a14y check --mode site` will surface every non-200 page in one pass.
 
 ### Pass
 

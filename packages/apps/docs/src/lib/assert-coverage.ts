@@ -49,7 +49,7 @@ export function assertCoverage(contentDir?: string): void {
 /** Astro integration wrapper that runs the assertion at build start. */
 export function assertCoverageIntegration(): AstroIntegration {
   return {
-    name: 'agentready-assert-coverage',
+    name: 'a14y-assert-coverage',
     hooks: {
       'astro:build:start': () => {
         assertCoverage();

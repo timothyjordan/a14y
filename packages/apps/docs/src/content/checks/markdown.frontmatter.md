@@ -24,13 +24,13 @@ When you generate the markdown mirror, include a YAML frontmatter block at the t
 
 ```markdown
 ---
-title: Install agentready
-description: Install agentready in under a minute and audit your first site.
+title: Install a14y
+description: Install a14y in under a minute and audit your first site.
 doc_version: "0.2"
 last_updated: 2026-04-01
 ---
 
-# Install agentready
+# Install a14y
 ...
 ```
 
@@ -38,9 +38,9 @@ last_updated: 2026-04-01
 
 ```markdown
 ---
-title: Install agentready
+title: Install a14y
 ---
 
-# Install agentready
+# Install a14y
 ...
 ```

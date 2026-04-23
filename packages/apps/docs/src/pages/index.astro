@@ -14,10 +14,10 @@ const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<BaseLayout title="agentready — agent readability scorecard docs">
+<BaseLayout title="a14y — agent readability scorecard docs">
   <h1>Agent readability scorecard</h1>
   <p class="lead">
-    Documentation for the rules that <strong>agentready</strong> uses to score how well
+    Documentation for the rules that <strong>a14y</strong> uses to score how well
     a documentation site can be consumed by AI agents. Every check has detection
     mechanics, implementation notes, pass/fail examples, and links to the underlying
     specs.
@@ -48,9 +48,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <section>
     <h2>Run the scorecard yourself</h2>
     <p>
-      agentready ships a CLI and a Chrome extension that both evaluate sites against
+      a14y ships a CLI and a Chrome extension that both evaluate sites against
       the scorecard versions listed here. Source and install instructions are on
-      <a href="https://github.com/timothyjordan/agentready">GitHub</a>.
+      <a href="https://github.com/timothyjordan/a14y">GitHub</a>.
     </p>
   </section>
 </BaseLayout>
