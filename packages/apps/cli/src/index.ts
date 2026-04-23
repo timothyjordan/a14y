@@ -138,6 +138,29 @@ program
     }
   });
 
+program.addHelpText(
+  'after',
+  `
+Commands in detail:
+  check <url>                   Audit a URL or a whole site
+    -m, --mode page|site          default: page
+    -s, --scorecard <version>     scorecard version
+    --max-pages <n>               default: 500
+    --concurrency <n>             default: 8
+    --page-check-concurrency <n>  default: 4
+    --polite-delay <ms>           default: 250
+    -o, --output <format>         text | json | agent-prompt
+    --fail-under <score>          exit 1 if final score < threshold
+    -v, --verbose                 stream progress events to stderr
+
+  scorecards                    List shipped scorecard versions
+    -o, --output <format>         text | json
+
+Run 'a14y help <command>' (or 'a14y <command> --help') for full details.
+Tip: 'check' is the default — 'a14y <url>' works the same as 'a14y check <url>'.
+`,
+);
+
 // Default to the `check` subcommand when the first positional is neither a
 // known command nor a flag. `a14y example.com` should behave the same as
 // `a14y check example.com`.

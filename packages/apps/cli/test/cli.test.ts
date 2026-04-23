@@ -40,6 +40,22 @@ describe('a14y CLI', () => {
     }
   });
 
+  it('top-level --help lists every command and its options', async () => {
+    // TJ-185: `a14y --help` must surface the flag lists inline and point
+    // users at `a14y help <command>` for the full detail view, so that
+    // option discoverability doesn't require reading the source or the
+    // README.
+    const { stdout } = await exec('node', [CLI, '--help']);
+    expect(stdout).toContain('Commands in detail');
+    expect(stdout).toContain('check <url>');
+    expect(stdout).toContain('--max-pages');
+    expect(stdout).toContain('--page-check-concurrency');
+    expect(stdout).toContain('scorecards');
+    expect(stdout).toContain("a14y help <command>");
+    // And the tip about the default-command shortcut introduced in TJ-184.
+    expect(stdout).toContain("'check' is the default");
+  });
+
   it('shows help with --mode and --scorecard flags documented', async () => {
     const { stdout } = await exec('node', [CLI, 'check', '--help']);
     expect(stdout).toContain('--mode');
