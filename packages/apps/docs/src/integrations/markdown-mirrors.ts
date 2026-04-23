@@ -24,17 +24,16 @@ import { listAllScorecards } from '../lib/scorecard-data';
  *   `/a14y/sitemap.md`, and emit
  *   `dist/scorecards/0.2.0/checks/<id>.md`.
  * - For non-check pages (landing, scorecards index, scorecard
- *   overview, glossary), emit a small auto-generated mirror with
- *   the four required frontmatter fields and a one-line body
+ *   overview, glossary, spec), emit a small auto-generated mirror
+ *   with the four required frontmatter fields and a one-line body
  *   pointing at the canonical HTML page. The point isn't a full
  *   markdown rendering of every page — it's that an agent following
  *   the .md suffix gets a real markdown response with the
  *   frontmatter the scorecard requires.
  *
  * Output paths follow Astro's `trailingSlash: 'always'` convention:
- * `/a14y/scorecards/0.2.0/checks/html.canonical-link/` becomes
- * a mirror at
- * `/a14y/scorecards/0.2.0/checks/html.canonical-link.md`.
+ * `/scorecards/0.2.0/checks/html.canonical-link/` becomes a mirror at
+ * `/scorecards/0.2.0/checks/html.canonical-link.md`.
  */
 export function markdownMirrorsIntegration(): AstroIntegration {
   return {
@@ -51,7 +50,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
         const checksContentDir = path.join(docsRoot, 'src/content/checks');
 
         const lastUpdated = new Date().toISOString();
-        const sitemapHref = '/a14y/sitemap.md';
+        const sitemapHref = '/sitemap.md';
 
         const scorecard = listAllScorecards()[0]; // current = v0.2.0
         const docVersion = scorecard?.version ?? '0.2.0';
@@ -97,8 +96,8 @@ export function markdownMirrorsIntegration(): AstroIntegration {
           } else {
             // Non-check page. Use a short stub keyed off the URL.
             title = humanizeSegment(cleanPath || 'a14y');
-            description = `a14y scorecard documentation — ${title}`;
-            const canonicalPath = `/a14y${cleanPath === '' ? '' : '/' + cleanPath}/`;
+            description = `a14y — agent readability for the web — ${title}`;
+            const canonicalPath = cleanPath === '' ? '/' : `/${cleanPath}/`;
             body = `# ${title}\n\nThis is the markdown mirror of [${canonicalPath}](${canonicalPath}). Open the canonical page for the full rendered version with navigation, code blocks, and the version selector.\n`;
           }
 

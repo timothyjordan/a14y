@@ -49,6 +49,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   title={`${entry.data.title} · v${version}`}
   description={entry.data.why}
   scorecardVersion={version}
+  showVersionSelector
 >
   <p class="lead">
     <a href={`${base}/scorecards/${version}/`}>← Scorecard v{version}</a>

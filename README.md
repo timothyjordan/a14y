@@ -2,10 +2,10 @@
 
 # a14y
 
-Agent readability scorer for documentation sites — `a14y` is shorthand for *agentreadability*. Audit a single page or a whole site against a versioned scorecard that measures how readable your docs are to coding agents and LLMs.
+**Agent readability for the web.** AI agents — ChatGPT, Claude, Copilot, Cursor — are becoming a primary way people discover and consume the web. `a14y` (shorthand for *agentreadability*) is an open spec for making any website discoverable, parseable, and comprehensible to those agents, a versioned scorecard that operationalizes the spec, and a CLI and Chrome extension that score any site against it. Documentation sites are a common high-value target, but the scorecard works for marketing sites, product pages, help centers — anything agents might read.
 
 > 📖 **Full documentation & source:** <https://github.com/timothyjordan/a14y>
-> 🌐 **Docs site:** <https://timothyjordan.github.io/a14y/>
+> 🌐 **Docs site:** <https://a14y.dev>
 
 ## Install
 
@@ -41,15 +41,15 @@ The sections below are generated from the CLI's own `--help` output, so they sta
 ```text
 Usage: a14y [options] [command]
 
-Agent readability scorer for documentation sites
+Agent readability scorer — audits any website against the versioned a14y
+scorecard
 
 Options:
   -V, --version          output the version number
   -h, --help             display help for command
 
 Commands:
-  check [options] <url>  Audit a URL or whole site against the agent
-                         readability scorecard
+  check [options] <url>  Audit a URL or whole site against the a14y scorecard
   scorecards [options]   List every shipped scorecard version and the checks
                          each one pins
   help [command]         display help for command
@@ -78,7 +78,7 @@ Tip: 'check' is the default — 'a14y <url>' works the same as 'a14y check <url>
 ```text
 Usage: a14y check [options] <url>
 
-Audit a URL or whole site against the agent readability scorecard
+Audit a URL or whole site against the a14y scorecard
 
 Options:
   -m, --mode <mode>             page or site (default: "page")
@@ -117,7 +117,7 @@ This repo is an npm workspace:
 - `packages/apps/cli` — the `a14y` binary (this CLI).
 - `packages/core` — `@a14y/core`, the library that implements scoring, crawling, and report generation. Consumed by the CLI and by the Chrome extension.
 - `packages/apps/extension` — Chrome extension (internal, not published to npm).
-- `packages/apps/docs` — Astro site published at <https://timothyjordan.github.io/a14y/>.
+- `packages/apps/docs` — Astro site published at <https://a14y.dev>.
 - `packages/aliases/*` — thin wrapper packages that re-export the CLI under `agentready` and `agentreadability`.
 
 ## Contributing

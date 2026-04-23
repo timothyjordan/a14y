@@ -1,3 +1,3 @@
 # a14y
 
-Agent readability scorer for documentation sites — `a14y` is shorthand for *agentreadability*. Audit a single page or a whole site against a versioned scorecard that measures how readable your docs are to coding agents and LLMs.
+**Agent readability for the web.** AI agents — ChatGPT, Claude, Copilot, Cursor — are becoming a primary way people discover and consume the web. `a14y` (shorthand for *agentreadability*) is an open spec for making any website discoverable, parseable, and comprehensible to those agents, a versioned scorecard that operationalizes the spec, and a CLI and Chrome extension that score any site against it. Documentation sites are a common high-value target, but the scorecard works for marketing sites, product pages, help centers — anything agents might read.

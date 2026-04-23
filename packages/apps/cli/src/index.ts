@@ -25,12 +25,12 @@ const program = new Command();
 
 program
   .name('a14y')
-  .description('Agent readability scorer for documentation sites')
+  .description('Agent readability scorer — audits any website against the versioned a14y scorecard')
   .version('0.3.0');
 
 program
   .command('check <url>')
-  .description('Audit a URL or whole site against the agent readability scorecard')
+  .description('Audit a URL or whole site against the a14y scorecard')
   .option('-m, --mode <mode>', 'page or site', 'page')
   .option('-s, --scorecard <version>', 'scorecard version to evaluate against', LATEST_SCORECARD)
   .option('--max-pages <n>', 'maximum pages to crawl in site mode', (v) => parseInt(v, 10), 500)

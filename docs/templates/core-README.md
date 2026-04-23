@@ -1,6 +1,6 @@
 # @a14y/core
 
-Scoring engine for [a14y](https://github.com/timothyjordan/a14y) — the agent readability scorer for documentation sites. This package contains the checks, crawler, and report generators; it's what the `a14y` CLI and the Chrome extension call into.
+Scoring engine for [a14y](https://github.com/timothyjordan/a14y) — agent readability for the web. This package contains the checks, crawler, and report generators; it's what the `a14y` CLI and the Chrome extension call into to evaluate any website against the versioned a14y scorecard.
 
 <!-- include: fragments/_links.md -->
 

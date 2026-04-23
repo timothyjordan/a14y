@@ -29,7 +29,7 @@ This repo is an npm workspace:
 - `packages/apps/cli` — the `a14y` binary (this CLI).
 - `packages/core` — `@a14y/core`, the library that implements scoring, crawling, and report generation. Consumed by the CLI and by the Chrome extension.
 - `packages/apps/extension` — Chrome extension (internal, not published to npm).
-- `packages/apps/docs` — Astro site published at <https://timothyjordan.github.io/a14y/>.
+- `packages/apps/docs` — Astro site published at <https://a14y.dev>.
 - `packages/aliases/*` — thin wrapper packages that re-export the CLI under `agentready` and `agentreadability`.
 
 ## Contributing
