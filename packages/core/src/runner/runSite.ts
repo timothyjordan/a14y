@@ -81,8 +81,8 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   const http = opts.http ?? createHttpClient();
   const parsedInput = new URL(opts.url);
   const baseUrl = parsedInput.origin + '/';
-  // Pathname prefix the site is hosted under, e.g. `/agentready` for
-  // `https://timothyjordan.github.io/agentready/`. Empty for sites at
+  // Pathname prefix the site is hosted under, e.g. `/a14y` for
+  // `https://timothyjordan.github.io/a14y/`. Empty for sites at
   // the origin root. Trailing slash stripped so loaders can join it
   // cleanly with leading-slash well-known paths.
   const sitePrefix = parsedInput.pathname.replace(/\/$/, '');
