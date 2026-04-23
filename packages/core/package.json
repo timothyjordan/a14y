@@ -23,11 +23,13 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepack": "node ../../scripts/build-readmes.mjs"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
