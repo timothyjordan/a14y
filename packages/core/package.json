@@ -1,6 +1,17 @@
 {
   "name": "@a14y/core",
   "version": "0.2.0",
+  "description": "Shared engine for the a14y agent-readability scorer. Powers the CLI and Chrome extension.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyjordan/a14y.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://timothyjordan.github.io/a14y/",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.ts",

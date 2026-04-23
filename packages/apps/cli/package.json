@@ -1,17 +1,29 @@
 {
   "name": "a14y",
   "version": "0.2.0",
+  "description": "Agent readability scorer for documentation sites. Audits pages and whole sites against the a14y scorecard.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyjordan/a14y.git",
+    "directory": "packages/apps/cli"
+  },
+  "homepage": "https://timothyjordan.github.io/a14y/",
   "main": "./dist/index.js",
   "bin": {
     "a14y": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest run"
   },
   "dependencies": {
-    "@a14y/core": "*",
+    "@a14y/core": "0.2.0",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"
