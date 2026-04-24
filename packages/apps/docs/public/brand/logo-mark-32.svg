@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="a14y">
+  <defs>
+    <radialGradient id="a14y-glow-32" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#b8eff7" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#4de0f0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4de0f0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="56" cy="60" r="40" fill="url(#a14y-glow-32)"/>
+
+  <circle cx="60" cy="56" r="40" stroke="#1b2763" stroke-width="10" fill="#ffffff"/>
+
+  <rect x="40" y="34" width="40" height="48" rx="4" stroke="#1b2763" stroke-width="5" fill="#ffffff"/>
+  <g stroke="#4de0f0" stroke-width="6" stroke-linecap="round">
+    <line x1="48" y1="48" x2="72" y2="48"/>
+    <line x1="48" y1="60" x2="72" y2="60"/>
+    <line x1="48" y1="72" x2="64" y2="72"/>
+  </g>
+
+  <line x1="88" y1="84" x2="112" y2="110" stroke="#1b2763" stroke-width="14" stroke-linecap="round"/>
+</svg>

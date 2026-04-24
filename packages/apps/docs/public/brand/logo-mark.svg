@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="a14y">
+  <defs>
+    <radialGradient id="a14y-mark-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#b8eff7" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#4de0f0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4de0f0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="40" cy="60" r="34" fill="url(#a14y-mark-glow)"/>
+
+  <circle cx="54" cy="54" r="40" stroke="#1b2763" stroke-width="8" fill="#ffffff"/>
+
+  <rect x="36" y="30" width="40" height="52" rx="3" stroke="#1b2763" stroke-width="3.5" fill="#ffffff"/>
+  <g stroke="#4de0f0" stroke-width="4.5" stroke-linecap="round">
+    <line x1="42" y1="42" x2="70" y2="42"/>
+    <line x1="42" y1="52" x2="70" y2="52"/>
+    <line x1="42" y1="62" x2="70" y2="62"/>
+    <line x1="42" y1="72" x2="62" y2="72"/>
+  </g>
+
+  <line x1="82" y1="82" x2="112" y2="112" stroke="#1b2763" stroke-width="12" stroke-linecap="round"/>
+  <line x1="87" y1="87" x2="107" y2="107" stroke="#4de0f0" stroke-width="3" stroke-linecap="round"/>
+</svg>
