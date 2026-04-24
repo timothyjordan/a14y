@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 310" role="img" aria-label="a14y.dev">
+  <defs>
+    <style>
+      .lk-1 { stroke-width: 20px; }
+      .lk-1, .lk-2, .lk-3 { fill: none; stroke: #1b2763; }
+      .lk-1, .lk-2, .lk-3, .lk-4 { stroke-miterlimit: 10; }
+      .lk-2 { stroke-width: 23px; }
+      .lk-3 { stroke-width: 10px; }
+      .lk-5 { fill: #fff; opacity: .9; }
+      .lk-4 { fill: #1b2763; stroke: #000; }
+    </style>
+  </defs>
+  <circle class="lk-4" cx="25.5" cy="75.5" r="25"/>
+  <circle class="lk-4" cx="150.5" cy="275.5" r="25"/>
+  <circle class="lk-4" cx="275.5" cy="225.5" r="25"/>
+  <circle class="lk-4" cx="25.5" cy="225.5" r="25"/>
+  <circle class="lk-4" cx="275.5" cy="75.5" r="25"/>
+  <circle class="lk-4" cx="150.5" cy="25.5" r="25"/>
+  <circle class="lk-4" cx="150.5" cy="150.5" r="25"/>
+  <line class="lk-3" x1="150.5" y1="25.5" x2="25.5" y2="75.5"/>
+  <line class="lk-3" x1="275.5" y1="75.5" x2="150.5" y2="25.5"/>
+  <line class="lk-3" x1="275.5" y1="223" x2="275.5" y2="75.5"/>
+  <line class="lk-3" x1="150.5" y1="275.5" x2="275.5" y2="223"/>
+  <line class="lk-3" x1="25.5" y1="225.5" x2="148.08" y2="275.5"/>
+  <line class="lk-3" x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+  <line class="lk-3" x1="275.5" y1="75.5" x2="25.5" y2="225.5"/>
+  <line class="lk-3" x1="25.5" y1="75.5" x2="275.5" y2="223"/>
+  <line class="lk-3" x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+  <line class="lk-3" x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+  <line class="lk-3" x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+  <circle class="lk-5" cx="262.5" cy="150.5" r="112.5"/>
+  <circle class="lk-3" cx="262.75" cy="150.5" r="112.5"/>
+  <line class="lk-3" x1="375.5" y1="262.5" x2="342.48" y2="229.41"/>
+  <line class="lk-2" x1="356.79" y1="243.79" x2="414.48" y2="301.48"/>
+  <line class="lk-1" x1="200.5" y1="90.5" x2="325.5" y2="90.5"/>
+  <line class="lk-1" x1="200.5" y1="130.45" x2="325.5" y2="130.45"/>
+  <line class="lk-1" x1="200.5" y1="170.43" x2="325.5" y2="170.43"/>
+  <line class="lk-1" x1="200.5" y1="210.49" x2="325.5" y2="210.49"/>
+  <text x="470" y="230"
+    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="180" font-weight="700" letter-spacing="-4" fill="#1b2763">a14y<tspan font-weight="500" opacity="0.75">.dev</tspan></text>
+</svg>

@@ -2,33 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Agent Readability</title>
+    <title>a14y — Agent Readability</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <header>
-      <h1>Agent Readability</h1>
+    <header class="brand-row">
+      <img class="brand-mark" src="icons/logo-mark.svg" alt="" width="22" height="22" />
+      <span class="brand-word">a14y</span>
+      <span class="eyebrow">Agent readability</span>
     </header>
+
     <main>
-      <div class="row">
-        <span class="label">URL</span>
-        <code id="current-url">…</code>
+      <div class="field">
+        <span class="field-label">URL</span>
+        <code id="current-url" class="url-pill">…</code>
       </div>
-      <div class="row">
-        <label for="scorecard">Scorecard</label>
-        <select id="scorecard"></select>
+
+      <div class="field field--inline">
+        <label class="field-label" for="scorecard">Scorecard</label>
+        <select id="scorecard" class="select"></select>
       </div>
+
       <div class="actions">
-        <button id="check-page" type="button">Check this page</button>
-        <button id="check-site" type="button">Scan whole site</button>
+        <button id="check-page" class="btn btn--primary" type="button">Check this page</button>
+        <button id="check-site" class="btn btn--ghost" type="button">Scan whole site</button>
       </div>
+
       <progress id="progress" value="0" max="100" hidden></progress>
       <p id="status" class="status"></p>
-      <section id="result" hidden>
-        <div class="score" id="score"></div>
-        <a id="open-results" href="#">View full report</a>
+
+      <section id="result" class="score-card" hidden>
+        <div id="score" class="score-number"></div>
+        <div id="score-meta" class="score-meta"></div>
+        <a id="open-results" class="result-link" href="#">View full report →</a>
       </section>
     </main>
+
+    <footer class="popup-footer">
+      <a href="https://a14y.dev" target="_blank" rel="noopener">a14y.dev</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://a14y.dev/privacy/" target="_blank" rel="noopener">Privacy</a>
+    </footer>
+
     <script type="module" src="popup.ts"></script>
   </body>
 </html>

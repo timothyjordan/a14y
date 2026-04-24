@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" role="img" aria-label="a14y">
+  <defs>
+    <style>
+      .m48-1 { stroke-width: 20px; }
+      .m48-1, .m48-2, .m48-3 { fill: none; stroke: #1b2763; }
+      .m48-1, .m48-2, .m48-3, .m48-4 { stroke-miterlimit: 10; }
+      .m48-2 { stroke-width: 23px; }
+      .m48-3 { stroke-width: 12px; }
+      .m48-5 { fill: #fff; opacity: .9; }
+      .m48-4 { fill: #1b2763; stroke: #000; }
+    </style>
+  </defs>
+  <circle class="m48-4" cx="25.5" cy="75.5" r="25"/>
+  <circle class="m48-4" cx="150.5" cy="275.5" r="25"/>
+  <circle class="m48-4" cx="275.5" cy="225.5" r="25"/>
+  <circle class="m48-4" cx="25.5" cy="225.5" r="25"/>
+  <circle class="m48-4" cx="275.5" cy="75.5" r="25"/>
+  <circle class="m48-4" cx="150.5" cy="25.5" r="25"/>
+  <circle class="m48-4" cx="150.5" cy="150.5" r="25"/>
+  <line class="m48-3" x1="150.5" y1="25.5" x2="25.5" y2="75.5"/>
+  <line class="m48-3" x1="275.5" y1="75.5" x2="150.5" y2="25.5"/>
+  <line class="m48-3" x1="275.5" y1="223" x2="275.5" y2="75.5"/>
+  <line class="m48-3" x1="150.5" y1="275.5" x2="275.5" y2="223"/>
+  <line class="m48-3" x1="25.5" y1="225.5" x2="148.08" y2="275.5"/>
+  <line class="m48-3" x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+  <line class="m48-3" x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+  <line class="m48-3" x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+  <line class="m48-3" x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+  <circle class="m48-5" cx="262.5" cy="150.5" r="112.5"/>
+  <circle class="m48-3" cx="262.75" cy="150.5" r="112.5"/>
+  <line class="m48-2" x1="356.79" y1="243.79" x2="414.48" y2="301.48"/>
+  <line class="m48-1" x1="200.5" y1="90.5" x2="325.5" y2="90.5"/>
+  <line class="m48-1" x1="200.5" y1="130.45" x2="325.5" y2="130.45"/>
+  <line class="m48-1" x1="200.5" y1="170.43" x2="325.5" y2="170.43"/>
+  <line class="m48-1" x1="200.5" y1="210.49" x2="325.5" y2="210.49"/>
+</svg>
