@@ -1,61 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" fill="none" role="img" aria-label="a14y">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61">
   <defs>
-    <radialGradient id="a14y-core-glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#b8eff7" stop-opacity="1"/>
-      <stop offset="55%" stop-color="#4de0f0" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#4de0f0" stop-opacity="0"/>
-    </radialGradient>
+    <style>
+      .cls-1 {
+        stroke-width: 20px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke: #1b2763;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke-width: 23px;
+      }
+
+      .cls-3 {
+        stroke-width: 10px;
+      }
+
+      .cls-5 {
+        fill: #fff;
+        opacity: .9;
+      }
+
+      .cls-4 {
+        fill: #1b2763;
+        stroke: #000;
+      }
+    </style>
   </defs>
-
-  <g stroke="#4de0f0" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9">
-    <path d="M60 30 L70 20 L80 30"/>
-    <path d="M70 20 L70 40"/>
-  </g>
-
-  <g stroke="#1b2763" stroke-width="3.5" stroke-linecap="round">
-    <line x1="132" y1="120" x2="70" y2="120"/>
-    <line x1="132" y1="120" x2="101" y2="66"/>
-    <line x1="132" y1="120" x2="39" y2="66"/>
-    <line x1="132" y1="120" x2="8"  y2="120"/>
-    <line x1="132" y1="120" x2="39" y2="174"/>
-    <line x1="132" y1="120" x2="101" y2="174"/>
-    <line x1="132" y1="120" x2="101" y2="66"/>
-    <line x1="101" y1="66"  x2="39"  y2="66"/>
-    <line x1="39"  y1="66"  x2="8"   y2="120"/>
-    <line x1="8"   y1="120" x2="39"  y2="174"/>
-    <line x1="39"  y1="174" x2="101" y2="174"/>
-    <line x1="101" y1="174" x2="132" y2="120"/>
-
-    <line x1="101" y1="66"  x2="39"  y2="174"/>
-    <line x1="39"  y1="66"  x2="101" y2="174"/>
-    <line x1="101" y1="66"  x2="101" y2="174"/>
-    <line x1="39"  y1="66"  x2="39"  y2="174"/>
-    <line x1="8"   y1="120" x2="132" y2="120"/>
-  </g>
-  <g fill="#1b2763">
-    <circle cx="132" cy="120" r="5.5"/>
-    <circle cx="101" cy="66"  r="5.5"/>
-    <circle cx="39"  cy="66"  r="5.5"/>
-    <circle cx="8"   cy="120" r="5.5"/>
-    <circle cx="39"  cy="174" r="5.5"/>
-    <circle cx="101" cy="174" r="5.5"/>
-  </g>
-
-  <circle cx="70" cy="120" r="34" fill="url(#a14y-core-glow)"/>
-  <circle cx="70" cy="120" r="8.5" fill="#4de0f0"/>
-
-  <circle cx="170" cy="120" r="62" fill="#ffffff" stroke="#1b2763" stroke-width="7"/>
-
-  <rect x="142" y="74" width="64" height="96" rx="3" fill="#ffffff" stroke="#1b2763" stroke-width="4"/>
-  <g fill="#4de0f0">
-    <rect x="150" y="86"  width="36" height="7" rx="1.5"/>
-    <rect x="150" y="104" width="48" height="7" rx="1.5"/>
-    <rect x="150" y="122" width="48" height="7" rx="1.5"/>
-    <rect x="150" y="140" width="48" height="7" rx="1.5"/>
-    <rect x="150" y="158" width="28" height="7" rx="1.5"/>
-  </g>
-  <rect x="198" y="80" width="8" height="84" rx="2" fill="#4de0f0" opacity="0.9"/>
-
-  <line x1="214" y1="164" x2="260" y2="210" stroke="#1b2763" stroke-width="14" stroke-linecap="round"/>
-  <line x1="220" y1="170" x2="252" y2="202" stroke="#4de0f0" stroke-width="3.5" stroke-linecap="round"/>
+  <circle class="cls-4" cx="25.5" cy="75.5" r="25"/>
+  <circle class="cls-4" cx="150.5" cy="275.5" r="25"/>
+  <circle class="cls-4" cx="275.5" cy="225.5" r="25"/>
+  <circle class="cls-4" cx="25.5" cy="225.5" r="25"/>
+  <circle class="cls-4" cx="275.5" cy="75.5" r="25"/>
+  <circle class="cls-4" cx="150.5" cy="25.5" r="25"/>
+  <circle class="cls-4" cx="150.5" cy="150.5" r="25"/>
+  <line class="cls-3" x1="150.5" y1="25.5" x2="25.5" y2="75.5"/>
+  <line class="cls-3" x1="275.5" y1="75.5" x2="150.5" y2="25.5"/>
+  <line class="cls-3" x1="275.5" y1="223" x2="275.5" y2="75.5"/>
+  <line class="cls-3" x1="150.5" y1="275.5" x2="275.5" y2="223"/>
+  <line class="cls-3" x1="25.5" y1="225.5" x2="148.08" y2="275.5"/>
+  <line class="cls-3" x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+  <line class="cls-3" x1="275.5" y1="75.5" x2="25.5" y2="225.5"/>
+  <line class="cls-3" x1="25.5" y1="75.5" x2="275.5" y2="223"/>
+  <line class="cls-3" x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+  <line class="cls-3" x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+  <line class="cls-3" x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+  <circle class="cls-5" cx="262.5" cy="150.5" r="112.5"/>
+  <circle class="cls-3" cx="262.75" cy="150.5" r="112.5"/>
+  <line class="cls-3" x1="375.5" y1="262.5" x2="342.48" y2="229.41"/>
+  <line class="cls-2" x1="356.79" y1="243.79" x2="414.48" y2="301.48"/>
+  <line class="cls-1" x1="200.5" y1="90.5" x2="325.5" y2="90.5"/>
+  <line class="cls-1" x1="200.5" y1="130.45" x2="325.5" y2="130.45"/>
+  <line class="cls-1" x1="200.5" y1="170.43" x2="325.5" y2="170.43"/>
+  <line class="cls-1" x1="200.5" y1="210.49" x2="325.5" y2="210.49"/>
 </svg>
