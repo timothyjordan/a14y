@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" role="img" aria-label="a14y">
+  <defs>
+    <style>
+      .m32-1 { stroke-width: 26px; fill: none; stroke: #1b2763; }
+      .m32-2 { fill: none; stroke: #1b2763; stroke-width: 14px; }
+      .m32-3 { stroke-width: 28px; fill: none; stroke: #1b2763; }
+      .m32-5 { fill: #fff; opacity: .95; }
+      .m32-4 { fill: #1b2763; }
+    </style>
+  </defs>
+  <g>
+    <circle class="m32-4" cx="25.5" cy="75.5" r="32"/>
+    <circle class="m32-4" cx="275.5" cy="75.5" r="32"/>
+    <circle class="m32-4" cx="25.5" cy="225.5" r="32"/>
+    <circle class="m32-4" cx="150.5" cy="150.5" r="32"/>
+    <circle class="m32-4" cx="150.5" cy="25.5" r="32"/>
+    <circle class="m32-4" cx="150.5" cy="275.5" r="32"/>
+    <circle class="m32-4" cx="275.5" cy="225.5" r="32"/>
+    <line class="m32-2" x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+    <line class="m32-2" x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+    <line class="m32-2" x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+    <line class="m32-2" x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+    <line class="m32-2" x1="275.5" y1="75.5" x2="275.5" y2="225.5"/>
+  </g>
+  <circle class="m32-5" cx="262.5" cy="150.5" r="112.5"/>
+  <circle class="m32-3" cx="262.75" cy="150.5" r="112.5"/>
+  <line class="m32-3" x1="356.79" y1="243.79" x2="414.48" y2="301.48" stroke-linecap="round"/>
+  <line class="m32-1" x1="200.5" y1="110.5" x2="325.5" y2="110.5"/>
+  <line class="m32-1" x1="200.5" y1="150.5" x2="325.5" y2="150.5"/>
+  <line class="m32-1" x1="200.5" y1="190.5" x2="325.5" y2="190.5"/>
+</svg>

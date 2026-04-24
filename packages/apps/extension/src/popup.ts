@@ -19,6 +19,7 @@ const progressEl = $<HTMLProgressElement>('progress');
 const statusEl = $<HTMLElement>('status');
 const resultEl = $<HTMLElement>('result');
 const scoreEl = $<HTMLElement>('score');
+const scoreMetaEl = $<HTMLElement>('score-meta');
 const openResultsLink = $<HTMLAnchorElement>('open-results');
 
 let activeTabUrl = '';
@@ -123,9 +124,10 @@ function render(state: CurrentRunState | null) {
 function showResult(run: SiteRun) {
   resultEl.hidden = false;
   scoreEl.textContent = `${run.summary.score}/100`;
-  scoreEl.className = 'score ' + scoreClass(run.summary.score);
+  scoreEl.className = 'score-number ' + scoreClass(run.summary.score);
+  scoreMetaEl.textContent = `Scorecard v${run.scorecardVersion} · ${run.summary.passed}/${run.summary.applicable} checks passed`;
   statusEl.className = 'status';
-  statusEl.textContent = `Scorecard v${run.scorecardVersion} · ${run.summary.passed}/${run.summary.applicable} checks passed`;
+  statusEl.textContent = '';
 }
 
 function scoreClass(score: number): string {

@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:og": "node scripts/build-og-image.mjs"
   },
   "dependencies": {
     "@a14y/core": "*",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
+    "sharp": "^0.33.5",
     "typescript": "^5.3.3",
     "vitest": "^1.6.1"
   }

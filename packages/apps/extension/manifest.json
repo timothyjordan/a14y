@@ -1,13 +1,28 @@
 {
   "manifest_version": 3,
-  "name": "Agent Readability",
-  "version": "0.2.0",
-  "description": "Score how well a documentation site is consumable by AI agents.",
+  "name": "a14y — Agent Readability",
+  "short_name": "a14y",
+  "version": "0.4.0",
+  "description": "Score how well any website is readable by AI agents — ChatGPT, Claude, Copilot, Cursor.",
+  "author": "Timothy Jordan",
+  "homepage_url": "https://a14y.dev",
+  "icons": {
+    "16": "src/icons/16.png",
+    "32": "src/icons/32.png",
+    "48": "src/icons/48.png",
+    "128": "src/icons/128.png"
+  },
   "permissions": ["storage", "activeTab", "alarms", "offscreen"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "src/popup.html",
-    "default_title": "Agent Readability"
+    "default_title": "a14y — Agent Readability",
+    "default_icon": {
+      "16": "src/icons/16.png",
+      "32": "src/icons/32.png",
+      "48": "src/icons/48.png",
+      "128": "src/icons/128.png"
+    }
   },
   "background": {
     "service_worker": "src/background.ts",
