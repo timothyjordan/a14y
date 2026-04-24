@@ -1,22 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="a14y">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" fill="none" role="img" aria-label="a14y">
   <defs>
-    <radialGradient id="a14y-glow-32" cx="0.5" cy="0.5" r="0.5">
+    <radialGradient id="a14y-mark32-glow" cx="0.5" cy="0.5" r="0.5">
       <stop offset="0%" stop-color="#b8eff7" stop-opacity="1"/>
-      <stop offset="60%" stop-color="#4de0f0" stop-opacity="0.4"/>
+      <stop offset="55%" stop-color="#4de0f0" stop-opacity="0.4"/>
       <stop offset="100%" stop-color="#4de0f0" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <circle cx="56" cy="60" r="40" fill="url(#a14y-glow-32)"/>
-
-  <circle cx="60" cy="56" r="40" stroke="#1b2763" stroke-width="10" fill="#ffffff"/>
-
-  <rect x="40" y="34" width="40" height="48" rx="4" stroke="#1b2763" stroke-width="5" fill="#ffffff"/>
-  <g stroke="#4de0f0" stroke-width="6" stroke-linecap="round">
-    <line x1="48" y1="48" x2="72" y2="48"/>
-    <line x1="48" y1="60" x2="72" y2="60"/>
-    <line x1="48" y1="72" x2="64" y2="72"/>
+  <g stroke="#1b2763" stroke-width="6" stroke-linecap="round">
+    <line x1="101" y1="66"  x2="39"  y2="66"/>
+    <line x1="39"  y1="66"  x2="8"   y2="120"/>
+    <line x1="8"   y1="120" x2="39"  y2="174"/>
+    <line x1="39"  y1="174" x2="101" y2="174"/>
+    <line x1="101" y1="174" x2="132" y2="120"/>
+    <line x1="132" y1="120" x2="101" y2="66"/>
   </g>
+  <circle cx="70" cy="120" r="40" fill="url(#a14y-mark32-glow)"/>
+  <circle cx="70" cy="120" r="14" fill="#4de0f0"/>
 
-  <line x1="88" y1="84" x2="112" y2="110" stroke="#1b2763" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="190" cy="120" r="70" fill="#ffffff" stroke="#1b2763" stroke-width="12"/>
+  <rect x="158" y="78" width="60" height="92" rx="3" fill="#ffffff" stroke="#1b2763" stroke-width="6"/>
+  <g fill="#4de0f0">
+    <rect x="166" y="92"  width="34" height="10" rx="2"/>
+    <rect x="166" y="114" width="44" height="10" rx="2"/>
+    <rect x="166" y="136" width="44" height="10" rx="2"/>
+    <rect x="166" y="158" width="28" height="10" rx="2"/>
+  </g>
+  <line x1="238" y1="168" x2="276" y2="208" stroke="#1b2763" stroke-width="20" stroke-linecap="round"/>
 </svg>

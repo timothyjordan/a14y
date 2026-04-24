@@ -26,18 +26,23 @@ async function main() {
     .replace(/^[\s\S]*?<svg[^>]*>/, '')
     .replace(/<\/svg>\s*$/, '');
 
-  // Lockup viewBox is 480×128; scale 1.7x and center horizontally, place
-  // vertically so the composition breathes above the tagline.
-  const scale = 1.7;
-  const lockupW = 480 * scale;
+  // Read the lockup viewBox dimensions so we compute a scale that fits
+  // inside the OG canvas regardless of how wide the lockup grows.
+  const vb = lockupSvg.match(/viewBox="0 0 (\d+) (\d+)"/);
+  const vbW = vb ? Number(vb[1]) : 480;
+  const vbH = vb ? Number(vb[2]) : 128;
+  const targetW = 920;
+  const scale = targetW / vbW;
+  const lockupW = vbW * scale;
+  const lockupH = vbH * scale;
   const lockupX = (1200 - lockupW) / 2;
-  const lockupY = 140;
+  const lockupY = 150;
 
   const ogSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${BG}"/>
   <g transform="translate(${lockupX}, ${lockupY}) scale(${scale})">${inner}</g>
-  <text x="600" y="500" text-anchor="middle"
+  <text x="600" y="${lockupY + lockupH + 70}" text-anchor="middle"
     font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
     font-size="42" font-weight="500" fill="${INK}" letter-spacing="-0.5">${TAGLINE}</text>
 </svg>`.trim();

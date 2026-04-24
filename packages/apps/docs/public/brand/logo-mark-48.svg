@@ -1,24 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" role="img" aria-label="a14y">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" fill="none" role="img" aria-label="a14y">
   <defs>
-    <radialGradient id="a14y-glow-48" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#b8eff7" stop-opacity="0.95"/>
+    <radialGradient id="a14y-mark48-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#b8eff7" stop-opacity="1"/>
       <stop offset="55%" stop-color="#4de0f0" stop-opacity="0.35"/>
       <stop offset="100%" stop-color="#4de0f0" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <circle cx="44" cy="64" r="32" fill="url(#a14y-glow-48)"/>
-
-  <circle cx="60" cy="60" r="38" stroke="#1b2763" stroke-width="7" fill="#ffffff"/>
-
-  <rect x="42" y="36" width="36" height="48" rx="3" stroke="#1b2763" stroke-width="3" fill="#ffffff"/>
-  <g stroke="#4de0f0" stroke-width="4" stroke-linecap="round">
-    <line x1="48" y1="46" x2="72" y2="46"/>
-    <line x1="48" y1="54" x2="72" y2="54"/>
-    <line x1="48" y1="62" x2="72" y2="62"/>
-    <line x1="48" y1="70" x2="66" y2="70"/>
+  <g stroke="#1b2763" stroke-width="4" stroke-linecap="round">
+    <line x1="132" y1="120" x2="101" y2="66"/>
+    <line x1="132" y1="120" x2="39" y2="66"/>
+    <line x1="132" y1="120" x2="8"  y2="120"/>
+    <line x1="132" y1="120" x2="39" y2="174"/>
+    <line x1="132" y1="120" x2="101" y2="174"/>
+    <line x1="101" y1="66"  x2="39"  y2="66"/>
+    <line x1="39"  y1="66"  x2="8"   y2="120"/>
+    <line x1="8"   y1="120" x2="39"  y2="174"/>
+    <line x1="39"  y1="174" x2="101" y2="174"/>
+    <line x1="101" y1="174" x2="132" y2="120"/>
   </g>
+  <g fill="#1b2763">
+    <circle cx="132" cy="120" r="6"/>
+    <circle cx="101" cy="66"  r="6"/>
+    <circle cx="39"  cy="66"  r="6"/>
+    <circle cx="8"   cy="120" r="6"/>
+    <circle cx="39"  cy="174" r="6"/>
+    <circle cx="101" cy="174" r="6"/>
+  </g>
+  <circle cx="70" cy="120" r="34" fill="url(#a14y-mark48-glow)"/>
+  <circle cx="70" cy="120" r="9" fill="#4de0f0"/>
 
-  <line x1="88" y1="88" x2="110" y2="110" stroke="#1b2763" stroke-width="11" stroke-linecap="round"/>
-  <line x1="93" y1="93" x2="105" y2="105" stroke="#4de0f0" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="170" cy="120" r="62" fill="#ffffff" stroke="#1b2763" stroke-width="8"/>
+  <rect x="142" y="74" width="64" height="96" rx="3" fill="#ffffff" stroke="#1b2763" stroke-width="4.5"/>
+  <g fill="#4de0f0">
+    <rect x="150" y="88"  width="36" height="8" rx="1.5"/>
+    <rect x="150" y="108" width="48" height="8" rx="1.5"/>
+    <rect x="150" y="128" width="48" height="8" rx="1.5"/>
+    <rect x="150" y="148" width="32" height="8" rx="1.5"/>
+  </g>
+  <rect x="198" y="80" width="8" height="84" rx="2" fill="#4de0f0"/>
+  <line x1="214" y1="164" x2="260" y2="210" stroke="#1b2763" stroke-width="16" stroke-linecap="round"/>
+  <line x1="220" y1="170" x2="252" y2="202" stroke="#4de0f0" stroke-width="4" stroke-linecap="round"/>
 </svg>
