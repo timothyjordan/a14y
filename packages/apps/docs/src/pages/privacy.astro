@@ -1,0 +1,73 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Build-time stamp. Astro is SSG so this value is fixed per deploy —
+// the freshness signal readers (and agents) look for.
+const lastUpdated = new Date().toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title="Privacy · a14y"
+  description="Privacy policy for the a14y CLI and Chrome extension — nothing is collected, nothing is transmitted to a14y-owned servers."
+>
+  <section class="hero">
+    <span class="eyebrow">Privacy</span>
+    <h1>Privacy</h1>
+    <p class="lead">
+      a14y — the spec, the CLI, and the Chrome extension — runs entirely on your
+      machine. Nothing about the sites you audit, the URLs you enter, or the
+      pages you fetch is transmitted to a14y-owned servers. There are no a14y
+      servers.
+    </p>
+  </section>
+
+  <h2>What the tools do locally</h2>
+  <p>
+    Both the <a href="https://www.npmjs.com/package/a14y" rel="noopener">CLI</a>
+    and the <a href={`${base}/#tools`}>Chrome extension</a> run the open
+    <a href={`${base}/spec/`}>a14y scorecard</a> against a URL you provide. The
+    only network traffic they generate is the HTTP request to fetch the page (or,
+    in <code>site</code> mode, the same-origin pages the crawler follows from
+    the entry URL). Those requests originate from your machine or your browser,
+    not from a14y infrastructure, and they behave exactly like any other
+    browser tab you open to the same site.
+  </p>
+
+  <h2>What the extension stores</h2>
+  <p>
+    The Chrome extension uses <code>chrome.storage.local</code> to remember the
+    last twenty audit runs — URL, scorecard version, timestamp, pass/fail
+    summary. That history is visible on the extension's report page and is
+    never sent anywhere. You can clear it at any time by removing the extension
+    from Chrome; uninstalling wipes <code>chrome.storage.local</code>.
+  </p>
+
+  <h2>What the CLI stores</h2>
+  <p>
+    The CLI writes its output to stdout (or to a file if you pass
+    <code>--output</code>). It does not write anywhere else. There is no
+    telemetry, no metrics endpoint, no analytics hook. You can verify this by
+    reading the source at
+    <a href="https://github.com/timothyjordan/a14y/tree/main/packages/apps/cli" rel="noopener">
+      github.com/timothyjordan/a14y
+    </a>.
+  </p>
+
+  <h2>No third parties</h2>
+  <p>
+    a14y has no third-party dependencies that phone home. No Google Analytics,
+    no error-reporting SDKs, no A/B-testing frameworks, no feature flags. The
+    site you're reading right now is a static site on GitHub Pages; the CLI and
+    extension are installable packages you run yourself.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions, concerns, or security reports can go to
+    <a href="mailto:timothy@timothyjordan.com">timothy@timothyjordan.com</a>.
+  </p>
+
+  <p class="lead" style="margin-top:32px;font-size:13px;">Last updated: {lastUpdated}.</p>
+</BaseLayout>
