@@ -11,6 +11,10 @@
   --scope-site: #007aff;
   --scope-page: #34c759;
   --accent: var(--scope-site);
+  --brand-ink: #1b2763;
+  --brand-ink-hover: #263075;
+  --brand-cyan: #4de0f0;
+  --brand-cyan-soft: #b8eff7;
   --max-width: 900px;
   --max-width-wide: 1040px;
   --radius: 10px;
@@ -100,12 +104,23 @@ pre code {
   gap: 16px;
 }
 .site-header a.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--text);
   letter-spacing: -0.01em;
+  line-height: 1;
 }
 .site-header a.brand:hover { text-decoration: none; }
+.site-header .brand-mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+}
+.site-header .brand-word { display: inline-block; }
 
 .site-nav {
   display: flex;

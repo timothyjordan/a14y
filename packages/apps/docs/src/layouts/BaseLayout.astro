@@ -98,10 +98,14 @@ const jsonLd = {
     <title>{title}</title>
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="text/markdown" href={mirrorHref} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/brand/favicon.svg`} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="article" />
+    <meta property="og:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
     <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -123,7 +127,10 @@ const jsonLd = {
   <body>
     <header class="site-header">
       <div class="site-header-inner">
-        <a class="brand" href={`${base}/`}>a14y</a>
+        <a class="brand" href={`${base}/`} aria-label="a14y home">
+          <img class="brand-mark" src={`${base}/brand/logo-mark.svg`} width="28" height="28" alt="" />
+          <span class="brand-word">a14y</span>
+        </a>
         <nav class="site-nav" aria-label="Primary">
           <a href={`${base}/spec/`}>Spec</a>
           <a href={`${base}/scorecards/`}>Scorecard</a>
@@ -178,7 +185,7 @@ const jsonLd = {
       <slot />
     </main>
     <footer class="site-footer">
-      a14y · <a href={`${base}/spec/`}>spec</a> · <a href={`${base}/scorecards/`}>scorecard</a> · <a href={`${base}/glossary/`}>glossary</a> · <a href="https://github.com/timothyjordan/a14y" rel="noopener">source</a>
+      a14y · <a href={`${base}/spec/`}>spec</a> · <a href={`${base}/scorecards/`}>scorecard</a> · <a href={`${base}/glossary/`}>glossary</a> · <a href={`${base}/privacy/`}>privacy</a> · <a href="https://github.com/timothyjordan/a14y" rel="noopener">source</a>
     </footer>
     <script is:inline>
       // Theme toggle + clipboard-copy handlers. Kept inline so the
