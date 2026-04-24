@@ -1,6 +1,6 @@
 {
   "name": "@a14y/extension",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-icons.mjs",
