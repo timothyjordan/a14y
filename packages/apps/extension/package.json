@@ -3,9 +3,12 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
+    "prebuild": "node scripts/build-icons.mjs",
     "build": "vite build",
     "dev": "vite",
-    "test": "vitest run"
+    "test": "vitest run",
+    "icons": "node scripts/build-icons.mjs",
+    "package": "node scripts/package-extension.mjs"
   },
   "dependencies": {
     "@a14y/core": "*"
@@ -13,6 +16,8 @@
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.25",
     "@types/chrome": "^0.0.260",
+    "adm-zip": "^0.5.17",
+    "sharp": "^0.33.5",
     "typescript": "^5.3.3",
     "vite": "^5.4.0",
     "vitest": "^1.6.1"
