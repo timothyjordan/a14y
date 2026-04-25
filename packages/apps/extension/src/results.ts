@@ -3,6 +3,7 @@
 import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@a14y/core';
 import type { RunRequest, RunResponse } from './bridge';
 import { runToMarkdown } from './lib/markdown';
+import { attachThemeToggle } from './lib/theme';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const empty = $<HTMLElement>('empty');
@@ -19,6 +20,9 @@ const exportPromptBtn = $<HTMLButtonElement>('export-prompt');
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
 
 async function init() {
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn instanceof HTMLButtonElement) attachThemeToggle(themeBtn);
+
   const recent = await fetchRecentRuns();
   if (recent.length === 0) {
     empty.hidden = false;

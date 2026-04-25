@@ -86,6 +86,39 @@ body {
   color: var(--text-muted);
 }
 
+.theme-toggle {
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+.theme-icon { display: none; }
+/* Show the icon for the OPPOSITE theme — clicking it switches modes. */
+:root[data-theme='dark'] .icon-sun { display: block; }
+:root:not([data-theme='dark']) .icon-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .icon-sun { display: block; }
+  :root:not([data-theme='light']) .icon-moon { display: none; }
+}
+
 .field {
   display: flex;
   align-items: center;

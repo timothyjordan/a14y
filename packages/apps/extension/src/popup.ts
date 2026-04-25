@@ -8,6 +8,7 @@ import {
   type RunRequest,
   type StartRunResponse,
 } from './bridge';
+import { attachThemeToggle } from './lib/theme';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -25,6 +26,8 @@ const openResultsLink = $<HTMLAnchorElement>('open-results');
 let activeTabUrl = '';
 
 async function init() {
+  attachThemeToggle($<HTMLButtonElement>('theme-toggle'));
+
   for (const card of listScorecards()) {
     const opt = document.createElement('option');
     opt.value = card.version;

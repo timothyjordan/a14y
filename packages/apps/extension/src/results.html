@@ -3,26 +3,47 @@
   <head>
     <meta charset="utf-8" />
     <title>Agent Readability — Report</title>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('a14y-theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="stylesheet" href="popup.css" />
     <style>
       body { width: 720px; max-width: 100%; }
+      .report-header { display: flex; align-items: center; gap: 12px; }
+      .report-header h1 { flex: 1; }
       table { width: 100%; border-collapse: collapse; font-size: 12px; }
-      th, td { padding: 6px 8px; border-bottom: 1px solid #e5e5ea; text-align: left; }
-      th { font-size: 11px; text-transform: uppercase; color: #6e6e73; letter-spacing: 0.04em; }
-      .pass { color: #34c759; }
+      th, td { padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+      th { font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em; }
+      .pass { color: var(--scope-page); }
       .fail { color: #ff3b30; }
       .warn { color: #ff9500; }
-      .na { color: #8e8e93; }
+      .na { color: var(--text-muted); }
       .error { color: #ff3b30; font-weight: 600; }
       details { margin-bottom: 12px; }
       summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
-      .group-title { font-weight: 600; margin: 12px 0 4px; color: #1d1d1f; }
+      .group-title { font-weight: 600; margin: 12px 0 4px; color: var(--text); }
       h2 { font-size: 16px; margin: 18px 0 8px; }
     </style>
   </head>
   <body>
-    <header>
+    <header class="report-header">
       <h1>Agent Readability Report</h1>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg class="theme-icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="theme-icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
     </header>
     <main>
       <div id="empty" hidden>
