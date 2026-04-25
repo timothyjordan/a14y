@@ -51,6 +51,19 @@ describe('results page redesign (TJ-211)', () => {
     expect(html).toMatch(/<footer class="site-footer">[\s\S]*a14y\.dev[\s\S]*Privacy/);
   });
 
+  it('places download buttons directly under the scorecard, above site checks (TJ-212)', () => {
+    // Use indexes within the report block to assert order.
+    const idxScorecard = html.indexOf('id="scorecard"');
+    const idxButtons = html.indexOf('id="export-buttons"');
+    const idxSiteChecks = html.indexOf('id="site-checks"');
+    expect(idxScorecard).toBeGreaterThan(-1);
+    expect(idxButtons).toBeGreaterThan(idxScorecard);
+    expect(idxSiteChecks).toBeGreaterThan(idxButtons);
+    // Bottom row is gone — there's exactly one #export-buttons element.
+    const matches = html.match(/id="export-buttons"/g) ?? [];
+    expect(matches).toHaveLength(1);
+  });
+
   it('does not hard-code colors except for white accents', () => {
     // The new design language depends entirely on CSS variables. The only
     // permitted literal is the white magnifying-glass body in the brand
