@@ -1,0 +1,61 @@
+import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const root = path.resolve(__dirname, '..');
+const html = readFileSync(path.join(root, 'src/results.html'), 'utf-8');
+const tokens = readFileSync(path.join(root, 'src/styles/tokens.css'), 'utf-8');
+const resultsCss = readFileSync(path.join(root, 'src/styles/results.css'), 'utf-8');
+
+describe('results page redesign (TJ-211)', () => {
+  it('uses the shared design-token stylesheet', () => {
+    // results.css imports tokens.css so the docs-site language flows in.
+    expect(resultsCss).toMatch(/@import\s+['"]\.\/tokens\.css['"]/);
+    // results.html links the results bundle (not the popup stylesheet).
+    expect(html).toMatch(/href="styles\/results\.css"/);
+    expect(html).not.toMatch(/href="popup\.css"/);
+  });
+
+  it('renders a sticky site header with brand and theme toggle', () => {
+    expect(html).toMatch(/<header[^>]+class="site-header"/);
+    expect(html).toMatch(/class="site-header-inner"/);
+    expect(html).toMatch(/class="brand"/);
+    expect(html).toMatch(/id="theme-toggle"/);
+    // Sticky positioning lives in the shared tokens, not inline.
+    expect(tokens).toMatch(/\.site-header[^}]*position:\s*sticky/);
+  });
+
+  it('renders a hero block with eyebrow, h1, and URL pill', () => {
+    expect(html).toMatch(/<section class="hero">[\s\S]*<span class="eyebrow">Report<\/span>[\s\S]*<h1>Agent Readability<\/h1>[\s\S]*<code id="report-url">/);
+  });
+
+  it('renders the score inside a .scorecard-callout', () => {
+    expect(html).toMatch(/<section id="scorecard" class="scorecard-callout">/);
+    expect(tokens).toMatch(/\.scorecard-callout/);
+  });
+
+  it('uses .check-list / .check-card components for site and page checks', () => {
+    expect(html).toMatch(/<ul id="site-checks" class="check-list">/);
+    expect(html).toMatch(/<ul id="page-checks" class="check-list">/);
+    expect(tokens).toMatch(/\.check-card/);
+    expect(tokens).toMatch(/\.check-card\.status-pass/);
+    expect(tokens).toMatch(/\.check-card\.status-fail/);
+  });
+
+  it('collapses history into a <details> element', () => {
+    expect(html).toMatch(/<details id="history-section"[^>]*class="history-section"/);
+    expect(html).toMatch(/<summary>Recent audits<\/summary>/);
+  });
+
+  it('renders a site-footer with a14y.dev links', () => {
+    expect(html).toMatch(/<footer class="site-footer">[\s\S]*a14y\.dev[\s\S]*Privacy/);
+  });
+
+  it('does not hard-code colors except for white accents', () => {
+    // The new design language depends entirely on CSS variables. The only
+    // permitted literal is the white magnifying-glass body in the brand
+    // mark SVG.
+    const banned = ['#1d1d1f', '#6e6e73', '#34c759', '#ff3b30', '#1b2763', '#0066cc'];
+    for (const hex of banned) expect(html).not.toContain(hex);
+  });
+});

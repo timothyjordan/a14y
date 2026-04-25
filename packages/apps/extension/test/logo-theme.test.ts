@@ -7,6 +7,22 @@ const root = path.resolve(__dirname, '..');
 describe('popup logo theme-aware colors (TJ-207)', () => {
   const html = readFileSync(path.join(root, 'src/popup.html'), 'utf-8');
   const css = readFileSync(path.join(root, 'src/popup.css'), 'utf-8');
+  const resultsHtml = readFileSync(path.join(root, 'src/results.html'), 'utf-8');
+  const tokensCss = readFileSync(path.join(root, 'src/styles/tokens.css'), 'utf-8');
+
+  it('results page also inlines the same theme-aware brand mark', () => {
+    expect(resultsHtml).toMatch(/<svg[^>]+class="brand-mark"/);
+    const svgMatch = resultsHtml.match(/<svg[^>]+class="brand-mark"[\s\S]*?<\/svg>/);
+    expect(svgMatch).toBeTruthy();
+    expect(svgMatch![0]).not.toContain('#1b2763');
+    expect(svgMatch![0]).toMatch(/stroke="currentColor"/);
+  });
+
+  it('shared tokens.css drives --logo-color across both pages', () => {
+    expect(tokensCss).toMatch(/--logo-color: var\(--brand-ink\)/);
+    expect(tokensCss).toMatch(/\[data-theme='dark'\][\s\S]*?--logo-color: var\(--brand-cyan\)/);
+    expect(tokensCss).toMatch(/\.brand-mark[^}]*color: var\(--logo-color\)/);
+  });
 
   it('inlines the brand mark as SVG (not <img>)', () => {
     expect(html).toMatch(/<svg[^>]+class="brand-mark"/);
