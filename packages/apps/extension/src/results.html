@@ -2,58 +2,145 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Agent Readability — Report</title>
-    <link rel="stylesheet" href="popup.css" />
-    <style>
-      body { width: 720px; max-width: 100%; }
-      table { width: 100%; border-collapse: collapse; font-size: 12px; }
-      th, td { padding: 6px 8px; border-bottom: 1px solid #e5e5ea; text-align: left; }
-      th { font-size: 11px; text-transform: uppercase; color: #6e6e73; letter-spacing: 0.04em; }
-      .pass { color: #34c759; }
-      .fail { color: #ff3b30; }
-      .warn { color: #ff9500; }
-      .na { color: #8e8e93; }
-      .error { color: #ff3b30; font-weight: 600; }
-      details { margin-bottom: 12px; }
-      summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
-      .group-title { font-weight: 600; margin: 12px 0 4px; color: #1d1d1f; }
-      h2 { font-size: 16px; margin: 18px 0 8px; }
-    </style>
+    <title>a14y — Report</title>
+    <script>
+      // Pre-paint theme sync — see tokens.css for matching CSS rules.
+      (function () {
+        try {
+          var t = localStorage.getItem('a14y-theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="styles/results.css" />
   </head>
   <body>
-    <header>
-      <h1>Agent Readability Report</h1>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="https://a14y.dev" target="_blank" rel="noopener">
+          <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" width="26" height="26" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="10">
+              <line x1="150.5" y1="25.5" x2="25.5" y2="75.5"/>
+              <line x1="275.5" y1="75.5" x2="150.5" y2="25.5"/>
+              <line x1="275.5" y1="223" x2="275.5" y2="75.5"/>
+              <line x1="150.5" y1="275.5" x2="275.5" y2="223"/>
+              <line x1="25.5" y1="225.5" x2="148.08" y2="275.5"/>
+              <line x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+              <line x1="275.5" y1="75.5" x2="25.5" y2="225.5"/>
+              <line x1="25.5" y1="75.5" x2="275.5" y2="223"/>
+              <line x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+              <line x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+              <line x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+            </g>
+            <g fill="currentColor" stroke="currentColor" stroke-miterlimit="10">
+              <circle cx="25.5" cy="75.5" r="25"/>
+              <circle cx="150.5" cy="275.5" r="25"/>
+              <circle cx="275.5" cy="225.5" r="25"/>
+              <circle cx="25.5" cy="225.5" r="25"/>
+              <circle cx="275.5" cy="75.5" r="25"/>
+              <circle cx="150.5" cy="25.5" r="25"/>
+              <circle cx="150.5" cy="150.5" r="25"/>
+            </g>
+            <circle cx="262.5" cy="150.5" r="112.5" fill="#fff" fill-opacity="0.9"/>
+            <circle cx="262.75" cy="150.5" r="112.5" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/>
+            <line x1="375.5" y1="262.5" x2="342.48" y2="229.41" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/>
+            <line x1="356.79" y1="243.79" x2="414.48" y2="301.48" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/>
+            <g fill="none" stroke="currentColor" stroke-width="20" stroke-miterlimit="10">
+              <line x1="200.5" y1="90.5" x2="325.5" y2="90.5"/>
+              <line x1="200.5" y1="130.45" x2="325.5" y2="130.45"/>
+              <line x1="200.5" y1="170.43" x2="325.5" y2="170.43"/>
+              <line x1="200.5" y1="210.49" x2="325.5" y2="210.49"/>
+            </g>
+          </svg>
+          <span class="brand-word">a14y</span>
+        </a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="theme-icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="theme-icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
     </header>
-    <main>
-      <div id="empty" hidden>
-        <p>No audits yet. Open the popup on any docs site and click <strong>Check this page</strong>.</p>
+
+    <main class="container">
+      <section id="current-run" class="current-run" hidden>
+        <span class="eyebrow">Auditing</span>
+        <div class="cr-target">
+          <code id="cr-url" class="cr-url"></code>
+          <span id="cr-mode" class="chip"></span>
+        </div>
+        <progress id="cr-progress" value="0" max="100"></progress>
+        <p id="cr-phase" class="status">Starting…</p>
+      </section>
+
+      <section id="run-error" class="run-error" hidden>
+        <h2>Audit failed</h2>
+        <p id="cr-error-msg" class="error"></p>
+        <p class="lead">You can try again from the extension popup on the page you wanted to audit.</p>
+      </section>
+
+      <div id="empty" class="hero" hidden>
+        <span class="eyebrow">Welcome</span>
+        <h1>No audits yet</h1>
+        <p class="lead">Open the extension popup on any website and click <strong>Check this page</strong> or <strong>Scan whole site</strong> to get started.</p>
       </div>
+
       <div id="report" hidden>
-        <div class="row">
-          <span class="label">URL</span>
-          <code id="report-url"></code>
+        <section class="hero">
+          <span class="eyebrow">Report</span>
+          <h1>Agent Readability</h1>
+          <p class="lead" id="report-target">
+            <code id="report-url"></code>
+            <span id="report-mode-chip" class="chip"></span>
+          </p>
+        </section>
+
+        <section id="scorecard" class="scorecard-callout">
+          <div class="score-line">
+            <strong id="report-score" class="score-number"></strong>
+            <span id="report-meta" class="score-meta"></span>
+          </div>
+        </section>
+
+        <div class="cta-row" id="export-buttons">
+          <button id="export-json" class="btn btn--ghost" type="button">Download JSON</button>
+          <button id="export-markdown" class="btn btn--ghost" type="button">Download Markdown</button>
+          <button id="export-prompt" class="btn btn--primary" type="button">Download fix prompt</button>
         </div>
-        <div class="row">
-          <span class="label">Score</span>
-          <strong id="report-score"></strong>
-          <span id="report-meta" class="status"></span>
-        </div>
-        <h2>Site checks</h2>
-        <table id="site-table"><tbody></tbody></table>
-        <h2 id="page-section-title">Page checks</h2>
-        <div id="pages-container"></div>
-        <div class="export-buttons" style="margin-top: 16px; display: flex; gap: 8px;">
-          <button id="export-json" type="button">Download JSON</button>
-          <button id="export-markdown" type="button">Download Markdown</button>
-          <button id="export-prompt" type="button">Download fix prompt</button>
-        </div>
+
+        <section class="group-section">
+          <h2>Site checks <span class="count" id="site-count"></span></h2>
+          <ul id="site-checks" class="check-list"></ul>
+        </section>
+
+        <section class="group-section">
+          <h2 id="page-section-title">Page checks</h2>
+          <ul id="page-checks" class="check-list"></ul>
+          <div id="pages-container"></div>
+        </section>
       </div>
-      <h2>History</h2>
-      <table id="history">
-        <thead><tr><th>Score</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
-        <tbody></tbody>
-      </table>
+
+      <details id="history-section" class="history-section" hidden>
+        <summary>Recent audits</summary>
+        <table id="history">
+          <thead><tr><th>Score</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </details>
     </main>
+
+    <footer class="site-footer">
+      <a href="https://a14y.dev" target="_blank" rel="noopener">a14y.dev</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://a14y.dev/privacy/" target="_blank" rel="noopener">Privacy</a>
+    </footer>
+
     <script type="module" src="results.ts"></script>
   </body>
 </html>
