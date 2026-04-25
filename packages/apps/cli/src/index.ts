@@ -12,6 +12,7 @@ import {
 } from '@a14y/core';
 import chalk from 'chalk';
 import ora, { type Ora } from 'ora';
+import { normalizeUrl, UnreachableUrlError } from './normalizeUrl';
 
 const STATUS_ICON: Record<CheckResult['status'], string> = {
   pass: chalk.green('✓'),
@@ -63,8 +64,24 @@ program
       process.exit(2);
     }
 
+    let resolvedUrl: string;
+    try {
+      const normalized = await normalizeUrl(url);
+      resolvedUrl = normalized.url;
+      if (normalized.rewrote) {
+        console.error(chalk.gray(`→ Resolved to ${resolvedUrl}`));
+      }
+    } catch (e) {
+      if (e instanceof UnreachableUrlError) {
+        console.error(chalk.red('Error:'), e.message);
+      } else {
+        console.error(chalk.red('Error:'), (e as Error).message);
+      }
+      process.exit(1);
+    }
+
     const useSpinner = options.output === 'text' && !options.verbose && process.stderr.isTTY;
-    const spinner: Ora | null = useSpinner ? ora({ text: `Auditing ${url}…`, stream: process.stderr }).start() : null;
+    const spinner: Ora | null = useSpinner ? ora({ text: `Auditing ${resolvedUrl}…`, stream: process.stderr }).start() : null;
 
     const onProgress = (event: ProgressEvent) => {
       if (spinner) {
@@ -79,7 +96,7 @@ program
     let result: SiteRun;
     try {
       result = await validate({
-        url,
+        url: resolvedUrl,
         mode: options.mode,
         scorecardVersion: options.scorecard,
         maxPages: options.maxPages,

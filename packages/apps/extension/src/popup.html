@@ -3,13 +3,66 @@
   <head>
     <meta charset="utf-8" />
     <title>a14y — Agent Readability</title>
+    <script>
+      // Pre-paint theme sync: read the stored preference before the body
+      // renders so we never flash the wrong theme. Mirrors a14y.dev.
+      (function () {
+        try {
+          var t = localStorage.getItem('a14y-theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <header class="brand-row">
-      <img class="brand-mark" src="icons/logo-mark.svg" alt="" width="22" height="22" />
+      <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" width="22" height="22" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="10">
+          <line x1="150.5" y1="25.5" x2="25.5" y2="75.5"/>
+          <line x1="275.5" y1="75.5" x2="150.5" y2="25.5"/>
+          <line x1="275.5" y1="223" x2="275.5" y2="75.5"/>
+          <line x1="150.5" y1="275.5" x2="275.5" y2="223"/>
+          <line x1="25.5" y1="225.5" x2="148.08" y2="275.5"/>
+          <line x1="25.5" y1="75.5" x2="25.5" y2="225.5"/>
+          <line x1="275.5" y1="75.5" x2="25.5" y2="225.5"/>
+          <line x1="25.5" y1="75.5" x2="275.5" y2="223"/>
+          <line x1="150.5" y1="25.5" x2="150.5" y2="275.5"/>
+          <line x1="25.5" y1="75.5" x2="275.5" y2="75.5"/>
+          <line x1="25.5" y1="225.5" x2="275.5" y2="225.5"/>
+        </g>
+        <g fill="currentColor" stroke="currentColor" stroke-miterlimit="10">
+          <circle cx="25.5" cy="75.5" r="25"/>
+          <circle cx="150.5" cy="275.5" r="25"/>
+          <circle cx="275.5" cy="225.5" r="25"/>
+          <circle cx="25.5" cy="225.5" r="25"/>
+          <circle cx="275.5" cy="75.5" r="25"/>
+          <circle cx="150.5" cy="25.5" r="25"/>
+          <circle cx="150.5" cy="150.5" r="25"/>
+        </g>
+        <circle cx="262.5" cy="150.5" r="112.5" fill="#fff" fill-opacity="0.9"/>
+        <circle cx="262.75" cy="150.5" r="112.5" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/>
+        <line x1="375.5" y1="262.5" x2="342.48" y2="229.41" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/>
+        <line x1="356.79" y1="243.79" x2="414.48" y2="301.48" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/>
+        <g fill="none" stroke="currentColor" stroke-width="20" stroke-miterlimit="10">
+          <line x1="200.5" y1="90.5" x2="325.5" y2="90.5"/>
+          <line x1="200.5" y1="130.45" x2="325.5" y2="130.45"/>
+          <line x1="200.5" y1="170.43" x2="325.5" y2="170.43"/>
+          <line x1="200.5" y1="210.49" x2="325.5" y2="210.49"/>
+        </g>
+      </svg>
       <span class="brand-word">a14y</span>
-      <span class="eyebrow">Agent readability</span>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        <svg class="theme-icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="theme-icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
     </header>
 
     <main>
@@ -28,14 +81,7 @@
         <button id="check-site" class="btn btn--ghost" type="button">Scan whole site</button>
       </div>
 
-      <progress id="progress" value="0" max="100" hidden></progress>
       <p id="status" class="status"></p>
-
-      <section id="result" class="score-card" hidden>
-        <div id="score" class="score-number"></div>
-        <div id="score-meta" class="score-meta"></div>
-        <a id="open-results" class="result-link" href="#">View full report →</a>
-      </section>
     </main>
 
     <footer class="popup-footer">
