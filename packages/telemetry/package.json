@@ -1,0 +1,49 @@
+{
+  "name": "@a14y/telemetry",
+  "version": "0.1.0",
+  "description": "Anonymous, opt-out telemetry shim shared by the a14y CLI and Chrome extension. Provider-agnostic core with a built-in GA4 Measurement Protocol adapter.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyjordan/a14y.git",
+    "directory": "packages/telemetry"
+  },
+  "homepage": "https://a14y.dev",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/cjs/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./node": {
+      "types": "./dist/cjs/runtime/node.d.ts",
+      "import": "./dist/esm/runtime/node.js",
+      "require": "./dist/cjs/runtime/node.js"
+    },
+    "./chrome-ext": {
+      "types": "./dist/cjs/runtime/chromeExt.d.ts",
+      "import": "./dist/esm/runtime/chromeExt.js",
+      "require": "./dist/cjs/runtime/chromeExt.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  }
+}

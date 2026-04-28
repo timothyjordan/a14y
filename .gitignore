@@ -44,3 +44,8 @@ coverage/
 # Astro generated (docs workspace)
 packages/apps/docs/.astro/
 packages/apps/docs/src/env.d.ts
+
+# Build-time injected telemetry config (provider keys)
+packages/apps/cli/src/generated/
+packages/apps/extension/src/generated/
+packages/apps/docs/src/generated/

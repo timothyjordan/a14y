@@ -55,6 +55,18 @@
     </header>
 
     <main>
+      <aside id="telemetry-banner" class="telemetry-banner" hidden>
+        <p>
+          a14y collects anonymous usage data to help improve the extension.
+          No URLs or page content are recorded.
+          <a href="https://a14y.dev/privacy/" target="_blank" rel="noopener">Learn more</a>
+        </p>
+        <div class="telemetry-banner-actions">
+          <button id="telemetry-banner-disable" type="button" class="btn-link">Turn off</button>
+          <button id="telemetry-banner-dismiss" type="button" class="btn-link">Got it</button>
+        </div>
+      </aside>
+
       <div class="field">
         <span class="field-label">URL</span>
         <code id="current-url" class="url-pill">…</code>

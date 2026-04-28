@@ -3,7 +3,8 @@
   "version": "0.4.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/build-icons.mjs",
+    "prebuild": "node scripts/build-icons.mjs && node ../../../scripts/inject-telemetry-config.mjs extension",
+    "pretest": "node ../../../scripts/inject-telemetry-config.mjs extension",
     "build": "vite build",
     "dev": "vite",
     "test": "vitest run",
@@ -11,7 +12,8 @@
     "package": "node scripts/package-extension.mjs"
   },
   "dependencies": {
-    "@a14y/core": "*"
+    "@a14y/core": "*",
+    "@a14y/telemetry": "*"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.25",

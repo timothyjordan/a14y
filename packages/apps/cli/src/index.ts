@@ -10,9 +10,22 @@ import {
   type ProgressEvent,
   type SiteRun,
 } from '@a14y/core';
+import {
+  bucketScore,
+  bucketPageCount,
+  bucketIssueCount,
+  bucketDurationMs,
+  errorClassName,
+} from '@a14y/telemetry';
 import chalk from 'chalk';
 import ora, { type Ora } from 'ora';
 import { normalizeUrl, UnreachableUrlError } from './normalizeUrl';
+import {
+  initCliTelemetry,
+  maybeShowFirstRunNotice,
+  flushAndShutdown,
+  track,
+} from './telemetry';
 
 const STATUS_ICON: Record<CheckResult['status'], string> = {
   pass: chalk.green('✓'),
@@ -27,7 +40,8 @@ const program = new Command();
 program
   .name('a14y')
   .description('Agent readability scorer — audits any website against the versioned a14y scorecard')
-  .version('0.3.0');
+  .version('0.3.0')
+  .option('--no-telemetry', 'disable anonymous usage telemetry for this run');
 
 program
   .command('check <url>')
@@ -46,9 +60,10 @@ program
   .option('-o, --output <format>', 'text, json, or agent-prompt', 'text')
   .option('--fail-under <score>', 'exit 1 if the final score is below this threshold', (v) => parseInt(v, 10))
   .option('-v, --verbose', 'stream progress events to stderr')
-  .action(async (url: string, options) => {
+  .action(async (url: string, options, command) => {
     if (options.mode !== 'page' && options.mode !== 'site') {
       console.error(chalk.red(`Invalid --mode "${options.mode}", expected "page" or "site"`));
+      track('cli_error', { command: 'check', phase: 'normalize', error_class: 'InvalidArg' });
       process.exit(2);
     }
     if (
@@ -61,8 +76,20 @@ program
           `Invalid --output "${options.output}", expected "text", "json", or "agent-prompt"`,
         ),
       );
+      track('cli_error', { command: 'check', phase: 'normalize', error_class: 'InvalidArg' });
       process.exit(2);
     }
+
+    const runtime = command.parent?.runtime as Awaited<ReturnType<typeof initCliTelemetry>>['runtime'] | undefined;
+    if (runtime) await maybeShowFirstRunNotice(runtime, options.output);
+
+    track('cli_command_invoked', {
+      command: 'check',
+      mode: options.mode,
+      scorecard_version: options.scorecard,
+      output_format: options.output,
+      verbose: options.verbose === true,
+    });
 
     let resolvedUrl: string;
     try {
@@ -77,6 +104,11 @@ program
       } else {
         console.error(chalk.red('Error:'), (e as Error).message);
       }
+      track('cli_error', {
+        command: 'check',
+        phase: 'normalize',
+        error_class: errorClassName(e),
+      });
       process.exit(1);
     }
 
@@ -94,6 +126,7 @@ program
     };
 
     let result: SiteRun;
+    const runStart = Date.now();
     try {
       result = await validate({
         url: resolvedUrl,
@@ -108,10 +141,29 @@ program
     } catch (e) {
       if (spinner) spinner.fail((e as Error).message);
       else console.error(chalk.red('Error:'), (e as Error).message);
+      track('cli_error', {
+        command: 'check',
+        phase: 'validate',
+        error_class: errorClassName(e),
+      });
       process.exit(1);
     }
 
     if (spinner) spinner.succeed(`Score: ${result.summary.score}/100`);
+
+    const thresholdBreached =
+      typeof options.failUnder === 'number' && result.summary.score < options.failUnder;
+    track('cli_run_completed', {
+      mode: options.mode,
+      scorecard_version: result.scorecardVersion,
+      score_bucket: bucketScore(result.summary.score),
+      page_count_bucket: bucketPageCount(result.pages.length),
+      duration_ms_bucket: bucketDurationMs(Date.now() - runStart),
+      failed_bucket: bucketIssueCount(result.summary.failed),
+      warned_bucket: bucketIssueCount(result.summary.warned),
+      errored_bucket: bucketIssueCount(result.summary.errored),
+      threshold_breached: thresholdBreached,
+    });
 
     if (options.output === 'json') {
       // JSON output goes to stdout so it can be piped into jq.
@@ -124,7 +176,7 @@ program
       printTextReport(result);
     }
 
-    if (typeof options.failUnder === 'number' && result.summary.score < options.failUnder) {
+    if (thresholdBreached) {
       console.error(
         chalk.red(`\nScore ${result.summary.score} is below threshold ${options.failUnder}`),
       );
@@ -137,6 +189,10 @@ program
   .description('List every shipped scorecard version and the checks each one pins')
   .option('-o, --output <format>', 'text or json', 'text')
   .action((options) => {
+    track('cli_command_invoked', {
+      command: 'scorecards',
+      output_format: options.output,
+    });
     const cards = listScorecards();
     if (options.output === 'json') {
       console.log(JSON.stringify(cards, null, 2));
@@ -188,10 +244,30 @@ if (firstPositional !== -1 && !KNOWN_COMMANDS.has(argv[firstPositional])) {
   argv.splice(firstPositional, 0, 'check');
 }
 
-program.parseAsync(argv).catch((e) => {
-  console.error(chalk.red('Fatal:'), (e as Error).message);
-  process.exit(1);
-});
+async function main(): Promise<void> {
+  const flagDisabled = argv.includes('--no-telemetry');
+  const { runtime } = await initCliTelemetry({ flagDisabled });
+  // Stash on the program so subcommand actions can read it for the first-run
+  // notice without a module-level singleton.
+  (program as unknown as { runtime: typeof runtime }).runtime = runtime;
+
+  try {
+    await program.parseAsync(argv);
+  } catch (e) {
+    track('cli_error', {
+      command: 'unknown',
+      phase: 'output',
+      error_class: errorClassName(e),
+    });
+    console.error(chalk.red('Fatal:'), (e as Error).message);
+    await flushAndShutdown();
+    process.exit(1);
+  }
+
+  await flushAndShutdown();
+}
+
+void main();
 
 function describeEvent(event: ProgressEvent): string {
   switch (event.type) {

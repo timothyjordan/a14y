@@ -260,3 +260,36 @@ progress::-moz-progress-bar { background: var(--text); }
   text-decoration: none;
 }
 .popup-footer a:hover { color: var(--text); }
+
+.telemetry-banner {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-alt);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.telemetry-banner p {
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+.telemetry-banner a {
+  color: var(--link);
+  text-decoration: none;
+}
+.telemetry-banner a:hover { text-decoration: underline; }
+.telemetry-banner-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--link);
+  font: inherit;
+  cursor: pointer;
+}
+.btn-link:hover { text-decoration: underline; }

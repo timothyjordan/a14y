@@ -1,0 +1,84 @@
+---
+// Privacy-first GA4 bootstrap. Renders nothing when:
+//   1. GA4_MEASUREMENT_ID is not injected (OSS clones, dev) — handled here.
+//   2. The browser sends Do Not Track — handled in the inline script below.
+//   3. The user has flipped the in-page opt-out on /privacy — handled below.
+import { GA4_MEASUREMENT_ID } from '~/generated/ga4-config';
+
+const measurementId = GA4_MEASUREMENT_ID;
+
+// Coarse path categorization keeps the URL itself out of telemetry while
+// still letting Explorations group views by section.
+function categorize(pathname: string): string {
+  const path = pathname.replace(/\/+$/, '') || '/';
+  if (path === '/' || path === '') return 'home';
+  if (path.startsWith('/spec')) return 'spec';
+  if (path.startsWith('/scorecards') || path.startsWith('/scorecard')) return 'scorecard';
+  if (path.startsWith('/check/') || path.startsWith('/checks')) return 'check_detail';
+  if (path.startsWith('/glossary')) return 'glossary';
+  if (path.startsWith('/privacy')) return 'privacy';
+  return 'other';
+}
+
+const pathCategory = categorize(Astro.url.pathname);
+---
+
+{measurementId && (
+  <script is:inline define:vars={{ measurementId, pathCategory }}>
+    (function () {
+      try {
+        var dnt = navigator.doNotTrack || (window).doNotTrack;
+        if (dnt === '1' || dnt === 'yes') return;
+      } catch (_) { /* ignore */ }
+      try {
+        if (localStorage.getItem('a14y:ga-opt-out') === '1') return;
+      } catch (_) { /* ignore */ }
+
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+      document.head.appendChild(s);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', measurementId, {
+        anonymize_ip: true,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
+        cookie_flags: 'SameSite=None;Secure',
+      });
+
+      gtag('event', 'docs_section_view', {
+        path_category: pathCategory,
+        app_name: 'docs',
+      });
+
+      document.addEventListener('click', function (event) {
+        var target = event.target;
+        var a = target && target.closest ? target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href) return;
+        var url;
+        try {
+          url = new URL(href, location.href);
+        } catch (_) {
+          return;
+        }
+        if (url.hostname === location.hostname) return;
+        var host = url.hostname;
+        var dest;
+        if (host.indexOf('github.com') !== -1) dest = 'github';
+        else if (host === 'www.npmjs.com' || host === 'npmjs.com' || host.indexOf('npmjs.com') !== -1) dest = 'npm';
+        else if (host.indexOf('chromewebstore.google.com') !== -1 || host.indexOf('chrome.google.com') !== -1) dest = 'chrome_web_store';
+        else dest = 'other';
+        gtag('event', 'outbound_click', {
+          destination: dest,
+          app_name: 'docs',
+        });
+      }, { capture: false });
+    })();
+  </script>
+)}

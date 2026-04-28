@@ -46,6 +46,7 @@ scorecard
 
 Options:
   -V, --version          output the version number
+  --no-telemetry         disable anonymous usage telemetry for this run
   -h, --help             display help for command
 
 Commands:

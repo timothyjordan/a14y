@@ -7,6 +7,8 @@ import {
 } from './bridge';
 import { attachThemeToggle } from './lib/theme';
 
+const SETTINGS_KEY = 'a14y:settings';
+
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
 const urlEl = $<HTMLElement>('current-url');
@@ -14,11 +16,15 @@ const scorecardEl = $<HTMLSelectElement>('scorecard');
 const checkPageBtn = $<HTMLButtonElement>('check-page');
 const checkSiteBtn = $<HTMLButtonElement>('check-site');
 const statusEl = $<HTMLElement>('status');
+const banner = $<HTMLElement>('telemetry-banner');
+const bannerDismiss = $<HTMLButtonElement>('telemetry-banner-dismiss');
+const bannerDisable = $<HTMLButtonElement>('telemetry-banner-disable');
 
 let activeTabUrl = '';
 
 async function init() {
   attachThemeToggle($<HTMLButtonElement>('theme-toggle'));
+  await initTelemetryBanner();
 
   for (const card of listScorecards()) {
     const opt = document.createElement('option');
@@ -70,6 +76,37 @@ async function startRun(mode: RunMode) {
   // so it picks up the live progress immediately.
   await chrome.tabs.create({ url: chrome.runtime.getURL('src/results.html') });
   window.close();
+}
+
+async function initTelemetryBanner(): Promise<void> {
+  const data = await chrome.storage.local.get(SETTINGS_KEY);
+  const settings = (data[SETTINGS_KEY] as { telemetryNoticeShown?: boolean; telemetryEnabled?: boolean } | undefined) ?? {};
+  if (settings.telemetryNoticeShown === true || settings.telemetryEnabled === false) return;
+  banner.hidden = false;
+  bannerDismiss.addEventListener('click', () => {
+    void persistNoticeShown();
+    banner.hidden = true;
+  });
+  bannerDisable.addEventListener('click', () => {
+    void persistTelemetryDisabled();
+    banner.hidden = true;
+  });
+}
+
+async function persistNoticeShown(): Promise<void> {
+  const data = await chrome.storage.local.get(SETTINGS_KEY);
+  const settings = (data[SETTINGS_KEY] as Record<string, unknown> | undefined) ?? {};
+  await chrome.storage.local.set({
+    [SETTINGS_KEY]: { ...settings, telemetryNoticeShown: true },
+  });
+}
+
+async function persistTelemetryDisabled(): Promise<void> {
+  const data = await chrome.storage.local.get(SETTINGS_KEY);
+  const settings = (data[SETTINGS_KEY] as Record<string, unknown> | undefined) ?? {};
+  await chrome.storage.local.set({
+    [SETTINGS_KEY]: { ...settings, telemetryEnabled: false, telemetryNoticeShown: true },
+  });
 }
 
 void init();

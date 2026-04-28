@@ -1,5 +1,6 @@
 ---
 import '~/styles/global.css';
+import Analytics from '~/components/Analytics.astro';
 import ScorecardSubHeader from '~/components/ScorecardSubHeader.astro';
 import { getLatestScorecardVersion } from '~/lib/scorecard-data';
 
@@ -109,6 +110,7 @@ const jsonLd = {
     <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <Analytics />
     <script is:inline>
       // Set data-theme before first paint to prevent FOUC. Light is
       // the default; OS preference is ignored — the user's explicit
