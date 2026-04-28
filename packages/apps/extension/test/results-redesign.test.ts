@@ -105,6 +105,20 @@ describe('results page redesign (TJ-211)', () => {
     expect(tokens).toMatch(/\.check-card:hover\s*\{[^}]*transform:\s*translateY/);
   });
 
+  it('contains no inline <script> blocks (MV3 CSP)', () => {
+    // MV3 disallows inline scripts — every <script> must have a src=.
+    // Catches regressions like the pre-paint theme script that crept
+    // back into popup.html / results.html.
+    const popup = readFileSync(path.join(root, 'src/popup.html'), 'utf-8');
+    const options = readFileSync(path.join(root, 'src/options.html'), 'utf-8');
+    for (const doc of [html, popup, options]) {
+      const scripts = doc.match(/<script[^>]*>/g) ?? [];
+      for (const tag of scripts) {
+        expect(tag, `inline <script> not allowed under MV3 CSP: ${tag}`).toMatch(/\ssrc=/);
+      }
+    }
+  });
+
   it('does not hard-code colors except for white accents', () => {
     // The new design language depends entirely on CSS variables. The only
     // permitted literal is the white magnifying-glass body in the brand
