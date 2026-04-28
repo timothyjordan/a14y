@@ -44,6 +44,8 @@ jobs:
         run: npm run build --workspace @a14y/core
 
       - name: Build @a14y/docs
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
         run: npm run build --workspace @a14y/docs
 
       - name: Configure Pages
