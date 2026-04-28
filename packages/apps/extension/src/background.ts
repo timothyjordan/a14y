@@ -2,6 +2,12 @@
 
 import { LATEST_SCORECARD, type SiteRun } from '@a14y/core';
 import {
+  bucketScore,
+  bucketPageCount,
+  bucketDurationMs,
+  errorClassName,
+} from '@a14y/telemetry';
+import {
   CURRENT_RUN_KEY,
   STALE_PROGRESS_MS,
   type CurrentRunState,
@@ -14,6 +20,13 @@ import {
   type RunResponse,
   type StartRunResponse,
 } from './bridge';
+import { initExtensionTelemetry, track, flush } from './telemetry';
+
+interface TelemetryMessage {
+  type: 'telemetry-event';
+  name: string;
+  props?: Record<string, unknown>;
+}
 
 const RUN_HISTORY_KEY = 'a14y:run-history';
 const HISTORY_LIMIT = 20;
@@ -30,6 +43,15 @@ const OFFSCREEN_JUSTIFICATION =
 // =========================================================================
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  // Telemetry forwarder: any context can post a telemetry-event message;
+  // the background is the only context that talks to the analytics endpoint.
+  if ((msg as TelemetryMessage).type === 'telemetry-event') {
+    const t = msg as TelemetryMessage;
+    track(t.name, t.props ?? {});
+    void flush();
+    return false;
+  }
+
   // Popup → background
   if ((msg as RunRequest).type === 'start-run') {
     void startRun(msg as RunRequest & { type: 'start-run' }).then((resp) => sendResponse(resp));
@@ -100,6 +122,11 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   await writeCurrentRun(initial);
   startKeepalive();
 
+  track('ext_audit_started', {
+    mode: msg.mode,
+    scorecard_version: initial.scorecardVersion,
+  });
+
   try {
     // Force a fresh module load every run by closing any prior offscreen
     // doc first. The offscreen module's main() only runs once per page
@@ -118,6 +145,8 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
       lastProgressAt: new Date().toISOString(),
     });
     stopKeepalive();
+    track('ext_audit_error', { error_class: errorClassName(e), phase: 'start' });
+    void flush();
   }
 
   return { ok: true };
@@ -159,6 +188,7 @@ async function onOffscreenProgress(msg: OffscreenProgressMessage): Promise<void>
 
 async function onOffscreenDone(run: SiteRun): Promise<void> {
   const state = await readCurrentRun();
+  const startedAt = state ? new Date(state.startedAt).getTime() : Date.now();
   if (state) {
     await writeCurrentRun({
       ...state,
@@ -175,6 +205,14 @@ async function onOffscreenDone(run: SiteRun): Promise<void> {
   await persistRun(run);
   stopKeepalive();
   await closeOffscreenDocument();
+  track('ext_audit_completed', {
+    mode: state?.mode ?? 'page',
+    scorecard_version: run.scorecardVersion,
+    score_bucket: bucketScore(run.summary.score),
+    page_count_bucket: bucketPageCount(run.pages.length),
+    duration_ms_bucket: bucketDurationMs(Date.now() - startedAt),
+  });
+  await flush();
 }
 
 async function onOffscreenError(error: string): Promise<void> {
@@ -189,6 +227,11 @@ async function onOffscreenError(error: string): Promise<void> {
   }
   stopKeepalive();
   await closeOffscreenDocument();
+  track('ext_audit_error', {
+    error_class: typeof error === 'string' ? 'OffscreenError' : 'Error',
+    phase: 'progress',
+  });
+  await flush();
 }
 
 // =========================================================================
@@ -296,7 +339,18 @@ chrome.runtime.onStartup.addListener(() => {
   void recoverStaleRunOnStartup();
 });
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
   console.log(`a14y extension installed (scorecard ${LATEST_SCORECARD})`);
   void recoverStaleRunOnStartup();
+  track('ext_installed', {
+    reason: details.reason,
+    previous_version: details.previousVersion,
+  });
+  void flush();
 });
+
+// Kick off telemetry as soon as the service worker boots. Init resolves
+// fast (just reads chrome.storage.local), and any track() calls before
+// init resolves are no-ops by design — the runtime hooks above all run
+// asynchronously after init completes.
+void initExtensionTelemetry();

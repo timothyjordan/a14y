@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "predev": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "build": "astro build",
+    "prebuild": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "preview": "astro preview",
+    "pretest": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "test": "vitest run",
     "build:og": "node scripts/build-og-image.mjs"
   },

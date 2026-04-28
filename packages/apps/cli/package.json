@@ -19,12 +19,15 @@
   ],
   "scripts": {
     "build": "tsc",
+    "prebuild": "node ../../../scripts/inject-telemetry-config.mjs cli",
+    "pretest": "node ../../../scripts/inject-telemetry-config.mjs cli",
     "start": "node dist/index.js",
     "test": "vitest run",
-    "prepack": "node ../../../scripts/build-readmes.mjs"
+    "prepack": "node ../../../scripts/inject-telemetry-config.mjs cli && node ../../../scripts/build-readmes.mjs"
   },
   "dependencies": {
     "@a14y/core": "0.3.0",
+    "@a14y/telemetry": "0.1.0",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"

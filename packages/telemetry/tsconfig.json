@@ -3,15 +3,11 @@
     "target": "ES2020",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/cjs",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@a14y/telemetry/node": ["../../../packages/telemetry/dist/cjs/runtime/node"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"]
 }

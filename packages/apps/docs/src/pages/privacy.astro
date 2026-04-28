@@ -10,57 +10,136 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
 
 <BaseLayout
   title="Privacy · a14y"
-  description="Privacy policy for the a14y CLI and Chrome extension — nothing is collected, nothing is transmitted to a14y-owned servers."
+  description="Privacy policy for a14y.dev, the a14y CLI, and the Chrome extension — what we collect, what we don't, and how to opt out."
 >
   <section class="hero">
     <span class="eyebrow">Privacy</span>
     <h1>Privacy</h1>
     <p class="lead">
-      a14y — the spec, the CLI, and the Chrome extension — runs entirely on your
-      machine. Nothing about the sites you audit, the URLs you enter, or the
-      pages you fetch is transmitted to a14y-owned servers. There are no a14y
-      servers.
+      We collect a small amount of anonymous usage data — by default, on — to
+      help us improve a14y. We never collect personally identifiable
+      information, the URLs you audit, or the content of any page you visit
+      with the extension or CLI. You can turn telemetry off on every surface,
+      and the controls are listed below.
     </p>
   </section>
 
-  <h2>What the tools do locally</h2>
+  <h2>What we collect</h2>
   <p>
-    Both the <a href="https://www.npmjs.com/package/a14y" rel="noopener">CLI</a>
-    and the <a href={`${base}/#tools`}>Chrome extension</a> run the open
-    <a href={`${base}/spec/`}>a14y scorecard</a> against a URL you provide. The
-    only network traffic they generate is the HTTP request to fetch the page (or,
-    in <code>site</code> mode, the same-origin pages the crawler follows from
-    the entry URL). Those requests originate from your machine or your browser,
-    not from a14y infrastructure, and they behave exactly like any other
-    browser tab you open to the same site.
+    All telemetry goes to a single Google Analytics 4 property, anonymized, with
+    Google Signals and ad personalization disabled. We never set or send a user
+    identifier; CLI and extension events are tied to a random UUID generated
+    locally on first run.
   </p>
 
-  <h2>What the extension stores</h2>
+  <h3>On a14y.dev</h3>
   <p>
-    The Chrome extension uses <code>chrome.storage.local</code> to remember the
-    last twenty audit runs — URL, scorecard version, timestamp, pass/fail
-    summary. That history is visible on the extension's report page and is
-    never sent anywhere. You can clear it at any time by removing the extension
-    from Chrome; uninstalling wipes <code>chrome.storage.local</code>.
+    Standard GA4 web measurement: page views, referrers, approximate region (IP
+    is anonymized at ingest), and clicks to outbound destinations grouped into
+    a fixed enum (<code>github</code> / <code>npm</code> / <code>chrome_web_store</code>
+    / <code>other</code>). GA4 sets a <code>_ga</code> cookie. The site honors
+    your browser's <em>Do Not Track</em> header — if it's set, no GA script is
+    loaded. You can also opt out for this site explicitly with the toggle below;
+    that flips a flag in <code>localStorage</code> and the GA script stops loading
+    on every subsequent visit.
   </p>
 
-  <h2>What the CLI stores</h2>
+  <h3>From the CLI</h3>
+  <p>The CLI sends an event for each of:</p>
+  <ul>
+    <li><code>cli_command_invoked</code> — the command name (<code>check</code> / <code>scorecards</code>), output format, mode, and scorecard version.</li>
+    <li><code>cli_run_completed</code> — bucketed score (e.g. <code>76-100</code>), bucketed page count, bucketed run duration, bucketed counts of failed / warned / errored checks. No URL, no per-check details.</li>
+    <li><code>cli_error</code> — the error class name (no message, no stack trace) and the phase it happened in.</li>
+  </ul>
+
+  <h3>From the Chrome extension</h3>
+  <p>The extension sends an event for each of:</p>
+  <ul>
+    <li><code>ext_installed</code> — whether the install was a fresh install or an update.</li>
+    <li><code>ext_audit_started</code> — mode (<code>page</code> / <code>site</code>) and scorecard version. No URL.</li>
+    <li><code>ext_audit_completed</code> — bucketed score, bucketed page count, bucketed duration. No URL.</li>
+    <li><code>ext_audit_error</code> — error class name and phase.</li>
+    <li><code>ext_settings_changed</code> — the name of the setting that changed (e.g. <code>maxPages</code>). No values. We deliberately do <em>not</em> track changes to the telemetry toggle itself.</li>
+  </ul>
+
+  <h2>What we don't collect</h2>
+  <ul>
+    <li>The URLs you audit, or any part of them.</li>
+    <li>The content of any page the CLI or extension fetches.</li>
+    <li>Per-check scorecard details — only bucketed totals.</li>
+    <li>Your real IP address (anonymized at ingest by GA4).</li>
+    <li>Any user-agent string detail beyond OS family.</li>
+    <li>Names, email addresses, or anything that could tie events to a real person.</li>
+    <li>Stack traces, error messages, or any free-text content from errors.</li>
+  </ul>
+
+  <h2>How to opt out</h2>
+
+  <h3>Website</h3>
   <p>
-    The CLI writes its output to stdout (or to a file if you pass
-    <code>--output</code>). It does not write anywhere else. There is no
-    telemetry, no metrics endpoint, no analytics hook. You can verify this by
-    reading the source at
-    <a href="https://github.com/timothyjordan/a14y/tree/main/packages/apps/cli" rel="noopener">
-      github.com/timothyjordan/a14y
-    </a>.
+    Set your browser's <em>Do Not Track</em> header (every browser supports
+    this in privacy settings) — we honor it and never load the GA script.
+    Or use the in-page toggle below; it persists in <code>localStorage</code>
+    on this site only.
+  </p>
+  <p>
+    <button
+      type="button"
+      id="ga-opt-out-toggle"
+      class="ga-opt-out-toggle"
+      data-on-label="Disable analytics on this site"
+      data-off-label="Enable analytics on this site"
+    >
+      Disable analytics on this site
+    </button>
+    <span id="ga-opt-out-status" class="ga-opt-out-status" aria-live="polite"></span>
+  </p>
+  <p>
+    For a system-wide opt-out, install Google's
+    <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics opt-out browser add-on</a>.
   </p>
 
-  <h2>No third parties</h2>
+  <h3>CLI</h3>
+  <p>Any of the following disables CLI telemetry. The first match wins:</p>
+  <ul>
+    <li>Pass <code>--no-telemetry</code> to a single command.</li>
+    <li>Set the env var <code>A14Y_TELEMETRY=0</code>.</li>
+    <li>Set <code>"telemetryEnabled": false</code> in <code>~/.a14y/config.json</code> (the CLI creates this file on first run).</li>
+    <li>Set <code>DO_NOT_TRACK=1</code> or run with <code>CI=true</code> — both auto-disable.</li>
+  </ul>
+
+  <h3>Chrome extension</h3>
   <p>
-    a14y has no third-party dependencies that phone home. No Google Analytics,
-    no error-reporting SDKs, no A/B-testing frameworks, no feature flags. The
-    site you're reading right now is a static site on GitHub Pages; the CLI and
-    extension are installable packages you run yourself.
+    Open the extension's <strong>Options</strong> page (right-click the action
+    icon → Options) and toggle off <em>Send anonymous usage data</em>. Or click
+    <em>Turn off</em> on the popup banner the first time you open the popup.
+    Both write the same flag in <code>chrome.storage.local</code>; no further
+    events leave your machine until you re-enable.
+  </p>
+
+  <h2>Provider and data sharing</h2>
+  <p>
+    All events go to Google Analytics 4. Google's privacy policy is at
+    <a href="https://policies.google.com/privacy" rel="noopener">policies.google.com/privacy</a>;
+    Google's overview of GA data controls is at
+    <a href="https://support.google.com/analytics/answer/6004245" rel="noopener">support.google.com/analytics/answer/6004245</a>.
+    Data resides on Google's global infrastructure. We have not enabled Google
+    Signals or ad personalization on the property.
+  </p>
+
+  <h2>What the extension still stores locally</h2>
+  <p>
+    The Chrome extension uses <code>chrome.storage.local</code> to remember
+    the last twenty audit runs — URL, scorecard version, timestamp, pass/fail
+    summary. That history stays on your device, is visible on the extension's
+    report page, and is never sent anywhere. Uninstalling the extension wipes
+    <code>chrome.storage.local</code>.
+  </p>
+
+  <h2>Data retention</h2>
+  <p>
+    The GA4 property is configured for the longest standard retention window
+    (14 months). Older events are deleted by Google automatically.
   </p>
 
   <h2>Contact</h2>
@@ -69,5 +148,60 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
     <a href="mailto:contact@a14y.dev">contact@a14y.dev</a>.
   </p>
 
+  <h2>Changelog</h2>
+  <ul>
+    <li><strong>v2 ({lastUpdated}):</strong> introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.</li>
+    <li><strong>v1:</strong> "no telemetry, no third parties" — superseded by v2.</li>
+  </ul>
+
   <p class="lead" style="margin-top:32px;font-size:13px;">Last updated: {lastUpdated}.</p>
+
+  <script is:inline>
+    (function () {
+      var KEY = 'a14y:ga-opt-out';
+      var btn = document.getElementById('ga-opt-out-toggle');
+      var status = document.getElementById('ga-opt-out-status');
+      if (!btn || !status) return;
+      function isOptedOut() {
+        try { return localStorage.getItem(KEY) === '1'; } catch (e) { return false; }
+      }
+      function render() {
+        if (isOptedOut()) {
+          btn.textContent = btn.getAttribute('data-off-label') || 'Enable analytics on this site';
+          status.textContent = 'Analytics is disabled on this site. Reload to confirm no GA script loads.';
+        } else {
+          btn.textContent = btn.getAttribute('data-on-label') || 'Disable analytics on this site';
+          status.textContent = '';
+        }
+      }
+      btn.addEventListener('click', function () {
+        try {
+          if (isOptedOut()) localStorage.removeItem(KEY);
+          else localStorage.setItem(KEY, '1');
+        } catch (e) {
+          status.textContent = 'Could not persist preference (localStorage unavailable).';
+          return;
+        }
+        render();
+      });
+      render();
+    })();
+  </script>
+
+  <style>
+    .ga-opt-out-toggle {
+      padding: 8px 14px;
+      border: 1px solid var(--border-strong, #d1d1d6);
+      border-radius: 6px;
+      background: var(--surface, #ffffff);
+      font: inherit;
+      cursor: pointer;
+    }
+    .ga-opt-out-toggle:hover { background: var(--surface-alt, #f2f2f5); }
+    .ga-opt-out-status {
+      margin-left: 10px;
+      font-size: 13px;
+      color: var(--text-muted, #6e6e73);
+    }
+  </style>
 </BaseLayout>
