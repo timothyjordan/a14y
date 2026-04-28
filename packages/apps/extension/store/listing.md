@@ -97,4 +97,4 @@ version = same score, every time.
 
 ## Support email
 
-`timothy@timothyjordan.com`
+`contact@a14y.dev`
