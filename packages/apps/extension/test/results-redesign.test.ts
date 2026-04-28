@@ -47,6 +47,10 @@ describe('results page redesign (TJ-211)', () => {
     expect(html).toMatch(/<summary>Recent audits<\/summary>/);
   });
 
+  it('includes a Mode column in the Recent audits header (TJ-213)', () => {
+    expect(html).toMatch(/<th>Score<\/th><th>Mode<\/th><th>URL<\/th><th>Scorecard<\/th><th>When<\/th>/);
+  });
+
   it('renders a site-footer with a14y.dev links', () => {
     expect(html).toMatch(/<footer class="site-footer">[\s\S]*a14y\.dev[\s\S]*Privacy/);
   });
@@ -62,6 +66,57 @@ describe('results page redesign (TJ-211)', () => {
     // Bottom row is gone — there's exactly one #export-buttons element.
     const matches = html.match(/id="export-buttons"/g) ?? [];
     expect(matches).toHaveLength(1);
+  });
+
+  it('uses an inline "Download:" label and short button names (TJ-213)', () => {
+    const exportRow = html.match(/id="export-buttons"[\s\S]*?<\/div>/)?.[0] ?? '';
+    expect(exportRow).toMatch(/<span class="cta-label">Download:<\/span>/);
+    expect(exportRow).toMatch(/id="export-json"[^>]*>JSON</);
+    expect(exportRow).toMatch(/id="export-markdown"[^>]*>Markdown</);
+    expect(exportRow).toMatch(/id="export-prompt"[^>]*>Coding agent prompt</);
+    // Old labels should not survive.
+    expect(exportRow).not.toMatch(/Download JSON|Download Markdown|Download fix prompt/);
+  });
+
+  it('orders download buttons: Coding agent prompt, Markdown, JSON (TJ-213)', () => {
+    const exportRow = html.match(/id="export-buttons"[\s\S]*?<\/div>/)?.[0] ?? '';
+    const idxPrompt = exportRow.indexOf('id="export-prompt"');
+    const idxMd = exportRow.indexOf('id="export-markdown"');
+    const idxJson = exportRow.indexOf('id="export-json"');
+    expect(idxPrompt).toBeGreaterThan(-1);
+    expect(idxMd).toBeGreaterThan(idxPrompt);
+    expect(idxJson).toBeGreaterThan(idxMd);
+  });
+
+  it('renders all action buttons with a unified .btn class (no primary/ghost split) (TJ-213)', () => {
+    const popup = readFileSync(path.join(root, 'src/popup.html'), 'utf-8');
+    expect(html).not.toMatch(/btn--primary|btn--ghost/);
+    expect(popup).not.toMatch(/btn--primary|btn--ghost/);
+  });
+
+  it('makes the whole check-card a link via .check-card-link (TJ-213)', () => {
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*display:\s*grid/);
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*text-decoration:\s*none/);
+    // Padding lives on the link so the whole li is the click target.
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*padding:/);
+  });
+
+  it('check-card has button-like hover (background + lift)', () => {
+    expect(tokens).toMatch(/\.check-card:hover\s*\{[^}]*transform:\s*translateY/);
+  });
+
+  it('contains no inline <script> blocks (MV3 CSP)', () => {
+    // MV3 disallows inline scripts — every <script> must have a src=.
+    // Catches regressions like the pre-paint theme script that crept
+    // back into popup.html / results.html.
+    const popup = readFileSync(path.join(root, 'src/popup.html'), 'utf-8');
+    const options = readFileSync(path.join(root, 'src/options.html'), 'utf-8');
+    for (const doc of [html, popup, options]) {
+      const scripts = doc.match(/<script[^>]*>/g) ?? [];
+      for (const tag of scripts) {
+        expect(tag, `inline <script> not allowed under MV3 CSP: ${tag}`).toMatch(/\ssrc=/);
+      }
+    }
   });
 
   it('does not hard-code colors except for white accents', () => {

@@ -3,17 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>a14y — Report</title>
-    <script>
-      // Pre-paint theme sync — see tokens.css for matching CSS rules.
-      (function () {
-        try {
-          var t = localStorage.getItem('a14y-theme');
-          if (t === 'light' || t === 'dark') {
-            document.documentElement.setAttribute('data-theme', t);
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <script type="module" src="theme-prepaint.ts"></script>
     <link rel="stylesheet" href="styles/results.css" />
   </head>
   <body>
@@ -109,9 +99,10 @@
         </section>
 
         <div class="cta-row" id="export-buttons">
-          <button id="export-json" class="btn btn--ghost" type="button">Download JSON</button>
-          <button id="export-markdown" class="btn btn--ghost" type="button">Download Markdown</button>
-          <button id="export-prompt" class="btn btn--primary" type="button">Download fix prompt</button>
+          <span class="cta-label">Download:</span>
+          <button id="export-prompt" class="btn" type="button">Coding agent prompt</button>
+          <button id="export-markdown" class="btn" type="button">Markdown</button>
+          <button id="export-json" class="btn" type="button">JSON</button>
         </div>
 
         <section class="group-section">
@@ -129,7 +120,7 @@
       <details id="history-section" class="history-section" hidden>
         <summary>Recent audits</summary>
         <table id="history">
-          <thead><tr><th>Score</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
+          <thead><tr><th>Score</th><th>Mode</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
           <tbody></tbody>
         </table>
       </details>
