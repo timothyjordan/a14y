@@ -78,9 +78,31 @@ describe('results page redesign (TJ-211)', () => {
     expect(exportRow).not.toMatch(/Download JSON|Download Markdown|Download fix prompt/);
   });
 
+  it('orders download buttons: Coding agent prompt, Markdown, JSON (TJ-213)', () => {
+    const exportRow = html.match(/id="export-buttons"[\s\S]*?<\/div>/)?.[0] ?? '';
+    const idxPrompt = exportRow.indexOf('id="export-prompt"');
+    const idxMd = exportRow.indexOf('id="export-markdown"');
+    const idxJson = exportRow.indexOf('id="export-json"');
+    expect(idxPrompt).toBeGreaterThan(-1);
+    expect(idxMd).toBeGreaterThan(idxPrompt);
+    expect(idxJson).toBeGreaterThan(idxMd);
+  });
+
+  it('renders all action buttons with a unified .btn class (no primary/ghost split) (TJ-213)', () => {
+    const popup = readFileSync(path.join(root, 'src/popup.html'), 'utf-8');
+    expect(html).not.toMatch(/btn--primary|btn--ghost/);
+    expect(popup).not.toMatch(/btn--primary|btn--ghost/);
+  });
+
   it('makes the whole check-card a link via .check-card-link (TJ-213)', () => {
     expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*display:\s*grid/);
     expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*text-decoration:\s*none/);
+    // Padding lives on the link so the whole li is the click target.
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*padding:/);
+  });
+
+  it('check-card has button-like hover (background + lift)', () => {
+    expect(tokens).toMatch(/\.check-card:hover\s*\{[^}]*transform:\s*translateY/);
   });
 
   it('does not hard-code colors except for white accents', () => {
