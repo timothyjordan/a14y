@@ -5,6 +5,38 @@ Keep this file in sync with the tagline used on a14y.dev.
 
 ---
 
+## Privacy practices form (Developer Dashboard → Privacy practices)
+
+### Data usage / categories
+
+| Category | Answer | Notes |
+|---|---|---|
+| Personally identifiable info | No | |
+| Health info | No | |
+| Financial and payment info | No | |
+| Authentication info | No | |
+| Personal communications | No | |
+| Location | No | |
+| Web history | No | URLs you audit are not transmitted. |
+| **User activity** | **Yes** | Anonymous interaction events (audit started/completed/error, install, settings changed) used to improve the extension. |
+| Website content | No | The crawler fetches pages locally; content is never transmitted off-device. |
+
+### Three Limited Use commitments — affirm all three:
+
+1. I certify that the use of data is **consistent with my posted Privacy Policy**.
+2. I certify that I do **not sell user data**.
+3. I certify that I do **not use or transfer user data for purposes unrelated to the item's single purpose**.
+
+### Privacy policy URL
+
+`https://a14y.dev/privacy/`
+
+### Remote code use
+
+> **No.** This extension does not load or execute remote code. It sends anonymous interaction events to Google Analytics 4 via the Measurement Protocol HTTP API. Google's documented pattern for GA in Chrome extensions is at https://developer.chrome.com/docs/extensions/how-to/integrate/google-analytics.
+
+---
+
 ## Name (≤45 chars)
 
 ```
@@ -79,9 +111,12 @@ v0.2.0 today — so scores from different runs stay comparable over time.
 
 ## Privacy
 
-Every audit runs locally. Nothing about the URLs you enter or the
-pages you fetch is transmitted to a14y-owned servers (there are no
-a14y-owned servers). Full policy: https://a14y.dev/privacy/
+Every audit runs in your browser — the URLs you enter and the pages
+the crawler fetches stay on your machine. a14y collects anonymous
+usage data by default (audit started/completed events with bucketed
+score and duration; never URLs, page content, or per-check details)
+to help us improve the extension. You can turn it off in the
+extension's options. Full policy: https://a14y.dev/privacy/
 
 ## Open source
 
