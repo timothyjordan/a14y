@@ -132,4 +132,4 @@ version = same score, every time.
 
 ## Support email
 
-`contact@a14y.dev`
+`agentreadability@gmail.com`
