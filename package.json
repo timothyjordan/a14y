@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": [
     "packages/core",
+    "packages/telemetry",
     "packages/apps/*",
     "packages/aliases/*"
   ],
