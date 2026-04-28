@@ -11,20 +11,18 @@ const scorecards = listAllScorecards();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<label class="version-selector">
-  <span>Scorecard</span>
-  <select
-    data-version-selector
-    data-base={base}
-    aria-label="Scorecard version"
-  >
-    {scorecards.map((card) => (
-      <option value={card.version} selected={card.version === current}>
-        v{card.version}{card.version === current ? '' : ''}
-      </option>
-    ))}
-  </select>
-</label>
+<select
+  class="version-selector"
+  data-version-selector
+  data-base={base}
+  aria-label="Scorecard version"
+>
+  {scorecards.map((card) => (
+    <option value={card.version} selected={card.version === current}>
+      v{card.version}
+    </option>
+  ))}
+</select>
 
 <script>
   // Simple client-side redirect when the user switches scorecard versions.
