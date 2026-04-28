@@ -589,15 +589,36 @@ h3 { font-size: 16px; margin: 24px 0 8px; }
   margin-top: 4px;
 }
 
-.version-selector {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
+/* Scorecard sub-header — second strip below the primary nav, used
+   only on scorecard pages so the version dropdown lives outside the
+   main menu. */
+.scorecard-subheader {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-alt);
 }
-.version-selector select {
+.scorecard-subheader-inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.scorecard-subheader-label {
+  color: var(--text);
+  font-weight: 500;
+}
+.scorecard-subheader-meta::before {
+  content: '·';
+  margin-right: 12px;
+  color: var(--text-muted);
+}
+.version-selector {
   font: inherit;
-  padding: 4px 8px;
+  font-size: 13px;
+  padding: 3px 8px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface);
