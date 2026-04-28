@@ -1,6 +1,6 @@
 ---
 import '~/styles/global.css';
-import VersionSelector from '~/components/VersionSelector.astro';
+import ScorecardSubHeader from '~/components/ScorecardSubHeader.astro';
 import { getLatestScorecardVersion } from '~/lib/scorecard-data';
 
 interface Props {
@@ -136,7 +136,6 @@ const jsonLd = {
           <a href={`${base}/scorecards/`}>Scorecard</a>
           <a href={`${base}/#tools`}>Tools</a>
           <a href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub</a>
-          {showVersionSelector && <VersionSelector current={scorecardVersion} />}
           <button
             type="button"
             class="theme-toggle"
@@ -181,6 +180,7 @@ const jsonLd = {
         </nav>
       </div>
     </header>
+    {showVersionSelector && <ScorecardSubHeader version={scorecardVersion} />}
     <main class={`container${wide ? ' container--wide' : ''}`}>
       <slot />
     </main>

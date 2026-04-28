@@ -1,0 +1,20 @@
+---
+import VersionSelector from '~/components/VersionSelector.astro';
+import { getScorecardByVersion } from '~/lib/scorecard-data';
+
+interface Props {
+  /** Active scorecard version. */
+  version: string;
+}
+
+const { version } = Astro.props;
+const scorecard = getScorecardByVersion(version);
+---
+
+<div class="scorecard-subheader" aria-label="Scorecard version">
+  <div class="scorecard-subheader-inner">
+    <span class="scorecard-subheader-label">Scorecard version</span>
+    <VersionSelector current={version} />
+    <span class="scorecard-subheader-meta">released {scorecard.releasedAt}</span>
+  </div>
+</div>
