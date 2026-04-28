@@ -8,10 +8,9 @@ import {
   shutdown,
   noopAdapter,
   createGa4MpAdapter,
-  createNodeRuntime,
   type Adapter,
-  type NodeRuntime,
 } from '@a14y/telemetry';
+import { createNodeRuntime, type NodeRuntime } from '@a14y/telemetry/node';
 import {
   GA4_MEASUREMENT_ID,
   GA4_MP_API_SECRET,

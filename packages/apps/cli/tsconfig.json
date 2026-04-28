@@ -7,7 +7,11 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@a14y/telemetry/node": ["../../../packages/telemetry/dist/cjs/runtime/node"]
+    }
   },
   "include": ["src/**/*"]
 }

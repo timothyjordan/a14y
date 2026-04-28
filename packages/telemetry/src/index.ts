@@ -1,14 +1,11 @@
-// Public API for @a14y/telemetry. The CLI and Chrome extension import everything from this entry.
-// `sideEffects: false` in package.json lets bundlers (Vite/Rollup) drop the
-// runtime helper that the consuming app doesn't reference — the extension
-// strips the Node runtime, Node consumers strip the chrome-ext runtime.
+// Public API for @a14y/telemetry — runtime-agnostic surface only.
+// Runtime helpers live behind subpath exports:
+//   import { createNodeRuntime } from '@a14y/telemetry/node';
+//   import { createChromeExtRuntime } from '@a14y/telemetry/chrome-ext';
+// Splitting them out keeps the extension bundle from pulling in `fs`/`os`
+// and the Node consumers from pulling in the chrome.* type surface.
 
 export { init, track, setEnabled, isEnabled, flush, shutdown } from './core/tracker';
-export { createNodeRuntime, type NodeRuntime } from './runtime/node';
-export {
-  createChromeExtRuntime,
-  type ChromeExtRuntime,
-} from './runtime/chromeExt';
 export {
   bucketScore,
   bucketPageCount,
