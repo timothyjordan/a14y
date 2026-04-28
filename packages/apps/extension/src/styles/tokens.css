@@ -311,12 +311,17 @@ h3 { font-size: 16px; margin: 24px 0 8px; }
   border-left: 4px solid var(--border);
   border-radius: var(--radius);
   padding: 10px 14px;
+  box-shadow: var(--shadow-card);
+}
+.check-card-link {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 4px 12px;
   align-items: baseline;
-  box-shadow: var(--shadow-card);
+  color: inherit;
+  text-decoration: none;
 }
+.check-card-link:hover { color: var(--link); }
 .check-card.status-pass { border-left-color: var(--scope-page); }
 .check-card.status-fail { border-left-color: var(--status-fail); }
 .check-card.status-warn { border-left-color: var(--status-warn); }
@@ -346,8 +351,6 @@ h3 { font-size: 16px; margin: 24px 0 8px; }
   font-weight: 600;
   grid-column: 2;
 }
-.check-card .id a { color: var(--text); }
-.check-card .id a:hover { color: var(--link); text-decoration: none; }
 .check-card .msg {
   grid-column: 2;
   color: var(--text-muted);

@@ -109,9 +109,10 @@
         </section>
 
         <div class="cta-row" id="export-buttons">
-          <button id="export-json" class="btn btn--ghost" type="button">Download JSON</button>
-          <button id="export-markdown" class="btn btn--ghost" type="button">Download Markdown</button>
-          <button id="export-prompt" class="btn btn--primary" type="button">Download fix prompt</button>
+          <span class="cta-label">Download:</span>
+          <button id="export-json" class="btn btn--ghost" type="button">JSON</button>
+          <button id="export-markdown" class="btn btn--ghost" type="button">Markdown</button>
+          <button id="export-prompt" class="btn btn--primary" type="button">Coding agent prompt</button>
         </div>
 
         <section class="group-section">
@@ -129,7 +130,7 @@
       <details id="history-section" class="history-section" hidden>
         <summary>Recent audits</summary>
         <table id="history">
-          <thead><tr><th>Score</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
+          <thead><tr><th>Score</th><th>Mode</th><th>URL</th><th>Scorecard</th><th>When</th></tr></thead>
           <tbody></tbody>
         </table>
       </details>

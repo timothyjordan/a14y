@@ -47,6 +47,10 @@ describe('results page redesign (TJ-211)', () => {
     expect(html).toMatch(/<summary>Recent audits<\/summary>/);
   });
 
+  it('includes a Mode column in the Recent audits header (TJ-213)', () => {
+    expect(html).toMatch(/<th>Score<\/th><th>Mode<\/th><th>URL<\/th><th>Scorecard<\/th><th>When<\/th>/);
+  });
+
   it('renders a site-footer with a14y.dev links', () => {
     expect(html).toMatch(/<footer class="site-footer">[\s\S]*a14y\.dev[\s\S]*Privacy/);
   });
@@ -62,6 +66,21 @@ describe('results page redesign (TJ-211)', () => {
     // Bottom row is gone — there's exactly one #export-buttons element.
     const matches = html.match(/id="export-buttons"/g) ?? [];
     expect(matches).toHaveLength(1);
+  });
+
+  it('uses an inline "Download:" label and short button names (TJ-213)', () => {
+    const exportRow = html.match(/id="export-buttons"[\s\S]*?<\/div>/)?.[0] ?? '';
+    expect(exportRow).toMatch(/<span class="cta-label">Download:<\/span>/);
+    expect(exportRow).toMatch(/id="export-json"[^>]*>JSON</);
+    expect(exportRow).toMatch(/id="export-markdown"[^>]*>Markdown</);
+    expect(exportRow).toMatch(/id="export-prompt"[^>]*>Coding agent prompt</);
+    // Old labels should not survive.
+    expect(exportRow).not.toMatch(/Download JSON|Download Markdown|Download fix prompt/);
+  });
+
+  it('makes the whole check-card a link via .check-card-link (TJ-213)', () => {
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*display:\s*grid/);
+    expect(tokens).toMatch(/\.check-card-link\s*\{[^}]*text-decoration:\s*none/);
   });
 
   it('does not hard-code colors except for white accents', () => {
