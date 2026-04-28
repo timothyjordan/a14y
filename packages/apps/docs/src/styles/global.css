@@ -17,6 +17,10 @@
   --brand-cyan-soft: #b8eff7;
   --max-width: 900px;
   --max-width-wide: 1040px;
+  /* Primary header height — both .site-header (min-height) and the
+     sticky .scorecard-subheader (top) read from this so the sub-header
+     aligns flush below the primary nav. */
+  --site-header-height: 61px;
   --radius: 10px;
   --radius-lg: 16px;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -93,6 +97,7 @@ pre code {
   position: sticky;
   top: 0;
   z-index: 50;
+  min-height: var(--site-header-height);
 }
 .site-header-inner {
   max-width: var(--max-width-wide);
@@ -589,12 +594,18 @@ h3 { font-size: 16px; margin: 24px 0 8px; }
   margin-top: 4px;
 }
 
-/* Scorecard sub-header — second strip below the primary nav, used
-   only on scorecard pages so the version dropdown lives outside the
-   main menu. */
+/* Scorecard sub-header — sticky strip directly below the primary nav,
+   used only on scorecard pages so the version dropdown lives outside
+   the main menu. The `top` offset matches the primary header's
+   --site-header-height so it pins flush underneath while scrolling. */
 .scorecard-subheader {
   border-bottom: 1px solid var(--border);
-  background: var(--surface-alt);
+  background: color-mix(in srgb, var(--surface-alt) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  position: sticky;
+  top: var(--site-header-height);
+  z-index: 49;
 }
 .scorecard-subheader-inner {
   max-width: var(--max-width-wide);
