@@ -17,7 +17,7 @@ import {
 } from './generated/telemetry-config';
 
 // Kept in sync with package.json. Used as `app_version` on every event.
-const APP_VERSION = '0.3.0';
+const APP_VERSION = '0.4.0';
 
 const FIRST_RUN_NOTICE = [
   '',
