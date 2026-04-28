@@ -166,25 +166,26 @@ function renderRun(run: SiteRun) {
 function checkCard(c: CheckResult): HTMLLIElement {
   const li = document.createElement('li');
   li.className = `check-card status-${c.status}`;
+  const link = document.createElement('a');
+  link.className = 'check-card-link';
+  link.href = c.docsUrl;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
   const tag = document.createElement('span');
   tag.className = 'status-tag';
   tag.textContent = c.status.toUpperCase();
   const id = document.createElement('div');
   id.className = 'id';
-  const link = document.createElement('a');
-  link.href = c.docsUrl;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.textContent = c.id;
-  id.appendChild(link);
-  li.appendChild(tag);
-  li.appendChild(id);
+  id.textContent = c.id;
+  link.appendChild(tag);
+  link.appendChild(id);
   if (c.message) {
     const msg = document.createElement('div');
     msg.className = 'msg';
     msg.textContent = c.message;
-    li.appendChild(msg);
+    link.appendChild(msg);
   }
+  li.appendChild(link);
   return li;
 }
 
@@ -230,8 +231,10 @@ function renderHistory(runs: Array<{ key: string; run: SiteRun }>) {
   historyBody.innerHTML = '';
   for (const { key, run } of runs) {
     const tr = document.createElement('tr');
+    const isSite = run.mode === 'site';
     tr.innerHTML = `
       <td class="${scoreClass(run.summary.score)}">${run.summary.score}</td>
+      <td><span class="chip ${isSite ? 'site' : 'page'}">${isSite ? 'Site' : 'Page'}</span></td>
       <td><code>${escapeHtml(run.url)}</code></td>
       <td>v${run.scorecardVersion}</td>
       <td>${new Date(run.startedAt).toLocaleString()}</td>

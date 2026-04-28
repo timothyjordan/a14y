@@ -3,18 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>a14y — Agent Readability</title>
-    <script>
-      // Pre-paint theme sync: read the stored preference before the body
-      // renders so we never flash the wrong theme. Mirrors a14y.dev.
-      (function () {
-        try {
-          var t = localStorage.getItem('a14y-theme');
-          if (t === 'light' || t === 'dark') {
-            document.documentElement.setAttribute('data-theme', t);
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <script type="module" src="theme-prepaint.ts"></script>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
@@ -77,8 +66,8 @@
       </div>
 
       <div class="actions">
-        <button id="check-page" class="btn btn--primary" type="button">Check this page</button>
-        <button id="check-site" class="btn btn--ghost" type="button">Scan whole site</button>
+        <button id="check-page" class="btn" type="button">Check this page</button>
+        <button id="check-site" class="btn" type="button">Scan whole site</button>
       </div>
 
       <p id="status" class="status"></p>

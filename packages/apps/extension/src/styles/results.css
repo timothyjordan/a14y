@@ -115,6 +115,10 @@
 .history-section .warn { color: var(--status-warn); font-weight: 600; }
 .history-section .fail { color: var(--status-fail); font-weight: 600; }
 
+/* ---------- Inline label for the Download row ---------- */
+
+.cta-row .cta-label { font-weight: 600; font-size: 14px; margin-right: 4px; }
+
 /* ---------- Body width override ---------- */
 
 body { min-width: 720px; }
