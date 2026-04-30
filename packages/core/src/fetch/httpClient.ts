@@ -19,9 +19,17 @@ export interface CreateHttpClientOptions {
   defaultMaxRedirects?: number;
   /** Default User-Agent applied to outbound requests. */
   userAgent?: string;
+  /**
+   * Default per-request timeout in milliseconds. Aborts the underlying fetch
+   * if a single hop exceeds it. Default 60_000 (60s) — long enough not to
+   * trip on slow-but-valid servers, short enough that one stalled connection
+   * cannot pin a worker indefinitely.
+   */
+  defaultTimeoutMs?: number;
 }
 
 const DEFAULT_USER_AGENT = 'a14y/0.2 (+https://github.com/timothyjordan/a14y)';
+const DEFAULT_TIMEOUT_MS = 60_000;
 
 export function createHttpClient(opts: CreateHttpClientOptions = {}): HttpClient {
   const fetchImpl: FetchImpl | undefined = opts.fetchImpl ?? (globalThis as { fetch?: FetchImpl }).fetch;
@@ -32,52 +40,80 @@ export function createHttpClient(opts: CreateHttpClientOptions = {}): HttpClient
   }
   const defaultMaxRedirects = opts.defaultMaxRedirects ?? 10;
   const userAgent = opts.userAgent ?? DEFAULT_USER_AGENT;
+  const defaultTimeoutMs = opts.defaultTimeoutMs ?? DEFAULT_TIMEOUT_MS;
 
   async function doFetch(url: string, options: HttpFetchOptions = {}): Promise<HttpResponse> {
     const method = options.method ?? 'GET';
     const maxHops = options.maxRedirects ?? defaultMaxRedirects;
+    const timeoutMs = options.timeoutMs ?? defaultTimeoutMs;
     const redirectChain: string[] = [];
 
     let currentUrl = url;
-    let response: Response;
     let hops = 0;
 
     while (true) {
-      response = await fetchImpl!(currentUrl, {
-        method,
-        headers: { 'user-agent': userAgent, ...(options.headers ?? {}) },
-        redirect: 'manual',
-        credentials: 'omit',
-      });
+      // Re-arm the timeout per hop. A redirect chain that bounces through a
+      // stalled host can't escape the per-request budget that way. The signal
+      // also covers the body read below — some servers (e.g. Google sitemap
+      // children under non-browser UAs) accept the connection then drip the
+      // body out over many seconds, which would hang otherwise.
+      const ac = new AbortController();
+      const timer = setTimeout(() => ac.abort(), timeoutMs);
+      try {
+        const response = await fetchImpl!(currentUrl, {
+          method,
+          headers: { 'user-agent': userAgent, ...(options.headers ?? {}) },
+          redirect: 'manual',
+          credentials: 'omit',
+          signal: ac.signal,
+        });
 
-      if (response.status >= 300 && response.status < 400) {
-        const location = response.headers.get('location');
-        if (!location) break;
-        redirectChain.push(currentUrl);
-        currentUrl = new URL(location, currentUrl).toString();
-        hops++;
-        if (hops > maxHops) {
+        if (response.status >= 300 && response.status < 400) {
+          const location = response.headers.get('location');
+          if (location) {
+            redirectChain.push(currentUrl);
+            currentUrl = new URL(location, currentUrl).toString();
+            hops++;
+            if (hops > maxHops) {
+              throw new Error(
+                `Too many redirects (${hops}) starting at ${url}; last hop was ${currentUrl}`,
+              );
+            }
+            // Drain any redirect body so the connection can be reused, then
+            // loop to the next hop with a fresh timer.
+            try {
+              await response.text();
+            } catch {
+              // Some platforms surface body-read errors on a 3xx with empty
+              // body; the redirect target is what matters.
+            }
+            continue;
+          }
+        }
+
+        // For HEAD we still consume the body so the underlying connection can
+        // be released, but we return an empty string to keep parity with HEAD.
+        const body = method === 'HEAD' ? '' : await response.text();
+
+        return {
+          url: currentUrl,
+          originalUrl: url,
+          status: response.status,
+          headers: response.headers,
+          body,
+          redirectChain,
+        };
+      } catch (e) {
+        if (ac.signal.aborted) {
           throw new Error(
-            `Too many redirects (${hops}) starting at ${url}; last hop was ${currentUrl}`,
+            `Request to ${currentUrl} exceeded ${timeoutMs}ms timeout`,
           );
         }
-        continue;
+        throw e;
+      } finally {
+        clearTimeout(timer);
       }
-      break;
     }
-
-    // For HEAD we still consume the body so the underlying connection can be
-    // released, but we return an empty string to keep parity with HEAD semantics.
-    const body = method === 'HEAD' ? '' : await response.text();
-
-    return {
-      url: currentUrl,
-      originalUrl: url,
-      status: response.status,
-      headers: response.headers,
-      body,
-      redirectChain,
-    };
   }
 
   async function fetchPage(url: string, options?: HttpFetchOptions): Promise<FetchedPage> {

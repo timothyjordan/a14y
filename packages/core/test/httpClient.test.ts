@@ -104,4 +104,72 @@ describe('createHttpClient', () => {
       (globalThis as { fetch?: unknown }).fetch = original;
     }
   });
+
+  it('aborts a request that exceeds the per-call timeout', async () => {
+    // Stub a fetch that resolves only when the caller aborts the signal —
+    // mirrors a server that accepts the connection then never replies.
+    const stalled = vi.fn((_url: string, init?: RequestInit): Promise<Response> => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal as AbortSignal | undefined;
+        signal?.addEventListener('abort', () => {
+          const err = new Error('aborted');
+          err.name = 'AbortError';
+          reject(err);
+        });
+      });
+    });
+    const client = createHttpClient({ fetchImpl: stalled, defaultTimeoutMs: 25 });
+    const start = Date.now();
+    await expect(client.fetch('https://stalled.example/')).rejects.toThrow(
+      /exceeded 25ms timeout/,
+    );
+    expect(Date.now() - start).toBeLessThan(500);
+  });
+
+  it('aborts a stalled body read once headers arrived', async () => {
+    // Mimic undici's behaviour: when the request is aborted, the body stream
+    // is cancelled and the consumer's `response.text()` rejects. The fake
+    // here wires the AbortSignal directly into the ReadableStream.
+    const slowBody = vi.fn(async (_url: string, init?: RequestInit): Promise<Response> => {
+      const signal = init?.signal as AbortSignal;
+      const stream = new ReadableStream({
+        start(controller) {
+          if (signal.aborted) {
+            controller.error(new DOMException('aborted', 'AbortError'));
+            return;
+          }
+          signal.addEventListener('abort', () => {
+            controller.error(new DOMException('aborted', 'AbortError'));
+          });
+        },
+      });
+      return new Response(stream, {
+        status: 200,
+        headers: { 'content-type': 'text/xml' },
+      });
+    });
+    const client = createHttpClient({ fetchImpl: slowBody, defaultTimeoutMs: 25 });
+    const start = Date.now();
+    await expect(client.fetch('https://slowbody.example/')).rejects.toThrow(
+      /exceeded 25ms timeout/,
+    );
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+
+it('honours per-call timeoutMs override', async () => {
+    const stalled = vi.fn((_url: string, init?: RequestInit): Promise<Response> => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal as AbortSignal | undefined;
+        signal?.addEventListener('abort', () => {
+          const err = new Error('aborted');
+          err.name = 'AbortError';
+          reject(err);
+        });
+      });
+    });
+    const client = createHttpClient({ fetchImpl: stalled, defaultTimeoutMs: 60_000 });
+    await expect(
+      client.fetch('https://stalled.example/', { timeoutMs: 20 }),
+    ).rejects.toThrow(/exceeded 20ms timeout/);
+  });
 });

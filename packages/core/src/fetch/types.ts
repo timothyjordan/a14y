@@ -30,6 +30,12 @@ export interface HttpFetchOptions {
   headers?: Record<string, string>;
   /** Maximum redirects to follow before giving up. Default 10. */
   maxRedirects?: number;
+  /**
+   * Per-request timeout in milliseconds. Aborts the underlying fetch (and is
+   * re-armed on each redirect hop) so a stalled connection cannot pin a
+   * worker. Defaults to the client-level `defaultTimeoutMs`.
+   */
+  timeoutMs?: number;
 }
 
 export interface HttpResponse {
