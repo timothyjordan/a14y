@@ -2,6 +2,13 @@
   "name": "agentreadability",
   "version": "0.4.1",
   "description": "Full-word alias for a14y. Installs the same CLI under the agentreadability command name.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyjordan/a14y.git",
+    "directory": "packages/aliases/agentreadability"
+  },
+  "homepage": "https://a14y.dev",
   "bin": {
     "agentreadability": "./bin.js"
   },
@@ -19,6 +26,5 @@
   "scripts": {
     "test": "vitest run",
     "prepack": "node ../../../scripts/build-readmes.mjs"
-  },
-  "license": "Apache-2.0"
+  }
 }

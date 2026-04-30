@@ -2,6 +2,13 @@
   "name": "agentready",
   "version": "0.4.1",
   "description": "Legacy alias for a14y. Installs the same CLI under the agentready command name.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothyjordan/a14y.git",
+    "directory": "packages/aliases/agentready"
+  },
+  "homepage": "https://a14y.dev",
   "bin": {
     "agentready": "./bin.js"
   },
@@ -19,6 +26,5 @@
   "scripts": {
     "test": "vitest run",
     "prepack": "node ../../../scripts/build-readmes.mjs"
-  },
-  "license": "Apache-2.0"
+  }
 }
