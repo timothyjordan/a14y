@@ -70,10 +70,16 @@ jobs:
           GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
         run: npm test --workspaces --if-present
 
+      # Auth is via npm Trusted Publishing (OIDC). With `id-token: write`
+      # granted at the workflow level and `registry-url` configured by
+      # setup-node above, `npm publish --provenance` exchanges the GitHub
+      # Actions OIDC token for a short-lived npm token at publish time —
+      # no long-lived NPM_TOKEN secret involved. Each package needs its
+      # Trusted Publisher configured once on npmjs.com pointing at this
+      # repo + this workflow filename.
       - name: Publish ${{ matrix.path }} to npm with provenance
         working-directory: ${{ matrix.path }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Re-export so any prepack scripts (telemetry inject, README build)
           # see the same values the build step did.
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
