@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "node",
+  "include-component-in-tag": true,
+  "include-v-in-tag": true,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "separate-pull-requests": true,
+  "packages": {
+    "packages/apps/cli": {
+      "package-name": "a14y",
+      "component": "a14y",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    "packages/aliases/agentready": {
+      "package-name": "agentready",
+      "component": "agentready"
+    },
+    "packages/aliases/agentreadability": {
+      "package-name": "agentreadability",
+      "component": "agentreadability"
+    },
+    "packages/core": {
+      "package-name": "@a14y/core",
+      "component": "core"
+    },
+    "packages/telemetry": {
+      "package-name": "@a14y/telemetry",
+      "component": "telemetry"
+    }
+  },
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "a14y-cli",
+      "components": ["a14y", "agentready", "agentreadability"]
+    }
+  ]
+}
