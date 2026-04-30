@@ -15,5 +15,5 @@
     "docs:check": "node scripts/build-readmes.mjs --check"
   },
   "author": "Timothy Jordan",
-  "license": "ISC"
+  "license": "Apache-2.0"
 }

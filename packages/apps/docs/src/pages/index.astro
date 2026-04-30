@@ -12,21 +12,8 @@ const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
 const totalChecks = latestChecks.length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const install = 'npx a14y your-site.com';
-
-// A14y eats its own dog food: a curated subset of checks the site
-// genuinely passes, used for the hero "agent view" companion panel.
-// The score is illustrative (not live-computed) but each row maps to a
-// real check id you can click through to.
-const sampleRows = [
-  { id: 'llms-txt.exists',          scope: 'site' },
-  { id: 'robots-txt.allows-ai-bots', scope: 'site' },
-  { id: 'sitemap.xml-exists',       scope: 'site' },
-  { id: 'agents-md.exists',         scope: 'site' },
-  { id: 'html.canonical-link',      scope: 'page' },
-  { id: 'html.json-ld.breadcrumb',  scope: 'page' },
-  { id: 'markdown.alternate-link',  scope: 'page' },
-];
+const installCmd = 'npm install -g a14y';
+const runCmd = 'npx a14y your-site.com';
 ---
 
 <BaseLayout
@@ -48,49 +35,68 @@ const sampleRows = [
         open spec, the versioned scorecard, and the tools to score how
         well they can.
       </p>
-      <div class="cta-row">
-        <a class="btn btn--primary" href="https://www.npmjs.com/package/a14y" rel="noopener">
-          Install a14y
-        </a>
-        <a class="btn btn--ghost" href={`${base}/spec/`}>Read the spec →</a>
-      </div>
-      <p class="footnote">
-        or run it once,
-        <span class="copy-cli" role="group" aria-label="Try a14y">
-          <span class="cmd">{install}</span>
+      <div class="cta-stack" role="group" aria-label="Try a14y">
+        <span class="copy-cli copy-cli--block">
+          <span class="copy-cli-label">install</span>
+          <span class="cmd">{installCmd}</span>
           <button
             type="button"
             class="copy-btn"
-            data-copy={install}
+            data-copy={installCmd}
             aria-label="Copy install command"
           >Copy</button>
         </span>
-      </p>
+        <span class="copy-cli copy-cli--block">
+          <span class="copy-cli-label">run once</span>
+          <span class="cmd">{runCmd}</span>
+          <button
+            type="button"
+            class="copy-btn"
+            data-copy={runCmd}
+            aria-label="Copy run command"
+          >Copy</button>
+        </span>
+        <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
+          Read the spec →
+        </a>
+      </div>
     </div>
 
     <aside class="agent-panel" aria-label="What an agent sees on a14y.dev">
       <div class="agent-panel-head">
         <span class="dot" aria-hidden="true"></span>
         <strong>agent.view</strong>
-        <span>· what an agent reads on a14y.dev</span>
+        <span>· what `a14y https://a14y.dev` prints</span>
       </div>
-      <div class="agent-panel-body">
-        <div class="score-row">
-          <span class="score-label">a14y score · v{latest}</span>
-          <span class="score-value">94<span class="denom"> / 100</span></span>
-        </div>
-        <hr class="rule" />
-        {sampleRows.map((row) => (
-          <div class="row">
-            <span class="glyph" aria-hidden="true">✓</span>
-            <span class="label">{row.id}</span>
-            <span class="scope">{row.scope}</span>
-          </div>
-        ))}
-      </div>
+      <pre class="agent-output" aria-label="Sample CLI output"><span class="ag-prompt">%</span> a14y https://a14y.dev
+<span class="ag-pass">✔</span> Score: 92/100
+
+Agent Readability Score: 92/100
+  scorecard 0.2.0 (released 2026-04-06) — mode page
+  33 pass · 3 fail · 0 warn · 0 error · 2 n/a (out of 38)
+
+Site checks
+  Discoverability
+    <span class="ag-pass">✓</span> llms-txt.exists                <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> robots-txt.allows-ai-bots      <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> sitemap-md.has-structure       <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> agents-md.has-min-sections     <span class="ag-mute">site</span>
+
+Page checks — https://a14y.dev/
+  HTML metadata
+    <span class="ag-pass">✓</span> html.canonical-link            <span class="ag-mute">page</span>
+    <span class="ag-pass">✓</span> html.lang-attribute (en)       <span class="ag-mute">page</span>
+  Structured data
+    <span class="ag-pass">✓</span> html.json-ld.breadcrumb        <span class="ag-mute">page</span>
+  Markdown mirror
+    <span class="ag-pass">✓</span> markdown.mirror-suffix         <span class="ag-mute">page</span>
+    <span class="ag-fail">✗</span> markdown.canonical-header      <span class="ag-mute">page</span>
+    <span class="ag-fail">✗</span> markdown.content-negotiation   <span class="ag-mute">page</span>
+  Code
+    <span class="ag-fail">✗</span> code.language-tags             <span class="ag-mute">page</span></pre>
       <div class="agent-panel-foot">
-        <span>npx a14y https://a14y.dev</span>
-        <a href={`${base}/scorecards/${latest}/`}>browse v{latest} →</a>
+        <a href={`${base}/scorecards/${latest}/`}>browse v{latest} checks →</a>
+        <a href={`${base}/llms.txt`} class="ag-foot-link">llms.txt</a>
       </div>
     </aside>
   </section>
@@ -227,24 +233,43 @@ const sampleRows = [
           Every scorecard version stays frozen forever, so historical
           scores trend cleanly even as the engine evolves.
         </p>
+        <p>
+          The block on the right is real output from
+          <code>a14y https://a14y.dev --output agent-prompt</code>.
+          The site is its own first benchmark.
+        </p>
       </div>
-      <pre class="output-sample-block" aria-label="Sample agent-prompt output"><span class="filename">a14y-fixes.md</span><span class="heading">## Failed checks for example.com</span>
+      <pre class="output-sample-block" aria-label="Real agent-prompt output for a14y.dev"><span class="filename">a14y https://a14y.dev --output agent-prompt</span><span class="heading"># Agent readability fix-list — https://a14y.dev/</span>
 
-<span class="ok">✓</span> 18 / 22 checks passed (score: 76)
-<strong>✗</strong> <em>llms-txt.exists</em> (site)
-  Add /llms.txt linking the pages you want
-  agents to index. See:
-  <span class="heading">https://a14y.dev/scorecards/{latest}/llms-txt.exists/</span>
+You are an autonomous coding agent. The a14y scorecard
+ran against https://a14y.dev/ on 2026-04-30 and identified
+<strong>3</strong> distinct failing checks across <strong>1</strong> page. Score: <strong>92/100</strong>.
 
-<strong>✗</strong> <em>markdown.alternate-link</em> (page)
-  Serve a .md mirror at the same URL with a
-  matching canonical header. See:
-  <span class="heading">https://a14y.dev/scorecards/{latest}/markdown.alternate-link/</span>
+After applying fixes, re-run the audit to verify:
 
-<strong>✗</strong> <em>html.json-ld.breadcrumb</em> (page)
-  Emit a BreadcrumbList in your JSON-LD graph
-  to anchor agents in the site hierarchy.
-</pre>
+  <em>a14y check https://a14y.dev/ --mode page</em>
+
+<span class="heading">## Snapshot</span>
+
+- <em>Score:</em>      92/100
+- <em>Mode:</em>       page
+- <em>Scorecard:</em>  v0.2.0 (released 2026-04-06)
+- <em>Failed:</em>     3 (3 unique, 3 instances)
+- <em>Passed:</em>     33     <em>N/A:</em> 2
+
+<span class="heading">## Failing checks</span>
+
+<span class="heading">### 1. code.language-tags — 1 page</span>
+- <em>What it checks:</em> code blocks declare a language
+- <em>Sample message:</em> 1/1 blocks missing language
+- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/code.language-tags/`}
+
+<span class="heading">### 2. markdown.canonical-header — 1 page</span>
+- <em>Sample:</em> no Link header
+- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/markdown.canonical-header/`}
+
+<span class="heading">### 3. markdown.content-negotiation — 1 page</span>
+- <em>Sample:</em> text/html; charset=utf-8</pre>
     </div>
   </section>
 </BaseLayout>
