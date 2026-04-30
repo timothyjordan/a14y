@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Run release-please
         id: release
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           # Both files live at the repo root and are committed.
           config-file: release-please-config.json
