@@ -77,6 +77,13 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
+      # Node 20 ships npm 10. npm Trusted Publishing requires npm 11.5.1+
+      # — older CLIs sign sigstore provenance but don't use the OIDC token
+      # as actual auth, so the publish PUT lands without credentials and
+      # npm returns a misleading 404. Upgrade in place.
+      - name: Upgrade npm for Trusted Publishing
+        run: npm install -g npm@latest
+
       # release-please bumps workspace package.json versions but does not
       # update the root package-lock.json, so `npm ci` would fail with a
       # lockfile-drift error on every release. `npm install` reconciles
