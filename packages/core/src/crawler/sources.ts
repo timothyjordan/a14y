@@ -16,12 +16,27 @@ export interface SeedCollection {
  * Fetch every seed file in parallel and merge their advertised URLs into a
  * single deduped set. The site checks read from the same shared map keys
  * so each resource is fetched at most once per run.
+ *
+ * Each loader emits `start` and `done` `SeedProgressEvent`s through
+ * `ctx.onSeedProgress` (when provided) so the CLI can surface movement
+ * during long sitemap-index reads. `loadSitemapXml` additionally emits
+ * `child` events per fetched child sitemap.
  */
 export async function collectSeeds(ctx: SiteCheckContext): Promise<SeedCollection> {
+  const onSeed = ctx.onSeedProgress;
+  const wrap = async <T extends { found: boolean }>(
+    resource: 'llms-txt' | 'sitemap-xml' | 'sitemap-md',
+    load: () => Promise<T>,
+  ): Promise<T> => {
+    onSeed?.({ kind: 'start', resource });
+    const result = await load();
+    onSeed?.({ kind: 'done', resource, found: result.found });
+    return result;
+  };
   const [llms, xml, md] = await Promise.all([
-    loadLlmsTxt(ctx),
-    loadSitemapXml(ctx),
-    loadSitemapMd(ctx),
+    wrap('llms-txt', () => loadLlmsTxt(ctx)),
+    wrap('sitemap-xml', () => loadSitemapXml(ctx)),
+    wrap('sitemap-md', () => loadSitemapMd(ctx)),
   ]);
 
   const urls = new Set<string>();

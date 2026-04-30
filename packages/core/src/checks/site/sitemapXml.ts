@@ -103,19 +103,26 @@ async function fetchSitemapAt(ctx: SiteCheckContext, url: string): Promise<Sitem
     const childUrls = parsed.childSitemaps.slice(0, MAX_CHILD_SITEMAPS);
     const queue = new ConcurrentQueue({ concurrency: CHILD_SITEMAP_CONCURRENCY });
     const allEntries: SitemapEntry[] = [];
+    let visited = 0;
+    const total = childUrls.length;
+    const onSeed = ctx.onSeedProgress;
     const tasks = childUrls.map((childUrl) =>
       queue.add(async () => {
         try {
           const childResp = await ctx.http.fetch(childUrl);
-          if (childResp.status < 200 || childResp.status >= 300) return;
-          const child = parseSitemapBody(childResp.body);
-          if (child.ok && child.kind === 'urlset') {
-            // Single-threaded JS — no lock needed.
-            for (const e of child.entries) allEntries.push(e);
+          if (childResp.status >= 200 && childResp.status < 300) {
+            const child = parseSitemapBody(childResp.body);
+            if (child.ok && child.kind === 'urlset') {
+              // Single-threaded JS — no lock needed.
+              for (const e of child.entries) allEntries.push(e);
+            }
           }
         } catch {
           // Skip unreachable / timed-out child sitemaps. One slow host
           // shouldn't poison the rest of the sitemap result.
+        } finally {
+          visited++;
+          onSeed?.({ kind: 'child', resource: 'sitemap-xml', visited, total });
         }
       }),
     );
@@ -135,24 +142,36 @@ async function fetchSitemapAt(ctx: SiteCheckContext, url: string): Promise<Sitem
 }
 
 export async function loadSitemapXml(ctx: SiteCheckContext): Promise<SitemapXmlResource> {
-  const cached = ctx.shared.get(SHARED_KEY) as SitemapXmlResource | undefined;
+  // The shared cache holds either the resolved resource (after the first
+  // load completes) or the in-flight Promise (while it's still loading).
+  // Memoizing the promise means concurrent callers — site checks fan out
+  // via Promise.all in the runner, plus collectSeeds — share a single
+  // walk of the sitemapindex and don't each refetch every child.
+  const cached = ctx.shared.get(SHARED_KEY) as
+    | SitemapXmlResource
+    | Promise<SitemapXmlResource>
+    | undefined;
   if (cached) return cached;
 
-  const candidates = wellKnownCandidates(ctx, [
-    '/sitemap.xml',
-    '/sitemap_index.xml',
-    '/sitemap-index.xml',
-  ]);
-  let result: SitemapXmlResource = { found: false };
-  for (const url of candidates) {
-    const tried = await fetchSitemapAt(ctx, url);
-    if (tried.found) {
-      result = tried;
-      break;
+  const promise = (async () => {
+    const candidates = wellKnownCandidates(ctx, [
+      '/sitemap.xml',
+      '/sitemap_index.xml',
+      '/sitemap-index.xml',
+    ]);
+    let result: SitemapXmlResource = { found: false };
+    for (const url of candidates) {
+      const tried = await fetchSitemapAt(ctx, url);
+      if (tried.found) {
+        result = tried;
+        break;
+      }
     }
-  }
-  ctx.shared.set(SHARED_KEY, result);
-  return result;
+    ctx.shared.set(SHARED_KEY, result);
+    return result;
+  })();
+  ctx.shared.set(SHARED_KEY, promise);
+  return promise;
 }
 
 export const sitemapXmlExists: SiteCheckSpec = {

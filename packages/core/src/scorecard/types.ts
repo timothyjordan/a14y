@@ -2,6 +2,22 @@ import type { FetchedPage, HttpClient } from '../fetch/types';
 
 export type CheckScope = 'site' | 'page';
 
+/**
+ * Resources surfaced by `collectSeeds`. The CLI uses these to render
+ * progress so the user sees movement during long sitemap-index reads.
+ */
+export type SeedResource = 'llms-txt' | 'sitemap-xml' | 'sitemap-md';
+
+export type SeedProgressEvent =
+  | { kind: 'start'; resource: SeedResource }
+  | {
+      kind: 'child';
+      resource: 'sitemap-xml';
+      visited: number;
+      total: number;
+    }
+  | { kind: 'done'; resource: SeedResource; found: boolean };
+
 export type CheckStatus = 'pass' | 'fail' | 'warn' | 'error' | 'na';
 
 export interface CheckOutcome {
@@ -36,6 +52,13 @@ export interface SiteCheckContext extends BaseCheckContext {
    * domains where the user doesn't control the top level.
    */
   sitePrefix?: string;
+  /**
+   * Optional callback that lets seed loaders stream progress out of
+   * `collectSeeds` (start/done per resource, plus per-child events when
+   * walking a sitemapindex). The runner wires this into its `onProgress`
+   * stream so the CLI spinner can render movement during long reads.
+   */
+  onSeedProgress?: (event: SeedProgressEvent) => void;
 }
 
 export interface PageCheckContext extends BaseCheckContext {
