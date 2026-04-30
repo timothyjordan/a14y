@@ -52,8 +52,13 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
+      # release-please bumps workspace package.json versions but does not
+      # update the root package-lock.json, so `npm ci` would fail with a
+      # lockfile-drift error on every release. `npm install` reconciles
+      # the lockfile in-place; the lockfile inside the published tarball
+      # is unaffected (npm pack only ships package.json + dist/ etc.).
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       # Core has to build before any consumer (CLI, telemetry-using packages,
       # alias packages that bundle CLI output) so workspace dist/ trees exist

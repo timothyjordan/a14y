@@ -39,6 +39,7 @@
       "type": "linked-versions",
       "groupName": "a14y-cli",
       "components": ["a14y", "agentready", "agentreadability"]
-    }
+    },
+    "node-workspace"
   ]
 }
