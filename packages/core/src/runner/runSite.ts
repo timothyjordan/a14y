@@ -9,6 +9,7 @@ import { buildCheckDocsUrl } from '../scorecard/docsUrl';
 import type {
   ResolvedCheck,
   ResolvedScorecard,
+  SeedProgressEvent,
   SiteCheckContext,
 } from '../scorecard/types';
 import { summarize, type CheckResult, type ScoreSummary } from '../score/compute';
@@ -39,6 +40,7 @@ export interface RunOptions {
 
 export type ProgressEvent =
   | { type: 'started'; mode: RunMode; url: string; scorecardVersion: string }
+  | { type: 'seed-progress'; event: SeedProgressEvent }
   | { type: 'site-check-done'; result: CheckResult }
   | { type: 'page-discovered'; url: string; visited: number }
   | { type: 'page-done'; url: string; passed: number; total: number }
@@ -97,6 +99,11 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     http,
     shared,
     sitePrefix,
+    // Forward seed-loading progress into the unified onProgress stream so
+    // the CLI spinner can render movement during long sitemap-index reads.
+    onSeedProgress: opts.onProgress
+      ? (event) => opts.onProgress!({ type: 'seed-progress', event })
+      : undefined,
   };
 
   // Site checks fan out independently of page checks. Kick them off in
