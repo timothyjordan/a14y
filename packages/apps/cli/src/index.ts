@@ -120,6 +120,10 @@ program
         if (event.type === 'page-discovered') spinner.text = `Visited ${event.visited}: ${event.url}`;
         else if (event.type === 'site-check-done') spinner.text = `Site check: ${event.result.id}`;
         else if (event.type === 'finished') spinner.text = `Done — score ${event.summary.score}`;
+        else if (event.type === 'seed-progress') {
+          const text = describeSeedProgress(event.event);
+          if (text) spinner.text = text;
+        }
       } else if (options.verbose) {
         process.stderr.write(chalk.gray(`[${event.type}] ${describeEvent(event)}\n`));
       }
@@ -279,8 +283,44 @@ function describeEvent(event: ProgressEvent): string {
       return `${event.url} (#${event.visited})`;
     case 'page-done':
       return `${event.url} (${event.passed}/${event.total} passed)`;
+    case 'seed-progress': {
+      const e = event.event;
+      if (e.kind === 'child') {
+        return `${e.resource} child ${e.visited}/${e.total}`;
+      }
+      if (e.kind === 'done') {
+        return `${e.resource} ${e.found ? 'found' : 'missing'}`;
+      }
+      return `${e.resource} loading`;
+    }
     case 'finished':
       return `score ${event.summary.score}`;
+  }
+}
+
+function describeSeedProgress(
+  event: ProgressEvent extends { type: 'seed-progress'; event: infer E } ? E : never,
+): string | null {
+  // Map the structured event to a single-line spinner string. `done` is a
+  // no-op so the next event (page-discovered, child progress on the next
+  // resource, or site-check-done) takes over without a flicker.
+  if (event.kind === 'start') {
+    return `Loading ${labelForResource(event.resource)}…`;
+  }
+  if (event.kind === 'child') {
+    return `Loading ${labelForResource(event.resource)} (${event.visited}/${event.total})…`;
+  }
+  return null;
+}
+
+function labelForResource(resource: 'llms-txt' | 'sitemap-xml' | 'sitemap-md'): string {
+  switch (resource) {
+    case 'llms-txt':
+      return 'llms.txt';
+    case 'sitemap-xml':
+      return 'sitemap.xml';
+    case 'sitemap-md':
+      return 'sitemap.md';
   }
 }
 
