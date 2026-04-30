@@ -2,6 +2,6 @@
   "packages/apps/cli": "0.4.0",
   "packages/aliases/agentready": "0.4.0",
   "packages/aliases/agentreadability": "0.4.0",
-  "packages/core": "0.3.0",
+  "packages/core": "0.3.1",
   "packages/telemetry": "0.1.0"
 }
