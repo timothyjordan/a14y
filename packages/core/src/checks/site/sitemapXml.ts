@@ -1,9 +1,26 @@
 import { XMLParser } from 'fast-xml-parser';
+import { ConcurrentQueue } from '../../crawler/queue';
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
 import { wellKnownCandidates } from './_wellKnown';
 
 const SHARED_KEY = 'site:sitemap-xml';
+/**
+ * How many child sitemaps to fetch in parallel when the root is a
+ * sitemapindex. 8 is a balance between throughput and politeness — large
+ * indexes (developers.google.com has 40 children) finish in under a minute
+ * even when individual children are slow, and we don't hammer a host with
+ * dozens of simultaneous connections.
+ */
+const CHILD_SITEMAP_CONCURRENCY = 8;
+/**
+ * Defense-in-depth cap on how many child sitemaps we follow. Real-world
+ * indexes top out in the low hundreds; capping prevents a pathological
+ * `<sitemapindex>` (intentional or otherwise) from spending unbounded time
+ * here. Children beyond the cap are dropped silently — the urlset/lastmod
+ * checks remain meaningful on the sample.
+ */
+const MAX_CHILD_SITEMAPS = 200;
 
 interface SitemapEntry {
   loc: string;
@@ -77,22 +94,32 @@ async function fetchSitemapAt(ctx: SiteCheckContext, url: string): Promise<Sitem
         urls: parsed.entries.map((e) => e.loc),
       };
     }
-    // sitemapindex — follow children sequentially. We deliberately don't use
-    // the crawler queue here so this loader stays usable from a check that
-    // runs without a configured queue.
+    // sitemapindex — follow children in parallel with bounded concurrency.
+    // The previous sequential loop hung audits on hosts whose child
+    // sitemaps respond slowly (e.g. developers.google.com under our UA
+    // takes ~24s per child × 40 children ≈ 16 minutes). With concurrency 8
+    // and the per-request timeout from httpClient, the worst case is
+    // bounded to roughly ceil(N/concurrency) × timeoutMs.
+    const childUrls = parsed.childSitemaps.slice(0, MAX_CHILD_SITEMAPS);
+    const queue = new ConcurrentQueue({ concurrency: CHILD_SITEMAP_CONCURRENCY });
     const allEntries: SitemapEntry[] = [];
-    for (const childUrl of parsed.childSitemaps) {
-      try {
-        const childResp = await ctx.http.fetch(childUrl);
-        if (childResp.status < 200 || childResp.status >= 300) continue;
-        const child = parseSitemapBody(childResp.body);
-        if (child.ok && child.kind === 'urlset') {
-          for (const e of child.entries) allEntries.push(e);
+    const tasks = childUrls.map((childUrl) =>
+      queue.add(async () => {
+        try {
+          const childResp = await ctx.http.fetch(childUrl);
+          if (childResp.status < 200 || childResp.status >= 300) return;
+          const child = parseSitemapBody(childResp.body);
+          if (child.ok && child.kind === 'urlset') {
+            // Single-threaded JS — no lock needed.
+            for (const e of child.entries) allEntries.push(e);
+          }
+        } catch {
+          // Skip unreachable / timed-out child sitemaps. One slow host
+          // shouldn't poison the rest of the sitemap result.
         }
-      } catch {
-        // skip unreachable child sitemaps
-      }
-    }
+      }),
+    );
+    await Promise.all(tasks);
     return {
       found: true,
       url: resp.url,
