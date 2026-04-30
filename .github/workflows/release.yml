@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+# release-please commits the version bumps and tags releases.
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # required for npm provenance attestations
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      paths_released: ${{ steps.release.outputs.paths_released }}
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          # Both files live at the repo root and are committed.
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    needs: release-please
+    if: needs.release-please.outputs.releases_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      # One package per matrix slot. Failures publish the others independently.
+      fail-fast: false
+      matrix:
+        path: ${{ fromJSON(needs.release-please.outputs.paths_released) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Core has to build before any consumer (CLI, telemetry-using packages,
+      # alias packages that bundle CLI output) so workspace dist/ trees exist
+      # by the time we publish.
+      - name: Build all workspaces
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build
+
+      - name: Run tests
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm test --workspaces --if-present
+
+      - name: Publish ${{ matrix.path }} to npm with provenance
+        working-directory: ${{ matrix.path }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Re-export so any prepack scripts (telemetry inject, README build)
+          # see the same values the build step did.
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm publish --provenance --access public
