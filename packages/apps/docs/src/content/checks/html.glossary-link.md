@@ -40,8 +40,8 @@ Publish a `/glossary/` (or `/terminology/`) page and link to it from your global
 
 ## Common gotchas
 
-The check matches link **text**, not href — naming the file `vocab.html` is fine as long as the visible link text says "Glossary" or "Terminology". Conversely, a footer link to `/glossary/` whose visible text reads "Definitions" won't satisfy the check.
+The check matches link **text**, not href, naming the file `vocab.html` is fine as long as the visible link text says "Glossary" or "Terminology". Conversely, a footer link to `/glossary/` whose visible text reads "Definitions" won't satisfy the check.
 
-Add the glossary link to a shared layout component (header, footer, or sidebar) rather than to individual pages — that way every page picks it up automatically without per-page maintenance.
+Add the glossary link to a shared layout component (header, footer, or sidebar) rather than to individual pages, that way every page picks it up automatically without per-page maintenance.
 
 A real glossary page is more useful than a stub. Even a flat list of 10–15 core terms with one-paragraph definitions is dramatically more useful for an agent than a placeholder, because it lets the agent disambiguate vocabulary without parsing your entire docs corpus first.

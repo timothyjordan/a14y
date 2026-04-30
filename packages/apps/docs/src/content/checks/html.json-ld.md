@@ -6,7 +6,7 @@ scope: page
 why: >
   JSON-LD is the richest machine-readable format an HTML page can carry. A page with
   JSON-LD can declare its type, author, dates, breadcrumbs, and relationships to other
-  pages — all in one block agents can read with a JSON parser instead of HTML scraping.
+  pages, all in one block agents can read with a JSON parser instead of HTML scraping.
 references:
   - title: "JSON-LD spec"
     url: https://www.w3.org/TR/json-ld11/

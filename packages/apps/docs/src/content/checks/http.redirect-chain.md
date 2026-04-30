@@ -18,7 +18,7 @@ The HTTP client follows redirects manually and records the chain of intermediate
 
 ## How to implement it
 
-Audit your redirect rules and collapse chains. The most common offender is "old URL → canonical URL → URL with trailing slash" — collapse the middle hop so the original URL goes straight to its final destination.
+Audit your redirect rules and collapse chains. The most common offender is "old URL → canonical URL → URL with trailing slash", collapse the middle hop so the original URL goes straight to its final destination.
 
 ### Pass
 

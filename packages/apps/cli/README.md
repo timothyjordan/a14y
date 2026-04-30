@@ -2,7 +2,7 @@
 
 # a14y
 
-**Agent readability for the web.** AI agents — ChatGPT, Claude, Copilot, Cursor — are becoming a primary way people discover and consume the web. `a14y` (shorthand for *agentreadability*) is an open spec for making any website discoverable, parseable, and comprehensible to those agents, a versioned scorecard that operationalizes the spec, and a CLI and Chrome extension that score any site against it. Documentation sites are a common high-value target, but the scorecard works for marketing sites, product pages, help centers — anything agents might read.
+**Agent readability for the web.** Agents (ChatGPT, Claude, Copilot, Cursor) now read most of the web before humans do. `a14y` (shorthand for *agentreadability*) is an open spec for making any website discoverable, parseable, and comprehensible to those agents, a versioned scorecard that operationalizes the spec, and a CLI plus Chrome extension that score any site against it. Documentation sites are a common high-value target, but the scorecard works for marketing sites, product pages, help centers, and anything else agents might read.
 
 > 📖 **Full documentation & source:** <https://github.com/timothyjordan/a14y>
 > 🌐 **Docs site:** <https://a14y.dev>
@@ -18,7 +18,7 @@ npm install -g a14y
 a14y https://example.com
 ```
 
-The CLI also ships under two alias names for discoverability — `agentready` and `agentreadability`. All three run the same binary.
+The CLI also ships under two alias names for discoverability: `agentready` and `agentreadability`. All three run the same binary.
 
 ## Usage
 
@@ -30,7 +30,7 @@ a14y <url> --output agent-prompt     # Markdown fix-list for a coding agent
 a14y scorecards                      # list available scorecard versions
 ```
 
-`check` is the default command — `a14y <url>` is exactly the same as `a14y check <url>`. For full flag documentation run `a14y --help` (summary) or `a14y help check` (detail).
+`check` is the default command: `a14y <url>` is exactly the same as `a14y check <url>`. For full flag documentation run `a14y --help` (summary) or `a14y help check` (detail).
 
 ## Command reference
 

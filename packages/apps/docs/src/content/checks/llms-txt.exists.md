@@ -20,7 +20,7 @@ The check sends a `GET` request to `/llms.txt`, then to `/.well-known/llms.txt`,
 
 ## How to implement it
 
-Create a plain-text file named `llms.txt` at the root of your site (or under `/.well-known/`) that lists the pages you want agents to read. Each line is either a markdown link, a section heading, or free text. The format is intentionally simple — agents can parse it without an HTML parser.
+Create a plain-text file named `llms.txt` at the root of your site (or under `/.well-known/`) that lists the pages you want agents to read. Each line is either a markdown link, a section heading, or free text. The format is intentionally simple, agents can parse it without an HTML parser.
 
 ### Pass
 
@@ -39,4 +39,4 @@ Served at `https://example.com/llms.txt`.
 
 ### Fail
 
-No file at any of the well-known paths — `GET /llms.txt`, `GET /.well-known/llms.txt`, `GET /docs/llms.txt`, and the `llms-full.txt` variants all return 404.
+No file at any of the well-known paths, `GET /llms.txt`, `GET /.well-known/llms.txt`, `GET /docs/llms.txt`, and the `llms-full.txt` variants all return 404.
