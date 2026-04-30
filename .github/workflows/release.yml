@@ -85,20 +85,42 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      # Core has to build before any consumer (CLI, telemetry-using packages,
-      # alias packages that bundle CLI output) so workspace dist/ trees exist
-      # by the time we publish.
-      - name: Build all workspaces
+      # `npm run build --workspaces` iterates alphabetically, not in
+      # topological order, so the CLI would build before @a14y/core's
+      # dist/ exists and tsc would fall back to wrong type resolution.
+      # Build in dependency order explicitly: core → telemetry → cli.
+      # Aliases ship only bin.js, no build step. Extension and docs
+      # aren't published from this workflow.
+      - name: Build @a14y/core
         env:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
           GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
-        run: npm run build
+        run: npm run build --workspace @a14y/core
 
-      - name: Run tests
+      - name: Build @a14y/telemetry
         env:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
           GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
-        run: npm test --workspaces --if-present
+        run: npm run build --workspace @a14y/telemetry
+
+      - name: Build a14y CLI
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace a14y
+
+      # Test only the package being published. Other workspaces have
+      # already been verified by the per-PR test runs that produced this
+      # release; re-running everything here would waste time and risk
+      # cross-workspace flakiness.
+      # `--workspace` only accepts workspace names in npm 11, not paths,
+      # so we cd into the workspace dir instead.
+      - name: Test ${{ matrix.path }}
+        working-directory: ${{ matrix.path }}
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm test --if-present
 
       # Auth is via npm Trusted Publishing (OIDC). With `id-token: write`
       # granted at the workflow level and `registry-url` configured by

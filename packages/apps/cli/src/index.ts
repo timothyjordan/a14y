@@ -298,9 +298,15 @@ function describeEvent(event: ProgressEvent): string {
   }
 }
 
-function describeSeedProgress(
-  event: ProgressEvent extends { type: 'seed-progress'; event: infer E } ? E : never,
-): string | null {
+// `Extract` distributes over the `ProgressEvent` union and pulls the
+// `seed-progress` variant's payload type. The previous inline
+// conditional `ProgressEvent extends ... ? ... : never` did *not*
+// distribute (distribution requires a generic type parameter, and
+// `ProgressEvent` is a concrete type), which collapsed the result to
+// `never` and made every property access on `event` an error.
+type SeedProgressPayload = Extract<ProgressEvent, { type: 'seed-progress' }>['event'];
+
+function describeSeedProgress(event: SeedProgressPayload): string | null {
   // Map the structured event to a single-line spinner string. `done` is a
   // no-op so the next event (page-discovered, child progress on the next
   // resource, or site-check-done) takes over without a flicker.
