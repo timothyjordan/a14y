@@ -177,6 +177,60 @@ describe('site/sitemapXml', () => {
     });
     expect((await run(sitemapXmlHasLastmod, ctx)).status).toBe('fail');
   });
+
+  it('follows a sitemapindex in parallel and tolerates a stuck child', async () => {
+    // 30 child sitemaps; one of them never resolves. Concurrency 8 means a
+    // single hang shouldn't block more than one slot, so the other 29
+    // should still complete and the loader should return their merged
+    // entries without throwing.
+    const N = 30;
+    const STUCK = 17;
+    const indexBody = `<?xml version="1.0"?><sitemapindex>${Array.from(
+      { length: N },
+      (_, i) => `<sitemap><loc>https://example.com/s_${i}.xml</loc></sitemap>`,
+    ).join('')}</sitemapindex>`;
+
+    type Route = { body: string; status?: number; headers?: Record<string, string> };
+    const routes: Record<string, Route> = {
+      'https://example.com/sitemap.xml': { body: indexBody },
+    };
+    for (let i = 0; i < N; i++) {
+      if (i === STUCK) continue;
+      routes[`https://example.com/s_${i}.xml`] = {
+        body: `<?xml version="1.0"?><urlset><url><loc>https://example.com/p${i}</loc><lastmod>2026-01-01</lastmod></url></urlset>`,
+      };
+    }
+    // Build a custom HttpClient that delegates to the fake routes but hangs
+    // for the STUCK child until its signal aborts (or 2s elapses as a test
+    // safety net) — we want to verify resilience, not block the suite.
+    const baseCtx = makeSiteCtx(BASE, routes);
+    const wrappedHttp = {
+      async fetch(url: string) {
+        if (url === `https://example.com/s_${STUCK}.xml`) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          throw new Error('simulated stall');
+        }
+        return baseCtx.http.fetch(url);
+      },
+      async fetchPage(url: string) {
+        return baseCtx.http.fetchPage(url);
+      },
+    };
+    const ctx = { ...baseCtx, http: wrappedHttp };
+
+    const start = Date.now();
+    const result = await run(sitemapXmlValid, ctx);
+    const elapsed = Date.now() - start;
+    expect(result.status).toBe('pass');
+    // 30 children sequentially × 200ms stall ≈ 6s; with concurrency 8 the
+    // stall only blocks one slot so total stays well under that.
+    expect(elapsed).toBeLessThan(2_000);
+
+    // has-lastmod should reflect the 29 healthy children.
+    const lastmod = await run(sitemapXmlHasLastmod, ctx);
+    expect(lastmod.status).toBe('pass');
+    expect(lastmod.message).toContain(`${N - 1} entries`);
+  });
 });
 
 describe('site/sitemapMd', () => {
