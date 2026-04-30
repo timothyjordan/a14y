@@ -1,34 +1,40 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { getLatestScorecardVersion } from '~/lib/scorecard-data';
+import { getLatestScorecardVersion, getScorecardByVersion } from '~/lib/scorecard-data';
 
 const latest = getLatestScorecardVersion();
+const released = getScorecardByVersion(latest).releasedAt;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
   title="The Agent Readability spec · a14y"
-  description="An open spec for making any website readable to AI agents. Three layers — discoverability, parsing, comprehension — plus the versioned scorecard that operationalizes them."
+  description="An open spec for making any website readable to AI agents. Three layers (discoverability, parsing, comprehension) plus the versioned scorecard that operationalizes them."
 >
   <section class="hero">
-    <span class="eyebrow">The spec</span>
-    <h1>Agent Readability, defined.</h1>
-    <p class="lead">
-      An open set of practices that make any website discoverable,
-      parseable, and comprehensible to AI agents. The scorecard
-      operationalizes the spec into pass/fail checks; the tools run
-      those checks against real sites.
-    </p>
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">spec</span>
+        <span>v{latest} · released {released}</span>
+      </div>
+      <h1>Agent readability, defined.</h1>
+      <p class="lead">
+        An open set of practices that make any website discoverable,
+        parseable, and comprehensible to AI agents. The scorecard
+        operationalizes the spec into pass-or-fail checks. The tools
+        run those checks against real sites.
+      </p>
+    </div>
   </section>
 
   <h2>What it is</h2>
   <p>
     <strong>Agent readability</strong> is the property of a website that lets AI
-    agents — assistants like ChatGPT, Claude, Copilot, and Cursor, as well as
-    autonomous agents built on top of them — find its pages, fetch their content
+    agents (assistants like ChatGPT, Claude, Copilot, and Cursor, plus
+    autonomous agents built on top of them) find its pages, fetch their content
     without wasting tokens on layout chrome, and extract the facts, code, and
-    context a user actually asked for. The goal isn't to turn every page into
-    markdown or build a separate "AI version" of your site. It's to expose the
+    context a user actually asked for. The goal isn&apos;t to turn every page into
+    markdown or build a separate &ldquo;AI version&rdquo; of your site. It&apos;s to expose the
     signals agents need alongside the page you already serve to humans.
   </p>
 
@@ -36,7 +42,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <p>
     Discovery is shifting. For a growing share of users, the first answer about a
     product, a help-center question, or a technical topic comes through an AI
-    agent, not a search engine — and often not the linked site at all. When an
+    agent, not a search engine, and often not the linked site at all. When an
     agent is the reader, three things change. Tokens cost money, so scraping a
     5&thinsp;MB HTML document to surface two paragraphs is wasteful. Layout and
     navigation chrome dominates raw HTML by byte count, so agents can miss the
@@ -47,8 +53,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <p>
     Agent readability is to AI-mediated discovery what SEO was to search:
     cheap to implement, compounding in return, and increasingly table stakes.
-    It applies to any website that wants to be read by an agent — documentation
-    portals and developer references are a common and high-value target, but
+    It applies to any website that wants to be read by an agent. Documentation
+    portals and developer references are a common, high-value target, but
     product pages, marketing sites, help centers, and long-form content all
     benefit from the same practices.
   </p>
@@ -62,7 +68,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <div class="spec-layers">
     <article class="spec-layer">
-      <div class="layer-num">Layer 1</div>
+      <div class="layer-num">Layer 01</div>
       <h3>Discoverability</h3>
       <p>
         Can agents find every page you want them to read? Covers
@@ -73,19 +79,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </p>
     </article>
     <article class="spec-layer">
-      <div class="layer-num">Layer 2</div>
+      <div class="layer-num">Layer 02</div>
       <h3>Parsing</h3>
       <p>
         Once an agent fetches a page, can it extract the content efficiently?
         Covers HTTP basics (no redirect chains, correct content types), HTML
         metadata (canonical link, lang, OG, meta description), markdown
         mirrors (<code>.md</code> at the same URL with frontmatter), and
-        content-to-chrome ratio. The cheapest win is usually a mirror — one
+        content-to-chrome ratio. The cheapest win is usually a mirror: one
         <code>.md</code> file per page, served with the right content type.
       </p>
     </article>
     <article class="spec-layer">
-      <div class="layer-num">Layer 3</div>
+      <div class="layer-num">Layer 03</div>
       <h3>Comprehension</h3>
       <p>
         Once parsed, does the content self-describe? Covers structured data
@@ -93,7 +99,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         language-tagged code blocks, API schema links, and semantic heading
         hierarchy. These are the signals an agent uses to generate
         accurate citations, working code examples, and cross-references
-        that don't hallucinate.
+        that don&apos;t hallucinate.
       </p>
     </article>
   </div>
@@ -101,10 +107,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <h2>How the scorecard operationalizes it</h2>
   <p>
     The <a href={`${base}/scorecards/${latest}/`}>a14y scorecard</a> is a
-    versioned, frozen manifest of pass/fail checks that maps directly to the
+    versioned, frozen manifest of pass-or-fail checks that maps directly to the
     three layers above. Each check has a stable id, a documented detection
-    rule, pass/fail examples, and fix guidance — so a failing result is an
-    immediately actionable work item, not a vague "improve your SEO" nudge.
+    rule, pass and fail examples, and fix guidance, so a failing result is an
+    immediately actionable work item, not a vague &ldquo;improve your SEO&rdquo; nudge.
     Scorecards are frozen once shipped: v{latest} always evaluates the same
     way, so historical scores compare cleanly even as the engine evolves.
   </p>
@@ -116,7 +122,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <h2>Status</h2>
   <p>
-    The spec is open and evolving. v{latest} is the current scorecard — see
+    The spec is open and evolving. v{latest} is the current scorecard. See
     the <a href={`${base}/scorecards/${latest}/`}>check list</a> for exactly
     what it measures today. New scorecard versions publish additively: older
     versions stay supported so your existing audits keep reproducing.

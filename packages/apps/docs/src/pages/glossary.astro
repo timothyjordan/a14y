@@ -6,16 +6,24 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   title="Glossary · a14y"
   description="Definitions for the core terms used in the a14y scorecard, CLI, and Chrome extension."
 >
-  <h1>Glossary</h1>
-  <p class="lead">
-    The vocabulary used by the a14y scorecard, CLI, and Chrome
-    extension. If a term in the docs feels overloaded, look here first.
-  </p>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">terms</span>
+        <span>vocabulary used across the spec, CLI, and extension</span>
+      </div>
+      <h1>Glossary</h1>
+      <p class="lead">
+        The vocabulary used by the a14y scorecard, CLI, and Chrome
+        extension. If a term in the docs feels overloaded, look here first.
+      </p>
+    </div>
+  </section>
 
   <h2>Scorecard</h2>
   <p>
     A versioned manifest pinning each stable check id to a specific
-    implementation version. Scorecards are frozen once published —
+    implementation version. Scorecards are frozen once published:
     changes go into a new file (e.g. <code>v0_3.ts</code>) so older
     audits remain reproducible. The current scorecard is
     <strong>v0.2.0</strong>.
@@ -57,7 +65,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   <p>
     A human-readable category label attached to each check, used to
     cluster checks by topic in reports (e.g. "HTML metadata",
-    "Discoverability", "Markdown mirror"). Purely cosmetic — the
+    "Discoverability", "Markdown mirror"). Purely cosmetic. The
     score itself doesn't depend on it.
   </p>
 
@@ -66,17 +74,17 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     Every check returns one of five statuses:
   </p>
   <ul>
-    <li><strong>pass</strong> — the rule is satisfied.</li>
-    <li><strong>fail</strong> — the rule is not satisfied. Counts against the score.</li>
-    <li><strong>warn</strong> — soft fail. Reported separately but treated as not-passed for scoring.</li>
-    <li><strong>error</strong> — the check threw unexpectedly. Treated as not-passed.</li>
-    <li><strong>n/a</strong> — the rule does not apply to this page (e.g. <code>api.schema-link</code> on a non-API page). Excluded from both halves of the score.</li>
+    <li><strong>pass</strong>: the rule is satisfied.</li>
+    <li><strong>fail</strong>: the rule is not satisfied. Counts against the score.</li>
+    <li><strong>warn</strong>: soft fail. Reported separately but treated as not-passed for scoring.</li>
+    <li><strong>error</strong>: the check threw unexpectedly. Treated as not-passed.</li>
+    <li><strong>n/a</strong>: the rule does not apply to this page (e.g. <code>api.schema-link</code> on a non-API page). Excluded from both halves of the score.</li>
   </ul>
 
   <h2>Applicable</h2>
   <p>
     The denominator of the score formula:
-    <code>applicable = total − na</code>. Only checks that meaningfully
+    <code>applicable = total - na</code>. Only checks that meaningfully
     apply to the audited content count. The score itself is
     <code>round(passed / applicable * 100)</code>.
   </p>

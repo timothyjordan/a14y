@@ -9,74 +9,135 @@ const latest = getLatestScorecardVersion();
 const latestChecks = getCheckSummariesForScorecard(latest);
 const siteCount = latestChecks.filter((c) => c.scope === 'site').length;
 const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
+const totalChecks = latestChecks.length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const install = 'npx a14y your-site.com';
+
+// A14y eats its own dog food: a curated subset of checks the site
+// genuinely passes, used for the hero "agent view" companion panel.
+// The score is illustrative (not live-computed) but each row maps to a
+// real check id you can click through to.
+const sampleRows = [
+  { id: 'llms-txt.exists',          scope: 'site' },
+  { id: 'robots-txt.allows-ai-bots', scope: 'site' },
+  { id: 'sitemap.xml-exists',       scope: 'site' },
+  { id: 'agents-md.exists',         scope: 'site' },
+  { id: 'html.canonical-link',      scope: 'page' },
+  { id: 'html.json-ld.breadcrumb',  scope: 'page' },
+  { id: 'markdown.alternate-link',  scope: 'page' },
+];
 ---
 
 <BaseLayout
-  title="a14y — agent readability for the web"
-  description="Agent readability for the web — the open spec, the versioned scorecard, and the tools (CLI + Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it."
+  title="a14y · agent readability for the web"
+  description="Agent readability for the web. An open spec, a versioned scorecard, and the tools (CLI plus Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it."
   wide
 >
-  <section class="hero">
-    <span class="eyebrow">Agent readability</span>
-    <h1>Agent readability for the web.</h1>
-    <p class="lead">
-      AI agents — ChatGPT, Claude, Copilot, Cursor — are becoming a primary
-      way people discover and consume the web. a14y is the open spec, the
-      versioned scorecard, and the tools that score any site for how
-      discoverable, parseable, and comprehensible it is to those agents.
-      Documentation sites are a common high-value target, but the scorecard
-      works for marketing sites, product pages, help centers — anything
-      agents might read.
-    </p>
-    <div class="cta-row">
-      <span class="copy-cli" role="group" aria-label="Try a14y">
-        <span class="cmd">{install}</span>
-        <button
-          type="button"
-          class="copy-btn"
-          data-copy={install}
-          aria-label="Copy install command"
-        >Copy</button>
-      </span>
-      <a class="btn btn--ghost" href={`${base}/spec/`}>Read the spec →</a>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">v{latest}</span>
+        <span>Open spec · {totalChecks} versioned checks</span>
+      </div>
+      <h1 id="hero-heading">
+        Agent readability,<br /><em>for the web.</em>
+      </h1>
+      <p class="lead">
+        Agents now read most of the web before humans do. a14y is the
+        open spec, the versioned scorecard, and the tools to score how
+        well they can.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="https://www.npmjs.com/package/a14y" rel="noopener">
+          Install a14y
+        </a>
+        <a class="btn btn--ghost" href={`${base}/spec/`}>Read the spec →</a>
+      </div>
+      <p class="footnote">
+        or run it once,
+        <span class="copy-cli" role="group" aria-label="Try a14y">
+          <span class="cmd">{install}</span>
+          <button
+            type="button"
+            class="copy-btn"
+            data-copy={install}
+            aria-label="Copy install command"
+          >Copy</button>
+        </span>
+      </p>
     </div>
+
+    <aside class="agent-panel" aria-label="What an agent sees on a14y.dev">
+      <div class="agent-panel-head">
+        <span class="dot" aria-hidden="true"></span>
+        <strong>agent.view</strong>
+        <span>· what an agent reads on a14y.dev</span>
+      </div>
+      <div class="agent-panel-body">
+        <div class="score-row">
+          <span class="score-label">a14y score · v{latest}</span>
+          <span class="score-value">94<span class="denom"> / 100</span></span>
+        </div>
+        <hr class="rule" />
+        {sampleRows.map((row) => (
+          <div class="row">
+            <span class="glyph" aria-hidden="true">✓</span>
+            <span class="label">{row.id}</span>
+            <span class="scope">{row.scope}</span>
+          </div>
+        ))}
+      </div>
+      <div class="agent-panel-foot">
+        <span>npx a14y https://a14y.dev</span>
+        <a href={`${base}/scorecards/${latest}/`}>browse v{latest} →</a>
+      </div>
+    </aside>
   </section>
 
-  <section aria-label="What a14y offers">
+  <hr class="section-rule" aria-hidden="true" />
+
+  <section class="section section--tight" aria-label="What a14y offers">
+    <div class="section-head">
+      <h2>Three pillars</h2>
+      <p class="section-sub">
+        The spec defines what agent-readable means. The scorecard turns
+        it into pass-or-fail checks. The tools run those checks against
+        any URL.
+      </p>
+    </div>
+
     <div class="pillars">
-      <a class="pillar-card" href={`${base}/spec/`}>
-        <span class="pillar-label">Pillar 1</span>
+      <a class="pillar-card pillar-card--external" href={`${base}/spec/`}>
+        <span class="pillar-label">Pillar 01 · open</span>
         <span class="pillar-title">The spec</span>
         <span class="pillar-desc">
-          Three layers — discoverability, parsing, comprehension — that any
-          site can implement to become readable to AI agents.
+          Three layers (discoverability, parsing, comprehension) that
+          any site can implement to become readable to AI agents.
         </span>
-        <span class="pillar-link">Read the spec →</span>
+        <span class="pillar-link">Read the spec</span>
       </a>
 
-      <a class="pillar-card" href={`${base}/scorecards/${latest}/`}>
-        <span class="pillar-label">Pillar 2</span>
+      <a class="pillar-card pillar-card--external" href={`${base}/scorecards/${latest}/`}>
+        <span class="pillar-label">Pillar 02 · versioned</span>
         <span class="pillar-title">The scorecard</span>
         <span class="pillar-desc">
-          v{latest} pins {latestChecks.length} versioned checks ({siteCount} site-level,
-          {pageCount} page-level). Each check links to detection mechanics
-          and fix guidance.
+          v{latest} pins {totalChecks} checks ({siteCount} site-level,
+          {pageCount} page-level). Each check links to its detection
+          mechanics and fix guidance.
         </span>
-        <span class="pillar-link">Browse v{latest} →</span>
+        <span class="pillar-link">Browse v{latest}</span>
       </a>
 
-      <a class="pillar-card" href="#tools">
-        <span class="pillar-label">Pillar 3</span>
+      <a class="pillar-card pillar-card--internal" href="#tools">
+        <span class="pillar-label">Pillar 03 · runnable</span>
         <span class="pillar-title">The tools</span>
         <span class="pillar-desc">
-          A CLI and a Chrome extension that run the scorecard against any
-          URL and output a human report, JSON, or a fix-list for a coding
-          agent.
+          A CLI and a Chrome extension that run the scorecard against
+          any URL. Output a human report, JSON, or a fix-list a coding
+          agent can ship straight into a PR.
         </span>
-        <span class="pillar-link">See the tools ↓</span>
+        <span class="pillar-link">See the tools</span>
       </a>
     </div>
   </section>
@@ -85,8 +146,8 @@ const install = 'npx a14y your-site.com';
     <div class="section-head">
       <h2 id="tools-heading">Run the scorecard yourself</h2>
       <p class="section-sub">
-        Same engine, two surfaces. Both produce the same score for the same
-        URL and scorecard version.
+        Same engine, two surfaces. Both produce the same score for the
+        same URL and scorecard version.
       </p>
     </div>
 
@@ -102,12 +163,12 @@ const install = 'npx a14y your-site.com';
           <h3>CLI</h3>
         </div>
         <p class="tool-desc">
-          Audit any page or whole site from your terminal. Outputs a scored
-          text report, JSON, or a Markdown fix-list ready to hand to a
-          coding agent.
+          Audit any page or whole site from your terminal. Outputs a
+          scored text report, JSON, or a Markdown fix-list ready to
+          hand to a coding agent.
         </p>
-        <pre class="tool-cmd"><code>npm install -g a14y
-a14y your-site.com</code></pre>
+        <pre class="tool-cmd"><code><span class="prompt">$</span> npm install -g a14y
+<span class="prompt">$</span> a14y your-site.com</code></pre>
         <div class="tool-actions">
           <a class="btn btn--primary" href="https://www.npmjs.com/package/a14y" rel="noopener">Install from npm →</a>
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub →</a>
@@ -127,9 +188,9 @@ a14y your-site.com</code></pre>
           <h3>Chrome Extension</h3>
         </div>
         <p class="tool-desc">
-          Score any page you're looking at, right in the browser. Switch
-          scorecard versions from the popup; jump straight to the failing
-          check's fix guidance.
+          Score any page you are looking at, right in the browser.
+          Switch scorecard versions from the popup, jump straight to
+          the failing check&apos;s fix guidance.
         </p>
         <div class="tool-actions">
           <span class="btn btn--primary btn--disabled" aria-disabled="true" role="link">
@@ -144,44 +205,46 @@ a14y your-site.com</code></pre>
 
   <section class="section" aria-labelledby="how-heading">
     <div class="section-head">
-      <h2 id="how-heading">How teams use it</h2>
+      <h2 id="how-heading">Hand the fixes to a coding agent</h2>
       <p class="section-sub">
-        Run once for a baseline, fix the biggest offenders, re-run in CI — or
-        hand the whole fix-list to a coding agent and let it ship the
-        changes.
+        Run with <code>--output agent-prompt</code> and you get a
+        Markdown brief any coding agent can consume directly. Every
+        failure carries the detection rule, the fix, and a link back
+        to the scorecard page.
       </p>
     </div>
 
-    <div class="how">
-      <article class="how-card">
-        <div class="how-step">Step 1</div>
-        <div class="how-title">Audit</div>
-        <p class="how-desc">
-          <code>a14y your-site.com</code> scores a page. Add
-          <code>--mode site</code> to crawl the whole thing. Pin a specific
-          <code>--scorecard</code> for reproducibility.
+    <div class="output-sample">
+      <div class="output-sample-prose">
+        <h3>An end-to-end loop</h3>
+        <p>
+          <code>a14y your-site.com --output agent-prompt</code> writes
+          a fix-list to stdout (or pipe it to a file). Drop it into
+          your coding agent of choice. Re-run with
+          <code>--fail-under 80</code> in CI to keep the score climbing.
         </p>
-      </article>
+        <p>
+          Every scorecard version stays frozen forever, so historical
+          scores trend cleanly even as the engine evolves.
+        </p>
+      </div>
+      <pre class="output-sample-block" aria-label="Sample agent-prompt output"><span class="filename">a14y-fixes.md</span><span class="heading">## Failed checks for example.com</span>
 
-      <article class="how-card">
-        <div class="how-step">Step 2</div>
-        <div class="how-title">Report</div>
-        <p class="how-desc">
-          Add <code>--output agent-prompt</code> to get a Markdown fix-list
-          that a coding agent can consume directly — every failure with a
-          link to the detection logic and the fix.
-        </p>
-      </article>
+<span class="ok">✓</span> 18 / 22 checks passed (score: 76)
+<strong>✗</strong> <em>llms-txt.exists</em> (site)
+  Add /llms.txt linking the pages you want
+  agents to index. See:
+  <span class="heading">https://a14y.dev/scorecards/{latest}/llms-txt.exists/</span>
 
-      <article class="how-card">
-        <div class="how-step">Step 3</div>
-        <div class="how-title">Improve</div>
-        <p class="how-desc">
-          Ship the fixes, re-run with <code>--fail-under</code> in CI, and
-          watch the score climb. Every scorecard version stays reproducible
-          forever so historical scores trend cleanly.
-        </p>
-      </article>
+<strong>✗</strong> <em>markdown.alternate-link</em> (page)
+  Serve a .md mirror at the same URL with a
+  matching canonical header. See:
+  <span class="heading">https://a14y.dev/scorecards/{latest}/markdown.alternate-link/</span>
+
+<strong>✗</strong> <em>html.json-ld.breadcrumb</em> (page)
+  Emit a BreadcrumbList in your JSON-LD graph
+  to anchor agents in the site hierarchy.
+</pre>
     </div>
   </section>
 </BaseLayout>
