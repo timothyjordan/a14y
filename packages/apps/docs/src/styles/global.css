@@ -760,7 +760,7 @@ p { margin: 0 0 16px; }
 }
 @media (min-width: 880px) {
   .output-sample {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
   }
 }
 .output-sample-prose {
@@ -791,9 +791,9 @@ p { margin: 0 0 16px; }
   background: var(--agent-bg);
   color: var(--agent-text);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.65;
-  padding: 24px 26px;
+  padding: 22px 24px;
   overflow-x: auto;
   white-space: pre;
 }
