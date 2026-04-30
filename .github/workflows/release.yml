@@ -3,6 +3,16 @@ name: Release
 on:
   push:
     branches: [main]
+  # Manual escape hatch for re-publishing after a fixable infra failure.
+  # Pass the workspace path (e.g. `packages/core`); the publish job runs
+  # for that path only and skips release-please. Don't use this for
+  # routine releases — let release-please drive those.
+  workflow_dispatch:
+    inputs:
+      path:
+        description: Workspace path to republish (e.g. packages/core)
+        required: true
+        type: string
 
 # release-please commits the version bumps and tags releases.
 permissions:
@@ -16,6 +26,9 @@ concurrency:
 
 jobs:
   release-please:
+    # Skip release-please on manual dispatch — the user is bypassing the
+    # normal flow to republish a previously released path.
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
@@ -31,7 +44,16 @@ jobs:
 
   publish:
     needs: release-please
-    if: needs.release-please.outputs.releases_created == 'true'
+    # `always()` lets this job run even when `release-please` is skipped
+    # (which happens on workflow_dispatch). Then the body of the
+    # condition decides whether we actually publish.
+    if: |
+      always() && (
+        (github.event_name == 'workflow_dispatch') ||
+        (github.event_name == 'push' &&
+         needs.release-please.result == 'success' &&
+         needs.release-please.outputs.releases_created == 'true')
+      )
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -40,7 +62,10 @@ jobs:
       # One package per matrix slot. Failures publish the others independently.
       fail-fast: false
       matrix:
-        path: ${{ fromJSON(needs.release-please.outputs.paths_released) }}
+        path: >-
+          ${{ github.event_name == 'workflow_dispatch'
+              && fromJSON(format('["{0}"]', inputs.path))
+              || fromJSON(needs.release-please.outputs.paths_released) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
