@@ -63,11 +63,6 @@ const runCmd = 'npx a14y your-site.com';
     </div>
 
     <aside class="agent-panel" aria-label="What an agent sees on a14y.dev">
-      <div class="agent-panel-head">
-        <span class="dot" aria-hidden="true"></span>
-        <strong>agent.view</strong>
-        <span>· what `a14y https://a14y.dev` prints</span>
-      </div>
       <pre class="agent-output" aria-label="Sample CLI output"><span class="ag-prompt">%</span> a14y https://a14y.dev
 <span class="ag-pass">✔</span> Score: 92/100
 
@@ -77,27 +72,23 @@ Agent Readability Score: 92/100
 
 Site checks
   Discoverability
-    <span class="ag-pass">✓</span> llms-txt.exists                <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> robots-txt.allows-ai-bots      <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> sitemap-md.has-structure       <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> agents-md.has-min-sections     <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> llms-txt.exists             <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> robots-txt.allows-ai-bots   <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> sitemap-md.has-structure    <span class="ag-mute">site</span>
+    <span class="ag-pass">✓</span> agents-md.has-min-sections  <span class="ag-mute">site</span>
 
 Page checks — https://a14y.dev/
   HTML metadata
-    <span class="ag-pass">✓</span> html.canonical-link            <span class="ag-mute">page</span>
-    <span class="ag-pass">✓</span> html.lang-attribute (en)       <span class="ag-mute">page</span>
+    <span class="ag-pass">✓</span> html.canonical-link         <span class="ag-mute">page</span>
+    <span class="ag-pass">✓</span> html.lang-attribute (en)    <span class="ag-mute">page</span>
   Structured data
-    <span class="ag-pass">✓</span> html.json-ld.breadcrumb        <span class="ag-mute">page</span>
+    <span class="ag-pass">✓</span> html.json-ld.breadcrumb     <span class="ag-mute">page</span>
   Markdown mirror
-    <span class="ag-pass">✓</span> markdown.mirror-suffix         <span class="ag-mute">page</span>
-    <span class="ag-fail">✗</span> markdown.canonical-header      <span class="ag-mute">page</span>
-    <span class="ag-fail">✗</span> markdown.content-negotiation   <span class="ag-mute">page</span>
+    <span class="ag-pass">✓</span> markdown.mirror-suffix      <span class="ag-mute">page</span>
+    <span class="ag-fail">✗</span> markdown.canonical-header   <span class="ag-mute">page</span>
+    <span class="ag-fail">✗</span> markdown.content-negotiation <span class="ag-mute">page</span>
   Code
-    <span class="ag-fail">✗</span> code.language-tags             <span class="ag-mute">page</span></pre>
-      <div class="agent-panel-foot">
-        <a href={`${base}/scorecards/${latest}/`}>browse v{latest} checks →</a>
-        <a href={`${base}/llms.txt`} class="ag-foot-link">llms.txt</a>
-      </div>
+    <span class="ag-fail">✗</span> code.language-tags          <span class="ag-mute">page</span></pre>
     </aside>
   </section>
 
@@ -173,8 +164,8 @@ Page checks — https://a14y.dev/
           scored text report, JSON, or a Markdown fix-list ready to
           hand to a coding agent.
         </p>
-        <pre class="tool-cmd"><code><span class="prompt">$</span> npm install -g a14y
-<span class="prompt">$</span> a14y your-site.com</code></pre>
+        <pre class="tool-cmd"><code><span class="prompt">%</span> npm install -g a14y
+<span class="prompt">%</span> a14y your-site.com</code></pre>
         <div class="tool-actions">
           <a class="btn btn--primary" href="https://www.npmjs.com/package/a14y" rel="noopener">Install from npm →</a>
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub →</a>
@@ -239,7 +230,8 @@ Page checks — https://a14y.dev/
           The site is its own first benchmark.
         </p>
       </div>
-      <pre class="output-sample-block" aria-label="Real agent-prompt output for a14y.dev"><span class="filename">a14y https://a14y.dev --output agent-prompt</span><span class="heading"># Agent readability fix-list — https://a14y.dev/</span>
+      <pre class="output-sample-block" aria-label="Real agent-prompt output for a14y.dev"><span class="ag-prompt">%</span> a14y https://a14y.dev --output agent-prompt
+<span class="heading"># Agent readability fix-list — https://a14y.dev/</span>
 
 You are an autonomous coding agent. The a14y scorecard
 ran against https://a14y.dev/ on 2026-04-30 and identified

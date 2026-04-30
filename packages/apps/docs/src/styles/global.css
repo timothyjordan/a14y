@@ -322,8 +322,8 @@ p { margin: 0 0 16px; }
 }
 @media (min-width: 960px) {
   .hero {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 56px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 48px;
     padding: 56px 0 0;
     align-items: center;
   }
@@ -448,11 +448,11 @@ p { margin: 0 0 16px; }
    and muted scope labels without breaking the verbatim layout. */
 .agent-output {
   margin: 0;
-  padding: 18px 22px 22px;
+  padding: 22px 24px;
   background: transparent;
   border: 0;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.65;
   color: var(--agent-text);
   overflow-x: auto;
@@ -556,7 +556,7 @@ p { margin: 0 0 16px; }
   user-select: all;
 }
 .copy-cli .cmd::before {
-  content: '$ ';
+  content: '%\00a0';
   color: var(--text-subtle);
   user-select: none;
 }
