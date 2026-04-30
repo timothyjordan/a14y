@@ -122,6 +122,63 @@ describe('validate (single page mode)', () => {
     expect(events).toContain('page-done');
     expect(events[events.length - 1]).toBe('finished');
   });
+
+  it('emits seed-progress events while loading well-known files', async () => {
+    const routes = buildRoutes();
+    // Make sitemap.xml a sitemapindex so we get child events too.
+    routes['https://example.com/sitemap.xml'] = {
+      body: `<?xml version="1.0"?><sitemapindex>
+        <sitemap><loc>https://example.com/s1.xml</loc></sitemap>
+        <sitemap><loc>https://example.com/s2.xml</loc></sitemap>
+      </sitemapindex>`,
+    };
+    routes['https://example.com/s1.xml'] = {
+      body: `<urlset><url><loc>https://example.com/p1</loc><lastmod>2026-04-01</lastmod></url></urlset>`,
+    };
+    routes['https://example.com/s2.xml'] = {
+      body: `<urlset><url><loc>https://example.com/p2</loc><lastmod>2026-04-01</lastmod></url></urlset>`,
+    };
+
+    const http = fakeHttpClient(routes);
+    const seedEvents: Array<{
+      type: string;
+      kind?: string;
+      resource?: string;
+      visited?: number;
+      total?: number;
+      found?: boolean;
+    }> = [];
+    await validate({
+      url: 'https://example.com/',
+      mode: 'page',
+      http,
+      onProgress: (e) => {
+        if (e.type === 'seed-progress') {
+          seedEvents.push({
+            type: e.type,
+            kind: e.event.kind,
+            resource: e.event.resource,
+            visited: 'visited' in e.event ? e.event.visited : undefined,
+            total: 'total' in e.event ? e.event.total : undefined,
+            found: 'found' in e.event ? e.event.found : undefined,
+          });
+        }
+      },
+    });
+
+    const resources = new Set(seedEvents.map((e) => e.resource));
+    expect(resources).toEqual(new Set(['llms-txt', 'sitemap-xml', 'sitemap-md']));
+
+    const xmlEvents = seedEvents.filter((e) => e.resource === 'sitemap-xml');
+    // start + 2 child + done.
+    expect(xmlEvents.find((e) => e.kind === 'start')).toBeDefined();
+    const childEvents = xmlEvents.filter((e) => e.kind === 'child');
+    expect(childEvents).toHaveLength(2);
+    expect(childEvents.at(-1)?.visited).toBe(2);
+    expect(childEvents.at(-1)?.total).toBe(2);
+    const done = xmlEvents.find((e) => e.kind === 'done');
+    expect(done?.found).toBe(true);
+  });
 });
 
 describe('validate (site mode)', () => {
