@@ -7,7 +7,7 @@
 //
 // Usage: node scripts/inject-telemetry-config.mjs <cli|extension|docs>
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -20,6 +20,30 @@ if (!['cli', 'extension', 'docs'].includes(surface)) {
 }
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+// Local-dev convenience: pull GA4 secrets from <repo_root>/.env.local so we
+// don't have to shell-export them each session. CI workflows set these in
+// the job's `env:` block, so anything already in process.env wins —
+// .env.local only fills gaps. The file is gitignored.
+function loadEnvLocal(path) {
+  if (!existsSync(path)) return;
+  for (const raw of readFileSync(path, 'utf8').split('\n')) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    const eq = line.indexOf('=');
+    if (eq < 1) continue;
+    const key = line.slice(0, eq).trim();
+    let value = line.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!(key in process.env)) process.env[key] = value;
+  }
+}
+loadEnvLocal(join(REPO_ROOT, '.env.local'));
 
 const measurementId = process.env.GA4_MEASUREMENT_ID || null;
 const apiSecret = process.env.GA4_MP_API_SECRET || null;

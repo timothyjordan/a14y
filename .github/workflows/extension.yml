@@ -1,0 +1,79 @@
+name: Extension build
+
+# Builds the browser extension with GA4 telemetry secrets baked in and
+# uploads the CWS-ready zip as a workflow artifact. The extension is
+# private (not published to npm), so this workflow exists purely to
+# produce a downloadable build for the Chrome Web Store dashboard.
+#
+# Push triggers a build on every commit to main so a fresh artifact is
+# always available; workflow_dispatch lets Tim grab one off any branch.
+#
+# Without GA4_MEASUREMENT_ID / GA4_MP_API_SECRET secrets, the build
+# still succeeds but the generated telemetry config exports nulls and
+# the extension's GA4 adapter silently disables itself.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: extension-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      # The extension imports @a14y/core and @a14y/telemetry by workspace
+      # link; build them first so tsc resolves their dist/ types.
+      - name: Build @a14y/core
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/core
+
+      - name: Build @a14y/telemetry
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/telemetry
+
+      - name: Build @a14y/extension
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/extension
+
+      - name: Test @a14y/extension
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm test --workspace @a14y/extension --if-present
+
+      # Reuses the dist/ produced by the build step — package-extension.mjs
+      # only re-runs vite build when dist/ is missing or --rebuild is passed.
+      - name: Package extension
+        run: npm run package --workspace @a14y/extension
+
+      - name: Upload extension zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: a14y-extension-zip
+          path: packages/apps/extension/a14y-extension-*.zip
+          if-no-files-found: error

@@ -9,7 +9,7 @@
     "packages/aliases/*"
   ],
   "scripts": {
-    "test": "npm test --workspaces --if-present && node --test scripts/build-readmes.test.mjs",
+    "test": "npm test --workspaces --if-present && node --test scripts/build-readmes.test.mjs scripts/inject-telemetry-config.test.mjs",
     "build": "npm run build --workspaces --if-present",
     "docs": "node scripts/build-readmes.mjs",
     "docs:check": "node scripts/build-readmes.mjs --check"
