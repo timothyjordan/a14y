@@ -1,10 +1,15 @@
 ---
+import { getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const entry = await getEntry('pages', 'glossary');
+if (!entry) throw new Error('Missing pages/glossary content entry');
+const { Content } = await entry.render();
 ---
 
 <BaseLayout
-  title="Glossary · a14y"
-  description="Definitions for the core terms used in the a14y scorecard, CLI, and Chrome extension."
+  title={entry.data.title}
+  description={entry.data.description}
 >
   <section class="hero">
     <div class="hero-text" style="grid-column: 1 / -1;">
@@ -20,105 +25,5 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <h2>Scorecard</h2>
-  <p>
-    A versioned manifest pinning each stable check id to a specific
-    implementation version. Scorecards are frozen once published:
-    changes go into a new file (e.g. <code>v0_3.ts</code>) so older
-    audits remain reproducible. The current scorecard is
-    <strong>v0.2.0</strong>.
-  </p>
-
-  <h2>Check</h2>
-  <p>
-    A single rule the scorecard evaluates against a site or a page.
-    Each check has a stable id (e.g. <code>html.canonical-link</code>),
-    a scope (site or page), a group label for UI rendering, and one
-    or more implementation versions describing the actual logic.
-  </p>
-
-  <h2>Check id</h2>
-  <p>
-    A stable, never-renamed identifier for a check (e.g.
-    <code>llms-txt.exists</code>, <code>markdown.mirror-suffix</code>).
-    Even if the check name or implementation changes, the id stays
-    the same so historical results compare cleanly.
-  </p>
-
-  <h2>Implementation version</h2>
-  <p>
-    Per-check semver string. Bumped whenever the check's observable
-    behaviour changes. Old versions stay in the registry forever so
-    frozen scorecards can keep evaluating their pinned implementations.
-  </p>
-
-  <h2>Scope</h2>
-  <p>
-    Either <code>site</code> (run once per audit, against the audited
-    origin) or <code>page</code> (run once per discovered page). Site
-    checks cover discoverability surfaces like llms.txt and robots.txt;
-    page checks cover HTML metadata, structured data, content
-    structure, and markdown mirrors.
-  </p>
-
-  <h2>Group</h2>
-  <p>
-    A human-readable category label attached to each check, used to
-    cluster checks by topic in reports (e.g. "HTML metadata",
-    "Discoverability", "Markdown mirror"). Purely cosmetic. The
-    score itself doesn't depend on it.
-  </p>
-
-  <h2>Pass / Fail / Warn / Error / N/A</h2>
-  <p>
-    Every check returns one of five statuses:
-  </p>
-  <ul>
-    <li><strong>pass</strong>: the rule is satisfied.</li>
-    <li><strong>fail</strong>: the rule is not satisfied. Counts against the score.</li>
-    <li><strong>warn</strong>: soft fail. Reported separately but treated as not-passed for scoring.</li>
-    <li><strong>error</strong>: the check threw unexpectedly. Treated as not-passed.</li>
-    <li><strong>n/a</strong>: the rule does not apply to this page (e.g. <code>api.schema-link</code> on a non-API page). Excluded from both halves of the score.</li>
-  </ul>
-
-  <h2>Applicable</h2>
-  <p>
-    The denominator of the score formula:
-    <code>applicable = total - na</code>. Only checks that meaningfully
-    apply to the audited content count. The score itself is
-    <code>round(passed / applicable * 100)</code>.
-  </p>
-
-  <h2>Manifest</h2>
-  <p>
-    The frozen TypeScript file (e.g. <code>v0_2.ts</code>) that pins
-    each check id in a scorecard to a specific implementation version.
-    The runtime resolver throws if any pinned id or version is missing
-    from the registry, so a frozen scorecard can never silently drift.
-  </p>
-
-  <h2>Parity</h2>
-  <p>
-    The contract that the CLI and the Chrome extension produce
-    byte-identical scores for the same URL + scorecard version.
-    Enforced by <code>parity.test.ts</code> in <code>@a14y/core</code>.
-  </p>
-
-  <h2>Subpath</h2>
-  <p>
-    A docs site hosted under a path on a shared domain (e.g.
-    <code>https://timothyjordan.github.io/a14y/</code>) rather
-    than at its own origin root. Site-level checks like
-    <code>llms-txt.exists</code> look for files at both the subpath
-    and the origin root, preferring the subpath copy.
-  </p>
-
-  <h2>Mirror</h2>
-  <p>
-    A markdown version of an HTML page, served at the same URL with
-    a <code>.md</code> suffix. Agents prefer mirrors because they
-    don't have to parse HTML or run JavaScript to read the content.
-    Documented in detail under
-    <code>markdown.mirror-suffix</code>.
-  </p>
+  <Content />
 </BaseLayout>
