@@ -71,9 +71,14 @@ jobs:
       - name: Package extension
         run: npm run package --workspace @a14y/extension
 
+      - name: Read extension version
+        id: ext_version
+        working-directory: packages/apps/extension
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
       - name: Upload extension zip
         uses: actions/upload-artifact@v4
         with:
-          name: a14y-extension
+          name: a14y-extension-${{ steps.ext_version.outputs.value }}
           path: packages/apps/extension/a14y-extension-*.zip
           if-no-files-found: error
