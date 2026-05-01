@@ -5,7 +5,7 @@ group: Discoverability
 scope: site
 why: >
   An AGENTS.md that only has a project description is barely better than no file at all.
-  Agents need actionable instructions — install, configure, use — to do anything useful
+  Agents need actionable instructions, install, configure, use, to do anything useful
   with your project.
 references:
   - title: "Agents.md spec"
@@ -18,7 +18,7 @@ After locating the skill file, the check extracts every heading line and tests t
 
 ## How to implement it
 
-Add at least two of an Installation section, a Configuration section, and a Usage / Examples section to your AGENTS.md (or CLAUDE.md, etc). The check looks at heading text, so the prose inside doesn't matter for passing — but real content matters for actually helping agents.
+Add at least two of an Installation section, a Configuration section, and a Usage / Examples section to your AGENTS.md (or CLAUDE.md, etc). The check looks at heading text, so the prose inside doesn't matter for passing, but real content matters for actually helping agents.
 
 ### Pass
 

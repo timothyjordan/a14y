@@ -4,7 +4,7 @@ title: sitemap entries include <lastmod>
 group: Discoverability
 scope: site
 why: >
-  <lastmod> lets agents do incremental re-ingestion — they can skip pages whose lastmod
+  <lastmod> lets agents do incremental re-ingestion, they can skip pages whose lastmod
   hasn't changed since their last crawl. Without it, agents either re-fetch everything every
   time (wasteful) or never update their snapshot (stale).
 references:

@@ -8,17 +8,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout title="Scorecards · a14y">
-  <h1>Scorecards</h1>
-  <p class="lead">
-    Every shipped scorecard. Each version pins each stable check id to a specific
-    implementation — older versions stay reproducible forever so historical scores
-    can be trended consistently.
-  </p>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">scorecards</span>
+        <span>frozen manifests · trend cleanly forever</span>
+      </div>
+      <h1>Scorecards</h1>
+      <p class="lead">
+        Every shipped scorecard. Each version pins each stable check id to a specific
+        implementation. Older versions stay reproducible forever so historical scores
+        can be trended consistently.
+      </p>
+    </div>
+  </section>
 
   <h2>How scorecards work</h2>
   <p>
     A scorecard is a frozen manifest pinning each stable check id to an
-    implementation version. Once shipped, a scorecard never changes — when
+    implementation version. Once shipped, a scorecard never changes: when
     a check's behaviour evolves, a new scorecard is published that points
     at the new implementation version while older scorecards keep pointing
     at the old one.

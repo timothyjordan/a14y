@@ -96,7 +96,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
           } else {
             // Non-check page. Use a short stub keyed off the URL.
             title = humanizeSegment(cleanPath || 'a14y');
-            description = `a14y — agent readability for the web — ${title}`;
+            description = `a14y · agent readability for the web · ${title}`;
             const canonicalPath = cleanPath === '' ? '/' : `/${cleanPath}/`;
             body = `# ${title}\n\nThis is the markdown mirror of [${canonicalPath}](${canonicalPath}). Open the canonical page for the full rendered version with navigation, code blocks, and the version selector.\n`;
           }

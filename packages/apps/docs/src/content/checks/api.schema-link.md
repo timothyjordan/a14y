@@ -14,7 +14,7 @@ references:
 
 ## How the check decides
 
-The check first inspects the page URL path. If the path does NOT contain `/api`, `/reference`, `/endpoints`, `/swagger`, or `/openapi` (case-insensitive), the check returns N/A — it only applies to pages that look like API documentation.
+The check first inspects the page URL path. If the path does NOT contain `/api`, `/reference`, `/endpoints`, `/swagger`, or `/openapi` (case-insensitive), the check returns N/A, it only applies to pages that look like API documentation.
 
 If the path DOES match, the check enumerates every `<a>` element on the page and asserts at least one `href` ends in `openapi.json`, `swagger.json`, `swagger.yaml`, or `schema.json`. Fails if no such link exists.
 

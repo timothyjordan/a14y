@@ -3,25 +3,30 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Build-time stamp. Astro is SSG so this value is fixed per deploy —
+// Build-time stamp. Astro is SSG so this value is fixed per deploy:
 // the freshness signal readers (and agents) look for.
 const lastUpdated = new Date().toISOString().slice(0, 10);
 ---
 
 <BaseLayout
   title="Privacy · a14y"
-  description="Privacy policy for a14y.dev, the a14y CLI, and the Chrome extension — what we collect, what we don't, and how to opt out."
+  description="Privacy policy for a14y.dev, the a14y CLI, and the Chrome extension. What we collect, what we don't, and how to opt out."
 >
   <section class="hero">
-    <span class="eyebrow">Privacy</span>
-    <h1>Privacy</h1>
-    <p class="lead">
-      We collect a small amount of anonymous usage data — by default, on — to
-      help us improve a14y. We never collect personally identifiable
-      information, the URLs you audit, or the content of any page you visit
-      with the extension or CLI. You can turn telemetry off on every surface,
-      and the controls are listed below.
-    </p>
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">policy</span>
+        <span>last updated {lastUpdated}</span>
+      </div>
+      <h1>Privacy</h1>
+      <p class="lead">
+        We collect a small amount of anonymous usage data, on by default,
+        to help us improve a14y. We never collect personally identifiable
+        information, the URLs you audit, or the content of any page you
+        visit with the extension or CLI. You can turn telemetry off on
+        every surface, and the controls are listed below.
+      </p>
+    </div>
   </section>
 
   <h2>What we collect</h2>
@@ -38,35 +43,35 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
     is anonymized at ingest), and clicks to outbound destinations grouped into
     a fixed enum (<code>github</code> / <code>npm</code> / <code>chrome_web_store</code>
     / <code>other</code>). GA4 sets a <code>_ga</code> cookie. The site honors
-    your browser's <em>Do Not Track</em> header — if it's set, no GA script is
-    loaded. You can also opt out for this site explicitly with the toggle below;
-    that flips a flag in <code>localStorage</code> and the GA script stops loading
+    your browser&apos;s <em>Do Not Track</em> header. If it&apos;s set, no GA script is
+    loaded. You can also opt out for this site explicitly with the toggle below.
+    That flips a flag in <code>localStorage</code> and the GA script stops loading
     on every subsequent visit.
   </p>
 
   <h3>From the CLI</h3>
   <p>The CLI sends an event for each of:</p>
-  <ul>
-    <li><code>cli_command_invoked</code> — the command name (<code>check</code> / <code>scorecards</code>), output format, mode, and scorecard version.</li>
-    <li><code>cli_run_completed</code> — bucketed score (e.g. <code>76-100</code>), bucketed page count, bucketed run duration, bucketed counts of failed / warned / errored checks. No URL, no per-check details.</li>
-    <li><code>cli_error</code> — the error class name (no message, no stack trace) and the phase it happened in.</li>
+  <ul class="privacy-page">
+    <li><code>cli_command_invoked</code>: the command name (<code>check</code> / <code>scorecards</code>), output format, mode, and scorecard version.</li>
+    <li><code>cli_run_completed</code>: bucketed score (e.g. <code>76-100</code>), bucketed page count, bucketed run duration, bucketed counts of failed, warned, and errored checks. No URL, no per-check details.</li>
+    <li><code>cli_error</code>: the error class name (no message, no stack trace) and the phase it happened in.</li>
   </ul>
 
   <h3>From the Chrome extension</h3>
   <p>The extension sends an event for each of:</p>
-  <ul>
-    <li><code>ext_installed</code> — whether the install was a fresh install or an update.</li>
-    <li><code>ext_audit_started</code> — mode (<code>page</code> / <code>site</code>) and scorecard version. No URL.</li>
-    <li><code>ext_audit_completed</code> — bucketed score, bucketed page count, bucketed duration. No URL.</li>
-    <li><code>ext_audit_error</code> — error class name and phase.</li>
-    <li><code>ext_settings_changed</code> — the name of the setting that changed (e.g. <code>maxPages</code>). No values. We deliberately do <em>not</em> track changes to the telemetry toggle itself.</li>
+  <ul class="privacy-page">
+    <li><code>ext_installed</code>: whether the install was a fresh install or an update.</li>
+    <li><code>ext_audit_started</code>: mode (<code>page</code> / <code>site</code>) and scorecard version. No URL.</li>
+    <li><code>ext_audit_completed</code>: bucketed score, bucketed page count, bucketed duration. No URL.</li>
+    <li><code>ext_audit_error</code>: error class name and phase.</li>
+    <li><code>ext_settings_changed</code>: the name of the setting that changed (e.g. <code>maxPages</code>). No values. We deliberately do <em>not</em> track changes to the telemetry toggle itself.</li>
   </ul>
 
-  <h2>What we don't collect</h2>
-  <ul>
+  <h2>What we don&apos;t collect</h2>
+  <ul class="privacy-page">
     <li>The URLs you audit, or any part of them.</li>
     <li>The content of any page the CLI or extension fetches.</li>
-    <li>Per-check scorecard details — only bucketed totals.</li>
+    <li>Per-check scorecard details. Only bucketed totals.</li>
     <li>Your real IP address (anonymized at ingest by GA4).</li>
     <li>Any user-agent string detail beyond OS family.</li>
     <li>Names, email addresses, or anything that could tie events to a real person.</li>
@@ -77,8 +82,8 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
 
   <h3>Website</h3>
   <p>
-    Set your browser's <em>Do Not Track</em> header (every browser supports
-    this in privacy settings) — we honor it and never load the GA script.
+    Set your browser&apos;s <em>Do Not Track</em> header (every browser supports
+    this in privacy settings). We honor it and never load the GA script.
     Or use the in-page toggle below; it persists in <code>localStorage</code>
     on this site only.
   </p>
@@ -86,7 +91,7 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
     <button
       type="button"
       id="ga-opt-out-toggle"
-      class="ga-opt-out-toggle"
+      class="btn btn--ghost"
       data-on-label="Disable analytics on this site"
       data-off-label="Enable analytics on this site"
     >
@@ -95,23 +100,23 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
     <span id="ga-opt-out-status" class="ga-opt-out-status" aria-live="polite"></span>
   </p>
   <p>
-    For a system-wide opt-out, install Google's
+    For a system-wide opt-out, install Google&apos;s
     <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics opt-out browser add-on</a>.
   </p>
 
   <h3>CLI</h3>
   <p>Any of the following disables CLI telemetry. The first match wins:</p>
-  <ul>
+  <ul class="privacy-page">
     <li>Pass <code>--no-telemetry</code> to a single command.</li>
     <li>Set the env var <code>A14Y_TELEMETRY=0</code>.</li>
     <li>Set <code>"telemetryEnabled": false</code> in <code>~/.a14y/config.json</code> (the CLI creates this file on first run).</li>
-    <li>Set <code>DO_NOT_TRACK=1</code> or run with <code>CI=true</code> — both auto-disable.</li>
+    <li>Set <code>DO_NOT_TRACK=1</code> or run with <code>CI=true</code>. Both auto-disable.</li>
   </ul>
 
   <h3>Chrome extension</h3>
   <p>
-    Open the extension's <strong>Options</strong> page (right-click the action
-    icon → Options) and toggle off <em>Send anonymous usage data</em>. Or click
+    Open the extension&apos;s <strong>Options</strong> page (right-click the action
+    icon, then Options) and toggle off <em>Send anonymous usage data</em>. Or click
     <em>Turn off</em> on the popup banner the first time you open the popup.
     Both write the same flag in <code>chrome.storage.local</code>; no further
     events leave your machine until you re-enable.
@@ -119,19 +124,19 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
 
   <h2>Provider and data sharing</h2>
   <p>
-    All events go to Google Analytics 4. Google's privacy policy is at
+    All events go to Google Analytics 4. Google&apos;s privacy policy is at
     <a href="https://policies.google.com/privacy" rel="noopener">policies.google.com/privacy</a>;
-    Google's overview of GA data controls is at
+    Google&apos;s overview of GA data controls is at
     <a href="https://support.google.com/analytics/answer/6004245" rel="noopener">support.google.com/analytics/answer/6004245</a>.
-    Data resides on Google's global infrastructure. We have not enabled Google
+    Data resides on Google&apos;s global infrastructure. We have not enabled Google
     Signals or ad personalization on the property.
   </p>
 
   <h2>What the extension still stores locally</h2>
   <p>
     The Chrome extension uses <code>chrome.storage.local</code> to remember
-    the last twenty audit runs — URL, scorecard version, timestamp, pass/fail
-    summary. That history stays on your device, is visible on the extension's
+    the last twenty audit runs: URL, scorecard version, timestamp, pass/fail
+    summary. That history stays on your device, is visible on the extension&apos;s
     report page, and is never sent anywhere. Uninstalling the extension wipes
     <code>chrome.storage.local</code>.
   </p>
@@ -149,12 +154,12 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
   </p>
 
   <h2>Changelog</h2>
-  <ul>
+  <ul class="privacy-page">
     <li><strong>v2 ({lastUpdated}):</strong> introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.</li>
-    <li><strong>v1:</strong> "no telemetry, no third parties" — superseded by v2.</li>
+    <li><strong>v1:</strong> &ldquo;no telemetry, no third parties.&rdquo; Superseded by v2.</li>
   </ul>
 
-  <p class="lead" style="margin-top:32px;font-size:13px;">Last updated: {lastUpdated}.</p>
+  <p style="margin-top:32px;font-size:13px;color:var(--text-subtle);font-family:var(--font-mono);">Last updated: {lastUpdated}.</p>
 
   <script is:inline>
     (function () {
@@ -189,19 +194,10 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
   </script>
 
   <style>
-    .ga-opt-out-toggle {
-      padding: 8px 14px;
-      border: 1px solid var(--border-strong, #d1d1d6);
-      border-radius: 6px;
-      background: var(--surface, #ffffff);
-      font: inherit;
-      cursor: pointer;
-    }
-    .ga-opt-out-toggle:hover { background: var(--surface-alt, #f2f2f5); }
     .ga-opt-out-status {
       margin-left: 10px;
       font-size: 13px;
-      color: var(--text-muted, #6e6e73);
+      color: var(--text-muted);
     }
   </style>
 </BaseLayout>

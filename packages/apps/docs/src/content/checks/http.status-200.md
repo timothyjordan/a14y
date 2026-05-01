@@ -4,7 +4,7 @@ title: Page returns HTTP 200
 group: HTTP
 scope: page
 why: >
-  A page that doesn't return 200 isn't a page — it's a 404, a 5xx, or an unintended
+  A page that doesn't return 200 isn't a page, it's a 404, a 5xx, or an unintended
   redirect target. Agents that follow links to non-200 pages waste context on error
   bodies they can't ingest.
 references:
@@ -18,7 +18,7 @@ After following any redirects, the check inspects the final response status. Pas
 
 ## How to implement it
 
-Make sure every URL listed in your sitemap or linked from your pages resolves to a 200. Audit your site for broken internal links periodically — `a14y check --mode site` will surface every non-200 page in one pass.
+Make sure every URL listed in your sitemap or linked from your pages resolves to a 200. Audit your site for broken internal links periodically, `a14y check --mode site` will surface every non-200 page in one pass.
 
 ### Pass
 

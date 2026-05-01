@@ -6,7 +6,7 @@ scope: site
 why: >
   GPTBot, ClaudeBot, CCBot, and Google-Extended are the named user-agents that today's
   largest AI ingesters use. Disallowing them in robots.txt is the explicit "do not include
-  this site in any LLM" signal — and it's almost always set inadvertently when authors
+  this site in any LLM" signal, and it's almost always set inadvertently when authors
   copy-paste a generic robots.txt template.
 references:
   - title: "OpenAI: GPTBot"
@@ -21,7 +21,7 @@ references:
 
 ## How the check decides
 
-The check parses your robots.txt with [`robots-parser`](https://github.com/samclarke/robots-parser) and asks each of `GPTBot`, `ClaudeBot`, `CCBot`, and `Google-Extended` whether the site root (`/`) is allowed. Passes if all four are allowed. Fails (with a list of blocked bots) if any are disallowed. If no robots.txt exists at all, the check passes — no robots.txt implies allow-all.
+The check parses your robots.txt with [`robots-parser`](https://github.com/samclarke/robots-parser) and asks each of `GPTBot`, `ClaudeBot`, `CCBot`, and `Google-Extended` whether the site root (`/`) is allowed. Passes if all four are allowed. Fails (with a list of blocked bots) if any are disallowed. If no robots.txt exists at all, the check passes, no robots.txt implies allow-all.
 
 ## How to implement it
 

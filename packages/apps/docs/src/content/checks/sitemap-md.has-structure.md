@@ -18,7 +18,7 @@ After fetching sitemap.md, the check counts heading lines (`^#+\s`) and markdown
 
 ## How to implement it
 
-Use markdown headings to express categories and bullet lists of links to express the pages within each category. Even a flat list with one heading is enough to pass — the check is intentionally permissive about structure depth.
+Use markdown headings to express categories and bullet lists of links to express the pages within each category. Even a flat list with one heading is enough to pass, the check is intentionally permissive about structure depth.
 
 ### Pass
 

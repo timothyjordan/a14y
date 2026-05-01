@@ -25,7 +25,7 @@ Two common fixes:
 
 ### Pass
 
-A page where rendered body text is, say, 4 KB out of an 18 KB HTML body — about 22% — passes comfortably.
+A page where rendered body text is, say, 4 KB out of an 18 KB HTML body, about 22%, passes comfortably.
 
 ### Fail
 

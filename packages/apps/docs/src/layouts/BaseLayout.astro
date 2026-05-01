@@ -2,12 +2,12 @@
 import '~/styles/global.css';
 import Analytics from '~/components/Analytics.astro';
 import ScorecardSubHeader from '~/components/ScorecardSubHeader.astro';
-import { getLatestScorecardVersion } from '~/lib/scorecard-data';
+import { getLatestScorecardVersion, getScorecardByVersion } from '~/lib/scorecard-data';
 
 interface Props {
   title: string;
   description?: string;
-  /** Active scorecard version — passed to the VersionSelector on scorecard pages. */
+  /** Active scorecard version. Passed to the VersionSelector on scorecard pages. */
   scorecardVersion?: string;
   /** Show the version selector in the header. Only scorecard pages need it. */
   showVersionSelector?: boolean;
@@ -17,31 +17,21 @@ interface Props {
 
 const {
   title,
-  description = 'Agent readability for the web — the open spec, the versioned scorecard, and the tools (CLI + Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it.',
+  description = 'Agent readability for the web. An open spec, a versioned scorecard, and the tools (CLI plus Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it.',
   scorecardVersion = getLatestScorecardVersion(),
   showVersionSelector = false,
   wide = false,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const latest = getLatestScorecardVersion();
+const latestReleased = getScorecardByVersion(latest).releasedAt;
 
-// Canonical URL for this page. Astro.site is the deployment origin
-// (https://a14y.dev), Astro.url.pathname gives the path relative to the
-// site, so the concatenation yields the fully-qualified canonical
-// address. Used by html.canonical-link, json-ld breadcrumb anchors,
-// and the markdown alternate link below.
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
-// Markdown mirror lives next to each HTML page with a `.md` suffix in
-// place of the trailing slash. The actual mirror files are generated
-// by the markdown-mirrors integration.
 const trimmedPath = Astro.url.pathname.replace(/\/$/, '') || '/index';
 const mirrorHref = new URL(`${trimmedPath}.md`, Astro.site).toString();
 
-// Build a BreadcrumbList from the URL pathname so JSON-LD consumers
-// know exactly where this page sits in the site hierarchy. The first
-// item is always the docs landing; subsequent items are derived from
-// the path segments after `base`.
 const baseSegments = base.replace(/^\//, '').split('/').filter(Boolean);
 const allSegments = Astro.url.pathname.replace(/^\//, '').split('/').filter(Boolean);
 const trailingSegments = allSegments.slice(baseSegments.length);
@@ -63,15 +53,8 @@ const breadcrumbItems = [
   }),
 ];
 
-// dateModified is fixed at build time. Astro is SSG so this is
-// deterministic per deploy and changes whenever the build runs,
-// which is exactly the freshness signal agents want.
 const dateModified = new Date().toISOString();
 
-// Use @graph so the BreadcrumbList sits as a sibling of the WebPage
-// node rather than nested under `breadcrumb:`. The a14y
-// json-ld.breadcrumb check walks JSON-LD nodes following @graph; the
-// nested breadcrumb shape was invisible to it.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -107,14 +90,20 @@ const jsonLd = {
     <meta property="og:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="oklch(0.985 0.008 90)" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="oklch(0.16 0.025 268)" media="(prefers-color-scheme: dark)" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap"
+    />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <Analytics />
     <script is:inline>
       // Set data-theme before first paint to prevent FOUC. Light is
-      // the default; OS preference is ignored — the user's explicit
-      // choice (sun/moon toggle, persisted to localStorage) wins.
+      // the default; OS preference is ignored (the user's explicit
+      // choice via the toggle, persisted to localStorage, wins).
       (function () {
         try {
           var stored = localStorage.getItem('a14y-theme');
@@ -132,12 +121,13 @@ const jsonLd = {
         <a class="brand" href={`${base}/`} aria-label="a14y home">
           <img class="brand-mark" src={`${base}/brand/logo-mark.svg`} width="28" height="28" alt="" />
           <span class="brand-word">a14y</span>
+          <span class="brand-version" aria-label={`Scorecard ${latest}`}>v{latest}</span>
         </a>
         <nav class="site-nav" aria-label="Primary">
           <a href={`${base}/spec/`}>Spec</a>
           <a href={`${base}/scorecards/`}>Scorecard</a>
-          <a href={`${base}/#tools`}>Tools</a>
-          <a href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub</a>
+          <a href={`${base}/#tools`} data-secondary>Tools</a>
+          <a href="https://github.com/timothyjordan/a14y" rel="noopener" data-secondary>GitHub</a>
           <button
             type="button"
             class="theme-toggle"
@@ -187,10 +177,42 @@ const jsonLd = {
       <slot />
     </main>
     <footer class="site-footer">
-      a14y · <a href={`${base}/spec/`}>spec</a> · <a href={`${base}/scorecards/`}>scorecard</a> · <a href={`${base}/glossary/`}>glossary</a> · <a href={`${base}/privacy/`}>privacy</a> · <a href="https://github.com/timothyjordan/a14y" rel="noopener">source</a>
+      <div class="site-footer-inner">
+        <div class="colophon">
+          <h4>a14y</h4>
+          <p>An open spec, a versioned scorecard, and the tools that measure how readable any site is to AI agents.</p>
+          <div class="colophon-meta">
+            scorecard v{latest} · released {latestReleased} · Apache-2.0
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Read</h4>
+          <ul>
+            <li><a href={`${base}/spec/`}>Spec</a></li>
+            <li><a href={`${base}/scorecards/`}>Scorecard</a></li>
+            <li><a href={`${base}/glossary/`}>Glossary</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Use</h4>
+          <ul>
+            <li><a href="https://www.npmjs.com/package/a14y" rel="noopener">npm</a></li>
+            <li><a href="https://github.com/timothyjordan/a14y" rel="noopener">Source</a></li>
+            <li><a href={`${base}/privacy/`}>Privacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>For agents</h4>
+          <ul>
+            <li><a href={`${base}/llms.txt`}>llms.txt</a></li>
+            <li><a href={`${base}/AGENTS.md`}>AGENTS.md</a></li>
+            <li><a href={`${base}/sitemap.md`}>sitemap.md</a></li>
+          </ul>
+        </div>
+      </div>
     </footer>
     <script is:inline>
-      // Theme toggle + clipboard-copy handlers. Kept inline so the
+      // Theme toggle plus clipboard-copy handlers. Kept inline so the
       // handlers bind on every page without an extra network round-trip.
       (function () {
         var btn = document.querySelector('[data-theme-toggle]');
