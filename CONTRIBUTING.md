@@ -145,8 +145,17 @@ together:
 ```sh
 npm install
 npm run build --workspace=@a14y/docs
-npx astro preview --root packages/apps/docs --port 4321
+npm run preview --workspace=@a14y/docs
 ```
+
+`npm run preview` runs a tiny custom static server
+(`packages/apps/docs/scripts/preview.mjs`) that serves `dist/` with
+the right Content-Type per file extension — including
+`text/markdown; charset=utf-8` for `.md` mirrors so UTF-8 glyphs
+(`✓`, `✗`, `✔`, `·`) render correctly. Astro's built-in
+`astro preview` defaults to `text/markdown` with no charset, which
+makes browsers fall back to Latin-1 and mojibake the output; the
+custom script avoids that.
 
 For HTML-only iteration, `npm run dev --workspace=@a14y/docs` is
 faster.

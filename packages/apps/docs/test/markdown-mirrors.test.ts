@@ -56,4 +56,5 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toMatch(/\[`[^`]+`\]\(\/scorecards\/[^/]+\/checks\/[^)]+\.md\)/);
     });
   });
+
 });
