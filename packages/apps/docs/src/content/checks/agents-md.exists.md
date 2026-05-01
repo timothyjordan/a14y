@@ -4,7 +4,7 @@ title: AGENTS.md (or equivalent) is published
 group: Discoverability
 scope: site
 why: >
-  AGENTS.md (and its many siblings — CLAUDE.md, .cursorrules, .cursor/rules) is the
+  AGENTS.md (and its many siblings, CLAUDE.md, .cursorrules, .cursor/rules) is the
   agent equivalent of a project README. It's the file an AI coding agent reads first to
   learn how this codebase or product wants to be used.
 references:
@@ -20,7 +20,7 @@ The check tries `GET` on each of these paths in order: `/AGENTS.md`, `/agents.md
 
 ## How to implement it
 
-Pick the convention that fits your tooling — `AGENTS.md` is the most universal — and put it at the root of your site. The file should answer "what is this", "how do I install / configure / use it", and "what are the conventions I should follow".
+Pick the convention that fits your tooling, `AGENTS.md` is the most universal, and put it at the root of your site. The file should answer "what is this", "how do I install / configure / use it", and "what are the conventions I should follow".
 
 ### Pass
 

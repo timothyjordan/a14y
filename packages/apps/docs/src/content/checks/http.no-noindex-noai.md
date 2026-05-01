@@ -6,7 +6,7 @@ scope: page
 why: >
   The X-Robots-Tag header is the response-header equivalent of a meta robots tag.
   Setting noindex, noai, or noimageai on it tells AI ingesters to skip the page entirely
-  — usually inadvertently, when the directive was meant for a different file type.
+  Often inadvertently, when the directive was meant for a different file type.
 references:
   - title: "Google: X-Robots-Tag"
     url: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag#xrobotstag

@@ -4,7 +4,7 @@ title: Has .md or .mdx mirror
 group: Markdown mirror
 scope: page
 why: >
-  A markdown mirror at <page>.md is the cleanest format an agent can ingest — no HTML,
+  A markdown mirror at <page>.md is the cleanest format an agent can ingest, no HTML,
   no scripts, no styling, just the content. Mirrors are a small amount of work to
   generate but dramatically reduce the cost of ingesting a doc site.
 references:
