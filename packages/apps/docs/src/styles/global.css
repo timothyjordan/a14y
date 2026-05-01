@@ -1085,6 +1085,7 @@ p { margin: 0 0 16px; }
 /* ─── Privacy page small tweaks ─────────────────────────────────── */
 
 .privacy-page li { margin-bottom: 6px; }
+.privacy-page ul li { margin-bottom: 6px; }
 
 /* ─── Focus visible ─────────────────────────────────────────────── */
 

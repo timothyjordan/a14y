@@ -7,6 +7,21 @@ import {
   getChecksGroupedByCategory,
 } from '../lib/scorecard-data';
 import { applyPageSubstitutions } from '../lib/page-substitutions';
+import {
+  renderPageMarkdown,
+  extractMetadataFromHtml,
+} from '../lib/html-to-markdown';
+
+/**
+ * Pages whose canonical source is the `.astro` file (too much
+ * bespoke design markup to express cleanly as markdown). The
+ * mirror integration reads the rendered HTML Astro just wrote to
+ * `dist/<value>` and converts it via Turndown for these.
+ */
+const HTML_DERIVED_PAGES: Record<string, string> = {
+  '': 'index.html',
+  spec: 'spec/index.html',
+};
 
 /**
  * Astro integration that emits a `.md` mirror for every generated
@@ -88,7 +103,20 @@ export function markdownMirrorsIntegration(): AstroIntegration {
           let title: string;
           let description: string;
 
-          if (checkMatch && checkIds.has(checkMatch[1])) {
+          const htmlDerivedPath = HTML_DERIVED_PAGES[cleanPath];
+          if (htmlDerivedPath) {
+            // Canonical source is the `.astro` file. Read the
+            // rendered HTML Astro just wrote, scope to <main>, and
+            // convert to clean markdown via Turndown.
+            const distHtmlPath = path.join(distDir, htmlDerivedPath);
+            const html = await fs.readFile(distHtmlPath, 'utf8');
+            const meta = extractMetadataFromHtml(html);
+            title = meta.title || humanizeSegment(cleanPath || 'a14y');
+            description =
+              meta.description ||
+              `a14y · agent readability for the web · ${title}`;
+            body = renderPageMarkdown(html);
+          } else if (checkMatch && checkIds.has(checkMatch[1])) {
             const checkId = checkMatch[1];
             const sourcePath = path.join(checksContentDir, `${checkId}.md`);
             const raw = await fs.readFile(sourcePath, 'utf8');
@@ -102,6 +130,32 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               parsed.frontmatter.why ?? parsed.frontmatter.description ?? title,
             );
             body = parsed.body;
+          } else if (pagesSlug === 'privacy') {
+            // Privacy is split across two markdown entries with the
+            // analytics opt-out button injected as JSX between them
+            // (the button needs a runtime <script>; markdown can't
+            // host one without dragging interactive UI into the
+            // mirror). Concatenate so the mirror reads as a single
+            // policy without any inline HTML.
+            const introRaw = await readIfExists(
+              path.join(pagesContentDir, 'privacy-intro.md'),
+            );
+            const tailRaw = await readIfExists(
+              path.join(pagesContentDir, 'privacy-tail.md'),
+            );
+            if (!introRaw || !tailRaw) {
+              throw new Error('Missing privacy-intro.md or privacy-tail.md');
+            }
+            const intro = parseFrontmatter(introRaw);
+            const tail = parseFrontmatter(tailRaw);
+            title = String(intro.frontmatter.title ?? 'Privacy · a14y');
+            description = String(
+              intro.frontmatter.description ??
+                'a14y · agent readability for the web · Privacy',
+            );
+            const introBody = applyPageSubstitutions(intro.body).replace(/\n+$/, '');
+            const tailBody = applyPageSubstitutions(tail.body).replace(/\n+$/, '');
+            body = `${introBody}\n\n${tailBody}`;
           } else if (pagesSlug === 'scorecards') {
             // The /scorecards/ page is split across two markdown
             // entries with a build-time-rendered version list
@@ -154,23 +208,6 @@ export function markdownMirrorsIntegration(): AstroIntegration {
                 `a14y · agent readability for the web · ${title}`,
             );
             body = applyPageSubstitutions(parsed.body);
-            // The landing page's "Hand the fixes to a coding agent"
-            // section is rendered in JSX (its inline <pre> with class
-            // markup confuses the markdown processor when embedded in
-            // the body). Append a markdown-flavored rendition of that
-            // section to the mirror so agents reading /index.md still
-            // get the full content.
-            if (pagesSlug === 'index') {
-              const tailRaw = await readIfExists(
-                path.join(pagesContentDir, 'index-tail.md'),
-              );
-              if (tailRaw) {
-                const tailBody = applyPageSubstitutions(
-                  parseFrontmatter(tailRaw).body,
-                ).replace(/\n+$/, '');
-                body = `${body.replace(/\n+$/, '')}\n\n${tailBody}`;
-              }
-            }
           } else {
             // Fallback for any page added without a matching `pages`
             // collection entry: emit the legacy stub so the mirror
@@ -308,10 +345,11 @@ function humanizeSegment(segmentPath: string): string {
  * fallback stub.
  */
 export function resolvePagesSlug(cleanPath: string): string | null {
-  if (cleanPath === '') return 'index';
-  if (cleanPath === 'spec') return 'spec';
+  // `''` and `'spec'` are HTML-derived (their canonical source is
+  // the `.astro` file, mirror generated via Turndown), so they
+  // intentionally are NOT in the pages collection.
   if (cleanPath === 'glossary') return 'glossary';
-  if (cleanPath === 'privacy') return 'privacy';
+  if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
   if (cleanPath === 'scorecards') return 'scorecards';
   if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';
   return null;

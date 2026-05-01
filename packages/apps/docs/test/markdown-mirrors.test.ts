@@ -8,12 +8,15 @@ import { getLatestScorecardVersion } from '../src/lib/scorecard-data';
 
 describe('markdown-mirrors helpers', () => {
   describe('resolvePagesSlug', () => {
-    it('maps the landing page to "index"', () => {
-      expect(resolvePagesSlug('')).toBe('index');
+    it('returns null for HTML-derived pages (index, spec)', () => {
+      // The landing page and /spec/ are authored as .astro and have
+      // their mirrors generated via Turndown from the rendered HTML
+      // — not from a `pages` collection entry.
+      expect(resolvePagesSlug('')).toBeNull();
+      expect(resolvePagesSlug('spec')).toBeNull();
     });
 
-    it('maps top-level pages 1:1 to their slugs', () => {
-      expect(resolvePagesSlug('spec')).toBe('spec');
+    it('maps prose-heavy pages to their content collection slugs', () => {
       expect(resolvePagesSlug('glossary')).toBe('glossary');
       expect(resolvePagesSlug('privacy')).toBe('privacy');
       expect(resolvePagesSlug('scorecards')).toBe('scorecards');

@@ -2,9 +2,11 @@
 import { getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 
-const entry = await getEntry('pages', 'privacy');
-if (!entry) throw new Error('Missing pages/privacy content entry');
-const { Content } = await entry.render();
+const intro = await getEntry('pages', 'privacy-intro');
+const tail = await getEntry('pages', 'privacy-tail');
+if (!intro || !tail) throw new Error('Missing privacy content entries');
+const { Content: IntroContent } = await intro.render();
+const { Content: TailContent } = await tail.render();
 
 // Build-time stamp. Astro is SSG so this value is fixed per deploy:
 // the freshness signal readers (and agents) look for.
@@ -12,8 +14,8 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
 ---
 
 <BaseLayout
-  title={entry.data.title}
-  description={entry.data.description}
+  title={intro.data.title}
+  description={intro.data.description}
 >
   <section class="hero">
     <div class="hero-text" style="grid-column: 1 / -1;">
@@ -32,7 +34,24 @@ const lastUpdated = new Date().toISOString().slice(0, 10);
     </div>
   </section>
 
-  <Content />
+  <div class="privacy-page">
+    <IntroContent />
+
+    <p>
+      <button
+        type="button"
+        id="ga-opt-out-toggle"
+        class="btn btn--ghost"
+        data-on-label="Disable analytics on this site"
+        data-off-label="Enable analytics on this site"
+      >
+        Disable analytics on this site
+      </button>
+      <span id="ga-opt-out-status" class="ga-opt-out-status" aria-live="polite"></span>
+    </p>
+
+    <TailContent />
+  </div>
 
   <script is:inline>
     (function () {
