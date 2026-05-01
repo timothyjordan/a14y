@@ -154,6 +154,23 @@ export function markdownMirrorsIntegration(): AstroIntegration {
                 `a14y · agent readability for the web · ${title}`,
             );
             body = applyPageSubstitutions(parsed.body);
+            // The landing page's "Hand the fixes to a coding agent"
+            // section is rendered in JSX (its inline <pre> with class
+            // markup confuses the markdown processor when embedded in
+            // the body). Append a markdown-flavored rendition of that
+            // section to the mirror so agents reading /index.md still
+            // get the full content.
+            if (pagesSlug === 'index') {
+              const tailRaw = await readIfExists(
+                path.join(pagesContentDir, 'index-tail.md'),
+              );
+              if (tailRaw) {
+                const tailBody = applyPageSubstitutions(
+                  parseFrontmatter(tailRaw).body,
+                ).replace(/\n+$/, '');
+                body = `${body.replace(/\n+$/, '')}\n\n${tailBody}`;
+              }
+            }
           } else {
             // Fallback for any page added without a matching `pages`
             // collection entry: emit the legacy stub so the mirror

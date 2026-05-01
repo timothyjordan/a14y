@@ -1,13 +1,14 @@
 ---
 import { getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { getLatestScorecardVersion, getCheckSummariesForScorecard } from '~/lib/scorecard-data';
+import { getLatestScorecardVersion, getScorecardByVersion, getCheckSummariesForScorecard } from '~/lib/scorecard-data';
 
 const entry = await getEntry('pages', 'index');
 if (!entry) throw new Error('Missing pages/index content entry');
 const { Content } = await entry.render();
 
 const latest = getLatestScorecardVersion();
+const released = getScorecardByVersion(latest).releasedAt;
 const latestChecks = getCheckSummariesForScorecard(latest);
 const totalChecks = latestChecks.length;
 
@@ -90,4 +91,69 @@ Page checks — https://a14y.dev/
   </section>
 
   <Content />
+
+  <section class="section" aria-labelledby="how-heading">
+    <div class="section-head">
+      <h2 id="how-heading">Hand the fixes to a coding agent</h2>
+      <p class="section-sub">
+        Run with <code>--output agent-prompt</code> and you get a
+        Markdown brief any coding agent can consume directly. Every
+        failure carries the detection rule, the fix, and a link back
+        to the scorecard page.
+      </p>
+    </div>
+
+    <div class="output-sample">
+      <div class="output-sample-prose">
+        <h3>An end-to-end loop</h3>
+        <p>
+          <code>a14y your-site.com --output agent-prompt</code> writes
+          a fix-list to stdout (or pipe it to a file). Drop it into
+          your coding agent of choice. Re-run with
+          <code>--fail-under 80</code> in CI to keep the score climbing.
+        </p>
+        <p>
+          Every scorecard version stays frozen forever, so historical
+          scores trend cleanly even as the engine evolves.
+        </p>
+        <p>
+          The block on the right is real output from
+          <code>a14y https://a14y.dev --output agent-prompt</code>.
+          The site is its own first benchmark.
+        </p>
+      </div>
+      <pre class="output-sample-block" aria-label="Real agent-prompt output for a14y.dev"><span class="ag-prompt">%</span> a14y https://a14y.dev --output agent-prompt
+<span class="heading"># Agent readability fix-list — https://a14y.dev/</span>
+
+You are an autonomous coding agent. The a14y scorecard
+ran against https://a14y.dev/ on 2026-04-30 and identified
+<strong>3</strong> distinct failing checks across <strong>1</strong> page. Score: <strong>92/100</strong>.
+
+After applying fixes, re-run the audit to verify:
+
+  <em>a14y check https://a14y.dev/ --mode page</em>
+
+<span class="heading">## Snapshot</span>
+
+- <em>Score:</em>      92/100
+- <em>Mode:</em>       page
+- <em>Scorecard:</em>  v{latest} (released {released})
+- <em>Failed:</em>     3 (3 unique, 3 instances)
+- <em>Passed:</em>     33     <em>N/A:</em> 2
+
+<span class="heading">## Failing checks</span>
+
+<span class="heading">### 1. code.language-tags — 1 page</span>
+- <em>What it checks:</em> code blocks declare a language
+- <em>Sample message:</em> 1/1 blocks missing language
+- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/code.language-tags/`}
+
+<span class="heading">### 2. markdown.canonical-header — 1 page</span>
+- <em>Sample:</em> no Link header
+- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/markdown.canonical-header/`}
+
+<span class="heading">### 3. markdown.content-negotiation — 1 page</span>
+- <em>Sample:</em> text/html; charset=utf-8</pre>
+    </div>
+  </section>
 </BaseLayout>
