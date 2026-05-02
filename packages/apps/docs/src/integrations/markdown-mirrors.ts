@@ -2,7 +2,26 @@ import type { AstroIntegration } from 'astro';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { listAllScorecards } from '../lib/scorecard-data';
+import {
+  listAllScorecards,
+  getChecksGroupedByCategory,
+} from '../lib/scorecard-data';
+import { applyPageSubstitutions } from '../lib/page-substitutions';
+import {
+  renderPageMarkdown,
+  extractMetadataFromHtml,
+} from '../lib/html-to-markdown';
+
+/**
+ * Pages whose canonical source is the `.astro` file (too much
+ * bespoke design markup to express cleanly as markdown). The
+ * mirror integration reads the rendered HTML Astro just wrote to
+ * `dist/<value>` and converts it via Turndown for these.
+ */
+const HTML_DERIVED_PAGES: Record<string, string> = {
+  '': 'index.html',
+  spec: 'spec/index.html',
+};
 
 /**
  * Astro integration that emits a `.md` mirror for every generated
@@ -48,6 +67,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
           '../../../',
         );
         const checksContentDir = path.join(docsRoot, 'src/content/checks');
+        const pagesContentDir = path.join(docsRoot, 'src/content/pages');
 
         const lastUpdated = new Date().toISOString();
         const sitemapHref = '/sitemap.md';
@@ -75,11 +95,28 @@ export function markdownMirrorsIntegration(): AstroIntegration {
           const checkMatch = cleanPath.match(
             /^scorecards\/[^/]+\/checks\/(.+)$/,
           );
+          // Resolve the matching `pages` collection slug for non-check
+          // pages. A non-null result means we have an authored
+          // markdown source whose body becomes the mirror body.
+          const pagesSlug = resolvePagesSlug(cleanPath);
           let body: string;
           let title: string;
           let description: string;
 
-          if (checkMatch && checkIds.has(checkMatch[1])) {
+          const htmlDerivedPath = HTML_DERIVED_PAGES[cleanPath];
+          if (htmlDerivedPath) {
+            // Canonical source is the `.astro` file. Read the
+            // rendered HTML Astro just wrote, scope to <main>, and
+            // convert to clean markdown via Turndown.
+            const distHtmlPath = path.join(distDir, htmlDerivedPath);
+            const html = await fs.readFile(distHtmlPath, 'utf8');
+            const meta = extractMetadataFromHtml(html);
+            title = meta.title || humanizeSegment(cleanPath || 'a14y');
+            description =
+              meta.description ||
+              `a14y · agent readability for the web · ${title}`;
+            body = renderPageMarkdown(html);
+          } else if (checkMatch && checkIds.has(checkMatch[1])) {
             const checkId = checkMatch[1];
             const sourcePath = path.join(checksContentDir, `${checkId}.md`);
             const raw = await fs.readFile(sourcePath, 'utf8');
@@ -93,8 +130,88 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               parsed.frontmatter.why ?? parsed.frontmatter.description ?? title,
             );
             body = parsed.body;
+          } else if (pagesSlug === 'privacy') {
+            // Privacy is split across two markdown entries with the
+            // analytics opt-out button injected as JSX between them
+            // (the button needs a runtime <script>; markdown can't
+            // host one without dragging interactive UI into the
+            // mirror). Concatenate so the mirror reads as a single
+            // policy without any inline HTML.
+            const introRaw = await readIfExists(
+              path.join(pagesContentDir, 'privacy-intro.md'),
+            );
+            const tailRaw = await readIfExists(
+              path.join(pagesContentDir, 'privacy-tail.md'),
+            );
+            if (!introRaw || !tailRaw) {
+              throw new Error('Missing privacy-intro.md or privacy-tail.md');
+            }
+            const intro = parseFrontmatter(introRaw);
+            const tail = parseFrontmatter(tailRaw);
+            title = String(intro.frontmatter.title ?? 'Privacy · a14y');
+            description = String(
+              intro.frontmatter.description ??
+                'a14y · agent readability for the web · Privacy',
+            );
+            const introBody = applyPageSubstitutions(intro.body).replace(/\n+$/, '');
+            const tailBody = applyPageSubstitutions(tail.body).replace(/\n+$/, '');
+            body = `${introBody}\n\n${tailBody}`;
+          } else if (pagesSlug === 'scorecards') {
+            // The /scorecards/ page is split across two markdown
+            // entries with a build-time-rendered version list
+            // between them. Concatenate so the mirror has the same
+            // visual order the .astro page renders.
+            const introRaw = await readIfExists(
+              path.join(pagesContentDir, 'scorecards-intro.md'),
+            );
+            const tailRaw = await readIfExists(
+              path.join(pagesContentDir, 'scorecards-tail.md'),
+            );
+            if (!introRaw || !tailRaw) {
+              throw new Error('Missing scorecards-intro.md or scorecards-tail.md');
+            }
+            const intro = parseFrontmatter(introRaw);
+            const tail = parseFrontmatter(tailRaw);
+            title = String(intro.frontmatter.title ?? 'Scorecards · a14y');
+            description = String(
+              intro.frontmatter.description ??
+                'a14y · agent readability for the web · Scorecards',
+            );
+            const introBody = applyPageSubstitutions(intro.body).replace(/\n+$/, '');
+            const tailBody = applyPageSubstitutions(tail.body).replace(/\n+$/, '');
+            body = `${introBody}\n\n${renderShippedVersionsList()}\n\n${tailBody}`;
+          } else if (pagesSlug === 'scorecards-version') {
+            // The /scorecards/<version>/ page is fully dynamic — its
+            // entire content (h1, description, check listings) comes
+            // from the scorecard registry. The mirror is synthesized
+            // from the same registry so HTML and .md stay in sync
+            // without a separate markdown source.
+            const versionMatch = cleanPath.match(/^scorecards\/([^/]+)$/);
+            const version = versionMatch?.[1];
+            if (!version) {
+              throw new Error(`Could not extract version from ${cleanPath}`);
+            }
+            const sc = listAllScorecards().find((c) => c.version === version);
+            if (!sc) {
+              throw new Error(`Scorecard ${version} not found`);
+            }
+            title = `Scorecard v${sc.version} · a14y`;
+            description = sc.description;
+            body = `${sc.description}\n\n${renderScorecardVersionChecks(version)}`;
+          } else if (pagesSlug && (await readIfExists(path.join(pagesContentDir, `${pagesSlug}.md`))) !== null) {
+            const sourcePath = path.join(pagesContentDir, `${pagesSlug}.md`);
+            const raw = (await readIfExists(sourcePath))!;
+            const parsed = parseFrontmatter(raw);
+            title = String(parsed.frontmatter.title ?? humanizeSegment(cleanPath || 'a14y'));
+            description = String(
+              parsed.frontmatter.description ??
+                `a14y · agent readability for the web · ${title}`,
+            );
+            body = applyPageSubstitutions(parsed.body);
           } else {
-            // Non-check page. Use a short stub keyed off the URL.
+            // Fallback for any page added without a matching `pages`
+            // collection entry: emit the legacy stub so the mirror
+            // route still returns valid markdown.
             title = humanizeSegment(cleanPath || 'a14y');
             description = `a14y · agent readability for the web · ${title}`;
             const canonicalPath = cleanPath === '' ? '/' : `/${cleanPath}/`;
@@ -197,10 +314,106 @@ function escapeYamlScalar(value: string): string {
   return value;
 }
 
+async function readIfExists(filePath: string): Promise<string | null> {
+  try {
+    return await fs.readFile(filePath, 'utf8');
+  } catch (err: unknown) {
+    if (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      (err as { code: string }).code === 'ENOENT'
+    ) {
+      return null;
+    }
+    throw err;
+  }
+}
+
 function humanizeSegment(segmentPath: string): string {
   if (!segmentPath) return 'a14y docs';
   const last = segmentPath.split('/').filter(Boolean).pop() ?? segmentPath;
   return last
     .replace(/[-_]/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+/**
+ * Map a build-output URL (without trailing slash) to the slug of a
+ * `pages` content collection entry. Returning null means the URL is
+ * not page-collection-backed and the caller should use the legacy
+ * fallback stub.
+ */
+export function resolvePagesSlug(cleanPath: string): string | null {
+  // `''` and `'spec'` are HTML-derived (their canonical source is
+  // the `.astro` file, mirror generated via Turndown), so they
+  // intentionally are NOT in the pages collection.
+  if (cleanPath === 'glossary') return 'glossary';
+  if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
+  if (cleanPath === 'scorecards') return 'scorecards';
+  if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';
+  return null;
+}
+
+/**
+ * Render the "Shipped versions" listing for the /scorecards/ index
+ * mirror. Source-of-truth is the in-repo scorecard registry, so a
+ * new published scorecard automatically appears in the mirror as it
+ * does on the .astro page.
+ */
+export function renderShippedVersionsList(): string {
+  const cards = listAllScorecards();
+  if (!cards.length) return '## Shipped versions\n';
+  const latestVersion = cards[0]?.version;
+  const lines: string[] = ['## Shipped versions', ''];
+  for (const card of cards) {
+    const isLatest = card.version === latestVersion;
+    const label = `v${card.version}${isLatest ? ' (latest)' : ''}`;
+    const checkCount = Object.keys(card.checks).length;
+    lines.push(
+      `- [${label}](/scorecards/${card.version}/) — ${card.description}`,
+    );
+    lines.push(
+      `  released ${card.releasedAt} · ${checkCount} checks pinned`,
+    );
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Render the dynamic site-checks + page-checks listing for a single
+ * scorecard version as markdown. Source-of-truth is the in-repo
+ * scorecard registry, so the mirror stays in sync with the .astro
+ * shell that renders the same data as `<CheckCard>` items.
+ */
+export function renderScorecardVersionChecks(version: string): string {
+  const groups = getChecksGroupedByCategory(version);
+  const siteGroups = groups.filter((g) => g.scope === 'site');
+  const pageGroups = groups.filter((g) => g.scope === 'page');
+  const lines: string[] = [];
+  if (siteGroups.length) {
+    lines.push('## Site checks');
+    lines.push('');
+    for (const g of siteGroups) {
+      lines.push(`### ${g.group}`);
+      lines.push('');
+      for (const c of g.checks) {
+        lines.push(`- [\`${c.id}\`](/scorecards/${version}/checks/${c.id}.md) — ${c.name}`);
+      }
+      lines.push('');
+    }
+  }
+  if (pageGroups.length) {
+    lines.push('## Page checks');
+    lines.push('');
+    for (const g of pageGroups) {
+      lines.push(`### ${g.group}`);
+      lines.push('');
+      for (const c of g.checks) {
+        lines.push(`- [\`${c.id}\`](/scorecards/${version}/checks/${c.id}.md) — ${c.name}`);
+      }
+      lines.push('');
+    }
+  }
+  return lines.join('\n').replace(/\n+$/, '');
 }

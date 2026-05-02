@@ -1,13 +1,20 @@
 ---
+import { getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { listAllScorecards, getLatestScorecardVersion } from '~/lib/scorecard-data';
+
+const intro = await getEntry('pages', 'scorecards-intro');
+const tail = await getEntry('pages', 'scorecards-tail');
+if (!intro || !tail) throw new Error('Missing scorecards content entries');
+const { Content: IntroContent } = await intro.render();
+const { Content: TailContent } = await tail.render();
 
 const cards = listAllScorecards();
 const latest = getLatestScorecardVersion();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<BaseLayout title="Scorecards · a14y">
+<BaseLayout title={intro.data.title}>
   <section class="hero">
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
@@ -23,19 +30,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </section>
 
-  <h2>How scorecards work</h2>
-  <p>
-    A scorecard is a frozen manifest pinning each stable check id to an
-    implementation version. Once shipped, a scorecard never changes: when
-    a check's behaviour evolves, a new scorecard is published that points
-    at the new implementation version while older scorecards keep pointing
-    at the old one.
-  </p>
-  <p>
-    This means historical audits stay reproducible: if you measured your
-    site against v0.2.0 last month, re-running v0.2.0 today gives the same
-    score even after the engine ships new check versions.
-  </p>
+  <IntroContent />
 
   <h2>Shipped versions</h2>
   <ul class="check-list">
@@ -52,10 +47,5 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     ))}
   </ul>
 
-  <h2>Pinning a scorecard</h2>
-  <p>
-    Use <code>--scorecard &lt;version&gt;</code> on the CLI or the dropdown
-    in the extension popup to evaluate against a specific scorecard. The
-    default is always the latest version.
-  </p>
+  <TailContent />
 </BaseLayout>

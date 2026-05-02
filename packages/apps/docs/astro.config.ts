@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { assertCoverageIntegration } from './src/lib/assert-coverage';
 import { markdownMirrorsIntegration } from './src/integrations/markdown-mirrors';
 import { discoveryFilesIntegration } from './src/integrations/discovery-files';
+import { remarkPageSubstitutions } from './src/integrations/page-substitutions-remark';
 
 // Astro config for the a14y documentation site.
 //
@@ -25,6 +26,7 @@ export default defineConfig({
     inlineStylesheets: 'never',
   },
   markdown: {
+    remarkPlugins: [remarkPageSubstitutions],
     shikiConfig: {
       // Shiki by default emits <pre class="astro-code …" data-language="ts">
       // which is fine for syntax highlighting but doesn't carry the

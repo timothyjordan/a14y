@@ -8,7 +8,7 @@
     "predev": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "build": "astro build",
     "prebuild": "node ../../../scripts/inject-telemetry-config.mjs docs",
-    "preview": "astro preview",
+    "preview": "node scripts/preview.mjs",
     "pretest": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "test": "vitest run",
     "build:og": "node scripts/build-og-image.mjs"
@@ -20,7 +20,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
+    "@types/turndown": "^5.0.6",
     "sharp": "^0.33.5",
+    "turndown": "^7.2.4",
     "typescript": "^5.3.3",
     "vitest": "^1.6.1"
   }

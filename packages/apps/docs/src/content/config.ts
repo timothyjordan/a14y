@@ -25,4 +25,23 @@ const checks = defineCollection({
   }),
 });
 
-export const collections = { checks };
+/**
+ * Schema for the per-non-check-page authoring content. Each entry's
+ * body is the canonical source for that page's content: it renders
+ * to the HTML page via `<Content />` and to the matching `.md`
+ * mirror via the markdown-mirrors integration. Inline HTML in the
+ * body is preserved by Astro's markdown pipeline so design
+ * components keep their classes; `{{TOKEN}}` placeholders are
+ * resolved by the page-substitutions remark plugin (HTML pipeline)
+ * and the same helper inside the mirror integration (markdown
+ * pipeline).
+ */
+const pages = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { checks, pages };
