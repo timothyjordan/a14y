@@ -2,10 +2,12 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import {
   getLatestScorecardVersion,
+  getScorecardByVersion,
   getCheckSummariesForScorecard,
 } from '~/lib/scorecard-data';
 
 const latest = getLatestScorecardVersion();
+const released = getScorecardByVersion(latest).releasedAt;
 const latestChecks = getCheckSummariesForScorecard(latest);
 const siteCount = latestChecks.filter((c) => c.scope === 'site').length;
 const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
@@ -243,7 +245,7 @@ After applying fixes, re-run the audit to verify:
 
 - <em>Score:</em>      92/100
 - <em>Mode:</em>       page
-- <em>Scorecard:</em>  v0.2.0 (released 2026-04-06)
+- <em>Scorecard:</em>  v{latest} (released {released})
 - <em>Failed:</em>     3 (3 unique, 3 instances)
 - <em>Passed:</em>     33     <em>N/A:</em> 2
 
