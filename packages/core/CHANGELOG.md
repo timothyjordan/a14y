@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/timothyjordan/a14y/compare/core-v0.3.1...core-v0.3.2) (2026-05-04)
+
+
+### Bug Fixes
+
+* stop crawler discovering phantom URLs from .md mirrors ([#50](https://github.com/timothyjordan/a14y/issues/50)) ([0e3c9d4](https://github.com/timothyjordan/a14y/commit/0e3c9d4cbfb026d3f6861d3ab1eedaccae267d2f))
+
 ## [0.3.1](https://github.com/timothyjordan/a14y/compare/core-v0.3.0...core-v0.3.1) (2026-04-30)
 
 
