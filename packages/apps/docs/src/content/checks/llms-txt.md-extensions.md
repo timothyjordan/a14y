@@ -18,7 +18,7 @@ The check parses every markdown link `[label](url)` out of the llms.txt body and
 
 ## How to implement it
 
-For every page you list in llms.txt, link to its markdown mirror rather than its HTML page. If you don't yet publish markdown mirrors, see [`markdown.mirror-suffix`](./markdown.mirror-suffix/) for how to add them.
+For every page you list in llms.txt, link to its markdown mirror rather than its HTML page. If you don't yet publish markdown mirrors, see [`markdown.mirror-suffix`](../markdown.mirror-suffix/) for how to add them.
 
 ### Pass
 

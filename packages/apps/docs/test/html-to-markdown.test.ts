@@ -54,7 +54,7 @@ const SAMPLE_PAGE = `
               <h3>CLI</h3>
             </div>
             <p class="tool-desc">Audit any page.</p>
-            <pre class="tool-cmd"><code><span class="prompt">%</span> npm install -g a14y
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> npm install -g a14y
 <span class="prompt">%</span> a14y your-site.com</code></pre>
             <div class="tool-actions">
               <a href="https://npmjs.com/package/a14y">Install from npm</a>
