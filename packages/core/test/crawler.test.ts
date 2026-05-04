@@ -74,6 +74,117 @@ describe('crawler/linkExtract', () => {
   });
 });
 
+describe('crawler/linkExtract example detection', () => {
+  it('skips <a> nested in <pre>, <code>, <samp>, or <kbd>', async () => {
+    const html = `<html><body>
+      <a href="/real">real</a>
+      <pre><a href="/example-in-pre">x</a></pre>
+      <code><a href="/example-in-code">y</a></code>
+      <samp><a href="/example-in-samp">z</a></samp>
+      <kbd><a href="/example-in-kbd">w</a></kbd>
+      <pre><code><a href="/example-deeply-nested">d</a></code></pre>
+    </body></html>`;
+    const ctx = siteCtx({ 'https://example.com/': { body: html } });
+    const fetched = await ctx.http.fetchPage('https://example.com/');
+    const links = extractSameOriginLinks(fetched, BASE);
+    expect(links.sort()).toEqual(['https://example.com/real']);
+  });
+
+  it('strips markdown fenced code blocks before extracting links', async () => {
+    // Markdown body that mixes raw HTML (which mirror generators emit) with
+    // fenced HTML examples. Only the unfenced <a> should be extracted.
+    const body = `---
+title: example
+---
+
+Some prose. <a href="/real-md">real</a>
+
+\`\`\`html
+<footer>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</footer>
+\`\`\`
+
+More prose.
+`;
+    const ctx = siteCtx({
+      'https://example.com/page.md': {
+        body,
+        headers: { 'content-type': 'text/markdown; charset=utf-8' },
+      },
+    });
+    const fetched = await ctx.http.fetchPage('https://example.com/page.md');
+    const links = extractSameOriginLinks(fetched, BASE);
+    expect(links.sort()).toEqual(['https://example.com/real-md']);
+  });
+
+  it('detects markdown by .md/.mdx URL extension when content-type is missing', async () => {
+    const body = `\`\`\`html
+<a href="/about">About</a>
+\`\`\`
+`;
+    const ctx = siteCtx({
+      'https://example.com/some.md': { body },
+      'https://example.com/some.mdx': { body },
+    });
+    for (const url of ['https://example.com/some.md', 'https://example.com/some.mdx']) {
+      const fetched = await ctx.http.fetchPage(url);
+      expect(extractSameOriginLinks(fetched, BASE)).toEqual([]);
+    }
+  });
+
+  it('strips tilde-fenced (~~~) blocks too', async () => {
+    const body = `~~~html
+<a href="/about">About</a>
+~~~
+`;
+    const ctx = siteCtx({
+      'https://example.com/page.md': {
+        body,
+        headers: { 'content-type': 'text/markdown' },
+      },
+    });
+    const fetched = await ctx.http.fetchPage('https://example.com/page.md');
+    expect(extractSameOriginLinks(fetched, BASE)).toEqual([]);
+  });
+
+  it('strips inline code spans in markdown', async () => {
+    const body = `Try \`<a href="/inline-example">x</a>\` for the snippet syntax.
+
+Real link: <a href="/real-inline">real</a>.
+`;
+    const ctx = siteCtx({
+      'https://example.com/page.md': {
+        body,
+        headers: { 'content-type': 'text/markdown' },
+      },
+    });
+    const fetched = await ctx.http.fetchPage('https://example.com/page.md');
+    expect(extractSameOriginLinks(fetched, BASE).sort()).toEqual([
+      'https://example.com/real-inline',
+    ]);
+  });
+
+  it('does NOT strip fences on HTML pages (text in HTML can legitimately contain backticks)', async () => {
+    // An HTML page that talks about markdown fences in plain text. Backtick
+    // sequences in HTML body text shouldn't trigger fence stripping; the
+    // ancestor filter still skips <a> inside <pre>/<code>.
+    const html = `<html><body>
+      <p>Markdown fences look like \`\`\` triple backticks \`\`\`. Here is a real anchor:</p>
+      <a href="/real-html">real</a>
+    </body></html>`;
+    const ctx = siteCtx({
+      'https://example.com/': {
+        body: html,
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+    });
+    const fetched = await ctx.http.fetchPage('https://example.com/');
+    expect(extractSameOriginLinks(fetched, BASE)).toEqual(['https://example.com/real-html']);
+  });
+});
+
 describe('crawler/queue', () => {
   it('runs at most concurrency tasks at once', async () => {
     const queue = new ConcurrentQueue({ concurrency: 2 });
