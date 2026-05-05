@@ -322,7 +322,11 @@ p { margin: 0 0 16px; }
 }
 @media (min-width: 960px) {
   .hero {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    /* Give the text column a touch more room so the longest hero CTA
+       (the agent skill install command) fits on one line without the
+       .cmd cell needing to horizontally scroll. The agent panel is
+       still wider than the text column — just less aggressively. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 48px;
     padding: 56px 0 0;
     align-items: center;
@@ -367,13 +371,17 @@ p { margin: 0 0 16px; }
   align-items: center;
 }
 
-/* Stacked command CTAs in the hero. The two copy-cli pills sit at full
+/* Stacked command CTAs in the hero. The copy-cli pills sit at full
    width on a comfortable max so the actual command is the visible
-   action; the spec link sits below as a quieter tertiary. */
+   action; the spec link sits below as a quieter tertiary. The max
+   width is sized to hold the longest command (the agent skill
+   install) on a single line; if a future command grows past that,
+   the .cmd cell scrolls rather than wrapping so the `%` prompt
+   never floats away from the first line. */
 .cta-stack {
   display: grid;
   gap: 10px;
-  max-width: 36ch;
+  max-width: 44ch;
 }
 .cta-stack .copy-cli--block {
   display: grid;
@@ -398,6 +406,9 @@ p { margin: 0 0 16px; }
   padding: 8px 14px;
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  min-width: 0;
 }
 .cta-stack .cta-spec {
   margin-top: 4px;

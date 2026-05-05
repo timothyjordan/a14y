@@ -16,6 +16,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const installCmd = 'npm install -g a14y';
 const runCmd = 'npx a14y your-site.com';
+const skillInstallCmd = 'npx skills add timothyjordan/a14y';
 ---
 
 <BaseLayout
@@ -54,6 +55,16 @@ const runCmd = 'npx a14y your-site.com';
             class="copy-btn"
             data-copy={runCmd}
             aria-label="Copy run command"
+          >Copy</button>
+        </span>
+        <span class="copy-cli copy-cli--block">
+          <span class="copy-cli-label">agent skill</span>
+          <span class="cmd">{skillInstallCmd}</span>
+          <button
+            type="button"
+            class="copy-btn"
+            data-copy={skillInstallCmd}
+            aria-label="Copy agent skill install command"
           >Copy</button>
         </span>
         <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
@@ -196,6 +207,36 @@ Page checks — https://a14y.dev/
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y/tree/main/packages/apps/extension" rel="noopener">View source →</a>
         </div>
         <p class="tool-note">Coming soon to the Chrome Web Store. For now, load the unpacked build from GitHub.</p>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-head">
+          <span class="tool-badge" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4 7l8 4 8-4-8-4z" />
+              <path d="m4 12 8 4 8-4" />
+              <path d="m4 17 8 4 8-4" />
+            </svg>
+          </span>
+          <h3>Coding agent skill</h3>
+        </div>
+        <p class="tool-desc">
+          A spec-compliant <a href="https://agentskills.io/specification" rel="noopener">agent skill</a> that
+          wraps the CLI: detects a local dev server, runs the audit,
+          proposes a fix plan, and tracks score deltas. Works with
+          Claude Code, Codex, Cursor, and any other coding agent that
+          supports the open skills format.
+        </p>
+        <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
+        <div class="tool-actions">
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-copy={skillInstallCmd}
+            aria-label="Copy install command"
+          >Copy install →</button>
+        </div>
+        <p class="tool-note">Discoverable via <code>&lt;link rel="agent-skills"&gt;</code> on every page of this site.</p>
       </article>
     </div>
   </section>

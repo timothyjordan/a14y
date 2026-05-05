@@ -3,16 +3,20 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listAllScorecards } from '../lib/scorecard-data';
+import { getAllSkills, getSkillBody } from '../lib/skills-data';
 
 /**
- * Astro integration that emits the five site-level discovery files
- * the a14y scorecard expects:
+ * Astro integration that emits the site-level discovery files the
+ * a14y scorecard expects, plus the open `.well-known/agent-skills/`
+ * discovery surface (Cloudflare Agent Skills Discovery RFC):
  *
- *   - llms.txt       (markdown index of every check page)
- *   - robots.txt     (allow-all + Sitemap pointer)
- *   - sitemap.xml    (XML sitemap with <lastmod>)
- *   - sitemap.md     (markdown sitemap with section headings)
- *   - AGENTS.md      (agent skill file with install/usage/config)
+ *   - llms.txt                                   (markdown index of every check page)
+ *   - robots.txt                                 (allow-all + Sitemap pointer)
+ *   - sitemap.xml                                (XML sitemap with <lastmod>)
+ *   - sitemap.md                                 (markdown sitemap with section headings)
+ *   - AGENTS.md                                  (agent skill file with install/usage/config)
+ *   - .well-known/agent-skills/index.json        (skills index per the RFC)
+ *   - .well-known/agent-skills/<name>/SKILL.md   (raw mirror of each skill in `skills/`)
  *
  * These are written into `public/` at `astro:config:setup`, BEFORE the
  * dev server starts or the build kicks off, so they exist as static
@@ -21,8 +25,9 @@ import { listAllScorecards } from '../lib/scorecard-data';
  * `output: 'static'` and `trailingSlash: 'always'` are combined, so
  * pure-endpoint approaches drop these in dev.)
  *
- * The five generated files are gitignored to keep them out of source
- * control: they are derived from the scorecard registry every time.
+ * The generated files are gitignored to keep them out of source
+ * control: they are derived from the scorecard registry and
+ * `skills/` directory every time.
  */
 export function discoveryFilesIntegration(): AstroIntegration {
   return {
@@ -174,6 +179,45 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '',
         ].join('\n');
         await fs.writeFile(path.join(publicDir, 'AGENTS.md'), agentsMd, 'utf8');
+
+        const skillsDir = path.join(publicDir, '.well-known', 'agent-skills');
+        const skills = await getAllSkills();
+        if (skills.length > 0) {
+          await fs.mkdir(skillsDir, { recursive: true });
+          const indexUrl = `${origin}/.well-known/agent-skills/index.json`;
+          const index = {
+            version: '1.0',
+            updated: lastmodIso,
+            skills: skills.map((skill) => ({
+              name: skill.name,
+              description: skill.description,
+              url: `/.well-known/agent-skills/${skill.name}/SKILL.md`,
+              ...(skill.license ? { license: skill.license } : {}),
+              ...(skill.compatibility ? { compatibility: skill.compatibility } : {}),
+              ...(skill.metadata ? { metadata: skill.metadata } : {}),
+            })),
+          };
+          await fs.writeFile(
+            path.join(skillsDir, 'index.json'),
+            JSON.stringify(index, null, 2) + '\n',
+            'utf8',
+          );
+          for (const skill of skills) {
+            const dir = path.join(skillsDir, skill.name);
+            await fs.mkdir(dir, { recursive: true });
+            const raw = await fs.readFile(skill.filePath, 'utf8');
+            await fs.writeFile(path.join(dir, 'SKILL.md'), raw, 'utf8');
+            // Also expose the body without frontmatter for clients
+            // that prefer rendered prose. Matches the `<skill>.md`
+            // mirror convention used elsewhere on the site.
+            const body = await getSkillBody(skill);
+            await fs.writeFile(path.join(dir, 'README.md'), body, 'utf8');
+          }
+          // Surface the index URL in stderr so it's easy to spot in
+          // build logs.
+          // eslint-disable-next-line no-console
+          console.log(`[a14y-discovery] wrote agent-skills index → ${indexUrl}`);
+        }
       },
     },
   };

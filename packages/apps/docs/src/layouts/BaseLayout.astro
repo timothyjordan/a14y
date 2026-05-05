@@ -82,6 +82,7 @@ const jsonLd = {
     <title>{title}</title>
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="text/markdown" href={mirrorHref} />
+    <link rel="agent-skills" href={new URL(`${base}/.well-known/agent-skills/index.json`, Astro.site).toString()} />
     <link rel="icon" type="image/svg+xml" href={`${base}/brand/favicon.svg`} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -207,6 +208,7 @@ const jsonLd = {
             <li><a href={`${base}/llms.txt`}>llms.txt</a></li>
             <li><a href={`${base}/AGENTS.md`}>AGENTS.md</a></li>
             <li><a href={`${base}/sitemap.md`}>sitemap.md</a></li>
+            <li><a href={`${base}/.well-known/agent-skills/index.json`}>agent-skills</a></li>
           </ul>
         </div>
       </div>

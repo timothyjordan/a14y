@@ -6,6 +6,8 @@
 
 <!-- include: fragments/_usage.md -->
 
+<!-- include: fragments/_skill.md -->
+
 ## Command reference
 
 The sections below are generated from the CLI's own `--help` output, so they stay in sync with the code.
