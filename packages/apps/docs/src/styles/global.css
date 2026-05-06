@@ -593,6 +593,42 @@ p { margin: 0 0 16px; }
   color: var(--scope-page);
 }
 
+/* Inline anchor button surfaced next to in-page section headings.
+   Reuses the same monospace pill aesthetic as `.copy-cli .copy-btn`
+   so the two share a vocabulary, but lives at the top level since it
+   isn't scoped to a CLI block. */
+.heading-link {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.heading-link:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.heading-link[data-state='copied'] {
+  color: var(--scope-page);
+  border-color: color-mix(in oklch, var(--scope-page) 50%, var(--border));
+}
+
+/* Anchor navigation lands cleanly below the sticky header. */
+main.container h2[id] {
+  scroll-margin-top: calc(var(--site-header-height) + 16px);
+}
+
 /* ─── Section rhythm ────────────────────────────────────────────── */
 
 .section { margin: 72px 0; }

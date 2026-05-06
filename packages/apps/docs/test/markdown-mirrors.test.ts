@@ -18,6 +18,7 @@ describe('markdown-mirrors helpers', () => {
 
     it('maps prose-heavy pages to their content collection slugs', () => {
       expect(resolvePagesSlug('glossary')).toBe('glossary');
+      expect(resolvePagesSlug('release-notes')).toBe('release-notes');
       expect(resolvePagesSlug('privacy')).toBe('privacy');
       expect(resolvePagesSlug('scorecards')).toBe('scorecards');
     });

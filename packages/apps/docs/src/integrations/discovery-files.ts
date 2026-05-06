@@ -44,6 +44,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '/',
           '/spec/',
           '/glossary/',
+          '/release-notes/',
           '/privacy/',
           '/scorecards/',
         ];
@@ -76,6 +77,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
         llmsLines.push('');
         llmsLines.push(`- [Landing](/index.md)`);
         llmsLines.push(`- [Glossary](/glossary.md)`);
+        llmsLines.push(`- [Release notes](/release-notes.md)`);
         llmsLines.push(`- [Scorecards index](/scorecards.md)`);
         llmsLines.push('');
         for (const card of scorecards) {

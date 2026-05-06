@@ -349,6 +349,7 @@ export function resolvePagesSlug(cleanPath: string): string | null {
   // the `.astro` file, mirror generated via Turndown), so they
   // intentionally are NOT in the pages collection.
   if (cleanPath === 'glossary') return 'glossary';
+  if (cleanPath === 'release-notes') return 'release-notes';
   if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
   if (cleanPath === 'scorecards') return 'scorecards';
   if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';

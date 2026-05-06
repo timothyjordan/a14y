@@ -1,0 +1,55 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const entry = await getEntry('pages', 'release-notes');
+if (!entry) throw new Error('Missing pages/release-notes content entry');
+const { Content } = await entry.render();
+
+// Build-time stamp so the eyebrow always reflects the freshest deploy
+// without requiring a manual touch on every release.
+const lastUpdated = new Date().toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <h1>Release notes</h1>
+      <div class="eyebrow">
+        <span>last updated {lastUpdated}</span>
+      </div>
+    </div>
+  </section>
+
+  <Content />
+
+  <script is:inline>
+    // Decorate every release-entry heading with a "Copy link" button so
+    // a reader can share a URL pointing at a specific entry. Astro's
+    // markdown pipeline already gives every h2 a stable id derived from
+    // the heading text, so we only need to surface them. Clipboard
+    // handling itself reuses the [data-copy] handler in BaseLayout.
+    (function () {
+      var container = document.querySelector('main.container');
+      if (!container) return;
+      container.querySelectorAll('h2[id]').forEach(function (h) {
+        if (h.querySelector('.heading-link')) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'heading-link';
+        btn.dataset.copy =
+          location.origin + location.pathname + '#' + h.id;
+        btn.setAttribute(
+          'aria-label',
+          'Copy link to section: ' + (h.textContent || '').trim(),
+        );
+        btn.textContent = 'Copy link';
+        h.appendChild(document.createTextNode(' '));
+        h.appendChild(btn);
+      });
+    })();
+  </script>
+</BaseLayout>
