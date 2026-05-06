@@ -52,7 +52,8 @@ Questions, concerns, or security reports can go to
 
 ## Changelog
 
-- **v2 ({{LAST_UPDATED}}):** introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.
+- **v3 ({{LAST_UPDATED}}):** CLI and extension now record per-check scorecard outcomes (stable check id + status), grouped by an ephemeral random run id. Replaces the previous "per-check scorecard details not collected" guarantee. URLs and page content remain off-limits.
+- **v2 (2026-04-28):** introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.
 - **v1:** "no telemetry, no third parties." Superseded by v2.
 
 Last updated: {{LAST_UPDATED}}.

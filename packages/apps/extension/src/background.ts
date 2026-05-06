@@ -6,6 +6,8 @@ import {
   bucketPageCount,
   bucketDurationMs,
   errorClassName,
+  generateRunId,
+  emitScorecardChecksFromRun,
 } from '@a14y/telemetry';
 import {
   CURRENT_RUN_KEY,
@@ -106,6 +108,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   }
 
   const now = new Date().toISOString();
+  const runId = generateRunId();
   const initial: CurrentRunState = {
     status: 'running',
     url: msg.url,
@@ -115,6 +118,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
     concurrency: msg.concurrency,
     pageCheckConcurrency: msg.pageCheckConcurrency,
     politeDelayMs: msg.politeDelayMs,
+    runId,
     startedAt: now,
     lastProgressAt: now,
     progress: { phase: `Starting ${msg.mode} audit…`, visited: 0, pct: 0 },
@@ -125,6 +129,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   track('ext_audit_started', {
     mode: msg.mode,
     scorecard_version: initial.scorecardVersion,
+    run_id: runId,
   });
 
   try {
@@ -145,7 +150,11 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
       lastProgressAt: new Date().toISOString(),
     });
     stopKeepalive();
-    track('ext_audit_error', { error_class: errorClassName(e), phase: 'start' });
+    track('ext_audit_error', {
+      error_class: errorClassName(e),
+      phase: 'start',
+      run_id: runId,
+    });
     void flush();
   }
 
@@ -202,16 +211,26 @@ async function onOffscreenDone(run: SiteRun): Promise<void> {
       result: run,
     });
   }
-  await persistRun(run);
+  try {
+    await persistRun(run);
+  } catch (e) {
+    // chrome.storage.local has a 10 MB quota; large SiteRuns × HISTORY_LIMIT
+    // can exceed it. Don't let history persistence block telemetry or the
+    // user-facing completion flow.
+    console.warn('a14y: failed to persist run history', e);
+  }
   stopKeepalive();
   await closeOffscreenDocument();
+  const runId = state?.runId;
   track('ext_audit_completed', {
     mode: state?.mode ?? 'page',
     scorecard_version: run.scorecardVersion,
     score_bucket: bucketScore(run.summary.score),
     page_count_bucket: bucketPageCount(run.pages.length),
     duration_ms_bucket: bucketDurationMs(Date.now() - startedAt),
+    run_id: runId,
   });
+  if (runId) emitScorecardChecksFromRun({ run, runId, surface: 'ext' });
   await flush();
 }
 
@@ -230,6 +249,7 @@ async function onOffscreenError(error: string): Promise<void> {
   track('ext_audit_error', {
     error_class: typeof error === 'string' ? 'OffscreenError' : 'Error',
     phase: 'progress',
+    run_id: state?.runId,
   });
   await flush();
 }
@@ -267,9 +287,25 @@ async function persistRun(run: SiteRun): Promise<void> {
     key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
     run,
   });
-  await chrome.storage.local.set({
-    [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
-  });
+  // Big audits can blow chrome.storage.local's 10 MB quota when stacked
+  // HISTORY_LIMIT deep. Try the full pruned list first; if storage rejects
+  // it, halve the kept count repeatedly until we fit (or give up at 1).
+  let kept = history.slice(0, HISTORY_LIMIT);
+  while (kept.length > 0) {
+    try {
+      await chrome.storage.local.set({ [RUN_HISTORY_KEY]: kept });
+      return;
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? '';
+      if (!msg.includes('quota')) throw e;
+      if (kept.length === 1) {
+        // The single newest run is itself too big to keep. Drop history.
+        await chrome.storage.local.set({ [RUN_HISTORY_KEY]: [] });
+        return;
+      }
+      kept = kept.slice(0, Math.max(1, Math.floor(kept.length / 2)));
+    }
+  }
 }
 
 // =========================================================================

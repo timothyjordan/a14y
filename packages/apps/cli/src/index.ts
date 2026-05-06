@@ -26,6 +26,7 @@ import {
   flushAndShutdown,
   track,
 } from './telemetry';
+import { emitScorecardChecks } from './scorecardEvents';
 
 const STATUS_ICON: Record<CheckResult['status'], string> = {
   pass: chalk.green('✓'),
@@ -80,8 +81,9 @@ program
       process.exit(2);
     }
 
-    const runtime = command.parent?.runtime as Awaited<ReturnType<typeof initCliTelemetry>>['runtime'] | undefined;
-    if (runtime) await maybeShowFirstRunNotice(runtime, options.output);
+    const cliInit = command.parent?.cliInit as Awaited<ReturnType<typeof initCliTelemetry>> | undefined;
+    if (cliInit) await maybeShowFirstRunNotice(cliInit.runtime, options.output);
+    const runId = cliInit?.runId;
 
     track('cli_command_invoked', {
       command: 'check',
@@ -89,6 +91,7 @@ program
       scorecard_version: options.scorecard,
       output_format: options.output,
       verbose: options.verbose === true,
+      run_id: runId,
     });
 
     let resolvedUrl: string;
@@ -108,6 +111,7 @@ program
         command: 'check',
         phase: 'normalize',
         error_class: errorClassName(e),
+        run_id: runId,
       });
       process.exit(1);
     }
@@ -149,6 +153,7 @@ program
         command: 'check',
         phase: 'validate',
         error_class: errorClassName(e),
+        run_id: runId,
       });
       process.exit(1);
     }
@@ -167,7 +172,10 @@ program
       warned_bucket: bucketIssueCount(result.summary.warned),
       errored_bucket: bucketIssueCount(result.summary.errored),
       threshold_breached: thresholdBreached,
+      run_id: runId,
     });
+
+    if (runId) emitScorecardChecks({ run: result, runId, surface: 'cli' });
 
     if (options.output === 'json') {
       // JSON output goes to stdout so it can be piped into jq.
@@ -193,9 +201,11 @@ program
   .description('List every shipped scorecard version and the checks each one pins')
   .option('-o, --output <format>', 'text or json', 'text')
   .action((options) => {
+    const cliInit = (program as unknown as { cliInit?: Awaited<ReturnType<typeof initCliTelemetry>> }).cliInit;
     track('cli_command_invoked', {
       command: 'scorecards',
       output_format: options.output,
+      run_id: cliInit?.runId,
     });
     const cards = listScorecards();
     if (options.output === 'json') {
@@ -250,10 +260,10 @@ if (firstPositional !== -1 && !KNOWN_COMMANDS.has(argv[firstPositional])) {
 
 async function main(): Promise<void> {
   const flagDisabled = argv.includes('--no-telemetry');
-  const { runtime } = await initCliTelemetry({ flagDisabled });
-  // Stash on the program so subcommand actions can read it for the first-run
-  // notice without a module-level singleton.
-  (program as unknown as { runtime: typeof runtime }).runtime = runtime;
+  const cliInit = await initCliTelemetry({ flagDisabled });
+  // Stash on the program so subcommand actions can read the runtime + run_id
+  // without a module-level singleton.
+  (program as unknown as { cliInit: typeof cliInit }).cliInit = cliInit;
 
   try {
     await program.parseAsync(argv);
@@ -262,6 +272,7 @@ async function main(): Promise<void> {
       command: 'unknown',
       phase: 'output',
       error_class: errorClassName(e),
+      run_id: cliInit.runId,
     });
     console.error(chalk.red('Fatal:'), (e as Error).message);
     await flushAndShutdown();

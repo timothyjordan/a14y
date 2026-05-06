@@ -15,6 +15,10 @@ export interface CurrentRunState {
   url: string;
   mode: RunMode;
   scorecardVersion: string;
+  /** Per-audit random id, threaded through every telemetry event so the
+   *  aggregate `ext_audit_*` row joins to the per-check rows from the
+   *  same audit. Set when the run starts. */
+  runId?: string;
   /** Crawl knobs forwarded from the popup. */
   maxPages?: number;
   concurrency?: number;
