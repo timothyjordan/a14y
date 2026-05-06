@@ -13,7 +13,8 @@ export type EventName =
   | 'ext_audit_error'
   | 'ext_settings_changed'
   | 'docs_section_view'
-  | 'outbound_click';
+  | 'outbound_click'
+  | 'scorecard_check_result';
 
 export type EventParamValue = string | number | boolean;
 

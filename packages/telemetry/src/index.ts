@@ -29,3 +29,12 @@ export type {
 export { noopAdapter } from './adapters/noop';
 export { createGa4MpAdapter, type Ga4MpAdapterOptions } from './adapters/ga4-mp';
 export type { Adapter, AdapterPayload } from './adapters/types';
+export {
+  generateRunId,
+  rollupPageStatuses,
+  trackScorecardCheckResult,
+  type ScorecardCheckStatus,
+  type TelemetrySurface,
+  type PageStatusRollup,
+  type ScorecardCheckResultParams,
+} from './scorecard';
