@@ -83,4 +83,19 @@ describe('agent-skills discovery files', () => {
     expect(a14y.license).toBe('Apache-2.0');
     expect(a14y.metadata?.homepage).toBe('https://a14y.dev');
   });
+
+  // Regression guard: the a14y skill body must continue to teach the
+  // plan-approval, item-level granularity, and design-matching rules
+  // — accidental deletions of these sections silently regress the
+  // skill's behaviour for every host agent that consumes it.
+  it('a14y SKILL.md teaches plan approval, itemized checklist, and design matching', async () => {
+    const skillBody = await fs.readFile(
+      path.join(publicDir, '.well-known', 'agent-skills', 'a14y', 'SKILL.md'),
+      'utf8',
+    );
+    expect(skillBody).toContain('itemized');
+    expect(skillBody).toContain('reply "go"');
+    expect(skillBody).toContain("Match the site's design");
+    expect(skillBody).toContain('Common skips');
+  });
 });

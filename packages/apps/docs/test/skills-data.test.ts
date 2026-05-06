@@ -129,6 +129,7 @@ describe('skills-data', () => {
       expect(a14y!.description.length).toBeLessThanOrEqual(1024);
       expect(a14y!.license).toBe('Apache-2.0');
       expect(a14y!.metadata?.homepage).toBe('https://a14y.dev');
+      expect(a14y!.metadata?.version).toMatch(/^\d+\.\d+\.\d+$/);
     });
 
     it('sorts entries by directory name', async () => {
