@@ -88,3 +88,67 @@ export function trackScorecardCheckResult(p: ScorecardCheckResultParams): void {
   if (typeof p.totalPages === 'number') params.total_pages = p.totalPages;
   track('scorecard_check_result', params);
 }
+
+/**
+ * Duck-typed shape of a scorecard run. Defined locally so this package
+ * doesn't take a dependency on @a14y/core; callers pass the relevant slice
+ * of their own SiteRun. `status` accepts any string and is narrowed to a
+ * `ScorecardCheckStatus` at emit time.
+ */
+export interface ScorecardRunLike {
+  scorecardVersion: string;
+  siteChecks: ReadonlyArray<{ id: string; status: string }>;
+  pages: ReadonlyArray<{ checks: ReadonlyArray<{ id: string; status: string }> }>;
+}
+
+export interface EmitScorecardChecksFromRunOptions {
+  run: ScorecardRunLike;
+  runId: string;
+  surface: TelemetrySurface;
+}
+
+/**
+ * Emit one `scorecard_check_result` per stable check id in `run`. Site-level
+ * checks pass through their status verbatim; page-level checks are rolled up
+ * across pages. Returns the number of events emitted (mostly for tests).
+ */
+export function emitScorecardChecksFromRun(opts: EmitScorecardChecksFromRunOptions): number {
+  const { run, runId, surface } = opts;
+  let count = 0;
+
+  for (const check of run.siteChecks) {
+    trackScorecardCheckResult({
+      runId,
+      checkId: check.id,
+      status: check.status as ScorecardCheckStatus,
+      scorecardVersion: run.scorecardVersion,
+      surface,
+    });
+    count++;
+  }
+
+  const byCheckId = new Map<string, string[]>();
+  for (const page of run.pages) {
+    for (const check of page.checks) {
+      const arr = byCheckId.get(check.id);
+      if (arr) arr.push(check.status);
+      else byCheckId.set(check.id, [check.status]);
+    }
+  }
+
+  for (const [checkId, statuses] of byCheckId) {
+    const rollup = rollupPageStatuses(statuses as ScorecardCheckStatus[]);
+    trackScorecardCheckResult({
+      runId,
+      checkId,
+      status: rollup.status,
+      scorecardVersion: run.scorecardVersion,
+      surface,
+      failedPages: rollup.failedPages,
+      totalPages: rollup.totalPages,
+    });
+    count++;
+  }
+
+  return count;
+}

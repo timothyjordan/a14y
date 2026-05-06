@@ -6,6 +6,8 @@ import {
   bucketPageCount,
   bucketDurationMs,
   errorClassName,
+  generateRunId,
+  emitScorecardChecksFromRun,
 } from '@a14y/telemetry';
 import {
   CURRENT_RUN_KEY,
@@ -106,6 +108,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   }
 
   const now = new Date().toISOString();
+  const runId = generateRunId();
   const initial: CurrentRunState = {
     status: 'running',
     url: msg.url,
@@ -115,6 +118,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
     concurrency: msg.concurrency,
     pageCheckConcurrency: msg.pageCheckConcurrency,
     politeDelayMs: msg.politeDelayMs,
+    runId,
     startedAt: now,
     lastProgressAt: now,
     progress: { phase: `Starting ${msg.mode} audit…`, visited: 0, pct: 0 },
@@ -125,6 +129,7 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
   track('ext_audit_started', {
     mode: msg.mode,
     scorecard_version: initial.scorecardVersion,
+    run_id: runId,
   });
 
   try {
@@ -145,7 +150,11 @@ async function startRun(msg: RunRequest & { type: 'start-run' }): Promise<StartR
       lastProgressAt: new Date().toISOString(),
     });
     stopKeepalive();
-    track('ext_audit_error', { error_class: errorClassName(e), phase: 'start' });
+    track('ext_audit_error', {
+      error_class: errorClassName(e),
+      phase: 'start',
+      run_id: runId,
+    });
     void flush();
   }
 
@@ -205,13 +214,16 @@ async function onOffscreenDone(run: SiteRun): Promise<void> {
   await persistRun(run);
   stopKeepalive();
   await closeOffscreenDocument();
+  const runId = state?.runId;
   track('ext_audit_completed', {
     mode: state?.mode ?? 'page',
     scorecard_version: run.scorecardVersion,
     score_bucket: bucketScore(run.summary.score),
     page_count_bucket: bucketPageCount(run.pages.length),
     duration_ms_bucket: bucketDurationMs(Date.now() - startedAt),
+    run_id: runId,
   });
+  if (runId) emitScorecardChecksFromRun({ run, runId, surface: 'ext' });
   await flush();
 }
 
@@ -230,6 +242,7 @@ async function onOffscreenError(error: string): Promise<void> {
   track('ext_audit_error', {
     error_class: typeof error === 'string' ? 'OffscreenError' : 'Error',
     phase: 'progress',
+    run_id: state?.runId,
   });
   await flush();
 }

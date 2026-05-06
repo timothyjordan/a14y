@@ -1,6 +1,12 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { init, flush, shutdown } from '../src/core/tracker';
-import { generateRunId, rollupPageStatuses, trackScorecardCheckResult } from '../src/scorecard';
+import {
+  generateRunId,
+  rollupPageStatuses,
+  trackScorecardCheckResult,
+  emitScorecardChecksFromRun,
+  type ScorecardRunLike,
+} from '../src/scorecard';
 import type { Adapter, AdapterPayload } from '../src/adapters/types';
 import type { ConfigProvider, DeviceIdProvider } from '../src/core/types';
 
@@ -154,6 +160,61 @@ describe('trackScorecardCheckResult', () => {
     expect(params).not.toHaveProperty('total_pages');
     expect(params.status).toBe('pass');
     expect(params.surface).toBe('ext');
+  });
+
+  it('emits one event per site check + one rolled-up event per page check id', async () => {
+    const rt = fakeRuntime();
+    await init({
+      appName: 'cli',
+      appVersion: '0.0.0',
+      adapter: rt.adapter,
+      deviceIdProvider: rt.deviceIdProvider,
+      configProvider: rt.configProvider,
+      flushIntervalMs: 60_000,
+    });
+
+    const run: ScorecardRunLike = {
+      scorecardVersion: '0.2.0',
+      siteChecks: [
+        { id: 'site.llms-txt', status: 'pass' },
+        { id: 'site.agents-md', status: 'fail' },
+      ],
+      pages: [
+        {
+          checks: [
+            { id: 'html.canonical-link', status: 'pass' },
+            { id: 'html.title', status: 'fail' },
+          ],
+        },
+        {
+          checks: [
+            { id: 'html.canonical-link', status: 'warn' },
+            { id: 'html.title', status: 'pass' },
+          ],
+        },
+      ],
+    };
+
+    const count = emitScorecardChecksFromRun({ run, runId: 'run-x', surface: 'ext' });
+    await flush();
+
+    expect(count).toBe(4);
+    const events = rt.captured.flatMap((p) => p.events);
+    const byId = Object.fromEntries(events.map((e) => [e.params.check_id, e.params]));
+    expect(byId['site.llms-txt'].status).toBe('pass');
+    expect(byId['site.agents-md'].status).toBe('fail');
+    // Page rollups: canonical = warn (no fails), title = fail (one fail).
+    expect(byId['html.canonical-link'].status).toBe('warn');
+    expect(byId['html.canonical-link'].failed_pages).toBe(0);
+    expect(byId['html.canonical-link'].total_pages).toBe(2);
+    expect(byId['html.title'].status).toBe('fail');
+    expect(byId['html.title'].failed_pages).toBe(1);
+    expect(byId['html.title'].total_pages).toBe(2);
+    for (const evt of events) {
+      expect(evt.params.surface).toBe('ext');
+      expect(evt.params.run_id).toBe('run-x');
+      expect(evt.params.scorecard_version).toBe('0.2.0');
+    }
   });
 
   it('does not enqueue when telemetry is disabled', async () => {

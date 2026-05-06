@@ -33,8 +33,11 @@ export {
   generateRunId,
   rollupPageStatuses,
   trackScorecardCheckResult,
+  emitScorecardChecksFromRun,
   type ScorecardCheckStatus,
   type TelemetrySurface,
   type PageStatusRollup,
   type ScorecardCheckResultParams,
+  type ScorecardRunLike,
+  type EmitScorecardChecksFromRunOptions,
 } from './scorecard';
