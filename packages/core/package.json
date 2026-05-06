@@ -1,6 +1,6 @@
 {
   "name": "@a14y/core",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Scoring engine for a14y — agent readability for the web. Powers the a14y CLI and Chrome extension.",
   "license": "Apache-2.0",
   "repository": {
