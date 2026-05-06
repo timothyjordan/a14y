@@ -211,7 +211,14 @@ async function onOffscreenDone(run: SiteRun): Promise<void> {
       result: run,
     });
   }
-  await persistRun(run);
+  try {
+    await persistRun(run);
+  } catch (e) {
+    // chrome.storage.local has a 10 MB quota; large SiteRuns × HISTORY_LIMIT
+    // can exceed it. Don't let history persistence block telemetry or the
+    // user-facing completion flow.
+    console.warn('a14y: failed to persist run history', e);
+  }
   stopKeepalive();
   await closeOffscreenDocument();
   const runId = state?.runId;
@@ -280,9 +287,25 @@ async function persistRun(run: SiteRun): Promise<void> {
     key: `${run.url}::${run.scorecardVersion}::${run.startedAt}`,
     run,
   });
-  await chrome.storage.local.set({
-    [RUN_HISTORY_KEY]: history.slice(0, HISTORY_LIMIT),
-  });
+  // Big audits can blow chrome.storage.local's 10 MB quota when stacked
+  // HISTORY_LIMIT deep. Try the full pruned list first; if storage rejects
+  // it, halve the kept count repeatedly until we fit (or give up at 1).
+  let kept = history.slice(0, HISTORY_LIMIT);
+  while (kept.length > 0) {
+    try {
+      await chrome.storage.local.set({ [RUN_HISTORY_KEY]: kept });
+      return;
+    } catch (e) {
+      const msg = (e as { message?: string }).message ?? '';
+      if (!msg.includes('quota')) throw e;
+      if (kept.length === 1) {
+        // The single newest run is itself too big to keep. Drop history.
+        await chrome.storage.local.set({ [RUN_HISTORY_KEY]: [] });
+        return;
+      }
+      kept = kept.slice(0, Math.max(1, Math.floor(kept.length / 2)));
+    }
+  }
 }
 
 // =========================================================================
