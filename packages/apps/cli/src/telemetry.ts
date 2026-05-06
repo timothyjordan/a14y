@@ -8,6 +8,7 @@ import {
   shutdown,
   noopAdapter,
   createGa4MpAdapter,
+  generateRunId,
   type Adapter,
 } from '@a14y/telemetry';
 import { createNodeRuntime, type NodeRuntime } from '@a14y/telemetry/node';
@@ -39,6 +40,10 @@ export interface InitCliOptions {
 export interface InitCliResult {
   runtime: NodeRuntime;
   resolvedDisable: DisableSource | null;
+  /** Per-CLI-invocation random id. Threaded into every event so analytics
+   *  can correlate the aggregate `cli_run_completed` row with the
+   *  per-check `scorecard_check_result` rows from the same audit. */
+  runId: string;
 }
 
 export async function initCliTelemetry(opts: InitCliOptions): Promise<InitCliResult> {
@@ -79,7 +84,7 @@ export async function initCliTelemetry(opts: InitCliOptions): Promise<InitCliRes
     await sendDisableAck(adapter, runtime, resolvedDisable);
   }
 
-  return { runtime, resolvedDisable };
+  return { runtime, resolvedDisable, runId: generateRunId() };
 }
 
 export async function maybeShowFirstRunNotice(
