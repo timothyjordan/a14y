@@ -50,32 +50,23 @@ const meanScore = entries.length
         <span>scorecard v{research.scorecardVersion} · updated {generatedLabel}</span>
       </div>
       <h1>How well do agents see the web?</h1>
-      <p class="lead">
-        We score a curated cross-section of websites with the
-        <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y scorecard</a>
-        and publish the results here. Use the leaderboard to compare platforms,
-        and the insights below to see which scorecard checks are hardest to pass
-        across the web.
+      <p class="lead research-lead">
+        Most of the web was built for human eyes. AI agents (coding
+        assistants, research bots, autonomous tools) have to fetch the same
+        pages and pull meaning out of layout-driven HTML, JavaScript-rendered
+        widgets, cookie walls, and broken markdown. The
+        <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y
+        scorecard</a> turns that effort into a number: how many of {38}
+        machine-readability checks a site passes, from <code>llms.txt</code>
+        through <code>AGENTS.md</code> down to canonical headers and
+        breadcrumb JSON-LD. The leaderboard below ranks {entries.length}
+        sites by that score; the insights underneath show which checks are
+        hardest to pass across the web. The biggest adoption gap isn't a
+        fancy semantic feature; it's the three flat files
+        (<code>llms.txt</code>, <code>AGENTS.md</code>, a markdown sitemap)
+        that take an hour to ship and that most sites still don't.
       </p>
     </div>
-  </section>
-
-  <section class="research-summary">
-    <p>
-      Most of the web was built for human eyes. AI agents (coding assistants,
-      research bots, autonomous tools) have to fetch the same pages and pull
-      meaning out of layout-driven HTML, JavaScript-rendered widgets, cookie
-      walls, and broken markdown. The
-      <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y
-      scorecard</a> turns that effort into a number: how many of {38} machine-
-      readability checks does a site pass, from <code>llms.txt</code> through
-      <code>AGENTS.md</code> down to canonical headers and breadcrumb JSON-LD.
-      The leaderboard below is what happens when we run those checks against
-      the {entries.length} sites in our public catalog. The biggest adoption
-      gap isn't a fancy semantic feature; it's the three flat files
-      (<code>llms.txt</code>, <code>AGENTS.md</code>, a markdown sitemap)
-      that take an hour to ship and that most sites still don't.
-    </p>
   </section>
 
   <nav class="page-toc" aria-label="On this page">
@@ -231,12 +222,14 @@ const meanScore = entries.length
 </BaseLayout>
 
 <style>
-  .research-summary {
-    margin: 28px 0 28px;
-    padding: 22px 26px;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+  /* The hero .lead is global-styled at max-width: 36ch (designed for a
+     short tagline). The /research/ lead is doing more work — it's the
+     page's whole editorial frame — so widen it and let the leading
+     breathe. */
+  .hero-text .lead.research-lead {
+    max-width: 64ch;
+    font-size: 18px;
+    line-height: 1.6;
   }
 
   .page-toc {
@@ -276,14 +269,6 @@ const meanScore = entries.length
     color: var(--text);
     border-bottom-color: var(--border-strong);
   }
-  .research-summary p {
-    margin: 0;
-    color: var(--text-muted);
-    max-width: 68ch;
-    font-size: 15px;
-    line-height: 1.65;
-  }
-
   .research-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
