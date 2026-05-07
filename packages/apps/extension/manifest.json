@@ -12,8 +12,15 @@
     "48": "src/icons/48.png",
     "128": "src/icons/128.png"
   },
-  "permissions": ["storage", "activeTab", "alarms", "offscreen"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "alarms",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "src/popup.html",
     "default_title": "a14y (Agent Readability)",
