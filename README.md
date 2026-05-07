@@ -129,7 +129,7 @@ This repo is an npm workspace:
 
 - `packages/apps/cli` — the `a14y` binary (this CLI).
 - `packages/core` — `@a14y/core`, the library that implements scoring, crawling, and report generation. Consumed by the CLI and by the Chrome extension.
-- `packages/apps/extension` — Chrome extension (internal, not published to npm).
+- `packages/apps/extension` — Chrome extension. Released as a `.zip` attached to each `extension-v<version>` GitHub Release (not on npm); see [RELEASING.md](./RELEASING.md).
 - `packages/apps/docs` — Astro site published at <https://a14y.dev>.
 - `packages/aliases/*` — thin wrapper packages that re-export the CLI under `agentready` and `agentreadability`.
 
@@ -143,6 +143,8 @@ npm run docs     # regenerate every README from docs/
 ```
 
 All user-facing READMEs in this repo (this one, `packages/apps/cli/README.md`, `packages/core/README.md`, and the alias READMEs) are generated from `docs/templates/` + `docs/fragments/`. Edit the source files and run `npm run docs` — never hand-edit a generated README.
+
+For contribution conventions (branching, tests, PR flow) see [CONTRIBUTING.md](./CONTRIBUTING.md). For the release flow (npm packages, Chrome extension, docs site) see [RELEASING.md](./RELEASING.md).
 
 ## Origins & Attribution
 
