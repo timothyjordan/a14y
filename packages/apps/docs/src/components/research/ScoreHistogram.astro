@@ -11,7 +11,10 @@ interface Props {
 
 const { buckets, width = 720, height = 220 } = Astro.props;
 
-const padding = { top: 8, right: 8, bottom: 28, left: 28 };
+// Top padding has to clear the count label that sits *above* the tallest
+// bar (~14px tall at the rendered font size). 22px gives the label its full
+// height plus the 4px offset used in the <text> y coordinate below.
+const padding = { top: 22, right: 8, bottom: 28, left: 28 };
 const innerWidth = width - padding.left - padding.right;
 const innerHeight = height - padding.top - padding.bottom;
 const maxN = Math.max(1, ...buckets.map((b) => b.n));
