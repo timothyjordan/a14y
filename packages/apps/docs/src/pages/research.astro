@@ -1,0 +1,305 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import LeaderboardTable from '~/components/research/LeaderboardTable.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import CategoryBars from '~/components/research/CategoryBars.astro';
+import CheckPassRates from '~/components/research/CheckPassRates.astro';
+import {
+  CATEGORY_LABELS,
+  getCategoryStats,
+  getHardestChecks,
+  getLeaderboard,
+  getResearchData,
+  getScoreHistogram,
+  type SiteCategory,
+} from '~/lib/research-data';
+
+const research = getResearchData();
+const entries = getLeaderboard();
+const hist = getScoreHistogram();
+const catStats = getCategoryStats();
+const hardestChecks = getHardestChecks();
+
+const categoriesPresent: SiteCategory[] = Array.from(
+  new Set(entries.map((e) => e.category)),
+).sort();
+
+const generated = new Date(research.generatedAt);
+const generatedLabel = isNaN(generated.getTime())
+  ? '—'
+  : generated.toISOString().slice(0, 10);
+
+const meanScore = entries.length
+  ? Math.round((entries.reduce((s, e) => s + e.score, 0) / entries.length) * 10) / 10
+  : 0;
+---
+
+<BaseLayout
+  title="Research — leaderboard of how AI agents see the web"
+  description="A scored leaderboard of major websites measured for agent readability with the open a14y scorecard. Find which docs platforms, SaaS products, and consumer sites AI agents can actually parse."
+  wide={true}
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">research</span>
+        <span>scorecard v{research.scorecardVersion} · updated {generatedLabel}</span>
+      </div>
+      <h1>How well do agents see the web?</h1>
+      <p class="lead">
+        We score a curated cross-section of websites with the
+        <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y scorecard</a>
+        and publish the results here. Use the leaderboard to compare platforms,
+        and the insights below to see which scorecard checks are hardest to pass
+        across the web.
+      </p>
+    </div>
+  </section>
+
+  <section class="research-stats">
+    <div class="stat">
+      <span class="stat-value">{entries.length}</span>
+      <span class="stat-label">sites scanned</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{meanScore}</span>
+      <span class="stat-label">mean score</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">v{research.scorecardVersion}</span>
+      <span class="stat-label">scorecard pinned</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{generatedLabel}</span>
+      <span class="stat-label">last refreshed</span>
+    </div>
+  </section>
+
+  <section class="research-section">
+    <header class="section-header">
+      <h2>Leaderboard</h2>
+      <div class="filter-bar" data-research-filter>
+        <label class="search">
+          <span class="sr-only">Search by name</span>
+          <input
+            type="search"
+            placeholder="Filter by name…"
+            data-filter-name
+            autocomplete="off"
+          />
+        </label>
+        <div class="cat-toggles" role="group" aria-label="Category filter">
+          {categoriesPresent.map((cat) => (
+            <label class="cat-toggle">
+              <input type="checkbox" value={cat} data-filter-cat checked />
+              <span>{CATEGORY_LABELS[cat]}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </header>
+    <p class="visible-count" data-visible-count>
+      Showing {entries.length} of {entries.length} sites.
+    </p>
+    <LeaderboardTable entries={entries} />
+  </section>
+
+  <section class="research-section">
+    <h2>Score distribution</h2>
+    <p class="section-lead">
+      How are scores distributed across the catalog? Each bar counts the sites
+      whose overall score falls in that 10-point bucket.
+    </p>
+    <ScoreHistogram buckets={hist} />
+  </section>
+
+  <section class="research-section">
+    <h2>Mean score by category</h2>
+    <p class="section-lead">
+      Docs platforms tend to score the highest (more of them ship llms.txt and
+      AGENTS.md); consumer sites the lowest.
+    </p>
+    <CategoryBars stats={catStats} />
+  </section>
+
+  <section class="research-section">
+    <h2>Hardest checks to pass</h2>
+    <p class="section-lead">
+      For each check id, the percentage of sites where the check fully passed
+      (every occurrence across every page returned <code>pass</code>). Sorted
+      hardest first. Filtered to checks applicable to ≥5 sites.
+    </p>
+    <CheckPassRates rows={hardestChecks} />
+  </section>
+
+  <section class="research-section research-method">
+    <h2>How this leaderboard is built</h2>
+    <p>
+      Every site is scanned with the open-source
+      <a href="https://www.npmjs.com/package/a14y" rel="noopener">a14y CLI</a>
+      pinned to scorecard <code>v{research.scorecardVersion}</code>. Each site
+      gets one site-mode crawl (≤50 pages, polite-delayed) or a single page-mode
+      audit for very large consumer sites where crawling would be hostile.
+      The site list is hand-curated from a mix of major documentation
+      platforms, non-developer SaaS, and consumer sites; want yours included?
+      <a href="https://github.com/timothyjordan/a14y/issues/new?title=Add%20site%20to%20research%20catalog">Open an issue</a>.
+    </p>
+    <p>
+      Scores from different scorecard versions are not directly comparable. When
+      we ship a new scorecard version, every site is re-scanned against it
+      before this page updates.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .research-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 24px 0 32px;
+  }
+  .stat {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+  }
+
+  .research-section {
+    margin-top: 56px;
+  }
+  .research-section h2 {
+    margin-bottom: 8px;
+  }
+  .section-lead {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: var(--text-muted);
+    max-width: 70ch;
+  }
+  .section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .section-header h2 { margin: 0; }
+  .filter-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text);
+    min-width: 18ch;
+  }
+  .search input:focus {
+    outline: 2px solid color-mix(in oklch, var(--brand-ink) 30%, transparent);
+    border-color: var(--border-strong);
+  }
+  .cat-toggles { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .cat-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface);
+    cursor: pointer;
+    user-select: none;
+  }
+  .cat-toggle:hover { border-color: var(--border-strong); }
+  .cat-toggle input { accent-color: var(--brand-ink); }
+  .visible-count {
+    margin: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+  .research-method p {
+    color: var(--text-muted);
+    max-width: 70ch;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script is:inline>
+  // Vanilla TS-as-JS: filter the leaderboard rows by name + category.
+  // No framework runtime; the table is rendered statically and we only
+  // toggle row visibility client-side.
+  (function () {
+    var bar = document.querySelector('[data-research-filter]');
+    if (!bar) return;
+    var nameInput = bar.querySelector('[data-filter-name]');
+    var catBoxes = bar.querySelectorAll('[data-filter-cat]');
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+    var counter = document.querySelector('[data-visible-count]');
+    var totalRows = rows.length;
+
+    function apply() {
+      var q = (nameInput && nameInput.value || '').trim().toLowerCase();
+      var allowed = new Set();
+      catBoxes.forEach(function (cb) {
+        if (cb.checked) allowed.add(cb.value);
+      });
+      var visible = 0;
+      rows.forEach(function (row) {
+        var name = row.getAttribute('data-name') || '';
+        var cat = row.getAttribute('data-category') || '';
+        var ok = (q === '' || name.indexOf(q) >= 0) && allowed.has(cat);
+        if (ok) {
+          row.removeAttribute('hidden');
+          visible++;
+        } else {
+          row.setAttribute('hidden', 'hidden');
+        }
+      });
+      if (counter) {
+        counter.textContent = 'Showing ' + visible + ' of ' + totalRows + ' sites.';
+      }
+    }
+
+    if (nameInput) nameInput.addEventListener('input', apply);
+    catBoxes.forEach(function (cb) { cb.addEventListener('change', apply); });
+  })();
+</script>

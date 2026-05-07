@@ -1,0 +1,114 @@
+---
+import type { CheckPassRate } from '~/lib/research-data';
+
+interface Props {
+  rows: CheckPassRate[];
+}
+
+const { rows } = Astro.props;
+
+const width = 720;
+const rowHeight = 28;
+const labelWidth = 220;
+const gutter = 8;
+const barAreaWidth = width - labelWidth - gutter - 80;
+const height = Math.max(80, rows.length * rowHeight + 16);
+
+const items = rows.map((r, i) => {
+  const y = 8 + i * rowHeight;
+  const pct = Math.round(r.passRate * 100);
+  const w = (r.passRate || 0) * barAreaWidth;
+  return { ...r, y, w, pct };
+});
+---
+
+{rows.length === 0 ? (
+  <p class="chart-empty">Not enough data yet.</p>
+) : (
+  <figure class="chart">
+    <svg
+      role="img"
+      aria-labelledby="pass-title pass-desc"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <title id="pass-title">Hardest checks to pass</title>
+      <desc id="pass-desc">
+        Per-check site pass rate, sorted from hardest (lowest) to easiest. A
+        site passes a check if every occurrence of that check across the
+        site's pages was status pass.
+      </desc>
+      {items.map((r) => (
+        <g class="pr-row">
+          <text
+            x={labelWidth - 8}
+            y={r.y + rowHeight / 2 + 4}
+            text-anchor="end"
+            class="pr-label"
+          >{r.checkId}</text>
+          <rect
+            x={labelWidth + gutter}
+            y={r.y + 6}
+            width={barAreaWidth}
+            height={rowHeight - 12}
+            rx="3"
+            class="pr-track"
+          />
+          <rect
+            x={labelWidth + gutter}
+            y={r.y + 6}
+            width={Math.max(r.w, 1)}
+            height={rowHeight - 12}
+            rx="3"
+            class="pr-bar"
+          />
+          <text
+            x={labelWidth + gutter + barAreaWidth + 6}
+            y={r.y + rowHeight / 2 + 4}
+            class="pr-value"
+          >{r.pct}% <tspan class="pr-n">· {r.passingSites}/{r.applicableSites}</tspan></text>
+        </g>
+      ))}
+    </svg>
+  </figure>
+)}
+
+<style>
+  .chart-empty {
+    padding: 24px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .pr-track {
+    fill: var(--surface-alt);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  .pr-bar {
+    fill: color-mix(in oklch, oklch(0.55 0.13 75) 35%, var(--surface));
+    stroke: color-mix(in oklch, oklch(0.55 0.13 75) 65%, var(--border));
+    stroke-width: 1;
+  }
+  :root[data-theme='dark'] .pr-bar {
+    fill: color-mix(in oklch, oklch(0.78 0.13 75) 36%, var(--surface));
+    stroke: color-mix(in oklch, oklch(0.78 0.13 75) 70%, var(--border));
+  }
+  .pr-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--text);
+  }
+  .pr-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--text);
+    font-weight: 600;
+  }
+  .pr-n {
+    font-weight: 400;
+    fill: var(--text-subtle);
+  }
+</style>

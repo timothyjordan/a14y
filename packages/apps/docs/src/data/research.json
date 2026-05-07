@@ -1,0 +1,3220 @@
+{
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "generatedAt": "2026-05-07T04:10:37.262Z",
+  "sites": [
+    {
+      "slug": "react-dev",
+      "name": "React",
+      "url": "https://react.dev",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 99,
+      "summary": {
+        "passed": 207,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 1004,
+        "total": 1214,
+        "applicable": 210
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "sitemap-md.exists",
+        "sitemap-xml.exists"
+      ],
+      "scannedAt": "2026-05-07T00:19:53.322Z"
+    },
+    {
+      "slug": "webflow",
+      "name": "Webflow",
+      "url": "https://webflow.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 81,
+      "summary": {
+        "passed": 709,
+        "failed": 166,
+        "warned": 0,
+        "errored": 0,
+        "na": 339,
+        "total": 1214,
+        "applicable": 875
+      },
+      "topFailures": [
+        "markdown.alternate-link",
+        "markdown.mirror-suffix",
+        "html.json-ld",
+        "code.language-tags",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T04:06:42.361Z"
+    },
+    {
+      "slug": "vercel-docs",
+      "name": "Vercel Docs",
+      "url": "https://vercel.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 80,
+      "summary": {
+        "passed": 803,
+        "failed": 206,
+        "warned": 0,
+        "errored": 0,
+        "na": 205,
+        "total": 1214,
+        "applicable": 1009
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.canonical-header",
+        "markdown.mirror-suffix",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:42:44.818Z"
+    },
+    {
+      "slug": "vercel",
+      "name": "Vercel",
+      "url": "https://vercel.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 79,
+      "summary": {
+        "passed": 802,
+        "failed": 207,
+        "warned": 0,
+        "errored": 0,
+        "na": 205,
+        "total": 1214,
+        "applicable": 1009
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.canonical-header",
+        "markdown.mirror-suffix",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:46:35.713Z"
+    },
+    {
+      "slug": "openai-docs",
+      "name": "OpenAI Platform Docs",
+      "url": "https://platform.openai.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 76,
+      "summary": {
+        "passed": 213,
+        "failed": 66,
+        "warned": 0,
+        "errored": 0,
+        "na": 935,
+        "total": 1214,
+        "applicable": 279
+      },
+      "topFailures": [
+        "api.schema-link",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T03:44:17.477Z"
+    },
+    {
+      "slug": "nuxt",
+      "name": "Nuxt",
+      "url": "https://nuxt.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 74,
+      "summary": {
+        "passed": 850,
+        "failed": 306,
+        "warned": 0,
+        "errored": 0,
+        "na": 58,
+        "total": 1214,
+        "applicable": 1156
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.date-modified",
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T00:21:48.524Z"
+    },
+    {
+      "slug": "duckdb",
+      "name": "DuckDB",
+      "url": "https://duckdb.org/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 73,
+      "summary": {
+        "passed": 708,
+        "failed": 257,
+        "warned": 0,
+        "errored": 0,
+        "na": 249,
+        "total": 1214,
+        "applicable": 965
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.text-ratio",
+        "markdown.alternate-link",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T00:28:34.814Z"
+    },
+    {
+      "slug": "intercom",
+      "name": "Intercom",
+      "url": "https://www.intercom.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 73,
+      "summary": {
+        "passed": 706,
+        "failed": 255,
+        "warned": 1,
+        "errored": 0,
+        "na": 252,
+        "total": 1214,
+        "applicable": 962
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.date-modified",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T03:57:15.036Z"
+    },
+    {
+      "slug": "figma",
+      "name": "Figma",
+      "url": "https://www.figma.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 72,
+      "summary": {
+        "passed": 694,
+        "failed": 274,
+        "warned": 0,
+        "errored": 0,
+        "na": 246,
+        "total": 1214,
+        "applicable": 968
+      },
+      "topFailures": [
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.glossary-link",
+        "markdown.mirror-suffix",
+        "html.json-ld.breadcrumb"
+      ],
+      "scannedAt": "2026-05-07T03:48:21.641Z"
+    },
+    {
+      "slug": "nextjs",
+      "name": "Next.js",
+      "url": "https://nextjs.org/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 72,
+      "summary": {
+        "passed": 804,
+        "failed": 305,
+        "warned": 0,
+        "errored": 0,
+        "na": 105,
+        "total": 1214,
+        "applicable": 1109
+      },
+      "topFailures": [
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section",
+        "code.language-tags",
+        "html.json-ld.breadcrumb"
+      ],
+      "scannedAt": "2026-05-07T00:21:21.257Z"
+    },
+    {
+      "slug": "railway-docs",
+      "name": "Railway Docs",
+      "url": "https://docs.railway.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 71,
+      "summary": {
+        "passed": 786,
+        "failed": 321,
+        "warned": 0,
+        "errored": 0,
+        "na": 107,
+        "total": 1214,
+        "applicable": 1107
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:43:10.069Z"
+    },
+    {
+      "slug": "supabase",
+      "name": "Supabase",
+      "url": "https://supabase.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 71,
+      "summary": {
+        "passed": 740,
+        "failed": 308,
+        "warned": 0,
+        "errored": 0,
+        "na": 166,
+        "total": 1214,
+        "applicable": 1048
+      },
+      "topFailures": [
+        "html.json-ld",
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section",
+        "html.glossary-link"
+      ],
+      "scannedAt": "2026-05-07T03:47:00.702Z"
+    },
+    {
+      "slug": "clickhouse",
+      "name": "ClickHouse",
+      "url": "https://clickhouse.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 69,
+      "summary": {
+        "passed": 687,
+        "failed": 313,
+        "warned": 0,
+        "errored": 0,
+        "na": 214,
+        "total": 1214,
+        "applicable": 1000
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.mirror-suffix",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified"
+      ],
+      "scannedAt": "2026-05-07T00:28:29.743Z"
+    },
+    {
+      "slug": "nodejs",
+      "name": "Node.js",
+      "url": "https://nodejs.org/docs/latest/api",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 69,
+      "summary": {
+        "passed": 595,
+        "failed": 266,
+        "warned": 0,
+        "errored": 0,
+        "na": 353,
+        "total": 1214,
+        "applicable": 861
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T00:24:16.901Z"
+    },
+    {
+      "slug": "prisma",
+      "name": "Prisma",
+      "url": "https://www.prisma.io/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 69,
+      "summary": {
+        "passed": 797,
+        "failed": 353,
+        "warned": 0,
+        "errored": 0,
+        "na": 64,
+        "total": 1214,
+        "applicable": 1150
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.date-modified",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.frontmatter"
+      ],
+      "scannedAt": "2026-05-07T00:28:40.998Z"
+    },
+    {
+      "slug": "cloudflare",
+      "name": "Cloudflare",
+      "url": "https://www.cloudflare.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 68,
+      "summary": {
+        "passed": 600,
+        "failed": 286,
+        "warned": 0,
+        "errored": 0,
+        "na": 328,
+        "total": 1214,
+        "applicable": 886
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.mirror-suffix",
+        "html.text-ratio",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T03:46:54.601Z"
+    },
+    {
+      "slug": "hubspot",
+      "name": "HubSpot",
+      "url": "https://www.hubspot.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 68,
+      "summary": {
+        "passed": 650,
+        "failed": 308,
+        "warned": 0,
+        "errored": 0,
+        "na": 256,
+        "total": 1214,
+        "applicable": 958
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.text-ratio",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T03:54:30.178Z"
+    },
+    {
+      "slug": "netlify-docs",
+      "name": "Netlify Docs",
+      "url": "https://docs.netlify.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 68,
+      "summary": {
+        "passed": 595,
+        "failed": 285,
+        "warned": 0,
+        "errored": 0,
+        "na": 334,
+        "total": 1214,
+        "applicable": 880
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T03:43:00.914Z"
+    },
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "url": "https://www.shopify.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 68,
+      "summary": {
+        "passed": 586,
+        "failed": 273,
+        "warned": 0,
+        "errored": 0,
+        "na": 355,
+        "total": 1214,
+        "applicable": 859
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.json-ld",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T04:06:21.240Z"
+    },
+    {
+      "slug": "stripe-docs",
+      "name": "Stripe Docs",
+      "url": "https://docs.stripe.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 68,
+      "summary": {
+        "passed": 346,
+        "failed": 163,
+        "warned": 0,
+        "errored": 0,
+        "na": 225,
+        "total": 734,
+        "applicable": 509
+      },
+      "topFailures": [
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.frontmatter",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:43:41.322Z"
+    },
+    {
+      "slug": "airtable",
+      "name": "Airtable",
+      "url": "https://www.airtable.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 67,
+      "summary": {
+        "passed": 634,
+        "failed": 319,
+        "warned": 0,
+        "errored": 0,
+        "na": 261,
+        "total": 1214,
+        "applicable": 953
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.json-ld.date-modified"
+      ],
+      "scannedAt": "2026-05-07T03:52:27.838Z"
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe",
+      "url": "https://stripe.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 67,
+      "summary": {
+        "passed": 449,
+        "failed": 219,
+        "warned": 0,
+        "errored": 0,
+        "na": 546,
+        "total": 1214,
+        "applicable": 668
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T03:47:06.465Z"
+    },
+    {
+      "slug": "1password",
+      "name": "1Password",
+      "url": "https://1password.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 66,
+      "summary": {
+        "passed": 485,
+        "failed": 250,
+        "warned": 0,
+        "errored": 0,
+        "na": 479,
+        "total": 1214,
+        "applicable": 735
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T04:07:18.264Z"
+    },
+    {
+      "slug": "render-docs",
+      "name": "Render Docs",
+      "url": "https://render.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 66,
+      "summary": {
+        "passed": 730,
+        "failed": 383,
+        "warned": 1,
+        "errored": 0,
+        "na": 100,
+        "total": 1214,
+        "applicable": 1114
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "markdown.alternate-link",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T03:43:18.016Z"
+    },
+    {
+      "slug": "shopify-dev",
+      "name": "Shopify Dev Docs",
+      "url": "https://shopify.dev/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 66,
+      "summary": {
+        "passed": 409,
+        "failed": 210,
+        "warned": 1,
+        "errored": 0,
+        "na": 114,
+        "total": 734,
+        "applicable": 620
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.frontmatter",
+        "markdown.sitemap-section",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T03:45:03.255Z"
+    },
+    {
+      "slug": "anthropic-docs",
+      "name": "Anthropic Docs",
+      "url": "https://docs.claude.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 683,
+        "failed": 369,
+        "warned": 0,
+        "errored": 0,
+        "na": 162,
+        "total": 1214,
+        "applicable": 1052
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.frontmatter"
+      ],
+      "scannedAt": "2026-05-07T03:44:14.093Z"
+    },
+    {
+      "slug": "clickup",
+      "name": "ClickUp",
+      "url": "https://clickup.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 656,
+        "failed": 354,
+        "warned": 0,
+        "errored": 0,
+        "na": 204,
+        "total": 1214,
+        "applicable": 1010
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T03:54:07.426Z"
+    },
+    {
+      "slug": "cloudflare-docs",
+      "name": "Cloudflare Docs",
+      "url": "https://developers.cloudflare.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 448,
+        "failed": 237,
+        "warned": 0,
+        "errored": 0,
+        "na": 49,
+        "total": 734,
+        "applicable": 685
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "http.content-type-html",
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:42:29.272Z"
+    },
+    {
+      "slug": "netlify",
+      "name": "Netlify",
+      "url": "https://www.netlify.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 560,
+        "failed": 306,
+        "warned": 0,
+        "errored": 0,
+        "na": 348,
+        "total": 1214,
+        "applicable": 866
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T03:46:42.788Z"
+    },
+    {
+      "slug": "notion-developers",
+      "name": "Notion API Docs",
+      "url": "https://developers.notion.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 692,
+        "failed": 366,
+        "warned": 0,
+        "errored": 0,
+        "na": 156,
+        "total": 1214,
+        "applicable": 1058
+      },
+      "topFailures": [
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section"
+      ],
+      "scannedAt": "2026-05-07T03:44:46.951Z"
+    },
+    {
+      "slug": "redis",
+      "name": "Redis",
+      "url": "https://redis.io/docs/latest",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 65,
+      "summary": {
+        "passed": 569,
+        "failed": 302,
+        "warned": 0,
+        "errored": 0,
+        "na": 343,
+        "total": 1214,
+        "applicable": 871
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "http.content-type-html",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T00:28:13.219Z"
+    },
+    {
+      "slug": "target",
+      "name": "Target",
+      "url": "https://www.target.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 65,
+      "summary": {
+        "passed": 17,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 12,
+        "total": 38,
+        "applicable": 26
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld",
+        "llms-txt.md-extensions",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T04:09:24.915Z"
+    },
+    {
+      "slug": "asana",
+      "name": "Asana",
+      "url": "https://asana.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 64,
+      "summary": {
+        "passed": 627,
+        "failed": 349,
+        "warned": 0,
+        "errored": 0,
+        "na": 238,
+        "total": 1214,
+        "applicable": 976
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.json-ld",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T03:52:54.675Z"
+    },
+    {
+      "slug": "linear",
+      "name": "Linear",
+      "url": "https://linear.app",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 64,
+      "summary": {
+        "passed": 618,
+        "failed": 346,
+        "warned": 0,
+        "errored": 0,
+        "na": 250,
+        "total": 1214,
+        "applicable": 964
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T03:47:45.967Z"
+    },
+    {
+      "slug": "linear-developers",
+      "name": "Linear API Docs",
+      "url": "https://linear.app/developers",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 64,
+      "summary": {
+        "passed": 618,
+        "failed": 346,
+        "warned": 0,
+        "errored": 0,
+        "na": 250,
+        "total": 1214,
+        "applicable": 964
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T03:44:37.866Z"
+    },
+    {
+      "slug": "tanstack",
+      "name": "TanStack",
+      "url": "https://tanstack.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 64,
+      "summary": {
+        "passed": 647,
+        "failed": 371,
+        "warned": 0,
+        "errored": 0,
+        "na": 196,
+        "total": 1214,
+        "applicable": 1018
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.frontmatter"
+      ],
+      "scannedAt": "2026-05-07T00:22:36.203Z"
+    },
+    {
+      "slug": "zendesk",
+      "name": "Zendesk",
+      "url": "https://www.zendesk.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 64,
+      "summary": {
+        "passed": 611,
+        "failed": 351,
+        "warned": 0,
+        "errored": 0,
+        "na": 252,
+        "total": 1214,
+        "applicable": 962
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T03:56:50.498Z"
+    },
+    {
+      "slug": "notion",
+      "name": "Notion",
+      "url": "https://www.notion.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 63,
+      "summary": {
+        "passed": 555,
+        "failed": 320,
+        "warned": 0,
+        "errored": 0,
+        "na": 339,
+        "total": 1214,
+        "applicable": 875
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T03:47:25.300Z"
+    },
+    {
+      "slug": "dropbox",
+      "name": "Dropbox",
+      "url": "https://www.dropbox.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 62,
+      "summary": {
+        "passed": 589,
+        "failed": 355,
+        "warned": 0,
+        "errored": 0,
+        "na": 270,
+        "total": 1214,
+        "applicable": 944
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T04:06:58.768Z"
+    },
+    {
+      "slug": "ruby",
+      "name": "Ruby",
+      "url": "https://docs.ruby-lang.org/en/master",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 62,
+      "summary": {
+        "passed": 528,
+        "failed": 329,
+        "warned": 0,
+        "errored": 0,
+        "na": 357,
+        "total": 1214,
+        "applicable": 857
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.json-ld",
+        "http.content-type-html",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:24:55.434Z"
+    },
+    {
+      "slug": "web-dev",
+      "name": "web.dev",
+      "url": "https://web.dev",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 62,
+      "summary": {
+        "passed": 678,
+        "failed": 409,
+        "warned": 0,
+        "errored": 0,
+        "na": 127,
+        "total": 1214,
+        "applicable": 1087
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.content-negotiation",
+        "markdown.frontmatter"
+      ],
+      "scannedAt": "2026-05-07T03:46:15.483Z"
+    },
+    {
+      "slug": "digitalocean-docs",
+      "name": "DigitalOcean Docs",
+      "url": "https://docs.digitalocean.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 61,
+      "summary": {
+        "passed": 595,
+        "failed": 376,
+        "warned": 0,
+        "errored": 0,
+        "na": 243,
+        "total": 1214,
+        "applicable": 971
+      },
+      "topFailures": [
+        "html.json-ld.breadcrumb",
+        "html.og-description",
+        "html.og-title",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T03:43:37.714Z"
+    },
+    {
+      "slug": "weather-com",
+      "name": "Weather.com",
+      "url": "https://weather.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 61,
+      "summary": {
+        "passed": 17,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 10,
+        "total": 38,
+        "applicable": 28
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "llms-txt.md-extensions"
+      ],
+      "scannedAt": "2026-05-07T04:09:10.852Z"
+    },
+    {
+      "slug": "aws-docs",
+      "name": "AWS Documentation",
+      "url": "https://docs.aws.amazon.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 60,
+      "summary": {
+        "passed": 343,
+        "failed": 227,
+        "warned": 0,
+        "errored": 4,
+        "na": 40,
+        "total": 614,
+        "applicable": 574
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.date-modified",
+        "html.og-description",
+        "html.og-title",
+        "http.content-type-html"
+      ],
+      "scannedAt": "2026-05-07T02:29:38.091Z"
+    },
+    {
+      "slug": "mongodb",
+      "name": "MongoDB",
+      "url": "https://www.mongodb.com/docs/manual",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 60,
+      "summary": {
+        "passed": 673,
+        "failed": 451,
+        "warned": 0,
+        "errored": 0,
+        "na": 90,
+        "total": 1214,
+        "applicable": 1124
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.date-modified",
+        "html.og-description",
+        "markdown.alternate-link",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T00:28:21.123Z"
+    },
+    {
+      "slug": "slack-api",
+      "name": "Slack API",
+      "url": "https://api.slack.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 60,
+      "summary": {
+        "passed": 253,
+        "failed": 167,
+        "warned": 0,
+        "errored": 0,
+        "na": 794,
+        "total": 1214,
+        "applicable": 420
+      },
+      "topFailures": [
+        "http.status-200",
+        "http.content-type-html",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T03:44:50.525Z"
+    },
+    {
+      "slug": "vite",
+      "name": "Vite",
+      "url": "https://vite.dev",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 60,
+      "summary": {
+        "passed": 578,
+        "failed": 391,
+        "warned": 0,
+        "errored": 0,
+        "na": 245,
+        "total": 1214,
+        "applicable": 969
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.meta-description"
+      ],
+      "scannedAt": "2026-05-07T00:22:14.904Z"
+    },
+    {
+      "slug": "zoom-support",
+      "name": "Zoom Support",
+      "url": "https://support.zoom.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 60,
+      "summary": {
+        "passed": 18,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 8,
+        "total": 38,
+        "applicable": 30
+      },
+      "topFailures": [
+        "agents-md.has-min-sections",
+        "discovery.indexed",
+        "html.glossary-link",
+        "html.json-ld",
+        "llms-txt.exists"
+      ],
+      "scannedAt": "2026-05-07T04:07:57.497Z"
+    },
+    {
+      "slug": "bbc",
+      "name": "BBC",
+      "url": "https://www.bbc.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 59,
+      "summary": {
+        "passed": 16,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 11,
+        "total": 38,
+        "applicable": 27
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "llms-txt.exists"
+      ],
+      "scannedAt": "2026-05-07T04:08:36.659Z"
+    },
+    {
+      "slug": "cnn",
+      "name": "CNN",
+      "url": "https://www.cnn.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 59,
+      "summary": {
+        "passed": 16,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 11,
+        "total": 38,
+        "applicable": 27
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T04:08:46.744Z"
+    },
+    {
+      "slug": "espn",
+      "name": "ESPN",
+      "url": "https://www.espn.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 59,
+      "summary": {
+        "passed": 16,
+        "failed": 10,
+        "warned": 1,
+        "errored": 0,
+        "na": 11,
+        "total": 38,
+        "applicable": 27
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "llms-txt.exists"
+      ],
+      "scannedAt": "2026-05-07T04:09:00.410Z"
+    },
+    {
+      "slug": "github-marketing",
+      "name": "GitHub",
+      "url": "https://github.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 59,
+      "summary": {
+        "passed": 157,
+        "failed": 109,
+        "warned": 0,
+        "errored": 0,
+        "na": 948,
+        "total": 1214,
+        "applicable": 266
+      },
+      "topFailures": [
+        "http.content-type-html",
+        "http.status-200",
+        "api.schema-link",
+        "agents-md.exists",
+        "llms-txt.md-extensions"
+      ],
+      "scannedAt": "2026-05-07T03:46:18.873Z"
+    },
+    {
+      "slug": "gitlab-marketing",
+      "name": "GitLab",
+      "url": "https://about.gitlab.com",
+      "category": "dev-tool",
+      "mode": "site",
+      "score": 59,
+      "summary": {
+        "passed": 505,
+        "failed": 355,
+        "warned": 0,
+        "errored": 0,
+        "na": 354,
+        "total": 1214,
+        "applicable": 860
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "http.content-type-html",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T03:46:30.425Z"
+    },
+    {
+      "slug": "squarespace",
+      "name": "Squarespace",
+      "url": "https://www.squarespace.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 59,
+      "summary": {
+        "passed": 567,
+        "failed": 392,
+        "warned": 0,
+        "errored": 0,
+        "na": 255,
+        "total": 1214,
+        "applicable": 959
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.text-ratio",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T04:06:32.703Z"
+    },
+    {
+      "slug": "kotlin",
+      "name": "Kotlin",
+      "url": "https://kotlinlang.org/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 58,
+      "summary": {
+        "passed": 555,
+        "failed": 408,
+        "warned": 0,
+        "errored": 0,
+        "na": 251,
+        "total": 1214,
+        "applicable": 963
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "html.meta-description",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T00:25:53.957Z"
+    },
+    {
+      "slug": "slack",
+      "name": "Slack",
+      "url": "https://slack.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 58,
+      "summary": {
+        "passed": 265,
+        "failed": 189,
+        "warned": 0,
+        "errored": 0,
+        "na": 760,
+        "total": 1214,
+        "applicable": 454
+      },
+      "topFailures": [
+        "http.status-200",
+        "http.content-type-html",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T03:48:25.471Z"
+    },
+    {
+      "slug": "angular",
+      "name": "Angular",
+      "url": "https://angular.dev",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 57,
+      "summary": {
+        "passed": 626,
+        "failed": 477,
+        "warned": 0,
+        "errored": 0,
+        "na": 111,
+        "total": 1214,
+        "applicable": 1103
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:21:11.568Z"
+    },
+    {
+      "slug": "mdn",
+      "name": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 57,
+      "summary": {
+        "passed": 253,
+        "failed": 193,
+        "warned": 0,
+        "errored": 0,
+        "na": 168,
+        "total": 614,
+        "applicable": 446
+      },
+      "topFailures": [
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title",
+        "http.content-type-html",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T03:45:17.091Z"
+    },
+    {
+      "slug": "vuejs",
+      "name": "Vue.js",
+      "url": "https://vuejs.org",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 57,
+      "summary": {
+        "passed": 604,
+        "failed": 462,
+        "warned": 0,
+        "errored": 0,
+        "na": 148,
+        "total": 1214,
+        "applicable": 1066
+      },
+      "topFailures": [
+        "html.canonical-link",
+        "html.json-ld",
+        "html.meta-description",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:20:59.545Z"
+    },
+    {
+      "slug": "bun",
+      "name": "Bun",
+      "url": "https://bun.sh/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 56,
+      "summary": {
+        "passed": 653,
+        "failed": 510,
+        "warned": 0,
+        "errored": 0,
+        "na": 51,
+        "total": 1214,
+        "applicable": 1163
+      },
+      "topFailures": [
+        "code.language-tags",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T00:24:23.774Z"
+    },
+    {
+      "slug": "nytimes-cooking",
+      "name": "NYT Cooking",
+      "url": "https://cooking.nytimes.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 56,
+      "summary": {
+        "passed": 14,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 13,
+        "total": 38,
+        "applicable": 25
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "llms-txt.exists"
+      ],
+      "scannedAt": "2026-05-07T04:09:15.861Z"
+    },
+    {
+      "slug": "radix-ui",
+      "name": "Radix UI",
+      "url": "https://www.radix-ui.com/primitives/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 56,
+      "summary": {
+        "passed": 586,
+        "failed": 466,
+        "warned": 0,
+        "errored": 0,
+        "na": 162,
+        "total": 1214,
+        "applicable": 1052
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T00:23:17.560Z"
+    },
+    {
+      "slug": "swift",
+      "name": "Swift",
+      "url": "https://www.swift.org/documentation",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 56,
+      "summary": {
+        "passed": 179,
+        "failed": 141,
+        "warned": 0,
+        "errored": 0,
+        "na": 894,
+        "total": 1214,
+        "applicable": 320
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "api.schema-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.meta-description"
+      ],
+      "scannedAt": "2026-05-07T00:25:59.043Z"
+    },
+    {
+      "slug": "nytimes",
+      "name": "The New York Times",
+      "url": "https://www.nytimes.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 56,
+      "summary": {
+        "passed": 14,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 13,
+        "total": 38,
+        "applicable": 25
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "llms-txt.exists"
+      ],
+      "scannedAt": "2026-05-07T04:08:32.219Z"
+    },
+    {
+      "slug": "twilio-docs",
+      "name": "Twilio Docs",
+      "url": "https://www.twilio.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 56,
+      "summary": {
+        "passed": 357,
+        "failed": 277,
+        "warned": 0,
+        "errored": 0,
+        "na": 100,
+        "total": 734,
+        "applicable": 634
+      },
+      "topFailures": [
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title",
+        "markdown.content-negotiation",
+        "html.glossary-link"
+      ],
+      "scannedAt": "2026-05-07T03:43:46.873Z"
+    },
+    {
+      "slug": "astro",
+      "name": "Astro",
+      "url": "https://docs.astro.build",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 55,
+      "summary": {
+        "passed": 491,
+        "failed": 398,
+        "warned": 0,
+        "errored": 0,
+        "na": 325,
+        "total": 1214,
+        "applicable": 889
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T00:22:02.498Z"
+    },
+    {
+      "slug": "atlassian",
+      "name": "Atlassian",
+      "url": "https://www.atlassian.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 55,
+      "summary": {
+        "passed": 279,
+        "failed": 227,
+        "warned": 0,
+        "errored": 0,
+        "na": 108,
+        "total": 614,
+        "applicable": 506
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified"
+      ],
+      "scannedAt": "2026-05-07T04:07:45.656Z"
+    },
+    {
+      "slug": "github-docs",
+      "name": "GitHub Docs",
+      "url": "https://docs.github.com/en",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 55,
+      "summary": {
+        "passed": 74,
+        "failed": 60,
+        "warned": 1,
+        "errored": 0,
+        "na": 383,
+        "total": 518,
+        "applicable": 135
+      },
+      "topFailures": [
+        "http.content-type-html",
+        "api.schema-link",
+        "http.status-200",
+        "agents-md.exists",
+        "discovery.indexed"
+      ],
+      "scannedAt": "2026-05-07T03:43:51.687Z"
+    },
+    {
+      "slug": "salesforce",
+      "name": "Salesforce",
+      "url": "https://www.salesforce.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 55,
+      "summary": {
+        "passed": 262,
+        "failed": 217,
+        "warned": 0,
+        "errored": 0,
+        "na": 135,
+        "total": 614,
+        "applicable": 479
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "discovery.indexed"
+      ],
+      "scannedAt": "2026-05-07T03:54:51.312Z"
+    },
+    {
+      "slug": "tailwind",
+      "name": "Tailwind CSS",
+      "url": "https://tailwindcss.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 55,
+      "summary": {
+        "passed": 493,
+        "failed": 405,
+        "warned": 0,
+        "errored": 0,
+        "na": 316,
+        "total": 1214,
+        "applicable": 898
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T00:22:48.264Z"
+    },
+    {
+      "slug": "airbnb-help",
+      "name": "Airbnb Help Center",
+      "url": "https://www.airbnb.com/help",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 54,
+      "summary": {
+        "passed": 237,
+        "failed": 203,
+        "warned": 0,
+        "errored": 0,
+        "na": 174,
+        "total": 614,
+        "applicable": 440
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix"
+      ],
+      "scannedAt": "2026-05-07T04:07:53.924Z"
+    },
+    {
+      "slug": "deno",
+      "name": "Deno",
+      "url": "https://docs.deno.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 54,
+      "summary": {
+        "passed": 517,
+        "failed": 448,
+        "warned": 0,
+        "errored": 0,
+        "na": 249,
+        "total": 1214,
+        "applicable": 965
+      },
+      "topFailures": [
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.text-ratio",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:24:28.805Z"
+    },
+    {
+      "slug": "fly-io",
+      "name": "Fly.io Docs",
+      "url": "https://fly.io/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 54,
+      "summary": {
+        "passed": 486,
+        "failed": 418,
+        "warned": 0,
+        "errored": 0,
+        "na": 310,
+        "total": 1214,
+        "applicable": 904
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "html.text-ratio",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T03:43:07.087Z"
+    },
+    {
+      "slug": "mailchimp",
+      "name": "Mailchimp",
+      "url": "https://mailchimp.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 54,
+      "summary": {
+        "passed": 509,
+        "failed": 440,
+        "warned": 0,
+        "errored": 0,
+        "na": 265,
+        "total": 1214,
+        "applicable": 949
+      },
+      "topFailures": [
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T03:57:32.578Z"
+    },
+    {
+      "slug": "gitlab-docs",
+      "name": "GitLab Docs",
+      "url": "https://docs.gitlab.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 53,
+      "summary": {
+        "passed": 297,
+        "failed": 262,
+        "warned": 0,
+        "errored": 0,
+        "na": 55,
+        "total": 614,
+        "applicable": 559
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.json-ld.date-modified",
+        "html.og-description",
+        "html.og-title"
+      ],
+      "scannedAt": "2026-05-07T03:44:06.854Z"
+    },
+    {
+      "slug": "monday",
+      "name": "monday.com",
+      "url": "https://monday.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 53,
+      "summary": {
+        "passed": 487,
+        "failed": 431,
+        "warned": 0,
+        "errored": 0,
+        "na": 296,
+        "total": 1214,
+        "applicable": 918
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T03:53:19.124Z"
+    },
+    {
+      "slug": "typescript",
+      "name": "TypeScript",
+      "url": "https://www.typescriptlang.org/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 53,
+      "summary": {
+        "passed": 478,
+        "failed": 427,
+        "warned": 0,
+        "errored": 0,
+        "na": 309,
+        "total": 1214,
+        "applicable": 905
+      },
+      "topFailures": [
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.glossary-link"
+      ],
+      "scannedAt": "2026-05-07T00:24:33.819Z"
+    },
+    {
+      "slug": "apple-support",
+      "name": "Apple Support",
+      "url": "https://support.apple.com/en-us",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 52,
+      "summary": {
+        "passed": 248,
+        "failed": 225,
+        "warned": 2,
+        "errored": 0,
+        "na": 139,
+        "total": 614,
+        "applicable": 475
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.json-ld.breadcrumb"
+      ],
+      "scannedAt": "2026-05-07T04:08:10.997Z"
+    },
+    {
+      "slug": "shadcn-ui",
+      "name": "shadcn/ui",
+      "url": "https://ui.shadcn.com/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 52,
+      "summary": {
+        "passed": 555,
+        "failed": 503,
+        "warned": 0,
+        "errored": 0,
+        "na": 156,
+        "total": 1214,
+        "applicable": 1058
+      },
+      "topFailures": [
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T00:22:54.650Z"
+    },
+    {
+      "slug": "wikipedia-en",
+      "name": "Wikipedia (English)",
+      "url": "https://en.wikipedia.org/wiki/Main_Page",
+      "category": "reference",
+      "mode": "page",
+      "score": 52,
+      "summary": {
+        "passed": 13,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 13,
+        "total": 38,
+        "applicable": 25
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld.breadcrumb",
+        "html.meta-description",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T00:19:43.796Z"
+    },
+    {
+      "slug": "spotify-support",
+      "name": "Spotify Support",
+      "url": "https://support.spotify.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 51,
+      "summary": {
+        "passed": 262,
+        "failed": 249,
+        "warned": 2,
+        "errored": 0,
+        "na": 101,
+        "total": 614,
+        "applicable": 513
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.canonical-header"
+      ],
+      "scannedAt": "2026-05-07T04:08:06.984Z"
+    },
+    {
+      "slug": "zoom",
+      "name": "Zoom",
+      "url": "https://www.zoom.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 48,
+      "summary": {
+        "passed": 447,
+        "failed": 476,
+        "warned": 0,
+        "errored": 0,
+        "na": 291,
+        "total": 1214,
+        "applicable": 923
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "discovery.indexed"
+      ],
+      "scannedAt": "2026-05-07T03:48:37.789Z"
+    },
+    {
+      "slug": "google-support",
+      "name": "Google Help",
+      "url": "https://support.google.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 47,
+      "summary": {
+        "passed": 240,
+        "failed": 272,
+        "warned": 1,
+        "errored": 0,
+        "na": 101,
+        "total": 614,
+        "applicable": 513
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T04:08:18.207Z"
+    },
+    {
+      "slug": "postgres",
+      "name": "PostgreSQL",
+      "url": "https://www.postgresql.org/docs/current",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 45,
+      "summary": {
+        "passed": 233,
+        "failed": 286,
+        "warned": 0,
+        "errored": 0,
+        "na": 215,
+        "total": 734,
+        "applicable": 519
+      },
+      "topFailures": [
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:27:39.581Z"
+    },
+    {
+      "slug": "sveltekit",
+      "name": "SvelteKit",
+      "url": "https://kit.svelte.dev/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 45,
+      "summary": {
+        "passed": 385,
+        "failed": 474,
+        "warned": 0,
+        "errored": 0,
+        "na": 331,
+        "total": 1190,
+        "applicable": 859
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "markdown.mirror-suffix",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T00:22:11.327Z"
+    },
+    {
+      "slug": "php",
+      "name": "PHP",
+      "url": "https://www.php.net/manual/en",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 44,
+      "summary": {
+        "passed": 224,
+        "failed": 285,
+        "warned": 0,
+        "errored": 0,
+        "na": 225,
+        "total": 734,
+        "applicable": 509
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "http.redirect-chain",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.meta-description"
+      ],
+      "scannedAt": "2026-05-07T00:25:20.359Z"
+    },
+    {
+      "slug": "python",
+      "name": "Python",
+      "url": "https://docs.python.org/3",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 44,
+      "summary": {
+        "passed": 229,
+        "failed": 291,
+        "warned": 0,
+        "errored": 0,
+        "na": 214,
+        "total": 734,
+        "applicable": 520
+      },
+      "topFailures": [
+        "html.json-ld",
+        "html.meta-description",
+        "http.content-type-html",
+        "markdown.alternate-link",
+        "markdown.content-negotiation"
+      ],
+      "scannedAt": "2026-05-07T00:24:48.453Z"
+    },
+    {
+      "slug": "solidjs",
+      "name": "SolidJS",
+      "url": "https://www.solidjs.com",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 44,
+      "summary": {
+        "passed": 15,
+        "failed": 16,
+        "warned": 3,
+        "errored": 0,
+        "na": 4,
+        "total": 38,
+        "applicable": 34
+      },
+      "topFailures": [
+        "agents-md.has-min-sections",
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings"
+      ],
+      "scannedAt": "2026-05-07T00:21:08.233Z"
+    },
+    {
+      "slug": "theguardian",
+      "name": "The Guardian",
+      "url": "https://www.theguardian.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 43,
+      "summary": {
+        "passed": 10,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title"
+      ],
+      "scannedAt": "2026-05-07T04:08:51.090Z"
+    },
+    {
+      "slug": "go",
+      "name": "Go",
+      "url": "https://go.dev/doc",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 42,
+      "summary": {
+        "passed": 432,
+        "failed": 585,
+        "warned": 0,
+        "errored": 0,
+        "na": 197,
+        "total": 1214,
+        "applicable": 1017
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title",
+        "markdown.alternate-link"
+      ],
+      "scannedAt": "2026-05-07T00:24:44.281Z"
+    },
+    {
+      "slug": "trello",
+      "name": "Trello",
+      "url": "https://trello.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 40,
+      "summary": {
+        "passed": 403,
+        "failed": 606,
+        "warned": 1,
+        "errored": 0,
+        "na": 204,
+        "total": 1214,
+        "applicable": 1010
+      },
+      "topFailures": [
+        "html.glossary-link",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T03:53:38.642Z"
+    },
+    {
+      "slug": "remix",
+      "name": "Remix",
+      "url": "https://remix.run/docs",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 38,
+      "summary": {
+        "passed": 16,
+        "failed": 26,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 62,
+        "applicable": 42
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.text-ratio"
+      ],
+      "scannedAt": "2026-05-07T00:21:56.058Z"
+    },
+    {
+      "slug": "rust",
+      "name": "Rust",
+      "url": "https://doc.rust-lang.org/book",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 36,
+      "summary": {
+        "passed": 320,
+        "failed": 578,
+        "warned": 0,
+        "errored": 0,
+        "na": 316,
+        "total": 1214,
+        "applicable": 898
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title"
+      ],
+      "scannedAt": "2026-05-07T00:24:37.894Z"
+    },
+    {
+      "slug": "svelte",
+      "name": "Svelte",
+      "url": "https://svelte.dev",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 36,
+      "summary": {
+        "passed": 279,
+        "failed": 504,
+        "warned": 0,
+        "errored": 0,
+        "na": 431,
+        "total": 1214,
+        "applicable": 783
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.json-ld",
+        "markdown.alternate-link",
+        "markdown.content-negotiation",
+        "html.canonical-link"
+      ],
+      "scannedAt": "2026-05-07T00:21:06.974Z"
+    },
+    {
+      "slug": "wsj",
+      "name": "The Wall Street Journal",
+      "url": "https://www.wsj.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 36,
+      "summary": {
+        "passed": 9,
+        "failed": 16,
+        "warned": 0,
+        "errored": 0,
+        "na": 13,
+        "total": 38,
+        "applicable": 25
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:08:58.719Z"
+    },
+    {
+      "slug": "etsy",
+      "name": "Etsy",
+      "url": "https://www.etsy.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 35,
+      "summary": {
+        "passed": 8,
+        "failed": 15,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:09:21.983Z"
+    },
+    {
+      "slug": "hacker-news",
+      "name": "Hacker News",
+      "url": "https://news.ycombinator.com",
+      "category": "reference",
+      "mode": "page",
+      "score": 35,
+      "summary": {
+        "passed": 8,
+        "failed": 15,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:08:28.779Z"
+    },
+    {
+      "slug": "archive-org",
+      "name": "Internet Archive",
+      "url": "https://archive.org",
+      "category": "reference",
+      "mode": "page",
+      "score": 35,
+      "summary": {
+        "passed": 8,
+        "failed": 15,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:08:25.113Z"
+    },
+    {
+      "slug": "imdb",
+      "name": "IMDb",
+      "url": "https://www.imdb.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 34,
+      "summary": {
+        "passed": 11,
+        "failed": 19,
+        "warned": 2,
+        "errored": 0,
+        "na": 6,
+        "total": 38,
+        "applicable": 32
+      },
+      "topFailures": [
+        "agents-md.has-min-sections",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:09:11.950Z"
+    },
+    {
+      "slug": "sqlite",
+      "name": "SQLite",
+      "url": "https://sqlite.org/docs.html",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 33,
+      "summary": {
+        "passed": 286,
+        "failed": 571,
+        "warned": 0,
+        "errored": 0,
+        "na": 357,
+        "total": 1214,
+        "applicable": 857
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.json-ld",
+        "html.meta-description",
+        "html.og-description"
+      ],
+      "scannedAt": "2026-05-07T00:27:52.975Z"
+    },
+    {
+      "slug": "canva",
+      "name": "Canva",
+      "url": "https://www.canva.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 32,
+      "summary": {
+        "passed": 25,
+        "failed": 53,
+        "warned": 0,
+        "errored": 0,
+        "na": 32,
+        "total": 110,
+        "applicable": 78
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:06:48.544Z"
+    },
+    {
+      "slug": "zig",
+      "name": "Zig",
+      "url": "https://ziglang.org/documentation/master",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 31,
+      "summary": {
+        "passed": 281,
+        "failed": 618,
+        "warned": 1,
+        "errored": 0,
+        "na": 314,
+        "total": 1214,
+        "applicable": 900
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.meta-description"
+      ],
+      "scannedAt": "2026-05-07T00:27:19.022Z"
+    },
+    {
+      "slug": "reuters",
+      "name": "Reuters",
+      "url": "https://www.reuters.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 30,
+      "summary": {
+        "passed": 7,
+        "failed": 16,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:08:54.167Z"
+    },
+    {
+      "slug": "stackoverflow",
+      "name": "Stack Overflow",
+      "url": "https://stackoverflow.com",
+      "category": "reference",
+      "mode": "page",
+      "score": 30,
+      "summary": {
+        "passed": 7,
+        "failed": 16,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:08:27.638Z"
+    },
+    {
+      "slug": "tripadvisor",
+      "name": "Tripadvisor",
+      "url": "https://www.tripadvisor.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 30,
+      "summary": {
+        "passed": 7,
+        "failed": 16,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:09:19.141Z"
+    },
+    {
+      "slug": "shopify-help",
+      "name": "Shopify Help Center",
+      "url": "https://help.shopify.com/en",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 29,
+      "summary": {
+        "passed": 7,
+        "failed": 17,
+        "warned": 0,
+        "errored": 0,
+        "na": 14,
+        "total": 38,
+        "applicable": 24
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings"
+      ],
+      "scannedAt": "2026-05-07T04:07:55.768Z"
+    },
+    {
+      "slug": "allrecipes",
+      "name": "Allrecipes",
+      "url": "https://www.allrecipes.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 28,
+      "summary": {
+        "passed": 7,
+        "failed": 17,
+        "warned": 1,
+        "errored": 0,
+        "na": 13,
+        "total": 38,
+        "applicable": 25
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:09:12.924Z"
+    },
+    {
+      "slug": "yelp",
+      "name": "Yelp",
+      "url": "https://www.yelp.com",
+      "category": "consumer",
+      "mode": "page",
+      "score": 26,
+      "summary": {
+        "passed": 6,
+        "failed": 17,
+        "warned": 0,
+        "errored": 0,
+        "na": 15,
+        "total": 38,
+        "applicable": 23
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings",
+        "html.json-ld"
+      ],
+      "scannedAt": "2026-05-07T04:09:17.423Z"
+    },
+    {
+      "slug": "azure-docs",
+      "name": "Azure Docs",
+      "url": "https://learn.microsoft.com/en-us/azure",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 25,
+      "summary": {
+        "passed": 6,
+        "failed": 18,
+        "warned": 0,
+        "errored": 0,
+        "na": 14,
+        "total": 38,
+        "applicable": 24
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings"
+      ],
+      "scannedAt": "2026-05-07T03:42:24.919Z"
+    },
+    {
+      "slug": "mysql",
+      "name": "MySQL",
+      "url": "https://dev.mysql.com/doc/refman/8.4/en",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 25,
+      "summary": {
+        "passed": 6,
+        "failed": 18,
+        "warned": 0,
+        "errored": 0,
+        "na": 14,
+        "total": 38,
+        "applicable": 24
+      },
+      "topFailures": [
+        "agents-md.exists",
+        "discovery.indexed",
+        "html.canonical-link",
+        "html.glossary-link",
+        "html.headings"
+      ],
+      "scannedAt": "2026-05-07T00:27:41.902Z"
+    },
+    {
+      "slug": "microsoft-support",
+      "name": "Microsoft Support",
+      "url": "https://support.microsoft.com",
+      "category": "enterprise",
+      "mode": "site",
+      "score": 15,
+      "summary": {
+        "passed": 65,
+        "failed": 367,
+        "warned": 0,
+        "errored": 0,
+        "na": 182,
+        "total": 614,
+        "applicable": 432
+      },
+      "topFailures": [
+        "discovery.indexed",
+        "html.glossary-link",
+        "html.json-ld",
+        "html.og-description",
+        "html.og-title"
+      ],
+      "scannedAt": "2026-05-07T04:08:21.328Z"
+    }
+  ],
+  "stats": {
+    "byCategory": [
+      {
+        "category": "dev-tool",
+        "n": 6,
+        "meanScore": 66.8,
+        "medianScore": 66.5
+      },
+      {
+        "category": "docs-platform",
+        "n": 56,
+        "meanScore": 57.2,
+        "medianScore": 57.5
+      },
+      {
+        "category": "enterprise",
+        "n": 30,
+        "meanScore": 56.9,
+        "medianScore": 59.5
+      },
+      {
+        "category": "consumer",
+        "n": 15,
+        "meanScore": 45.1,
+        "medianScore": 43
+      },
+      {
+        "category": "reference",
+        "n": 4,
+        "meanScore": 38,
+        "medianScore": 35
+      }
+    ],
+    "scoreHistogram": [
+      {
+        "from": 0,
+        "to": 9,
+        "label": "0-9",
+        "n": 0
+      },
+      {
+        "from": 10,
+        "to": 19,
+        "label": "10-19",
+        "n": 1
+      },
+      {
+        "from": 20,
+        "to": 29,
+        "label": "20-29",
+        "n": 5
+      },
+      {
+        "from": 30,
+        "to": 39,
+        "label": "30-39",
+        "n": 14
+      },
+      {
+        "from": 40,
+        "to": 49,
+        "label": "40-49",
+        "n": 10
+      },
+      {
+        "from": 50,
+        "to": 59,
+        "label": "50-59",
+        "n": 33
+      },
+      {
+        "from": 60,
+        "to": 69,
+        "label": "60-69",
+        "n": 36
+      },
+      {
+        "from": 70,
+        "to": 79,
+        "label": "70-79",
+        "n": 9
+      },
+      {
+        "from": 80,
+        "to": 89,
+        "label": "80-89",
+        "n": 2
+      },
+      {
+        "from": 90,
+        "to": 100,
+        "label": "90-100",
+        "n": 1
+      }
+    ],
+    "checkPassRates": [
+      {
+        "checkId": "api.schema-link",
+        "name": "API pages link to a machine-readable schema",
+        "group": "API",
+        "scope": "page",
+        "applicableSites": 19,
+        "passingSites": 0,
+        "passRate": 0
+      },
+      {
+        "checkId": "markdown.frontmatter",
+        "name": "Markdown mirror has required frontmatter",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 49,
+        "passingSites": 0,
+        "passRate": 0
+      },
+      {
+        "checkId": "markdown.sitemap-section",
+        "name": "Markdown mirror includes a Sitemap section",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 49,
+        "passingSites": 0,
+        "passRate": 0
+      },
+      {
+        "checkId": "markdown.canonical-header",
+        "name": "Markdown mirror sends canonical Link header",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 49,
+        "passingSites": 1,
+        "passRate": 0.02
+      },
+      {
+        "checkId": "html.glossary-link",
+        "name": "Links to a glossary or terminology page",
+        "group": "Content structure",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 3,
+        "passRate": 0.028
+      },
+      {
+        "checkId": "markdown.alternate-link",
+        "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 5,
+        "passRate": 0.046
+      },
+      {
+        "checkId": "markdown.content-negotiation",
+        "name": "Server returns markdown for Accept: text/markdown",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 7,
+        "passRate": 0.065
+      },
+      {
+        "checkId": "llms-txt.md-extensions",
+        "name": "llms.txt links use .md or .mdx",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 61,
+        "passingSites": 5,
+        "passRate": 0.082
+      },
+      {
+        "checkId": "code.language-tags",
+        "name": "Code blocks declare a language",
+        "group": "Code",
+        "scope": "page",
+        "applicableSites": 47,
+        "passingSites": 4,
+        "passRate": 0.085
+      },
+      {
+        "checkId": "html.json-ld.date-modified",
+        "name": "JSON-LD declares dateModified",
+        "group": "Structured data",
+        "scope": "page",
+        "applicableSites": 45,
+        "passingSites": 5,
+        "passRate": 0.111
+      },
+      {
+        "checkId": "sitemap-md.has-structure",
+        "name": "sitemap.md has headings and links",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 21,
+        "passingSites": 3,
+        "passRate": 0.143
+      },
+      {
+        "checkId": "html.meta-description",
+        "name": "Has meta description (>= 50 chars)",
+        "group": "HTML metadata",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 16,
+        "passRate": 0.148
+      },
+      {
+        "checkId": "markdown.mirror-suffix",
+        "name": "Has .md or .mdx mirror",
+        "group": "Markdown mirror",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 18,
+        "passRate": 0.167
+      },
+      {
+        "checkId": "sitemap-md.exists",
+        "name": "sitemap.md is published",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 21,
+        "passRate": 0.189
+      },
+      {
+        "checkId": "html.json-ld",
+        "name": "Has parseable JSON-LD block",
+        "group": "Structured data",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 21,
+        "passRate": 0.194
+      },
+      {
+        "checkId": "html.json-ld.breadcrumb",
+        "name": "JSON-LD declares a BreadcrumbList",
+        "group": "Structured data",
+        "scope": "page",
+        "applicableSites": 45,
+        "passingSites": 10,
+        "passRate": 0.222
+      },
+      {
+        "checkId": "agents-md.exists",
+        "name": "AGENTS.md (or equivalent) is published",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 37,
+        "passRate": 0.333
+      },
+      {
+        "checkId": "agents-md.has-min-sections",
+        "name": "agent skill file documents at least 2 of install/config/usage",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 37,
+        "passingSites": 13,
+        "passRate": 0.351
+      },
+      {
+        "checkId": "html.og-description",
+        "name": "Has og:description",
+        "group": "HTML metadata",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 38,
+        "passRate": 0.352
+      },
+      {
+        "checkId": "sitemap-xml.has-lastmod",
+        "name": "sitemap entries include <lastmod>",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 71,
+        "passingSites": 25,
+        "passRate": 0.352
+      },
+      {
+        "checkId": "html.headings",
+        "name": "Has at least 3 section headings",
+        "group": "Content structure",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 39,
+        "passRate": 0.361
+      },
+      {
+        "checkId": "html.text-ratio",
+        "name": "Text-to-HTML ratio is above 15%",
+        "group": "Content structure",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 48,
+        "passRate": 0.444
+      },
+      {
+        "checkId": "html.og-title",
+        "name": "Has og:title",
+        "group": "HTML metadata",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 53,
+        "passRate": 0.491
+      },
+      {
+        "checkId": "html.canonical-link",
+        "name": "Has <link rel=\"canonical\">",
+        "group": "HTML metadata",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 56,
+        "passRate": 0.519
+      },
+      {
+        "checkId": "discovery.indexed",
+        "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+        "group": "Discoverability",
+        "scope": "page",
+        "applicableSites": 92,
+        "passingSites": 50,
+        "passRate": 0.543
+      },
+      {
+        "checkId": "llms-txt.exists",
+        "name": "llms.txt is published",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 61,
+        "passRate": 0.55
+      },
+      {
+        "checkId": "http.status-200",
+        "name": "Page returns HTTP 200",
+        "group": "HTTP",
+        "scope": "page",
+        "applicableSites": 111,
+        "passingSites": 73,
+        "passRate": 0.658
+      },
+      {
+        "checkId": "sitemap-xml.exists",
+        "name": "sitemap.xml is published",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 78,
+        "passRate": 0.703
+      },
+      {
+        "checkId": "http.content-type-html",
+        "name": "Content-Type is text/html; charset=utf-8",
+        "group": "HTTP",
+        "scope": "page",
+        "applicableSites": 110,
+        "passingSites": 79,
+        "passRate": 0.718
+      },
+      {
+        "checkId": "html.lang-attribute",
+        "name": "Root <html> has lang attribute",
+        "group": "HTML metadata",
+        "scope": "page",
+        "applicableSites": 108,
+        "passingSites": 89,
+        "passRate": 0.824
+      },
+      {
+        "checkId": "robots-txt.allows-ai-bots",
+        "name": "robots.txt allows AI bots",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 94,
+        "passRate": 0.847
+      },
+      {
+        "checkId": "llms-txt.content-type",
+        "name": "llms.txt served as text/plain",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 61,
+        "passingSites": 53,
+        "passRate": 0.869
+      },
+      {
+        "checkId": "robots-txt.exists",
+        "name": "robots.txt is published",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 97,
+        "passRate": 0.874
+      },
+      {
+        "checkId": "http.redirect-chain",
+        "name": "Redirect chain is at most 1 hop",
+        "group": "HTTP",
+        "scope": "page",
+        "applicableSites": 111,
+        "passingSites": 101,
+        "passRate": 0.91
+      },
+      {
+        "checkId": "sitemap-xml.valid",
+        "name": "sitemap.xml parses as urlset or sitemapindex",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 78,
+        "passingSites": 71,
+        "passRate": 0.91
+      },
+      {
+        "checkId": "http.no-noindex-noai",
+        "name": "x-robots-tag does not block agents",
+        "group": "HTTP",
+        "scope": "page",
+        "applicableSites": 111,
+        "passingSites": 106,
+        "passRate": 0.955
+      },
+      {
+        "checkId": "robots-txt.allows-llms-txt",
+        "name": "robots.txt does not disallow llms.txt",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 111,
+        "passingSites": 106,
+        "passRate": 0.955
+      },
+      {
+        "checkId": "llms-txt.non-empty",
+        "name": "llms.txt is not empty",
+        "group": "Discoverability",
+        "scope": "site",
+        "applicableSites": 61,
+        "passingSites": 60,
+        "passRate": 0.984
+      }
+    ]
+  }
+}
