@@ -45,4 +45,6 @@ npm run docs     # regenerate every README from docs/
 
 All user-facing READMEs in this repo (this one, `packages/apps/cli/README.md`, `packages/core/README.md`, and the alias READMEs) are generated from `docs/templates/` + `docs/fragments/`. Edit the source files and run `npm run docs` — never hand-edit a generated README.
 
+<!-- include: fragments/_attribution.md -->
+
 <!-- include: fragments/_license.md -->
