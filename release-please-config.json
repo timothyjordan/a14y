@@ -5,6 +5,8 @@
   "include-v-in-tag": true,
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
+  "pull-request-header": "**Merge this PR when you're ready to ship the latest changes.** Each package's section below shows the new version and changelog entries computed from Conventional Commits since the last release. Merging this PR triggers `npm publish --provenance` for any bumped npm package and attaches a fresh `.zip` to the `extension-v<version>` GitHub Release for any extension bump — full flow in [RELEASING.md](https://github.com/timothyjordan/a14y/blob/main/RELEASING.md). The PR body refreshes automatically on every push to `main`, so it always reflects what would ship if you merged right now.",
+  "pull-request-footer": "_Need to republish a single package after an infra failure? Use the `Release` workflow's manual `workflow_dispatch` with the workspace path — see [RELEASING.md](https://github.com/timothyjordan/a14y/blob/main/RELEASING.md#escape-hatch-republish-one-package). Don't use that path for routine releases._",
   "packages": {
     "packages/apps/cli": {
       "package-name": "a14y",

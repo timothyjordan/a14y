@@ -213,3 +213,14 @@ Repeat for any other page you touched.
   user confirmation.
 - Pre-launch marketing/policy copy is flexible — feel free to suggest
   changes alongside structural work.
+
+## Releases
+
+Releases ship via [release-please](https://github.com/googleapis/release-please).
+The bot keeps an open PR (`chore: release main`) on `main` that bundles
+version bumps for every package whose Conventional Commits earn one.
+Merging that PR publishes any bumped npm packages with provenance,
+attaches a fresh Chrome-extension `.zip` to a GitHub Release, and
+triggers a docs-site rebuild. See [`RELEASING.md`](./RELEASING.md) for
+the full flow including CWS upload, escape hatches, and how to keep
+the public release-notes page in sync.
