@@ -11,7 +11,10 @@ const width = 720;
 const rowHeight = 28;
 const labelWidth = 220;
 const gutter = 8;
-const barAreaWidth = width - labelWidth - gutter - 80;
+// Right-side reserve has to fit "100% · 234/234" (14 chars at 11px mono ≈
+// 92px) plus the 6px gap before it. 110 leaves a safety margin.
+const valueReserve = 110;
+const barAreaWidth = width - labelWidth - gutter - valueReserve;
 const height = Math.max(80, rows.length * rowHeight + 16);
 
 const items = rows.map((r, i) => {
