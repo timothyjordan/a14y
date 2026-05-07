@@ -9,6 +9,12 @@ on:
       - '.github/workflows/deploy-docs.yml'
       - 'package.json'
       - 'package-lock.json'
+  # Redeploy after every successful Release run so the
+  # /chrome-extension/ page picks up newly-released asset metadata
+  # (the page calls the GitHub Releases API at build time).
+  workflow_run:
+    workflows: ['Release']
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +29,9 @@ concurrency:
 
 jobs:
   build:
+    # Skip workflow_run firings where the upstream Release failed —
+    # there's no new release metadata to pick up in that case.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

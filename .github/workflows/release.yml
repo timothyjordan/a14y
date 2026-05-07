@@ -137,6 +137,7 @@ jobs:
       # Trusted Publisher configured once on npmjs.com pointing at this
       # repo + this workflow filename.
       - name: Publish ${{ matrix.path }} to npm with provenance
+        if: matrix.path != 'packages/apps/extension'
         working-directory: ${{ matrix.path }}
         env:
           # Re-export so any prepack scripts (telemetry inject, README build)
@@ -144,3 +145,89 @@ jobs:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
           GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
         run: npm publish --provenance --access public
+
+  # Stop-gap distribution channel for the Chrome extension while the
+  # Chrome Web Store review is pending: when release-please cuts an
+  # extension release (or when this workflow is dispatched manually for
+  # `packages/apps/extension`), build the extension with telemetry secrets
+  # baked in, package the CWS-ready zip, and attach it to the
+  # `extension-v<version>` GitHub Release. The /chrome-extension/ page on
+  # a14y.dev links to that asset via the GitHub Releases API at docs
+  # build time.
+  publish-extension:
+    needs: release-please
+    if: |
+      always() && (
+        (github.event_name == 'workflow_dispatch' && inputs.path == 'packages/apps/extension') ||
+        (github.event_name == 'push' &&
+         needs.release-please.result == 'success' &&
+         needs.release-please.outputs.releases_created == 'true' &&
+         contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/apps/extension'))
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      # `gh release upload` writes back to the release release-please
+      # just created, so we need contents:write here even though the
+      # npm `publish` job above only needs read.
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      # Mirrors the dependency order in extension.yml — the extension
+      # imports @a14y/core and @a14y/telemetry by workspace link, so
+      # their dist/ must exist before tsc resolves the extension's
+      # imports.
+      - name: Build @a14y/core
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/core
+
+      - name: Build @a14y/telemetry
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/telemetry
+
+      - name: Build @a14y/extension
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm run build --workspace @a14y/extension
+
+      - name: Test @a14y/extension
+        env:
+          GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          GA4_MP_API_SECRET: ${{ secrets.GA4_MP_API_SECRET }}
+        run: npm test --workspace @a14y/extension --if-present
+
+      - name: Package extension
+        run: npm run package --workspace @a14y/extension
+
+      - name: Read extension version
+        id: ext_version
+        working-directory: packages/apps/extension
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      # `gh release upload --clobber` overwrites if a previous run
+      # uploaded the same asset name (e.g., a manual dispatch
+      # republish). The release tag itself was created by release-please
+      # in the upstream job — we never create the release here.
+      - name: Attach .zip to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload \
+            "extension-v${{ steps.ext_version.outputs.value }}" \
+            "packages/apps/extension/a14y-extension-${{ steps.ext_version.outputs.value }}.zip" \
+            --clobber

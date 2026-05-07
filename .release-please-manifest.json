@@ -3,5 +3,6 @@
   "packages/aliases/agentready": "0.4.2",
   "packages/aliases/agentreadability": "0.4.2",
   "packages/core": "0.3.2",
-  "packages/telemetry": "0.1.1"
+  "packages/telemetry": "0.1.1",
+  "packages/apps/extension": "0.5.0"
 }

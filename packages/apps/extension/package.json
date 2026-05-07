@@ -1,6 +1,6 @@
 {
   "name": "@a14y/extension",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-icons.mjs && node ../../../scripts/inject-telemetry-config.mjs extension",

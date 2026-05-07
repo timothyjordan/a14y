@@ -21,6 +21,13 @@ import {
 const HTML_DERIVED_PAGES: Record<string, string> = {
   '': 'index.html',
   spec: 'spec/index.html',
+  // The chrome-extension page has dynamic content (version, file
+  // size, asset URL fetched from the GitHub Releases API at build
+  // time), so authoring it as a markdown source would force us to
+  // either duplicate the install steps or drop the dynamic data
+  // from the mirror. Deriving the mirror from the rendered HTML
+  // keeps both representations in sync from a single source.
+  'chrome-extension': 'chrome-extension/index.html',
 };
 
 /**

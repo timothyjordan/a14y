@@ -45,6 +45,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '/spec/',
           '/glossary/',
           '/release-notes/',
+          '/chrome-extension/',
           '/privacy/',
           '/scorecards/',
         ];
@@ -78,6 +79,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
         llmsLines.push(`- [Landing](/index.md)`);
         llmsLines.push(`- [Glossary](/glossary.md)`);
         llmsLines.push(`- [Release notes](/release-notes.md)`);
+        llmsLines.push(`- [Chrome extension](/chrome-extension.md)`);
         llmsLines.push(`- [Scorecards index](/scorecards.md)`);
         llmsLines.push('');
         for (const card of scorecards) {
@@ -146,7 +148,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           'npm install -g a14y',
           '```',
           '',
-          'Or load the Chrome extension unpacked from the latest release.',
+          'Or download the Chrome extension from https://a14y.dev/chrome-extension/ and load it unpacked from the bundled .zip.',
           '',
           '## Usage',
           '',

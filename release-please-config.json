@@ -9,6 +9,7 @@
     "packages/apps/cli": {
       "package-name": "a14y",
       "component": "a14y",
+      "draft": true,
       "extra-files": [
         {
           "type": "generic",
@@ -18,19 +19,30 @@
     },
     "packages/aliases/agentready": {
       "package-name": "agentready",
-      "component": "agentready"
+      "component": "agentready",
+      "draft": true
     },
     "packages/aliases/agentreadability": {
       "package-name": "agentreadability",
-      "component": "agentreadability"
+      "component": "agentreadability",
+      "draft": true
     },
     "packages/core": {
       "package-name": "@a14y/core",
-      "component": "core"
+      "component": "core",
+      "draft": true
     },
     "packages/telemetry": {
       "package-name": "@a14y/telemetry",
-      "component": "telemetry"
+      "component": "telemetry",
+      "draft": true
+    },
+    "packages/apps/extension": {
+      "package-name": "@a14y/extension",
+      "component": "extension",
+      "extra-files": [
+        { "type": "json", "path": "manifest.json", "jsonpath": "$.version" }
+      ]
     }
   },
   "plugins": [

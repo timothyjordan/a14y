@@ -33,7 +33,7 @@ npm run build -w @a14y/extension
 canonical brand SVGs in `packages/apps/docs/public/brand/`. Never edit
 the PNGs directly — edit the SVG source and rerun the build.
 
-## Package for Chrome Web Store
+## Package the .zip locally
 
 ```
 npm run package -w @a14y/extension
@@ -42,7 +42,9 @@ npm run package -w @a14y/extension
 Produces `a14y-extension-<version>.zip` at the extension package root.
 Reuses the existing `dist/` by default — pass `--rebuild` (forwarded
 via `-- --rebuild`) to force a fresh vite build first. The zip is
-gitignored.
+gitignored. CI runs the same script when cutting a release; this
+target exists so you can preview the exact artifact locally before
+shipping it.
 
 ## Capture store screenshots
 
@@ -62,7 +64,23 @@ The script spins up a tiny localhost server on `dist/` (so Vite's
 absolute asset paths resolve) and drives system Chrome headless to
 render the real popup at each of the idle / running / done states.
 
-## Publish to Chrome Web Store
+## Cut a release
+
+The extension is versioned and shipped by
+[release-please](https://github.com/googleapis/release-please) the
+same way the npm packages are. Use Conventional Commits scoped to
+`extension` (e.g. `feat(extension): …`, `fix(extension): …`) so the
+release-please bot opens a release PR with the right semver bump.
+Merging that PR creates an `extension-v<version>` git tag and the
+`publish-extension` job in `.github/workflows/release.yml` builds the
+extension, runs `npm run package`, and attaches the
+`a14y-extension-<version>.zip` to the resulting GitHub Release.
+
+The /chrome-extension/ page on a14y.dev reads from that GitHub
+Release at docs build time, so the public download link updates
+automatically — no manual edits required.
+
+## Submit to Chrome Web Store
 
 Everything a human needs to fill the upload form lives in `store/`:
 
@@ -74,12 +92,15 @@ Everything a human needs to fill the upload form lives in `store/`:
 | 1280×800 screenshots (×3)   | `store/screenshots/*.png`         |
 | Privacy policy URL          | `https://a14y.dev/privacy/`       |
 | 128×128 store icon          | `src/icons/128.png`               |
-| Extension zip               | `a14y-extension-<version>.zip`    |
+| Extension zip               | from the GitHub Release           |
 
 Steps:
 
-1. `npm run build -w @a14y/extension && npm run package -w @a14y/extension`
-2. Go to the [Chrome Web Store developer dashboard](https://chrome.google.com/webstore/devconsole)
+1. Download `a14y-extension-<version>.zip` from the
+   [latest extension release](https://github.com/timothyjordan/a14y/releases?q=extension-v).
+   (Locally, `npm run package -w @a14y/extension` builds the same
+   artifact if you want to dry-run an upload.)
+2. Go to the [Chrome Web Store developer dashboard](https://chrome.google.com/webstore/devconsole).
 3. New item (first submit) or New package (subsequent). Upload the zip.
 4. Paste listing fields from `store/listing.md`, screenshots from
    `store/screenshots/`, 128×128 from `src/icons/128.png`.
@@ -88,8 +109,8 @@ Steps:
 6. Submit for review.
 
 Review takes anywhere from a few hours to a few days. On approval,
-update the "Coming soon" CTA on a14y.dev's landing `tool-card` to
-link the real listing.
+swap the manual-install copy on a14y.dev's `/chrome-extension/` page
+for the real CWS listing link.
 
 ## Project layout
 

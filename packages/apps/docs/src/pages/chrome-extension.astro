@@ -1,0 +1,393 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import {
+  getLatestExtensionRelease,
+  formatBytes,
+} from '~/lib/extension-release';
+
+// Resolve the latest extension release at build time. If the API call
+// fails (rate-limit, network blip, no extension release cut yet), the
+// page renders a fallback that points to the GitHub releases index so
+// the user is never stranded.
+const release = await getLatestExtensionRelease();
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repoUrl = 'https://github.com/timothyjordan/a14y';
+const releasesIndexUrl = `${repoUrl}/releases`;
+
+const releaseDate = release?.publishedAt
+  ? release.publishedAt.slice(0, 10)
+  : null;
+const sizeLabel = release?.zipAsset
+  ? formatBytes(release.zipAsset.size)
+  : null;
+
+const extensionsUrl = 'chrome://extensions/';
+
+// The popup specimen renders the actual idle-state shape of the
+// extension popup: brand row, URL pill, scorecard selector, two
+// equal-weight action buttons, footer. The audit results render in
+// a separate full-page report (results.html), not inside the popup —
+// don't fabricate an embedded score card here.
+const specimenUrl = 'https://a14y.dev/';
+const specimenScorecard = 'v0.2.0 (latest)';
+---
+
+<BaseLayout
+  title="a14y for Chrome · agent readability for the web"
+  description="The a14y Chrome extension scores any page you're on against the agent readability scorecard, right from the toolbar."
+  wide
+>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-text">
+      <div class="eyebrow">
+        {release ? (
+          <>
+            <span class="eyebrow-pin">v{release.version}</span>
+            <span>
+              released {releaseDate}{sizeLabel ? ` · ${sizeLabel}` : ''}
+            </span>
+          </>
+        ) : (
+          <>
+            <span class="eyebrow-pin">preview</span>
+            <span>first release pending</span>
+          </>
+        )}
+      </div>
+      <h1 id="hero-heading">a14y for Chrome</h1>
+      <p class="lead">
+        One click from the toolbar; the full report opens in a new
+        tab with pass/fail breakdowns and direct jumps to each
+        check's fix guidance.
+      </p>
+      <div class="cta-row">
+        {release?.zipAsset ? (
+          <a class="btn btn--primary" href={release.zipAsset.url} download>
+            Download .zip{sizeLabel ? ` · ${sizeLabel}` : ''}
+          </a>
+        ) : (
+          <a class="btn btn--primary" href={releasesIndexUrl} rel="noopener">
+            Browse releases on GitHub
+          </a>
+        )}
+        <a
+          class="btn btn--ghost"
+          href={release ? release.htmlUrl : `${repoUrl}/tree/main/packages/apps/extension`}
+          rel="noopener"
+        >
+          {release ? 'Release notes' : 'View source'} →
+        </a>
+      </div>
+    </div>
+
+    <aside class="ext-panel" aria-label="The extension popup — idle state">
+      <div class="ext-popup">
+        <header class="ext-popup-bar">
+          <span class="ext-popup-brand">
+            <img src={`${base}/brand/logo-mark.svg`} width="22" height="22" alt="" />
+            <span class="ext-popup-word">a14y</span>
+          </span>
+          <span class="ext-popup-toggle" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+        </header>
+        <div class="ext-popup-body">
+          <div class="ext-popup-field">
+            <span class="ext-popup-label">URL</span>
+            <code class="ext-popup-pill">{specimenUrl}</code>
+          </div>
+          <div class="ext-popup-field">
+            <span class="ext-popup-label">Scorecard</span>
+            <span class="ext-popup-select">{specimenScorecard}</span>
+          </div>
+          <div class="ext-popup-actions">
+            <span class="ext-popup-cta">Check this page</span>
+            <span class="ext-popup-cta">Scan whole site</span>
+          </div>
+        </div>
+        <footer class="ext-popup-foot">
+          <span>a14y.dev</span>
+          <span aria-hidden="true">·</span>
+          <span>Privacy</span>
+        </footer>
+      </div>
+    </aside>
+  </section>
+
+  <p class="cx-stopgap" role="note">
+    <strong>Stop-gap install.</strong> Chrome Web Store review is in
+    progress; the manual steps below are how you load it today.
+  </p>
+
+  <section class="cx-section">
+    <h2 id="install">Install</h2>
+    <ol class="cx-steps">
+      <li>
+        Find the <code>.zip</code> you just downloaded; if you skipped
+        the button above, grab one from
+        {' '}<a href={releasesIndexUrl} rel="noopener">the releases page</a>.
+      </li>
+      <li>
+        Unzip it; keep the resulting folder somewhere stable. Chrome
+        reads from this folder on every load — if you delete or move
+        it, the extension breaks.
+      </li>
+      <li>
+        Open
+        {' '}<code class="cx-copy-pill">
+          <span class="cx-copy-text">{extensionsUrl}</span>
+          <button
+            type="button"
+            class="cx-copy-btn"
+            data-copy={extensionsUrl}
+            aria-label={`Copy ${extensionsUrl} to clipboard`}
+          >Copy</button>
+        </code>
+        {' '}in a new tab.
+      </li>
+      <li>
+        Toggle <strong>Developer mode</strong> on; the switch sits in
+        the top-right of the page.
+      </li>
+      <li>
+        Click <strong>Load unpacked</strong> and select the unzipped
+        folder.
+      </li>
+      <li>
+        Pin a14y from the puzzle-piece icon so the popup is one click
+        away on any page.
+      </li>
+    </ol>
+  </section>
+
+  <section class="cx-section">
+    <h2 id="updating">Updating</h2>
+    <p>
+      To install a newer version, repeat the steps above with the
+      latest <code>.zip</code>; Chrome replaces the existing install
+      in place. Once the Chrome Web Store approves the extension this
+      page switches to a one-click install button and updates run
+      automatically.
+    </p>
+  </section>
+
+  <section class="cx-section">
+    <h2 id="privacy">Privacy</h2>
+    <p>
+      The extension scores pages locally and sends only anonymous
+      usage events (which check ran, pass/fail counts); never the URL
+      or page content you audited. See
+      {' '}<a href={`${base}/privacy/`}>privacy</a> for the full
+      breakdown and an on/off toggle.
+    </p>
+  </section>
+
+  <style>
+    /* Stop-gap notice — quiet, single-line, no side-stripe. */
+    .cx-stopgap {
+      margin: 28px 0 0;
+      padding: 12px 16px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md, 10px);
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+    .cx-stopgap strong {
+      color: var(--text);
+      font-weight: 600;
+      margin-right: 0.4em;
+    }
+
+    .cx-section {
+      margin-top: 40px;
+    }
+    .cx-section h2 {
+      margin-top: 0;
+    }
+
+    /* Numbered steps — readable spacing, no special chrome. */
+    .cx-steps {
+      padding-left: 22px;
+      max-width: 60ch;
+    }
+    .cx-steps li {
+      margin: 14px 0;
+      line-height: 1.65;
+    }
+    .cx-steps code {
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--surface-alt);
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+    }
+
+    /* Inline copyable code pill, mirroring the home-page copy-cli
+       interaction so the chrome://extensions/ instruction matches the
+       site's signature one-click pattern. */
+    .cx-copy-pill {
+      display: inline-flex;
+      align-items: stretch;
+      padding: 0;
+      gap: 0;
+      overflow: hidden;
+      vertical-align: baseline;
+    }
+    .cx-copy-pill .cx-copy-text {
+      padding: 1px 8px;
+    }
+    .cx-copy-pill .cx-copy-btn {
+      border: 0;
+      border-left: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-subtle);
+      padding: 1px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    .cx-copy-pill .cx-copy-btn:hover {
+      color: var(--text);
+      background: color-mix(in oklch, var(--surface-alt) 60%, var(--border) 40%);
+    }
+    .cx-copy-pill .cx-copy-btn:focus-visible {
+      outline: 2px solid var(--brand-ink);
+      outline-offset: 1px;
+    }
+
+    /* ─── Popup specimen ────────────────────────────────────────────
+       Static HTML render of the extension's actual popup (idle state):
+       brand row with theme toggle, URL pill, scorecard select, two
+       equal-weight action buttons, footer. Audit results render in a
+       separate full-page report (not in the popup), so this specimen
+       is faithful to what the user sees when they click the toolbar
+       icon. */
+    .ext-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg, 14px);
+      padding: 14px;
+      box-shadow: 0 12px 40px -18px oklch(0.18 0.025 268 / 0.45);
+      align-self: center;
+    }
+    .ext-popup {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .ext-popup-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ext-popup-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .ext-popup-word { letter-spacing: 0.01em; }
+    .ext-popup-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text-muted);
+    }
+    .ext-popup-body {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+    .ext-popup-field {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+    .ext-popup-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .ext-popup-pill {
+      display: block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ext-popup-select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font-size: 12.5px;
+      color: var(--text);
+    }
+    .ext-popup-select::after {
+      content: '⌃';
+      transform: rotate(180deg);
+      font-size: 12px;
+      color: var(--text-subtle);
+      margin-left: 8px;
+    }
+    .ext-popup-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .ext-popup-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 10px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .ext-popup-foot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+  </style>
+</BaseLayout>

@@ -2,11 +2,14 @@ name: Extension build
 
 # Builds the browser extension with GA4 telemetry secrets baked in and
 # uploads the CWS-ready zip as a workflow artifact. The extension is
-# private (not published to npm), so this workflow exists purely to
-# produce a downloadable build for the Chrome Web Store dashboard.
+# private (not published to npm), so this workflow exists purely as a
+# per-commit smoke build (and a way to grab a one-off zip off any
+# branch via workflow_dispatch).
 #
-# Push triggers a build on every commit to main so a fresh artifact is
-# always available; workflow_dispatch lets Tim grab one off any branch.
+# Versioned releases are NOT cut here — release-please drives the
+# `extension-v<version>` tags, and the `publish-extension` job in
+# release.yml attaches the production .zip to the resulting GitHub
+# Release. See packages/apps/extension/README.md for the release flow.
 #
 # Without GA4_MEASUREMENT_ID / GA4_MP_API_SECRET secrets, the build
 # still succeeds but the generated telemetry config exports nulls and
