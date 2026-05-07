@@ -143,24 +143,24 @@ function hostOf(url: string): string {
     text-align: center;
   }
   .score-excellent {
-    color: oklch(0.45 0.13 150);
-    border-color: color-mix(in oklch, oklch(0.45 0.13 150) 50%, var(--border));
-    background: color-mix(in oklch, oklch(0.45 0.13 150) 8%, var(--surface));
+    color: oklch(0.40 0.13 150);
+    border-color: oklch(0.55 0.13 150 / 0.7);
+    background: color-mix(in oklch, oklch(0.55 0.13 150) 22%, var(--surface));
   }
   .score-good {
-    color: oklch(0.5 0.10 200);
-    border-color: color-mix(in oklch, oklch(0.5 0.10 200) 50%, var(--border));
-    background: color-mix(in oklch, oklch(0.5 0.10 200) 8%, var(--surface));
+    color: oklch(0.42 0.10 200);
+    border-color: oklch(0.55 0.10 200 / 0.7);
+    background: color-mix(in oklch, oklch(0.55 0.10 200) 20%, var(--surface));
   }
   .score-fair {
-    color: oklch(0.55 0.13 75);
-    border-color: color-mix(in oklch, oklch(0.55 0.13 75) 50%, var(--border));
-    background: color-mix(in oklch, oklch(0.55 0.13 75) 8%, var(--surface));
+    color: oklch(0.50 0.13 75);
+    border-color: oklch(0.62 0.13 75 / 0.7);
+    background: color-mix(in oklch, oklch(0.62 0.13 75) 22%, var(--surface));
   }
   .score-poor {
-    color: oklch(0.50 0.18 25);
-    border-color: color-mix(in oklch, oklch(0.50 0.18 25) 50%, var(--border));
-    background: color-mix(in oklch, oklch(0.50 0.18 25) 8%, var(--surface));
+    color: oklch(0.45 0.18 25);
+    border-color: oklch(0.55 0.18 25 / 0.7);
+    background: color-mix(in oklch, oklch(0.55 0.18 25) 20%, var(--surface));
   }
   :root[data-theme='dark'] .score-excellent { color: oklch(0.85 0.13 150); }
   :root[data-theme='dark'] .score-good { color: oklch(0.85 0.10 200); }
@@ -201,8 +201,32 @@ function hostOf(url: string): string {
   }
   .lb-row[hidden] { display: none; }
 
+  /* Below 720px: collapse the table into a card layout per row so the
+     score column never overflows offscreen. The native <table>/<tr>/<td>
+     stays in the DOM (preserves a11y semantics + keeps the existing
+     filter script working) but each cell paints as a flex item. */
   @media (max-width: 720px) {
-    .col-fail { display: none; }
-    .col-cat { width: auto; }
+    .leaderboard, .leaderboard tbody, .leaderboard tr, .leaderboard td { display: block; }
+    .leaderboard thead { display: none; }
+    .lb-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas:
+        "rank name  score"
+        "rank cat   score"
+        "fail fail  fail";
+      gap: 6px 12px;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .leaderboard td { padding: 0; border: none; }
+    .col-rank { grid-area: rank; align-self: center; }
+    .col-name { grid-area: name; min-width: 0; }
+    .col-name a { gap: 1px; }
+    .col-cat  { grid-area: cat; width: auto; }
+    .col-score { grid-area: score; align-self: center; text-align: right; width: auto; }
+    .col-fail  { grid-area: fail; }
+    .col-fail .lb-fails { gap: 4px; }
+    .lb-fail-id { font-size: 10px; padding: 2px 5px; }
   }
 </style>

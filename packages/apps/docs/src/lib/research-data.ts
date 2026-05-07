@@ -120,3 +120,33 @@ export function scoreBand(score: number): 'excellent' | 'good' | 'fair' | 'poor'
   if (score >= 50) return 'fair';
   return 'poor';
 }
+
+/** Share of catalog sites where every site-level llms.txt check passed. */
+export function getLlmsTxtAdoption(): { passing: number; total: number; pct: number } {
+  const llmsExists = data.stats.checkPassRates.find((c) => c.checkId === 'llms-txt.exists');
+  if (!llmsExists) return { passing: 0, total: 0, pct: 0 };
+  const pct =
+    llmsExists.applicableSites === 0
+      ? 0
+      : Math.round((llmsExists.passingSites / llmsExists.applicableSites) * 100);
+  return {
+    passing: llmsExists.passingSites,
+    total: llmsExists.applicableSites,
+    pct,
+  };
+}
+
+/** The check id that appears most often in any site's topFailures list across the catalog. */
+export function getMostCommonTopFailure(): { checkId: string; siteCount: number } | null {
+  const counts = new Map<string, number>();
+  for (const site of data.sites) {
+    for (const id of site.topFailures) {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    }
+  }
+  let best: { checkId: string; siteCount: number } | null = null;
+  for (const [checkId, n] of counts) {
+    if (!best || n > best.siteCount) best = { checkId, siteCount: n };
+  }
+  return best;
+}
