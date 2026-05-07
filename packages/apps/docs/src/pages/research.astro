@@ -1,0 +1,621 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import LeaderboardTable from '~/components/research/LeaderboardTable.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import CategoryBars from '~/components/research/CategoryBars.astro';
+import CheckPassRates from '~/components/research/CheckPassRates.astro';
+import {
+  CATEGORY_LABELS,
+  getCategoryStats,
+  getHardestChecks,
+  getLeaderboard,
+  getLlmsTxtAdoption,
+  getMostCommonTopFailure,
+  getResearchData,
+  getScoreHistogram,
+  type SiteCategory,
+} from '~/lib/research-data';
+
+const research = getResearchData();
+const entries = getLeaderboard();
+const hist = getScoreHistogram();
+const catStats = getCategoryStats();
+const hardestChecks = getHardestChecks();
+const llms = getLlmsTxtAdoption();
+const mostCommonFailure = getMostCommonTopFailure();
+
+const categoriesPresent: SiteCategory[] = Array.from(
+  new Set(entries.map((e) => e.category)),
+).sort();
+
+const generated = new Date(research.generatedAt);
+const generatedLabel = isNaN(generated.getTime())
+  ? '—'
+  : generated.toISOString().slice(0, 10);
+
+const meanScore = entries.length
+  ? Math.round((entries.reduce((s, e) => s + e.score, 0) / entries.length) * 10) / 10
+  : 0;
+---
+
+<BaseLayout
+  title="Research: leaderboard of how AI agents see the web"
+  description="A scored leaderboard of major websites measured for agent readability with the open a14y scorecard. Find which docs platforms, SaaS products, and consumer sites AI agents can actually parse."
+  wide={true}
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">research</span>
+        <span>scorecard v{research.scorecardVersion} · updated {generatedLabel}</span>
+      </div>
+      <h1>How well do agents see the web?</h1>
+      <p class="lead research-lead">
+        Most of the web was built for human eyes. AI agents (coding
+        assistants, research bots, autonomous tools) have to fetch the same
+        pages and pull meaning out of layout-driven HTML, JavaScript-rendered
+        widgets, cookie walls, and broken markdown. The
+        <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y
+        scorecard</a> turns that effort into a number: how many of {38}
+        machine-readability checks a site passes, from <code>llms.txt</code>
+        through <code>AGENTS.md</code> down to canonical headers and
+        breadcrumb JSON-LD. The leaderboard below ranks a cross-section of
+        sites by that score; the insights underneath show how we're evolving
+        to a more agent-readable web.
+      </p>
+      <nav class="page-toc" aria-label="On this page">
+        <span class="page-toc-label">Jump to</span>
+        <ul>
+          <li><a href="#leaderboard">leaderboard</a></li>
+          <li><a href="#score-distribution">score distribution</a></li>
+          <li><a href="#mean-score-by-category">by category</a></li>
+          <li><a href="#hardest-checks">hardest checks</a></li>
+          <li><a href="#how-this-leaderboard-is-built">methodology</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="research-stats">
+    <div class="stat">
+      <span class="stat-value">{entries.length}</span>
+      <span class="stat-label">sites scanned</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{meanScore}</span>
+      <span class="stat-label">mean score</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{llms.pct}%</span>
+      <span class="stat-label">ship llms.txt</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value stat-value--mono">
+        {mostCommonFailure ? mostCommonFailure.checkId : '—'}
+      </span>
+      <span class="stat-label">most common top failure</span>
+    </div>
+  </section>
+
+  <section class="research-section" id="leaderboard">
+    <header class="section-header">
+      <h2>Leaderboard</h2>
+      <div class="filter-bar" data-research-filter>
+        <label class="search">
+          <span class="sr-only">Search by name</span>
+          <input
+            type="search"
+            placeholder="Filter by name…"
+            data-filter-name
+            autocomplete="off"
+          />
+        </label>
+        <div class="cat-toggles" role="group" aria-label="Category filter">
+          {categoriesPresent.map((cat) => (
+            <label class="cat-toggle">
+              <input type="checkbox" value={cat} data-filter-cat checked />
+              <span>{CATEGORY_LABELS[cat]}</span>
+            </label>
+          ))}
+        </div>
+        <button type="button" class="filter-reset" data-filter-reset hidden>
+          Reset filters
+        </button>
+      </div>
+    </header>
+    <p class="visible-count" data-visible-count>
+      Showing {Math.min(entries.length, 50)} of {entries.length} sites.
+    </p>
+    <p class="filter-empty" data-filter-empty hidden role="status">
+      No sites match your filters. <button type="button" data-filter-reset-link>Reset filters</button>.
+    </p>
+    <LeaderboardTable entries={entries} scorecardVersion={research.scorecardVersion} />
+    <nav class="pager" aria-label="Leaderboard pagination" data-pager>
+      <button type="button" class="pager-btn" data-pager-prev disabled aria-label="Previous page">←</button>
+      <span class="pager-status" data-pager-status>Page 1</span>
+      <button type="button" class="pager-btn" data-pager-next aria-label="Next page">→</button>
+      <button type="button" class="pager-toggle" data-pager-show-all aria-pressed="false">
+        Show all
+      </button>
+    </nav>
+  </section>
+
+  <section class="research-section" id="score-distribution">
+    <h2>Score distribution</h2>
+    <p class="section-lead">
+      How are the {entries.length} scores distributed across the catalog? Each
+      bar counts the sites whose overall score falls in that 10-point bucket.
+      Most sites cluster between 40 and 70: the long climb to a high score
+      starts only once a site ships <code>llms.txt</code>, an
+      <code>AGENTS.md</code>, and a markdown sitemap, the three site-level
+      checks that a single template change can flip from failing to passing.
+    </p>
+    <ScoreHistogram buckets={hist} />
+  </section>
+
+  <section class="research-section" id="mean-score-by-category">
+    <h2>Mean score by category</h2>
+    <p class="section-lead">
+      Docs platforms tend to score the highest because their authors think
+      hardest about machine consumers; many already ship <code>llms.txt</code>
+      and an <code>AGENTS.md</code>. Consumer sites like news, retail, and
+      reference sit at the bottom: they were built for human eyes, hide
+      content behind cookie banners and JavaScript, and rarely surface the
+      machine-readable signals an agent needs to navigate them.
+    </p>
+    <CategoryBars stats={catStats} />
+  </section>
+
+  <section class="research-section" id="hardest-checks">
+    <h2>Hardest checks to pass</h2>
+    <p class="section-lead">
+      For each check id, the percentage of sites where the check fully passed
+      (every occurrence across every page returned <code>pass</code>). Sorted
+      hardest first; filtered to checks applicable to ≥5 sites. The pile-up
+      of zeroes and single-digit pass rates near the top is the most
+      actionable list on this page: they're the cheapest scorecard wins
+      every site is leaving on the table.
+    </p>
+    <CheckPassRates rows={hardestChecks} scorecardVersion={research.scorecardVersion} />
+  </section>
+
+  <section class="research-section research-method" id="how-this-leaderboard-is-built">
+    <h2>How this leaderboard is built</h2>
+
+    <h3>Scoring</h3>
+    <p>
+      Every site is scanned with the open-source
+      <a href="https://www.npmjs.com/package/a14y" rel="noopener">a14y CLI</a>
+      pinned to scorecard <code>v{research.scorecardVersion}</code>. Each site
+      gets one site-mode crawl (≤50 pages, polite-delayed) or a single
+      page-mode audit for very large consumer sites where crawling every page
+      would be wasteful or hostile. The score is the simple ratio
+      <code>passed / applicable</code> across every check on every page,
+      the same number the CLI prints when you run it locally, so a site
+      owner's local result matches the leaderboard exactly.
+    </p>
+
+    <h3>Catalog</h3>
+    <p>
+      The site list is hand-curated with deliberate ratios: at least half are
+      technical documentation platforms (React, Stripe, AWS, etc.); at least a
+      quarter are non-developer SaaS dashboards and help centers (Notion,
+      Slack, Atlassian help); the rest are major consumer sites
+      (Wikipedia, news, retail) audited in page mode so a single scan stays
+      bounded. Want yours included?
+      <a href="https://github.com/timothyjordan/a14y/issues/new?title=Add%20site%20to%20research%20catalog">Open an issue</a>.
+    </p>
+
+    <h3>Versioning</h3>
+    <p>
+      Scores from different scorecard versions are not directly comparable.
+      When we ship a new scorecard version, every site is re-scanned against
+      it before this page updates, so the leaderboard you're reading today
+      compares apples to apples even as the scorecard itself evolves over
+      time.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  /* The hero .lead is global-styled at max-width: 36ch (designed for a
+     short tagline). The /research/ lead is doing more work — it's the
+     page's whole editorial frame — so widen it and let the leading
+     breathe. */
+  .hero-text .lead.research-lead {
+    max-width: 64ch;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  /* TOC reads as a "what's next" tail to the lead paragraph rather than
+     a bordered separator strip. No background, no rules — just an inline
+     "Jump to" label followed by the section anchors at the same width as
+     the lead. Sits flush under the paragraph, not above the next section. */
+  .page-toc {
+    display: flex;
+    align-items: baseline;
+    gap: 6px 14px;
+    flex-wrap: wrap;
+    margin: -16px 0 0;
+    max-width: 64ch;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .page-toc-label {
+    color: var(--text-subtle);
+  }
+  .page-toc-label::after {
+    content: ':';
+  }
+  .page-toc ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .page-toc li {
+    display: inline;
+  }
+  .page-toc li + li::before {
+    content: ' · ';
+    color: var(--text-subtle);
+    margin: 0 2px;
+  }
+  .page-toc a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--text-muted) 40%, transparent);
+    text-underline-offset: 3px;
+  }
+  .page-toc a:hover {
+    color: var(--text);
+    text-decoration-color: currentColor;
+  }
+  .research-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 24px 0 32px;
+  }
+  .stat {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+  }
+  .stat-value--mono {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+  }
+
+  .research-section {
+    margin-top: 56px;
+    /* Anchored TOC jumps land below the sticky site header. 16px is the
+       breathing room above the heading once the header is cleared. */
+    scroll-margin-top: calc(var(--site-header-height) + 16px);
+  }
+  .research-section h2 {
+    margin-bottom: 8px;
+  }
+  .research-method h3 {
+    margin-top: 24px;
+    margin-bottom: 6px;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .research-method h3:first-of-type {
+    margin-top: 4px;
+  }
+  .section-lead {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: var(--text-muted);
+    max-width: 68ch;
+  }
+  .section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .section-header h2 { margin: 0; }
+  .filter-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text);
+    min-width: 18ch;
+  }
+  .search input:focus {
+    outline: 2px solid color-mix(in oklch, var(--brand-ink) 30%, transparent);
+    border-color: var(--border-strong);
+  }
+  .cat-toggles { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .cat-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface);
+    cursor: pointer;
+    user-select: none;
+  }
+  .cat-toggle:hover { border-color: var(--border-strong); }
+  .cat-toggle input { accent-color: var(--brand-ink); }
+  .filter-reset {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  .filter-reset:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .visible-count {
+    margin: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+  .filter-empty {
+    margin: 8px 0 16px;
+    padding: 18px 20px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  /* `display: flex` above wins over the implicit [hidden] { display: none }.
+     Restate it explicitly so the pager actually disappears when the script
+     toggles the attribute (e.g. when a filter narrows the result set to 0
+     or to <= one page worth of rows). */
+  .pager[hidden] { display: none; }
+  .pager-btn,
+  .pager-toggle {
+    appearance: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .pager-btn { min-width: 36px; }
+  .pager-btn:hover:not(:disabled),
+  .pager-toggle:hover {
+    border-color: var(--border-strong);
+  }
+  .pager-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pager-toggle[aria-pressed='true'] {
+    background: var(--surface-alt);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .pager-status {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    min-width: 8ch;
+    text-align: center;
+  }
+  .pager-toggle {
+    margin-left: auto;
+  }
+  .filter-empty button {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--text);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .research-method p {
+    color: var(--text-muted);
+    max-width: 68ch;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script is:inline>
+  // Vanilla JS: filter + paginate the leaderboard. No framework runtime;
+  // the full table is rendered statically and we toggle row visibility
+  // in two passes: filter (name + category) decides which rows MATCH,
+  // then pagination decides which of those matching rows are SHOWN.
+  // The two layers compose; filter changes reset the pager to page 1.
+  (function () {
+    var PAGE_SIZE = 50;
+    var bar = document.querySelector('[data-research-filter]');
+    if (!bar) return;
+    var nameInput = bar.querySelector('[data-filter-name]');
+    var catBoxes = bar.querySelectorAll('[data-filter-cat]');
+    var resetBtn = bar.querySelector('[data-filter-reset]');
+    var emptyMsg = document.querySelector('[data-filter-empty]');
+    var emptyResetLink = emptyMsg && emptyMsg.querySelector('[data-filter-reset-link]');
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+    var counter = document.querySelector('[data-visible-count]');
+    var totalRows = rows.length;
+
+    var pager = document.querySelector('[data-pager]');
+    var prevBtn = pager && pager.querySelector('[data-pager-prev]');
+    var nextBtn = pager && pager.querySelector('[data-pager-next]');
+    var pagerStatus = pager && pager.querySelector('[data-pager-status]');
+    var showAllBtn = pager && pager.querySelector('[data-pager-show-all]');
+
+    var currentPage = 1;
+    var showAll = false;
+
+    function defaultsActive() {
+      if (nameInput && nameInput.value) return false;
+      for (var i = 0; i < catBoxes.length; i++) if (!catBoxes[i].checked) return false;
+      return true;
+    }
+
+    function apply() {
+      var q = (nameInput && nameInput.value || '').trim().toLowerCase();
+      var allowed = Object.create(null);
+      catBoxes.forEach(function (cb) { if (cb.checked) allowed[cb.value] = true; });
+
+      // Pass 1: figure out which rows pass the filter.
+      var matching = [];
+      rows.forEach(function (row) {
+        var name = row.getAttribute('data-name') || '';
+        var cat = row.getAttribute('data-category') || '';
+        var ok = (q === '' || name.indexOf(q) >= 0) && allowed[cat];
+        if (ok) matching.push(row);
+      });
+
+      var totalPages = showAll || matching.length === 0
+        ? 1
+        : Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      // Pass 2: only show the current page's slice. Hide everything else.
+      var sliceStart = showAll ? 0 : (currentPage - 1) * PAGE_SIZE;
+      var sliceEnd = showAll ? matching.length : sliceStart + PAGE_SIZE;
+      rows.forEach(function (row) { row.setAttribute('hidden', 'hidden'); });
+      for (var i = sliceStart; i < sliceEnd && i < matching.length; i++) {
+        matching[i].removeAttribute('hidden');
+      }
+
+      var shownCount = Math.min(matching.length - sliceStart, sliceEnd - sliceStart);
+      if (shownCount < 0) shownCount = 0;
+
+      if (counter) {
+        if (matching.length === 0) {
+          counter.textContent = 'Showing 0 of ' + totalRows + ' sites.';
+        } else if (showAll || matching.length <= PAGE_SIZE) {
+          counter.textContent = 'Showing ' + matching.length + ' of ' + totalRows + ' sites.';
+        } else {
+          counter.textContent =
+            'Showing ' + (sliceStart + 1) + '–' + (sliceStart + shownCount) +
+            ' of ' + matching.length +
+            (matching.length === totalRows ? '' : ' filtered') + ' sites.';
+        }
+      }
+      if (emptyMsg) {
+        if (matching.length === 0) emptyMsg.removeAttribute('hidden');
+        else emptyMsg.setAttribute('hidden', 'hidden');
+      }
+      if (resetBtn) {
+        if (defaultsActive()) resetBtn.setAttribute('hidden', 'hidden');
+        else resetBtn.removeAttribute('hidden');
+      }
+
+      if (pager) {
+        var hidePager = matching.length <= PAGE_SIZE;
+        if (hidePager) pager.setAttribute('hidden', 'hidden');
+        else pager.removeAttribute('hidden');
+        if (prevBtn) prevBtn.disabled = showAll || currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = showAll || currentPage >= totalPages;
+        if (pagerStatus) {
+          pagerStatus.textContent = showAll
+            ? 'All ' + matching.length
+            : 'Page ' + currentPage + ' of ' + totalPages;
+        }
+        if (showAllBtn) {
+          showAllBtn.setAttribute('aria-pressed', showAll ? 'true' : 'false');
+          showAllBtn.textContent = showAll ? 'Paginate' : 'Show all';
+        }
+      }
+    }
+
+    function reset() {
+      if (nameInput) nameInput.value = '';
+      catBoxes.forEach(function (cb) { cb.checked = true; });
+      currentPage = 1;
+      apply();
+      if (nameInput) nameInput.focus();
+    }
+
+    function onFilterChange() { currentPage = 1; apply(); }
+
+    if (nameInput) nameInput.addEventListener('input', onFilterChange);
+    catBoxes.forEach(function (cb) { cb.addEventListener('change', onFilterChange); });
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
+    function changePage(delta) {
+      currentPage += delta;
+      apply();
+      // Bring the leaderboard heading back into view so the user has
+      // orientation after a page flip; otherwise next/prev leaves them
+      // stranded at the bottom of the previous page's last row.
+      var anchor = document.getElementById('leaderboard');
+      if (anchor && typeof anchor.scrollIntoView === 'function') {
+        anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { changePage(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { changePage(1); });
+    if (showAllBtn) showAllBtn.addEventListener('click', function () { showAll = !showAll; apply(); });
+
+    apply();
+  })();
+</script>

@@ -1,0 +1,112 @@
+---
+import { CATEGORY_LABELS, type CategoryStat } from '~/lib/research-data';
+
+interface Props {
+  stats: CategoryStat[];
+}
+
+const { stats } = Astro.props;
+
+const width = 720;
+const rowHeight = 36;
+const labelWidth = 140;
+const gutter = 12;
+const barAreaWidth = width - labelWidth - gutter - 60; // 60 reserved for the trailing label
+const height = Math.max(80, stats.length * rowHeight + 16);
+
+const rows = stats.map((s, i) => {
+  const y = 8 + i * rowHeight;
+  const w = (s.meanScore / 100) * barAreaWidth;
+  return { ...s, y, w };
+});
+---
+
+{stats.length === 0 ? (
+  <p class="chart-empty">No data yet.</p>
+) : (
+  <figure class="chart">
+    <svg
+      role="img"
+      aria-labelledby="cat-title cat-desc"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <title id="cat-title">Mean score by category</title>
+      <desc id="cat-desc">
+        Average overall score per site category, sorted from highest mean to lowest.
+      </desc>
+      {rows.map((r) => (
+        <g class="cat-row">
+          <text
+            x={labelWidth - 8}
+            y={r.y + rowHeight / 2 + 4}
+            text-anchor="end"
+            class="cat-label"
+          >{CATEGORY_LABELS[r.category]}</text>
+          <rect
+            x={labelWidth + gutter}
+            y={r.y + 8}
+            width={barAreaWidth}
+            height={rowHeight - 16}
+            rx="4"
+            class="cat-track"
+          />
+          <rect
+            x={labelWidth + gutter}
+            y={r.y + 8}
+            width={Math.max(r.w, 1)}
+            height={rowHeight - 16}
+            rx="4"
+            class="cat-bar"
+          />
+          <text
+            x={labelWidth + gutter + r.w + 6}
+            y={r.y + rowHeight / 2 + 4}
+            class="cat-value"
+          >{r.meanScore} <tspan class="cat-n">· n={r.n}</tspan></text>
+        </g>
+      ))}
+    </svg>
+  </figure>
+)}
+
+<style>
+  .chart-empty {
+    padding: 24px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .cat-track {
+    fill: var(--surface-alt);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  .cat-bar {
+    fill: color-mix(in oklch, var(--brand-ink) 30%, var(--surface));
+    stroke: color-mix(in oklch, var(--brand-ink) 60%, var(--border));
+    stroke-width: 1;
+  }
+  :root[data-theme='dark'] .cat-bar {
+    fill: color-mix(in oklch, var(--brand-cyan) 36%, var(--surface));
+    stroke: color-mix(in oklch, var(--brand-cyan) 70%, var(--border));
+  }
+  .cat-label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--text);
+  }
+  .cat-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--text);
+  }
+  .cat-n {
+    font-weight: 400;
+    fill: var(--text-subtle);
+  }
+</style>

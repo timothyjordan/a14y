@@ -1,0 +1,106 @@
+---
+import type { ScoreHistogramBucket } from '~/lib/research-data';
+
+interface Props {
+  buckets: ScoreHistogramBucket[];
+  /** SVG width for the chart area in user units. */
+  width?: number;
+  /** SVG height for the chart area in user units. */
+  height?: number;
+}
+
+const { buckets, width = 720, height = 220 } = Astro.props;
+
+// Top padding has to clear the count label that sits *above* the tallest
+// bar (~14px tall at the rendered font size). 22px gives the label its full
+// height plus the 4px offset used in the <text> y coordinate below.
+const padding = { top: 22, right: 8, bottom: 28, left: 28 };
+const innerWidth = width - padding.left - padding.right;
+const innerHeight = height - padding.top - padding.bottom;
+const maxN = Math.max(1, ...buckets.map((b) => b.n));
+const barGap = 6;
+const barWidth = (innerWidth - barGap * (buckets.length - 1)) / Math.max(1, buckets.length);
+
+const bars = buckets.map((b, i) => {
+  const x = padding.left + i * (barWidth + barGap);
+  const h = (b.n / maxN) * innerHeight;
+  const y = padding.top + (innerHeight - h);
+  return { x, y, h, w: barWidth, label: b.label, n: b.n };
+});
+
+const totalSites = buckets.reduce((sum, b) => sum + b.n, 0);
+---
+
+{totalSites === 0 ? (
+  <p class="chart-empty">No data yet.</p>
+) : (
+  <figure class="chart">
+    <svg
+      role="img"
+      aria-labelledby="hist-title hist-desc"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <title id="hist-title">Score distribution</title>
+      <desc id="hist-desc">
+        Number of sites in each 10-point score bucket from 0–9 to 90–100.
+      </desc>
+      {bars.map((bar) => (
+        <g>
+          <rect
+            x={bar.x}
+            y={bar.y}
+            width={bar.w}
+            height={Math.max(bar.h, 1)}
+            rx="3"
+            class="hist-bar"
+          />
+          {bar.n > 0 && (
+            <text
+              x={bar.x + bar.w / 2}
+              y={bar.y - 4}
+              text-anchor="middle"
+              class="hist-count"
+            >{bar.n}</text>
+          )}
+          <text
+            x={bar.x + bar.w / 2}
+            y={height - 6}
+            text-anchor="middle"
+            class="hist-label"
+          >{bar.label}</text>
+        </g>
+      ))}
+    </svg>
+  </figure>
+)}
+
+<style>
+  .chart-empty {
+    padding: 24px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .hist-bar {
+    fill: color-mix(in oklch, var(--brand-ink) 22%, var(--surface));
+    stroke: color-mix(in oklch, var(--brand-ink) 50%, var(--border));
+    stroke-width: 1;
+  }
+  :root[data-theme='dark'] .hist-bar {
+    fill: color-mix(in oklch, var(--brand-cyan) 28%, var(--surface));
+    stroke: color-mix(in oklch, var(--brand-cyan) 60%, var(--border));
+  }
+  .hist-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+  .hist-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-subtle);
+  }
+</style>
