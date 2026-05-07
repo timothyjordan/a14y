@@ -59,26 +59,22 @@ const meanScore = entries.length
         scorecard</a> turns that effort into a number: how many of {38}
         machine-readability checks a site passes, from <code>llms.txt</code>
         through <code>AGENTS.md</code> down to canonical headers and
-        breadcrumb JSON-LD. The leaderboard below ranks {entries.length}
-        sites by that score; the insights underneath show which checks are
-        hardest to pass across the web. The biggest adoption gap isn't a
-        fancy semantic feature; it's the three flat files
-        (<code>llms.txt</code>, <code>AGENTS.md</code>, a markdown sitemap)
-        that take an hour to ship and that most sites still don't.
+        breadcrumb JSON-LD. The leaderboard below ranks a cross-section of
+        sites by that score; the insights underneath show how we're evolving
+        to a more agent-readable web.
       </p>
+      <nav class="page-toc" aria-label="On this page">
+        <span class="page-toc-label">Jump to</span>
+        <ul>
+          <li><a href="#leaderboard">leaderboard</a></li>
+          <li><a href="#score-distribution">score distribution</a></li>
+          <li><a href="#mean-score-by-category">by category</a></li>
+          <li><a href="#hardest-checks">hardest checks</a></li>
+          <li><a href="#how-this-leaderboard-is-built">methodology</a></li>
+        </ul>
+      </nav>
     </div>
   </section>
-
-  <nav class="page-toc" aria-label="On this page">
-    <span class="page-toc-label">On this page</span>
-    <ul>
-      <li><a href="#leaderboard">Leaderboard</a></li>
-      <li><a href="#score-distribution">Score distribution</a></li>
-      <li><a href="#mean-score-by-category">By category</a></li>
-      <li><a href="#hardest-checks">Hardest checks</a></li>
-      <li><a href="#how-this-leaderboard-is-built">Methodology</a></li>
-    </ul>
-  </nav>
 
   <section class="research-stats">
     <div class="stat">
@@ -232,42 +228,50 @@ const meanScore = entries.length
     line-height: 1.6;
   }
 
+  /* TOC reads as a "what's next" tail to the lead paragraph rather than
+     a bordered separator strip. No background, no rules — just an inline
+     "Jump to" label followed by the section anchors at the same width as
+     the lead. Sits flush under the paragraph, not above the next section. */
   .page-toc {
     display: flex;
     align-items: baseline;
-    gap: 18px;
+    gap: 6px 14px;
     flex-wrap: wrap;
-    padding: 14px 18px;
-    margin-bottom: 32px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    margin: -16px 0 0;
+    max-width: 64ch;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
   }
   .page-toc-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     color: var(--text-subtle);
   }
+  .page-toc-label::after {
+    content: ':';
+  }
   .page-toc ul {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
+    display: inline;
     margin: 0;
     padding: 0;
     list-style: none;
   }
+  .page-toc li {
+    display: inline;
+  }
+  .page-toc li + li::before {
+    content: ' · ';
+    color: var(--text-subtle);
+    margin: 0 2px;
+  }
   .page-toc a {
-    font-family: var(--font-mono);
-    font-size: 12px;
     color: var(--text-muted);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--text-muted) 40%, transparent);
+    text-underline-offset: 3px;
   }
   .page-toc a:hover {
     color: var(--text);
-    border-bottom-color: var(--border-strong);
+    text-decoration-color: currentColor;
   }
   .research-stats {
     display: grid;
