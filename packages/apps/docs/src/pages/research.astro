@@ -280,7 +280,7 @@ const meanScore = entries.length
   .research-summary p {
     margin: 0;
     color: var(--text-muted);
-    max-width: 78ch;
+    max-width: 68ch;
     font-size: 15px;
     line-height: 1.65;
   }
@@ -342,7 +342,7 @@ const meanScore = entries.length
     margin-top: 0;
     margin-bottom: 18px;
     color: var(--text-muted);
-    max-width: 72ch;
+    max-width: 68ch;
   }
   .section-header {
     display: flex;
@@ -426,6 +426,11 @@ const meanScore = entries.length
     margin-top: 18px;
     flex-wrap: wrap;
   }
+  /* `display: flex` above wins over the implicit [hidden] { display: none }.
+     Restate it explicitly so the pager actually disappears when the script
+     toggles the attribute (e.g. when a filter narrows the result set to 0
+     or to <= one page worth of rows). */
+  .pager[hidden] { display: none; }
   .pager-btn,
   .pager-toggle {
     appearance: none;
@@ -475,7 +480,7 @@ const meanScore = entries.length
   }
   .research-method p {
     color: var(--text-muted);
-    max-width: 72ch;
+    max-width: 68ch;
   }
   .sr-only {
     position: absolute;
@@ -608,8 +613,19 @@ const meanScore = entries.length
     catBoxes.forEach(function (cb) { cb.addEventListener('change', onFilterChange); });
     if (resetBtn) resetBtn.addEventListener('click', reset);
     if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
-    if (prevBtn) prevBtn.addEventListener('click', function () { currentPage--; apply(); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { currentPage++; apply(); });
+    function changePage(delta) {
+      currentPage += delta;
+      apply();
+      // Bring the leaderboard heading back into view so the user has
+      // orientation after a page flip; otherwise next/prev leaves them
+      // stranded at the bottom of the previous page's last row.
+      var anchor = document.getElementById('leaderboard');
+      if (anchor && typeof anchor.scrollIntoView === 'function') {
+        anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { changePage(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { changePage(1); });
     if (showAllBtn) showAllBtn.addEventListener('click', function () { showAll = !showAll; apply(); });
 
     apply();

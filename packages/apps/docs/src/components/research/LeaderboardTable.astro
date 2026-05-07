@@ -205,11 +205,14 @@ function hostOf(url: string): string {
   /* Below 720px: collapse the table into a card layout per row so the
      score column never overflows offscreen. The native <table>/<tr>/<td>
      stays in the DOM (preserves a11y semantics + keeps the existing
-     filter script working) but each cell paints as a flex item. */
+     filter script working) but each cell paints as a flex item. The
+     grid rule on tr.lb-row needs higher specificity than the
+     .leaderboard tr block-display reset above it, otherwise the cards
+     never engage. */
   @media (max-width: 720px) {
-    .leaderboard, .leaderboard tbody, .leaderboard tr, .leaderboard td { display: block; }
+    .leaderboard, .leaderboard tbody, .leaderboard td { display: block; }
     .leaderboard thead { display: none; }
-    .lb-row {
+    .leaderboard tr.lb-row {
       display: grid;
       grid-template-columns: auto 1fr auto;
       grid-template-areas:
