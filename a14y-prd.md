@@ -164,7 +164,6 @@ packages/
   apps/
     cli/                 Node CLI (`a14y`)
     extension/           Chrome MV3 extension (@a14y/extension)
-npm-placeholders/        Reserved npm package names
 ```
 
 ## 11. Roadmap
