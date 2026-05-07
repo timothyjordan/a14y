@@ -322,6 +322,9 @@ const meanScore = entries.length
 
   .research-section {
     margin-top: 56px;
+    /* Anchored TOC jumps land below the sticky site header. 16px is the
+       breathing room above the heading once the header is cleared. */
+    scroll-margin-top: calc(var(--site-header-height) + 16px);
   }
   .research-section h2 {
     margin-bottom: 8px;
