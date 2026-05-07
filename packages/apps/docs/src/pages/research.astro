@@ -129,7 +129,7 @@ const meanScore = entries.length
     <p class="filter-empty" data-filter-empty hidden role="status">
       No sites match your filters. <button type="button" data-filter-reset-link>Reset filters</button>.
     </p>
-    <LeaderboardTable entries={entries} />
+    <LeaderboardTable entries={entries} scorecardVersion={research.scorecardVersion} />
     <nav class="pager" aria-label="Leaderboard pagination" data-pager>
       <button type="button" class="pager-btn" data-pager-prev disabled aria-label="Previous page">←</button>
       <span class="pager-status" data-pager-status>Page 1</span>
@@ -176,7 +176,7 @@ const meanScore = entries.length
       actionable list on this page: they're the cheapest scorecard wins
       every site is leaving on the table.
     </p>
-    <CheckPassRates rows={hardestChecks} />
+    <CheckPassRates rows={hardestChecks} scorecardVersion={research.scorecardVersion} />
   </section>
 
   <section class="research-section research-method" id="how-this-leaderboard-is-built">

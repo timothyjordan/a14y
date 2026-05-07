@@ -121,6 +121,16 @@ export function scoreBand(score: number): 'excellent' | 'good' | 'fair' | 'poor'
   return 'poor';
 }
 
+/**
+ * Build the docs URL for a scorecard check, e.g. "html.glossary-link" →
+ * "/scorecards/0.2.0/checks/html.glossary-link/". Honors the site's
+ * BASE_URL so it works correctly when deployed under a non-root path.
+ */
+export function checkDocsUrl(scorecardVersion: string, checkId: string): string {
+  const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+  return `${base}/scorecards/${scorecardVersion}/checks/${checkId}/`;
+}
+
 /** Share of catalog sites where every site-level llms.txt check passed. */
 export function getLlmsTxtAdoption(): { passing: number; total: number; pct: number } {
   const llmsExists = data.stats.checkPassRates.find((c) => c.checkId === 'llms-txt.exists');

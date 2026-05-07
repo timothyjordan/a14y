@@ -1,11 +1,12 @@
 ---
-import { CATEGORY_LABELS, scoreBand, type LeaderboardEntry } from '~/lib/research-data';
+import { CATEGORY_LABELS, checkDocsUrl, scoreBand, type LeaderboardEntry } from '~/lib/research-data';
 
 interface Props {
   entries: LeaderboardEntry[];
+  scorecardVersion: string;
 }
 
-const { entries } = Astro.props;
+const { entries, scorecardVersion } = Astro.props;
 
 function hostOf(url: string): string {
   try {
@@ -62,7 +63,7 @@ function hostOf(url: string): string {
             ) : (
               <span class="lb-fails">
                 {entry.topFailures.slice(0, 2).map((id) => (
-                  <code class="lb-fail-id">{id}</code>
+                  <a class="lb-fail-id" href={checkDocsUrl(scorecardVersion, id)}>{id}</a>
                 ))}
                 {entry.topFailures.length > 2 && (
                   <span class="lb-fail-more" title={entry.topFailures.slice(2).join(', ')}>
@@ -177,6 +178,12 @@ function hostOf(url: string): string {
     background: var(--surface-alt);
     border: 1px solid var(--border);
     color: var(--text-muted);
+    text-decoration: none;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  a.lb-fail-id:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
   }
   .lb-fail-more {
     font-family: var(--font-mono);

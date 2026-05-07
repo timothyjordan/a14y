@@ -1,11 +1,12 @@
 ---
-import type { CheckPassRate } from '~/lib/research-data';
+import { checkDocsUrl, type CheckPassRate } from '~/lib/research-data';
 
 interface Props {
   rows: CheckPassRate[];
+  scorecardVersion: string;
 }
 
-const { rows } = Astro.props;
+const { rows, scorecardVersion } = Astro.props;
 
 const width = 720;
 const rowHeight = 28;
@@ -42,7 +43,7 @@ const items = rows.map((r, i) => {
         site's pages was status pass.
       </desc>
       {items.map((r) => (
-        <g class="pr-row">
+        <a class="pr-row pr-link" href={checkDocsUrl(scorecardVersion, r.checkId)}>
           <text
             x={labelWidth - 8}
             y={r.y + rowHeight / 2 + 4}
@@ -70,7 +71,7 @@ const items = rows.map((r, i) => {
             y={r.y + rowHeight / 2 + 4}
             class="pr-value"
           >{r.pct}% <tspan class="pr-n">· {r.passingSites}/{r.applicableSites}</tspan></text>
-        </g>
+        </a>
       ))}
     </svg>
   </figure>
@@ -103,6 +104,21 @@ const items = rows.map((r, i) => {
     font-family: var(--font-mono);
     font-size: 11px;
     fill: var(--text);
+  }
+  /* Each row is wrapped in an SVG <a> linking to the check's docs page.
+     The browser default underlines every <text> inside the anchor;
+     setting text-decoration: none on the anchor itself suppresses that
+     for all descendants. We then opt the label back in on hover. */
+  .pr-link { cursor: pointer; text-decoration: none; }
+  .pr-link:hover .pr-label {
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+  }
+  .pr-link:hover .pr-bar {
+    fill: color-mix(in oklch, oklch(0.55 0.13 75) 50%, var(--surface));
+  }
+  :root[data-theme='dark'] .pr-link:hover .pr-bar {
+    fill: color-mix(in oklch, oklch(0.78 0.13 75) 52%, var(--surface));
   }
   .pr-value {
     font-family: var(--font-mono);
