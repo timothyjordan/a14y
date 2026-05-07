@@ -79,6 +79,17 @@ const meanScore = entries.length
     </p>
   </section>
 
+  <nav class="page-toc" aria-label="On this page">
+    <span class="page-toc-label">On this page</span>
+    <ul>
+      <li><a href="#leaderboard">Leaderboard</a></li>
+      <li><a href="#score-distribution">Score distribution</a></li>
+      <li><a href="#mean-score-by-category">By category</a></li>
+      <li><a href="#hardest-checks">Hardest checks</a></li>
+      <li><a href="#how-this-leaderboard-is-built">Methodology</a></li>
+    </ul>
+  </nav>
+
   <section class="research-stats">
     <div class="stat">
       <span class="stat-value">{entries.length}</span>
@@ -100,7 +111,7 @@ const meanScore = entries.length
     </div>
   </section>
 
-  <section class="research-section">
+  <section class="research-section" id="leaderboard">
     <header class="section-header">
       <h2>Leaderboard</h2>
       <div class="filter-bar" data-research-filter>
@@ -127,15 +138,23 @@ const meanScore = entries.length
       </div>
     </header>
     <p class="visible-count" data-visible-count>
-      Showing {entries.length} of {entries.length} sites.
+      Showing {Math.min(entries.length, 50)} of {entries.length} sites.
     </p>
     <p class="filter-empty" data-filter-empty hidden role="status">
       No sites match your filters. <button type="button" data-filter-reset-link>Reset filters</button>.
     </p>
     <LeaderboardTable entries={entries} />
+    <nav class="pager" aria-label="Leaderboard pagination" data-pager>
+      <button type="button" class="pager-btn" data-pager-prev disabled aria-label="Previous page">←</button>
+      <span class="pager-status" data-pager-status>Page 1</span>
+      <button type="button" class="pager-btn" data-pager-next aria-label="Next page">→</button>
+      <button type="button" class="pager-toggle" data-pager-show-all aria-pressed="false">
+        Show all
+      </button>
+    </nav>
   </section>
 
-  <section class="research-section">
+  <section class="research-section" id="score-distribution">
     <h2>Score distribution</h2>
     <p class="section-lead">
       How are the {entries.length} scores distributed across the catalog? Each
@@ -148,7 +167,7 @@ const meanScore = entries.length
     <ScoreHistogram buckets={hist} />
   </section>
 
-  <section class="research-section">
+  <section class="research-section" id="mean-score-by-category">
     <h2>Mean score by category</h2>
     <p class="section-lead">
       Docs platforms tend to score the highest because their authors think
@@ -161,7 +180,7 @@ const meanScore = entries.length
     <CategoryBars stats={catStats} />
   </section>
 
-  <section class="research-section">
+  <section class="research-section" id="hardest-checks">
     <h2>Hardest checks to pass</h2>
     <p class="section-lead">
       For each check id, the percentage of sites where the check fully passed
@@ -174,7 +193,7 @@ const meanScore = entries.length
     <CheckPassRates rows={hardestChecks} />
   </section>
 
-  <section class="research-section research-method">
+  <section class="research-section research-method" id="how-this-leaderboard-is-built">
     <h2>How this leaderboard is built</h2>
 
     <h3>Scoring</h3>
@@ -214,11 +233,49 @@ const meanScore = entries.length
 
 <style>
   .research-summary {
-    margin: 28px 0 36px;
+    margin: 28px 0 28px;
     padding: 22px 26px;
     background: var(--surface-alt);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+  }
+
+  .page-toc {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    margin-bottom: 32px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-subtle);
+  }
+  .page-toc ul {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .page-toc a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+  }
+  .page-toc a:hover {
+    color: var(--text);
+    border-bottom-color: var(--border-strong);
   }
   .research-summary p {
     margin: 0;
@@ -359,6 +416,50 @@ const meanScore = entries.length
     color: var(--text-muted);
     font-size: 14px;
   }
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .pager-btn,
+  .pager-toggle {
+    appearance: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .pager-btn { min-width: 36px; }
+  .pager-btn:hover:not(:disabled),
+  .pager-toggle:hover {
+    border-color: var(--border-strong);
+  }
+  .pager-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .pager-toggle[aria-pressed='true'] {
+    background: var(--surface-alt);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .pager-status {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    min-width: 8ch;
+    text-align: center;
+  }
+  .pager-toggle {
+    margin-left: auto;
+  }
   .filter-empty button {
     appearance: none;
     background: transparent;
@@ -387,11 +488,13 @@ const meanScore = entries.length
 </style>
 
 <script is:inline>
-  // Vanilla JS: filter the leaderboard rows by name + category, surface
-  // an empty state + reset button when nothing matches. No framework
-  // runtime; the table is rendered statically; we only toggle visibility
-  // and a couple of sibling messages.
+  // Vanilla JS: filter + paginate the leaderboard. No framework runtime;
+  // the full table is rendered statically and we toggle row visibility
+  // in two passes: filter (name + category) decides which rows MATCH,
+  // then pagination decides which of those matching rows are SHOWN.
+  // The two layers compose; filter changes reset the pager to page 1.
   (function () {
+    var PAGE_SIZE = 50;
     var bar = document.querySelector('[data-research-filter]');
     if (!bar) return;
     var nameInput = bar.querySelector('[data-filter-name]');
@@ -403,6 +506,15 @@ const meanScore = entries.length
     var counter = document.querySelector('[data-visible-count]');
     var totalRows = rows.length;
 
+    var pager = document.querySelector('[data-pager]');
+    var prevBtn = pager && pager.querySelector('[data-pager-prev]');
+    var nextBtn = pager && pager.querySelector('[data-pager-next]');
+    var pagerStatus = pager && pager.querySelector('[data-pager-status]');
+    var showAllBtn = pager && pager.querySelector('[data-pager-show-all]');
+
+    var currentPage = 1;
+    var showAll = false;
+
     function defaultsActive() {
       if (nameInput && nameInput.value) return false;
       for (var i = 0; i < catBoxes.length; i++) if (!catBoxes[i].checked) return false;
@@ -413,41 +525,90 @@ const meanScore = entries.length
       var q = (nameInput && nameInput.value || '').trim().toLowerCase();
       var allowed = Object.create(null);
       catBoxes.forEach(function (cb) { if (cb.checked) allowed[cb.value] = true; });
-      var visible = 0;
+
+      // Pass 1: figure out which rows pass the filter.
+      var matching = [];
       rows.forEach(function (row) {
         var name = row.getAttribute('data-name') || '';
         var cat = row.getAttribute('data-category') || '';
         var ok = (q === '' || name.indexOf(q) >= 0) && allowed[cat];
-        if (ok) {
-          row.removeAttribute('hidden');
-          visible++;
-        } else {
-          row.setAttribute('hidden', 'hidden');
-        }
+        if (ok) matching.push(row);
       });
+
+      var totalPages = showAll || matching.length === 0
+        ? 1
+        : Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      // Pass 2: only show the current page's slice. Hide everything else.
+      var sliceStart = showAll ? 0 : (currentPage - 1) * PAGE_SIZE;
+      var sliceEnd = showAll ? matching.length : sliceStart + PAGE_SIZE;
+      rows.forEach(function (row) { row.setAttribute('hidden', 'hidden'); });
+      for (var i = sliceStart; i < sliceEnd && i < matching.length; i++) {
+        matching[i].removeAttribute('hidden');
+      }
+
+      var shownCount = Math.min(matching.length - sliceStart, sliceEnd - sliceStart);
+      if (shownCount < 0) shownCount = 0;
+
       if (counter) {
-        counter.textContent = 'Showing ' + visible + ' of ' + totalRows + ' sites.';
+        if (matching.length === 0) {
+          counter.textContent = 'Showing 0 of ' + totalRows + ' sites.';
+        } else if (showAll || matching.length <= PAGE_SIZE) {
+          counter.textContent = 'Showing ' + matching.length + ' of ' + totalRows + ' sites.';
+        } else {
+          counter.textContent =
+            'Showing ' + (sliceStart + 1) + '–' + (sliceStart + shownCount) +
+            ' of ' + matching.length +
+            (matching.length === totalRows ? '' : ' filtered') + ' sites.';
+        }
       }
       if (emptyMsg) {
-        if (visible === 0) emptyMsg.removeAttribute('hidden');
+        if (matching.length === 0) emptyMsg.removeAttribute('hidden');
         else emptyMsg.setAttribute('hidden', 'hidden');
       }
       if (resetBtn) {
         if (defaultsActive()) resetBtn.setAttribute('hidden', 'hidden');
         else resetBtn.removeAttribute('hidden');
       }
+
+      if (pager) {
+        var hidePager = matching.length <= PAGE_SIZE;
+        if (hidePager) pager.setAttribute('hidden', 'hidden');
+        else pager.removeAttribute('hidden');
+        if (prevBtn) prevBtn.disabled = showAll || currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = showAll || currentPage >= totalPages;
+        if (pagerStatus) {
+          pagerStatus.textContent = showAll
+            ? 'All ' + matching.length
+            : 'Page ' + currentPage + ' of ' + totalPages;
+        }
+        if (showAllBtn) {
+          showAllBtn.setAttribute('aria-pressed', showAll ? 'true' : 'false');
+          showAllBtn.textContent = showAll ? 'Paginate' : 'Show all';
+        }
+      }
     }
 
     function reset() {
       if (nameInput) nameInput.value = '';
       catBoxes.forEach(function (cb) { cb.checked = true; });
+      currentPage = 1;
       apply();
       if (nameInput) nameInput.focus();
     }
 
-    if (nameInput) nameInput.addEventListener('input', apply);
-    catBoxes.forEach(function (cb) { cb.addEventListener('change', apply); });
+    function onFilterChange() { currentPage = 1; apply(); }
+
+    if (nameInput) nameInput.addEventListener('input', onFilterChange);
+    catBoxes.forEach(function (cb) { cb.addEventListener('change', onFilterChange); });
     if (resetBtn) resetBtn.addEventListener('click', reset);
     if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
+    if (prevBtn) prevBtn.addEventListener('click', function () { currentPage--; apply(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { currentPage++; apply(); });
+    if (showAllBtn) showAllBtn.addEventListener('click', function () { showAll = !showAll; apply(); });
+
+    apply();
   })();
 </script>
