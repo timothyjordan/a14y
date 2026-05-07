@@ -39,7 +39,7 @@ const meanScore = entries.length
 ---
 
 <BaseLayout
-  title="Research — leaderboard of how AI agents see the web"
+  title="Research: leaderboard of how AI agents see the web"
   description="A scored leaderboard of major websites measured for agent readability with the open a14y scorecard. Find which docs platforms, SaaS products, and consumer sites AI agents can actually parse."
   wide={true}
 >
@@ -62,8 +62,8 @@ const meanScore = entries.length
 
   <section class="research-summary">
     <p>
-      Most of the web was built for human eyes. AI agents — coding assistants,
-      research bots, autonomous tools — have to fetch the same pages and pull
+      Most of the web was built for human eyes. AI agents (coding assistants,
+      research bots, autonomous tools) have to fetch the same pages and pull
       meaning out of layout-driven HTML, JavaScript-rendered widgets, cookie
       walls, and broken markdown. The
       <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/scorecards/`}>a14y
@@ -74,7 +74,7 @@ const meanScore = entries.length
       the {entries.length} sites in our public catalog. The headline is that
       the median site barely clears halfway: there's a lot of low-hanging
       fruit out there for any team that cares to pick it. The biggest
-      adoption gap isn't a fancy semantic feature — it's the three flat files
+      adoption gap isn't a fancy semantic feature; it's the three flat files
       that take an hour to ship.
     </p>
   </section>
@@ -140,7 +140,7 @@ const meanScore = entries.length
     <p class="section-lead">
       How are the {entries.length} scores distributed across the catalog? Each
       bar counts the sites whose overall score falls in that 10-point bucket.
-      Most sites cluster between 40 and 70 — the long climb to a high score
+      Most sites cluster between 40 and 70: the long climb to a high score
       starts only once a site ships <code>llms.txt</code>, an
       <code>AGENTS.md</code>, and a markdown sitemap, the three site-level
       checks that a single template change can flip from failing to passing.
@@ -152,7 +152,7 @@ const meanScore = entries.length
     <h2>Mean score by category</h2>
     <p class="section-lead">
       Docs platforms tend to score the highest because their authors think
-      hardest about machine consumers — many already ship <code>llms.txt</code>
+      hardest about machine consumers; many already ship <code>llms.txt</code>
       and an <code>AGENTS.md</code>. Consumer sites like news, retail, and
       reference sit at the bottom: they were built for human eyes, hide
       content behind cookie banners and JavaScript, and rarely surface the
@@ -168,7 +168,7 @@ const meanScore = entries.length
       (every occurrence across every page returned <code>pass</code>). Sorted
       hardest first; filtered to checks applicable to ≥5 sites. The pile-up
       of zeroes and single-digit pass rates near the top is the most
-      actionable list on this page — they're the cheapest scorecard wins
+      actionable list on this page: they're the cheapest scorecard wins
       every site is leaving on the table.
     </p>
     <CheckPassRates rows={hardestChecks} />
@@ -185,7 +185,7 @@ const meanScore = entries.length
       gets one site-mode crawl (≤50 pages, polite-delayed) or a single
       page-mode audit for very large consumer sites where crawling every page
       would be wasteful or hostile. The score is the simple ratio
-      <code>passed / applicable</code> across every check on every page —
+      <code>passed / applicable</code> across every check on every page,
       the same number the CLI prints when you run it locally, so a site
       owner's local result matches the leaderboard exactly.
     </p>
@@ -389,7 +389,7 @@ const meanScore = entries.length
 <script is:inline>
   // Vanilla JS: filter the leaderboard rows by name + category, surface
   // an empty state + reset button when nothing matches. No framework
-  // runtime — the table is rendered statically; we only toggle visibility
+  // runtime; the table is rendered statically; we only toggle visibility
   // and a couple of sibling messages.
   (function () {
     var bar = document.querySelector('[data-research-filter]');
