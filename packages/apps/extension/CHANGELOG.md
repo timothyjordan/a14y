@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.5](https://github.com/timothyjordan/a14y/compare/extension-v0.5.4...extension-v0.5.5) (2026-05-08)
+
+
+### Features
+
+* introduce draft scorecard workflow for community contributions (TJ-408) ([#9](https://github.com/timothyjordan/a14y/issues/9)) ([431471e](https://github.com/timothyjordan/a14y/commit/431471eef5d6bee2464a31dcdc9b859de7afc01e))
+* shareable score summary across CLI, extension, and skill (TJ-376) ([#8](https://github.com/timothyjordan/a14y/issues/8)) ([7ce0c0b](https://github.com/timothyjordan/a14y/commit/7ce0c0b9ed8b47489f7623f56847d63fe802ea2d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.5 to 0.3.6
+    * @a14y/telemetry bumped from 0.1.2 to 0.1.3
+
 ## [0.5.4](https://github.com/timothyjordan/a14y/compare/extension-v0.5.3...extension-v0.5.4) (2026-05-08)
 
 
