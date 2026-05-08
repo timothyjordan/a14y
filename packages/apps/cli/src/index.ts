@@ -2,8 +2,11 @@
 
 import { Command } from 'commander';
 import {
+  DRAFT_SCORECARD_VERSION,
   LATEST_SCORECARD,
+  isDraftScorecardVersion,
   listScorecards,
+  resolveScorecardSelector,
   runToAgentPrompt,
   validate,
   type CheckResult,
@@ -48,7 +51,11 @@ program
   .command('check <url>')
   .description('Audit a URL or whole site against the a14y scorecard')
   .option('-m, --mode <mode>', 'page or site', 'page')
-  .option('-s, --scorecard <version>', 'scorecard version to evaluate against', LATEST_SCORECARD)
+  .option(
+    '-s, --scorecard <version>',
+    'scorecard version to evaluate against, or "draft" for the in-progress scorecard',
+    LATEST_SCORECARD,
+  )
   .option('--max-pages <n>', 'maximum pages to crawl in site mode', (v) => parseInt(v, 10), 500)
   .option('--concurrency <n>', 'parallel fetches during crawling', (v) => parseInt(v, 10), 8)
   .option(
@@ -85,10 +92,21 @@ program
     if (cliInit) await maybeShowFirstRunNotice(cliInit.runtime, options.output);
     const runId = cliInit?.runId;
 
+    // Resolve aliases like "draft" / "latest" up front so telemetry, the
+    // validate() call, and the warning all see the same concrete version.
+    const scorecardVersion = resolveScorecardSelector(options.scorecard);
+    if (isDraftScorecardVersion(scorecardVersion)) {
+      console.error(
+        chalk.yellow(
+          `! Using draft scorecard ${scorecardVersion} — checks are subject to change before release.`,
+        ),
+      );
+    }
+
     track('cli_command_invoked', {
       command: 'check',
       mode: options.mode,
-      scorecard_version: options.scorecard,
+      scorecard_version: scorecardVersion,
       output_format: options.output,
       verbose: options.verbose === true,
       run_id: runId,
@@ -139,7 +157,7 @@ program
       result = await validate({
         url: resolvedUrl,
         mode: options.mode,
-        scorecardVersion: options.scorecard,
+        scorecardVersion,
         maxPages: options.maxPages,
         concurrency: options.concurrency,
         pageCheckConcurrency: options.pageCheckConcurrency,
@@ -214,11 +232,16 @@ program
     }
     for (const card of cards) {
       const isLatest = card.version === LATEST_SCORECARD;
-      console.log(
-        chalk.bold(`v${card.version}`) +
-          (isLatest ? chalk.gray(' (latest)') : '') +
-          chalk.gray(` released ${card.releasedAt}`),
-      );
+      const isDraft = isDraftScorecardVersion(card.version);
+      const tag = isDraft
+        ? chalk.yellow(' (draft)')
+        : isLatest
+          ? chalk.gray(' (latest)')
+          : '';
+      const releasedLine = isDraft
+        ? chalk.gray(' unreleased')
+        : chalk.gray(` released ${card.releasedAt}`);
+      console.log(chalk.bold(`v${card.version}`) + tag + releasedLine);
       console.log('  ' + card.description);
       console.log(`  ${Object.keys(card.checks).length} checks pinned`);
       console.log('');
@@ -231,7 +254,7 @@ program.addHelpText(
 Commands in detail:
   check <url>                   Audit a URL or a whole site
     -m, --mode page|site          default: page
-    -s, --scorecard <version>     scorecard version
+    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one
     --max-pages <n>               default: 500
     --concurrency <n>             default: 8
     --page-check-concurrency <n>  default: 4
