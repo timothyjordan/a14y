@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.4](https://github.com/timothyjordan/a14y/compare/a14y-v0.4.3...a14y-v0.4.4) (2026-05-08)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.3 to 0.3.4
+
 ## [0.4.3](https://github.com/timothyjordan/a14y/compare/a14y-v0.4.2...a14y-v0.4.3) (2026-05-08)
 
 
