@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.2](https://github.com/timothyjordan/a14y/compare/extension-v0.5.1...extension-v0.5.2) (2026-05-08)
+
+
+### Bug Fixes
+
+* **core:** point DOCS_BASE_URL at canonical a14y.dev (TJ-395) ([#70](https://github.com/timothyjordan/a14y/issues/70)) ([f744bbf](https://github.com/timothyjordan/a14y/commit/f744bbf60776629ee440f30b438aa1b579c5f851))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from * to 0.3.3
+
 ## [0.5.1](https://github.com/timothyjordan/a14y/compare/extension-v0.5.0...extension-v0.5.1) (2026-05-07)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@a14y/extension",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-icons.mjs && node ../../../scripts/inject-telemetry-config.mjs extension",
@@ -12,7 +12,7 @@
     "package": "node scripts/package-extension.mjs"
   },
   "dependencies": {
-    "@a14y/core": "*",
+    "@a14y/core": "0.3.3",
     "@a14y/telemetry": "*"
   },
   "devDependencies": {
