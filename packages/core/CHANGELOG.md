@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.7](https://github.com/timothyjordan/a14y/compare/core-v0.3.6...core-v0.3.7) (2026-05-08)
+
+
+### Features
+
+* **core:** seed-loading progress events (TJ-235) ([cbcb419](https://github.com/timothyjordan/a14y/commit/cbcb41964e84259731822054b018f088299b48fe))
+* **docs:** a14y.dev landing redesign + manual light/dark toggle ([#19](https://github.com/timothyjordan/a14y/issues/19)) ([a9ff3cc](https://github.com/timothyjordan/a14y/commit/a9ff3cc55acdc0eae26fb57bc2b8a69ded78f1ef))
+* introduce draft scorecard workflow for community contributions (TJ-408) ([#9](https://github.com/timothyjordan/a14y/issues/9)) ([431471e](https://github.com/timothyjordan/a14y/commit/431471eef5d6bee2464a31dcdc9b859de7afc01e))
+* shareable score summary across CLI, extension, and skill (TJ-376) ([#8](https://github.com/timothyjordan/a14y/issues/8)) ([7ce0c0b](https://github.com/timothyjordan/a14y/commit/7ce0c0b9ed8b47489f7623f56847d63fe802ea2d))
+
+
+### Bug Fixes
+
+* **ci:** make release publish job tolerate workspace bumps (TJ-240) ([#33](https://github.com/timothyjordan/a14y/issues/33)) ([fbd1ffe](https://github.com/timothyjordan/a14y/commit/fbd1ffebb811239d40d1e4c71781f88f83d08746))
+* **core:** parallelize sitemapindex children with bounded concurrency (TJ-234) ([745a906](https://github.com/timothyjordan/a14y/commit/745a9063618705265d16409a332553a01da5a52d))
+* **core:** per-request timeout in httpClient (TJ-233) ([7396c30](https://github.com/timothyjordan/a14y/commit/7396c304d22ae8547ca71b52a5dfb35bc59658f2))
+* **core:** point DOCS_BASE_URL at canonical a14y.dev (TJ-395) ([#70](https://github.com/timothyjordan/a14y/issues/70)) ([f744bbf](https://github.com/timothyjordan/a14y/commit/f744bbf60776629ee440f30b438aa1b579c5f851))
+* stop crawler discovering phantom URLs from .md mirrors ([#50](https://github.com/timothyjordan/a14y/issues/50)) ([978dedd](https://github.com/timothyjordan/a14y/commit/978dedd535df89103ab28e79125278a6f6322d1c))
+
 ## [0.3.6](https://github.com/timothyjordan/a14y/compare/core-v0.3.5...core-v0.3.6) (2026-05-08)
 
 
