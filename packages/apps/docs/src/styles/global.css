@@ -1100,6 +1100,34 @@ main.container h2[id] {
 }
 .site-footer a:hover { color: var(--text); text-decoration: underline; }
 
+.site-footer-credit {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-subtle);
+}
+.site-footer-credit a {
+  color: var(--text-muted);
+}
+.site-footer-credit a:hover { color: var(--text); }
+.site-footer-credit-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  transition: color 120ms ease;
+}
+.site-footer-credit-icon:hover { color: var(--text); text-decoration: none; }
+.site-footer-credit-icon:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
+
 /* ─── Spec page ─────────────────────────────────────────────────── */
 
 .spec-layers {
