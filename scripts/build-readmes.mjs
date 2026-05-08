@@ -110,6 +110,10 @@ const TARGETS = [
     out: 'packages/core/README.md',
   },
   {
+    template: 'telemetry-README.md',
+    out: 'packages/telemetry/README.md',
+  },
+  {
     template: 'alias-README.md',
     out: 'packages/aliases/agentready/README.md',
     vars: { name: 'agentready', bin: 'agentready', label: 'Legacy alias' },
