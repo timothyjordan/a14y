@@ -70,7 +70,7 @@ Commands:
 Commands in detail:
   check <url>                   Audit a URL or a whole site
     -m, --mode page|site          default: page
-    -s, --scorecard <version>     scorecard version
+    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one
     --max-pages <n>               default: 500
     --concurrency <n>             default: 8
     --page-check-concurrency <n>  default: 4
@@ -96,7 +96,8 @@ Audit a URL or whole site against the a14y scorecard
 
 Options:
   -m, --mode <mode>             page or site (default: "page")
-  -s, --scorecard <version>     scorecard version to evaluate against (default:
+  -s, --scorecard <version>     scorecard version to evaluate against, or
+                                "draft" for the in-progress scorecard (default:
                                 "0.2.0")
   --max-pages <n>               maximum pages to crawl in site mode (default:
                                 500)

@@ -16,6 +16,9 @@ export {
   getScorecard,
   listScorecards,
   LATEST_SCORECARD,
+  DRAFT_SCORECARD_VERSION,
+  isDraftScorecardVersion,
+  resolveScorecardSelector,
   SCORECARDS,
 } from './scorecard';
 export { buildCheckDocsUrl, DOCS_BASE_URL } from './scorecard/docsUrl';

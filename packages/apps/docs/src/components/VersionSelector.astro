@@ -1,5 +1,9 @@
 ---
-import { listAllScorecards, getLatestScorecardVersion } from '~/lib/scorecard-data';
+import {
+  isDraftScorecardVersion,
+  listAllScorecards,
+  getLatestScorecardVersion,
+} from '~/lib/scorecard-data';
 
 interface Props {
   /** Currently-selected scorecard version (controls which option is highlighted). */
@@ -19,7 +23,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 >
   {scorecards.map((card) => (
     <option value={card.version} selected={card.version === current}>
-      v{card.version}
+      v{card.version}{isDraftScorecardVersion(card.version) ? ' (draft)' : ''}
     </option>
   ))}
 </select>

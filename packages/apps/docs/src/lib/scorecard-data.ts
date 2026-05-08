@@ -5,9 +5,12 @@
  * and the registry shape can change without rippling through templates.
  */
 import {
+  DRAFT_SCORECARD_VERSION,
   LATEST_SCORECARD,
   getScorecard,
+  isDraftScorecardVersion,
   listScorecards,
+  resolveScorecardSelector,
   type ResolvedCheck,
   type ResolvedScorecard,
   type ScorecardManifest,
@@ -26,21 +29,38 @@ export function listAllScorecards(): ScorecardManifest[] {
   return listScorecards();
 }
 
+/** Frozen, published scorecards only. Excludes the draft. */
+export function listPublishedScorecards(): ScorecardManifest[] {
+  return listScorecards().filter((c) => !isDraftScorecardVersion(c.version));
+}
+
+/** Current draft manifest, or null if no draft is registered. */
+export function getDraftScorecard(): ScorecardManifest | null {
+  return listScorecards().find((c) => isDraftScorecardVersion(c.version)) ?? null;
+}
+
+export function getDraftScorecardVersion(): string {
+  return DRAFT_SCORECARD_VERSION;
+}
+
 export function getLatestScorecardVersion(): string {
   return LATEST_SCORECARD;
 }
 
+/** Re-exported so templates can branch on draft vs published without re-importing. */
+export { isDraftScorecardVersion };
+
 export function getScorecardByVersion(version: string): ResolvedScorecard {
-  return getScorecard(version);
+  return getScorecard(resolveScorecardSelector(version));
 }
 
 export function getCheckSummariesForScorecard(version: string): CheckSummary[] {
-  const scorecard = getScorecard(version);
+  const scorecard = getScorecardByVersion(version);
   return [...scorecard.siteChecks, ...scorecard.pageChecks].map(toSummary);
 }
 
 export function getCheckSummary(version: string, id: string): CheckSummary | null {
-  const scorecard = getScorecard(version);
+  const scorecard = getScorecardByVersion(version);
   const all = [...scorecard.siteChecks, ...scorecard.pageChecks];
   const found = all.find((c) => c.id === id);
   return found ? toSummary(found) : null;

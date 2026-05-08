@@ -104,6 +104,12 @@ export type PageCheckSpec = CheckSpec<PageCheckContext>;
  * A scorecard manifest pins each check id to a single implementation version.
  * Scorecard files (v0_2.ts, v0_3.ts, ...) are FROZEN once shipped; updating a
  * check means publishing a new scorecard version that points at the new impl.
+ *
+ * Exactly one mutable manifest exists at any time — the draft scorecard at
+ * `scorecard/draft.ts`, with a semver pre-release version like `0.3.0-draft`.
+ * Contributions to the rubric (new check ids, bumped impl versions, removed
+ * checks) land there. On cut day the draft is copied to the next frozen file
+ * and a new draft is opened. See CONTRIBUTING.md and RELEASING.md.
  */
 export interface ScorecardManifest {
   version: string;
