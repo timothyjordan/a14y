@@ -122,3 +122,35 @@
 /* ---------- Body width override ---------- */
 
 body { min-width: 720px; }
+
+/* ---------- Share-score popover (TJ-412) ---------- */
+
+.share-popover {
+  position: absolute;
+  z-index: 10;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  box-shadow: var(--shadow-card-hover);
+  width: min(380px, calc(100vw - 32px));
+}
+.share-popover[hidden] { display: none; }
+.share-text {
+  white-space: pre-wrap;
+  user-select: all;
+  margin: 0 0 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.share-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.share-status {
+  font-size: 13px;
+  color: var(--text-muted);
+}

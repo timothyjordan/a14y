@@ -99,10 +99,26 @@
         </section>
 
         <div class="cta-row" id="export-buttons">
+          <button id="share-score" class="btn" type="button">Share score</button>
           <span class="cta-label">Download:</span>
           <button id="export-prompt" class="btn" type="button">Coding agent prompt</button>
           <button id="export-markdown" class="btn" type="button">Markdown</button>
           <button id="export-json" class="btn" type="button">JSON</button>
+        </div>
+
+        <div
+          id="share-popover"
+          class="share-popover"
+          role="dialog"
+          aria-label="Share your score"
+          hidden
+        >
+          <pre id="share-text" class="share-text"></pre>
+          <div class="share-actions">
+            <button id="share-copy" class="btn" type="button">Copy</button>
+            <button id="share-close" class="btn" type="button">Close</button>
+            <span id="share-status" class="share-status" aria-live="polite"></span>
+          </div>
         </div>
 
         <section class="group-section">

@@ -1,6 +1,12 @@
 /// <reference types="chrome" />
 
-import { runToAgentPrompt, type CheckResult, type PageReport, type SiteRun } from '@a14y/core';
+import {
+  formatShareSummary,
+  runToAgentPrompt,
+  type CheckResult,
+  type PageReport,
+  type SiteRun,
+} from '@a14y/core';
 import {
   CURRENT_RUN_KEY,
   type CurrentRunState,
@@ -27,6 +33,12 @@ const pageSectionTitle = $<HTMLElement>('page-section-title');
 const exportBtn = $<HTMLButtonElement>('export-json');
 const exportMdBtn = $<HTMLButtonElement>('export-markdown');
 const exportPromptBtn = $<HTMLButtonElement>('export-prompt');
+const shareBtn = $<HTMLButtonElement>('share-score');
+const sharePopover = $<HTMLElement>('share-popover');
+const shareTextEl = $<HTMLElement>('share-text');
+const shareCopyBtn = $<HTMLButtonElement>('share-copy');
+const shareCloseBtn = $<HTMLButtonElement>('share-close');
+const shareStatus = $<HTMLElement>('share-status');
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
 const historySection = $<HTMLDetailsElement>('history-section');
 const currentRunEl = $<HTMLElement>('current-run');
@@ -161,7 +173,70 @@ function renderRun(run: SiteRun) {
     'text/markdown',
     `a14y-fixes-${filenameTimestamp(run)}.md`,
   );
+
+  shareBtn.onclick = () => openSharePopover(run);
 }
+
+function openSharePopover(run: SiteRun): void {
+  shareTextEl.textContent = formatShareSummary(run, { surface: 'extension' });
+  shareStatus.textContent = '';
+  sharePopover.hidden = false;
+  positionSharePopover();
+  window.addEventListener('resize', positionSharePopover);
+  window.addEventListener('scroll', positionSharePopover, { passive: true });
+  document.addEventListener('keydown', onSharePopoverKey);
+  document.addEventListener('mousedown', onSharePopoverOutsideClick);
+  shareCopyBtn.focus();
+}
+
+function closeSharePopover(): void {
+  if (sharePopover.hidden) return;
+  sharePopover.hidden = true;
+  window.removeEventListener('resize', positionSharePopover);
+  window.removeEventListener('scroll', positionSharePopover);
+  document.removeEventListener('keydown', onSharePopoverKey);
+  document.removeEventListener('mousedown', onSharePopoverOutsideClick);
+  shareBtn.focus();
+}
+
+function positionSharePopover(): void {
+  const rect = shareBtn.getBoundingClientRect();
+  // Place the popover anchored to the button's bottom-left in document
+  // coordinates. width: min(380px, viewport-32px) is set in CSS, so clamp
+  // here to keep the right edge inside the viewport with an 8px margin.
+  const popoverWidth = sharePopover.offsetWidth;
+  const margin = 8;
+  const maxLeft = window.scrollX + window.innerWidth - popoverWidth - margin;
+  const desiredLeft = window.scrollX + rect.left;
+  const left = Math.max(window.scrollX + margin, Math.min(desiredLeft, maxLeft));
+  const top = window.scrollY + rect.bottom + 6;
+  sharePopover.style.left = `${left}px`;
+  sharePopover.style.top = `${top}px`;
+}
+
+function onSharePopoverKey(event: KeyboardEvent): void {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeSharePopover();
+  }
+}
+
+function onSharePopoverOutsideClick(event: MouseEvent): void {
+  const target = event.target as Node | null;
+  if (!target) return;
+  if (sharePopover.contains(target) || shareBtn.contains(target)) return;
+  closeSharePopover();
+}
+
+shareCopyBtn.onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(shareTextEl.textContent ?? '');
+    shareStatus.textContent = 'Copied!';
+  } catch {
+    shareStatus.textContent = 'Copy failed — select the text and copy manually.';
+  }
+};
+shareCloseBtn.onclick = closeSharePopover;
 
 function checkCard(c: CheckResult): HTMLLIElement {
   const li = document.createElement('li');
