@@ -54,4 +54,6 @@ export { summarize, type CheckResult, type ScoreSummary } from './score/compute'
 
 export { runToAgentPrompt, type AgentPromptOptions } from './report/agentPrompt';
 
+export { formatShareSummary, type ShareSummaryOptions } from './report/shareSummary';
+
 export { DISCOVERY_INDEXED_KEY } from './checks/page/discovery';
