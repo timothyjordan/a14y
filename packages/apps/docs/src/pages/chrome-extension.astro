@@ -14,6 +14,10 @@ const release = await getLatestExtensionRelease();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const repoUrl = 'https://github.com/timothyjordan/a14y';
 const releasesIndexUrl = `${repoUrl}/releases`;
+// Prefer the resolved release's tag page when a release was actually
+// fetched (even if its .zip asset isn't attached yet); fall back to
+// the top-level /releases index only when no release was resolved.
+const releaseLinkUrl = release?.htmlUrl ?? releasesIndexUrl;
 
 const releaseDate = release?.publishedAt
   ? release.publishedAt.slice(0, 10)
@@ -67,7 +71,7 @@ const specimenScorecard = 'v0.2.0 (latest)';
             Download .zip{sizeLabel ? ` · ${sizeLabel}` : ''}
           </a>
         ) : (
-          <a class="btn btn--primary" href={releasesIndexUrl} rel="noopener">
+          <a class="btn btn--primary" href={releaseLinkUrl} rel="noopener">
             Browse releases on GitHub
           </a>
         )}
@@ -128,7 +132,7 @@ const specimenScorecard = 'v0.2.0 (latest)';
       <li>
         Find the <code>.zip</code> you just downloaded; if you skipped
         the button above, grab one from
-        {' '}<a href={releasesIndexUrl} rel="noopener">the releases page</a>.
+        {' '}<a href={releaseLinkUrl} rel="noopener">the releases page</a>.
       </li>
       <li>
         Unzip it; keep the resulting folder somewhere stable. Chrome
