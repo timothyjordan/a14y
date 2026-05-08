@@ -13,9 +13,11 @@ describe('scorecard registry', () => {
     expect(SCORECARDS['0.2.0']).toBe(SCORECARD_0_2_0);
   });
 
-  it('lists every shipped scorecard', () => {
+  it('lists every shipped scorecard, including the draft', () => {
     const versions = listScorecards().map((s) => s.version);
     expect(versions).toContain('0.2.0');
+    // The draft is also included; covered in detail by scorecard.draft.test.ts.
+    expect(versions.some((v) => v.endsWith('-draft'))).toBe(true);
   });
 
   it('v0.2.0 manifest covers all 38 spec checks', () => {
