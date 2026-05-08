@@ -65,6 +65,7 @@ Commands in detail:
     --polite-delay <ms>           default: 250
     -o, --output <format>         text | json | agent-prompt
     --fail-under <score>          exit 1 if final score < threshold
+    --no-share                    omit the shareable score block
     -v, --verbose                 stream progress events to stderr
 
   scorecards                    List shipped scorecard versions
@@ -96,6 +97,7 @@ Options:
   -o, --output <format>         text, json, or agent-prompt (default: "text")
   --fail-under <score>          exit 1 if the final score is below this
                                 threshold
+  --no-share                    omit the shareable score block from text output
   -v, --verbose                 stream progress events to stderr
   -h, --help                    display help for command
 ```

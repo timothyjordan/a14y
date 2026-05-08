@@ -88,6 +88,8 @@ describe('a14y CLI', () => {
     expect(stdout).toContain('--fail-under');
     // Documents the new agent-prompt output format from TJ-151.
     expect(stdout).toContain('agent-prompt');
+    // TJ-411: the share block opt-out flag must be discoverable.
+    expect(stdout).toContain('--no-share');
   });
 
   it('treats a bare URL as `check <url>`', async () => {

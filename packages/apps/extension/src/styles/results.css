@@ -122,3 +122,97 @@
 /* ---------- Body width override ---------- */
 
 body { min-width: 720px; }
+
+/* ---------- Share-score popover (TJ-412) ---------- */
+
+.scorecard-callout .share-icon-btn {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.scorecard-callout .share-icon-btn:hover,
+.scorecard-callout .share-icon-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--border-strong, var(--text));
+  background: var(--surface);
+}
+
+.share-popover {
+  position: absolute;
+  z-index: 10;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  box-shadow: var(--shadow-card-hover);
+  width: min(380px, calc(100vw - 32px));
+}
+.share-popover[hidden] { display: none; }
+.share-text {
+  white-space: pre-wrap;
+  user-select: all;
+  margin: 0 0 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.share-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.share-platform-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.share-platform-btn:hover,
+.share-platform-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--border-strong, var(--text));
+  background: var(--surface);
+  text-decoration: none;
+}
+.share-close-btn { margin-left: auto; }
+.share-status {
+  flex-basis: 100%;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.share-linkedin-confirm[hidden] { display: none; }
+.share-linkedin-message {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.share-linkedin-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}

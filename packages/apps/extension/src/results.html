@@ -95,6 +95,33 @@
           <div class="score-line">
             <strong id="report-score" class="score-number"></strong>
             <span id="report-meta" class="score-meta"></span>
+            <button
+              id="share-score"
+              class="share-icon-btn"
+              type="button"
+              aria-label="Share score"
+              title="Share score"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
           </div>
         </section>
 
@@ -103,6 +130,144 @@
           <button id="export-prompt" class="btn" type="button">Coding agent prompt</button>
           <button id="export-markdown" class="btn" type="button">Markdown</button>
           <button id="export-json" class="btn" type="button">JSON</button>
+        </div>
+
+        <div
+          id="share-popover"
+          class="share-popover"
+          role="dialog"
+          aria-label="Share your score"
+          hidden
+        >
+          <pre id="share-text" class="share-text"></pre>
+          <div id="share-actions" class="share-actions">
+            <a
+              id="share-x"
+              class="share-platform-btn"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              aria-label="Share on X"
+              title="Share on X"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M18.244 2H21l-6.52 7.453L22 22h-6.793l-4.793-6.27L4.8 22H2.04l6.972-7.97L2 2h6.91l4.34 5.74L18.244 2zm-1.18 18.001h1.77L7.02 3.9H5.13l11.934 16.1z" />
+              </svg>
+            </a>
+            <button
+              id="share-linkedin"
+              class="share-platform-btn"
+              type="button"
+              aria-label="Share on LinkedIn"
+              title="Share on LinkedIn"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.22 0z" />
+              </svg>
+            </button>
+            <a
+              id="share-bluesky"
+              class="share-platform-btn"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              aria-label="Share on Bluesky"
+              title="Share on Bluesky"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 600 530"
+                width="18"
+                height="18"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M135.7 44C202.4 94 274 195.5 300 250c26-54.5 97.6-156 164.3-206 48.1-36 126-64 126 24.8 0 17.7-10.2 149-16.2 170.3-21 74.3-96.6 93.2-164 81.7 117.7 20 147.7 86.4 83 152.8C470 599.4 416 446.6 402 407.4c-2.6-7.2-3.8-10.5-3.8-7.7 0-2.8-1.2.5-3.8 7.7-14 39.2-68 192-191 84.2-64.7-66.4-34.7-132.7 83-152.8-67.4 11.5-143-7.4-164-81.7C16.4 235.8 6.2 104.5 6.2 86.8c0-88.8 77.9-60.8 126-24.8z" />
+              </svg>
+            </a>
+            <button
+              id="share-copy"
+              class="share-platform-btn"
+              type="button"
+              aria-label="Copy share text"
+              title="Copy"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+            </button>
+            <button
+              id="share-close"
+              class="share-platform-btn share-close-btn"
+              type="button"
+              aria-label="Close"
+              title="Close"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <span id="share-status" class="share-status" aria-live="polite"></span>
+          </div>
+          <div id="share-linkedin-confirm" class="share-linkedin-confirm" hidden>
+            <p class="share-linkedin-message">
+              Your share text is copied to the clipboard. Paste it into your
+              LinkedIn post body — LinkedIn's share dialog only carries the link.
+            </p>
+            <div class="share-linkedin-actions">
+              <a
+                id="share-linkedin-continue"
+                class="btn"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              >Continue to LinkedIn</a>
+              <button id="share-linkedin-back" class="btn" type="button">Back</button>
+            </div>
+          </div>
         </div>
 
         <section class="group-section">
