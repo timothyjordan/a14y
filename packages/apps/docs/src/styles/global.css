@@ -1101,14 +1101,10 @@ main.container h2[id] {
 .site-footer a:hover { color: var(--text); text-decoration: underline; }
 
 .site-footer-credit {
-  max-width: var(--max-width-wide);
-  margin: 32px auto 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
+  margin-top: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  gap: 10px;
   font-size: 13px;
   color: var(--text-subtle);
 }
