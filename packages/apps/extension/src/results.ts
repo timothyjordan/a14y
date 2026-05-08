@@ -37,11 +37,15 @@ const shareBtn = $<HTMLButtonElement>('share-score');
 const sharePopover = $<HTMLElement>('share-popover');
 const shareTextEl = $<HTMLElement>('share-text');
 const shareXLink = $<HTMLAnchorElement>('share-x');
-const shareLinkedInLink = $<HTMLAnchorElement>('share-linkedin');
+const shareLinkedInBtn = $<HTMLButtonElement>('share-linkedin');
 const shareBlueskyLink = $<HTMLAnchorElement>('share-bluesky');
 const shareCopyBtn = $<HTMLButtonElement>('share-copy');
 const shareCloseBtn = $<HTMLButtonElement>('share-close');
 const shareStatus = $<HTMLElement>('share-status');
+const shareActionsRow = $<HTMLElement>('share-actions');
+const shareLinkedInConfirm = $<HTMLElement>('share-linkedin-confirm');
+const shareLinkedInContinue = $<HTMLAnchorElement>('share-linkedin-continue');
+const shareLinkedInBack = $<HTMLButtonElement>('share-linkedin-back');
 
 const SHARE_CTA_URL = 'https://a14y.dev?utm_source=extension&utm_medium=share';
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
@@ -186,12 +190,13 @@ function openSharePopover(run: SiteRun): void {
   const text = formatShareSummary(run, { surface: 'extension' });
   shareTextEl.textContent = text;
   shareStatus.textContent = '';
-  // X and Bluesky accept prefilled post text; LinkedIn's share-offsite intent
-  // only takes a URL, so we send users the CTA URL there and rely on the
-  // separate Copy button (or LinkedIn's own preview) to carry the score.
+  // X and Bluesky accept prefilled post text. LinkedIn's share-offsite intent
+  // only takes a URL, so the LinkedIn button opens a confirm step (handled
+  // separately) instead of going straight to LinkedIn.
   shareXLink.href = `https://x.com/intent/post?text=${encodeURIComponent(text)}`;
   shareBlueskyLink.href = `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`;
-  shareLinkedInLink.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_CTA_URL)}`;
+  shareLinkedInContinue.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_CTA_URL)}`;
+  showShareActionsView();
   sharePopover.hidden = false;
   positionSharePopover();
   window.addEventListener('resize', positionSharePopover);
@@ -199,6 +204,19 @@ function openSharePopover(run: SiteRun): void {
   document.addEventListener('keydown', onSharePopoverKey);
   document.addEventListener('mousedown', onSharePopoverOutsideClick);
   shareCopyBtn.focus();
+}
+
+function showShareActionsView(): void {
+  shareActionsRow.hidden = false;
+  shareLinkedInConfirm.hidden = true;
+}
+
+function showLinkedInConfirmView(): void {
+  shareActionsRow.hidden = true;
+  shareLinkedInConfirm.hidden = false;
+  // Recompute placement — the confirm view's height differs from the icon row.
+  positionSharePopover();
+  shareLinkedInContinue.focus();
 }
 
 function closeSharePopover(): void {
@@ -248,14 +266,26 @@ shareCopyBtn.onclick = async () => {
     shareStatus.textContent = 'Copy failed — select the text and copy manually.';
   }
 };
-// LinkedIn's share intent only takes a URL, so copy the full text to the
-// clipboard alongside opening the share dialog. The user pastes into the
-// post body and the URL preview takes care of the link.
-shareLinkedInLink.addEventListener('click', () => {
-  void navigator.clipboard?.writeText(shareTextEl.textContent ?? '').catch(() => {
-    /* clipboard may be unavailable — the LinkedIn dialog still opens. */
-  });
-  shareStatus.textContent = 'Text copied — paste it into your LinkedIn post.';
+// LinkedIn's share intent only carries a URL — show a confirm step that
+// copies the full text to the clipboard first, then offers a button to
+// continue to LinkedIn where the user pastes the text into the post body.
+shareLinkedInBtn.onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(shareTextEl.textContent ?? '');
+  } catch {
+    /* clipboard may be unavailable — the user can still copy from the
+       <pre> via triple-click before continuing to LinkedIn. */
+  }
+  showLinkedInConfirmView();
+};
+shareLinkedInBack.onclick = () => {
+  showShareActionsView();
+  shareLinkedInBtn.focus();
+};
+shareLinkedInContinue.addEventListener('click', () => {
+  // Close the popover after the user follows the link out so the next time
+  // they open share they start fresh on the icon row.
+  closeSharePopover();
 });
 shareCloseBtn.onclick = closeSharePopover;
 

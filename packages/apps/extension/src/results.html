@@ -115,9 +115,11 @@
                 aria-hidden="true"
                 focusable="false"
               >
-                <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7" />
-                <polyline points="16 6 12 2 8 6" />
-                <line x1="12" y1="2" x2="12" y2="15" />
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
               </svg>
             </button>
           </div>
@@ -138,7 +140,7 @@
           hidden
         >
           <pre id="share-text" class="share-text"></pre>
-          <div class="share-actions">
+          <div id="share-actions" class="share-actions">
             <a
               id="share-x"
               class="share-platform-btn"
@@ -160,12 +162,10 @@
                 <path d="M18.244 2H21l-6.52 7.453L22 22h-6.793l-4.793-6.27L4.8 22H2.04l6.972-7.97L2 2h6.91l4.34 5.74L18.244 2zm-1.18 18.001h1.77L7.02 3.9H5.13l11.934 16.1z" />
               </svg>
             </a>
-            <a
+            <button
               id="share-linkedin"
               class="share-platform-btn"
-              href="#"
-              target="_blank"
-              rel="noopener"
+              type="button"
               aria-label="Share on LinkedIn"
               title="Share on LinkedIn"
             >
@@ -180,7 +180,7 @@
               >
                 <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.22 0z" />
               </svg>
-            </a>
+            </button>
             <a
               id="share-bluesky"
               class="share-platform-btn"
@@ -251,6 +251,22 @@
               </svg>
             </button>
             <span id="share-status" class="share-status" aria-live="polite"></span>
+          </div>
+          <div id="share-linkedin-confirm" class="share-linkedin-confirm" hidden>
+            <p class="share-linkedin-message">
+              Your share text is copied to the clipboard. Paste it into your
+              LinkedIn post body — LinkedIn's share dialog only carries the link.
+            </p>
+            <div class="share-linkedin-actions">
+              <a
+                id="share-linkedin-continue"
+                class="btn"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              >Continue to LinkedIn</a>
+              <button id="share-linkedin-back" class="btn" type="button">Back</button>
+            </div>
           </div>
         </div>
 

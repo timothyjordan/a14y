@@ -202,3 +202,17 @@ body { min-width: 720px; }
   font-size: 13px;
   color: var(--text-muted);
 }
+
+.share-linkedin-confirm[hidden] { display: none; }
+.share-linkedin-message {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.share-linkedin-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
