@@ -56,6 +56,24 @@ describe('markdown-mirrors helpers', () => {
       // Each check links to its mirror at the .md suffix.
       expect(out).toMatch(/\[`[^`]+`\]\(\/scorecards\/[^/]+\/checks\/[^)]+\.md\)/);
     });
+
+    it('resolves the "draft" alias to the current draft scorecard', () => {
+      // Should not throw — the alias is resolved by getScorecardByVersion.
+      const out = renderScorecardVersionChecks('draft');
+      expect(out).toMatch(/^## Site checks/m);
+    });
+  });
+
+  describe('renderShippedVersionsList draft section', () => {
+    it('emits a "## Draft" section with a link to /scorecards/draft/', () => {
+      const out = renderShippedVersionsList();
+      // Driven by whether a draft is currently registered. The draft
+      // exists today (0.3.0-draft); if a future cut leaves no draft,
+      // this assertion needs revisiting alongside that change.
+      expect(out).toMatch(/^## Draft/m);
+      expect(out).toContain('(draft)');
+      expect(out).toContain('/scorecards/draft/');
+    });
   });
 
 });

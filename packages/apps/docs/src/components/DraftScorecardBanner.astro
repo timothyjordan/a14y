@@ -1,0 +1,25 @@
+---
+/**
+ * Prominent banner shown at the top of every draft-scorecard page so
+ * visitors don't mistake an in-progress rubric for a frozen release.
+ * Reuses the .scorecard-callout treatment defined in global.css.
+ */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<aside class="scorecard-callout" aria-label="Draft scorecard notice" style="margin-top: 0;">
+  <span class="callout-eyebrow">Draft scorecard</span>
+  <h2>Subject to change before release</h2>
+  <p>
+    This rubric is the next planned scorecard. Check ids, weights, and pinned
+    implementation versions can still move. Use it for previews and feedback,
+    not for tracking historical scores.
+  </p>
+  <div class="callout-actions">
+    <a
+      href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#scorecard-lifecycle"
+      rel="noopener"
+    >Propose a change</a>
+    <a href={`${base}/scorecards/`}>See shipped scorecards</a>
+  </div>
+</aside>

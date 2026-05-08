@@ -4,7 +4,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   listAllScorecards,
+  listPublishedScorecards,
   getChecksGroupedByCategory,
+  getDraftScorecardVersion,
+  getScorecardByVersion,
+  isDraftScorecardVersion,
 } from '../lib/scorecard-data';
 import { applyPageSubstitutions } from '../lib/page-substitutions';
 import {
@@ -79,13 +83,16 @@ export function markdownMirrorsIntegration(): AstroIntegration {
         const lastUpdated = new Date().toISOString();
         const sitemapHref = '/sitemap.md';
 
-        const scorecard = listAllScorecards()[0]; // current = v0.2.0
+        const scorecard = listPublishedScorecards()[0]; // current = v0.2.0
         const docVersion = scorecard?.version ?? '0.2.0';
 
-        // Index every check id once so we can fast-route by URL.
-        const checkIds = new Set<string>(
-          scorecard ? Object.keys(scorecard.checks) : [],
-        );
+        // Index every check id pinned by ANY shipped or draft scorecard so
+        // pages under `/scorecards/<v>/checks/<id>/` route to the source
+        // markdown regardless of which manifest pinned the id.
+        const checkIds = new Set<string>();
+        for (const card of listAllScorecards()) {
+          for (const id of Object.keys(card.checks)) checkIds.add(id);
+        }
 
         for (const page of pages) {
           // page.pathname is "" for /, "scorecards/" for /scorecards/, etc.
@@ -192,17 +199,21 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             // entire content (h1, description, check listings) comes
             // from the scorecard registry. The mirror is synthesized
             // from the same registry so HTML and .md stay in sync
-            // without a separate markdown source.
+            // without a separate markdown source. Resolves the
+            // `/scorecards/draft/` alias to the current draft version.
             const versionMatch = cleanPath.match(/^scorecards\/([^/]+)$/);
             const version = versionMatch?.[1];
             if (!version) {
               throw new Error(`Could not extract version from ${cleanPath}`);
             }
-            const sc = listAllScorecards().find((c) => c.version === version);
+            const resolvedVersion =
+              version === 'draft' ? getDraftScorecardVersion() : version;
+            const sc = listAllScorecards().find((c) => c.version === resolvedVersion);
             if (!sc) {
               throw new Error(`Scorecard ${version} not found`);
             }
-            title = `Scorecard v${sc.version} · a14y`;
+            const draftSuffix = isDraftScorecardVersion(sc.version) ? ' (draft)' : '';
+            title = `Scorecard v${sc.version}${draftSuffix} · a14y`;
             description = sc.description;
             body = `${sc.description}\n\n${renderScorecardVersionChecks(version)}`;
           } else if (pagesSlug && (await readIfExists(path.join(pagesContentDir, `${pagesSlug}.md`))) !== null) {
@@ -370,20 +381,39 @@ export function resolvePagesSlug(cleanPath: string): string | null {
  * does on the .astro page.
  */
 export function renderShippedVersionsList(): string {
-  const cards = listAllScorecards();
-  if (!cards.length) return '## Shipped versions\n';
-  const latestVersion = cards[0]?.version;
+  const published = listPublishedScorecards();
   const lines: string[] = ['## Shipped versions', ''];
-  for (const card of cards) {
-    const isLatest = card.version === latestVersion;
-    const label = `v${card.version}${isLatest ? ' (latest)' : ''}`;
-    const checkCount = Object.keys(card.checks).length;
+  if (!published.length) {
+    lines.push('_No shipped scorecards yet._');
+  } else {
+    const latestVersion = published[0]?.version;
+    for (const card of published) {
+      const isLatest = card.version === latestVersion;
+      const label = `v${card.version}${isLatest ? ' (latest)' : ''}`;
+      const checkCount = Object.keys(card.checks).length;
+      lines.push(
+        `- [${label}](/scorecards/${card.version}/) — ${card.description}`,
+      );
+      lines.push(
+        `  released ${card.releasedAt} · ${checkCount} checks pinned`,
+      );
+    }
+  }
+
+  // The draft also appears on the page (with a banner). Include it in the
+  // mirror under its own subheading so an agent reading the .md mirror sees
+  // exactly the surfaces the HTML page advertises.
+  const cards = listAllScorecards();
+  const draft = cards.find((c) => isDraftScorecardVersion(c.version));
+  if (draft) {
+    lines.push('');
+    lines.push('## Draft');
+    lines.push('');
+    const checkCount = Object.keys(draft.checks).length;
     lines.push(
-      `- [${label}](/scorecards/${card.version}/) — ${card.description}`,
+      `- [v${draft.version} (draft)](/scorecards/draft/) — ${draft.description}`,
     );
-    lines.push(
-      `  released ${card.releasedAt} · ${checkCount} checks pinned`,
-    );
+    lines.push(`  unreleased · ${checkCount} checks pinned`);
   }
   return lines.join('\n');
 }
