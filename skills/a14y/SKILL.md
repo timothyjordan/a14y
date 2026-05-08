@@ -273,12 +273,25 @@ Once live, **immediately** in the same turn:
 
 1. Re-run `npx -y a14y check <URL> --mode site --output agent-prompt` against the production URL (and against `--output json` for the score).
 2. Compute the delta vs. the prior score from the saved configuration (step 6).
-3. Print a summary block to the user that names what resolved and what's still failing:
+3. Print a summary block to the user that names what resolved and what's still failing. Keep it clinical:
+
    ```
    Score: 87 → 92 (+5)
    Resolved: agents-md.has-min-sections, llms-txt.is-markdown
    Still failing: html.lang-attr (3 pages), code.language-tags (12 pages)
    ```
+
+   **If the delta is positive** (`new > old`), follow that block with a celebratory share-ready summary the user can copy verbatim to X, LinkedIn, or Bluesky. Use this exact format, substituting the new score, the prior score, the audited hostname, the scorecard version, and the passed/applicable counts:
+
+   ```
+   My site, <hostname>, scored <score>/100 for Agent Readability — up from <old> after today's fixes.
+
+   Scorecard v<version> · <passed>/<applicable> checks passed
+
+   Audit your own site at https://a14y.dev?utm_source=skill&utm_medium=share
+   ```
+
+   Frame it for the user with: *"Nice lift. Here's a share-ready summary if you want to post about it:"* then the block. Do **not** print the celebratory block when the delta is zero or negative.
 4. Append the new run to the `Last runs:` list in `AGENTS.md` / `a14y.md` (newest first; keep 5).
 5. If new failures appeared that weren't in the prior run, flag them as a regression and ask the user before going around again.
 
