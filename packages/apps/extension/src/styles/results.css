@@ -125,6 +125,29 @@ body { min-width: 720px; }
 
 /* ---------- Share-score popover (TJ-412) ---------- */
 
+.scorecard-callout .share-icon-btn {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.scorecard-callout .share-icon-btn:hover,
+.scorecard-callout .share-icon-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--border-strong, var(--text));
+  background: var(--surface);
+}
+
 .share-popover {
   position: absolute;
   z-index: 10;
@@ -146,11 +169,36 @@ body { min-width: 720px; }
 }
 .share-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   flex-wrap: wrap;
 }
+.share-platform-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.share-platform-btn:hover,
+.share-platform-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--border-strong, var(--text));
+  background: var(--surface);
+  text-decoration: none;
+}
+.share-close-btn { margin-left: auto; }
 .share-status {
+  flex-basis: 100%;
+  margin-top: 8px;
   font-size: 13px;
   color: var(--text-muted);
 }

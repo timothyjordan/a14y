@@ -36,9 +36,14 @@ const exportPromptBtn = $<HTMLButtonElement>('export-prompt');
 const shareBtn = $<HTMLButtonElement>('share-score');
 const sharePopover = $<HTMLElement>('share-popover');
 const shareTextEl = $<HTMLElement>('share-text');
+const shareXLink = $<HTMLAnchorElement>('share-x');
+const shareLinkedInLink = $<HTMLAnchorElement>('share-linkedin');
+const shareBlueskyLink = $<HTMLAnchorElement>('share-bluesky');
 const shareCopyBtn = $<HTMLButtonElement>('share-copy');
 const shareCloseBtn = $<HTMLButtonElement>('share-close');
 const shareStatus = $<HTMLElement>('share-status');
+
+const SHARE_CTA_URL = 'https://a14y.dev?utm_source=extension&utm_medium=share';
 const historyBody = $<HTMLTableElement>('history').querySelector('tbody')!;
 const historySection = $<HTMLDetailsElement>('history-section');
 const currentRunEl = $<HTMLElement>('current-run');
@@ -178,8 +183,15 @@ function renderRun(run: SiteRun) {
 }
 
 function openSharePopover(run: SiteRun): void {
-  shareTextEl.textContent = formatShareSummary(run, { surface: 'extension' });
+  const text = formatShareSummary(run, { surface: 'extension' });
+  shareTextEl.textContent = text;
   shareStatus.textContent = '';
+  // X and Bluesky accept prefilled post text; LinkedIn's share-offsite intent
+  // only takes a URL, so we send users the CTA URL there and rely on the
+  // separate Copy button (or LinkedIn's own preview) to carry the score.
+  shareXLink.href = `https://x.com/intent/post?text=${encodeURIComponent(text)}`;
+  shareBlueskyLink.href = `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`;
+  shareLinkedInLink.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_CTA_URL)}`;
   sharePopover.hidden = false;
   positionSharePopover();
   window.addEventListener('resize', positionSharePopover);
@@ -236,6 +248,15 @@ shareCopyBtn.onclick = async () => {
     shareStatus.textContent = 'Copy failed — select the text and copy manually.';
   }
 };
+// LinkedIn's share intent only takes a URL, so copy the full text to the
+// clipboard alongside opening the share dialog. The user pastes into the
+// post body and the URL preview takes care of the link.
+shareLinkedInLink.addEventListener('click', () => {
+  void navigator.clipboard?.writeText(shareTextEl.textContent ?? '').catch(() => {
+    /* clipboard may be unavailable — the LinkedIn dialog still opens. */
+  });
+  shareStatus.textContent = 'Text copied — paste it into your LinkedIn post.';
+});
 shareCloseBtn.onclick = closeSharePopover;
 
 function checkCard(c: CheckResult): HTMLLIElement {
