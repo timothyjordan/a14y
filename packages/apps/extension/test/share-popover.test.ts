@@ -83,9 +83,14 @@ describe('share-score popover (TJ-412)', () => {
     expect(resultsTs).toMatch(/SHARE_CTA_URL\s*=\s*['"]https:\/\/a14y\.dev\?utm_source=extension&utm_medium=share['"]/);
   });
 
-  it('copies share text and switches to the confirm view when LinkedIn is clicked', () => {
+  it('copies share text minus the CTA paragraph and switches to the confirm view when LinkedIn is clicked', () => {
     expect(resultsTs).toMatch(/shareLinkedInBtn\.onclick\s*=\s*async/);
-    expect(resultsTs).toMatch(/navigator\.clipboard\.writeText\(shareTextEl\.textContent[\s\S]*showLinkedInConfirmView/);
+    // The CTA URL is dropped — LinkedIn renders that link as a URL preview,
+    // so pasting it into the post body would duplicate it.
+    expect(resultsTs).toMatch(/withoutCtaParagraph\(shareTextEl\.textContent\b/);
+    expect(resultsTs).toMatch(/navigator\.clipboard\.writeText\(linkedInText\)/);
+    // Helper drops the last paragraph (split on \n\n, slice(0, -1), join).
+    expect(resultsTs).toMatch(/function withoutCtaParagraph[\s\S]*split\(['"]\\n\\n['"]\)[\s\S]*slice\(0,\s*-1\)[\s\S]*join\(['"]\\n\\n['"]\)/);
   });
 
   it('toggles between the actions row and the LinkedIn confirm view via hidden', () => {

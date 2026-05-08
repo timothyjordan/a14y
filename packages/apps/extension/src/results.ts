@@ -267,17 +267,27 @@ shareCopyBtn.onclick = async () => {
   }
 };
 // LinkedIn's share intent only carries a URL — show a confirm step that
-// copies the full text to the clipboard first, then offers a button to
+// copies the share text to the clipboard first, then offers a button to
 // continue to LinkedIn where the user pastes the text into the post body.
+// LinkedIn's own URL preview will render the CTA link, so strip the last
+// paragraph (the "Audit your own site…" line) — pasting it would duplicate
+// the link the preview is already showing.
 shareLinkedInBtn.onclick = async () => {
+  const linkedInText = withoutCtaParagraph(shareTextEl.textContent ?? '');
   try {
-    await navigator.clipboard.writeText(shareTextEl.textContent ?? '');
+    await navigator.clipboard.writeText(linkedInText);
   } catch {
     /* clipboard may be unavailable — the user can still copy from the
        <pre> via triple-click before continuing to LinkedIn. */
   }
   showLinkedInConfirmView();
 };
+
+function withoutCtaParagraph(text: string): string {
+  const paragraphs = text.split('\n\n');
+  if (paragraphs.length <= 1) return text;
+  return paragraphs.slice(0, -1).join('\n\n');
+}
 shareLinkedInBack.onclick = () => {
   showShareActionsView();
   shareLinkedInBtn.focus();
