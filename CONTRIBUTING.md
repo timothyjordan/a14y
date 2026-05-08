@@ -101,25 +101,70 @@ same body verbatim to the `.md` sibling.
 
 ### Scorecard version pages → synthesized
 
-Pages: `/scorecards/<version>/`.
+Pages: `/scorecards/<version>/`, plus the `/scorecards/draft/` alias.
 
 These are not authored by hand — they are generated from the registry
-in `@a14y/core`. To add or remove a check on a scorecard, edit the
-matching scorecard manifest (e.g.
-`packages/core/src/scorecard/v0_2.ts`) and add a corresponding
-`src/content/checks/<id>.md` in the docs package. The build will fail
-loudly if a scorecard pin lacks a matching content file (see
-`src/lib/assert-coverage.ts` and `test/coverage.test.ts`).
+in `@a14y/core`. The build will fail loudly if a scorecard pin lacks a
+matching content file (see `src/lib/assert-coverage.ts` and
+`test/coverage.test.ts`). To add or remove a check on the rubric, edit
+`packages/core/src/scorecard/draft.ts` (see "Scorecard lifecycle"
+below) and add a corresponding `src/content/checks/<id>.md`.
+
+## Scorecard lifecycle
+
+The scorecard ships as a set of frozen manifests plus one mutable
+**draft**.
+
+- **Published manifests** live at `packages/core/src/scorecard/v0_*.ts`
+  (e.g. `v0_2.ts`). These are FROZEN: never edited after release so
+  historical scores stay reproducible forever. Each one pins every
+  stable check id to a single implementation version.
+- **The draft manifest** lives at `packages/core/src/scorecard/draft.ts`
+  and uses a semver pre-release version (e.g. `0.3.0-draft`). It is the
+  contribution surface — PRs adding new check ids, bumping pinned
+  implementation versions, or removing deprecated checks all land here.
+  Consumers can preview it via `a14y check --scorecard draft` or at
+  https://a14y.dev/scorecards/draft/.
+- **Cut day**: the team copies `draft.ts` to a new frozen `v0_N.ts`,
+  drops the `-draft` suffix, then reseeds `draft.ts` with the next
+  planned version. See [`RELEASING.md`](./RELEASING.md#cutting-a-new-scorecard).
+
+**You should never edit a `v0_*.ts` file.** Once shipped they are
+immutable; editing one would silently break determinism for everyone
+using that scorecard. All scorecard contributions go through `draft.ts`.
 
 ## Adding a new check
 
 1. Implement the check under `packages/core/src/checks/{site,page}/`.
-2. Pin it in the scorecard manifest (e.g.
-   `packages/core/src/scorecard/v0_2.ts`).
-3. Add `packages/apps/docs/src/content/checks/<id>.md` with the
+   Use a fresh stable id; add an entry under `implementations` keyed
+   by `'1.0.0'`.
+2. Wire it into the registry by adding the import to
+   `packages/core/src/scorecard/_imports.ts`.
+3. Pin it in the **draft** manifest at
+   `packages/core/src/scorecard/draft.ts`. Do not edit any frozen
+   `v0_*.ts`.
+4. Add `packages/apps/docs/src/content/checks/<id>.md` with the
    frontmatter shape above. The `id` field must match the manifest pin.
-4. Run `npm test --workspace=@a14y/docs` — the coverage test enforces
-   that every pinned check has a content file.
+5. Run `npm test --workspace=@a14y/core` (registry resolves) and
+   `npm test --workspace=@a14y/docs` (coverage gate passes).
+
+## Updating an existing check
+
+If a check's behavior should change (better detection, fewer false
+positives, etc.):
+
+1. In the check's source file under
+   `packages/core/src/checks/{site,page}/`, add a new entry to
+   `implementations` keyed by a bumped semver (e.g. `'1.1.0'`). Leave
+   the old `'1.0.0'` implementation in place — frozen scorecards still
+   reference it.
+2. In `packages/core/src/scorecard/draft.ts`, update the pin for that
+   check id from `'1.0.0'` to `'1.1.0'`. Do not touch any frozen
+   `v0_*.ts` file.
+3. Update the check's docs at
+   `packages/apps/docs/src/content/checks/<id>.md` if the behavior
+   description changes.
+4. Run the test suites listed under "Adding a new check".
 
 ## Adding a new page
 
