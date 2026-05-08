@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import {
   LATEST_SCORECARD,
+  formatShareSummary,
   listScorecards,
   runToAgentPrompt,
   validate,
@@ -60,6 +61,7 @@ program
   .option('--polite-delay <ms>', 'minimum delay between request starts', (v) => parseInt(v, 10), 250)
   .option('-o, --output <format>', 'text, json, or agent-prompt', 'text')
   .option('--fail-under <score>', 'exit 1 if the final score is below this threshold', (v) => parseInt(v, 10))
+  .option('--no-share', 'omit the shareable score block from text output')
   .option('-v, --verbose', 'stream progress events to stderr')
   .action(async (url: string, options, command) => {
     if (options.mode !== 'page' && options.mode !== 'site') {
@@ -186,6 +188,7 @@ program
       console.log(runToAgentPrompt(result));
     } else {
       printTextReport(result);
+      if (options.share !== false) printShareBlock(result);
     }
 
     if (thresholdBreached) {
@@ -238,6 +241,7 @@ Commands in detail:
     --polite-delay <ms>           default: 250
     -o, --output <format>         text | json | agent-prompt
     --fail-under <score>          exit 1 if final score < threshold
+    --no-share                    omit the shareable score block
     -v, --verbose                 stream progress events to stderr
 
   scorecards                    List shipped scorecard versions
@@ -371,6 +375,17 @@ function printTextReport(run: SiteRun): void {
       );
     }
   }
+}
+
+function printShareBlock(run: SiteRun): void {
+  console.log('');
+  console.log(chalk.bold('Share your score'));
+  console.log(chalk.gray('  Copy and paste:'));
+  console.log('');
+  for (const line of formatShareSummary(run, { surface: 'cli' }).split('\n')) {
+    console.log('  ' + line);
+  }
+  console.log('');
 }
 
 function printGroupedChecks(checks: CheckResult[]): void {
