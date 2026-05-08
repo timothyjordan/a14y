@@ -93,7 +93,7 @@ function mirrorCandidates(pageUrl: string): string[] {
   // For trailing-slash URLs (Astro / Hugo / many SSGs default), also
   // try the in-directory mirror at <path>/index.md. The plain
   // `<path>.md` can resolve to a parent directory the site doesn't
-  // own — for example `https://timothyjordan.github.io/a14y/`
+  // own — for example `https://a14y.dev/`
   // would otherwise look for `/a14y.md` which lives outside
   // the docs site's subpath.
   if (hadTrailingSlash) {

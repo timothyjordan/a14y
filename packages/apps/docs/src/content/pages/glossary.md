@@ -79,7 +79,7 @@ Enforced by `parity.test.ts` in `@a14y/core`.
 ## Subpath
 
 A docs site hosted under a path on a shared domain (e.g.
-`https://timothyjordan.github.io/a14y/`) rather
+`https://a14y.dev/`) rather
 than at its own origin root. Site-level checks like
 `llms-txt.exists` look for files at both the subpath
 and the origin root, preferring the subpath copy.

@@ -150,7 +150,7 @@ This asserts that every stable check id pinned in any shipped scorecard has a co
 4. `npm run build --workspace @a14y/docs` must generate a new detail page for the id
 
 **Deployment:**
-Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://timothyjordan.github.io/a14y/`.
+Pushes to `main` that touch `packages/apps/docs/**`, `packages/core/**`, or `.github/workflows/deploy-docs.yml` trigger the `deploy-docs` workflow. It builds the core package first (the docs build imports its dist), then builds the docs, uploads `packages/apps/docs/dist/` as a Pages artifact, and deploys via `actions/deploy-pages@v4`. The site lives at `https://a14y.dev/`.
 
 For the first deploy, the Pages source in the repo settings must be set to **GitHub Actions** (Settings → Pages → Source → GitHub Actions).
 
@@ -159,7 +159,7 @@ For the first deploy, the Pages source in the repo settings must be set to **Git
 The docs site dogfoods the a14y scorecard against itself. After all the docs-site-to-100 work merged, the deployed score is:
 
 ```
-a14y check https://timothyjordan.github.io/a14y/ --mode site --max-pages 60
+a14y check https://a14y.dev/ --mode site --max-pages 60
 → 92/100  (passed=962, failed=84, na=408, applicable=1046, total=1454, pages=60)
 ```
 

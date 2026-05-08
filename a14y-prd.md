@@ -32,7 +32,7 @@ Documentation is historically built for human eyeballs — sticky headers, JavaS
 | :--- | :--- | :--- |
 | Chrome extension (`@a14y/extension`) | Browser-based ad-hoc audits, single page or whole site | Loaded unpacked from `packages/apps/extension/dist`; Chrome Web Store later |
 | CLI (`a14y`) | Local pre-commit, CI gating, JSON pipelines | Published to npm |
-| Docs site (`@a14y/docs`) | Public reference for every scorecard version — detection rules, implementation notes, pass/fail examples | Astro + GitHub Pages at https://timothyjordan.github.io/a14y/ |
+| Docs site (`@a14y/docs`) | Public reference for every scorecard version — detection rules, implementation notes, pass/fail examples | Astro + GitHub Pages at https://a14y.dev/ |
 
 ## 5. Scorecard
 
@@ -67,7 +67,7 @@ v0.2.0 contains 14 site-level checks and 24 page-level checks (38 total) coverin
 - **Code & API:** `language-*` class on every `<pre><code>` block; API pages link to `openapi.json` / `swagger.json` / `swagger.yaml` / `schema.json`.
 - **Discovery:** the page is announced by `sitemap.xml`, `llms.txt`, or `sitemap.md` (orphan detection — only meaningful in site mode).
 
-The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://timothyjordan.github.io/a14y/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
+The full list and pinning is in `packages/core/src/scorecard/v0_2.ts`. Human-facing documentation — one page per stable check id with detection mechanics, implementation notes, and references — lives at https://a14y.dev/scorecards/0.2.0/ and is sourced from the markdown files under `packages/apps/docs/src/content/checks/`. The docs build is gated on an integrity check that fails loudly if any shipped scorecard references a check id without a matching content file.
 
 **Static-host limitation:** the docs site is itself audited by a14y, and on GitHub Pages two checks (`markdown.content-negotiation` and `markdown.canonical-header`) are physically un-passable because they require server-side behaviour (Accept-based response branching, per-response `Link` headers) that static hosts cannot provide. They are documented as wontfix-on-static; the realistic scorecard ceiling on the current host is ~95–97%. Migrating to a host with edge functions (Vercel / Netlify / Cloudflare Pages) would unlock both checks.
 
