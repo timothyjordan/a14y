@@ -284,7 +284,7 @@ Once live, **immediately** in the same turn:
    **If the delta is positive** (`new > old`), follow that block with a celebratory share-ready summary the user can copy verbatim to X, LinkedIn, or Bluesky. Use this exact format, substituting the new score, the prior score, the audited hostname, the scorecard version, and the passed/applicable counts:
 
    ```
-   My site, <hostname>, scored <score>/100 for Agent Readability — up from <old> after today's fixes.
+   <hostname> scored <score>/100 for Agent Readability — up from <old> after today's fixes.
 
    Scorecard v<version> · <passed>/<applicable> checks passed
 

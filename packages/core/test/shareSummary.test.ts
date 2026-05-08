@@ -30,7 +30,7 @@ function run(overrides: Partial<SiteRun> = {}): SiteRun {
 describe('formatShareSummary', () => {
   it('renders the canonical lead with hostname, score, scorecard, and CTA', () => {
     const text = formatShareSummary(run(), { surface: 'cli' });
-    expect(text).toContain('My site, example.com, scored 87/100 for Agent Readability.');
+    expect(text).toContain('example.com scored 87/100 for Agent Readability.');
     expect(text).toContain('Scorecard v0.2.0 · 42/48 checks passed');
     expect(text).toContain(
       'Audit your own site at https://a14y.dev?utm_source=cli&utm_medium=share',
@@ -42,7 +42,7 @@ describe('formatShareSummary', () => {
       run({ url: 'https://docs.example.co.uk/some/deep/path?x=1' }),
       { surface: 'cli' },
     );
-    expect(text).toContain('My site, docs.example.co.uk,');
+    expect(text).toContain('docs.example.co.uk scored');
     expect(text).not.toContain('https://docs.example.co.uk');
     expect(text).not.toContain('/some/deep/path');
   });
@@ -61,7 +61,7 @@ describe('formatShareSummary', () => {
       priorScore: 80,
     });
     expect(text).toContain(
-      "My site, example.com, scored 92/100 for Agent Readability — up from 80 after today's fixes.",
+      "example.com scored 92/100 for Agent Readability — up from 80 after today's fixes.",
     );
   });
 
@@ -69,7 +69,7 @@ describe('formatShareSummary', () => {
     const same = formatShareSummary(run(), { surface: 'skill', priorScore: 87 });
     const lower = formatShareSummary(run(), { surface: 'skill', priorScore: 90 });
     expect(same).not.toContain('up from');
-    expect(same).toContain('My site, example.com, scored 87/100 for Agent Readability.');
+    expect(same).toContain('example.com scored 87/100 for Agent Readability.');
     expect(lower).not.toContain('up from');
   });
 
@@ -97,6 +97,6 @@ describe('formatShareSummary', () => {
 
   it('falls back to the raw url string when URL parsing fails', () => {
     const text = formatShareSummary(run({ url: 'not a url' }), { surface: 'cli' });
-    expect(text).toContain('My site, not a url, scored 87/100 for Agent Readability.');
+    expect(text).toContain('not a url scored 87/100 for Agent Readability.');
   });
 });

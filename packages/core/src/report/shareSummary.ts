@@ -24,8 +24,8 @@ export function formatShareSummary(run: SiteRun, opts: ShareSummaryOptions): str
   const ctaUrl = opts.ctaUrl ?? defaultCtaUrl(opts.surface);
   const showLift = opts.priorScore !== undefined && opts.priorScore < score;
   const lead = showLift
-    ? `My site, ${hostname}, scored ${score}/100 for Agent Readability — up from ${opts.priorScore} after today's fixes.`
-    : `My site, ${hostname}, scored ${score}/100 for Agent Readability.`;
+    ? `${hostname} scored ${score}/100 for Agent Readability — up from ${opts.priorScore} after today's fixes.`
+    : `${hostname} scored ${score}/100 for Agent Readability.`;
   const meta = `Scorecard v${run.scorecardVersion} · ${run.summary.passed}/${run.summary.applicable} checks passed`;
   const cta = `Audit your own site at ${ctaUrl}`;
   return `${lead}\n\n${meta}\n\n${cta}`;
