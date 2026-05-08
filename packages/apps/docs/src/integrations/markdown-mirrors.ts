@@ -18,9 +18,10 @@ import {
  * mirror integration reads the rendered HTML Astro just wrote to
  * `dist/<value>` and converts it via Turndown for these.
  */
-const HTML_DERIVED_PAGES: Record<string, string> = {
+export const HTML_DERIVED_PAGES: Record<string, string> = {
   '': 'index.html',
   spec: 'spec/index.html',
+  about: 'about/index.html',
   // The chrome-extension page has dynamic content (version, file
   // size, asset URL fetched from the GitHub Releases API at build
   // time), so authoring it as a markdown source would force us to

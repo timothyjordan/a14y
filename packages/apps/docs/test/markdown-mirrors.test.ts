@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  HTML_DERIVED_PAGES,
   resolvePagesSlug,
   renderShippedVersionsList,
   renderScorecardVersionChecks,
@@ -7,13 +8,30 @@ import {
 import { getLatestScorecardVersion } from '../src/lib/scorecard-data';
 
 describe('markdown-mirrors helpers', () => {
+  describe('HTML_DERIVED_PAGES', () => {
+    it('registers each design-heavy page so its mirror is generated via Turndown', () => {
+      // Pages whose canonical source is .astro (too much bespoke
+      // markup to express cleanly as markdown) must be listed here
+      // so the integration reads the rendered HTML for the mirror.
+      // Missing entries silently fall back to the legacy stub mirror,
+      // which loses the page's actual prose.
+      expect(HTML_DERIVED_PAGES['']).toBe('index.html');
+      expect(HTML_DERIVED_PAGES['spec']).toBe('spec/index.html');
+      expect(HTML_DERIVED_PAGES['about']).toBe('about/index.html');
+      expect(HTML_DERIVED_PAGES['chrome-extension']).toBe(
+        'chrome-extension/index.html',
+      );
+    });
+  });
+
   describe('resolvePagesSlug', () => {
-    it('returns null for HTML-derived pages (index, spec)', () => {
-      // The landing page and /spec/ are authored as .astro and have
-      // their mirrors generated via Turndown from the rendered HTML
-      // — not from a `pages` collection entry.
+    it('returns null for HTML-derived pages (index, spec, about)', () => {
+      // The landing page, /spec/, and /about/ are authored as .astro
+      // and have their mirrors generated via Turndown from the
+      // rendered HTML — not from a `pages` collection entry.
       expect(resolvePagesSlug('')).toBeNull();
       expect(resolvePagesSlug('spec')).toBeNull();
+      expect(resolvePagesSlug('about')).toBeNull();
     });
 
     it('maps prose-heavy pages to their content collection slugs', () => {

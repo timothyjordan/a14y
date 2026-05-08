@@ -1,0 +1,146 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const personalSite = 'https://timothyjordan.com';
+const repoUrl = 'https://github.com/timothyjordan/a14y';
+---
+
+<BaseLayout
+  title="About · a14y"
+  description="a14y is built by Timothy Jordan — an expert on agent-led growth and agent readability, with a foundation in developer relations. About the maker and the thesis behind the open spec."
+  wide
+>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">about</span>
+        <span>the maker · the thesis</span>
+      </div>
+      <h1 id="hero-heading">Hi, I'm Timothy.</h1>
+      <p class="lead">
+        I'm an expert on agent-led growth and agent readability,
+        with a foundation in developer relations. Everyone keeps
+        asking me about this, and lots of folks have ideas — so
+        a14y is the consistent open-source spec we can all update
+        together that tells you what to do.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href={personalSite} rel="noopener">
+          Hire me for advising →
+        </a>
+        <a class="btn btn--ghost" href={`${base}/spec/`}>
+          Read the spec →
+        </a>
+      </div>
+    </div>
+
+    <aside class="agent-panel" aria-label="Career snapshot">
+      <pre class="agent-output" aria-label="whoami output"><span class="ag-prompt">%</span> whoami
+Timothy Jordan — DevRel · agent-led growth
+
+  <span class="ag-pass">✓</span> 16y  Google — DevRel, OSS strategy
+         Flutter · Firebase · Angular · Dart
+         TensorFlow · Material · Maps · Search
+  <span class="ag-pass">✓</span> ~2y  Vercel — VP of Developer Experience
+         AI-driven DevRel · Agent-Led Growth
+  <span class="ag-pass">✓</span> now  a14y maintainer · advising
+
+<span class="ag-prompt">%</span> contact --advising
+→ <span class="ag-mute">timothyjordan.com</span></pre>
+    </aside>
+  </section>
+
+  <hr class="section-rule" aria-hidden="true" />
+
+  <section class="section section--tight" aria-labelledby="why-open-heading">
+    <div class="section-head">
+      <h2 id="why-open-heading">Why a14y is open</h2>
+      <p class="section-sub">
+        Agents already read most of the web before humans do. Every
+        team trying to be readable to them is reinventing the same
+        checklist in a private wiki. That doesn't scale, and it
+        doesn't converge.
+      </p>
+    </div>
+    <p>
+      The spec is versioned and the scorecard is frozen per release,
+      so historical scores stay comparable as the field moves. The
+      engine that scores any URL is the same one that scores
+      a14y.dev itself — every page on this site has to pass its own
+      checks. If you have a check we should add, or you disagree
+      with one we already have, the repo is the room: open an issue
+      or a PR.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="working-on-heading">
+    <div class="section-head">
+      <h2 id="working-on-heading">What I'm working on</h2>
+      <p class="section-sub">
+        Three concrete artifacts and a small amount of advising on
+        the side.
+      </p>
+    </div>
+    <ul class="about-list">
+      <li>
+        <strong>The spec and scorecard.</strong> Three layers
+        (discoverability, parsing, comprehension) operationalised as
+        pass-or-fail checks. Versioned so a score from last quarter
+        still means something next quarter.
+      </li>
+      <li>
+        <strong>The tools.</strong> A CLI, a Chrome extension, and
+        a coding-agent skill that all run the same checks against
+        the same scorecard. Output a human report, JSON, or a
+        Markdown fix-list ready to hand to an agent.
+      </li>
+      <li>
+        <strong>Advising.</strong> Helping teams measure and improve
+        agent readability across docs, marketing, and product
+        surfaces — and bring agent-led growth into how they ship.
+      </li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="hire-heading">
+    <div class="section-head">
+      <h2 id="hire-heading">Work with me</h2>
+      <p class="section-sub">
+        Advising on developer relations, agent-led growth, and
+        agent-readability strategy. The full services page and
+        contact details live on my personal site.
+      </p>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn--primary" href={personalSite} rel="noopener">
+        Hire me →
+      </a>
+      <a class="btn btn--ghost" href={repoUrl} rel="noopener">
+        Or contribute on GitHub →
+      </a>
+    </div>
+  </section>
+
+  <style>
+    .about-list {
+      max-width: 64ch;
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+    .about-list li {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md, 10px);
+      background: var(--surface);
+      line-height: 1.6;
+    }
+    .about-list strong {
+      color: var(--text);
+      font-weight: 600;
+      margin-right: 0.35em;
+    }
+  </style>
+</BaseLayout>
