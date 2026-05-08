@@ -2,31 +2,44 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CheckCard from '~/components/CheckCard.astro';
+import DraftScorecardBanner from '~/components/DraftScorecardBanner.astro';
 import {
   listAllScorecards,
   getScorecardByVersion,
   getChecksGroupedByCategory,
+  getDraftScorecardVersion,
+  isDraftScorecardVersion,
 } from '~/lib/scorecard-data';
 
 export const getStaticPaths = (() => {
-  return listAllScorecards().map((card) => ({
+  const draftVersion = getDraftScorecardVersion();
+  const paths = listAllScorecards().map((card) => ({
     params: { version: card.version },
   }));
+  // Friendly alias: /scorecards/draft/ resolves to whichever -draft version
+  // is current. Both URLs render the same page.
+  paths.push({ params: { version: 'draft' }, props: { resolvedVersion: draftVersion } });
+  return paths;
 }) satisfies GetStaticPaths;
 
 const { version } = Astro.params;
-const scorecard = getScorecardByVersion(version!);
-const groups = getChecksGroupedByCategory(version!);
+const resolvedVersion = (Astro.props.resolvedVersion as string | undefined) ?? version!;
+const scorecard = getScorecardByVersion(resolvedVersion);
+const groups = getChecksGroupedByCategory(resolvedVersion);
 const siteGroups = groups.filter((g) => g.scope === 'site');
 const pageGroups = groups.filter((g) => g.scope === 'page');
 const totalChecks = scorecard.siteChecks.length + scorecard.pageChecks.length;
+const isDraft = isDraftScorecardVersion(scorecard.version);
 ---
 
-<BaseLayout title={`Scorecard v${version} · a14y`} scorecardVersion={version} showVersionSelector>
+<BaseLayout title={`Scorecard v${scorecard.version} · a14y`} scorecardVersion={scorecard.version} showVersionSelector>
+  {isDraft && <DraftScorecardBanner />}
   <h1>Scorecard v{scorecard.version}</h1>
   <p class="lead">{scorecard.description}</p>
   <div class="meta-row">
-    <span class="chip">released {scorecard.releasedAt}</span>
+    {isDraft
+      ? <span class="chip">unreleased</span>
+      : <span class="chip">released {scorecard.releasedAt}</span>}
     <span class="chip">{totalChecks} checks</span>
     <span class="chip site">{scorecard.siteChecks.length} site-level</span>
     <span class="chip page">{scorecard.pageChecks.length} page-level</span>
@@ -44,7 +57,7 @@ const totalChecks = scorecard.siteChecks.length + scorecard.pageChecks.length;
       </h2>
       <ul class="check-list">
         {group.checks.map((check) => (
-          <li><CheckCard check={check} scorecardVersion={version!} /></li>
+          <li><CheckCard check={check} scorecardVersion={scorecard.version} /></li>
         ))}
       </ul>
     </section>
@@ -62,7 +75,7 @@ const totalChecks = scorecard.siteChecks.length + scorecard.pageChecks.length;
       </h2>
       <ul class="check-list">
         {group.checks.map((check) => (
-          <li><CheckCard check={check} scorecardVersion={version!} /></li>
+          <li><CheckCard check={check} scorecardVersion={scorecard.version} /></li>
         ))}
       </ul>
     </section>

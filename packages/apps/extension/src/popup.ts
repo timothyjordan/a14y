@@ -1,6 +1,11 @@
 /// <reference types="chrome" />
 
-import { LATEST_SCORECARD, listScorecards, type RunMode } from '@a14y/core';
+import {
+  LATEST_SCORECARD,
+  isDraftScorecardVersion,
+  listScorecards,
+  type RunMode,
+} from '@a14y/core';
 import {
   type RunRequest,
   type StartRunResponse,
@@ -29,7 +34,12 @@ async function init() {
   for (const card of listScorecards()) {
     const opt = document.createElement('option');
     opt.value = card.version;
-    opt.textContent = `v${card.version}` + (card.version === LATEST_SCORECARD ? ' (latest)' : '');
+    const tag = isDraftScorecardVersion(card.version)
+      ? ' (draft)'
+      : card.version === LATEST_SCORECARD
+        ? ' (latest)'
+        : '';
+    opt.textContent = `v${card.version}${tag}`;
     scorecardEl.appendChild(opt);
   }
   scorecardEl.value = LATEST_SCORECARD;

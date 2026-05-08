@@ -2,18 +2,22 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import DraftScorecardBanner from '~/components/DraftScorecardBanner.astro';
 import {
   listAllScorecards,
   getScorecardByVersion,
   getCheckSummary,
+  getDraftScorecardVersion,
+  isDraftScorecardVersion,
 } from '~/lib/scorecard-data';
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection('checks');
   const paths: Array<{
     params: { version: string; id: string };
-    props: { entrySlug: string };
+    props: { entrySlug: string; resolvedVersion: string };
   }> = [];
+  const draftVersion = getDraftScorecardVersion();
   for (const card of listAllScorecards()) {
     const scorecard = getScorecardByVersion(card.version);
     const allIds = new Set([
@@ -24,35 +28,45 @@ export const getStaticPaths = (async () => {
       if (!allIds.has(entry.data.id)) continue;
       paths.push({
         params: { version: card.version, id: entry.data.id },
-        props: { entrySlug: entry.slug },
+        props: { entrySlug: entry.slug, resolvedVersion: card.version },
       });
+      // Mirror every draft check id under the `/scorecards/draft/...`
+      // alias so both URLs work.
+      if (card.version === draftVersion) {
+        paths.push({
+          params: { version: 'draft', id: entry.data.id },
+          props: { entrySlug: entry.slug, resolvedVersion: draftVersion },
+        });
+      }
     }
   }
   return paths;
 }) satisfies GetStaticPaths;
 
 const { version, id } = Astro.params;
-const { entrySlug } = Astro.props;
+const { entrySlug, resolvedVersion } = Astro.props;
 const entry = await getEntry('checks', entrySlug);
 if (!entry) throw new Error(`Missing content entry for slug ${entrySlug}`);
 
-const summary = getCheckSummary(version!, id!);
+const summary = getCheckSummary(resolvedVersion, id!);
 if (!summary) {
-  throw new Error(`Check ${id} not found in scorecard v${version}`);
+  throw new Error(`Check ${id} not found in scorecard v${resolvedVersion}`);
 }
 
+const isDraft = isDraftScorecardVersion(resolvedVersion);
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
-  title={`${entry.data.title} · v${version}`}
+  title={`${entry.data.title} · v${resolvedVersion}`}
   description={entry.data.why}
-  scorecardVersion={version}
+  scorecardVersion={resolvedVersion}
   showVersionSelector
 >
+  {isDraft && <DraftScorecardBanner />}
   <p class="lead">
-    <a href={`${base}/scorecards/${version}/`}>← Scorecard v{version}</a>
+    <a href={`${base}/scorecards/${version}/`}>← Scorecard v{resolvedVersion}</a>
   </p>
 
   <h1>{entry.data.title}</h1>
