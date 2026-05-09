@@ -59,4 +59,7 @@ export { runToAgentPrompt, type AgentPromptOptions } from './report/agentPrompt'
 
 export { formatShareSummary, type ShareSummaryOptions } from './report/shareSummary';
 
+export { buildBadgeUrl, parseBadgeParams, BADGE_BASE_URL } from './report/badgeUrl';
+export type { BadgeData, BadgeTheme } from './report/badgeUrl';
+
 export { DISCOVERY_INDEXED_KEY } from './checks/page/discovery';
