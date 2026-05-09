@@ -3,6 +3,7 @@ import { ConcurrentQueue } from '../../crawler/queue';
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
 import { wellKnownCandidates } from './_wellKnown';
+import { isW3CDateTime } from '../_dateValidation';
 
 const SHARED_KEY = 'site:sitemap-xml';
 /**
@@ -239,6 +240,33 @@ export const sitemapXmlHasLastmod: SiteCheckSpec = {
               status: 'fail',
               message: `${missing}/${entries.length} entries missing <lastmod>`,
             };
+      },
+    },
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if every <url> in sitemap.xml has a <lastmod> child whose value parses as a W3C Datetime (the format sitemaps.org requires).',
+      run: async (ctx) => {
+        const r = await loadSitemapXml(ctx as SiteCheckContext);
+        if (!r.found || !r.parsed) return { status: 'na', message: 'sitemap.xml unavailable' };
+        const entries = r.entries ?? [];
+        if (entries.length === 0) {
+          return { status: 'warn', message: 'sitemap.xml has no <url> entries' };
+        }
+        const missing = entries.filter((e) => !e.lastmod).length;
+        const invalid = entries.filter(
+          (e) => typeof e.lastmod === 'string' && !isW3CDateTime(e.lastmod),
+        ).length;
+        if (missing === 0 && invalid === 0) {
+          return { status: 'pass', message: `${entries.length} entries with valid lastmod` };
+        }
+        const parts: string[] = [];
+        if (missing > 0) parts.push(`${missing} missing <lastmod>`);
+        if (invalid > 0) parts.push(`${invalid} with invalid date`);
+        return {
+          status: 'fail',
+          message: `${parts.join(', ')} of ${entries.length} entries`,
+        };
       },
     },
   },
