@@ -16,6 +16,9 @@ describe('LeaderboardTable', () => {
 
     for (const entry of entries) {
       expect(html).toContain(`href="/research/${entry.slug}/"`);
+      // Whole-row click target: every row carries its scorecard URL on
+      // data-href so the inline script can navigate from any cell.
+      expect(html).toContain(`data-href="/research/${entry.slug}/"`);
     }
     // External-link attributes should be gone — those were the old CTA.
     // The external URL is still surfaced on the per-site scorecard page,

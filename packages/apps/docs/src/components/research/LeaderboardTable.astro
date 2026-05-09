@@ -41,6 +41,7 @@ function hostOf(url: string): string {
         <tr
           class="lb-row"
           data-slug={entry.slug}
+          data-href={siteRunUrl(entry.slug)}
           data-name={entry.name.toLowerCase()}
           data-category={entry.category}
           data-score={entry.score}
@@ -110,6 +111,10 @@ function hostOf(url: string): string {
     border-bottom-color: var(--border-strong);
   }
   .leaderboard tbody tr:hover { background: var(--surface-alt); }
+  /* Whole row is the click target for the scorecard page; only the
+     check-id anchors in the Top failures column escape this and link
+     to their own docs page (handled by the row-click script below). */
+  .leaderboard tbody tr.lb-row { cursor: pointer; }
   .col-rank {
     width: 48px;
     color: var(--text-subtle);
@@ -242,3 +247,34 @@ function hostOf(url: string): string {
     .lb-fail-id { font-size: 10px; padding: 2px 5px; }
   }
 </style>
+
+<script is:inline>
+  // Make the entire leaderboard row a click target for the scorecard
+  // page, while preserving the inner anchors (the .col-name link, which
+  // is the keyboard/screen-reader handle, and every .lb-fail-id in the
+  // Top failures column, which links to its own check page). Mouse
+  // users get the affordance on the whole row; keyboard users still
+  // tab to the col-name anchor and activate it the usual way.
+  (function () {
+    var table = document.querySelector('.leaderboard');
+    if (!table) return;
+    table.addEventListener('click', function (e) {
+      // If the click landed on an anchor (or anything inside one),
+      // let it handle navigation itself — including modifier-clicks
+      // and middle-clicks for new tabs.
+      if (e.target.closest('a')) return;
+      var row = e.target.closest('tr.lb-row');
+      if (!row) return;
+      var href = row.getAttribute('data-href');
+      if (!href) return;
+      // Mirror normal anchor semantics: middle/cmd/ctrl/shift open in
+      // new tab/window. Browsers handle this on real <a> automatically;
+      // we replicate the meaningful subset here.
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) {
+        window.open(href, '_blank');
+      } else {
+        window.location.href = href;
+      }
+    });
+  })();
+</script>
