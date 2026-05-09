@@ -1,0 +1,109 @@
+---
+import type { CheckResult } from '@a14y/core';
+import { checkDocsUrl } from '~/lib/research-data';
+
+interface Props {
+  check: CheckResult;
+  scorecardVersion: string;
+}
+
+const { check, scorecardVersion } = Astro.props;
+const href = check.docsUrl?.length ? check.docsUrl : checkDocsUrl(scorecardVersion, check.id);
+---
+
+<li class={`check-card status-${check.status}`}>
+  <a class="check-card-link" href={href}>
+    <span class="status-tag">{check.status.toUpperCase()}</span>
+    <span class="id">{check.id}</span>
+    {check.message && <span class="msg">{check.message}</span>}
+  </a>
+</li>
+
+<style>
+  /* Status signaling lives entirely in the leading PASS/FAIL tag —
+     no left-stripe accents, no full-card recoloring. The tag is bold,
+     monospace, and contrast-tuned (see global.css `--status-*` tokens),
+     so it carries the green/red call-out without doubling it on the
+     border. */
+  .check-card {
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .check-card:hover {
+    background: var(--surface-alt);
+    border-color: var(--border-strong);
+  }
+  .check-card-link {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    padding: 10px 14px;
+    min-height: 44px;
+    color: inherit;
+    text-decoration: none;
+    align-items: baseline;
+  }
+  .check-card-link:hover { text-decoration: none; color: inherit; }
+  .check-card-link:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  .status-tag {
+    grid-row: span 2;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    min-width: 56px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  /* Tag color picks the readable end of the status palette — paired
+     with a low-mix tint background for the chip-on-card contrast. The
+     2-stop mix keeps it perceivable in both themes without going
+     fluorescent. */
+  .status-pass  .status-tag {
+    color: color-mix(in oklch, var(--status-pass) 70%, var(--text));
+    background: color-mix(in oklch, var(--status-pass) 16%, var(--surface));
+    border-color: color-mix(in oklch, var(--status-pass) 35%, transparent);
+  }
+  .status-fail  .status-tag,
+  .status-error .status-tag {
+    color: color-mix(in oklch, var(--status-fail) 70%, var(--text));
+    background: color-mix(in oklch, var(--status-fail) 14%, var(--surface));
+    border-color: color-mix(in oklch, var(--status-fail) 35%, transparent);
+  }
+  .status-warn  .status-tag {
+    color: color-mix(in oklch, var(--status-warn) 60%, var(--text));
+    background: color-mix(in oklch, var(--status-warn) 18%, var(--surface));
+    border-color: color-mix(in oklch, var(--status-warn) 38%, transparent);
+  }
+
+  .check-card .id {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .check-card-link:hover .id { text-decoration: underline; }
+  .check-card .msg {
+    grid-column: 2;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+</style>

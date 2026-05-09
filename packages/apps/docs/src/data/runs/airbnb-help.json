@@ -1,0 +1,4884 @@
+{
+  "url": "https://www.airbnb.com/help",
+  "baseUrl": "https://www.airbnb.com/",
+  "mode": "site",
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "startedAt": "2026-05-07T04:07:46.639Z",
+  "finishedAt": "2026-05-07T04:07:53.924Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "name": "llms.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.exists/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "name": "robots.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "https://www.airbnb.com/robots.txt",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.exists/"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "name": "robots.txt allows AI bots",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-ai-bots/"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "name": "robots.txt does not disallow llms.txt",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-llms-txt/"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "name": "sitemap.xml is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.xml not reachable",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-xml.exists/"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "name": "sitemap.md is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.md not reachable",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-md.exists/"
+    },
+    {
+      "id": "agents-md.exists",
+      "name": "AGENTS.md (or equivalent) is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "No agent skill file found",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/agents-md.exists/"
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://www.airbnb.com/help",
+      "finalUrl": "https://www.airbnb.com/help",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "14 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "33.0%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 53
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/3218",
+      "finalUrl": "https://www.airbnb.com/help/article/3218",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/3218",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "149 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "13 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.6%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/169",
+      "finalUrl": "https://www.airbnb.com/help/article/169",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/169",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "70 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 block(s)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "name": "JSON-LD declares dateModified",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.date-modified/"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "name": "JSON-LD declares a BreadcrumbList",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no BreadcrumbList node",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.breadcrumb/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "18 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.8%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/all-topics",
+      "finalUrl": "https://www.airbnb.com/help/all-topics",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/all-topics",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "11 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "35.2%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 53
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/3116",
+      "finalUrl": "https://www.airbnb.com/help/article/3116",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/3116",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "129 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "11 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "26.1%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/170",
+      "finalUrl": "https://www.airbnb.com/help/article/170",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/170",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "169 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "13 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/1566",
+      "finalUrl": "https://www.airbnb.com/help/article/1566",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/1566",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "139 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 block(s)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "name": "JSON-LD declares dateModified",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.date-modified/"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "name": "JSON-LD declares a BreadcrumbList",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no BreadcrumbList node",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.breadcrumb/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "13 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "26.0%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/126",
+      "finalUrl": "https://www.airbnb.com/help/article/126",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/126",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "97 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "39 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.9%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/login?redirect_url=/help",
+      "finalUrl": "https://www.airbnb.com/login?redirect_url=/help",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "100 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "5 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "39.5%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/contact-us?entry=HELP_CENTER&role=guest",
+      "finalUrl": "https://www.airbnb.com/help/contact-us?entry=HELP_CENTER&role=guest",
+      "status": 429,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 1 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "21.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/",
+      "finalUrl": "https://www.airbnb.com/",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "132 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 block(s)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "name": "JSON-LD declares dateModified",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.date-modified/"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "name": "JSON-LD declares a BreadcrumbList",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no BreadcrumbList node",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.breadcrumb/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "4 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "65.0%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/92",
+      "finalUrl": "https://www.airbnb.com/help/article/92",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/92",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "101 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "9 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "26.0%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/feature/1",
+      "finalUrl": "https://www.airbnb.com/help/feature/1",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/feature/1",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "8 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 53
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/topic/1395/safety-tips-and-guidelines",
+      "finalUrl": "https://www.airbnb.com/help/topic/1395",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "28 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "27.1%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 47
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/823",
+      "finalUrl": "https://www.airbnb.com/help/article/823",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/823",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 44 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 block(s)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "name": "JSON-LD declares dateModified",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.date-modified/"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "name": "JSON-LD declares a BreadcrumbList",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no BreadcrumbList node",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld.breadcrumb/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "17 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "26.6%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 58
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/aircover",
+      "finalUrl": "https://www.airbnb.com/help/article/3218",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/3218",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "149 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "13 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25.6%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/accessibility",
+      "finalUrl": "https://www.airbnb.com/accessibility",
+      "status": 429,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 1 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "21.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/article/2701/extenuating-circumstances-policy-and-the-coronavirus-covid19",
+      "finalUrl": "https://www.airbnb.com/help/article/1320",
+      "status": 429,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "2 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 1 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "21.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 2,
+        "failed": 15,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 12
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/against-discrimination",
+      "finalUrl": "https://www.airbnb.com/against-discrimination",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "69 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "21 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "18.3%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/contact-us?entry=DESKTOP_FOOTER_SAFETY",
+      "finalUrl": "https://www.airbnb.com/help/contact-us/logged-out?entry=DESKTOP_FOOTER_SAFETY",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "4 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "29.4%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 47
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/help/home?from=footer",
+      "finalUrl": "https://www.airbnb.com/help",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "2 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "14 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "33.0%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 47
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/travelinsurance",
+      "finalUrl": "https://www.airbnb.com/e/travelinsurance",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "1 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/e/travelinsurance",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "112 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "22 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "15.8%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/neighbors",
+      "finalUrl": "https://www.airbnb.com/help/article/3290",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "2 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/help/article/3290",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "78 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "11 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "24.8%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/host/homes?from_footer=1",
+      "finalUrl": "https://www.airbnb.com/host/homes?from_footer=1",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "172 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "14 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "24.2%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "url": "https://www.airbnb.com/host/experiences",
+      "finalUrl": "https://www.airbnb.com/host/experiences",
+      "status": 200,
+      "sources": [
+        "crawl"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "text/html;charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "https://www.airbnb.com/host/experiences",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "128 chars",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "en",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "25 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "36.5%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 65
+      }
+    }
+  ],
+  "summary": {
+    "passed": 237,
+    "failed": 203,
+    "warned": 0,
+    "errored": 0,
+    "na": 174,
+    "total": 614,
+    "applicable": 440,
+    "score": 54
+  }
+}

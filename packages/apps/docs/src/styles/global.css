@@ -34,6 +34,13 @@
   --signal:       oklch(0.55 0.15 35);   /* terra: emphasis, version pin */
   --signal-soft:  oklch(0.92 0.04 35);
 
+  /* Status colors — used by the scorecard results UI to give pass/fail
+     a clear quick-scan signal, matching the extension's report. Brighter
+     than the muted scope/signal palette by design. */
+  --status-pass: oklch(0.62 0.18 150);
+  --status-fail: oklch(0.58 0.22 25);
+  --status-warn: oklch(0.68 0.16 65);
+
   /* Accent resolves to brand-ink, not iOS blue */
   --accent:       var(--brand-ink);
 
@@ -78,6 +85,9 @@
   --scope-page:   oklch(0.78 0.10 110);
   --signal:       oklch(0.78 0.15 35);
   --signal-soft:  oklch(0.30 0.06 35);
+  --status-pass:  oklch(0.78 0.16 150);
+  --status-fail:  oklch(0.74 0.18 25);
+  --status-warn:  oklch(0.82 0.14 65);
   --accent:       var(--brand-cyan);
   --shadow-card:  0 1px 0 oklch(0 0 0 / 0.4), 0 2px 6px oklch(0 0 0 / 0.3);
   color-scheme: dark;
