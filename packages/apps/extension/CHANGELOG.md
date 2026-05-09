@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.6](https://github.com/timothyjordan/a14y/compare/extension-v0.5.5...extension-v0.5.6) (2026-05-08)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.6 to 0.3.7
+    * @a14y/telemetry bumped from 0.1.3 to 0.1.4
+
 ## [0.5.5](https://github.com/timothyjordan/a14y/compare/extension-v0.5.4...extension-v0.5.5) (2026-05-08)
 
 
