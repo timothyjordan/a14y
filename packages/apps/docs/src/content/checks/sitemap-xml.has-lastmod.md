@@ -14,7 +14,7 @@ references:
 
 ## How the check decides
 
-After parsing the sitemap, the check inspects every `<url>` entry and counts how many are missing a `<lastmod>` child. Passes if all entries have one. Fails with a count if any are missing. Warns if the sitemap has zero entries. Returns N/A if the sitemap couldn't be parsed at all.
+After parsing the sitemap, the check inspects every `<url>` entry, counts how many are missing a `<lastmod>` child, and counts how many have a `<lastmod>` whose value does not parse as a [W3C Datetime](https://www.w3.org/TR/NOTE-datetime) (the format sitemaps.org requires). Passes only if every entry has a `<lastmod>` and every value is a valid date. Fails with a breakdown of missing vs. invalid counts otherwise. Warns if the sitemap has zero entries. Returns N/A if the sitemap couldn't be parsed at all. Calendar-impossible values like `2026-02-30` are rejected.
 
 ## How to implement it
 
@@ -37,6 +37,16 @@ Most sitemap generators emit `<lastmod>` automatically from the source file mtim
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://example.com/docs/install</loc>
+  </url>
+</urlset>
+```
+
+```xml
+<!-- lastmod present but not a valid W3C Datetime -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.com/docs/install</loc>
+    <lastmod>recently</lastmod>
   </url>
 </urlset>
 ```

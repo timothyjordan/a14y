@@ -34,6 +34,12 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
   scoringMethodology: 'per-check-mean-v1',
   checks: {
     ...SCORECARD_0_2_0.checks,
+    // Bumped to 1.1.0: the modified-date checks now require the value to
+    // parse as the date format the upstream spec actually defines, not
+    // just to be a non-empty string. See CONTRIBUTING.md "Updating an
+    // existing check".
+    'html.json-ld.date-modified': '1.1.0',
+    'sitemap-xml.has-lastmod': '1.1.0',
     'markdown.navigation-stripped': '1.0.0',
     'markdown.size-reduction': '1.0.0',
     'markdown.valid-markdown': '1.0.0',
