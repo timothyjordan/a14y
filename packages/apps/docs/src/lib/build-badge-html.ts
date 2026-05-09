@@ -26,7 +26,6 @@ export interface BadgePalette {
   statusPass: string;
   statusFail: string;
   statusWarn: string;
-  statusError: string;
   statusNa: string;
 }
 
@@ -35,7 +34,7 @@ export interface BadgePalette {
 // running site, so adjust both in lockstep if the tokens move.
 export const BADGE_LIGHT_PALETTE: BadgePalette = {
   bg: '#faf7ed',
-  surface: '#fdfcf6',
+  surface: '#fefdf9',
   surfaceAlt: '#efebde',
   border: '#d8d3c1',
   borderStrong: '#bdb7a3',
@@ -50,7 +49,6 @@ export const BADGE_LIGHT_PALETTE: BadgePalette = {
   statusPass: '#1f7a3d',
   statusFail: '#a83327',
   statusWarn: '#a86417',
-  statusError: '#7a3a52',
   statusNa: '#9a958a',
 };
 
@@ -71,7 +69,6 @@ export const BADGE_DARK_PALETTE: BadgePalette = {
   statusPass: '#5fc17f',
   statusFail: '#d97a73',
   statusWarn: '#d49764',
-  statusError: '#c49a8c',
   statusNa: '#7a7867',
 };
 
@@ -91,10 +88,8 @@ export function buildBadgeHtml(data: BadgeData): string {
   const cls = `a14y-badge-${id}`;
 
   const host = data.url ? hostOf(data.url) : '';
-  const npxCmd = data.url ? `npx a14y ${data.url}` : 'npx a14y https://your-site.com';
   const dateText = formatDate(data.date);
   const versionText = data.scorecardVersion ? `V${data.scorecardVersion}` : '';
-  const grade = letterGrade(data.score);
   const scoreColor = bandColor(data.score, palette);
 
   const segments = barSegments(data, palette);
@@ -103,18 +98,15 @@ export function buildBadgeHtml(data: BadgeData): string {
     cls,
     palette,
     scoreColor,
-    grade,
     versionText,
     dateText,
     host,
-    npxCmd,
     score: data.score,
     applicable: data.applicable,
     total: data.total,
     passed: data.passed,
     failed: data.failed,
     warned: data.warned,
-    errored: data.errored,
     na: data.na,
     segments,
   });
@@ -129,18 +121,15 @@ interface RenderArgs {
   cls: string;
   palette: BadgePalette;
   scoreColor: string;
-  grade: string;
   versionText: string;
   dateText: string;
   host: string;
-  npxCmd: string;
   score: number;
   applicable: number;
   total: number;
   passed: number;
   failed: number;
   warned: number;
-  errored: number;
   na: number;
   segments: { color: string; pct: number }[];
 }
@@ -187,13 +176,12 @@ function renderCard(a: RenderArgs): string {
     `font-family:${MONO_STACK};font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:${p.textMuted};margin-top:4px;`;
 
   const statsRowStyle =
-    `display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:18px 0 16px;`;
+    `display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 16px;`;
 
   const stats: Array<{ count: number; label: string; color: string }> = [
     { count: a.passed, label: 'PASSED', color: p.statusPass },
     { count: a.failed, label: 'FAILED', color: p.statusFail },
     { count: a.warned, label: 'WARNED', color: p.statusWarn },
-    { count: a.errored, label: 'ERRORED', color: p.statusError },
     { count: a.na, label: 'N/A', color: p.statusNa },
   ];
   const statsHtml = stats
@@ -209,10 +197,12 @@ function renderCard(a: RenderArgs): string {
     )
     .join('');
 
+  // No nested-card background — a top divider separates the footer from the
+  // stats row instead, keeping the footer as a flat text block.
   const tryStyle =
-    `background:${p.surfaceAlt};border-radius:8px;padding:10px 14px;` +
+    `border-top:1px solid ${p.border};padding:14px 0 0;margin-top:4px;` +
     `font-family:${MONO_STACK};font-size:11px;line-height:1.5;color:${p.textMuted};`;
-  const tryEyebrow = `font-size:10px;letter-spacing:.12em;color:${p.textSubtle};display:block;margin-bottom:2px;`;
+  const tryEyebrow = `font-size:10px;letter-spacing:.12em;color:${p.textSubtle};display:block;margin-bottom:4px;`;
 
   return (
     `<a class="a14y-badge ${a.cls}" href="https://a14y.dev" target="_blank" rel="noopener" style="${outerStyle}">` +
@@ -224,7 +214,7 @@ function renderCard(a: RenderArgs): string {
     `<div class="${a.cls}__circle" style="${circleStyle}">` +
     `<div style="font-family:${MONO_STACK};font-size:10px;letter-spacing:.18em;color:${p.textSubtle};">SCORE</div>` +
     `<div class="${a.cls}__score" style="font-size:54px;font-weight:600;line-height:1.05;color:${a.scoreColor};letter-spacing:-0.02em;">${a.score}</div>` +
-    `<div style="font-family:${MONO_STACK};font-size:11px;color:${p.textMuted};letter-spacing:.05em;">/100 · ${a.grade}</div>` +
+    `<div style="font-family:${MONO_STACK};font-size:11px;color:${p.textMuted};letter-spacing:.05em;">/100</div>` +
     `</div>` +
     `<div class="${a.cls}__col" style="${heroColStyle}">` +
     `<div style="${wordmarkRowStyle}"><span class="${a.cls}__logo" style="display:inline-flex;color:${p.brand};">${LOGO_SVG}</span><span class="${a.cls}__wordmark" style="${wordmarkStyle}">a14y</span></div>` +
@@ -236,7 +226,7 @@ function renderCard(a: RenderArgs): string {
     `<div class="${a.cls}__stats" style="${statsRowStyle}">${statsHtml}</div>` +
     `<div class="${a.cls}__tryit" style="${tryStyle}">` +
     `<span style="${tryEyebrow}">TRY IT</span>` +
-    `Try a14y on your own site: ${escapeText(a.npxCmd)}` +
+    `Try a14y on your own site: https://a14y.dev` +
     `</div>` +
     `</a>`
   );
@@ -319,13 +309,6 @@ function bandColor(score: number, p: BadgePalette): string {
   return p.scorePoor;
 }
 
-function letterGrade(score: number): 'A' | 'B' | 'C' | 'D' {
-  if (score >= 85) return 'A';
-  if (score >= 70) return 'B';
-  if (score >= 50) return 'C';
-  return 'D';
-}
-
 function hostOf(url: string): string {
   try {
     return new URL(url).host.replace(/^www\./, '');
@@ -346,12 +329,14 @@ function formatDate(iso: string): string {
 }
 
 function barSegments(data: BadgeData, p: BadgePalette): { color: string; pct: number }[] {
+  // Bar mirrors the four-column stats row: passed / failed / warned / na.
+  // `errored` is rare in practice and intentionally excluded (the score
+  // formula already penalizes it; we just don't visualize it separately).
   const denom = Math.max(data.total, 1);
   const raw = [
     { color: p.statusPass, count: data.passed },
     { color: p.statusFail, count: data.failed },
     { color: p.statusWarn, count: data.warned },
-    { color: p.statusError, count: data.errored },
     { color: p.statusNa, count: data.na },
   ];
   return raw

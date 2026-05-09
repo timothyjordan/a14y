@@ -37,13 +37,15 @@ describe('buildBadgeHtml', () => {
     expect(html).not.toMatch(/>www\.example\.com</);
   });
 
-  it('renders all five status counts with their labels', () => {
+  it('renders four status counts (PASSED, FAILED, WARNED, N/A) with their labels', () => {
     const html = buildBadgeHtml(data);
     expect(html).toMatch(/>32<[^]*?PASSED/);
     expect(html).toMatch(/>3<[^]*?FAILED/);
     expect(html).toMatch(/>0<[^]*?WARNED/);
-    expect(html).toMatch(/>0<[^]*?ERRORED/);
     expect(html).toMatch(/>3<[^]*?N\/A/);
+    // ERRORED is rare in practice and dropped from the badge to keep
+    // the stats row at four balanced columns.
+    expect(html).not.toMatch(/ERRORED/);
   });
 
   it('renders the applicable/total caption', () => {
@@ -61,16 +63,19 @@ describe('buildBadgeHtml', () => {
     expect(buildBadgeHtml(data)).toMatch(/<a [^>]*href="https:\/\/a14y\.dev"[^>]*>/);
   });
 
-  it('renders a "TRY IT" footer with the npx command including the audited URL', () => {
+  it('renders a "TRY IT" footer with a stable a14y.dev URL (not the npx command)', () => {
     const html = buildBadgeHtml(data);
     expect(html).toContain('TRY IT');
-    expect(html).toContain('npx a14y https://example.com');
+    expect(html).toContain('Try a14y on your own site: https://a14y.dev');
+    // The per-run npx command + audited URL are gone — the footer is now a
+    // stable invitation that works for embedders without CLI familiarity.
+    expect(html).not.toMatch(/npx\s+a14y/);
+    expect(html).not.toContain('https://example.com');
   });
 
-  it('falls back to a generic try-it command when the audited URL is missing', () => {
+  it('keeps the static TRY IT footer when the audited URL is missing', () => {
     const html = buildBadgeHtml({ ...data, url: undefined });
-    expect(html).toContain('npx a14y');
-    expect(html).not.toContain('npx a14y undefined');
+    expect(html).toContain('Try a14y on your own site: https://a14y.dev');
   });
 
   it('uses the light palette and emits no <style> tag in light theme', () => {
@@ -101,11 +106,14 @@ describe('buildBadgeHtml', () => {
     expect(buildBadgeHtml({ ...data, score: 40 })).toContain(BADGE_LIGHT_PALETTE.scorePoor);
   });
 
-  it('shows the letter grade matching the band (A/B/C/D)', () => {
-    expect(buildBadgeHtml({ ...data, score: 92 })).toMatch(/\/100\s*·\s*A/);
-    expect(buildBadgeHtml({ ...data, score: 75 })).toMatch(/\/100\s*·\s*B/);
-    expect(buildBadgeHtml({ ...data, score: 60 })).toMatch(/\/100\s*·\s*C/);
-    expect(buildBadgeHtml({ ...data, score: 40 })).toMatch(/\/100\s*·\s*D/);
+  it('renders /100 under the score number with no letter grade', () => {
+    const html = buildBadgeHtml(data);
+    expect(html).toMatch(/\/100/);
+    // The letter-grade suffix ("· A" / "· B" / etc.) is gone — the score
+    // number plus the band-color already convey level.
+    for (const grade of ['A', 'B', 'C', 'D']) {
+      expect(html).not.toMatch(new RegExp(`\\/100\\s*·\\s*${grade}\\b`));
+    }
   });
 
   it('returns markup safe to embed (single root anchor + optional <style>)', () => {
