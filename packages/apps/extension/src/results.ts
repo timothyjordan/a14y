@@ -1,6 +1,7 @@
 /// <reference types="chrome" />
 
 import {
+  buildBadgeUrl,
   formatShareSummary,
   runToAgentPrompt,
   type CheckResult,
@@ -39,6 +40,7 @@ const shareTextEl = $<HTMLElement>('share-text');
 const shareXLink = $<HTMLAnchorElement>('share-x');
 const shareLinkedInBtn = $<HTMLButtonElement>('share-linkedin');
 const shareBlueskyLink = $<HTMLAnchorElement>('share-bluesky');
+const shareEmbedLink = $<HTMLAnchorElement>('share-embed');
 const shareCopyBtn = $<HTMLButtonElement>('share-copy');
 const shareCloseBtn = $<HTMLButtonElement>('share-close');
 const shareStatus = $<HTMLElement>('share-status');
@@ -195,6 +197,7 @@ function openSharePopover(run: SiteRun): void {
   // separately) instead of going straight to LinkedIn.
   shareXLink.href = `https://x.com/intent/post?text=${encodeURIComponent(text)}`;
   shareBlueskyLink.href = `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`;
+  shareEmbedLink.href = buildBadgeUrl(run);
   shareLinkedInContinue.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SHARE_CTA_URL)}`;
   showShareActionsView();
   sharePopover.hidden = false;
