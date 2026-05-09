@@ -292,6 +292,14 @@ Once live, **immediately** in the same turn:
    ```
 
    Frame it for the user with: *"Nice lift. Here's a share-ready summary if you want to post about it:"* then the block. Do **not** print the celebratory block when the delta is zero or negative.
+
+   The text run of `npx -y a14y check <URL>` also ends with an `Embed badge:` URL — surface it to the user verbatim so they can drop a copy-paste HTML badge into their site:
+
+   ```
+   Embed badge: https://a14y.dev/badge/?s=<score>&v=<version>&...
+   ```
+
+   Frame it as: *"And if you want to publish the score on your site, here's an embeddable HTML badge:"* — point them at the URL. Print this regardless of delta direction; the badge is useful even when the score didn't move.
 4. Append the new run to the `Last runs:` list in `AGENTS.md` / `a14y.md` (newest first; keep 5).
 5. If new failures appeared that weren't in the prior run, flag them as a regression and ask the user before going around again.
 
@@ -310,6 +318,7 @@ Only after all five sub-steps land is the audit cycle complete. If a deploy poll
 | CI gate (fail under 80) | `npx -y a14y check <url> --fail-under 80` |
 | Faster site crawl | `npx -y a14y check <url> --mode site --max-pages 100 --concurrency 12` |
 | Disable telemetry | `npx -y a14y --no-telemetry check <url>` |
+| Get an embed badge URL | (printed at the bottom of the `text` output of any `check`) |
 
 ## Common mistakes
 
