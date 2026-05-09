@@ -82,7 +82,6 @@ const MONO_STACK =
 const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" width="32" height="22" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:middle"><g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="10"><line x1="150.5" y1="25.5" x2="25.5" y2="75.5"/><line x1="275.5" y1="75.5" x2="150.5" y2="25.5"/><line x1="275.5" y1="223" x2="275.5" y2="75.5"/><line x1="150.5" y1="275.5" x2="275.5" y2="223"/><line x1="25.5" y1="225.5" x2="148.08" y2="275.5"/><line x1="25.5" y1="75.5" x2="25.5" y2="225.5"/><line x1="275.5" y1="75.5" x2="25.5" y2="225.5"/><line x1="25.5" y1="75.5" x2="275.5" y2="223"/><line x1="150.5" y1="25.5" x2="150.5" y2="275.5"/><line x1="25.5" y1="75.5" x2="275.5" y2="75.5"/><line x1="25.5" y1="225.5" x2="275.5" y2="225.5"/></g><g fill="currentColor" stroke="currentColor" stroke-miterlimit="10"><circle cx="25.5" cy="75.5" r="25"/><circle cx="150.5" cy="275.5" r="25"/><circle cx="275.5" cy="225.5" r="25"/><circle cx="25.5" cy="225.5" r="25"/><circle cx="275.5" cy="75.5" r="25"/><circle cx="150.5" cy="25.5" r="25"/><circle cx="150.5" cy="150.5" r="25"/></g><circle cx="262.5" cy="150.5" r="112.5" fill="#fff" fill-opacity="0.9"/><circle cx="262.75" cy="150.5" r="112.5" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/><line x1="375.5" y1="262.5" x2="342.48" y2="229.41" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/><line x1="356.79" y1="243.79" x2="414.48" y2="301.48" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><g fill="none" stroke="currentColor" stroke-width="20" stroke-miterlimit="10"><line x1="200.5" y1="90.5" x2="325.5" y2="90.5"/><line x1="200.5" y1="130.45" x2="325.5" y2="130.45"/><line x1="200.5" y1="170.43" x2="325.5" y2="170.43"/><line x1="200.5" y1="210.49" x2="325.5" y2="210.49"/></g></svg>`;
 
 export function buildBadgeHtml(data: BadgeData): string {
-  const isAuto = data.theme === 'auto';
   const palette = data.theme === 'dark' ? BADGE_DARK_PALETTE : BADGE_LIGHT_PALETTE;
   const id = stableId(data);
   const cls = `a14y-badge-${id}`;
@@ -94,7 +93,7 @@ export function buildBadgeHtml(data: BadgeData): string {
 
   const segments = barSegments(data, palette);
 
-  const card = renderCard({
+  return renderCard({
     cls,
     palette,
     scoreColor,
@@ -110,11 +109,6 @@ export function buildBadgeHtml(data: BadgeData): string {
     na: data.na,
     segments,
   });
-
-  if (!isAuto) return card;
-
-  const style = autoThemeCss(cls, BADGE_LIGHT_PALETTE, BADGE_DARK_PALETTE);
-  return card + style;
 }
 
 interface RenderArgs {
@@ -141,8 +135,7 @@ function renderCard(a: RenderArgs): string {
     `display:block;text-decoration:none;color:${p.text};` +
     `background:${p.bg};border:1px solid ${p.border};border-radius:14px;` +
     `padding:22px 24px 20px;max-width:520px;width:100%;box-sizing:border-box;` +
-    `font-family:${FONT_STACK};line-height:1.4;` +
-    `box-shadow:0 1px 0 ${p.border} inset;`;
+    `font-family:${FONT_STACK};line-height:1.4;`;
 
   const headerStyle =
     `display:flex;justify-content:space-between;align-items:center;` +
@@ -197,12 +190,11 @@ function renderCard(a: RenderArgs): string {
     )
     .join('');
 
-  // No nested-card background — a top divider separates the footer from the
-  // stats row instead, keeping the footer as a flat text block.
+  // No nested-card background and no eyebrow — a top divider separates the
+  // footer from the stats row, and the line speaks for itself.
   const tryStyle =
     `border-top:1px solid ${p.border};padding:14px 0 0;margin-top:4px;` +
     `font-family:${MONO_STACK};font-size:11px;line-height:1.5;color:${p.textMuted};`;
-  const tryEyebrow = `font-size:10px;letter-spacing:.12em;color:${p.textSubtle};display:block;margin-bottom:4px;`;
 
   return (
     `<a class="a14y-badge ${a.cls}" href="https://a14y.dev" target="_blank" rel="noopener" style="${outerStyle}">` +
@@ -225,81 +217,10 @@ function renderCard(a: RenderArgs): string {
     `</div>` +
     `<div class="${a.cls}__stats" style="${statsRowStyle}">${statsHtml}</div>` +
     `<div class="${a.cls}__tryit" style="${tryStyle}">` +
-    `<span style="${tryEyebrow}">TRY IT</span>` +
     `Try a14y on your own site: https://a14y.dev` +
     `</div>` +
     `</a>`
   );
-}
-
-function autoThemeCss(
-  cls: string,
-  light: BadgePalette,
-  dark: BadgePalette,
-): string {
-  // For auto theme we keep the light palette baked into inline styles (so
-  // light-mode browsers render correctly without any CSS) and emit a
-  // scoped @media (prefers-color-scheme: dark) block that swaps every
-  // light token for its dark equivalent via attribute selectors.
-  //
-  // !important is required because inline styles otherwise outrank
-  // selector rules. The selectors are scoped to the unique class so the
-  // overrides cannot leak into the host site.
-  const root = `.${cls}`;
-
-  // Use Maps so duplicate hex values (e.g. statusPass shares its hex with
-  // scoreExcellent) collapse to a single rule.
-  const colorSwaps = new Map<string, string>();
-  const bgSwaps = new Map<string, string>();
-  const borderSwaps = new Map<string, string>();
-
-  const colorTokens: (keyof BadgePalette)[] = [
-    'text',
-    'textMuted',
-    'textSubtle',
-    'brand',
-    'scoreExcellent',
-    'scoreGood',
-    'scoreFair',
-    'scorePoor',
-  ];
-  const bgTokens: (keyof BadgePalette)[] = [
-    'bg',
-    'surface',
-    'surfaceAlt',
-    'statusPass',
-    'statusFail',
-    'statusWarn',
-    'statusError',
-    'statusNa',
-  ];
-  const borderTokens: (keyof BadgePalette)[] = ['border'];
-
-  for (const t of colorTokens) colorSwaps.set(light[t], dark[t]);
-  for (const t of bgTokens) bgSwaps.set(light[t], dark[t]);
-  for (const t of borderTokens) borderSwaps.set(light[t], dark[t]);
-
-  const rules: string[] = [];
-  for (const [l, d] of colorSwaps) {
-    rules.push(
-      `${root}[style*="color:${l}"],${root} [style*="color:${l}"]{color:${d} !important;}`,
-    );
-  }
-  for (const [l, d] of bgSwaps) {
-    rules.push(
-      `${root}[style*="background:${l}"],${root} [style*="background:${l}"]{background:${d} !important;}`,
-    );
-  }
-  for (const [l, d] of borderSwaps) {
-    // Inline styles use shorthand `border:1px solid <hex>` and
-    // `border-bottom:1px dashed <hex>`. A targeted `border-color:` override
-    // covers both shorthand declarations.
-    rules.push(
-      `${root}[style*="${l}"],${root} [style*="${l}"]{border-color:${d} !important;}`,
-    );
-  }
-
-  return `<style>@media (prefers-color-scheme: dark){${rules.join('')}}</style>`;
 }
 
 function bandColor(score: number, p: BadgePalette): string {

@@ -74,11 +74,13 @@ describe('parseBadgeParams', () => {
     expect(parseBadgeParams('?s=abc&a=10&t=20')).toBeNull();
   });
 
-  it('clamps theme to one of light|dark|auto, defaulting to light', () => {
+  it('clamps theme to light or dark; auto and unknown fall back to light', () => {
     const built = buildBadgeUrl(baseRun);
-    expect(parseBadgeParams(new URL(built + '&theme=neon').search)?.theme).toBe('light');
-    expect(parseBadgeParams(new URL(built + '&theme=auto').search)?.theme).toBe('auto');
     expect(parseBadgeParams(new URL(built + '&theme=dark').search)?.theme).toBe('dark');
+    expect(parseBadgeParams(new URL(built + '&theme=neon').search)?.theme).toBe('light');
+    // Stale snippets generated before round-3 may carry theme=auto. Treat
+    // them as light rather than throwing or rendering with a removed branch.
+    expect(parseBadgeParams(new URL(built + '&theme=auto').search)?.theme).toBe('light');
   });
 
   it('drops mode when it is not page|site', () => {

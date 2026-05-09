@@ -22,10 +22,10 @@ describe('badge.astro (TJ-423)', () => {
     expect(page).toMatch(/id="copy-embed"[^>]*>[\s\S]*?Copy/);
   });
 
-  it('exposes the three theme radios (light/dark/auto)', () => {
+  it('exposes the two theme radios (light/dark) — auto was removed', () => {
     expect(page).toMatch(/name="badge-theme"[^>]*value="light"/);
     expect(page).toMatch(/name="badge-theme"[^>]*value="dark"/);
-    expect(page).toMatch(/name="badge-theme"[^>]*value="auto"/);
+    expect(page).not.toMatch(/name="badge-theme"[^>]*value="auto"/);
   });
 
   it('renders an empty-state explainer for the no-params case', () => {

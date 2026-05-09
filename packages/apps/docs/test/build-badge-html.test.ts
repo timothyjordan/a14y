@@ -63,17 +63,18 @@ describe('buildBadgeHtml', () => {
     expect(buildBadgeHtml(data)).toMatch(/<a [^>]*href="https:\/\/a14y\.dev"[^>]*>/);
   });
 
-  it('renders a "TRY IT" footer with a stable a14y.dev URL (not the npx command)', () => {
+  it('renders a stable footer line pointing at https://a14y.dev (no eyebrow, no npx command)', () => {
     const html = buildBadgeHtml(data);
-    expect(html).toContain('TRY IT');
     expect(html).toContain('Try a14y on your own site: https://a14y.dev');
-    // The per-run npx command + audited URL are gone — the footer is now a
-    // stable invitation that works for embedders without CLI familiarity.
+    // The "TRY IT" eyebrow was redundant with the body line. Body alone now.
+    expect(html).not.toContain('TRY IT');
+    // Per-run npx command + audited URL are gone — the footer is a stable
+    // invitation that works for embedders without CLI familiarity.
     expect(html).not.toMatch(/npx\s+a14y/);
     expect(html).not.toContain('https://example.com');
   });
 
-  it('keeps the static TRY IT footer when the audited URL is missing', () => {
+  it('keeps the static footer when the audited URL is missing', () => {
     const html = buildBadgeHtml({ ...data, url: undefined });
     expect(html).toContain('Try a14y on your own site: https://a14y.dev');
   });
@@ -87,15 +88,6 @@ describe('buildBadgeHtml', () => {
   it('uses the dark palette and emits no <style> tag in dark theme', () => {
     const html = buildBadgeHtml({ ...data, theme: 'dark' });
     expect(html).not.toContain('<style');
-    expect(html).toContain(BADGE_DARK_PALETTE.bg);
-  });
-
-  it('emits a scoped <style> block with prefers-color-scheme in auto theme', () => {
-    const html = buildBadgeHtml({ ...data, theme: 'auto' });
-    expect(html).toContain('<style>');
-    expect(html).toMatch(/@media\s*\(prefers-color-scheme:\s*dark\)/);
-    // Both palettes' background must appear so the @media swap has values.
-    expect(html).toContain(BADGE_LIGHT_PALETTE.bg);
     expect(html).toContain(BADGE_DARK_PALETTE.bg);
   });
 
@@ -116,13 +108,12 @@ describe('buildBadgeHtml', () => {
     }
   });
 
-  it('returns markup safe to embed (single root anchor + optional <style>)', () => {
-    const light = buildBadgeHtml({ ...data, theme: 'light' });
-    expect(light.trim().startsWith('<a')).toBe(true);
-    expect(light.trim().endsWith('</a>')).toBe(true);
-
-    const auto = buildBadgeHtml({ ...data, theme: 'auto' });
-    expect(auto.trim().startsWith('<a')).toBe(true);
-    expect(auto.trim().endsWith('</style>')).toBe(true);
+  it('returns a single self-contained anchor element regardless of theme', () => {
+    for (const theme of ['light', 'dark'] as const) {
+      const html = buildBadgeHtml({ ...data, theme });
+      expect(html.trim().startsWith('<a')).toBe(true);
+      expect(html.trim().endsWith('</a>')).toBe(true);
+      expect(html).not.toContain('<style');
+    }
   });
 });

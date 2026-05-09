@@ -6,7 +6,7 @@ import { DOCS_BASE_URL } from '../scorecard/docsUrl';
 // the URL compact for paste-friendliness.
 export const BADGE_BASE_URL = DOCS_BASE_URL;
 
-export type BadgeTheme = 'light' | 'dark' | 'auto';
+export type BadgeTheme = 'light' | 'dark';
 
 export interface BadgeData {
   score: number;
@@ -50,8 +50,9 @@ export function parseBadgeParams(search: string | URLSearchParams): BadgeData | 
   const applicable = numOrNull(q.get('a'));
   const total = numOrNull(q.get('t'));
   if (score === null || applicable === null || total === null) return null;
-  const themeRaw = q.get('theme');
-  const theme: BadgeTheme = themeRaw === 'dark' || themeRaw === 'auto' ? themeRaw : 'light';
+  // theme=dark is the only opt-in; everything else (including a stale
+  // theme=auto from earlier snippets) falls back to light.
+  const theme: BadgeTheme = q.get('theme') === 'dark' ? 'dark' : 'light';
   const modeRaw = q.get('m');
   return {
     score,

@@ -402,15 +402,25 @@ function printTextReport(run: SiteRun): void {
 }
 
 function printShareBlock(run: SiteRun): void {
+  // The post is wrapped in a pair of dashed rules. The label "Copy and paste
+  // this post " is folded into the start rule so the box reads as a single
+  // visual envelope; the end rule is plain dashes of equal length. Rule
+  // lines are dim gray; the post body keeps the default terminal color so it
+  // stands out as the copyable content.
+  const ruleWidth = 72;
+  const startLabel = 'Copy and paste this post ';
+  const startRule = startLabel + '-'.repeat(Math.max(ruleWidth - startLabel.length, 0));
+  const endRule = '-'.repeat(ruleWidth);
+
   console.log('');
   console.log(chalk.bold('Share your score'));
-  console.log(chalk.gray('  Copy and paste:'));
-  console.log('');
+  console.log(chalk.gray(startRule));
   for (const line of formatShareSummary(run, { surface: 'cli' }).split('\n')) {
-    console.log('  ' + line);
+    console.log(line);
   }
+  console.log(chalk.gray(endRule));
   console.log('');
-  console.log(chalk.gray('  Embed badge: ') + buildBadgeUrl(run));
+  console.log(chalk.gray('Embed badge: ' + buildBadgeUrl(run)));
   console.log('');
 }
 
