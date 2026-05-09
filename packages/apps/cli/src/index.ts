@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import {
   DRAFT_SCORECARD_VERSION,
   LATEST_SCORECARD,
+  buildBadgeUrl,
   formatShareSummary,
   isDraftScorecardVersion,
   listScorecards,
@@ -408,6 +409,8 @@ function printShareBlock(run: SiteRun): void {
   for (const line of formatShareSummary(run, { surface: 'cli' }).split('\n')) {
     console.log('  ' + line);
   }
+  console.log('');
+  console.log(chalk.gray('  Embed badge: ') + buildBadgeUrl(run));
   console.log('');
 }
 

@@ -149,6 +149,17 @@ describe('a14y CLI', () => {
     expect(() => JSON.parse(stdout)).not.toThrow();
   });
 
+  it('printShareBlock wires buildBadgeUrl into the Share output (TJ-425)', async () => {
+    // The actual run path requires a network round-trip, so assert against
+    // the source — same shape as the share-popover test in the extension.
+    const src = await import('node:fs').then((fs) =>
+      fs.promises.readFile(path.resolve(__dirname, '../src/index.ts'), 'utf-8'),
+    );
+    expect(src).toMatch(/import\s*\{[\s\S]*?buildBadgeUrl[\s\S]*?\}\s*from\s*['"]@a14y\/core['"]/);
+    // The Share block ends with an "Embed badge: <url>" line.
+    expect(src).toMatch(/printShareBlock[\s\S]*?Embed badge[\s\S]*?buildBadgeUrl\(run\)/);
+  });
+
   it('rejects unknown --output values', async () => {
     // Regression for TJ-151: the validator should know about
     // text/json/agent-prompt and reject anything else with a clear
