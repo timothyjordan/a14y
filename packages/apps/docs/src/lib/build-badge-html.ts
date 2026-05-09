@@ -121,7 +121,7 @@ export function buildBadgeHtml(data: BadgeData): string {
 
   if (!isAuto) return card;
 
-  const style = autoThemeCss(cls, BADGE_LIGHT_PALETTE, BADGE_DARK_PALETTE, data.score);
+  const style = autoThemeCss(cls, BADGE_LIGHT_PALETTE, BADGE_DARK_PALETTE);
   return card + style;
 }
 
@@ -246,31 +246,70 @@ function autoThemeCss(
   cls: string,
   light: BadgePalette,
   dark: BadgePalette,
-  score: number,
 ): string {
-  // Dark-mode overrides via @media. We use !important because inline styles
-  // (set above for the light defaults) win over class selectors otherwise.
-  // The selector list is exhaustive against every styled descendant, scoped
-  // to the unique class so it can't leak into the host site.
+  // For auto theme we keep the light palette baked into inline styles (so
+  // light-mode browsers render correctly without any CSS) and emit a
+  // scoped @media (prefers-color-scheme: dark) block that swaps every
+  // light token for its dark equivalent via attribute selectors.
+  //
+  // !important is required because inline styles otherwise outrank
+  // selector rules. The selectors are scoped to the unique class so the
+  // overrides cannot leak into the host site.
   const root = `.${cls}`;
-  const scoreDark = bandColor(score, dark);
-  const lines = [
-    `${root}{background:${dark.bg}!important;color:${dark.text}!important;border-color:${dark.border}!important;box-shadow:0 1px 0 ${dark.border} inset!important;}`,
-    `${root}__header{color:${dark.textSubtle}!important;border-bottom-color:${dark.border}!important;}`,
-    `${root}__circle{background:${dark.surface}!important;border-color:${dark.border}!important;}`,
-    `${root}__score{color:${scoreDark}!important;}`,
-    `${root}__logo,${root}__wordmark{color:${dark.brand}!important;}`,
-    `${root}__host{color:${dark.textMuted}!important;}`,
-    `${root}__bar{background:${dark.surfaceAlt}!important;}`,
-    `${root}__caption{color:${dark.textMuted}!important;}`,
-    `${root}__tryit{background:${dark.surfaceAlt}!important;color:${dark.textMuted}!important;}`,
-  ];
-  // Color-coded stats dots (light → dark mapping by index)
-  const lightDots = [light.statusPass, light.statusFail, light.statusWarn, light.statusError, light.statusNa];
-  const darkDots = [dark.statusPass, dark.statusFail, dark.statusWarn, dark.statusError, dark.statusNa];
-  const dotRules = lightDots.map((l, i) => `${root}__stats span[style*="background:${l}"]{background:${darkDots[i]}!important;}`);
 
-  return `<style>@media (prefers-color-scheme: dark){${[...lines, ...dotRules].join('')}}</style>`;
+  // Use Maps so duplicate hex values (e.g. statusPass shares its hex with
+  // scoreExcellent) collapse to a single rule.
+  const colorSwaps = new Map<string, string>();
+  const bgSwaps = new Map<string, string>();
+  const borderSwaps = new Map<string, string>();
+
+  const colorTokens: (keyof BadgePalette)[] = [
+    'text',
+    'textMuted',
+    'textSubtle',
+    'brand',
+    'scoreExcellent',
+    'scoreGood',
+    'scoreFair',
+    'scorePoor',
+  ];
+  const bgTokens: (keyof BadgePalette)[] = [
+    'bg',
+    'surface',
+    'surfaceAlt',
+    'statusPass',
+    'statusFail',
+    'statusWarn',
+    'statusError',
+    'statusNa',
+  ];
+  const borderTokens: (keyof BadgePalette)[] = ['border'];
+
+  for (const t of colorTokens) colorSwaps.set(light[t], dark[t]);
+  for (const t of bgTokens) bgSwaps.set(light[t], dark[t]);
+  for (const t of borderTokens) borderSwaps.set(light[t], dark[t]);
+
+  const rules: string[] = [];
+  for (const [l, d] of colorSwaps) {
+    rules.push(
+      `${root}[style*="color:${l}"],${root} [style*="color:${l}"]{color:${d} !important;}`,
+    );
+  }
+  for (const [l, d] of bgSwaps) {
+    rules.push(
+      `${root}[style*="background:${l}"],${root} [style*="background:${l}"]{background:${d} !important;}`,
+    );
+  }
+  for (const [l, d] of borderSwaps) {
+    // Inline styles use shorthand `border:1px solid <hex>` and
+    // `border-bottom:1px dashed <hex>`. A targeted `border-color:` override
+    // covers both shorthand declarations.
+    rules.push(
+      `${root}[style*="${l}"],${root} [style*="${l}"]{border-color:${d} !important;}`,
+    );
+  }
+
+  return `<style>@media (prefers-color-scheme: dark){${rules.join('')}}</style>`;
 }
 
 function bandColor(score: number, p: BadgePalette): string {

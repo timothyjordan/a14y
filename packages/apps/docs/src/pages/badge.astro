@@ -1,0 +1,199 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Embed your a14y badge"
+  description="Generate a copy-paste HTML snippet that displays your agent readability score on your own site."
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">share</span>
+        <span>publish your score</span>
+      </div>
+      <h1>Embed your a14y badge</h1>
+      <p class="lead">
+        Drop the HTML below into your site to show off your agent
+        readability score. Everything is inline — no scripts, no CDN,
+        no tracking.
+      </p>
+    </div>
+  </section>
+
+  <section class="badge-stage">
+    <div class="badge-controls">
+      <span class="badge-controls-label">Theme</span>
+      <div class="badge-theme-radios" role="radiogroup" aria-label="Badge theme">
+        <label><input type="radio" name="badge-theme" value="light" checked /> Light</label>
+        <label><input type="radio" name="badge-theme" value="dark" /> Dark</label>
+        <label><input type="radio" name="badge-theme" value="auto" /> Auto</label>
+      </div>
+    </div>
+
+    <div id="badge-preview" class="badge-preview" aria-live="polite"></div>
+
+    <p id="badge-empty" class="badge-empty" hidden>
+      No score data in the URL. Run <code>npx -y a14y check &lt;url&gt;</code>
+      to print a share link, or click <strong>Share score → Embed badge</strong>
+      on the report page in the a14y Chrome extension.
+    </p>
+  </section>
+
+  <section class="badge-embed">
+    <h2>Embed code</h2>
+    <p class="lead">Copy this HTML and paste it where you want the badge to appear.</p>
+    <textarea id="embed-code" class="badge-embed-code" readonly rows="8" spellcheck="false" aria-label="Embed HTML"></textarea>
+    <div class="badge-embed-actions">
+      <button id="copy-embed" class="btn btn-primary" type="button">Copy</button>
+      <span id="copy-status" class="badge-copy-status" aria-live="polite"></span>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { parseBadgeParams, type BadgeTheme } from '@a14y/core';
+  import { buildBadgeHtml } from '~/lib/build-badge-html';
+
+  const previewEl = document.getElementById('badge-preview') as HTMLElement;
+  const emptyEl = document.getElementById('badge-empty') as HTMLElement;
+  const codeEl = document.getElementById('embed-code') as HTMLTextAreaElement;
+  const copyBtn = document.getElementById('copy-embed') as HTMLButtonElement;
+  const copyStatus = document.getElementById('copy-status') as HTMLElement;
+  const themeRadios = document.querySelectorAll<HTMLInputElement>(
+    'input[name="badge-theme"]',
+  );
+  const embedSection = document.querySelector('.badge-embed') as HTMLElement | null;
+  const themeFieldset = document.querySelector('.badge-controls') as HTMLElement | null;
+
+  const data = parseBadgeParams(window.location.search);
+
+  if (!data) {
+    emptyEl.hidden = false;
+    previewEl.hidden = true;
+    if (embedSection) embedSection.hidden = true;
+    if (themeFieldset) themeFieldset.hidden = true;
+  } else {
+    // Honor a `theme=` param on first load.
+    const initial = data.theme;
+    const radio = Array.from(themeRadios).find((r) => r.value === initial);
+    if (radio) radio.checked = true;
+    render(initial);
+
+    themeRadios.forEach((r) => {
+      r.addEventListener('change', () => {
+        if (!r.checked) return;
+        const t = r.value as BadgeTheme;
+        const u = new URL(window.location.href);
+        u.searchParams.set('theme', t);
+        history.replaceState(null, '', u.toString());
+        render(t);
+      });
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(codeEl.value);
+        copyStatus.textContent = 'Copied!';
+      } catch {
+        copyStatus.textContent = 'Copy failed — select the text and copy manually.';
+      }
+      window.setTimeout(() => {
+        copyStatus.textContent = '';
+      }, 1800);
+    });
+  }
+
+  function render(theme: BadgeTheme): void {
+    if (!data) return;
+    const html = buildBadgeHtml({ ...data, theme });
+    previewEl.innerHTML = html;
+    codeEl.value = html;
+  }
+</script>
+
+<style>
+  .badge-stage {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .badge-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .badge-controls[hidden] {
+    display: none;
+  }
+  .badge-controls-label {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    font-size: 0.7rem;
+  }
+  .badge-theme-radios {
+    display: inline-flex;
+    gap: 0.75rem;
+  }
+  .badge-theme-radios label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .badge-preview {
+    padding: clamp(1rem, 4vw, 2rem);
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg, 14px);
+    display: flex;
+    justify-content: center;
+  }
+  .badge-preview[hidden] {
+    display: none;
+  }
+  .badge-empty {
+    padding: 1.25rem 1.5rem;
+    background: var(--surface-alt);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-lg, 14px);
+    color: var(--text-muted);
+  }
+  .badge-empty[hidden] {
+    display: none;
+  }
+
+  .badge-embed {
+    margin-top: 2.5rem;
+  }
+  .badge-embed[hidden] {
+    display: none;
+  }
+  .badge-embed-code {
+    width: 100%;
+    min-height: 9rem;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 8px);
+    resize: vertical;
+  }
+  .badge-embed-actions {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .badge-copy-status {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>
