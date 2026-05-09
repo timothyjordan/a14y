@@ -1,0 +1,76 @@
+---
+import type { CheckResult } from '@a14y/core';
+import { checkDocsUrl } from '~/lib/research-data';
+
+interface Props {
+  check: CheckResult;
+  scorecardVersion: string;
+}
+
+const { check, scorecardVersion } = Astro.props;
+const href = check.docsUrl?.length ? check.docsUrl : checkDocsUrl(scorecardVersion, check.id);
+---
+
+<li class={`check-card status-${check.status}`}>
+  <a class="check-card-link" href={href}>
+    <span class="status-tag">{check.status.toUpperCase()}</span>
+    <span class="id">{check.id}</span>
+    {check.message && <span class="msg">{check.message}</span>}
+  </a>
+</li>
+
+<style>
+  .check-card {
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 120ms ease;
+  }
+  .check-card:hover { border-color: var(--border-strong); }
+  .check-card-link {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 14px;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--text);
+    align-items: baseline;
+  }
+  .status-tag {
+    grid-row: span 2;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    text-align: center;
+    min-width: 52px;
+    border: 1px solid currentColor;
+  }
+  .status-pass .status-tag { color: oklch(0.40 0.13 150); background: color-mix(in oklch, oklch(0.55 0.13 150) 18%, var(--surface)); }
+  .status-warn .status-tag { color: oklch(0.50 0.13 75); background: color-mix(in oklch, oklch(0.62 0.13 75) 18%, var(--surface)); }
+  .status-fail .status-tag,
+  .status-error .status-tag { color: oklch(0.45 0.18 25); background: color-mix(in oklch, oklch(0.55 0.18 25) 16%, var(--surface)); }
+  :root[data-theme='dark'] .status-pass .status-tag { color: oklch(0.85 0.13 150); }
+  :root[data-theme='dark'] .status-warn .status-tag { color: oklch(0.85 0.13 75); }
+  :root[data-theme='dark'] .status-fail .status-tag,
+  :root[data-theme='dark'] .status-error .status-tag { color: oklch(0.80 0.18 25); }
+
+  .check-card .id {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .check-card-link:hover .id { text-decoration: underline; }
+  .check-card .msg {
+    grid-column: 2;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+</style>

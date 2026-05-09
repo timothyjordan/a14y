@@ -1,5 +1,6 @@
 ---
 import { CATEGORY_LABELS, checkDocsUrl, scoreBand, type LeaderboardEntry } from '~/lib/research-data';
+import { siteRunUrl } from '~/lib/site-run';
 
 interface Props {
   entries: LeaderboardEntry[];
@@ -46,7 +47,7 @@ function hostOf(url: string): string {
         >
           <td class="col-rank"><span class="rank">{i + 1}</span></td>
           <td class="col-name">
-            <a href={entry.url} rel="nofollow noopener" target="_blank">
+            <a href={siteRunUrl(entry.slug)}>
               <span class="lb-name">{entry.name}</span>
               <span class="lb-host">{hostOf(entry.url)}</span>
             </a>

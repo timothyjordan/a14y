@@ -1,0 +1,375 @@
+---
+import type { GetStaticPaths } from 'astro';
+import type { LeaderboardEntry } from '~/lib/research-data';
+import type { SiteRun } from '@a14y/core';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import CheckResultCard from '~/components/research/CheckResultCard.astro';
+import PageDetails from '~/components/research/PageDetails.astro';
+import {
+  CATEGORY_LABELS,
+  getLeaderboard,
+  scoreBand,
+} from '~/lib/research-data';
+import { listSiteRunSlugs, loadSiteRun } from '~/lib/site-run';
+
+export const getStaticPaths = (() => {
+  const published = new Set(listSiteRunSlugs());
+  return getLeaderboard()
+    .filter((entry) => published.has(entry.slug))
+    .map((entry) => ({
+      params: { slug: entry.slug },
+      props: { entry, run: loadSiteRun(entry.slug)! },
+    }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: LeaderboardEntry;
+  run: SiteRun;
+}
+
+const { entry, run } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isSite = run.mode === 'site';
+const scannedAt = (() => {
+  const d = new Date(run.finishedAt);
+  return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
+})();
+const passSiteChecks = run.siteChecks.filter((c) => c.status === 'pass').length;
+
+const PAGE_SIZE = 50;
+const totalPages = run.pages.length;
+const isPaginated = totalPages > PAGE_SIZE;
+const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
+---
+
+<BaseLayout
+  title={`${entry.name} — a14y scorecard`}
+  description={`a14y scorecard for ${entry.name}: how well AI agents can discover, parse, and comprehend ${entry.url}. Score ${run.summary.score}/100 against scorecard v${run.scorecardVersion}.`}
+  wide={true}
+>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href={`${base}/research/`}>← Leaderboard</a>
+  </nav>
+
+  <header class="site-header">
+    <div class="site-title">
+      <h1>{entry.name}</h1>
+      <a class="visit-site" href={entry.url} rel="nofollow noopener" target="_blank">
+        Visit site ↗
+      </a>
+    </div>
+    <div class="site-meta">
+      <span class={`chip cat-${entry.category}`}>{CATEGORY_LABELS[entry.category]}</span>
+      <span class={`chip ${isSite ? 'site' : 'page'}`}>{isSite ? 'site scan' : 'page check'}</span>
+      <span class="meta-text">scorecard v{run.scorecardVersion}</span>
+      {scannedAt && <span class="meta-text">scanned {scannedAt}</span>}
+    </div>
+  </header>
+
+  <section class="scorecard-hero">
+    <div class="score-block">
+      <span class={`score-number score-${scoreBand(run.summary.score)}`}>{run.summary.score}</span>
+      <span class="score-out">/ 100</span>
+    </div>
+    <p class="score-summary">
+      <strong>{run.summary.passed}</strong> of {run.summary.applicable} checks passed
+      <span class="dot">·</span>
+      <strong>{totalPages}</strong> {totalPages === 1 ? 'page' : 'pages'} audited
+      {run.summary.failed > 0 && <><span class="dot">·</span><span class="fail-count">{run.summary.failed} failing</span></>}
+    </p>
+  </section>
+
+  {run.siteChecks.length > 0 && (
+    <section class="research-section">
+      <h2>Site checks <span class="count">· {passSiteChecks}/{run.siteChecks.length} passed</span></h2>
+      <p class="section-lead">
+        Evaluated once against the site's origin: discoverability surfaces like
+        <code>llms.txt</code>, <code>AGENTS.md</code>, and sitemap signals.
+      </p>
+      <ul class="check-list">
+        {run.siteChecks.map((check) => (
+          <CheckResultCard check={check} scorecardVersion={run.scorecardVersion} />
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="research-section" id="pages">
+    <h2>Pages <span class="count">· {totalPages}</span></h2>
+    {totalPages === 0 ? (
+      <p class="section-lead">No pages were audited for this site.</p>
+    ) : totalPages === 1 ? (
+      <>
+        <p class="section-lead">
+          Single page audited: <code>{run.pages[0].finalUrl}</code>.
+        </p>
+        <ul class="check-list">
+          {run.pages[0].checks.map((check) => (
+            <CheckResultCard check={check} scorecardVersion={run.scorecardVersion} />
+          ))}
+        </ul>
+      </>
+    ) : (
+      <>
+        <p class="section-lead">
+          Each page was audited against the same scorecard. Click a page to expand its check results.
+        </p>
+        {isPaginated && (
+          <>
+            <p class="visible-count" data-page-visible-count>
+              Showing 1–{Math.min(PAGE_SIZE, totalPages)} of {totalPages} pages.
+            </p>
+            <nav class="pager" aria-label="Pages pagination" data-page-pager>
+              <button type="button" class="pager-btn" data-page-prev disabled aria-label="Previous page">←</button>
+              <span class="pager-status" data-page-status>Page 1 of {pageCount}</span>
+              <button type="button" class="pager-btn" data-page-next aria-label="Next page" disabled={pageCount <= 1}>→</button>
+              <button type="button" class="pager-toggle" data-page-show-all aria-pressed="false">Show all</button>
+            </nav>
+          </>
+        )}
+        <div class="pages-list" data-pages-list data-page-size={PAGE_SIZE}>
+          {run.pages.map((page, i) => (
+            <div class="page-row" data-page-index={i} hidden={isPaginated && i >= PAGE_SIZE}>
+              <PageDetails page={page} scorecardVersion={run.scorecardVersion} />
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    margin: 0 0 16px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+  }
+  .breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { color: var(--text); text-decoration: underline; }
+
+  .site-header { margin-bottom: 24px; }
+  .site-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .site-title h1 { margin: 0; }
+  .visit-site {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .visit-site:hover { color: var(--text); border-color: var(--border-strong); }
+  .site-meta {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    align-items: center;
+  }
+  .meta-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+
+  .scorecard-hero {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 28px 0 40px;
+    padding: 24px 28px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-alt);
+  }
+  .score-block {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .score-number {
+    font-family: var(--font-mono);
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .score-excellent { color: oklch(0.40 0.13 150); }
+  .score-good      { color: oklch(0.42 0.10 200); }
+  .score-fair      { color: oklch(0.50 0.13 75); }
+  .score-poor      { color: oklch(0.45 0.18 25); }
+  :root[data-theme='dark'] .score-excellent { color: oklch(0.85 0.13 150); }
+  :root[data-theme='dark'] .score-good      { color: oklch(0.85 0.10 200); }
+  :root[data-theme='dark'] .score-fair      { color: oklch(0.85 0.13 75); }
+  :root[data-theme='dark'] .score-poor      { color: oklch(0.80 0.18 25); }
+  .score-out {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--text-subtle);
+  }
+  .score-summary {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .score-summary strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  .score-summary .dot { color: var(--text-subtle); margin: 0 6px; }
+  .score-summary .fail-count { color: oklch(0.45 0.18 25); }
+  :root[data-theme='dark'] .score-summary .fail-count { color: oklch(0.80 0.18 25); }
+
+  .research-section { margin-top: 48px; }
+  .research-section h2 {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .research-section h2 .count {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-subtle);
+  }
+  .section-lead {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: var(--text-muted);
+    max-width: 68ch;
+  }
+
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+  }
+
+  .visible-count {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    flex-wrap: wrap;
+  }
+  .pager[hidden] { display: none; }
+  .pager-btn,
+  .pager-toggle {
+    appearance: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .pager-btn { min-width: 36px; }
+  .pager-btn:hover:not(:disabled),
+  .pager-toggle:hover { border-color: var(--border-strong); }
+  .pager-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pager-toggle[aria-pressed='true'] {
+    background: var(--surface-alt);
+    border-color: var(--border-strong);
+  }
+  .pager-status {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    min-width: 10ch;
+    text-align: center;
+  }
+  .pager-toggle { margin-left: auto; }
+
+  .pages-list { display: grid; gap: 6px; }
+  .page-row[hidden] { display: none; }
+
+  .chip.site { background: color-mix(in oklch, oklch(0.55 0.10 200) 18%, var(--surface)); border-color: oklch(0.55 0.10 200 / 0.5); }
+  .chip.page { background: color-mix(in oklch, oklch(0.55 0.13 280) 16%, var(--surface)); border-color: oklch(0.55 0.13 280 / 0.5); }
+</style>
+
+<script is:inline>
+  // Vanilla pager for the per-site Pages section. Rows are pre-rendered and
+  // toggled via [hidden]. Same DOM shape as the leaderboard pager so styles
+  // cascade and the keyboard/aria semantics match.
+  (function () {
+    var pager = document.querySelector('[data-page-pager]');
+    var list = document.querySelector('[data-pages-list]');
+    if (!pager || !list) return;
+    var prevBtn = pager.querySelector('[data-page-prev]');
+    var nextBtn = pager.querySelector('[data-page-next]');
+    var statusEl = pager.querySelector('[data-page-status]');
+    var toggle = pager.querySelector('[data-page-show-all]');
+    var counter = document.querySelector('[data-page-visible-count]');
+    var pageSize = parseInt(list.getAttribute('data-page-size') || '50', 10);
+    var rows = Array.prototype.slice.call(list.querySelectorAll('.page-row'));
+    var total = rows.length;
+    var pageCount = Math.max(1, Math.ceil(total / pageSize));
+    var current = 1;
+    var showAll = false;
+
+    function apply() {
+      var start = showAll ? 0 : (current - 1) * pageSize;
+      var end = showAll ? total : start + pageSize;
+      for (var i = 0; i < rows.length; i++) {
+        if (i >= start && i < end) rows[i].removeAttribute('hidden');
+        else rows[i].setAttribute('hidden', 'hidden');
+      }
+      if (counter) {
+        if (showAll) {
+          counter.textContent = 'Showing all ' + total + ' pages.';
+        } else {
+          counter.textContent = 'Showing ' + (start + 1) + '–' + Math.min(end, total) + ' of ' + total + ' pages.';
+        }
+      }
+      if (statusEl) {
+        statusEl.textContent = showAll ? 'All ' + total : 'Page ' + current + ' of ' + pageCount;
+      }
+      if (prevBtn) prevBtn.disabled = showAll || current <= 1;
+      if (nextBtn) nextBtn.disabled = showAll || current >= pageCount;
+      if (toggle) {
+        toggle.setAttribute('aria-pressed', showAll ? 'true' : 'false');
+        toggle.textContent = showAll ? 'Paginate' : 'Show all';
+      }
+    }
+
+    function jump(delta) {
+      current += delta;
+      if (current < 1) current = 1;
+      if (current > pageCount) current = pageCount;
+      apply();
+      var anchor = document.getElementById('pages');
+      if (anchor && typeof anchor.scrollIntoView === 'function') {
+        anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { jump(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { jump(1); });
+    if (toggle) toggle.addEventListener('click', function () { showAll = !showAll; apply(); });
+    apply();
+  })();
+</script>

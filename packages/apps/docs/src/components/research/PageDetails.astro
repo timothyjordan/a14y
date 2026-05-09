@@ -1,0 +1,117 @@
+---
+import type { PageReport } from '@a14y/core';
+import CheckResultCard from './CheckResultCard.astro';
+import { scoreClass } from '~/lib/site-run';
+
+interface Props {
+  page: PageReport;
+  scorecardVersion: string;
+}
+
+const { page, scorecardVersion } = Astro.props;
+---
+
+<details class="page-details">
+  <summary>
+    <span class={`page-score score-${scoreClass(page.summary.score)}`}>{page.summary.score}</span>
+    <span class="page-url">{page.finalUrl}</span>
+    <span class="page-counts">{page.summary.passed}/{page.summary.applicable}</span>
+    <a class="page-visit" href={page.finalUrl} rel="nofollow noopener" target="_blank" aria-label={`Open ${page.finalUrl} in new tab`}>↗</a>
+  </summary>
+  {page.checks.length === 0 ? (
+    <p class="page-empty">No applicable checks for this page.</p>
+  ) : (
+    <ul class="check-list">
+      {page.checks.map((check) => (
+        <CheckResultCard check={check} scorecardVersion={scorecardVersion} />
+      ))}
+    </ul>
+  )}
+</details>
+
+<style>
+  .page-details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-bottom: 8px;
+  }
+  .page-details[open] { background: var(--surface-alt); }
+  .page-details summary {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .page-details summary::-webkit-details-marker { display: none; }
+  .page-details summary::before {
+    content: '▸';
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-subtle);
+    margin-right: -8px;
+    transition: transform 120ms ease;
+  }
+  .page-details[open] summary::before { transform: rotate(90deg); }
+  .page-score {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 999px;
+    min-width: 40px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .score-pass { color: oklch(0.40 0.13 150); border-color: oklch(0.55 0.13 150 / 0.7); background: color-mix(in oklch, oklch(0.55 0.13 150) 22%, var(--surface)); }
+  .score-warn { color: oklch(0.50 0.13 75); border-color: oklch(0.62 0.13 75 / 0.7); background: color-mix(in oklch, oklch(0.62 0.13 75) 22%, var(--surface)); }
+  .score-fail { color: oklch(0.45 0.18 25); border-color: oklch(0.55 0.18 25 / 0.7); background: color-mix(in oklch, oklch(0.55 0.18 25) 20%, var(--surface)); }
+  :root[data-theme='dark'] .score-pass { color: oklch(0.85 0.13 150); }
+  :root[data-theme='dark'] .score-warn { color: oklch(0.85 0.13 75); }
+  :root[data-theme='dark'] .score-fail { color: oklch(0.80 0.18 25); }
+
+  .page-url {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .page-counts {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+  .page-visit {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .page-visit:hover {
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .check-list {
+    list-style: none;
+    padding: 0 14px 14px;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .page-empty {
+    margin: 0;
+    padding: 0 14px 14px;
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+</style>
