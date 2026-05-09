@@ -8,9 +8,8 @@ import PageDetails from '~/components/research/PageDetails.astro';
 import {
   CATEGORY_LABELS,
   getLeaderboard,
-  scoreBand,
 } from '~/lib/research-data';
-import { listSiteRunSlugs, loadSiteRun } from '~/lib/site-run';
+import { listSiteRunSlugs, loadSiteRun, scoreClass } from '~/lib/site-run';
 
 export const getStaticPaths = (() => {
   const published = new Set(listSiteRunSlugs());
@@ -68,15 +67,9 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
   </header>
 
   <section class="scorecard-hero">
-    <div class="score-block">
-      <span class={`score-number score-${scoreBand(run.summary.score)}`}>{run.summary.score}</span>
-      <span class="score-out">/ 100</span>
-    </div>
-    <p class="score-summary">
-      <strong>{run.summary.passed}</strong> of {run.summary.applicable} checks passed
-      <span class="dot">·</span>
-      <strong>{totalPages}</strong> {totalPages === 1 ? 'page' : 'pages'} audited
-      {run.summary.failed > 0 && <><span class="dot">·</span><span class="fail-count">{run.summary.failed} failing</span></>}
+    <span class={`score-number score-${scoreClass(run.summary.score)}`}>{run.summary.score}</span>
+    <p class="score-meta">
+      out of 100 <span class="dot">·</span> scorecard v{run.scorecardVersion} <span class="dot">·</span> {run.summary.passed}/{run.summary.applicable} checks passed <span class="dot">·</span> {totalPages} {totalPages === 1 ? 'page' : 'pages'}
     </p>
   </section>
 
@@ -161,16 +154,23 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
   }
   .site-title h1 { margin: 0; }
   .visit-site {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
     font-family: var(--font-mono);
     font-size: 13px;
     color: var(--text-muted);
     text-decoration: none;
-    padding: 4px 10px;
+    padding: 6px 14px;
     border: 1px solid var(--border);
     border-radius: 999px;
     transition: border-color 120ms ease, color 120ms ease;
   }
   .visit-site:hover { color: var(--text); border-color: var(--border-strong); }
+  .visit-site:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
   .site-meta {
     margin-top: 10px;
     display: flex;
@@ -184,52 +184,43 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
     color: var(--text-subtle);
   }
 
+  /* Scorecard hero: a card whose only status signal is the big colored
+     score number. No side stripes (the colored numeral is louder than
+     any 4px bar), no background tint that competes with the rest of
+     the page. The "57 out of 100 · scorecard v0.2.0 · 4936/8726
+     checks passed · 500 pages" meta line mirrors the extension's
+     copy verbatim so a developer who knows the extension reads it
+     fluently here. */
   .scorecard-hero {
     display: flex;
     align-items: baseline;
-    gap: 24px;
+    gap: 18px;
     flex-wrap: wrap;
-    margin: 28px 0 40px;
-    padding: 24px 28px;
+    margin: 24px 0 40px;
+    padding: 22px 24px;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-alt);
-  }
-  .score-block {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
   }
   .score-number {
     font-family: var(--font-mono);
-    font-size: 56px;
+    font-size: 48px;
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
   }
-  .score-excellent { color: oklch(0.40 0.13 150); }
-  .score-good      { color: oklch(0.42 0.10 200); }
-  .score-fair      { color: oklch(0.50 0.13 75); }
-  .score-poor      { color: oklch(0.45 0.18 25); }
-  :root[data-theme='dark'] .score-excellent { color: oklch(0.85 0.13 150); }
-  :root[data-theme='dark'] .score-good      { color: oklch(0.85 0.10 200); }
-  :root[data-theme='dark'] .score-fair      { color: oklch(0.85 0.13 75); }
-  :root[data-theme='dark'] .score-poor      { color: oklch(0.80 0.18 25); }
-  .score-out {
-    font-family: var(--font-mono);
-    font-size: 18px;
-    color: var(--text-subtle);
-  }
-  .score-summary {
+  .score-pass { color: var(--status-pass); }
+  .score-warn { color: var(--status-warn); }
+  .score-fail { color: var(--status-fail); }
+  .score-meta {
     margin: 0;
     color: var(--text-muted);
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.55;
   }
-  .score-summary strong { color: var(--text); font-variant-numeric: tabular-nums; }
-  .score-summary .dot { color: var(--text-subtle); margin: 0 6px; }
-  .score-summary .fail-count { color: oklch(0.45 0.18 25); }
-  :root[data-theme='dark'] .score-summary .fail-count { color: oklch(0.80 0.18 25); }
+  .score-meta .dot { color: var(--text-subtle); margin: 0 4px; }
 
   .research-section { margin-top: 48px; }
   .research-section h2 {

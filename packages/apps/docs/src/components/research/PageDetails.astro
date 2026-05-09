@@ -16,7 +16,6 @@ const { page, scorecardVersion } = Astro.props;
     <span class={`page-score score-${scoreClass(page.summary.score)}`}>{page.summary.score}</span>
     <span class="page-url">{page.finalUrl}</span>
     <span class="page-counts">{page.summary.passed}/{page.summary.applicable}</span>
-    <a class="page-visit" href={page.finalUrl} rel="nofollow noopener" target="_blank" aria-label={`Open ${page.finalUrl} in new tab`}>↗</a>
   </summary>
   {page.checks.length === 0 ? (
     <p class="page-empty">No applicable checks for this page.</p>
@@ -35,48 +34,50 @@ const { page, scorecardVersion } = Astro.props;
     border-radius: var(--radius);
     background: var(--surface);
     margin-bottom: 8px;
+    box-shadow: var(--shadow-card);
   }
-  .page-details[open] { background: var(--surface-alt); }
-  .page-details summary {
-    display: grid;
-    grid-template-columns: auto 1fr auto auto;
-    gap: 14px;
-    align-items: center;
-    padding: 10px 14px;
+  .page-details > summary {
     cursor: pointer;
     list-style: none;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    min-height: 44px;
+    font-weight: 600;
   }
-  .page-details summary::-webkit-details-marker { display: none; }
-  .page-details summary::before {
+  .page-details > summary::-webkit-details-marker { display: none; }
+  .page-details > summary:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+  .page-details > summary::before {
     content: '▸';
-    font-family: var(--font-mono);
-    font-size: 11px;
+    display: inline-block;
     color: var(--text-subtle);
-    margin-right: -8px;
+    font-size: 12px;
+    line-height: 1;
     transition: transform 120ms ease;
   }
-  .page-details[open] summary::before { transform: rotate(90deg); }
+  .page-details[open] > summary::before { transform: rotate(90deg); }
+
   .page-score {
     font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 2px 10px;
-    border-radius: 999px;
-    min-width: 40px;
-    text-align: center;
-    border: 1px solid var(--border);
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
   }
-  .score-pass { color: oklch(0.40 0.13 150); border-color: oklch(0.55 0.13 150 / 0.7); background: color-mix(in oklch, oklch(0.55 0.13 150) 22%, var(--surface)); }
-  .score-warn { color: oklch(0.50 0.13 75); border-color: oklch(0.62 0.13 75 / 0.7); background: color-mix(in oklch, oklch(0.62 0.13 75) 22%, var(--surface)); }
-  .score-fail { color: oklch(0.45 0.18 25); border-color: oklch(0.55 0.18 25 / 0.7); background: color-mix(in oklch, oklch(0.55 0.18 25) 20%, var(--surface)); }
-  :root[data-theme='dark'] .score-pass { color: oklch(0.85 0.13 150); }
-  :root[data-theme='dark'] .score-warn { color: oklch(0.85 0.13 75); }
-  :root[data-theme='dark'] .score-fail { color: oklch(0.80 0.18 25); }
+  .score-pass { color: var(--status-pass); }
+  .score-warn { color: var(--status-warn); }
+  .score-fail { color: var(--status-fail); }
 
   .page-url {
     font-family: var(--font-mono);
     font-size: 13px;
-    color: var(--text);
+    color: var(--text-muted);
+    font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -87,30 +88,18 @@ const { page, scorecardVersion } = Astro.props;
     font-size: 12px;
     color: var(--text-subtle);
     font-variant-numeric: tabular-nums;
-  }
-  .page-visit {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    color: var(--text-muted);
-    text-decoration: none;
-    border: 1px solid transparent;
-  }
-  .page-visit:hover {
-    color: var(--text);
-    border-color: var(--border);
+    font-weight: 400;
   }
   .check-list {
     list-style: none;
-    padding: 0 14px 14px;
-    margin: 0;
+    padding: 0 14px 14px 38px;
+    margin: 6px 0 0;
     display: grid;
     gap: 6px;
   }
   .page-empty {
     margin: 0;
-    padding: 0 14px 14px;
+    padding: 0 14px 14px 38px;
     font-size: 13px;
     color: var(--text-subtle);
   }
