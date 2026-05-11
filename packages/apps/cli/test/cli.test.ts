@@ -149,6 +149,19 @@ describe('a14y CLI', () => {
     expect(() => JSON.parse(stdout)).not.toThrow();
   });
 
+  it('printTextReport hints at --mode site for single-page reviews (TJ-428)', async () => {
+    // page mode is the CLI default. The text report needs to make clear that
+    // only one URL was audited and that --mode site exists for a full crawl,
+    // otherwise users may mistake a single-page review for a full audit.
+    // Asserting against source matches the TJ-425 pattern below — exercising
+    // the live code path requires a network round-trip the suite avoids.
+    const src = await import('node:fs').then((fs) =>
+      fs.promises.readFile(path.resolve(__dirname, '../src/index.ts'), 'utf-8'),
+    );
+    expect(src).toMatch(/printTextReport[\s\S]*run\.mode === 'page'[\s\S]*--mode site/);
+    expect(src).toMatch(/Single-page review/);
+  });
+
   it('printShareBlock wires buildBadgeUrl into the Share output (TJ-425)', async () => {
     // The actual run path requires a network round-trip, so assert against
     // the source — same shape as the share-popover test in the extension.

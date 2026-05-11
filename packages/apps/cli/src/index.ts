@@ -399,6 +399,17 @@ function printTextReport(run: SiteRun): void {
       );
     }
   }
+
+  // TJ-428: page mode is the default and only audits the URL provided.
+  // Site-scope checks (llms.txt, sitemap, AGENTS.md) still run, but per-page
+  // checks aren't evaluated against the rest of the origin. Surface that
+  // explicitly so users don't mistake a single-page review for a full audit.
+  if (run.mode === 'page') {
+    console.log('');
+    console.log(chalk.gray(`Single-page review — only ${run.pages[0].finalUrl} was audited.`));
+    console.log(chalk.gray('For a full-site audit (crawls every reachable page) run:'));
+    console.log('  ' + chalk.cyan(`a14y ${run.url} --mode site`));
+  }
 }
 
 function printShareBlock(run: SiteRun): void {
