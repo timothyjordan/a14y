@@ -408,7 +408,7 @@ function printTextReport(run: SiteRun): void {
   // reads as "heads up" rather than another gray detail line.
   if (run.mode === 'page') {
     console.log('');
-    console.log(`${chalk.yellow('!')} Single-page review — only ${run.pages[0].finalUrl} was audited.`);
+    console.log(`${chalk.yellow('!')} Single-page review: only ${run.pages[0].finalUrl} was audited.`);
     console.log('  For a full-site audit (crawls every reachable page) run:');
     console.log('  ' + chalk.cyan(`a14y ${run.url} --mode site`));
   }
