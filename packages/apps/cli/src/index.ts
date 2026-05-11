@@ -46,7 +46,7 @@ const program = new Command();
 program
   .name('a14y')
   .description('Agent readability scorer — audits any website against the versioned a14y scorecard')
-  .version('0.4.9') // x-release-please-version
+  .version('0.4.10') // x-release-please-version
   .option('--no-telemetry', 'disable anonymous usage telemetry for this run');
 
 program
