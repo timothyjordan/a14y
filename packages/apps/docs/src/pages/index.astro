@@ -5,18 +5,39 @@ import {
   getScorecardByVersion,
   getCheckSummariesForScorecard,
 } from '~/lib/scorecard-data';
+import { buildBadgeHtml } from '~/lib/build-badge-html';
+import type { BadgeData } from '@a14y/core';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
-const latestChecks = getCheckSummariesForScorecard(latest);
-const siteCount = latestChecks.filter((c) => c.scope === 'site').length;
-const pageCount = latestChecks.filter((c) => c.scope === 'page').length;
-const totalChecks = latestChecks.length;
+const totalChecks = getCheckSummariesForScorecard(latest).length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const installCmd = 'npm install -g a14y';
 const runCmd = 'npx a14y your-site.com';
 const skillInstallCmd = 'npx skills add timothyjordan/a14y';
+
+// Hero badge — a14y.dev's own readability score, rendered at build time
+// from the same `buildBadgeHtml` powering /badge/. Values mirror the
+// summary the CLI prints when run against the live site so the hero
+// stays truthful. Both palettes are emitted; CSS hides the one that
+// doesn't match the current `[data-theme]`.
+const heroBadgeBase = {
+  score: 92,
+  scorecardVersion: latest,
+  applicable: 36,
+  total: 38,
+  passed: 33,
+  failed: 3,
+  warned: 0,
+  errored: 0,
+  na: 2,
+  date: released.slice(0, 10),
+  mode: 'site' as const,
+  url: 'https://a14y.dev/',
+};
+const heroBadgeLightHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'light' } satisfies BadgeData);
+const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } satisfies BadgeData);
 ---
 
 <BaseLayout
@@ -73,81 +94,66 @@ const skillInstallCmd = 'npx skills add timothyjordan/a14y';
       </div>
     </div>
 
-    <aside class="agent-panel" aria-label="What an agent sees on a14y.dev">
-      <pre class="agent-output" aria-label="Sample CLI output"><span class="ag-prompt">%</span> a14y https://a14y.dev
-<span class="ag-pass">✔</span> Score: 92/100
-
-Agent Readability Score: 92/100
-  scorecard 0.2.0 (released 2026-04-06) — mode page
-  33 pass · 3 fail · 0 warn · 0 error · 2 n/a (out of 38)
-
-Site checks
-  Discoverability
-    <span class="ag-pass">✓</span> llms-txt.exists             <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> robots-txt.allows-ai-bots   <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> sitemap-md.has-structure    <span class="ag-mute">site</span>
-    <span class="ag-pass">✓</span> agents-md.has-min-sections  <span class="ag-mute">site</span>
-
-Page checks — https://a14y.dev/
-  HTML metadata
-    <span class="ag-pass">✓</span> html.canonical-link         <span class="ag-mute">page</span>
-    <span class="ag-pass">✓</span> html.lang-attribute (en)    <span class="ag-mute">page</span>
-  Structured data
-    <span class="ag-pass">✓</span> html.json-ld.breadcrumb     <span class="ag-mute">page</span>
-  Markdown mirror
-    <span class="ag-pass">✓</span> markdown.mirror-suffix      <span class="ag-mute">page</span>
-    <span class="ag-fail">✗</span> markdown.canonical-header   <span class="ag-mute">page</span>
-    <span class="ag-fail">✗</span> markdown.content-negotiation <span class="ag-mute">page</span>
-  Code
-    <span class="ag-fail">✗</span> code.language-tags          <span class="ag-mute">page</span></pre>
+    <aside class="hero-badge" aria-label="a14y.dev's own readability score">
+      <span class="hero-badge-variant hero-badge-variant--light">
+        <Fragment set:html={heroBadgeLightHtml} />
+      </span>
+      <span class="hero-badge-variant hero-badge-variant--dark" aria-hidden="true">
+        <Fragment set:html={heroBadgeDarkHtml} />
+      </span>
+      <a class="hero-badge-link" href={`${base}/badge/`}>Embed your own →</a>
     </aside>
   </section>
 
   <hr class="section-rule" aria-hidden="true" />
 
-  <section class="section section--tight" aria-label="What a14y offers">
+  <section class="section section--tight" aria-labelledby="steps-heading">
     <div class="section-head">
-      <h2>Three pillars</h2>
+      <h2 id="steps-heading">Three steps to an agent-readable site</h2>
       <p class="section-sub">
-        The spec defines what agent-readable means. The scorecard turns
-        it into pass-or-fail checks. The tools run those checks against
-        any URL.
+        Score it, fix it, prove it. The same loop works in your
+        terminal, your browser, or your coding agent — backed by an
+        <a href={`${base}/spec/`}>open spec</a> and a versioned
+        <a href={`${base}/scorecards/${latest}/`}>scorecard</a>.
       </p>
     </div>
 
-    <div class="pillars">
-      <a class="pillar-card pillar-card--external" href={`${base}/spec/`}>
-        <span class="pillar-label">Pillar 01 · open</span>
-        <span class="pillar-title">The spec</span>
-        <span class="pillar-desc">
-          Three layers (discoverability, parsing, comprehension) that
-          any site can implement to become readable to AI agents.
-        </span>
-        <span class="pillar-link">Read the spec</span>
-      </a>
+    <ol class="steps">
+      <li class="step-card">
+        <span class="step-num">01</span>
+        <h3>Run the scorecard</h3>
+        <p>
+          From the <a href="#tools">CLI</a>, the
+          {' '}<a href={`${base}/chrome-extension/`}>Chrome extension</a>,
+          or by handing the job to a coding agent with the a14y skill.
+          Same engine, same score.
+        </p>
+      </li>
+      <li class="step-card">
+        <span class="step-num">02</span>
+        <h3>Fix what failed</h3>
+        <p>
+          Every failing check links to its detection rule and a fix.
+          Pipe <code>--output agent-prompt</code> into a coding agent
+          to ship the changes as a PR.
+        </p>
+      </li>
+      <li class="step-card">
+        <span class="step-num">03</span>
+        <h3>Re-run &amp; share</h3>
+        <p>
+          Run again to confirm the score climbed, then
+          {' '}<a href={`${base}/badge/`}>embed your badge</a> so
+          agents (and humans) know your site is ready.
+        </p>
+      </li>
+    </ol>
 
-      <a class="pillar-card pillar-card--external" href={`${base}/scorecards/${latest}/`}>
-        <span class="pillar-label">Pillar 02 · versioned</span>
-        <span class="pillar-title">The scorecard</span>
-        <span class="pillar-desc">
-          v{latest} pins {totalChecks} checks ({siteCount} site-level,
-          {pageCount} page-level). Each check links to its detection
-          mechanics and fix guidance.
-        </span>
-        <span class="pillar-link">Browse v{latest}</span>
-      </a>
-
-      <a class="pillar-card pillar-card--internal" href="#tools">
-        <span class="pillar-label">Pillar 03 · runnable</span>
-        <span class="pillar-title">The tools</span>
-        <span class="pillar-desc">
-          A CLI and a Chrome extension that run the scorecard against
-          any URL. Output a human report, JSON, or a fix-list a coding
-          agent can ship straight into a PR.
-        </span>
-        <span class="pillar-link">See the tools</span>
-      </a>
-    </div>
+    <p class="steps-skill-callout">
+      Or skip the manual loop —
+      {' '}<a href="#automate">install the agent skill</a> and a coding
+      agent runs all three steps for you.
+    </p>
   </section>
 
   <section id="tools" class="section" aria-labelledby="tools-heading">
@@ -241,68 +247,53 @@ Page checks — https://a14y.dev/
     </div>
   </section>
 
-  <section class="section" aria-labelledby="how-heading">
+  <section id="automate" class="section" aria-labelledby="automate-heading">
     <div class="section-head">
-      <h2 id="how-heading">Hand the fixes to a coding agent</h2>
+      <h2 id="automate-heading">Update your site the easy way</h2>
       <p class="section-sub">
-        Run with <code>--output agent-prompt</code> and you get a
-        Markdown brief any coding agent can consume directly. Every
-        failure carries the detection rule, the fix, and a link back
-        to the scorecard page.
+        Both paths produce the same score. Pick the one that matches
+        how you ship: write your own coding-agent prompt, or let the
+        skill drive the whole loop.
       </p>
     </div>
 
-    <div class="output-sample">
-      <div class="output-sample-prose">
-        <h3>An end-to-end loop</h3>
+    <div class="automate-grid">
+      <article class="automate-card">
+        <span class="automate-eyebrow">Path A · bring your own agent</span>
+        <h3>Markdown fix-list from the CLI or extension</h3>
         <p>
-          <code>a14y your-site.com --output agent-prompt</code> writes
-          a fix-list to stdout (or pipe it to a file). Drop it into
-          your coding agent of choice. Re-run with
-          <code>--fail-under 80</code> in CI to keep the score climbing.
+          Run with <code>--output agent-prompt</code> in the CLI, or
+          hit <strong>Share → Agent prompt</strong> in the extension.
+          Paste the Markdown into Claude Code, Codex, Cursor, or any
+          agent that takes a prompt.
         </p>
+        <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> a14y your-site.com --output agent-prompt</code></pre>
+        <div class="automate-actions">
+          <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener">CLI on npm →</a>
+          <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Chrome extension →</a>
+        </div>
+      </article>
+
+      <article class="automate-card automate-card--feature">
+        <span class="automate-eyebrow">Path B · agent on rails</span>
+        <h3>The a14y skill runs the whole loop</h3>
         <p>
-          Every scorecard version stays frozen forever, so historical
-          scores trend cleanly even as the engine evolves.
+          Install once. Then in any coding session: the skill detects
+          your local dev server, runs the audit, proposes a prioritized
+          fix plan, ships the changes, and re-runs to confirm the
+          score went up.
         </p>
-        <p>
-          The block on the right is real output from
-          <code>a14y https://a14y.dev --output agent-prompt</code>.
-          The site is its own first benchmark.
-        </p>
-      </div>
-      <pre class="output-sample-block" aria-label="Real agent-prompt output for a14y.dev"><span class="ag-prompt">%</span> a14y https://a14y.dev --output agent-prompt
-<span class="heading"># Agent readability fix-list — https://a14y.dev/</span>
-
-You are an autonomous coding agent. The a14y scorecard
-ran against https://a14y.dev/ on 2026-04-30 and identified
-<strong>3</strong> distinct failing checks across <strong>1</strong> page. Score: <strong>92/100</strong>.
-
-After applying fixes, re-run the audit to verify:
-
-  <em>a14y check https://a14y.dev/ --mode page</em>
-
-<span class="heading">## Snapshot</span>
-
-- <em>Score:</em>      92/100
-- <em>Mode:</em>       page
-- <em>Scorecard:</em>  v{latest} (released {released})
-- <em>Failed:</em>     3 (3 unique, 3 instances)
-- <em>Passed:</em>     33     <em>N/A:</em> 2
-
-<span class="heading">## Failing checks</span>
-
-<span class="heading">### 1. code.language-tags — 1 page</span>
-- <em>What it checks:</em> code blocks declare a language
-- <em>Sample message:</em> 1/1 blocks missing language
-- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/code.language-tags/`}
-
-<span class="heading">### 2. markdown.canonical-header — 1 page</span>
-- <em>Sample:</em> no Link header
-- <em>Docs:</em> {`https://a14y.dev/scorecards/${latest}/checks/markdown.canonical-header/`}
-
-<span class="heading">### 3. markdown.content-negotiation — 1 page</span>
-- <em>Sample:</em> text/html; charset=utf-8</pre>
+        <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
+        <div class="automate-actions">
+          <button
+            type="button"
+            class="btn btn--primary"
+            data-copy={skillInstallCmd}
+            aria-label="Copy install command"
+          >Copy install →</button>
+          <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">Star on GitHub ★</a>
+        </div>
+      </article>
     </div>
   </section>
 </BaseLayout>
