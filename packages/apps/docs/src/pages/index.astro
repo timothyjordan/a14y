@@ -13,9 +13,10 @@ const released = getScorecardByVersion(latest).releasedAt;
 const totalChecks = getCheckSummariesForScorecard(latest).length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const installCmd = 'npm install -g a14y';
 const runCmd = 'npx a14y your-site.com';
 const skillInstallCmd = 'npx skills add timothyjordan/a14y';
+const chromeWebStoreUrl =
+  'https://chromewebstore.google.com/detail/a14y-agent-readability/gkkhpjiicjfoblocffiigpbbphbbojom';
 
 // Hero badge — a14y.dev's own readability score, rendered at build time
 // from the same `buildBadgeHtml` powering /badge/. Values mirror the
@@ -54,22 +55,12 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
       <h1 id="hero-heading">Agent readability for the web</h1>
       <p class="lead">
         Agents now read most of the web before humans do. a14y is the
-        open spec, the versioned scorecard, and the tools to score how
-        well they can.
+        open spec, the versioned scorecard, and the tools to make the
+        web readable by those agents.
       </p>
       <div class="cta-stack" role="group" aria-label="Try a14y">
         <span class="copy-cli copy-cli--block">
-          <span class="copy-cli-label">install</span>
-          <span class="cmd">{installCmd}</span>
-          <button
-            type="button"
-            class="copy-btn"
-            data-copy={installCmd}
-            aria-label="Copy install command"
-          >Copy</button>
-        </span>
-        <span class="copy-cli copy-cli--block">
-          <span class="copy-cli-label">run once</span>
+          <span class="copy-cli-label">run</span>
           <span class="cmd">{runCmd}</span>
           <button
             type="button"
@@ -79,7 +70,7 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
           >Copy</button>
         </span>
         <span class="copy-cli copy-cli--block">
-          <span class="copy-cli-label">agent skill</span>
+          <span class="copy-cli-label">skill</span>
           <span class="cmd">{skillInstallCmd}</span>
           <button
             type="button"
@@ -88,9 +79,27 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
             aria-label="Copy agent skill install command"
           >Copy</button>
         </span>
-        <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
-          Read the spec →
-        </a>
+        <div class="cta-row">
+          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
+            <span class="cws-badge-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
+                <circle cx="24" cy="24" r="22" fill="#fff" />
+                <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
+                <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
+                <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
+                <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
+                <circle cx="24" cy="24" r="6" fill="#4285F4" />
+              </svg>
+            </span>
+            <span class="cws-badge-text">
+              <span class="cws-badge-eyebrow">Available in the</span>
+              <span class="cws-badge-store">Chrome Web Store</span>
+            </span>
+          </a>
+          <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
+            Read the spec →
+          </a>
+        </div>
       </div>
     </div>
 
@@ -105,19 +114,7 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
     </aside>
   </section>
 
-  <hr class="section-rule" aria-hidden="true" />
-
-  <section class="section section--tight" aria-labelledby="steps-heading">
-    <div class="section-head">
-      <h2 id="steps-heading">Three steps to an agent-readable site</h2>
-      <p class="section-sub">
-        Score it, fix it, prove it. The same loop works in your
-        terminal, your browser, or your coding agent — backed by an
-        <a href={`${base}/spec/`}>open spec</a> and a versioned
-        <a href={`${base}/scorecards/${latest}/`}>scorecard</a>.
-      </p>
-    </div>
-
+  <section class="section section--tight" aria-label="How a14y works">
     <ol class="steps">
       <li class="step-card">
         <span class="step-num">01</span>
@@ -151,17 +148,17 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
 
     <p class="steps-skill-callout">
       Or skip the manual loop —
-      {' '}<a href="#automate">install the agent skill</a> and a coding
+      {' '}<a href="#skill">install the agent skill</a> and a coding
       agent runs all three steps for you.
     </p>
   </section>
 
   <section id="tools" class="section" aria-labelledby="tools-heading">
     <div class="section-head">
-      <h2 id="tools-heading">Run the scorecard yourself</h2>
+      <h2 id="tools-heading">Auditing tools</h2>
       <p class="section-sub">
-        Same engine, two surfaces. Both produce the same score for the
-        same URL and scorecard version.
+        Same engine, three ways. All produce the same score for the
+        same URL and scorecard version. Choose the easiest for you.
       </p>
     </div>
 
@@ -215,7 +212,7 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
         <p class="tool-note">Chrome Web Store review pending. For now, grab the latest <code>.zip</code> from <a href={`${base}/chrome-extension/`}>the install page</a>.</p>
       </article>
 
-      <article class="tool-card">
+      <article id="skill" class="tool-card">
         <div class="tool-head">
           <span class="tool-badge" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

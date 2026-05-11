@@ -421,9 +421,78 @@ p { margin: 0 0 16px; }
   overflow-x: auto;
   min-width: 0;
 }
-.cta-stack .cta-spec {
+.cta-stack .cta-row {
   margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.cta-stack .cta-spec {
   width: fit-content;
+}
+
+/* Chrome Web Store badge — inspired by the official badge in
+   developer.chrome.com/docs/webstore/branding, but rebuilt in our
+   button shell so it reads as part of the page rather than dropped
+   in from another design system. */
+.cws-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 12px;
+  border-radius: 8px;
+  background: var(--brand-ink);
+  color: var(--brand-paper);
+  text-decoration: none;
+  border: 1px solid var(--brand-ink);
+  font-family: var(--font-sans);
+  line-height: 1.1;
+  transition: background 160ms ease, transform 160ms ease,
+              border-color 160ms ease, box-shadow 160ms ease;
+}
+.cws-badge:hover {
+  background: var(--brand-ink-hover);
+  color: var(--brand-paper);
+  text-decoration: none;
+  box-shadow: 0 6px 18px -10px oklch(0.18 0.025 268 / 0.55);
+}
+.cws-badge:active { transform: translateY(1px); }
+:root[data-theme='dark'] .cws-badge {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+:root[data-theme='dark'] .cws-badge:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+.cws-badge-mark {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cws-badge-mark svg { display: block; }
+.cws-badge-text {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.cws-badge-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+.cws-badge-store {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
 }
 
 /* ─── Hero badge — a14y.dev's own readability card ─────────────── */
