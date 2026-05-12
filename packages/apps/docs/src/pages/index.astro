@@ -204,12 +204,11 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
           the failing check&apos;s fix guidance.
         </p>
         <div class="tool-actions">
-          <a class="btn btn--primary" href={`${base}/chrome-extension/`}>
-            Install →
+          <a class="btn btn--primary" href={chromeWebStoreUrl} rel="noopener">
+            Install from Chrome Web Store →
           </a>
-          <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y/tree/main/packages/apps/extension" rel="noopener">View source →</a>
+          <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Manual install →</a>
         </div>
-        <p class="tool-note">Chrome Web Store review pending. For now, grab the latest <code>.zip</code> from <a href={`${base}/chrome-extension/`}>the install page</a>.</p>
       </article>
 
       <article id="skill" class="tool-card">
@@ -244,53 +243,4 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
     </div>
   </section>
 
-  <section id="automate" class="section" aria-labelledby="automate-heading">
-    <div class="section-head">
-      <h2 id="automate-heading">Update your site the easy way</h2>
-      <p class="section-sub">
-        Both paths produce the same score. Pick the one that matches
-        how you ship: write your own coding-agent prompt, or let the
-        skill drive the whole loop.
-      </p>
-    </div>
-
-    <div class="automate-grid">
-      <article class="automate-card">
-        <span class="automate-eyebrow">Path A · bring your own agent</span>
-        <h3>Markdown fix-list from the CLI or extension</h3>
-        <p>
-          Run with <code>--output agent-prompt</code> in the CLI, or
-          hit <strong>Share → Agent prompt</strong> in the extension.
-          Paste the Markdown into Claude Code, Codex, Cursor, or any
-          agent that takes a prompt.
-        </p>
-        <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> a14y your-site.com --output agent-prompt</code></pre>
-        <div class="automate-actions">
-          <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener">CLI on npm →</a>
-          <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Chrome extension →</a>
-        </div>
-      </article>
-
-      <article class="automate-card automate-card--feature">
-        <span class="automate-eyebrow">Path B · agent on rails</span>
-        <h3>The a14y skill runs the whole loop</h3>
-        <p>
-          Install once. Then in any coding session: the skill detects
-          your local dev server, runs the audit, proposes a prioritized
-          fix plan, ships the changes, and re-runs to confirm the
-          score went up.
-        </p>
-        <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
-        <div class="automate-actions">
-          <button
-            type="button"
-            class="btn btn--primary"
-            data-copy={skillInstallCmd}
-            aria-label="Copy install command"
-          >Copy install →</button>
-          <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">Star on GitHub ★</a>
-        </div>
-      </article>
-    </div>
-  </section>
 </BaseLayout>

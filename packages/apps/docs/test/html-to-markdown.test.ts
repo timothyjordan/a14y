@@ -64,29 +64,6 @@ const SAMPLE_PAGE = `
           </article>
         </div>
       </section>
-      <section id="automate" class="section">
-        <h2 id="automate-heading">Update your site the easy way</h2>
-        <div class="automate-grid">
-          <article class="automate-card">
-            <span class="automate-eyebrow">Path A · bring your own agent</span>
-            <h3>Markdown fix-list from the CLI or extension</h3>
-            <p>Run with <code>--output agent-prompt</code> and paste into any agent.</p>
-            <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> a14y your-site.com --output agent-prompt</code></pre>
-            <div class="automate-actions">
-              <a href="https://www.npmjs.com/package/a14y">CLI on npm →</a>
-            </div>
-          </article>
-          <article class="automate-card automate-card--feature">
-            <span class="automate-eyebrow">Path B · agent on rails</span>
-            <h3>The a14y skill runs the whole loop</h3>
-            <p>Install once.</p>
-            <pre class="automate-cmd"><code class="language-shell"><span class="prompt">%</span> npx skills add timothyjordan/a14y</code></pre>
-            <div class="automate-actions">
-              <a href="https://github.com/timothyjordan/a14y">Star on GitHub ★</a>
-            </div>
-          </article>
-        </div>
-      </section>
     </main>
     <footer class="site-footer">© 2026</footer>
   </body>
@@ -122,20 +99,8 @@ describe('renderPageMarkdown', () => {
     expect(out).toMatch(/### 02 — Fix what failed/);
   });
 
-  it('promotes automate cards to ### headings folding in the eyebrow label', () => {
-    expect(out).toMatch(/### Path A · bring your own agent — Markdown fix-list from the CLI or extension/);
-    expect(out).toMatch(/### Path B · agent on rails — The a14y skill runs the whole loop/);
-    expect(out).toMatch(/\[CLI on npm →\]\(https:\/\/www\.npmjs\.com\/package\/a14y\)/);
-    expect(out).toMatch(/\[Star on GitHub ★\]\(https:\/\/github\.com\/timothyjordan\/a14y\)/);
-  });
-
   it('renders the tool-card cli snippet as a fenced shell block, preserving newlines', () => {
     expect(out).toMatch(/```shell\n% npm install -g a14y\n% a14y your-site\.com\n```/);
-  });
-
-  it('renders automate-cmd as a fenced shell block too', () => {
-    expect(out).toMatch(/```shell\n% a14y your-site\.com --output agent-prompt\n```/);
-    expect(out).toMatch(/```shell\n% npx skills add timothyjordan\/a14y\n```/);
   });
 
   it('keeps the canonical hero h1', () => {

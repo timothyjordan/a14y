@@ -4,8 +4,8 @@
    (terra, olive, cyan) for scope and signal. All values are OKLCH so
    chroma stays stable across the lightness ramp.
 
-   The agent surface (--agent-* tokens, used by .tool-cmd / .automate-cmd)
-   is the deliberate counterpart: ink-dark in BOTH light and dark themes,
+   The agent surface (--agent-* tokens, used by .tool-cmd) is the
+   deliberate counterpart: ink-dark in BOTH light and dark themes,
    because it represents "what an agent sees" — a different reader
    looking at the same page.
    ─────────────────────────────────────────────────────────────────── */
@@ -846,87 +846,6 @@ main.container h2[id] {
   font-size: 13px;
   color: var(--text-subtle);
   margin: 0;
-}
-
-/* ─── Automation section — two paths to a fix ──────────────────── */
-
-.automate-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-@media (min-width: 880px) {
-  .automate-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
-}
-.automate-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 26px 28px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.automate-card--feature {
-  border-color: var(--brand-ink);
-  border-width: 1.5px;
-  box-shadow: 0 12px 40px -22px oklch(0.18 0.025 268 / 0.35);
-}
-:root[data-theme='dark'] .automate-card--feature {
-  border-color: var(--brand-cyan);
-}
-.automate-card .automate-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-}
-.automate-card--feature .automate-eyebrow {
-  color: var(--brand-ink);
-}
-:root[data-theme='dark'] .automate-card--feature .automate-eyebrow {
-  color: var(--brand-cyan);
-}
-.automate-card h3 {
-  margin: 0;
-  font-size: 21px;
-  letter-spacing: -0.018em;
-  line-height: 1.2;
-}
-.automate-card p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 15px;
-  line-height: 1.55;
-}
-.automate-card code {
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: var(--surface-alt);
-  font-family: var(--font-mono);
-  font-size: 0.92em;
-}
-.automate-cmd {
-  background: var(--agent-bg);
-  color: var(--agent-text);
-  border: 1px solid var(--agent-rule);
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.6;
-  overflow-x: auto;
-  margin: 0;
-}
-.automate-cmd .prompt { color: var(--agent-muted); }
-.automate-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  margin-top: auto;
 }
 
 /* ─── Scorecard callout (no side-stripe) ────────────────────────── */
