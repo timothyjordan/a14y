@@ -126,10 +126,10 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         <span class="step-num">01</span>
         <h3>Run the scorecard</h3>
         <p>
-          From the <a href="#tools">CLI</a>, the
-          {' '}<a href={`${base}/chrome-extension/`}>Chrome extension</a>,
-          or by handing the job to a coding agent with the a14y skill.
-          Same engine, same score.
+          From the <a href="#cli">CLI</a>, the
+          {' '}<a href="#chrome-extension">Chrome extension</a>, or by
+          handing the job to a coding agent with the
+          {' '}<a href="#skill">a14y skill</a>. Same engine, same score.
         </p>
       </li>
       <li class="step-card">
@@ -168,7 +168,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
     </div>
 
     <div class="tools">
-      <article class="tool-card">
+      <article id="cli" class="tool-card">
         <div class="tool-head">
           <span class="tool-badge" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -191,7 +191,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         </div>
       </article>
 
-      <article class="tool-card">
+      <article id="chrome-extension" class="tool-card">
         <div class="tool-head">
           <span class="tool-badge" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
