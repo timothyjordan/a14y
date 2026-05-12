@@ -37,8 +37,14 @@ const heroBadgeBase = {
   mode: 'site' as const,
   url: 'https://a14y.dev/',
 };
-const heroBadgeLightHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'light' } satisfies BadgeData);
-const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } satisfies BadgeData);
+const heroBadgeLightHtml = buildBadgeHtml(
+  { ...heroBadgeBase, theme: 'light' } satisfies BadgeData,
+  { renderAs: 'div' },
+);
+const heroBadgeDarkHtml = buildBadgeHtml(
+  { ...heroBadgeBase, theme: 'dark' } satisfies BadgeData,
+  { renderAs: 'div' },
+);
 ---
 
 <BaseLayout
@@ -146,11 +152,10 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
       </li>
     </ol>
 
-    <p class="steps-skill-callout">
-      Or skip the manual loop —
-      {' '}<a href="#skill">install the agent skill</a> and a coding
-      agent runs all three steps for you.
-    </p>
+    <aside class="steps-skill-callout" aria-label="Skip the manual loop">
+      <p>Or skip the manual loop. The agent skill runs all three steps for you.</p>
+      <a class="btn btn--ghost" href="#skill">Install the skill →</a>
+    </aside>
   </section>
 
   <section id="tools" class="section" aria-labelledby="tools-heading">
@@ -224,10 +229,10 @@ const heroBadgeDarkHtml = buildBadgeHtml({ ...heroBadgeBase, theme: 'dark' } sat
         </div>
         <p class="tool-desc">
           A spec-compliant <a href="https://agentskills.io/specification" rel="noopener">agent skill</a> that
-          wraps the CLI: detects a local dev server, runs the audit,
-          proposes a fix plan, and tracks score deltas. Works with
-          Claude Code, Codex, Cursor, and any other coding agent that
-          supports the open skills format.
+          drives the audit loop for you: detects a local dev server,
+          runs the audit, proposes a fix plan, tracks score deltas.
+          Works with Claude Code, Codex, Cursor, and any other coding
+          agent that supports the open skills format.
         </p>
         <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
         <div class="tool-actions">
