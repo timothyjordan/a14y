@@ -1,7 +1,6 @@
 {
   "enabledPlugins": {
-    "impeccable@anthropics/claude-code": true,
-    "superpowers@obra/superpowers-marketplace": true,
-    "a14y@timothyjordan/a14y": true
+    "impeccable@pbakaus/impeccable": true,
+    "superpowers@obra/superpowers-marketplace": true
   }
 }
