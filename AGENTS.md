@@ -47,7 +47,7 @@ match the rest of the repo.
 
 | Want to change… | Edit |
 |---|---|
-| A check's logic | `packages/core/src/checks/{site,page}/<id>.ts` (add a new `'1.x.x'` entry under `implementations`; do not mutate existing ones) |
+| A check's logic | `packages/core/src/checks/{site,page}/<file>.ts` (camelCase file name; one file may declare several related check ids — e.g. `llmsTxt.ts` declares `llms-txt.exists`, `.content-type`, `.non-empty`, `.md-extensions`). Add a new `'1.x.x'` entry under `implementations`; do not mutate existing ones. |
 | Which checks are on the rubric | `packages/core/src/scorecard/draft.ts` |
 | Wire a new check into the registry | `packages/core/src/scorecard/_imports.ts` |
 | A check's docs page | `packages/apps/docs/src/content/checks/<id>.md` |
@@ -58,8 +58,10 @@ match the rest of the repo.
 
 ## Adding a new check (recipe)
 
-1. Add `packages/core/src/checks/{site,page}/<id>.ts` with an
-   `implementations` map keyed by `'1.0.0'`.
+1. Add `packages/core/src/checks/{site,page}/<file>.ts` with an
+   `implementations` map keyed by `'1.0.0'`. The file name is
+   camelCase; the check ids inside it are kebab-case and scoped
+   (e.g. `llms-txt.exists`).
 2. Import it in `packages/core/src/scorecard/_imports.ts`.
 3. Pin it in `packages/core/src/scorecard/draft.ts`.
 4. Add `packages/apps/docs/src/content/checks/<id>.md` with required
@@ -69,7 +71,7 @@ match the rest of the repo.
 
 ## Updating an existing check (recipe)
 
-1. In `packages/core/src/checks/{site,page}/<id>.ts`, add a new
+1. In `packages/core/src/checks/{site,page}/<file>.ts`, add a new
    `'1.1.0'` (or higher) entry to `implementations`. **Leave the
    existing `'1.0.0'` entry untouched** — frozen scorecards reference
    it by version.
