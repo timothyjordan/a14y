@@ -76,30 +76,18 @@ function createService(): TurndownService {
     replacement: () => '',
   });
 
-  // The hero's right-side panel is a live demo of `a14y` CLI
-  // output. The block contains classed `<span>` highlighting; emit
-  // it as a fenced code block of plain text instead.
-  td.addRule('agent-panel-pre', {
+  // The hero's right-side badge is a self-contained visual card
+  // (inline-styled anchor wrapping the score, host, and stats). It
+  // makes no sense as markdown; emit a single embed link instead.
+  td.addRule('hero-badge', {
     filter: (node) =>
-      isHtmlElement(node) &&
-      node.tagName === 'PRE' &&
-      node.classList.contains('agent-output'),
+      isHtmlElement(node) && node.classList.contains('hero-badge'),
     replacement: (_content, node) => {
-      const text = (node as HTMLElement).textContent ?? '';
-      return `\n\n\`\`\`\n${text.trim()}\n\`\`\`\n\n`;
-    },
-  });
-
-  // Sample agent-prompt output block in the "Hand the fixes"
-  // section: same treatment — fenced code block of plain text.
-  td.addRule('output-sample-pre', {
-    filter: (node) =>
-      isHtmlElement(node) &&
-      node.tagName === 'PRE' &&
-      node.classList.contains('output-sample-block'),
-    replacement: (_content, node) => {
-      const text = (node as HTMLElement).textContent ?? '';
-      return `\n\n\`\`\`\n${text.trim()}\n\`\`\`\n\n`;
+      const el = node as HTMLElement;
+      const link = el.querySelector('a.hero-badge-link');
+      const href = link?.getAttribute('href') ?? '/badge/';
+      const text = link ? (link.textContent ?? '').trim() : 'Embed your own a14y badge';
+      return `\n\n[${text}](${href})\n\n`;
     },
   });
 
@@ -117,25 +105,22 @@ function createService(): TurndownService {
     },
   });
 
-  // Pillar card: an anchor wrapping label / title / desc / link
-  // spans. Convert to:
+  // Step card: a list item with number / h3 / paragraph. Convert to:
   //
-  //   ### {title}
+  //   ### NN — Title
   //
-  //   {description}
-  //
-  //   [{link text}]({href})
-  td.addRule('pillar-card', {
+  //   {description with inline links preserved}
+  td.addRule('step-card', {
     filter: (node) =>
-      isHtmlElement(node) && node.classList.contains('pillar-card'),
+      isHtmlElement(node) && node.classList.contains('step-card'),
     replacement: (_content, node) => {
       const el = node as HTMLElement;
-      const title = textOf(el, '.pillar-title');
-      const desc = textOf(el, '.pillar-desc');
-      const link = textOf(el, '.pillar-link');
-      const href = el.getAttribute('href') ?? '';
-      const linkLine = link && href ? `[${link}](${href})` : '';
-      return `\n\n### ${title}\n\n${desc}\n\n${linkLine}\n\n`;
+      const num = textOf(el, '.step-num');
+      const heading = textOf(el, 'h3');
+      const p = el.querySelector('p');
+      const body = p ? td.turndown(p.innerHTML).trim() : '';
+      const title = num ? `${num} — ${heading}` : heading;
+      return `\n\n### ${title}\n\n${body}\n\n`;
     },
   });
 

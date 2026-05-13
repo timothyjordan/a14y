@@ -116,4 +116,21 @@ describe('buildBadgeHtml', () => {
       expect(html).not.toContain('<style');
     }
   });
+
+  it('emits a non-interactive <div> wrapper when renderAs is "div"', () => {
+    const html = buildBadgeHtml(data, { renderAs: 'div' });
+    expect(html.trim().startsWith('<div class="a14y-badge')).toBe(true);
+    expect(html.trim().endsWith('</div>')).toBe(true);
+    // No outer anchor and no target/_blank attributes leaking through.
+    expect(html).not.toMatch(/<a[^>]+a14y-badge/);
+    expect(html).not.toContain('target="_blank"');
+    // Inner score / host content should still render identically.
+    expect(html).toContain('>91<');
+    expect(html).toContain('example.com');
+  });
+
+  it('still defaults to the <a href="https://a14y.dev"> wrapper when no options are passed', () => {
+    const html = buildBadgeHtml(data);
+    expect(html).toContain('href="https://a14y.dev"');
+  });
 });

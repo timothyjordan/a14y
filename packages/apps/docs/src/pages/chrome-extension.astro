@@ -27,6 +27,8 @@ const sizeLabel = release?.zipAsset
   : null;
 
 const extensionsUrl = 'chrome://extensions/';
+const chromeWebStoreUrl =
+  'https://chromewebstore.google.com/detail/a14y-agent-readability/gkkhpjiicjfoblocffiigpbbphbbojom';
 
 // The popup specimen renders the actual idle-state shape of the
 // extension popup: brand row, URL pill, scorecard selector, two
@@ -66,15 +68,22 @@ const specimenScorecard = 'v0.2.0 (latest)';
         check's fix guidance.
       </p>
       <div class="cta-row">
-        {release?.zipAsset ? (
-          <a class="btn btn--primary" href={release.zipAsset.url} download>
-            Download .zip{sizeLabel ? ` · ${sizeLabel}` : ''}
-          </a>
-        ) : (
-          <a class="btn btn--primary" href={releaseLinkUrl} rel="noopener">
-            Browse releases on GitHub
-          </a>
-        )}
+        <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="Install a14y from the Chrome Web Store">
+          <span class="cws-badge-mark" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
+              <circle cx="24" cy="24" r="22" fill="#fff" />
+              <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" />
+              <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
+              <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
+              <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
+              <circle cx="24" cy="24" r="6" fill="#4285F4" />
+            </svg>
+          </span>
+          <span class="cws-badge-text">
+            <span class="cws-badge-eyebrow">Install from the</span>
+            <span class="cws-badge-store">Chrome Web Store</span>
+          </span>
+        </a>
         <a
           class="btn btn--ghost"
           href={release ? release.htmlUrl : `${repoUrl}/tree/main/packages/apps/extension`}
@@ -121,13 +130,36 @@ const specimenScorecard = 'v0.2.0 (latest)';
     </aside>
   </section>
 
-  <p class="cx-stopgap" role="note">
-    <strong>Stop-gap install.</strong> Chrome Web Store review is in
-    progress; the manual steps below are how you load it today.
-  </p>
-
   <section class="cx-section">
     <h2 id="install">Install</h2>
+    <p>
+      Click the <strong>Chrome Web Store</strong> button above and
+      then the <strong>Add to Chrome</strong> button. Make sure to
+      also pin a14y from the puzzle-piece icon so the popup is one
+      click away on any page.
+    </p>
+  </section>
+
+  <section class="cx-section">
+    <h2 id="manual-install">Manual install: the latest release</h2>
+    <p class="cx-manual-intro">
+      The Chrome Web Store version trails <code>main</code> by however
+      long the review queue is. If you want the latest release the day
+      it ships, install the unpacked build from GitHub instead.
+    </p>
+    {release?.zipAsset ? (
+      <p>
+        <a class="btn btn--primary" href={release.zipAsset.url} download>
+          Download .zip{sizeLabel ? ` · ${sizeLabel}` : ''}
+        </a>
+      </p>
+    ) : (
+      <p>
+        <a class="btn btn--primary" href={releaseLinkUrl} rel="noopener">
+          Browse releases on GitHub
+        </a>
+      </p>
+    )}
     <ol class="cx-steps">
       <li>
         Find the <code>.zip</code> you just downloaded; if you skipped
@@ -136,8 +168,8 @@ const specimenScorecard = 'v0.2.0 (latest)';
       </li>
       <li>
         Unzip it; keep the resulting folder somewhere stable. Chrome
-        reads from this folder on every load — if you delete or move
-        it, the extension breaks.
+        reads from this folder on every launch; if you move or delete
+        it, the extension stops loading.
       </li>
       <li>
         Open
@@ -170,11 +202,10 @@ const specimenScorecard = 'v0.2.0 (latest)';
   <section class="cx-section">
     <h2 id="updating">Updating</h2>
     <p>
-      To install a newer version, repeat the steps above with the
-      latest <code>.zip</code>; Chrome replaces the existing install
-      in place. Once the Chrome Web Store approves the extension this
-      page switches to a one-click install button and updates run
-      automatically.
+      Chrome Web Store installs update on Chrome's normal cadence;
+      no action required. For manual installs, repeat the steps
+      above with a newer <code>.zip</code> and Chrome replaces the
+      existing install in place.
     </p>
   </section>
 
@@ -182,7 +213,7 @@ const specimenScorecard = 'v0.2.0 (latest)';
     <h2 id="privacy">Privacy</h2>
     <p>
       The extension scores pages locally and sends only anonymous
-      usage events (which check ran, pass/fail counts); never the URL
+      usage events (which check ran, pass/fail counts); not the URL
       or page content you audited. See
       {' '}<a href={`${base}/privacy/`}>privacy</a> for the full
       breakdown and an on/off toggle.
@@ -190,28 +221,15 @@ const specimenScorecard = 'v0.2.0 (latest)';
   </section>
 
   <style>
-    /* Stop-gap notice — quiet, single-line, no side-stripe. */
-    .cx-stopgap {
-      margin: 28px 0 0;
-      padding: 12px 16px;
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md, 10px);
-      color: var(--text-muted);
-      font-size: 14.5px;
-      line-height: 1.55;
-    }
-    .cx-stopgap strong {
-      color: var(--text);
-      font-weight: 600;
-      margin-right: 0.4em;
-    }
-
     .cx-section {
       margin-top: 40px;
     }
     .cx-section h2 {
       margin-top: 0;
+    }
+    .cx-manual-intro {
+      max-width: 60ch;
+      color: var(--text-muted);
     }
 
     /* Numbered steps — readable spacing, no special chrome. */

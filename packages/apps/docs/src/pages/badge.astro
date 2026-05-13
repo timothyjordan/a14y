@@ -31,9 +31,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
     <div id="badge-preview" class="badge-preview" aria-live="polite"></div>
 
     <p id="badge-empty" class="badge-empty" hidden>
-      No score data in the URL. Run <code>npx -y a14y check &lt;url&gt;</code>
-      to print a share link, or click <strong>Share score → Embed badge</strong>
-      on the report page in the a14y Chrome extension.
+      No score data in the URL.<br />
+      Run <code>npx a14y your-site.com</code> to print a share link,
+      or click <strong>Share score → Embed badge</strong> on the
+      report page in the
+      {' '}<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/chrome-extension/`}>a14y Chrome extension</a>.
     </p>
   </section>
 

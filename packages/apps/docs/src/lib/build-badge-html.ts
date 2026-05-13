@@ -81,7 +81,20 @@ const MONO_STACK =
 // Stroke uses currentColor so we can theme it with the brand color.
 const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.61 309.61" width="32" height="22" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:middle"><g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="10"><line x1="150.5" y1="25.5" x2="25.5" y2="75.5"/><line x1="275.5" y1="75.5" x2="150.5" y2="25.5"/><line x1="275.5" y1="223" x2="275.5" y2="75.5"/><line x1="150.5" y1="275.5" x2="275.5" y2="223"/><line x1="25.5" y1="225.5" x2="148.08" y2="275.5"/><line x1="25.5" y1="75.5" x2="25.5" y2="225.5"/><line x1="275.5" y1="75.5" x2="25.5" y2="225.5"/><line x1="25.5" y1="75.5" x2="275.5" y2="223"/><line x1="150.5" y1="25.5" x2="150.5" y2="275.5"/><line x1="25.5" y1="75.5" x2="275.5" y2="75.5"/><line x1="25.5" y1="225.5" x2="275.5" y2="225.5"/></g><g fill="currentColor" stroke="currentColor" stroke-miterlimit="10"><circle cx="25.5" cy="75.5" r="25"/><circle cx="150.5" cy="275.5" r="25"/><circle cx="275.5" cy="225.5" r="25"/><circle cx="25.5" cy="225.5" r="25"/><circle cx="275.5" cy="75.5" r="25"/><circle cx="150.5" cy="25.5" r="25"/><circle cx="150.5" cy="150.5" r="25"/></g><circle cx="262.5" cy="150.5" r="112.5" fill="#fff" fill-opacity="0.9"/><circle cx="262.75" cy="150.5" r="112.5" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/><line x1="375.5" y1="262.5" x2="342.48" y2="229.41" fill="none" stroke="currentColor" stroke-width="10" stroke-miterlimit="10"/><line x1="356.79" y1="243.79" x2="414.48" y2="301.48" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><g fill="none" stroke="currentColor" stroke-width="20" stroke-miterlimit="10"><line x1="200.5" y1="90.5" x2="325.5" y2="90.5"/><line x1="200.5" y1="130.45" x2="325.5" y2="130.45"/><line x1="200.5" y1="170.43" x2="325.5" y2="170.43"/><line x1="200.5" y1="210.49" x2="325.5" y2="210.49"/></g></svg>`;
 
-export function buildBadgeHtml(data: BadgeData): string {
+export interface BuildBadgeOptions {
+  /**
+   * Wrap the card in an `<a>` (default) or a `<div>`. Use `'div'` when
+   * the badge is rendered on a page where the anchor would self-link
+   * (e.g. the hero on a14y.dev itself) — emitting a non-interactive
+   * wrapper keeps hover affordances honest.
+   */
+  renderAs?: 'a' | 'div';
+}
+
+export function buildBadgeHtml(
+  data: BadgeData,
+  options: BuildBadgeOptions = {},
+): string {
   const palette = data.theme === 'dark' ? BADGE_DARK_PALETTE : BADGE_LIGHT_PALETTE;
   const id = stableId(data);
   const cls = `a14y-badge-${id}`;
@@ -108,6 +121,7 @@ export function buildBadgeHtml(data: BadgeData): string {
     warned: data.warned,
     na: data.na,
     segments,
+    renderAs: options.renderAs ?? 'a',
   });
 }
 
@@ -126,6 +140,7 @@ interface RenderArgs {
   warned: number;
   na: number;
   segments: { color: string; pct: number }[];
+  renderAs: 'a' | 'div';
 }
 
 function renderCard(a: RenderArgs): string {
@@ -196,8 +211,14 @@ function renderCard(a: RenderArgs): string {
     `border-top:1px solid ${p.border};padding:14px 0 0;margin-top:4px;` +
     `font-family:${MONO_STACK};font-size:11px;line-height:1.5;color:${p.textMuted};`;
 
+  const wrapperOpen =
+    a.renderAs === 'div'
+      ? `<div class="a14y-badge ${a.cls}" style="${outerStyle}">`
+      : `<a class="a14y-badge ${a.cls}" href="https://a14y.dev" target="_blank" rel="noopener" style="${outerStyle}">`;
+  const wrapperClose = a.renderAs === 'div' ? `</div>` : `</a>`;
+
   return (
-    `<a class="a14y-badge ${a.cls}" href="https://a14y.dev" target="_blank" rel="noopener" style="${outerStyle}">` +
+    wrapperOpen +
     `<div class="${a.cls}__header" style="${headerStyle}">` +
     `<span>A14Y${a.versionText ? ' · ' + a.versionText : ''}</span>` +
     `<span>${a.dateText}</span>` +
@@ -219,7 +240,7 @@ function renderCard(a: RenderArgs): string {
     `<div class="${a.cls}__tryit" style="${tryStyle}">` +
     `Try a14y on your own site: https://a14y.dev` +
     `</div>` +
-    `</a>`
+    wrapperClose
   );
 }
 

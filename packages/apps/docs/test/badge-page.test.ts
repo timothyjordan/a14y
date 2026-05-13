@@ -30,7 +30,8 @@ describe('badge.astro (TJ-423)', () => {
 
   it('renders an empty-state explainer for the no-params case', () => {
     expect(page).toMatch(/id="badge-empty"/);
-    expect(page).toMatch(/npx\s+(?:-y\s+)?a14y\s+check/i);
+    expect(page).toMatch(/npx\s+a14y\s+your-site\.com/i);
+    expect(page).toMatch(/\/chrome-extension\/`}>a14y Chrome extension</);
   });
 
   it('imports the URL parser from @a14y/core and the HTML builder from ~/lib', () => {
