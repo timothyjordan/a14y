@@ -158,6 +158,66 @@ const heroBadgeDarkHtml = buildBadgeHtml(
     </aside>
   </section>
 
+  <section class="section" aria-labelledby="docs-heading">
+    <div class="section-head">
+      <h2 id="docs-heading">Every check is a complete recipe</h2>
+      <p class="section-sub">
+        a14y documents what each check looks for, why it matters,
+        and exactly how to ship the fix. Making your site readable
+        to agents should be a checklist, not a research project.
+      </p>
+    </div>
+
+    <article class="check-preview">
+      <header class="check-preview-head">
+        <span class="check-preview-eyebrow">One of {totalChecks} · v{latest} · site check</span>
+        <p class="check-preview-id"><code>llms-txt.exists</code></p>
+        <h3 class="check-preview-title">llms.txt is published</h3>
+      </header>
+
+      <div class="check-preview-grid">
+        <div class="check-preview-cell">
+          <span class="check-preview-label">Why it matters</span>
+          <p>
+            An <code>llms.txt</code> at a well-known location is
+            the agent equivalent of a sitemap. It tells AI
+            ingesters which pages are worth reading and gives them
+            a single, deterministic starting point for crawling.
+          </p>
+        </div>
+        <div class="check-preview-cell">
+          <span class="check-preview-label">How we check</span>
+          <p>
+            <code>GET /llms.txt</code>, then
+            {' '}<code>/.well-known/llms.txt</code>, then
+            {' '}<code>/docs/llms.txt</code>. Any 2xx response
+            passes. Falls back to the <code>llms-full.txt</code>
+            variants before failing.
+          </p>
+        </div>
+        <div class="check-preview-cell">
+          <span class="check-preview-label">How to implement</span>
+          <p>
+            Publish a plain-text <code>llms.txt</code> at your
+            site root (or under <code>/.well-known/</code>) listing
+            the pages worth reading. The format is intentionally
+            simple: markdown links, headings, or free text. No HTML
+            parser needed.
+          </p>
+        </div>
+      </div>
+
+      <footer class="check-preview-foot">
+        <a href={`${base}/scorecards/${latest}/checks/llms-txt.exists/`}>
+          Read the full check page →
+        </a>
+        <a class="btn btn--ghost" href={`${base}/scorecards/${latest}/`}>
+          Browse all {totalChecks} checks
+        </a>
+      </footer>
+    </article>
+  </section>
+
   <section id="tools" class="section" aria-labelledby="tools-heading">
     <div class="section-head">
       <h2 id="tools-heading">Auditing tools</h2>
@@ -246,66 +306,6 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         <p class="tool-note">Discoverable via <code>&lt;link rel="agent-skills"&gt;</code> on every page of this site.</p>
       </article>
     </div>
-  </section>
-
-  <section class="section" aria-labelledby="docs-heading">
-    <div class="section-head">
-      <h2 id="docs-heading">Every check is a complete recipe</h2>
-      <p class="section-sub">
-        a14y documents what each check looks for, why it matters,
-        and exactly how to ship the fix. Making your site readable
-        to agents should be a checklist, not a research project.
-      </p>
-    </div>
-
-    <article class="check-preview">
-      <header class="check-preview-head">
-        <span class="check-preview-eyebrow">One of {totalChecks} · v{latest} · site check</span>
-        <p class="check-preview-id"><code>llms-txt.exists</code></p>
-        <h3 class="check-preview-title">llms.txt is published</h3>
-      </header>
-
-      <div class="check-preview-grid">
-        <div class="check-preview-cell">
-          <span class="check-preview-label">Why it matters</span>
-          <p>
-            An <code>llms.txt</code> at a well-known location is
-            the agent equivalent of a sitemap. It tells AI
-            ingesters which pages are worth reading and gives them
-            a single, deterministic starting point for crawling.
-          </p>
-        </div>
-        <div class="check-preview-cell">
-          <span class="check-preview-label">How we check</span>
-          <p>
-            <code>GET /llms.txt</code>, then
-            {' '}<code>/.well-known/llms.txt</code>, then
-            {' '}<code>/docs/llms.txt</code>. Any 2xx response
-            passes. Falls back to the <code>llms-full.txt</code>
-            variants before failing.
-          </p>
-        </div>
-        <div class="check-preview-cell">
-          <span class="check-preview-label">How to implement</span>
-          <p>
-            Publish a plain-text <code>llms.txt</code> at your
-            site root (or under <code>/.well-known/</code>) listing
-            the pages worth reading. The format is intentionally
-            simple: markdown links, headings, or free text. No HTML
-            parser needed.
-          </p>
-        </div>
-      </div>
-
-      <footer class="check-preview-foot">
-        <a href={`${base}/scorecards/${latest}/checks/llms-txt.exists/`}>
-          Read the full check page →
-        </a>
-        <a class="btn btn--ghost" href={`${base}/scorecards/${latest}/`}>
-          Browse all {totalChecks} checks
-        </a>
-      </footer>
-    </article>
   </section>
 
 </BaseLayout>
