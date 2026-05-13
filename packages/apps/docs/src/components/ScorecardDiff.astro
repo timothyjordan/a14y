@@ -1,0 +1,228 @@
+---
+/**
+ * Inline diff block rendered on every draft scorecard page. Shows added,
+ * bumped, and removed check ids vs the latest published scorecard, with
+ * GitHub attribution where the refresh-draft-diff workflow has recorded it.
+ *
+ * Always renders — even when there are no changes — so the empty state
+ * teaches visitors what to expect once a contribution lands.
+ */
+import {
+  getCheckSummary,
+  getDraftDiffEntries,
+  getLatestScorecardVersion,
+  type DraftDiffEntry,
+} from '~/lib/scorecard-data';
+
+interface Props {
+  /** Draft scorecard version (e.g. `0.3.0-draft`). Used to link the check pages. */
+  draftVersion: string;
+}
+
+const { draftVersion } = Astro.props;
+const latest = getLatestScorecardVersion();
+const entries = getDraftDiffEntries();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const counts = entries.reduce(
+  (acc, e) => {
+    acc[e.kind] += 1;
+    return acc;
+  },
+  { added: 0, bumped: 0, removed: 0 },
+);
+
+function checkName(entry: DraftDiffEntry): string {
+  // Removed checks may no longer be in the draft; fall back to the latest
+  // published manifest where they still exist.
+  const lookupVersion = entry.kind === 'removed' ? latest : draftVersion;
+  return getCheckSummary(lookupVersion, entry.id)?.name ?? entry.id;
+}
+
+function checkHref(entry: DraftDiffEntry): string {
+  const lookupVersion = entry.kind === 'removed' ? latest : draftVersion;
+  return `${base}/scorecards/${lookupVersion}/checks/${entry.id}/`;
+}
+---
+
+<section class="scorecard-diff" aria-labelledby="scorecard-diff-heading">
+  <header class="scorecard-diff-header">
+    <h2 id="scorecard-diff-heading">Changes vs v{latest}</h2>
+    {entries.length > 0 ? (
+      <p class="scorecard-diff-summary">
+        <span class="diff-chip diff-chip-added">+{counts.added} new</span>
+        <span class="diff-chip diff-chip-bumped">{counts.bumped} bumped</span>
+        <span class="diff-chip diff-chip-removed">−{counts.removed} removed</span>
+        <a class="diff-all-link" href={`${base}/scorecards/${draftVersion}/changes/`}>View all changes →</a>
+      </p>
+    ) : (
+      <p class="scorecard-diff-empty">
+        No changes vs v{latest} yet. The draft will diverge once a contribution
+        lands — see <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#scorecard-lifecycle" rel="noopener">CONTRIBUTING.md</a>.
+      </p>
+    )}
+  </header>
+
+  {entries.length > 0 && (
+    <ul class="diff-list">
+      {entries.map((entry) => (
+        <li class={`diff-row diff-row-${entry.kind}`}>
+          <span class="diff-kind">
+            {entry.kind === 'added' && '+ added'}
+            {entry.kind === 'bumped' && '~ bumped'}
+            {entry.kind === 'removed' && '− removed'}
+          </span>
+          <a class="diff-id" href={checkHref(entry)}>{entry.id}</a>
+          <span class="diff-name">{checkName(entry)}</span>
+          <span class="diff-version">
+            {entry.kind === 'added' && <>v{entry.toImpl}</>}
+            {entry.kind === 'bumped' && <>v{entry.fromImpl} → v{entry.toImpl}</>}
+            {entry.kind === 'removed' && <>was v{entry.fromImpl}</>}
+          </span>
+          {entry.attribution ? (
+            <span class="diff-attribution">
+              by <a href={entry.attribution.authorUrl} rel="noopener">@{entry.attribution.author}</a>
+              {' · '}
+              <a href={entry.attribution.prUrl} rel="noopener">#{entry.attribution.pr}</a>
+            </span>
+          ) : (
+            <span class="diff-attribution diff-attribution-pending">attribution pending</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+</section>
+
+<style>
+  .scorecard-diff {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    margin: 40px 0;
+    background: var(--surface);
+    display: grid;
+    gap: 18px;
+  }
+  .scorecard-diff-header h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    letter-spacing: -0.015em;
+  }
+  .scorecard-diff-summary {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .scorecard-diff-empty {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .diff-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    background: var(--surface);
+  }
+  .diff-chip-added {
+    color: var(--scope-page);
+    border-color: color-mix(in oklch, var(--scope-page) 50%, var(--border));
+  }
+  .diff-chip-bumped {
+    color: var(--signal);
+    border-color: color-mix(in oklch, var(--signal) 50%, var(--border));
+  }
+  .diff-chip-removed {
+    color: var(--text-subtle);
+  }
+  .diff-all-link {
+    margin-left: auto;
+    font-size: 13px;
+  }
+  .diff-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .diff-row {
+    display: grid;
+    grid-template-columns: minmax(90px, max-content) minmax(160px, max-content) 1fr max-content;
+    grid-template-areas:
+      'kind id name version'
+      '. attribution attribution attribution';
+    align-items: baseline;
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-left-width: 3px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: 14px;
+  }
+  .diff-row-added { border-left-color: var(--scope-page); }
+  .diff-row-bumped { border-left-color: var(--signal); }
+  .diff-row-removed {
+    border-left-color: var(--text-subtle);
+    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
+  }
+  .diff-kind {
+    grid-area: kind;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    letter-spacing: 0.02em;
+  }
+  .diff-id {
+    grid-area: id;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .diff-row-removed .diff-id {
+    color: var(--text-subtle);
+    text-decoration: line-through;
+  }
+  .diff-name {
+    grid-area: name;
+    color: var(--text-muted);
+  }
+  .diff-version {
+    grid-area: version;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+  .diff-attribution {
+    grid-area: attribution;
+    font-size: 12.5px;
+    color: var(--text-subtle);
+  }
+  .diff-attribution-pending {
+    font-style: italic;
+  }
+  @media (max-width: 640px) {
+    .diff-row {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'kind'
+        'id'
+        'name'
+        'version'
+        'attribution';
+      row-gap: 2px;
+    }
+  }
+</style>

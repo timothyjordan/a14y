@@ -1,0 +1,40 @@
+---
+/**
+ * One-line `+N · M bumped · K removed vs v{latest}` chip rendered on the
+ * scorecards index page next to the draft entry. Renders nothing when the
+ * draft is verbatim identical to the latest published — that avoids noise
+ * before the first contribution lands.
+ */
+import { getDraftDiff, getLatestScorecardVersion } from '~/lib/scorecard-data';
+
+const diff = getDraftDiff();
+const latest = getLatestScorecardVersion();
+const hasAny = diff.added.length + diff.bumped.length + diff.removed.length > 0;
+---
+
+{hasAny && (
+  <span class="diff-summary-chip">
+    <span class="diff-summary-added">+{diff.added.length} new</span>
+    {' · '}
+    <span class="diff-summary-bumped">{diff.bumped.length} bumped</span>
+    {' · '}
+    <span class="diff-summary-removed">−{diff.removed.length} removed</span>
+    {' '}vs v{latest}
+  </span>
+)}
+
+<style>
+  .diff-summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    letter-spacing: 0.02em;
+  }
+  .diff-summary-added { color: var(--scope-page); }
+  .diff-summary-bumped { color: var(--signal); }
+  .diff-summary-removed { color: var(--text-subtle); }
+</style>

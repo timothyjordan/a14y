@@ -20,7 +20,9 @@ export {
   isDraftScorecardVersion,
   resolveScorecardSelector,
   SCORECARDS,
+  loadDraftChanges,
 } from './scorecard';
+export type { DraftChange, DraftChangeKind, DraftChangesFile } from './scorecard';
 export { buildCheckDocsUrl, DOCS_BASE_URL } from './scorecard/docsUrl';
 export type {
   ScorecardManifest,

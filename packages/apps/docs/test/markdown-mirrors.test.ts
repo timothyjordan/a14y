@@ -3,8 +3,13 @@ import {
   resolvePagesSlug,
   renderShippedVersionsList,
   renderScorecardVersionChecks,
+  renderScorecardDiffSection,
+  renderDraftChangesPage,
 } from '../src/integrations/markdown-mirrors';
-import { getLatestScorecardVersion } from '../src/lib/scorecard-data';
+import {
+  getDraftScorecardVersion,
+  getLatestScorecardVersion,
+} from '../src/lib/scorecard-data';
 
 describe('markdown-mirrors helpers', () => {
   describe('resolvePagesSlug', () => {
@@ -26,6 +31,11 @@ describe('markdown-mirrors helpers', () => {
     it('maps any /scorecards/<version>/ to "scorecards-version"', () => {
       expect(resolvePagesSlug('scorecards/0.2.0')).toBe('scorecards-version');
       expect(resolvePagesSlug('scorecards/1.0.0')).toBe('scorecards-version');
+    });
+
+    it('maps /scorecards/<version>/changes/ to "scorecards-version-changes"', () => {
+      expect(resolvePagesSlug('scorecards/draft/changes')).toBe('scorecards-version-changes');
+      expect(resolvePagesSlug('scorecards/0.3.0-draft/changes')).toBe('scorecards-version-changes');
     });
 
     it('returns null for check-detail and unknown paths', () => {
@@ -73,6 +83,37 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toMatch(/^## Draft/m);
       expect(out).toContain('(draft)');
       expect(out).toContain('/scorecards/draft/');
+    });
+  });
+
+  describe('renderScorecardDiffSection', () => {
+    it('emits a "## Changes vs v<latest>" heading even when the diff is empty', () => {
+      const out = renderScorecardDiffSection(getDraftScorecardVersion());
+      const latest = getLatestScorecardVersion();
+      expect(out).toMatch(new RegExp(`^## Changes vs v${latest.replace('.', '\\.')}`, 'm'));
+    });
+
+    it('shows the no-changes empty state when the draft matches the latest published', () => {
+      // Current state: draft is seeded verbatim from the latest published.
+      // When the draft first diverges this assertion tightens — the empty
+      // state should disappear and Added/Bumped/Removed subheadings appear.
+      const out = renderScorecardDiffSection(getDraftScorecardVersion());
+      expect(out).toContain('No changes yet');
+    });
+  });
+
+  describe('renderDraftChangesPage', () => {
+    it('mentions the latest published version and links back to its scorecard page', () => {
+      const out = renderDraftChangesPage(getDraftScorecardVersion());
+      const latest = getLatestScorecardVersion();
+      expect(out).toContain(`v${latest}`);
+      expect(out).toContain(`/scorecards/${latest}/`);
+    });
+
+    it('shows the no-contributions empty state when nothing has diverged yet', () => {
+      const out = renderDraftChangesPage(getDraftScorecardVersion());
+      expect(out).toContain('No contributions yet');
+      expect(out).toContain('CONTRIBUTING.md');
     });
   });
 

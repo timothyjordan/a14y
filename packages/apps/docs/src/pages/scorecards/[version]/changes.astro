@@ -1,0 +1,192 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import {
+  getCheckSummary,
+  getDraftDiffEntries,
+  getDraftScorecardVersion,
+  getLatestScorecardVersion,
+  isDraftScorecardVersion,
+  type DraftDiffEntry,
+} from '~/lib/scorecard-data';
+
+/**
+ * Release-notes-style page listing every recorded change to the draft
+ * scorecard vs the latest published version, with attribution + PR links.
+ * Emitted only for draft versions (the literal draft version string + the
+ * `/scorecards/draft/` alias). Frozen versions 404 on `/changes/`.
+ */
+export const getStaticPaths = (() => {
+  const draftVersion = getDraftScorecardVersion();
+  return [
+    { params: { version: draftVersion }, props: { resolvedVersion: draftVersion } },
+    { params: { version: 'draft' }, props: { resolvedVersion: draftVersion } },
+  ];
+}) satisfies GetStaticPaths;
+
+const resolvedVersion = Astro.props.resolvedVersion as string;
+const latest = getLatestScorecardVersion();
+const entries = getDraftDiffEntries();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+if (!isDraftScorecardVersion(resolvedVersion)) {
+  throw new Error(`Draft changes page requested for non-draft version "${resolvedVersion}"`);
+}
+
+function checkName(entry: DraftDiffEntry): string {
+  const lookupVersion = entry.kind === 'removed' ? latest : resolvedVersion;
+  return getCheckSummary(lookupVersion, entry.id)?.name ?? entry.id;
+}
+
+function checkHref(entry: DraftDiffEntry): string {
+  const lookupVersion = entry.kind === 'removed' ? latest : resolvedVersion;
+  return `${base}/scorecards/${lookupVersion}/checks/${entry.id}/`;
+}
+
+// Sort attributed entries by mergedAt desc (most recent first); pending
+// entries sink to the bottom so the historical list reads chronologically.
+const sorted = [...entries].sort((a, b) => {
+  if (a.attribution && b.attribution) {
+    return b.attribution.mergedAt.localeCompare(a.attribution.mergedAt);
+  }
+  if (a.attribution) return -1;
+  if (b.attribution) return 1;
+  return a.id.localeCompare(b.id);
+});
+---
+
+<BaseLayout
+  title={`Draft scorecard changes vs v${latest} · a14y`}
+  description={`Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latest}, with GitHub attribution.`}
+  scorecardVersion={resolvedVersion}
+  showVersionSelector
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">draft changes</span>
+        <span>vs v{latest}</span>
+      </div>
+      <h1>Draft scorecard changes</h1>
+      <p class="lead">
+        Every recorded change to the in-progress scorecard
+        <code>{resolvedVersion}</code> vs the latest published
+        <a href={`${base}/scorecards/${latest}/`}>v{latest}</a>. Attribution is
+        recorded automatically by the
+        <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#diff-refresh-workflow" rel="noopener">refresh-draft-diff workflow</a>
+        on every PR that touches the draft manifest.
+      </p>
+    </div>
+  </section>
+
+  {sorted.length === 0 ? (
+    <p class="lead">
+      No contributions yet. The draft is currently identical to v{latest}. See
+      <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#scorecard-lifecycle" rel="noopener">CONTRIBUTING.md</a>
+      to propose one.
+    </p>
+  ) : (
+    <ol class="changes-list">
+      {sorted.map((entry) => (
+        <li class={`change-entry change-entry-${entry.kind}`}>
+          <header>
+            <span class={`change-kind change-kind-${entry.kind}`}>{entry.kind}</span>
+            <a class="change-id" href={checkHref(entry)}>{entry.id}</a>
+            <span class="change-name">{checkName(entry)}</span>
+          </header>
+          <div class="change-version">
+            {entry.kind === 'added' && <>v{entry.toImpl}</>}
+            {entry.kind === 'bumped' && <>v{entry.fromImpl} → v{entry.toImpl}</>}
+            {entry.kind === 'removed' && <>was v{entry.fromImpl}</>}
+          </div>
+          {entry.attribution ? (
+            <footer class="change-attribution">
+              <a href={entry.attribution.authorUrl} rel="noopener">@{entry.attribution.author}</a>
+              {' · '}
+              <a href={entry.attribution.prUrl} rel="noopener">PR #{entry.attribution.pr}</a>
+              {' · '}
+              <time datetime={entry.attribution.mergedAt}>{entry.attribution.mergedAt.slice(0, 10)}</time>
+            </footer>
+          ) : (
+            <footer class="change-attribution change-attribution-pending">
+              attribution pending — the refresh-draft-diff workflow hasn't run for this change yet
+            </footer>
+          )}
+        </li>
+      ))}
+    </ol>
+  )}
+</BaseLayout>
+
+<style>
+  .changes-list {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: grid;
+    gap: 14px;
+  }
+  .change-entry {
+    border: 1px solid var(--border);
+    border-left-width: 3px;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    background: var(--surface);
+    display: grid;
+    gap: 6px;
+  }
+  .change-entry-added { border-left-color: var(--scope-page); }
+  .change-entry-bumped { border-left-color: var(--signal); }
+  .change-entry-removed {
+    border-left-color: var(--text-subtle);
+    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
+  }
+  .change-entry header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .change-kind {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+  .change-kind-added {
+    color: var(--scope-page);
+    border-color: color-mix(in oklch, var(--scope-page) 50%, var(--border));
+  }
+  .change-kind-bumped {
+    color: var(--signal);
+    border-color: color-mix(in oklch, var(--signal) 50%, var(--border));
+  }
+  .change-kind-removed { color: var(--text-subtle); }
+  .change-id {
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .change-entry-removed .change-id {
+    text-decoration: line-through;
+    color: var(--text-subtle);
+  }
+  .change-name {
+    color: var(--text-muted);
+    font-size: 14.5px;
+  }
+  .change-version {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  .change-attribution {
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+  .change-attribution-pending {
+    font-style: italic;
+  }
+</style>

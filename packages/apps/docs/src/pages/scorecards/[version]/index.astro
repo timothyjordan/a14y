@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CheckCard from '~/components/CheckCard.astro';
 import DraftScorecardBanner from '~/components/DraftScorecardBanner.astro';
+import ScorecardDiff from '~/components/ScorecardDiff.astro';
 import {
   listAllScorecards,
   getScorecardByVersion,
@@ -34,6 +35,7 @@ const isDraft = isDraftScorecardVersion(scorecard.version);
 
 <BaseLayout title={`Scorecard v${scorecard.version} · a14y`} scorecardVersion={scorecard.version} showVersionSelector>
   {isDraft && <DraftScorecardBanner />}
+  {isDraft && <ScorecardDiff draftVersion={scorecard.version} />}
   <h1>Scorecard v{scorecard.version}</h1>
   <p class="lead">{scorecard.description}</p>
   <div class="meta-row">
