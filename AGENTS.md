@@ -28,6 +28,17 @@ human-readable version, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 5. **Frontmatter `id` in `src/content/checks/<id>.md` must equal the
    filename and the pin in `draft.ts`.** The coverage gate fails the
    build otherwise.
+6. **If your change touches `draft.ts`, the `refresh-draft-diff`
+   workflow MUST run before the PR is merged.** It regenerates
+   `packages/core/src/scorecard/draft-changes.json` — the attribution
+   data the docs site reads to render each diff entry on
+   `/scorecards/draft/` and `/scorecards/draft/changes/`. It auto-runs
+   on each push to PRs that modify `draft.ts`. If it didn't run (fork
+   PR, workflow disabled, merged before the run completed), trigger
+   it manually from `Actions → Refresh draft diff → Run workflow`. To
+   preview the would-be JSON without pushing, run
+   `node scripts/refresh-draft-diff.mjs --local`. Verify
+   `draft-changes.json` reflects the net diff before requesting review.
 
 ## Canonical commands
 
@@ -94,6 +105,10 @@ Before opening a PR, confirm:
 - [ ] If anything under `docs/templates/` or `docs/fragments/`
       changed: `npm run docs` was run and the regenerated READMEs are
       committed.
+- [ ] If `draft.ts` changed: the `refresh-draft-diff` workflow ran on
+      the PR head and `packages/core/src/scorecard/draft-changes.json`
+      reflects the net diff with attribution. See
+      [CONTRIBUTING → Diff refresh workflow](./CONTRIBUTING.md#diff-refresh-workflow).
 - [ ] Commits follow Conventional Commits.
 
 ## Further reading

@@ -1,0 +1,73 @@
+name: Refresh draft diff
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'packages/core/src/scorecard/draft.ts'
+      - 'packages/core/src/scorecard/draft-changes.json'
+      - 'scripts/refresh-draft-diff.mjs'
+      - '.github/workflows/refresh-draft-diff.yml'
+  # Manual trigger covers two cases:
+  #   1. A PR's auto-run didn't fire (fork PR, runner outage, etc.).
+  #   2. Audit / catch-up on `main` for a merged PR whose draft.ts
+  #      changes never went through the auto-refresh — re-runs the
+  #      reconciliation against the current state of main.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-draft-diff-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # PR head ref so the eventual `git push` lands on the
+          # contributor's branch. For workflow_dispatch on main, this
+          # falls back to the default branch.
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build @a14y/core
+        run: npm run build --workspace @a14y/core
+
+      - name: Refresh draft-changes.json
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+          PR_URL: ${{ github.event.pull_request.html_url || '' }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
+          PR_AUTHOR_URL: ${{ github.event.pull_request.user.html_url || format('https://github.com/{0}', github.actor) }}
+          MERGED_AT: ${{ github.event.pull_request.merged_at || '' }}
+        run: node scripts/refresh-draft-diff.mjs
+
+      - name: Commit and push if the JSON changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- packages/core/src/scorecard/draft-changes.json; then
+            echo "No changes to draft-changes.json; nothing to commit."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add packages/core/src/scorecard/draft-changes.json
+          git commit -m "chore(scorecard): refresh draft changes [skip ci]"
+          git push

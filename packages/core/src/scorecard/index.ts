@@ -121,3 +121,9 @@ export function getScorecard(version: string = LATEST_SCORECARD): ResolvedScorec
 }
 
 export * from './types';
+export {
+  loadDraftChanges,
+  type DraftChange,
+  type DraftChangeKind,
+  type DraftChangesFile,
+} from './draft-changes';

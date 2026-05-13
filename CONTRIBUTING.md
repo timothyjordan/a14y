@@ -212,6 +212,45 @@ The scorecard ships as a set of frozen manifests plus one mutable
 > contributions go through `draft.ts` and through a *new*
 > `implementations` entry.
 
+### Diff refresh workflow
+
+When a PR changes `packages/core/src/scorecard/draft.ts`, the docs site
+needs to surface the resulting diff vs the latest published scorecard
+— added / removed / bumped checks with per-change attribution to the
+contributor and PR. That listing is rendered from
+`packages/core/src/scorecard/draft-changes.json`, which is regenerated
+by the **`refresh-draft-diff`** GitHub workflow.
+
+Three flows cover every case:
+
+1. **Default path (auto-run).** Every PR that modifies `draft.ts`
+   automatically triggers `refresh-draft-diff` on each push. The
+   workflow recomputes the net diff, reconciles it against the
+   existing `draft-changes.json` (entries whose check id no longer
+   appears in the net diff are dropped — that's how conflict
+   resolution works when a later commit reverts an earlier one), and
+   commits the updated JSON back to the PR branch with
+   `chore(scorecard): refresh draft changes [skip ci]`. No action
+   needed from you beyond rebasing if you have local commits.
+2. **Manual trigger.** If the auto-run didn't fire (workflow disabled,
+   a push collision, etc.), trigger it by hand:
+   `Actions → Refresh draft diff → Run workflow → <branch>`. To preview
+   what the workflow would produce without pushing, run
+   `node scripts/refresh-draft-diff.mjs --local` against your working
+   tree — it prints the would-be JSON and exits.
+3. **Audit / catch-up.** If a PR merged with `draft.ts` changes but
+   `draft-changes.json` is now stale (it didn't pick up the change),
+   trigger the workflow on `main` via `workflow_dispatch`. It detects
+   any unrecorded net change, attributes it to the most recent PR that
+   touched the relevant entry (via `git log --follow -L`), and commits
+   the refreshed JSON directly to `main`.
+
+> **Fork PRs.** GitHub does not let workflows from fork PRs push
+> commits back to the PR branch. For fork contributions, a maintainer
+> needs to rebase the branch locally and re-push so the workflow can
+> attribute under the maintainer push, or merge and then run the
+> audit/catch-up flow on `main`.
+
 ## Adding a new check
 
 1. Implement the check under `packages/core/src/checks/{site,page}/`.
