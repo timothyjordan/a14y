@@ -248,4 +248,64 @@ const heroBadgeDarkHtml = buildBadgeHtml(
     </div>
   </section>
 
+  <section class="section" aria-labelledby="docs-heading">
+    <div class="section-head">
+      <h2 id="docs-heading">Every check has its own page</h2>
+      <p class="section-sub">
+        Each of the {totalChecks} scorecard checks ships with
+        documentation that explains why it matters, how the audit
+        verifies it, and how to implement the fix.
+      </p>
+    </div>
+
+    <article class="check-preview">
+      <header class="check-preview-head">
+        <span class="check-preview-eyebrow">v{latest} · page check</span>
+        <p class="check-preview-id"><code>html.canonical-link</code></p>
+        <h3 class="check-preview-title">
+          Has <code>&lt;link rel="canonical"&gt;</code>
+        </h3>
+      </header>
+
+      <div class="check-preview-grid">
+        <div class="check-preview-cell">
+          <span class="check-preview-label">Why it matters</span>
+          <p>
+            Agents follow canonical links to deduplicate the same
+            content reachable at multiple URLs. Without one, RAG
+            ingesters store the same article under several URLs and
+            waste context-window capacity.
+          </p>
+        </div>
+        <div class="check-preview-cell">
+          <span class="check-preview-label">How we check</span>
+          <p>
+            Load the page, query
+            {' '}<code>link[rel="canonical"]</code>, read the
+            {' '}<code>href</code>. Passes if a non-empty absolute
+            href is present.
+          </p>
+        </div>
+        <div class="check-preview-cell">
+          <span class="check-preview-label">How to implement</span>
+          <p>
+            Add <code>&lt;link rel="canonical"&gt;</code> to every
+            page's <code>&lt;head&gt;</code> pointing at the URL you
+            consider authoritative. Most generators emit this once
+            you set <code>site</code> in their config.
+          </p>
+        </div>
+      </div>
+
+      <footer class="check-preview-foot">
+        <a href={`${base}/scorecards/${latest}/checks/html.canonical-link/`}>
+          Read the full check page →
+        </a>
+        <a class="btn btn--ghost" href={`${base}/scorecards/${latest}/`}>
+          Browse all {totalChecks} checks
+        </a>
+      </footer>
+    </article>
+  </section>
+
 </BaseLayout>

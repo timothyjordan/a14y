@@ -871,6 +871,119 @@ main.container h2[id] {
   margin: 0;
 }
 
+/* ─── Check-preview section ─────────────────────────────────────
+   Single card that pitches the per-check documentation by showing
+   a real check's title plus three labeled excerpts (Why / How we
+   check / How to implement). Editorial layout — one card, three
+   columns, distinct labels — chosen over a 3-card grid so it
+   reads as "a preview of a page" rather than "three more cards." */
+
+.check-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.check-preview-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.check-preview-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.check-preview-id {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.check-preview-id code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: var(--brand-ink);
+}
+:root[data-theme='dark'] .check-preview-id code { color: var(--brand-cyan); }
+.check-preview-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+}
+.check-preview-title code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--surface-alt);
+}
+.check-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 880px) {
+  .check-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+.check-preview-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.check-preview-cell p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.check-preview-cell code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--surface-alt);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.check-preview-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.check-preview-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.check-preview-foot > a:first-child {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-ink);
+  text-decoration: none;
+}
+:root[data-theme='dark'] .check-preview-foot > a:first-child { color: var(--brand-cyan); }
+.check-preview-foot > a:first-child:hover { text-decoration: underline; }
+
 /* ─── Scorecard callout (no side-stripe) ────────────────────────── */
 
 .scorecard-callout {
