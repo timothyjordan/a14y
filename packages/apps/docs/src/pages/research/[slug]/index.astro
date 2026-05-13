@@ -12,21 +12,25 @@ import {
 import { listSiteRunSlugs, loadSiteRun, scoreClass } from '~/lib/site-run';
 
 export const getStaticPaths = (() => {
+  // Return only the params + the lightweight LeaderboardEntry. The full
+  // SiteRun is loaded inside the page itself so each render only holds
+  // one run in memory (the catalog totals 100+ MB after trimming —
+  // returning every run as a prop here OOMs Astro's build pass).
   const published = new Set(listSiteRunSlugs());
   return getLeaderboard()
     .filter((entry) => published.has(entry.slug))
     .map((entry) => ({
       params: { slug: entry.slug },
-      props: { entry, run: loadSiteRun(entry.slug)! },
+      props: { entry },
     }));
 }) satisfies GetStaticPaths;
 
 interface Props {
   entry: LeaderboardEntry;
-  run: SiteRun;
 }
 
-const { entry, run } = Astro.props;
+const { entry } = Astro.props;
+const run = (await loadSiteRun(entry.slug))!;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isSite = run.mode === 'site';

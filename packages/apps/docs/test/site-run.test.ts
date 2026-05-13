@@ -25,9 +25,9 @@ describe('listSiteRunSlugs', () => {
 });
 
 describe('loadSiteRun', () => {
-  it('returns the SiteRun shape for a known leaderboard slug', () => {
+  it('returns the SiteRun shape for a known leaderboard slug', async () => {
     const slug = listSiteRunSlugs()[0];
-    const run = loadSiteRun(slug);
+    const run = await loadSiteRun(slug);
     expect(run).not.toBeNull();
     expect(run!.url).toMatch(/^https?:\/\//);
     expect(typeof run!.summary.score).toBe('number');
@@ -35,13 +35,13 @@ describe('loadSiteRun', () => {
     expect(Array.isArray(run!.siteChecks)).toBe(true);
   });
 
-  it('returns null for an unknown slug', () => {
-    expect(loadSiteRun('definitely-not-a-real-site')).toBeNull();
+  it('returns null for an unknown slug', async () => {
+    expect(await loadSiteRun('definitely-not-a-real-site')).toBeNull();
   });
 
-  it('contains no na checks (publish strips them)', () => {
+  it('contains no na checks (publish strips them)', async () => {
     const slug = listSiteRunSlugs()[0];
-    const run = loadSiteRun(slug)!;
+    const run = (await loadSiteRun(slug))!;
     for (const c of run.siteChecks) expect(c.status).not.toBe('na');
     for (const page of run.pages) {
       for (const c of page.checks) expect(c.status).not.toBe('na');
