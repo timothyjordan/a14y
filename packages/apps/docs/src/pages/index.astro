@@ -250,55 +250,55 @@ const heroBadgeDarkHtml = buildBadgeHtml(
 
   <section class="section" aria-labelledby="docs-heading">
     <div class="section-head">
-      <h2 id="docs-heading">Every check has its own page</h2>
+      <h2 id="docs-heading">Every check is a complete recipe</h2>
       <p class="section-sub">
-        Each of the {totalChecks} scorecard checks ships with
-        documentation that explains why it matters, how the audit
-        verifies it, and how to implement the fix.
+        a14y documents what each check looks for, why it matters,
+        and exactly how to ship the fix. Making your site readable
+        to agents should be a checklist, not a research project.
       </p>
     </div>
 
     <article class="check-preview">
       <header class="check-preview-head">
-        <span class="check-preview-eyebrow">v{latest} · page check</span>
-        <p class="check-preview-id"><code>html.canonical-link</code></p>
-        <h3 class="check-preview-title">
-          Has <code>&lt;link rel="canonical"&gt;</code>
-        </h3>
+        <span class="check-preview-eyebrow">One of {totalChecks} · v{latest} · site check</span>
+        <p class="check-preview-id"><code>llms-txt.exists</code></p>
+        <h3 class="check-preview-title">llms.txt is published</h3>
       </header>
 
       <div class="check-preview-grid">
         <div class="check-preview-cell">
           <span class="check-preview-label">Why it matters</span>
           <p>
-            Agents follow canonical links to deduplicate the same
-            content reachable at multiple URLs. Without one, RAG
-            ingesters store the same article under several URLs and
-            waste context-window capacity.
+            An <code>llms.txt</code> at a well-known location is
+            the agent equivalent of a sitemap. It tells AI
+            ingesters which pages are worth reading and gives them
+            a single, deterministic starting point for crawling.
           </p>
         </div>
         <div class="check-preview-cell">
           <span class="check-preview-label">How we check</span>
           <p>
-            Load the page, query
-            {' '}<code>link[rel="canonical"]</code>, read the
-            {' '}<code>href</code>. Passes if a non-empty absolute
-            href is present.
+            <code>GET /llms.txt</code>, then
+            {' '}<code>/.well-known/llms.txt</code>, then
+            {' '}<code>/docs/llms.txt</code>. Any 2xx response
+            passes. Falls back to the <code>llms-full.txt</code>
+            variants before failing.
           </p>
         </div>
         <div class="check-preview-cell">
           <span class="check-preview-label">How to implement</span>
           <p>
-            Add <code>&lt;link rel="canonical"&gt;</code> to every
-            page's <code>&lt;head&gt;</code> pointing at the URL you
-            consider authoritative. Most generators emit this once
-            you set <code>site</code> in their config.
+            Publish a plain-text <code>llms.txt</code> at your
+            site root (or under <code>/.well-known/</code>) listing
+            the pages worth reading. The format is intentionally
+            simple: markdown links, headings, or free text. No HTML
+            parser needed.
           </p>
         </div>
       </div>
 
       <footer class="check-preview-foot">
-        <a href={`${base}/scorecards/${latest}/checks/html.canonical-link/`}>
+        <a href={`${base}/scorecards/${latest}/checks/llms-txt.exists/`}>
           Read the full check page →
         </a>
         <a class="btn btn--ghost" href={`${base}/scorecards/${latest}/`}>
