@@ -90,19 +90,28 @@ describe('diffScorecards', () => {
     );
   });
 
-  it('reports today\'s draft-vs-latest as empty (draft is seeded verbatim)', () => {
-    // Guards the empty-state UX. When the draft first diverges, this
-    // assertion will start failing — that's the signal to verify the
-    // refresh-draft-diff workflow produced matching attribution.
+  it('reports today\'s draft-vs-latest with the new markdown.* checks added', () => {
+    // The draft has diverged from the latest published scorecard: TJ-456
+    // landed three new markdown.* checks. If a future PR removes or bumps
+    // them, update this assertion to match.
     const diff = getDraftDiff();
-    expect(diff.added).toEqual([]);
+    expect(diff.added.map((a) => a.id).sort()).toEqual([
+      'markdown.navigation-stripped',
+      'markdown.size-reduction',
+      'markdown.valid-markdown',
+    ]);
     expect(diff.removed).toEqual([]);
     expect(diff.bumped).toEqual([]);
   });
 });
 
 describe('getDraftDiffEntries', () => {
-  it('returns no entries when the draft is identical to the latest published', () => {
-    expect(getDraftDiffEntries()).toEqual([]);
+  it('returns one entry per check that has diverged from the latest published', () => {
+    const ids = getDraftDiffEntries().map((e) => e.id).sort();
+    expect(ids).toEqual([
+      'markdown.navigation-stripped',
+      'markdown.size-reduction',
+      'markdown.valid-markdown',
+    ]);
   });
 });

@@ -93,12 +93,16 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toMatch(new RegExp(`^## Changes vs v${latest.replace('.', '\\.')}`, 'm'));
     });
 
-    it('shows the no-changes empty state when the draft matches the latest published', () => {
-      // Current state: draft is seeded verbatim from the latest published.
-      // When the draft first diverges this assertion tightens — the empty
-      // state should disappear and Added/Bumped/Removed subheadings appear.
+    it('renders an Added subheading with each new check id when the draft has diverged', () => {
+      // The draft has diverged from the latest published scorecard: TJ-456
+      // landed three new markdown.* checks. If a future PR removes or bumps
+      // them, update this assertion to match.
       const out = renderScorecardDiffSection(getDraftScorecardVersion());
-      expect(out).toContain('No changes yet');
+      expect(out).not.toContain('No changes yet');
+      expect(out).toMatch(/^### Added/m);
+      expect(out).toContain('markdown.navigation-stripped');
+      expect(out).toContain('markdown.size-reduction');
+      expect(out).toContain('markdown.valid-markdown');
     });
   });
 
@@ -110,10 +114,13 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toContain(`/scorecards/${latest}/`);
     });
 
-    it('shows the no-contributions empty state when nothing has diverged yet', () => {
+    it('lists the diverged check ids under a Changes heading', () => {
       const out = renderDraftChangesPage(getDraftScorecardVersion());
-      expect(out).toContain('No contributions yet');
-      expect(out).toContain('CONTRIBUTING.md');
+      expect(out).not.toContain('No contributions yet');
+      expect(out).toMatch(/^## Changes/m);
+      expect(out).toContain('markdown.navigation-stripped');
+      expect(out).toContain('markdown.size-reduction');
+      expect(out).toContain('markdown.valid-markdown');
     });
   });
 
