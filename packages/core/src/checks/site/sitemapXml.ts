@@ -72,12 +72,15 @@ function parseSitemapBody(body: string): ParsedSitemap {
   if (root.urlset) {
     const urls = ((root.urlset as { url?: Array<{ loc?: unknown; lastmod?: unknown }> }).url ?? [])
       .filter((u) => typeof u.loc === 'string')
-      .map((u) => ({
-        loc: u.loc as string,
+      .map((u) => {
         // Coerce defensively: even with parseTagValue: false a future
         // schema change or extension could surface non-string values.
-        lastmod: u.lastmod == null ? undefined : String(u.lastmod),
-      }));
+        // Empty `<lastmod></lastmod>` parses to "" — treat it as
+        // absent so the 1.1.0 check reports "missing" (consistent
+        // with omitting the element), not "invalid date".
+        const raw = u.lastmod == null ? undefined : String(u.lastmod);
+        return { loc: u.loc as string, lastmod: raw === '' ? undefined : raw };
+      });
     return { ok: true, kind: 'urlset', entries: urls, childSitemaps: [] };
   }
   if (root.sitemapindex) {
