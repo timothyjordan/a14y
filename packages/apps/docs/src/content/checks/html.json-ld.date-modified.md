@@ -14,7 +14,7 @@ references:
 
 ## How the check decides
 
-The check parses every JSON-LD block on the page, walks every node (including arrays and `@graph` children), and looks for a `dateModified` field whose value parses as a schema.org `Date` (`YYYY-MM-DD`) or `DateTime` (date + time + timezone designator). Returns N/A if no JSON-LD exists. Fails if JSON-LD exists but no node declares `dateModified`, or if every value present is not a valid date string. Calendar-impossible values like `2026-02-30` are rejected.
+The check parses every JSON-LD block on the page, walks every node (including arrays and `@graph` children), and looks for a `dateModified` field whose value parses as a schema.org `Date` (`YYYY-MM-DD`) or `DateTime` (date + time + timezone designator). The timezone designator may use either the extended form (`+00:00`) or the basic form (`+0000`); both are valid ISO 8601. Returns N/A if no JSON-LD exists. Fails if JSON-LD exists but no node declares `dateModified`, or if every value present is not a valid date string. Calendar-impossible values like `2026-02-30` are rejected.
 
 ## How to implement it
 
