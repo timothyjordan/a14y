@@ -31,6 +31,7 @@ describe('_dateValidation', () => {
   // Strings both validators must accept.
   const validBoth = [
     '2026-04-01',
+    '2024-02-29', // leap day
     '2026-04-01T00:00:00Z',
     '2026-04-01T12:34:56+00:00',
     '2026-04-01T12:34:56-08:00',
@@ -46,6 +47,7 @@ describe('_dateValidation', () => {
     '2026-04-01T12:34Z', // seconds-required narrowing
     '2026-13-01',
     '2026-02-30',
+    '2025-02-29', // non-leap year
     '2026/04/01',
     '04-01-2026',
     '2026-04-01 12:34:56',
@@ -181,6 +183,17 @@ describe('sitemap-xml.has-lastmod 1.1.0', () => {
     const ctx = makeSiteCtx(BASE, { [`${BASE}/sitemap.xml`]: { body } });
     const r = await impl.run(ctx);
     expect(r.status).toBe('pass');
+  });
+
+  it('treats <lastmod></lastmod> as missing, not invalid', async () => {
+    const body = `<?xml version="1.0"?><urlset>
+      <url><loc>${BASE}/a</loc><lastmod></lastmod></url>
+    </urlset>`;
+    const ctx = makeSiteCtx(BASE, { [`${BASE}/sitemap.xml`]: { body } });
+    const r = await impl.run(ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/missing/);
+    expect(r.message).not.toMatch(/invalid/);
   });
 
   it('fails (not "missing") on year-only <lastmod>2026</lastmod>', async () => {
