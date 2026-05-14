@@ -43,6 +43,14 @@ export interface SitemapXmlResource {
 const parser = new XMLParser({
   ignoreAttributes: true,
   isArray: (name) => name === 'url' || name === 'sitemap',
+  // Pretty-printed sitemaps emit `<lastmod>\n  2026-04-01\n</lastmod>` and
+  // year-only values like `<lastmod>2026</lastmod>`. With parseTagValue's
+  // default of true, the parser strips surrounding whitespace but also
+  // coerces numeric-looking strings to numbers — which would route a
+  // declared `<lastmod>` into the "missing" bucket in the 1.1.0 check.
+  // Disable coercion so values stay as strings, and trim in the mapper.
+  parseTagValue: false,
+  trimValues: true,
 });
 
 interface ParsedSitemap {
@@ -62,9 +70,14 @@ function parseSitemapBody(body: string): ParsedSitemap {
   }
   const root = (xml as { urlset?: unknown; sitemapindex?: unknown }) ?? {};
   if (root.urlset) {
-    const urls = ((root.urlset as { url?: Array<{ loc?: string; lastmod?: string }> }).url ?? [])
+    const urls = ((root.urlset as { url?: Array<{ loc?: unknown; lastmod?: unknown }> }).url ?? [])
       .filter((u) => typeof u.loc === 'string')
-      .map((u) => ({ loc: u.loc as string, lastmod: u.lastmod }));
+      .map((u) => ({
+        loc: u.loc as string,
+        // Coerce defensively: even with parseTagValue: false a future
+        // schema change or extension could surface non-string values.
+        lastmod: u.lastmod == null ? undefined : String(u.lastmod),
+      }));
     return { ok: true, kind: 'urlset', entries: urls, childSitemaps: [] };
   }
   if (root.sitemapindex) {
