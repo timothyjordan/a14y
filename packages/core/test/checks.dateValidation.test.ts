@@ -50,7 +50,13 @@ describe('_dateValidation', () => {
     '04-01-2026',
     '2026-04-01 12:34:56',
     '2026-04-01T12:34:56', // missing TZD
-    '2026-04-01T25:00:00Z',
+    '2026-04-01T25:00:00Z', // hours > 23
+    '2026-04-01T12:60:00Z', // minutes > 59
+    '2026-04-01T12:00:60Z', // seconds > 59
+    '2026-04-01T12:00:00+99:00', // offset hours > 14
+    '2026-04-01T12:00:00+05:60', // offset minutes > 59
+    '2026-04-01T12:00:00+14:30', // offset > 14:00 cap
+    '2026-04-01T12:00:00+05', // hours-only TZD (deliberately narrowed)
   ];
   // Where the validators legitimately diverge: ISO 8601 permits a
   // no-colon TZD, W3C Datetime requires the colon form.
