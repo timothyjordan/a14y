@@ -119,7 +119,7 @@ export const htmlJsonLdDateModified: PageCheckSpec = {
         if (valid) return { status: 'pass', message: valid };
         return {
           status: 'fail',
-          message: `dateModified present but not a valid schema.org Date/DateTime: ${present[0]}`,
+          message: `${present.length} dateModified value(s) present but not a valid schema.org Date/DateTime (e.g. ${present[0]})`,
         };
       },
     },
