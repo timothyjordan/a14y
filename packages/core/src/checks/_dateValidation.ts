@@ -27,21 +27,30 @@
  *   - W3C TZD requires `Z` or `[+-]hh:mm` exactly. ISO 8601 also
  *     accepts `[+-]hhmm` (no colon); that's where the two validators
  *     intentionally diverge.
+ *   - Hours-only TZD (`[+-]hh`) is rejected for both. ISO 8601 permits
+ *     it but it's vanishingly rare in modified-date strings, and
+ *     supporting it would force the regex to carry an asymmetric
+ *     alternation that obscures the W3C/ISO 8601 divergence above.
  *
  * Both functions confirm the calendar values are real (e.g. `2024-02-30`
- * is rejected) by parsing the string with `Date` and cross-checking the
- * round-trip — `Date.parse` happily coerces out-of-range days into the
- * next month, so the surface check alone isn't enough.
+ * is rejected) by constructing a UTC `Date` from the parsed Y/M/D and
+ * confirming each component round-trips — `Date.UTC` happily coerces
+ * out-of-range days into the next month, so the surface regex alone
+ * isn't enough. Real TZD offset bounds (|hh| ≤ 14, mm ≤ 59) are
+ * enforced in `checkDateTime`; the regex alone would accept `+99:59`.
  *
  * Inputs are trimmed of surrounding whitespace before matching;
  * pretty-printed XML in particular can present `<lastmod>\n  …\n</lastmod>`.
  */
 
 const DATE_ONLY = /^(\d{4})-(\d{2})-(\d{2})$/;
+// Capture group 7 is the TZD ("Z" or "[+-]hh[:mm]") so checkDateTime
+// can enforce offset bounds beyond what the regex alone expresses.
 const DATE_TIME_W3C =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
 const DATE_TIME_ISO8601 =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
+const TZD_OFFSET = /^[+-](\d{2}):?(\d{2})$/;
 
 function isCalendarValid(y: number, m: number, d: number): boolean {
   const dt = new Date(Date.UTC(y, m - 1, d));
@@ -60,12 +69,22 @@ function checkDateOnly(s: string): boolean {
 function checkDateTime(s: string, re: RegExp): boolean {
   const m = re.exec(s);
   if (!m) return false;
-  const [, y, mo, d, hh, mm, ss] = m;
+  const [, y, mo, d, hh, mm, ss, tzd] = m;
   if (!isCalendarValid(Number(y), Number(mo), Number(d))) return false;
   const H = Number(hh);
   const M = Number(mm);
   const S = Number(ss);
   if (H > 23 || M > 59 || S > 59) return false;
+  // Real-world TZD offsets are within ±14:00 (ISO 8601). The regex
+  // already shaped the form; this rejects nonsense like "+99:59".
+  if (tzd !== 'Z') {
+    const off = TZD_OFFSET.exec(tzd);
+    if (!off) return false;
+    const offH = Number(off[1]);
+    const offM = Number(off[2]);
+    if (offH > 14 || offM > 59) return false;
+    if (offH === 14 && offM !== 0) return false;
+  }
   return true;
 }
 
