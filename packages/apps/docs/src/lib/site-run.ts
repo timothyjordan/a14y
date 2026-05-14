@@ -2,34 +2,45 @@
  * Loaders for the per-site scorecard pages at `/research/<slug>/`. Each
  * full SiteRun JSON is published from the private a14y-internal repo into
  * `src/data/runs/<slug>.json` by the `@a14y/research` publish command.
- * Astro reads them at build time via `import.meta.glob`; the dynamic route
- * `pages/research/[slug]/index.astro` consumes these helpers in
- * `getStaticPaths()` and at render time.
  *
- * Types come from @a14y/core so the public site renders the exact shape
- * the CLI and extension produce.
+ * **Bypass Vite's bundler.** The catalog has 240+ run files totalling 100+ MB
+ * after trimming. Anything based on `import.meta.glob` (eager or lazy) pulls
+ * all of them into Vite's module graph during the static build pass and
+ * crashes Node's heap. Instead we read the files directly with `fs` at
+ * render time — Vite never sees the JSON, the bundler stays small, and
+ * each per-page render only holds its own SiteRun in memory.
+ *
+ * Types come from @a14y/core so the public site renders the exact
+ * shape the CLI and extension produce.
  */
 import type { SiteRun } from '@a14y/core';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 
-const RUN_MODULES = import.meta.glob<{ default: SiteRun }>('../data/runs/*.json', {
-  eager: true,
-});
+const RUNS_DIR = resolve(process.cwd(), 'src', 'data', 'runs');
 
-const RUNS_BY_SLUG: Record<string, SiteRun> = (() => {
-  const out: Record<string, SiteRun> = {};
-  for (const [path, mod] of Object.entries(RUN_MODULES)) {
-    const slug = path.split('/').pop()!.replace(/\.json$/, '');
-    out[slug] = mod.default;
+const SLUGS: string[] = (() => {
+  try {
+    return readdirSync(RUNS_DIR)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => f.slice(0, -'.json'.length))
+      .sort();
+  } catch {
+    // Fresh checkouts before `pnpm --filter @a14y/research start publish`
+    // has been run won't have a runs/ dir. Empty list lets the dynamic
+    // route resolve to no params instead of throwing at build time.
+    return [];
   }
-  return out;
 })();
 
-export function loadSiteRun(slug: string): SiteRun | null {
-  return RUNS_BY_SLUG[slug] ?? null;
+export async function loadSiteRun(slug: string): Promise<SiteRun | null> {
+  if (!SLUGS.includes(slug)) return null;
+  const raw = readFileSync(join(RUNS_DIR, `${slug}.json`), 'utf8');
+  return JSON.parse(raw) as SiteRun;
 }
 
 export function listSiteRunSlugs(): string[] {
-  return Object.keys(RUNS_BY_SLUG).sort();
+  return [...SLUGS];
 }
 
 /**
