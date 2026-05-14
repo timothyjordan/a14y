@@ -4,8 +4,8 @@
   "mode": "site",
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
-  "startedAt": "2026-05-09T06:53:52.137Z",
-  "finishedAt": "2026-05-09T06:53:52.575Z",
+  "startedAt": "2026-05-14T00:23:08.492Z",
+  "finishedAt": "2026-05-14T00:23:08.977Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -105,7 +105,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "84.7%"
+          "message": "85.2%"
         },
         {
           "id": "html.glossary-link",

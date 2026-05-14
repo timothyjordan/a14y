@@ -4,8 +4,8 @@
   "mode": "site",
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
-  "startedAt": "2026-05-09T06:11:59.934Z",
-  "finishedAt": "2026-05-09T06:12:01.027Z",
+  "startedAt": "2026-05-13T23:06:05.209Z",
+  "finishedAt": "2026-05-13T23:06:05.936Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
