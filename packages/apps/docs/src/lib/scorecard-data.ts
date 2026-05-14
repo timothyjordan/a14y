@@ -10,7 +10,9 @@ import {
   getScorecard,
   isDraftScorecardVersion,
   listScorecards,
+  loadDraftChanges,
   resolveScorecardSelector,
+  type DraftChange,
   type ResolvedCheck,
   type ResolvedScorecard,
   type ScorecardManifest,
@@ -100,4 +102,120 @@ function toSummary(c: ResolvedCheck): CheckSummary {
     implementationVersion: c.implementationVersion,
     description: c.description,
   };
+}
+
+/**
+ * Structural diff between two scorecard manifests. Operates on the raw
+ * `checks: Record<id, implVersion>` maps so it returns clean results even
+ * when an id has since been removed from the registry. Order: added then
+ * bumped then removed entries; ids within each bucket sorted alphabetically.
+ */
+export interface ScorecardDiff {
+  fromVersion: string;
+  toVersion: string;
+  added: Array<{ id: string; toImpl: string }>;
+  removed: Array<{ id: string; fromImpl: string }>;
+  bumped: Array<{ id: string; fromImpl: string; toImpl: string }>;
+}
+
+function getManifestChecks(version: string): Record<string, string> {
+  const resolved = resolveScorecardSelector(version);
+  const manifest = listScorecards().find((c) => c.version === resolved);
+  if (!manifest) {
+    const known = listScorecards().map((c) => c.version).join(', ') || '(none)';
+    throw new Error(
+      `Unknown scorecard version "${version}". Known versions: ${known}`,
+    );
+  }
+  return manifest.checks;
+}
+
+/**
+ * Pure comparison of two check maps. Extracted so it can be exercised with
+ * synthetic fixtures in tests without going through the real registry.
+ */
+export function diffCheckMaps(
+  from: Record<string, string>,
+  to: Record<string, string>,
+): Pick<ScorecardDiff, 'added' | 'removed' | 'bumped'> {
+  const added: ScorecardDiff['added'] = [];
+  const removed: ScorecardDiff['removed'] = [];
+  const bumped: ScorecardDiff['bumped'] = [];
+
+  for (const [id, toImpl] of Object.entries(to)) {
+    const fromImpl = from[id];
+    if (fromImpl === undefined) {
+      added.push({ id, toImpl });
+    } else if (fromImpl !== toImpl) {
+      bumped.push({ id, fromImpl, toImpl });
+    }
+  }
+  for (const [id, fromImpl] of Object.entries(from)) {
+    if (to[id] === undefined) {
+      removed.push({ id, fromImpl });
+    }
+  }
+
+  added.sort((a, b) => a.id.localeCompare(b.id));
+  removed.sort((a, b) => a.id.localeCompare(b.id));
+  bumped.sort((a, b) => a.id.localeCompare(b.id));
+
+  return { added, removed, bumped };
+}
+
+export function diffScorecards(fromVersion: string, toVersion: string): ScorecardDiff {
+  const from = getManifestChecks(fromVersion);
+  const to = getManifestChecks(toVersion);
+  return {
+    fromVersion: resolveScorecardSelector(fromVersion),
+    toVersion: resolveScorecardSelector(toVersion),
+    ...diffCheckMaps(from, to),
+  };
+}
+
+/**
+ * Diff between the latest published scorecard and the current draft, joined
+ * with attribution data from `draft-changes.json`. Entries with no matching
+ * attribution record carry `attribution: null` (the most common case until
+ * the refresh-draft-diff workflow records them post-merge).
+ */
+export interface DraftDiffEntry {
+  id: string;
+  kind: 'added' | 'removed' | 'bumped';
+  fromImpl?: string;
+  toImpl?: string;
+  attribution: DraftChange | null;
+}
+
+export function getDraftDiff(): ScorecardDiff {
+  return diffScorecards(LATEST_SCORECARD, DRAFT_SCORECARD_VERSION);
+}
+
+export function getDraftDiffEntries(): DraftDiffEntry[] {
+  const diff = getDraftDiff();
+  const attributions = loadDraftChanges().changes;
+  const find = (id: string, kind: DraftDiffEntry['kind']): DraftChange | null =>
+    attributions.find((c) => c.checkId === id && c.kind === kind) ?? null;
+
+  return [
+    ...diff.added.map((c): DraftDiffEntry => ({
+      id: c.id,
+      kind: 'added',
+      toImpl: c.toImpl,
+      attribution: find(c.id, 'added'),
+    })),
+    ...diff.bumped.map((c): DraftDiffEntry => ({
+      id: c.id,
+      kind: 'bumped',
+      fromImpl: c.fromImpl,
+      toImpl: c.toImpl,
+      attribution: find(c.id, 'bumped'),
+    })),
+    ...diff.removed.map((c): DraftDiffEntry => ({
+      id: c.id,
+      kind: 'removed',
+      fromImpl: c.fromImpl,
+      attribution: find(c.id, 'removed'),
+    })),
+  ];
 }

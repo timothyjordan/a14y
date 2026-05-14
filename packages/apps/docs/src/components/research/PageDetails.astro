@@ -1,0 +1,106 @@
+---
+import type { PageReport } from '@a14y/core';
+import CheckResultCard from './CheckResultCard.astro';
+import { scoreClass } from '~/lib/site-run';
+
+interface Props {
+  page: PageReport;
+  scorecardVersion: string;
+}
+
+const { page, scorecardVersion } = Astro.props;
+---
+
+<details class="page-details">
+  <summary>
+    <span class={`page-score score-${scoreClass(page.summary.score)}`}>{page.summary.score}</span>
+    <span class="page-url">{page.finalUrl}</span>
+    <span class="page-counts">{page.summary.passed}/{page.summary.applicable}</span>
+  </summary>
+  {page.checks.length === 0 ? (
+    <p class="page-empty">No applicable checks for this page.</p>
+  ) : (
+    <ul class="check-list">
+      {page.checks.map((check) => (
+        <CheckResultCard check={check} scorecardVersion={scorecardVersion} />
+      ))}
+    </ul>
+  )}
+</details>
+
+<style>
+  .page-details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-bottom: 8px;
+    box-shadow: var(--shadow-card);
+  }
+  .page-details > summary {
+    cursor: pointer;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    min-height: 44px;
+    font-weight: 600;
+  }
+  .page-details > summary::-webkit-details-marker { display: none; }
+  .page-details > summary:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+  .page-details > summary::before {
+    content: '▸';
+    display: inline-block;
+    color: var(--text-subtle);
+    font-size: 12px;
+    line-height: 1;
+    transition: transform 120ms ease;
+  }
+  .page-details[open] > summary::before { transform: rotate(90deg); }
+
+  .page-score {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-pass { color: var(--status-pass); }
+  .score-warn { color: var(--status-warn); }
+  .score-fail { color: var(--status-fail); }
+
+  .page-url {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .page-counts {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+  }
+  .check-list {
+    list-style: none;
+    padding: 0 14px 14px 38px;
+    margin: 6px 0 0;
+    display: grid;
+    gap: 6px;
+  }
+  .page-empty {
+    margin: 0;
+    padding: 0 14px 14px 38px;
+    font-size: 13px;
+    color: var(--text-subtle);
+  }
+</style>

@@ -23,27 +23,29 @@ const SAMPLE_PAGE = `
             <button type="button" class="copy-btn">Copy</button>
           </div>
         </div>
-        <aside class="agent-panel">
-          <pre class="agent-output"><span class="ag-prompt">%</span> a14y
-<span class="ag-pass">✓</span> Score: 100/100</pre>
+        <aside class="hero-badge">
+          <a class="a14y-badge" href="https://a14y.dev" style="display:block">
+            <div>A14Y · V0.2.0 · MAY 11, 2026</div>
+            <div>SCORE 92/100</div>
+          </a>
+          <a class="hero-badge-link" href="/badge/">Embed your own →</a>
         </aside>
       </section>
       <section class="section">
-        <h2>Three pillars</h2>
-        <div class="pillars">
-          <a class="pillar-card" href="/spec/">
-            <span class="pillar-label">Pillar 01</span>
-            <span class="pillar-title">The spec</span>
-            <span class="pillar-desc">Three layers of agent readability.</span>
-            <span class="pillar-link">Read the spec</span>
-          </a>
-          <a class="pillar-card" href="/scorecards/0.2.0/">
-            <span class="pillar-label">Pillar 02</span>
-            <span class="pillar-title">The scorecard</span>
-            <span class="pillar-desc">v0.2.0 pins 38 checks.</span>
-            <span class="pillar-link">Browse v0.2.0</span>
-          </a>
-        </div>
+        <h2 id="steps-heading">Three steps to an agent-readable site</h2>
+        <ol class="steps">
+          <li class="step-card">
+            <span class="step-num">01</span>
+            <h3>Run the scorecard</h3>
+            <p>From the <a href="#tools">CLI</a>, the <a href="/chrome-extension/">Chrome extension</a>, or by handing the job to a coding agent.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-num">02</span>
+            <h3>Fix what failed</h3>
+            <p>Each failing check links to its fix.</p>
+          </li>
+        </ol>
+        <p class="steps-skill-callout">Or skip the loop — <a href="#automate">install the skill</a>.</p>
       </section>
       <section id="tools" class="section">
         <h2>Run the scorecard</h2>
@@ -84,16 +86,17 @@ describe('renderPageMarkdown', () => {
     expect(out).not.toContain('© 2026');
   });
 
-  it('promotes pillar cards to ### headings with description and link', () => {
-    expect(out).toMatch(/### The spec/);
-    expect(out).toMatch(/Three layers of agent readability\./);
-    expect(out).toMatch(/\[Read the spec\]\(\/spec\/\)/);
-    expect(out).toMatch(/### The scorecard/);
-    expect(out).toMatch(/\[Browse v0\.2\.0\]\(\/scorecards\/0\.2\.0\/\)/);
+  it('reduces the hero badge to a single embed link, dropping inline-styled chrome', () => {
+    expect(out).toMatch(/\[Embed your own →\]\(\/badge\/\)/);
+    expect(out).not.toMatch(/A14Y · V0\.2\.0/);
+    expect(out).not.toMatch(/SCORE 92\/100/);
   });
 
-  it('renders the agent-output pre as a fenced code block of plain text', () => {
-    expect(out).toMatch(/```\n% a14y\n.* Score: 100\/100\n```/s);
+  it('promotes step cards to ### headings with numbered titles', () => {
+    expect(out).toMatch(/### 01 — Run the scorecard/);
+    expect(out).toMatch(/\[CLI\]\(#tools\)/);
+    expect(out).toMatch(/\[Chrome extension\]\(\/chrome-extension\/\)/);
+    expect(out).toMatch(/### 02 — Fix what failed/);
   });
 
   it('renders the tool-card cli snippet as a fenced shell block, preserving newlines', () => {

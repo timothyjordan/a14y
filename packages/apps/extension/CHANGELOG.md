@@ -1,5 +1,60 @@
 # Changelog
 
+## [0.5.10](https://github.com/timothyjordan/a14y/compare/extension-v0.5.9...extension-v0.5.10) (2026-05-13)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.10 to 0.3.11
+    * @a14y/telemetry bumped from 0.1.7 to 0.1.8
+
+## [0.5.9](https://github.com/timothyjordan/a14y/compare/extension-v0.5.8...extension-v0.5.9) (2026-05-11)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.9 to 0.3.10
+    * @a14y/telemetry bumped from 0.1.6 to 0.1.7
+
+## [0.5.8](https://github.com/timothyjordan/a14y/compare/extension-v0.5.7...extension-v0.5.8) (2026-05-09)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.8 to 0.3.9
+    * @a14y/telemetry bumped from 0.1.5 to 0.1.6
+
+## [0.5.7](https://github.com/timothyjordan/a14y/compare/extension-v0.5.6...extension-v0.5.7) (2026-05-09)
+
+
+### Features
+
+* website badge for sharing a14y scores (TJ-420) ([#16](https://github.com/timothyjordan/a14y/issues/16)) ([77e498a](https://github.com/timothyjordan/a14y/commit/77e498a7ed6970b62bd7578e567375c3f4918332))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.7 to 0.3.8
+    * @a14y/telemetry bumped from 0.1.4 to 0.1.5
+
+## [0.5.6](https://github.com/timothyjordan/a14y/compare/extension-v0.5.5...extension-v0.5.6) (2026-05-08)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @a14y/core bumped from 0.3.6 to 0.3.7
+    * @a14y/telemetry bumped from 0.1.3 to 0.1.4
+
 ## [0.5.5](https://github.com/timothyjordan/a14y/compare/extension-v0.5.4...extension-v0.5.5) (2026-05-08)
 
 

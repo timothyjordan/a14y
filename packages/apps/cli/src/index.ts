@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import {
   DRAFT_SCORECARD_VERSION,
   LATEST_SCORECARD,
+  buildBadgeUrl,
   formatShareSummary,
   isDraftScorecardVersion,
   listScorecards,
@@ -45,7 +46,7 @@ const program = new Command();
 program
   .name('a14y')
   .description('Agent readability scorer — audits any website against the versioned a14y scorecard')
-  .version('0.4.6') // x-release-please-version
+  .version('0.4.11') // x-release-please-version
   .option('--no-telemetry', 'disable anonymous usage telemetry for this run');
 
 program
@@ -398,16 +399,41 @@ function printTextReport(run: SiteRun): void {
       );
     }
   }
+
+  // TJ-428: page mode is the default and only audits the URL provided.
+  // Site-scope checks (llms.txt, sitemap, AGENTS.md) still run, but per-page
+  // checks aren't evaluated against the rest of the origin. Surface that
+  // explicitly so users don't mistake a single-page review for a full audit.
+  // Yellow `!` matches the draft-scorecard warning style so the call-out
+  // reads as "heads up" rather than another gray detail line.
+  if (run.mode === 'page') {
+    console.log('');
+    console.log(`${chalk.yellow('!')} Single-page review: only ${run.pages[0].finalUrl} was audited.`);
+    console.log('  For a full-site audit (crawls every reachable page) run:');
+    console.log('  ' + chalk.cyan(`a14y ${run.url} --mode site`));
+  }
 }
 
 function printShareBlock(run: SiteRun): void {
+  // The post is wrapped in a pair of dashed rules. The label "Copy and paste
+  // this post " is folded into the start rule so the box reads as a single
+  // visual envelope; the end rule is plain dashes of equal length. Rule
+  // lines are dim gray; the post body keeps the default terminal color so it
+  // stands out as the copyable content.
+  const ruleWidth = 72;
+  const startLabel = 'Copy and paste this post ';
+  const startRule = startLabel + '-'.repeat(Math.max(ruleWidth - startLabel.length, 0));
+  const endRule = '-'.repeat(ruleWidth);
+
   console.log('');
   console.log(chalk.bold('Share your score'));
-  console.log(chalk.gray('  Copy and paste:'));
-  console.log('');
+  console.log(chalk.gray(startRule));
   for (const line of formatShareSummary(run, { surface: 'cli' }).split('\n')) {
-    console.log('  ' + line);
+    console.log(line);
   }
+  console.log(chalk.gray(endRule));
+  console.log('');
+  console.log(chalk.gray('Embed badge: ' + buildBadgeUrl(run)));
   console.log('');
 }
 

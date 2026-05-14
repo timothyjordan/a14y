@@ -20,7 +20,9 @@ export {
   isDraftScorecardVersion,
   resolveScorecardSelector,
   SCORECARDS,
+  loadDraftChanges,
 } from './scorecard';
+export type { DraftChange, DraftChangeKind, DraftChangesFile } from './scorecard';
 export { buildCheckDocsUrl, DOCS_BASE_URL } from './scorecard/docsUrl';
 export type {
   ScorecardManifest,
@@ -58,5 +60,8 @@ export { summarize, type CheckResult, type ScoreSummary } from './score/compute'
 export { runToAgentPrompt, type AgentPromptOptions } from './report/agentPrompt';
 
 export { formatShareSummary, type ShareSummaryOptions } from './report/shareSummary';
+
+export { buildBadgeUrl, parseBadgeParams, BADGE_BASE_URL } from './report/badgeUrl';
+export type { BadgeData, BadgeTheme } from './report/badgeUrl';
 
 export { DISCOVERY_INDEXED_KEY } from './checks/page/discovery';

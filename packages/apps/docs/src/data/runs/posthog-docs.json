@@ -1,0 +1,2131 @@
+{
+  "url": "https://posthog.com/docs",
+  "baseUrl": "https://posthog.com/",
+  "mode": "site",
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "startedAt": "2026-05-07T05:49:48.433Z",
+  "finishedAt": "2026-05-07T05:49:50.152Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "name": "llms.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "Found llms.txt at https://posthog.com/llms.txt",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.exists/"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "name": "llms.txt served as text/plain",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "text/plain; charset=utf-8",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.content-type/"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "name": "llms.txt is not empty",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.non-empty/"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "name": "llms.txt links use .md or .mdx",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "2497 links checked",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.md-extensions/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "name": "robots.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "https://posthog.com/robots.txt",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.exists/"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "name": "robots.txt allows AI bots",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-ai-bots/"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "name": "robots.txt does not disallow llms.txt",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-llms-txt/"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "name": "sitemap.xml is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.xml not reachable",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-xml.exists/"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "name": "sitemap.md is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.md not reachable",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-md.exists/"
+    },
+    {
+      "id": "agents-md.exists",
+      "name": "AGENTS.md (or equivalent) is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "No agent skill file found",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/agents-md.exists/"
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://posthog.com/docs/libraries.md",
+      "finalUrl": "https://posthog.com/docs/libraries.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/api.md",
+      "finalUrl": "https://posthog.com/docs/api.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/activity.md",
+      "finalUrl": "https://posthog.com/docs/activity.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/error-tracking/capture.md",
+      "finalUrl": "https://posthog.com/docs/error-tracking/capture.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/surveys/creating-surveys.md",
+      "finalUrl": "https://posthog.com/docs/surveys/creating-surveys.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/feature-flags/adding-feature-flag-code.md",
+      "finalUrl": "https://posthog.com/docs/feature-flags/adding-feature-flag-code.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/experiments/adding-experiment-code.md",
+      "finalUrl": "https://posthog.com/docs/experiments/adding-experiment-code.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/cloudflare.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/cloudflare.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/kubernetes-ingress-controller.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/kubernetes-ingress-controller.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/cloudfront.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/cloudfront.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/managed-reverse-proxy.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/managed-reverse-proxy.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/caddy.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/caddy.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/content-security-policy.md",
+      "finalUrl": "https://posthog.com/docs/advanced/content-security-policy.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/netlify.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/netlify.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/llm-analytics.md",
+      "finalUrl": "https://posthog.com/docs/llm-analytics.md",
+      "status": 404,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 404",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 0 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "3.5%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html; charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 8,
+        "total": 24,
+        "applicable": 16,
+        "score": 19
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/data-warehouse.md",
+      "finalUrl": "https://posthog.com/docs/data-warehouse.md",
+      "status": 404,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 404",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "html.canonical-link",
+          "name": "Has <link rel=\"canonical\">",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.canonical-link/"
+        },
+        {
+          "id": "html.meta-description",
+          "name": "Has meta description (>= 50 chars)",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.meta-description/"
+        },
+        {
+          "id": "html.og-title",
+          "name": "Has og:title",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-title/"
+        },
+        {
+          "id": "html.og-description",
+          "name": "Has og:description",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.og-description/"
+        },
+        {
+          "id": "html.lang-attribute",
+          "name": "Root <html> has lang attribute",
+          "group": "HTML metadata",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "missing",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.lang-attribute/"
+        },
+        {
+          "id": "html.json-ld",
+          "name": "Has parseable JSON-LD block",
+          "group": "Structured data",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no parseable JSON-LD found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.json-ld/"
+        },
+        {
+          "id": "html.headings",
+          "name": "Has at least 3 section headings",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "only 0 headings",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.headings/"
+        },
+        {
+          "id": "html.text-ratio",
+          "name": "Text-to-HTML ratio is above 15%",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "3.5%",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.text-ratio/"
+        },
+        {
+          "id": "html.glossary-link",
+          "name": "Links to a glossary or terminology page",
+          "group": "Content structure",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no glossary/terminology link",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/html.glossary-link/"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "name": "Has .md or .mdx mirror",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.mirror-suffix/"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.alternate-link/"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "name": "Server returns markdown for Accept: text/markdown",
+          "group": "Markdown mirror",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/html; charset=utf-8",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/markdown.content-negotiation/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 8,
+        "total": 24,
+        "applicable": 16,
+        "score": 19
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/pomerium.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/pomerium.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/nextjs-middleware.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/nextjs-middleware.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/nginx.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/nginx.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/node.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/node.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/nextjs.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/nextjs.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/nuxt.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/nuxt.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/railway.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/railway.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/remix.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/remix.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/browser-extension.md",
+      "finalUrl": "https://posthog.com/docs/advanced/browser-extension.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/cdp.md",
+      "finalUrl": "https://posthog.com/docs/advanced/cdp.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/vercel.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/vercel.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/proxy-reference.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/proxy-reference.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "url": "https://posthog.com/docs/advanced/proxy/sveltekit.md",
+      "finalUrl": "https://posthog.com/docs/advanced/proxy/sveltekit.md",
+      "status": 200,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "200",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    }
+  ],
+  "summary": {
+    "passed": 125,
+    "failed": 29,
+    "warned": 0,
+    "errored": 0,
+    "na": 580,
+    "total": 734,
+    "applicable": 154,
+    "score": 81
+  }
+}

@@ -4,9 +4,10 @@
    (terra, olive, cyan) for scope and signal. All values are OKLCH so
    chroma stays stable across the lightness ramp.
 
-   The agent surface (.agent-panel) is the deliberate counterpart:
-   ink-dark in BOTH light and dark themes, because it represents
-   "what an agent sees" — a different reader looking at the same page.
+   The agent surface (--agent-* tokens, used by .tool-cmd) is the
+   deliberate counterpart: ink-dark in BOTH light and dark themes,
+   because it represents "what an agent sees" — a different reader
+   looking at the same page.
    ─────────────────────────────────────────────────────────────────── */
 
 :root {
@@ -33,6 +34,13 @@
   --scope-page:   oklch(0.50 0.10 110);  /* olive */
   --signal:       oklch(0.55 0.15 35);   /* terra: emphasis, version pin */
   --signal-soft:  oklch(0.92 0.04 35);
+
+  /* Status colors — used by the scorecard results UI to give pass/fail
+     a clear quick-scan signal, matching the extension's report. Brighter
+     than the muted scope/signal palette by design. */
+  --status-pass: oklch(0.62 0.18 150);
+  --status-fail: oklch(0.58 0.22 25);
+  --status-warn: oklch(0.68 0.16 65);
 
   /* Accent resolves to brand-ink, not iOS blue */
   --accent:       var(--brand-ink);
@@ -78,6 +86,9 @@
   --scope-page:   oklch(0.78 0.10 110);
   --signal:       oklch(0.78 0.15 35);
   --signal-soft:  oklch(0.30 0.06 35);
+  --status-pass:  oklch(0.78 0.16 150);
+  --status-fail:  oklch(0.74 0.18 25);
+  --status-warn:  oklch(0.82 0.14 65);
   --accent:       var(--brand-cyan);
   --shadow-card:  0 1px 0 oklch(0 0 0 / 0.4), 0 2px 6px oklch(0 0 0 / 0.3);
   color-scheme: dark;
@@ -410,87 +421,136 @@ p { margin: 0 0 16px; }
   overflow-x: auto;
   min-width: 0;
 }
-.cta-stack .cta-spec {
+.cta-stack .cta-row {
   margin-top: 4px;
-  width: fit-content;
-}
-
-/* ─── Agent-view panel — the conceptual companion ───────────────── */
-
-.agent-panel {
-  background: var(--agent-bg);
-  color: var(--agent-text);
-  border: 1px solid var(--agent-rule);
-  border-radius: var(--radius-lg);
-  padding: 0;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  line-height: 1.7;
-  overflow: hidden;
-  box-shadow: 0 12px 40px -16px oklch(0.18 0.025 268 / 0.5);
-}
-.agent-panel-head {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 16px;
-  border-bottom: 1px solid var(--agent-rule);
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  color: var(--agent-muted);
-  background: color-mix(in oklch, var(--agent-bg) 92%, white 6%);
-}
-.agent-panel-head .dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--agent-pass);
-  box-shadow: 0 0 0 3px color-mix(in oklch, var(--agent-pass) 25%, transparent);
-}
-.agent-panel-head strong {
-  color: var(--agent-text);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-/* The agent.view body is now a single <pre> rendering of real CLI
-   output. Span tokens colorize the prompt, pass marks, fail marks,
-   and muted scope labels without breaking the verbatim layout. */
-.agent-output {
-  margin: 0;
-  padding: 22px 24px;
-  background: transparent;
-  border: 0;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 1.65;
-  color: var(--agent-text);
-  overflow-x: auto;
-  white-space: pre;
-}
-.agent-output .ag-prompt { color: var(--agent-muted); }
-.agent-output .ag-pass   { color: var(--agent-pass); }
-.agent-output .ag-fail   { color: var(--agent-fail); }
-.agent-output .ag-mute   { color: var(--agent-muted); font-size: 0.85em; }
-.agent-panel-foot {
-  padding: 12px 16px;
-  border-top: 1px solid var(--agent-rule);
-  font-size: 11.5px;
-  color: var(--agent-muted);
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
 }
-.agent-panel-foot a {
-  color: var(--agent-accent);
+.cta-stack .cta-row .cta-spec {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.1;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.cta-stack .cta-row .cta-spec:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+/* Chrome Web Store badge — inspired by the official badge in
+   developer.chrome.com/docs/webstore/branding, but rebuilt in our
+   button shell so it reads as part of the page rather than dropped
+   in from another design system. */
+.cws-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 12px;
+  border-radius: 8px;
+  background: var(--brand-ink);
+  color: var(--brand-paper);
+  text-decoration: none;
+  border: 1px solid var(--brand-ink);
+  font-family: var(--font-sans);
+  line-height: 1.1;
+  transition: background 160ms ease, transform 160ms ease,
+              border-color 160ms ease, box-shadow 160ms ease;
+}
+.cws-badge:hover {
+  background: var(--brand-ink-hover);
+  color: var(--brand-paper);
+  text-decoration: none;
+  box-shadow: 0 6px 18px -10px oklch(0.18 0.025 268 / 0.55);
+}
+.cws-badge:active { transform: translateY(1px); }
+:root[data-theme='dark'] .cws-badge {
+  background: var(--brand-cyan);
+  color: var(--brand-ink);
+  border-color: var(--brand-cyan);
+}
+:root[data-theme='dark'] .cws-badge:hover {
+  background: color-mix(in oklch, var(--brand-cyan) 88%, white 12%);
+  color: var(--brand-ink);
+  box-shadow: 0 6px 18px -10px oklch(0.85 0.07 220 / 0.45);
+}
+.cws-badge-mark {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cws-badge-mark svg { display: block; }
+.cws-badge-text {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.cws-badge-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+.cws-badge-store {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+/* ─── Hero badge — a14y.dev's own readability card ─────────────── */
+
+.hero-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.hero-badge-variant {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+}
+/* Show only the variant that matches the current theme. The badge
+   bakes its palette into inline styles at build time, so we render
+   both and toggle via CSS rather than re-rendering on theme change. */
+:root:not([data-theme='dark']) .hero-badge-variant--dark { display: none; }
+:root[data-theme='dark'] .hero-badge-variant--light { display: none; }
+
+.hero-badge .a14y-badge {
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 12px 40px -16px oklch(0.18 0.025 268 / 0.18);
+}
+.hero-badge-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
   text-decoration: none;
 }
-.agent-panel-foot a:hover { text-decoration: underline; }
-.agent-panel-foot .ag-foot-link {
-  color: var(--agent-muted);
+.hero-badge-link:hover {
+  color: var(--brand-ink);
+  text-decoration: underline;
 }
+:root[data-theme='dark'] .hero-badge-link:hover { color: var(--brand-cyan); }
 
 /* ─── Buttons ───────────────────────────────────────────────────── */
 
@@ -658,67 +718,83 @@ main.container h2[id] {
   margin: 32px 0 0;
 }
 
-/* ─── Pillars ───────────────────────────────────────────────────── */
+/* ─── Three-step process ────────────────────────────────────────── */
 
-.pillars {
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  margin: 0;
+  counter-reset: step;
 }
 @media (min-width: 720px) {
-  .pillars { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .steps { grid-template-columns: repeat(3, 1fr); gap: 18px; }
 }
-.pillar-card {
+.step-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   padding: 22px 24px 24px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  text-decoration: none;
   color: var(--text);
-  transition: border-color 160ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 220ms ease;
+  transition: border-color 160ms ease;
   position: relative;
 }
-.pillar-card:hover {
+.step-card:hover {
   border-color: var(--border-strong);
-  text-decoration: none;
-  color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card);
 }
-.pillar-card .pillar-label {
+.step-card .step-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 38px;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--text-subtle);
+  margin-bottom: 6px;
 }
-.pillar-card .pillar-title {
+:root[data-theme='dark'] .step-card .step-num { color: var(--text-subtle); }
+.step-card h3 {
+  margin: 0;
   font-weight: 700;
   font-size: 21px;
   letter-spacing: -0.018em;
   line-height: 1.2;
 }
-.pillar-card .pillar-desc {
+.step-card p {
+  margin: 4px 0 0;
   color: var(--text-muted);
   font-size: 15px;
   line-height: 1.55;
-  flex: 1;
 }
-.pillar-card .pillar-link {
-  color: var(--brand-ink);
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 6px;
+.step-card code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--surface-alt);
   font-family: var(--font-mono);
+  font-size: 0.92em;
 }
-:root[data-theme='dark'] .pillar-card .pillar-link { color: var(--brand-cyan); }
-.pillar-card--internal .pillar-link::before { content: '↓ '; }
-.pillar-card--external .pillar-link::after { content: ' →'; }
+.steps-skill-callout {
+  margin: 22px 0 0;
+  padding: 14px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.steps-skill-callout p {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.45;
+}
 
 /* ─── Tools section ─────────────────────────────────────────────── */
 
@@ -795,69 +871,118 @@ main.container h2[id] {
   margin: 0;
 }
 
-/* ─── Output sample (replaces second card grid) ─────────────────── */
+/* ─── Check-preview section ─────────────────────────────────────
+   Single card that pitches the per-check documentation by showing
+   a real check's title plus three labeled excerpts (Why / How we
+   check / How to implement). Editorial layout — one card, three
+   columns, distinct labels — chosen over a 3-card grid so it
+   reads as "a preview of a page" rather than "three more cards." */
 
-.output-sample {
+.check-preview {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 880px) {
-  .output-sample {
-    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-  }
-}
-.output-sample-prose {
   padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.check-preview-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
 }
-@media (min-width: 880px) {
-  .output-sample-prose { border-bottom: 0; border-right: 1px solid var(--border); }
+.check-preview-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
 }
-.output-sample-prose h3 {
-  margin: 0 0 10px;
-  font-size: 22px;
-  letter-spacing: -0.018em;
-}
-.output-sample-prose p {
-  margin: 0 0 14px;
+.check-preview-id {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
   color: var(--text-muted);
-  font-size: 15.5px;
+}
+.check-preview-id code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: var(--brand-ink);
+}
+:root[data-theme='dark'] .check-preview-id code { color: var(--brand-cyan); }
+.check-preview-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+}
+.check-preview-title code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--surface-alt);
+}
+.check-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 880px) {
+  .check-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+.check-preview-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.check-preview-cell p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
   line-height: 1.55;
 }
-.output-sample-prose p:last-of-type { margin-bottom: 0; }
-.output-sample-prose code {
-  background: var(--surface-alt);
-  font-size: 12.5px;
+.check-preview-cell code {
   padding: 1px 6px;
-}
-.output-sample-block {
-  background: var(--agent-bg);
-  color: var(--agent-text);
+  border-radius: 4px;
+  background: var(--surface-alt);
   font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 1.65;
-  padding: 22px 24px;
-  margin: 18px;
-  border-radius: 12px;
-  overflow-x: auto;
-  white-space: pre;
+  font-size: 0.9em;
 }
-.output-sample-block .filename {
-  color: var(--agent-muted);
-  display: block;
-  margin-bottom: 14px;
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
+.check-preview-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
+  color: var(--text-subtle);
 }
-.output-sample-block strong { color: var(--agent-fail); font-weight: 600; }
-.output-sample-block em { color: var(--agent-muted); font-style: normal; }
-.output-sample-block .ok { color: var(--agent-pass); }
-.output-sample-block .heading { color: var(--agent-accent); }
+.check-preview-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.check-preview-foot > a:first-child {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-ink);
+  text-decoration: none;
+}
+:root[data-theme='dark'] .check-preview-foot > a:first-child { color: var(--brand-cyan); }
+.check-preview-foot > a:first-child:hover { text-decoration: underline; }
 
 /* ─── Scorecard callout (no side-stripe) ────────────────────────── */
 

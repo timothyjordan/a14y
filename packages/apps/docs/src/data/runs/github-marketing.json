@@ -1,0 +1,3645 @@
+{
+  "url": "https://github.com/",
+  "baseUrl": "https://github.com/",
+  "mode": "site",
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "startedAt": "2026-05-07T03:46:16.520Z",
+  "finishedAt": "2026-05-07T03:46:18.873Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "name": "llms.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "Found llms.txt at https://github.com/llms.txt",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.exists/"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "name": "llms.txt served as text/plain",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "text/plain",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.content-type/"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "name": "llms.txt is not empty",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.non-empty/"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "name": "llms.txt links use .md or .mdx",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "112/112 links are not .md/.mdx",
+      "details": {
+        "offenders": [
+          "https://docs.github.com/api/pagelist/en/free-pro-team@latest",
+          "https://docs.github.com/api/article",
+          "https://docs.github.com/api/search",
+          "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp",
+          "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/use-the-github-mcp-server",
+          "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/set-up-the-github-mcp-server",
+          "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents",
+          "https://docs.github.com/en/github-cli/github-cli",
+          "https://docs.github.com/en/github-cli/github-cli/quickstart",
+          "https://docs.github.com/en/rest"
+        ]
+      },
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/llms-txt.md-extensions/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "name": "robots.txt is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "https://github.com/robots.txt",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.exists/"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "name": "robots.txt allows AI bots",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-ai-bots/"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "name": "robots.txt does not disallow llms.txt",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/robots-txt.allows-llms-txt/"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "name": "sitemap.xml is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.xml not reachable",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-xml.exists/"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "name": "sitemap.md is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "pass",
+      "message": "https://github.com/sitemap.md",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-md.exists/"
+    },
+    {
+      "id": "sitemap-md.has-structure",
+      "name": "sitemap.md has headings and links",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "sitemap.md is missing headings or links",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/sitemap-md.has-structure/"
+    },
+    {
+      "id": "agents-md.exists",
+      "name": "AGENTS.md (or equivalent) is published",
+      "group": "Discoverability",
+      "scope": "site",
+      "implementationVersion": "1.0.0",
+      "status": "fail",
+      "message": "No agent skill file found",
+      "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/agents-md.exists/"
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://docs.github.com/api/pagelist/en/free-pro-team@latest",
+      "finalUrl": "https://docs.github.com/api/pagelist/en/free-pro-team@latest",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "api.schema-link",
+          "name": "API pages link to a machine-readable schema",
+          "group": "API",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/api.schema-link/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/github-cli/github-cli",
+      "finalUrl": "https://docs.github.com/en/github-cli/github-cli",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/api/article",
+      "finalUrl": "https://docs.github.com/api/article",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "api.schema-link",
+          "name": "API pages link to a machine-readable schema",
+          "group": "API",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/api.schema-link/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/use-the-github-mcp-server",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/use-the-github-mcp-server",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/github-cli/github-cli/quickstart",
+      "finalUrl": "https://docs.github.com/en/github-cli/github-cli/quickstart",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/api/search",
+      "finalUrl": "https://docs.github.com/api/search",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "api.schema-link",
+          "name": "API pages link to a machine-readable schema",
+          "group": "API",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/api.schema-link/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/set-up-the-github-mcp-server",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/set-up-the-github-mcp-server",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/agents/about-third-party-agents",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/about-third-party-agents",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot",
+      "finalUrl": "https://docs.github.com/en/copilot",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/rest",
+      "finalUrl": "https://docs.github.com/en/rest",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/actions",
+      "finalUrl": "https://docs.github.com/en/actions",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/graphql",
+      "finalUrl": "https://docs.github.com/en/graphql",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/chat-with-copilot/chat-in-ide",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/chat-with-copilot/chat-in-ide",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/plans",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/get-started/what-is-github-copilot",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/what-is-github-copilot",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/billing/copilot-requests",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/billing/copilot-requests",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/get-started/quickstart",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/quickstart",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/billing/individual-plans",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/billing/individual-plans",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/get-started/best-practices",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/best-practices",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/get-started/features",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/features",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents/overview",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents/overview",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/free-access-with-copilot-student",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/manage-your-account/free-access-with-copilot-student",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/chat-with-copilot/chat-in-mobile",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/chat-with-copilot/chat-in-mobile",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/automate-with-actions",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/automate-with-actions",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/cli-best-practices",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/get-free-access-to-copilot-pro",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/manage-your-account/get-free-access-to-copilot-pro",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/reference/ai-models/model-comparison",
+      "finalUrl": "https://docs.github.com/en/copilot/reference/ai-models/model-comparison",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "api.schema-link",
+          "name": "API pages link to a machine-readable schema",
+          "group": "API",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/api.schema-link/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/reference/ai-models/supported-models",
+      "finalUrl": "https://docs.github.com/en/copilot/reference/ai-models/supported-models",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "api.schema-link",
+          "name": "API pages link to a machine-readable schema",
+          "group": "API",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/api.schema-link/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started",
+      "finalUrl": "https://docs.github.com/en/get-started",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/tutorials/copilot-chat-cookbook",
+      "finalUrl": "https://docs.github.com/en/copilot/tutorials/copilot-chat-cookbook",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/responsible-use/chat-in-github-mobile",
+      "finalUrl": "https://docs.github.com/en/copilot/responsible-use/chat-in-github-mobile",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/git-basics/managing-remote-repositories",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/managing-remote-repositories",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/start-your-journey/about-github-and-git",
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/about-github-and-git",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/git-basics/about-remote-repositories",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/about-remote-repositories",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/git-basics/ignoring-files",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/ignoring-files",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/learning-about-github/githubs-plans",
+      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/githubs-plans",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/git-basics/set-up-git",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/set-up-git",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts",
+      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/start-your-journey",
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
+      "status": 429,
+      "sources": [
+        "llms-txt"
+      ],
+      "checks": [
+        {
+          "id": "http.status-200",
+          "name": "Page returns HTTP 200",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "Got 429",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.status-200/"
+        },
+        {
+          "id": "http.redirect-chain",
+          "name": "Redirect chain is at most 1 hop",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "0 hops",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.redirect-chain/"
+        },
+        {
+          "id": "http.content-type-html",
+          "name": "Content-Type is text/html; charset=utf-8",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "fail",
+          "message": "text/plain",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.content-type-html/"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "name": "x-robots-tag does not block agents",
+          "group": "HTTP",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "message": "no x-robots-tag",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/http.no-noindex-noai/"
+        },
+        {
+          "id": "discovery.indexed",
+          "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
+          "group": "Discoverability",
+          "scope": "page",
+          "implementationVersion": "1.0.0",
+          "status": "pass",
+          "docsUrl": "https://timothyjordan.github.io/a14y/scorecards/0.2.0/checks/discovery.indexed/"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    }
+  ],
+  "summary": {
+    "passed": 157,
+    "failed": 109,
+    "warned": 0,
+    "errored": 0,
+    "na": 948,
+    "total": 1214,
+    "applicable": 266,
+    "score": 59
+  }
+}

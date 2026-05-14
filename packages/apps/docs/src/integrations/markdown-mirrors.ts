@@ -6,8 +6,10 @@ import {
   listAllScorecards,
   listPublishedScorecards,
   getChecksGroupedByCategory,
+  getCheckSummary,
+  getDraftDiffEntries,
   getDraftScorecardVersion,
-  getScorecardByVersion,
+  getLatestScorecardVersion,
   isDraftScorecardVersion,
 } from '../lib/scorecard-data';
 import { applyPageSubstitutions } from '../lib/page-substitutions';
@@ -215,7 +217,23 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             const draftSuffix = isDraftScorecardVersion(sc.version) ? ' (draft)' : '';
             title = `Scorecard v${sc.version}${draftSuffix} · a14y`;
             description = sc.description;
-            body = `${sc.description}\n\n${renderScorecardVersionChecks(version)}`;
+            const checksSection = renderScorecardVersionChecks(version);
+            const diffSection = isDraftScorecardVersion(sc.version)
+              ? `\n\n${renderScorecardDiffSection(sc.version)}`
+              : '';
+            body = `${sc.description}\n\n${checksSection}${diffSection}`;
+          } else if (pagesSlug === 'scorecards-version-changes') {
+            const versionMatch = cleanPath.match(/^scorecards\/([^/]+)\/changes$/);
+            const version = versionMatch?.[1];
+            if (!version) {
+              throw new Error(`Could not extract version from ${cleanPath}`);
+            }
+            const resolvedVersion =
+              version === 'draft' ? getDraftScorecardVersion() : version;
+            const latestPub = getLatestScorecardVersion();
+            title = `Draft scorecard changes vs v${latestPub} · a14y`;
+            description = `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latestPub}.`;
+            body = renderDraftChangesPage(resolvedVersion);
           } else if (pagesSlug && (await readIfExists(path.join(pagesContentDir, `${pagesSlug}.md`))) !== null) {
             const sourcePath = path.join(pagesContentDir, `${pagesSlug}.md`);
             const raw = (await readIfExists(sourcePath))!;
@@ -370,6 +388,7 @@ export function resolvePagesSlug(cleanPath: string): string | null {
   if (cleanPath === 'release-notes') return 'release-notes';
   if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
   if (cleanPath === 'scorecards') return 'scorecards';
+  if (/^scorecards\/[^/]+\/changes$/.test(cleanPath)) return 'scorecards-version-changes';
   if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';
   return null;
 }
@@ -453,5 +472,101 @@ export function renderScorecardVersionChecks(version: string): string {
       lines.push('');
     }
   }
+  return lines.join('\n').replace(/\n+$/, '');
+}
+
+/**
+ * Inline diff section appended to the draft scorecard's markdown mirror so
+ * agents reading the .md see the same added/bumped/removed listing the HTML
+ * page shows. Mirrors `ScorecardDiff.astro` in shape and empty-state copy.
+ */
+export function renderScorecardDiffSection(draftVersion: string): string {
+  const latest = getLatestScorecardVersion();
+  const entries = getDraftDiffEntries();
+  const lines: string[] = [`## Changes vs v${latest}`, ''];
+  if (entries.length === 0) {
+    lines.push('_No changes yet. The draft is currently identical to the latest published scorecard._');
+    return lines.join('\n');
+  }
+  const sections: Array<{ kind: 'added' | 'bumped' | 'removed'; heading: string }> = [
+    { kind: 'added', heading: 'Added' },
+    { kind: 'bumped', heading: 'Bumped' },
+    { kind: 'removed', heading: 'Removed' },
+  ];
+  for (const section of sections) {
+    const rows = entries.filter((e) => e.kind === section.kind);
+    if (!rows.length) continue;
+    lines.push(`### ${section.heading}`);
+    lines.push('');
+    for (const e of rows) {
+      const lookupVersion = e.kind === 'removed' ? latest : draftVersion;
+      const name = getCheckSummary(lookupVersion, e.id)?.name ?? e.id;
+      const versionLabel =
+        e.kind === 'added'
+          ? `v${e.toImpl}`
+          : e.kind === 'bumped'
+            ? `v${e.fromImpl} → v${e.toImpl}`
+            : `was v${e.fromImpl}`;
+      const attribution = e.attribution
+        ? ` (by [@${e.attribution.author}](${e.attribution.authorUrl}) in [PR #${e.attribution.pr}](${e.attribution.prUrl}))`
+        : ' _(attribution pending)_';
+      lines.push(
+        `- [\`${e.id}\`](/scorecards/${lookupVersion}/checks/${e.id}.md) — ${name} · ${versionLabel}${attribution}`,
+      );
+    }
+    lines.push('');
+  }
+  return lines.join('\n').replace(/\n+$/, '');
+}
+
+/**
+ * Full markdown body for the /scorecards/<draft>/changes/ release-notes
+ * page. Mirrors the .astro page in shape and empty-state copy.
+ */
+export function renderDraftChangesPage(draftVersion: string): string {
+  const latest = getLatestScorecardVersion();
+  const entries = getDraftDiffEntries();
+  const lines: string[] = [
+    `Every recorded change to the in-progress scorecard \`${draftVersion}\` vs the latest published [v${latest}](/scorecards/${latest}/). Attribution is recorded automatically by the refresh-draft-diff workflow on every PR that touches the draft manifest.`,
+    '',
+  ];
+
+  if (entries.length === 0) {
+    lines.push(
+      `_No contributions yet. The draft is currently identical to v${latest}. See [CONTRIBUTING.md](https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#scorecard-lifecycle) to propose one._`,
+    );
+    return lines.join('\n');
+  }
+
+  const sorted = [...entries].sort((a, b) => {
+    if (a.attribution && b.attribution) {
+      return b.attribution.mergedAt.localeCompare(a.attribution.mergedAt);
+    }
+    if (a.attribution) return -1;
+    if (b.attribution) return 1;
+    return a.id.localeCompare(b.id);
+  });
+
+  lines.push('## Changes');
+  lines.push('');
+  for (const e of sorted) {
+    const lookupVersion = e.kind === 'removed' ? latest : draftVersion;
+    const name = getCheckSummary(lookupVersion, e.id)?.name ?? e.id;
+    const versionLabel =
+      e.kind === 'added'
+        ? `v${e.toImpl}`
+        : e.kind === 'bumped'
+          ? `v${e.fromImpl} → v${e.toImpl}`
+          : `was v${e.fromImpl}`;
+    const kindLabel = e.kind.charAt(0).toUpperCase() + e.kind.slice(1);
+    const attribution = e.attribution
+      ? `_${e.attribution.mergedAt.slice(0, 10)} · by [@${e.attribution.author}](${e.attribution.authorUrl}) · [PR #${e.attribution.pr}](${e.attribution.prUrl})_`
+      : '_attribution pending — the refresh-draft-diff workflow hasn\'t run for this change yet_';
+    lines.push(
+      `- **${kindLabel}** [\`${e.id}\`](/scorecards/${lookupVersion}/checks/${e.id}.md) — ${name} · ${versionLabel}`,
+    );
+    lines.push(`  ${attribution}`);
+  }
+
   return lines.join('\n').replace(/\n+$/, '');
 }
