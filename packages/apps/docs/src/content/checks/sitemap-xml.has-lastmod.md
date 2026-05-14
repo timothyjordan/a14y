@@ -14,7 +14,7 @@ references:
 
 ## How the check decides
 
-After parsing the sitemap, the check inspects every `<url>` entry, counts how many are missing a `<lastmod>` child, and counts how many have a `<lastmod>` whose value does not parse as a [W3C Datetime](https://www.w3.org/TR/NOTE-datetime) (the format sitemaps.org requires). Passes only if every entry has a `<lastmod>` and every value is a valid date. Fails with a breakdown of missing vs. invalid counts otherwise. Warns if the sitemap has zero entries. Returns N/A if the sitemap couldn't be parsed at all. Calendar-impossible values like `2026-02-30` are rejected.
+After parsing the sitemap, the check inspects every `<url>` entry, counts how many are missing a `<lastmod>` child, and counts how many have a `<lastmod>` whose value does not parse as a [W3C Datetime](https://www.w3.org/TR/NOTE-datetime) (the format sitemaps.org requires). Passes only if every entry has a `<lastmod>` and every value is a valid date. Fails with a breakdown of missing vs. invalid counts otherwise. Warns if the sitemap has zero entries. Returns N/A if the sitemap couldn't be parsed at all. Calendar-impossible values like `2026-02-30` are rejected. The W3C Datetime profile permits coarser granularities like `2026` or `2026-04`, but this check requires at least a calendar day — coarser values aren't actionable for incremental re-ingestion. Surrounding whitespace from pretty-printed sitemaps is tolerated.
 
 ## How to implement it
 
