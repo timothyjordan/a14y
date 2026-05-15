@@ -1546,6 +1546,14 @@ main.container h2[id] {
   font-weight: 600;
   font-size: 0.92rem;
 }
+.press-asset-note {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  color: color-mix(in oklch, var(--brand-ink) 70%, transparent);
+}
+:root[data-theme='dark'] .press-asset-note {
+  color: color-mix(in oklch, var(--brand-paper) 70%, transparent);
+}
 
 /* OG image gets its own feature row above the logo grid. The 2:1
    aspect-ratio image deserves real space; tiling it next to square
