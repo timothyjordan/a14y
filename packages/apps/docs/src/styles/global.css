@@ -842,6 +842,63 @@ main.container h2[id] {
   margin: 0;
 }
 .tool-card .tool-cmd .prompt { color: var(--agent-muted); }
+
+/* Labelled command block — small mono label above an agent-surface
+   <pre> with a lightweight corner copy button. Used for the CLI card
+   ("run" / "install"), the agent-skill card ("install"), and slots
+   into the same vertical rhythm as the Chrome Extension card's CWS
+   badge so the three Auditing-tools cards share a structure: text →
+   visual element → bottom actions. */
+.tool-card .tool-cmd-block {
+  display: grid;
+  gap: 6px;
+}
+.tool-card .tool-cmd-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.tool-card .tool-cmd-wrap {
+  position: relative;
+}
+.tool-card .tool-cmd-wrap .tool-cmd {
+  padding-right: 60px;
+}
+.tool-card .tool-cmd-copy {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid oklch(1 0 0 / 0.18);
+  color: oklch(1 0 0 / 0.72);
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+.tool-card .tool-cmd-copy:hover {
+  color: oklch(1 0 0 / 1);
+  border-color: oklch(1 0 0 / 0.34);
+  background: oklch(1 0 0 / 0.04);
+}
+.tool-card .tool-cmd-copy[data-state="copied"] {
+  color: var(--brand-cyan);
+  border-color: var(--brand-cyan);
+}
+.tool-card .tool-cmd-block--badge {
+  /* The CWS badge sits in the visual-element slot where the other two
+     cards have an agent-surface <pre>. Center it horizontally so the
+     pill doesn't dangle hard-left at narrow card widths. */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .tool-card .tool-actions {
   display: flex;
   flex-wrap: wrap;

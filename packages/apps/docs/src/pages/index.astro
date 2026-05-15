@@ -250,8 +250,31 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           scored text report, JSON, or a Markdown fix-list ready to
           hand to a coding agent.
         </p>
-        <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> npm install -g a14y
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">run</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {runCmd}</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy={runCmd}
+              aria-label="Copy run command"
+            >Copy</button>
+          </div>
+        </div>
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">install</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> npm install -g a14y
 <span class="prompt">%</span> a14y your-site.com</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy="npm install -g a14y && a14y your-site.com"
+              aria-label="Copy install and run command"
+            >Copy</button>
+          </div>
+        </div>
         <div class="tool-actions">
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub →</a>
           <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener">View on npm →</a>
@@ -275,7 +298,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           Switch scorecard versions from the popup, jump straight to
           the failing check&apos;s fix guidance.
         </p>
-        <div class="tool-actions">
+        <div class="tool-cmd-block tool-cmd-block--badge">
           <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="Install a14y from the Chrome Web Store">
             <span class="cws-badge-mark" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
@@ -292,6 +315,8 @@ const heroBadgeDarkHtml = buildBadgeHtml(
               <span class="cws-badge-store">Chrome Web Store</span>
             </span>
           </a>
+        </div>
+        <div class="tool-actions">
           <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Manual install →</a>
         </div>
       </article>
@@ -314,14 +339,17 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           Works with Claude Code, Codex, Cursor, and any other coding
           agent that supports the open skills format.
         </p>
-        <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
-        <div class="tool-actions">
-          <button
-            type="button"
-            class="btn btn--primary"
-            data-copy={skillInstallCmd}
-            aria-label="Copy install command"
-          >Copy install →</button>
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">install</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy={skillInstallCmd}
+              aria-label="Copy install command"
+            >Copy</button>
+          </div>
         </div>
         <p class="tool-note">Discoverable via <code>&lt;link rel="agent-skills"&gt;</code> on every page of this site.</p>
       </article>
