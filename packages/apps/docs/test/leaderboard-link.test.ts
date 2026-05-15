@@ -4,7 +4,7 @@ import LeaderboardTable from '../src/components/research/LeaderboardTable.astro'
 import { getLeaderboard, getResearchData } from '../src/lib/research-data';
 
 describe('LeaderboardTable', () => {
-  it('links each row to the internal /research/<slug>/ page, not the external site', async () => {
+  it('links each row to the internal /leaderboard/<slug>/ page, not the external site', async () => {
     const container = await AstroContainer.create();
     const entries = getLeaderboard().slice(0, 3);
     const html = await container.renderToString(LeaderboardTable, {
@@ -15,10 +15,10 @@ describe('LeaderboardTable', () => {
     });
 
     for (const entry of entries) {
-      expect(html).toContain(`href="/research/${entry.slug}/"`);
+      expect(html).toContain(`href="/leaderboard/${entry.slug}/"`);
       // Whole-row click target: every row carries its scorecard URL on
       // data-href so the inline script can navigate from any cell.
-      expect(html).toContain(`data-href="/research/${entry.slug}/"`);
+      expect(html).toContain(`data-href="/leaderboard/${entry.slug}/"`);
     }
     // External-link attributes should be gone — those were the old CTA.
     // The external URL is still surfaced on the per-site scorecard page,
