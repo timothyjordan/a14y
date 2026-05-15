@@ -8,10 +8,11 @@ const page = readFileSync(
 );
 
 describe('homepage hero (TJ-439)', () => {
-  it('eyebrow is the single positioning one-liner', () => {
+  it('eyebrow is the three-noun positioning line', () => {
     expect(page).toMatch(
-      /<span>Open spec, open tools, public leaderboard\. Lighthouse for AI agents\.<\/span>/,
+      /<span>Open spec, open tools, public leaderboard\.<\/span>/,
     );
+    expect(page).not.toMatch(/Lighthouse for AI agents/);
     expect(page).not.toMatch(/<span class="eyebrow-pin">v\{latest\}<\/span>/);
   });
 
@@ -40,11 +41,9 @@ describe('homepage hero (TJ-439)', () => {
     expect(githubIdx).toBeLessThan(specIdx);
   });
 
-  it('renders the public-leaderboard teaser section linking to /research/', () => {
-    expect(page).toMatch(/id="leaderboard-heading"/);
-    expect(page).toMatch(/A public leaderboard, not a private score/);
-    expect(page).toMatch(/Browse the leaderboard →/);
-    expect(page).toMatch(/href=\{`\$\{base\}\/research\/`\}/);
+  it('does not render the public-leaderboard teaser section', () => {
+    expect(page).not.toMatch(/id="leaderboard-heading"/);
+    expect(page).not.toMatch(/A public leaderboard, not a private score/);
   });
 
   it('Tools section intro emphasizes open tools + speed + CI', () => {
@@ -52,16 +51,13 @@ describe('homepage hero (TJ-439)', () => {
     expect(page).toMatch(/Sub-second per page, CI-friendly/);
   });
 
-  it('BaseLayout meta title + description use the new positioning', () => {
-    expect(page).toMatch(/title="a14y · Lighthouse for AI agents"/);
-    expect(page).toMatch(/description="Lighthouse for AI agents\./);
+  it('BaseLayout meta title is "a14y: Agent readability for the web"', () => {
+    expect(page).toMatch(/title="a14y: Agent readability for the web"/);
+    expect(page).not.toMatch(/title="a14y · Lighthouse for AI agents"/);
   });
 
-  it('loads the leaderboard site count from research-data', () => {
-    expect(page).toMatch(
-      /import\s*\{[^}]*getLeaderboard[^}]*\}\s*from\s*['"]~\/lib\/research-data['"]/,
-    );
-    expect(page).toMatch(/leaderboardSiteCount\s*=\s*getLeaderboard\(\)\.length/);
-    expect(page).toMatch(/Compare\s*[\s\S]*?against \{leaderboardSiteCount\} sites/);
+  it('does not import research-data on the homepage', () => {
+    expect(page).not.toMatch(/from\s*['"]~\/lib\/research-data['"]/);
+    expect(page).not.toMatch(/getLeaderboard\(\)/);
   });
 });
