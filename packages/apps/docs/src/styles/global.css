@@ -904,8 +904,13 @@ main.container h2[id] {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  margin-top: auto;
 }
+/* Anchor the description to the top of the card, then push the first
+   sibling after it to the bottom so the visual element + actions
+   cluster at the card's foot. With three uneven cards in a row, this
+   keeps their tops AND bottoms aligned; the breathing room collapses
+   in the middle instead of below the action row. */
+.tool-card .tool-desc + * { margin-top: auto; }
 .tool-card .tool-note {
   font-size: 13px;
   color: var(--text-subtle);
