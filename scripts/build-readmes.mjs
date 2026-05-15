@@ -21,11 +21,23 @@ const __dirname = dirname(__filename);
 const REPO_ROOT = resolve(__dirname, '..');
 const DOCS_DIR = join(REPO_ROOT, 'docs');
 const CLI_ENTRY = join(REPO_ROOT, 'packages/apps/cli/dist/index.js');
+const CORE_ENTRY = join(REPO_ROOT, 'packages/core/dist/cjs/index.js');
 
 const BANNER =
   '<!-- THIS FILE IS GENERATED. Edit docs/templates/ or docs/fragments/ and run `npm run docs`. -->\n\n';
 
 const CHECK_MODE = process.argv.includes('--check');
+
+function ensureCoreBuilt() {
+  if (existsSync(CORE_ENTRY)) return;
+  const result = spawnSync('npm', ['--workspace', '@a14y/core', 'run', 'build'], {
+    cwd: REPO_ROOT,
+    stdio: 'inherit',
+  });
+  if (result.status !== 0) {
+    throw new Error('Failed to build @a14y/core before generating READMEs.');
+  }
+}
 
 function ensureCliBuilt() {
   if (existsSync(CLI_ENTRY)) return;
@@ -126,6 +138,7 @@ const TARGETS = [
 ];
 
 function main() {
+  ensureCoreBuilt();
   ensureCliBuilt();
   const results = TARGETS.map((t) => {
     const rendered = render(join(DOCS_DIR, 'templates', t.template), t.vars || {});
