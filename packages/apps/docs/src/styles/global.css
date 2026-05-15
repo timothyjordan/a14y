@@ -377,9 +377,18 @@ p { margin: 0 0 16px; }
 
 .hero .cta-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 14px;
+}
+.hero .cta-row .btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 1.1;
+}
+@media (max-width: 640px) {
+  .hero .cta-row { flex-wrap: wrap; }
 }
 
 /* Stacked command CTAs in the hero. The copy-cli pills sit at full
@@ -421,32 +430,6 @@ p { margin: 0 0 16px; }
   overflow-x: auto;
   min-width: 0;
 }
-.cta-stack .cta-row {
-  margin-top: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: stretch;
-}
-.cta-stack .cta-row .cta-spec {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.1;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  text-decoration: none;
-  transition: background 160ms ease, border-color 160ms ease;
-}
-.cta-stack .cta-row .cta-spec:hover {
-  border-color: var(--border-strong);
-  background: var(--surface-alt);
-  color: var(--text);
-}
 
 /* Chrome Web Store badge — inspired by the official badge in
    developer.chrome.com/docs/webstore/branding, but rebuilt in our
@@ -475,14 +458,15 @@ p { margin: 0 0 16px; }
 }
 .cws-badge:active { transform: translateY(1px); }
 :root[data-theme='dark'] .cws-badge {
-  background: var(--brand-cyan);
-  color: var(--brand-ink);
+  background: var(--brand-ink);
+  color: var(--brand-paper);
   border-color: var(--brand-cyan);
 }
 :root[data-theme='dark'] .cws-badge:hover {
-  background: color-mix(in oklch, var(--brand-cyan) 88%, white 12%);
-  color: var(--brand-ink);
-  box-shadow: 0 6px 18px -10px oklch(0.85 0.07 220 / 0.45);
+  background: var(--brand-ink-hover);
+  color: var(--brand-paper);
+  border-color: var(--brand-cyan);
+  box-shadow: 0 6px 18px -10px oklch(0 0 0 / 0.45);
 }
 .cws-badge-mark {
   display: inline-flex;
@@ -803,8 +787,8 @@ main.container h2[id] {
   grid-template-columns: 1fr;
   gap: 18px;
 }
-@media (min-width: 720px) {
-  .tools { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+@media (min-width: 1024px) {
+  .tools { grid-template-columns: repeat(3, 1fr); gap: 22px; }
 }
 
 .tool-card {
@@ -858,13 +842,75 @@ main.container h2[id] {
   margin: 0;
 }
 .tool-card .tool-cmd .prompt { color: var(--agent-muted); }
+
+/* Labelled command block — small mono label above an agent-surface
+   <pre> with a lightweight corner copy button. Used for the CLI card
+   ("run" / "install"), the agent-skill card ("install"), and slots
+   into the same vertical rhythm as the Chrome Extension card's CWS
+   badge so the three Auditing-tools cards share a structure: text →
+   visual element → bottom actions. */
+.tool-card .tool-cmd-block {
+  display: grid;
+  gap: 6px;
+}
+.tool-card .tool-cmd-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.tool-card .tool-cmd-wrap {
+  position: relative;
+}
+.tool-card .tool-cmd-wrap .tool-cmd {
+  padding-right: 60px;
+}
+.tool-card .tool-cmd-copy {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid oklch(1 0 0 / 0.18);
+  color: oklch(1 0 0 / 0.72);
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+.tool-card .tool-cmd-copy:hover {
+  color: oklch(1 0 0 / 1);
+  border-color: oklch(1 0 0 / 0.34);
+  background: oklch(1 0 0 / 0.04);
+}
+.tool-card .tool-cmd-copy[data-state="copied"] {
+  color: var(--brand-cyan);
+  border-color: var(--brand-cyan);
+}
+.tool-card .tool-cmd-block--badge {
+  /* The CWS badge sits in the visual-element slot where the other two
+     cards have an agent-surface <pre>. Center it horizontally so the
+     pill doesn't dangle hard-left at narrow card widths. */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .tool-card .tool-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  margin-top: auto;
 }
+/* Anchor the description to the top of the card, then push the first
+   sibling after it to the bottom so the visual element + actions
+   cluster at the card's foot. With three uneven cards in a row, this
+   keeps their tops AND bottoms aligned; the breathing room collapses
+   in the middle instead of below the action row. */
+.tool-card .tool-desc + * { margin-top: auto; }
 .tool-card .tool-note {
   font-size: 13px;
   color: var(--text-subtle);

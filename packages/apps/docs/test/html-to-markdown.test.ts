@@ -16,7 +16,7 @@ const SAMPLE_PAGE = `
     <main class="container">
       <section class="hero">
         <div class="hero-text">
-          <div class="eyebrow"><span>v0.2.0 · 38 versioned checks</span></div>
+          <div class="eyebrow"><span>Open spec, open tools, public leaderboard. Lighthouse for AI agents.</span></div>
           <h1 id="hero-heading">Agent readability for the web</h1>
           <p class="lead">A short lead paragraph.</p>
           <div class="cta-stack">
@@ -81,7 +81,7 @@ describe('renderPageMarkdown', () => {
   });
 
   it('drops chrome (header, footer, nav, eyebrow, copy buttons)', () => {
-    expect(out).not.toMatch(/v0\.2\.0 · 38 versioned checks/);
+    expect(out).not.toMatch(/Open spec, open tools, public leaderboard/);
     expect(out).not.toMatch(/^Copy$/m);
     expect(out).not.toContain('© 2026');
   });
