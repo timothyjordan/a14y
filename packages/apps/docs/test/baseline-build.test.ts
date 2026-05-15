@@ -55,13 +55,21 @@ describe('A14Y_BASELINE build flag — BaseLayout.astro', () => {
     );
   });
 
-  it('renders a baseline banner above <header> when the flag is set', () => {
-    expect(baseLayout).toMatch(
-      /\{isBaseline && \([\s\S]*?baseline-banner[\s\S]*?\)\}[\s\S]*?<header class="site-header">/,
-    );
-    expect(baseLayout).toMatch(
-      /Baseline build — agent-readability enhancements removed for benchmarking/,
-    );
+  // Earlier revisions of the baseline build included a "Baseline build
+  // — … real product is at a14y.dev" banner so a careful agent could
+  // tell the page apart from the enhanced site. We removed it because
+  // an agent that read the banner text might WebFetch a14y.dev and
+  // contaminate the before/after measurement: baseline-specific UI
+  // must not mention or link to a14y.dev (see feedback memory
+  // `feedback-baseline-no-a14y-mentions`). This guard makes sure the
+  // banner doesn't sneak back in.
+  it('does NOT render a baseline-only banner (would tempt agents to WebFetch a14y.dev)', () => {
+    expect(baseLayout).not.toMatch(/baseline-banner/);
+    expect(baseLayout).not.toMatch(/Baseline build —/);
+    // No `{isBaseline && <...>}` markup branch lurking either — the
+    // flag is only used to gate things OFF, never to render new
+    // baseline-only DOM.
+    expect(baseLayout).not.toMatch(/\{isBaseline && </);
   });
 
   it('omits canonical, alternate, and agent-skills <link> tags in baseline', () => {

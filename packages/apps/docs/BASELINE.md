@@ -27,9 +27,12 @@ Set via the build-time env flag `A14Y_BASELINE=1`:
 - The embeddable badge widget's outbound `href="https://a14y.dev"` is
   swapped for `href="#"` so an agent crawling the baseline cannot
   fall through to the enhanced site.
-- A small yellow banner at the top of `<body>` discloses that this is
-  a fixture (so a careful agent reading the page knows it's not the
-  real product).
+
+The baseline intentionally has **no banner or copy disclosing that it
+is a fixture**: any text mention of "a14y.dev" — even one that's not
+a clickable link — could prompt a careful coding agent to `WebFetch`
+the enhanced site and contaminate the before/after measurement. The
+site looks exactly like the real product to a human visitor.
 
 `<html lang="en">`, semantic HTML elements, `alt` text, and ARIA
 attributes are kept — they serve assistive-tech users, not just
