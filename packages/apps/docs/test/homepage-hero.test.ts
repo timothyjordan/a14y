@@ -8,12 +8,12 @@ const page = readFileSync(
 );
 
 describe('homepage hero (TJ-439)', () => {
-  it('eyebrow is the three-noun positioning line', () => {
+  it('eyebrow pairs the version pin with the three-noun positioning line', () => {
+    expect(page).toMatch(/<span class="eyebrow-pin">v\{latest\}<\/span>/);
     expect(page).toMatch(
       /<span>Open spec, open tools, public leaderboard\.<\/span>/,
     );
     expect(page).not.toMatch(/Lighthouse for AI agents/);
-    expect(page).not.toMatch(/<span class="eyebrow-pin">v\{latest\}<\/span>/);
   });
 
   it('keeps the canonical h1', () => {
