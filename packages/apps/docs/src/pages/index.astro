@@ -48,21 +48,20 @@ const heroBadgeDarkHtml = buildBadgeHtml(
 ---
 
 <BaseLayout
-  title="a14y · agent readability for the web"
-  description="Agent readability for the web. An open spec, a versioned scorecard, and the tools (CLI plus Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it."
+  title="a14y: Agent readability for the web"
+  description="Agent readability for the web. An open spec, open tools, and a public leaderboard for how well AI agents can discover, parse, and comprehend any website."
   wide
 >
   <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-text">
       <div class="eyebrow">
         <span class="eyebrow-pin">v{latest}</span>
-        <span>Open spec · {totalChecks} versioned checks</span>
+        <span>Open spec, open tools, public leaderboard.</span>
       </div>
       <h1 id="hero-heading">Agent readability for the web</h1>
       <p class="lead">
         Agents now read most of the web before humans do. a14y is the
-        open spec, the versioned scorecard, and the tools to make the
-        web readable by those agents.
+        open source project making the web readable by those agents.
       </p>
       <div class="cta-stack" role="group" aria-label="Try a14y">
         <span class="copy-cli copy-cli--block">
@@ -85,27 +84,34 @@ const heroBadgeDarkHtml = buildBadgeHtml(
             aria-label="Copy agent skill install command"
           >Copy</button>
         </span>
-        <div class="cta-row">
-          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
-            <span class="cws-badge-mark" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
-                <circle cx="24" cy="24" r="22" fill="#fff" />
-                <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
-                <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
-                <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
-                <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
-                <circle cx="24" cy="24" r="6" fill="#4285F4" />
-              </svg>
-            </span>
-            <span class="cws-badge-text">
-              <span class="cws-badge-eyebrow">Available in the</span>
-              <span class="cws-badge-store">Chrome Web Store</span>
-            </span>
-          </a>
-          <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
-            Read the spec →
-          </a>
-        </div>
+      </div>
+      <div class="cta-row">
+        <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
+          <span class="cws-badge-mark" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
+              <circle cx="24" cy="24" r="22" fill="#fff" />
+              <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
+              <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
+              <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
+              <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
+              <circle cx="24" cy="24" r="6" fill="#4285F4" />
+            </svg>
+          </span>
+          <span class="cws-badge-text">
+            <span class="cws-badge-eyebrow">Available in the</span>
+            <span class="cws-badge-store">Chrome Web Store</span>
+          </span>
+        </a>
+        <a
+          class="btn btn--ghost cta-github"
+          href="https://github.com/timothyjordan/a14y"
+          rel="noopener"
+        >
+          Star the GitHub →
+        </a>
+        <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
+          Read the spec →
+        </a>
       </div>
     </div>
 
@@ -222,8 +228,9 @@ const heroBadgeDarkHtml = buildBadgeHtml(
     <div class="section-head">
       <h2 id="tools-heading">Auditing tools</h2>
       <p class="section-sub">
-        Same engine, three ways. All produce the same score for the
-        same URL and scorecard version.
+        Open tools, three surfaces. Sub-second per page, CI-friendly,
+        and headless. Score a single URL or an entire site against
+        the same versioned checks the public leaderboard uses.
       </p>
     </div>
 
@@ -243,11 +250,34 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           scored text report, JSON, or a Markdown fix-list ready to
           hand to a coding agent.
         </p>
-        <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> npm install -g a14y
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">run</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {runCmd}</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy={runCmd}
+              aria-label="Copy run command"
+            >Copy</button>
+          </div>
+        </div>
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">install</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> npm install -g a14y
 <span class="prompt">%</span> a14y your-site.com</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy="npm install -g a14y && a14y your-site.com"
+              aria-label="Copy install and run command"
+            >Copy</button>
+          </div>
+        </div>
         <div class="tool-actions">
-          <a class="btn btn--primary" href="https://www.npmjs.com/package/a14y" rel="noopener">Install from npm →</a>
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub →</a>
+          <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener">View on npm →</a>
         </div>
       </article>
 
@@ -268,10 +298,25 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           Switch scorecard versions from the popup, jump straight to
           the failing check&apos;s fix guidance.
         </p>
-        <div class="tool-actions">
-          <a class="btn btn--primary" href={chromeWebStoreUrl} rel="noopener">
-            Install from Chrome Web Store →
+        <div class="tool-cmd-block tool-cmd-block--badge">
+          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="Install a14y from the Chrome Web Store">
+            <span class="cws-badge-mark" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
+                <circle cx="24" cy="24" r="22" fill="#fff" />
+                <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
+                <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
+                <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
+                <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
+                <circle cx="24" cy="24" r="6" fill="#4285F4" />
+              </svg>
+            </span>
+            <span class="cws-badge-text">
+              <span class="cws-badge-eyebrow">Available in the</span>
+              <span class="cws-badge-store">Chrome Web Store</span>
+            </span>
           </a>
+        </div>
+        <div class="tool-actions">
           <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Manual install →</a>
         </div>
       </article>
@@ -294,14 +339,17 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           Works with Claude Code, Codex, Cursor, and any other coding
           agent that supports the open skills format.
         </p>
-        <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
-        <div class="tool-actions">
-          <button
-            type="button"
-            class="btn btn--primary"
-            data-copy={skillInstallCmd}
-            aria-label="Copy install command"
-          >Copy install →</button>
+        <div class="tool-cmd-block">
+          <span class="tool-cmd-label">install</span>
+          <div class="tool-cmd-wrap">
+            <pre class="tool-cmd"><code class="language-shell"><span class="prompt">%</span> {skillInstallCmd}</code></pre>
+            <button
+              type="button"
+              class="tool-cmd-copy"
+              data-copy={skillInstallCmd}
+              aria-label="Copy install command"
+            >Copy</button>
+          </div>
         </div>
         <p class="tool-note">Discoverable via <code>&lt;link rel="agent-skills"&gt;</code> on every page of this site.</p>
       </article>

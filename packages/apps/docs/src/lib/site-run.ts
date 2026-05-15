@@ -1,5 +1,5 @@
 /**
- * Loaders for the per-site scorecard pages at `/research/<slug>/`. Each
+ * Loaders for the per-site scorecard pages at `/leaderboard/<slug>/`. Each
  * full SiteRun JSON is published from the private a14y-internal repo into
  * `src/data/runs/<slug>.json` by the `@a14y/research` publish command.
  *
@@ -60,5 +60,5 @@ export function scoreClass(score: number): 'pass' | 'warn' | 'fail' {
  */
 export function siteRunUrl(slug: string): string {
   const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
-  return `${base}/research/${slug}/`;
+  return `${base}/leaderboard/${slug}/`;
 }

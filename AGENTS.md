@@ -39,6 +39,15 @@ human-readable version, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
    preview the would-be JSON without pushing, run
    `node scripts/refresh-draft-diff.mjs --local`. Verify
    `draft-changes.json` reflects the net diff before requesting review.
+7. **Non-trivial scorecard changes ship docs-first.** Split into two
+   PRs: a **spec PR** (the check's `.md` page + the `draft.ts` pin,
+   plus a stub `'1.1.0'` implementation copying the prior version
+   when updating an existing check, so the pin resolves and tests
+   stay green) lands and merges first; an **implementation PR** then
+   replaces the stub with the real `'1.1.0'` handler. Rationale:
+   prevents the spec PR and impl PR from pulling against each other
+   while reviewers negotiate the contract. See
+   [CONTRIBUTING → Docs-first for scorecard changes](./CONTRIBUTING.md#docs-first-for-scorecard-changes).
 
 ## Canonical commands
 
@@ -69,6 +78,9 @@ match the rest of the repo.
 
 ## Adding a new check (recipe)
 
+> For non-trivial additions, split into spec + impl PRs (see
+> invariant #7). The steps below are the impl PR.
+
 1. Add `packages/core/src/checks/{site,page}/<file>.ts` with an
    `implementations` map keyed by `'1.0.0'`. The file name is
    camelCase; the check ids inside it are kebab-case and scoped
@@ -81,6 +93,11 @@ match the rest of the repo.
    `npm test --workspace @a14y/docs`.
 
 ## Updating an existing check (recipe)
+
+> For non-trivial bumps, split into spec + impl PRs (see invariant
+> #7). The steps below are the impl PR — the spec PR already shipped
+> the `.md` page, the `draft.ts` pin bump, and a stub `'1.1.0'` copy
+> of the prior handler; here you replace that stub with real logic.
 
 1. In `packages/core/src/checks/{site,page}/<file>.ts`, add a new
    `'1.1.0'` (or higher) entry to `implementations`. **Leave the
@@ -109,6 +126,8 @@ Before opening a PR, confirm:
       the PR head and `packages/core/src/scorecard/draft-changes.json`
       reflects the net diff with attribution. See
       [CONTRIBUTING → Diff refresh workflow](./CONTRIBUTING.md#diff-refresh-workflow).
+- [ ] If non-trivial rubric change: docs-first split was used — the
+      spec PR landed before this impl PR (see invariant #7).
 - [ ] Commits follow Conventional Commits.
 
 ## Further reading
