@@ -1,6 +1,7 @@
 ---
 interface Props {
-  /** Pre-captured terminal text (ANSI already stripped). */
+  /** Pre-captured terminal text. May contain ANSI escape sequences;
+   *  build-time `ansiToHtml` converts them to themed `<span>` runs. */
   text: string;
   /** Caption rendered in the chrome bar. e.g. "$ npx a14y a14y.dev". */
   caption?: string;
@@ -10,9 +11,92 @@ interface Props {
 
 const { text, caption, label = 'Terminal output' } = Astro.props;
 
-// The fixture starts with a leading blank line; trim the very first/last
+// The fixture starts with a leading blank line; trim leading/trailing
 // blank lines so the rendered window doesn't waste a row top and bottom.
 const body = text.replace(/^\n+/, '').replace(/\n+$/, '');
+
+/**
+ * Convert a string containing ANSI SGR (Select Graphic Rendition)
+ * escape sequences into safe HTML. Maps the limited subset the a14y
+ * CLI emits to brand-themed CSS classes so the rendered terminal in
+ * HTML matches the live tool's typography.
+ *
+ * Supported codes:
+ *   1   bold              → .ansi-bold
+ *   2   dim               → .ansi-dim
+ *   22  reset weight/dim
+ *   31  red               → .ansi-red    (status-fail)
+ *   32  green             → .ansi-green  (status-pass)
+ *   33  yellow            → .ansi-yellow (status-warn)
+ *   90  bright black      → .ansi-gray   (subdued meta text)
+ *   39  reset color
+ *   0   reset all
+ *
+ * Anything else is silently dropped (no escape sequence reaches HTML).
+ */
+function ansiToHtml(input: string): string {
+  const escapeHtml = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const codeClass: Record<number, string> = {
+    1: 'ansi-bold',
+    2: 'ansi-dim',
+    31: 'ansi-red',
+    32: 'ansi-green',
+    33: 'ansi-yellow',
+    90: 'ansi-gray',
+  };
+  const resetFor: Record<number, string[]> = {
+    22: ['ansi-bold', 'ansi-dim'],
+    39: ['ansi-red', 'ansi-green', 'ansi-yellow', 'ansi-gray'],
+  };
+
+  let out = '';
+  const stack: string[] = [];
+  let lastIndex = 0;
+  // eslint-disable-next-line no-control-regex
+  const sgrRe = /\[([0-9;]*)m/g;
+  let m: RegExpExecArray | null;
+  while ((m = sgrRe.exec(input)) !== null) {
+    out += escapeHtml(input.slice(lastIndex, m.index));
+    lastIndex = m.index + m[0].length;
+    const raw = m[1].length === 0 ? '0' : m[1];
+    const codes = raw.split(';').filter(Boolean).map(Number);
+    if (codes.length === 0) codes.push(0);
+    for (const code of codes) {
+      if (code === 0) {
+        while (stack.length) {
+          out += '</span>';
+          stack.pop();
+        }
+      } else if (resetFor[code]) {
+        const candidates = resetFor[code];
+        for (let i = stack.length - 1; i >= 0; i--) {
+          if (candidates.includes(stack[i])) {
+            const above = stack.splice(i + 1);
+            for (let j = 0; j < above.length + 1; j++) out += '</span>';
+            stack.pop();
+            for (const cls of above) {
+              out += `<span class="${cls}">`;
+              stack.push(cls);
+            }
+            break;
+          }
+        }
+      } else if (codeClass[code]) {
+        out += `<span class="${codeClass[code]}">`;
+        stack.push(codeClass[code]);
+      }
+    }
+  }
+  out += escapeHtml(input.slice(lastIndex));
+  while (stack.length) {
+    out += '</span>';
+    stack.pop();
+  }
+  return out;
+}
+
+const html = ansiToHtml(body);
 ---
 
 <figure class="terminal-window" aria-label={label}>
@@ -24,5 +108,5 @@ const body = text.replace(/^\n+/, '').replace(/\n+$/, '');
     </span>
     {caption && <span class="terminal-window-caption">{caption}</span>}
   </header>
-  <pre class="terminal-window-body"><code>{body}</code></pre>
+  <pre class="terminal-window-body"><code set:html={html} /></pre>
 </figure>

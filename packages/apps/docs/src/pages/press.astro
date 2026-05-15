@@ -190,14 +190,14 @@ const logoAssets: LogoAsset[] = [
         {totalSites} sites scored against scorecard
         {' '}v{research.scorecardVersion}. Top 10 below; the full
         ranking, score histogram, and per-site scorecards are at
-        {' '}<a href={`${base}/research/`}>a14y.dev/research/</a>.
+        {' '}<a href={`${base}/leaderboard/`}>a14y.dev/leaderboard/</a>.
       </p>
     </div>
     <div class="press-leaderboard">
       <ScoreHistogram buckets={buckets} />
       <LeaderboardTable entries={top10} scorecardVersion={research.scorecardVersion} />
       <p class="press-leaderboard-foot">
-        <a href={`${base}/research/`}>See all {totalSites} sites at a14y.dev/research/ →</a>
+        <a href={`${base}/leaderboard/`}>See all {totalSites} sites at a14y.dev/leaderboard/ →</a>
       </p>
     </div>
   </section>

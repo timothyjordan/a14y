@@ -28,15 +28,16 @@ scorecard surface at [a14y.dev/scorecards/](https://a14y.dev/scorecards/)
 shows every one of them with detection rules and remediation guidance.
 
 **The tools.** Three surfaces, one engine: a free CLI (`npx a14y
-your-site.com`), a free Chrome extension, and a coding-agent skill
-(`npx skills add timothyjordan/a14y`) that drives the audit-and-fix
-loop inside Claude Code, Codex, Cursor, and any other spec-compliant
-agent. All three produce the same score for the same URL and
-scorecard version. The CLI also emits a Markdown fix-list (`--output
-agent-prompt`) that any agent can ingest directly.
+your-site.com`), a free [Chrome extension](https://chromewebstore.google.com/detail/a14y-agent-readability/gkkhpjiicjfoblocffiigpbbphbbojom),
+and a coding-agent skill (`npx skills add timothyjordan/a14y`) that
+drives the audit-and-fix loop inside Claude Code, Codex, Cursor, and
+any other spec-compliant agent. All three produce the same score for
+the same URL and scorecard version. The CLI also emits a Markdown
+fix-list (`--output agent-prompt`) that any agent can ingest
+directly.
 
 **The proof.** The public leaderboard at
-[a14y.dev/research/](https://a14y.dev/research/) scores a
+[a14y.dev/leaderboard/](https://a14y.dev/leaderboard/) scores a
 cross-section of major websites against the current scorecard, with
 per-site scorecards, a score histogram, and category breakdowns. It
 updates as the dataset is refreshed, and every score on the

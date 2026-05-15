@@ -84,7 +84,7 @@ describe('press.astro (TJ-440)', () => {
     expect(page).toMatch(/import\s+ScoreHistogram\s+from\s+['"]~\/components\/research\/ScoreHistogram\.astro['"]/);
     expect(page).toMatch(/\.slice\(0,\s*10\)/);
     expect(page).toContain('getLeaderboard()');
-    expect(page).toContain('a14y.dev/research/');
+    expect(page).toContain('a14y.dev/leaderboard/');
   });
 
   it('embeds the captured CLI output through TerminalWindow', () => {

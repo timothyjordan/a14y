@@ -1453,6 +1453,16 @@ main.container h2[id] {
   padding: 0;
   color: inherit;
 }
+/* ANSI palette rendered inside the terminal window. Mapped to the
+   brand status tokens so pass/fail/warn match the rest of the site. */
+.terminal-window-body .ansi-bold { font-weight: 700; }
+.terminal-window-body .ansi-dim,
+.terminal-window-body .ansi-gray {
+  color: color-mix(in oklch, var(--brand-paper) 55%, transparent);
+}
+.terminal-window-body .ansi-green { color: var(--status-pass); }
+.terminal-window-body .ansi-red { color: var(--status-fail); }
+.terminal-window-body .ansi-yellow { color: var(--status-warn); }
 
 /* Leaderboard wrapper on the press page */
 .press-leaderboard {

@@ -1,59 +1,59 @@
 
-Agent Readability Score: 92/100
-  scorecard 0.2.0 (released 2026-04-06) — mode page
-  33 pass · 3 fail · 0 warn · 0 error · 2 n/a (out of 38)
+[1mAgent Readability Score: 92/100[22m
+[90m  scorecard 0.2.0 (released 2026-04-06) — mode page[39m
+[90m  33 pass · 3 fail · 0 warn · 0 error · 2 n/a (out of 38)[39m
 
-Site checks
-  Discoverability
-    ✓ llms-txt.exists — Found llms.txt at https://a14y.dev/llms.txt
-    ✓ llms-txt.content-type — text/plain; charset=utf-8
-    ✓ llms-txt.non-empty
-    ✓ llms-txt.md-extensions — 84 links checked
-    ✓ robots-txt.exists — https://a14y.dev/robots.txt
-    ✓ robots-txt.allows-ai-bots — Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended
-    ✓ robots-txt.allows-llms-txt
-    ✓ sitemap-xml.exists — https://a14y.dev/sitemap.xml
-    ✓ sitemap-xml.valid — urlset
-    ✓ sitemap-xml.has-lastmod — 85 entries with lastmod
-    ✓ sitemap-md.exists — https://a14y.dev/sitemap.md
-    ✓ sitemap-md.has-structure — 8 headings, 85 links
-    ✓ agents-md.exists — https://a14y.dev/AGENTS.md
-    ✓ agents-md.has-min-sections — Found: installation, configuration, usage
+[1mSite checks[22m
+  [2mDiscoverability[22m
+    [32m✓[39m llms-txt.exists[90m — Found llms.txt at https://a14y.dev/llms.txt[39m
+    [32m✓[39m llms-txt.content-type[90m — text/plain; charset=utf-8[39m
+    [32m✓[39m llms-txt.non-empty
+    [32m✓[39m llms-txt.md-extensions[90m — 84 links checked[39m
+    [32m✓[39m robots-txt.exists[90m — https://a14y.dev/robots.txt[39m
+    [32m✓[39m robots-txt.allows-ai-bots[90m — Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended[39m
+    [32m✓[39m robots-txt.allows-llms-txt
+    [32m✓[39m sitemap-xml.exists[90m — https://a14y.dev/sitemap.xml[39m
+    [32m✓[39m sitemap-xml.valid[90m — urlset[39m
+    [32m✓[39m sitemap-xml.has-lastmod[90m — 85 entries with lastmod[39m
+    [32m✓[39m sitemap-md.exists[90m — https://a14y.dev/sitemap.md[39m
+    [32m✓[39m sitemap-md.has-structure[90m — 8 headings, 85 links[39m
+    [32m✓[39m agents-md.exists[90m — https://a14y.dev/AGENTS.md[39m
+    [32m✓[39m agents-md.has-min-sections[90m — Found: installation, configuration, usage[39m
 
-Page checks — https://a14y.dev/
-  HTTP
-    ✓ http.status-200 — 200
-    ✓ http.redirect-chain — 0 hops
-    ✓ http.content-type-html — text/html; charset=utf-8
-    ✓ http.no-noindex-noai — no x-robots-tag
-  HTML metadata
-    ✓ html.canonical-link — https://a14y.dev/
-    ✓ html.meta-description — 195 chars
-    ✓ html.og-title
-    ✓ html.og-description
-    ✓ html.lang-attribute — en
-  Structured data
-    ✓ html.json-ld — 1 block(s)
-    ✓ html.json-ld.date-modified — 2026-05-14T22:13:15.430Z
-    ✓ html.json-ld.breadcrumb
-  Content structure
-    ✓ html.headings — 10 headings
-    ✗ html.text-ratio — 13.4%
-    ✓ html.glossary-link
-  Markdown mirror
-    ✓ markdown.mirror-suffix — https://a14y.dev/index.md
-    ✓ markdown.alternate-link — https://a14y.dev/index.md
-    ✓ markdown.frontmatter
-    ✗ markdown.canonical-header — no Link header
-    ✗ markdown.content-negotiation — text/html; charset=utf-8
-    ✓ markdown.sitemap-section
-  Code
-    ✓ code.language-tags — 2 blocks
-  API
-    - api.schema-link — not an API page
-  Discoverability
-    - discovery.indexed — no site index available
+[1mPage checks — https://a14y.dev/[22m
+  [2mHTTP[22m
+    [32m✓[39m http.status-200[90m — 200[39m
+    [32m✓[39m http.redirect-chain[90m — 0 hops[39m
+    [32m✓[39m http.content-type-html[90m — text/html; charset=utf-8[39m
+    [32m✓[39m http.no-noindex-noai[90m — no x-robots-tag[39m
+  [2mHTML metadata[22m
+    [32m✓[39m html.canonical-link[90m — https://a14y.dev/[39m
+    [32m✓[39m html.meta-description[90m — 195 chars[39m
+    [32m✓[39m html.og-title
+    [32m✓[39m html.og-description
+    [32m✓[39m html.lang-attribute[90m — en[39m
+  [2mStructured data[22m
+    [32m✓[39m html.json-ld[90m — 1 block(s)[39m
+    [32m✓[39m html.json-ld.date-modified[90m — 2026-05-15T16:17:57.474Z[39m
+    [32m✓[39m html.json-ld.breadcrumb
+  [2mContent structure[22m
+    [32m✓[39m html.headings[90m — 10 headings[39m
+    [31m✗[39m html.text-ratio[90m — 13.4%[39m
+    [32m✓[39m html.glossary-link
+  [2mMarkdown mirror[22m
+    [32m✓[39m markdown.mirror-suffix[90m — https://a14y.dev/index.md[39m
+    [32m✓[39m markdown.alternate-link[90m — https://a14y.dev/index.md[39m
+    [32m✓[39m markdown.frontmatter
+    [31m✗[39m markdown.canonical-header[90m — no Link header[39m
+    [31m✗[39m markdown.content-negotiation[90m — text/html; charset=utf-8[39m
+    [32m✓[39m markdown.sitemap-section
+  [2mCode[22m
+    [32m✓[39m code.language-tags[90m — 2 blocks[39m
+  [2mAPI[22m
+    [90m-[39m api.schema-link[90m — not an API page[39m
+  [2mDiscoverability[22m
+    [90m-[39m discovery.indexed[90m — no site index available[39m
 
-! Single-page review: only https://a14y.dev/ was audited.
+[33m![39m Single-page review: only https://a14y.dev/ was audited.
   For a full-site audit (crawls every reachable page) run:
-  a14y https://a14y.dev/ --mode site
+  [36ma14y https://a14y.dev/ --mode site[39m
