@@ -6,11 +6,13 @@ import {
   getCheckSummariesForScorecard,
 } from '~/lib/scorecard-data';
 import { buildBadgeHtml } from '~/lib/build-badge-html';
+import { getLeaderboard } from '~/lib/research-data';
 import type { BadgeData } from '@a14y/core';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
 const totalChecks = getCheckSummariesForScorecard(latest).length;
+const leaderboardSiteCount = getLeaderboard().length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const runCmd = 'npx a14y your-site.com';
@@ -48,21 +50,19 @@ const heroBadgeDarkHtml = buildBadgeHtml(
 ---
 
 <BaseLayout
-  title="a14y · agent readability for the web"
-  description="Agent readability for the web. An open spec, a versioned scorecard, and the tools (CLI plus Chrome extension) that score any website for how well AI agents can discover, parse, and comprehend it."
+  title="a14y · Lighthouse for AI agents"
+  description="Lighthouse for AI agents. An open spec, open tools, and a public leaderboard for how well AI agents can discover, parse, and comprehend any website."
   wide
 >
   <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-text">
       <div class="eyebrow">
-        <span class="eyebrow-pin">v{latest}</span>
-        <span>Open spec · {totalChecks} versioned checks</span>
+        <span>Open spec, open tools, public leaderboard. Lighthouse for AI agents.</span>
       </div>
       <h1 id="hero-heading">Agent readability for the web</h1>
       <p class="lead">
         Agents now read most of the web before humans do. a14y is the
-        open spec, the versioned scorecard, and the tools to make the
-        web readable by those agents.
+        open source project making the web readable by those agents.
       </p>
       <div class="cta-stack" role="group" aria-label="Try a14y">
         <span class="copy-cli copy-cli--block">
@@ -101,6 +101,13 @@ const heroBadgeDarkHtml = buildBadgeHtml(
               <span class="cws-badge-eyebrow">Available in the</span>
               <span class="cws-badge-store">Chrome Web Store</span>
             </span>
+          </a>
+          <a
+            class="btn btn--ghost cta-github"
+            href="https://github.com/timothyjordan/a14y"
+            rel="noopener"
+          >
+            Star the GitHub →
           </a>
           <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
             Read the spec →
@@ -145,9 +152,11 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         <span class="step-num">03</span>
         <h3>Re-run &amp; share</h3>
         <p>
-          Run again to confirm the score climbed, then
+          Run again to confirm the score climbed. Then
           {' '}<a href={`${base}/badge/`}>embed your badge</a> so
-          agents (and humans) know your site is ready.
+          agents (and humans) know your site is ready, or
+          {' '}<a href={`${base}/research/`}>see how you stack up
+          on the public leaderboard</a>.
         </p>
       </li>
     </ol>
@@ -218,12 +227,29 @@ const heroBadgeDarkHtml = buildBadgeHtml(
     </article>
   </section>
 
+  <section class="section" aria-labelledby="leaderboard-heading">
+    <div class="section-head">
+      <h2 id="leaderboard-heading">A public leaderboard, not a private score</h2>
+      <p class="section-sub">
+        Every site we audit publishes its full SiteRun JSON. Compare
+        against {leaderboardSiteCount} sites, see which checks the top
+        of the leaderboard ships, and put your own up next to them.
+      </p>
+    </div>
+    <p class="leaderboard-teaser-cta">
+      <a class="btn btn--primary" href={`${base}/research/`}>
+        Browse the leaderboard →
+      </a>
+    </p>
+  </section>
+
   <section id="tools" class="section" aria-labelledby="tools-heading">
     <div class="section-head">
       <h2 id="tools-heading">Auditing tools</h2>
       <p class="section-sub">
-        Same engine, three ways. All produce the same score for the
-        same URL and scorecard version.
+        Open tools, three surfaces. Sub-second per page, CI-friendly,
+        and headless — score a single URL or an entire site against
+        the same versioned checks the public leaderboard uses.
       </p>
     </div>
 
