@@ -251,7 +251,45 @@ Three flows cover every case:
 > attribute under the maintainer push, or merge and then run the
 > audit/catch-up flow on `main`.
 
+### Docs-first for scorecard changes
+
+Any non-trivial rubric change — adding a check, removing a check, or
+bumping a pinned implementation version — should ship in **two PRs**:
+the **spec PR** first, then the **implementation PR**. This keeps the
+impl PR pointed at a fixed target instead of a moving one, lets
+reviewers reason about each piece in isolation, and prevents `main`
+from ever holding docs that are ahead of or behind the code.
+
+The split, concretely:
+
+1. **Spec PR.** Lands the contract.
+   - The check's content page at
+     `packages/apps/docs/src/content/checks/<id>.md` (new file, or the
+     updated description of what the bumped version means).
+   - The pin in `packages/core/src/scorecard/draft.ts` (new entry, or
+     the bumped version).
+   - **For "updating an existing check" only**, also include a **stub
+     `'1.1.0'` implementation** in the check's `implementations` map —
+     typically a verbatim copy of the previous version's handler — so
+     the new pin resolves and `npm test --workspace @a14y/core` stays
+     green. The impl PR replaces this stub.
+2. **Implementation PR.** Lands the real `'1.1.0'` handler over the
+   stub. No `draft.ts` changes, no doc copy changes — just the
+   behavior the spec PR already described.
+
+Both PRs touch `draft.ts`, so the `refresh-draft-diff` workflow will
+run on each. The second run rewrites `draft-changes.json` to attribute
+the entry against the impl PR — that's expected, not a regression.
+
+For the per-step recipes once you've chosen the right PR, see
+[Adding a new check](#adding-a-new-check) and
+[Updating an existing check](#updating-an-existing-check).
+
 ## Adding a new check
+
+> For non-trivial additions, ship this as the impl PR of a
+> [docs-first split](#docs-first-for-scorecard-changes) — land the
+> spec PR (content page + `draft.ts` pin) first.
 
 1. Implement the check under `packages/core/src/checks/{site,page}/`.
    Use a fresh stable id; add an entry under `implementations` keyed
@@ -269,6 +307,11 @@ Three flows cover every case:
 
 If a check's behavior should change (better detection, fewer false
 positives, etc.):
+
+> For non-trivial bumps, ship this as the impl PR of a
+> [docs-first split](#docs-first-for-scorecard-changes) — land the
+> spec PR (updated content page + `draft.ts` pin + stub `'1.1.0'`)
+> first.
 
 1. In the check's source file under
    `packages/core/src/checks/{site,page}/`, add a new entry to
@@ -413,6 +456,9 @@ Before you ask for review, confirm:
       regenerated READMEs.
 - [ ] Commit messages follow Conventional Commits.
 - [ ] No frozen `v0_*.ts` file was modified.
+- [ ] If non-trivial rubric change: shipped via the
+      [docs-first split](#docs-first-for-scorecard-changes) — the
+      spec PR landed before this impl PR.
 
 ## Common pitfalls
 
