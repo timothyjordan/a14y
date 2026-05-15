@@ -458,14 +458,15 @@ p { margin: 0 0 16px; }
 }
 .cws-badge:active { transform: translateY(1px); }
 :root[data-theme='dark'] .cws-badge {
-  background: var(--brand-cyan);
-  color: var(--brand-ink);
+  background: var(--brand-ink);
+  color: var(--brand-paper);
   border-color: var(--brand-cyan);
 }
 :root[data-theme='dark'] .cws-badge:hover {
-  background: color-mix(in oklch, var(--brand-cyan) 88%, white 12%);
-  color: var(--brand-ink);
-  box-shadow: 0 6px 18px -10px oklch(0.85 0.07 220 / 0.45);
+  background: var(--brand-ink-hover);
+  color: var(--brand-paper);
+  border-color: var(--brand-cyan);
+  box-shadow: 0 6px 18px -10px oklch(0 0 0 / 0.45);
 }
 .cws-badge-mark {
   display: inline-flex;
@@ -786,8 +787,8 @@ main.container h2[id] {
   grid-template-columns: 1fr;
   gap: 18px;
 }
-@media (min-width: 720px) {
-  .tools { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+@media (min-width: 1024px) {
+  .tools { grid-template-columns: repeat(3, 1fr); gap: 22px; }
 }
 
 .tool-card {
