@@ -6,10 +6,6 @@ const page = readFileSync(
   path.resolve(__dirname, '../src/pages/press.astro'),
   'utf-8',
 );
-const bio = readFileSync(
-  path.resolve(__dirname, '../src/content/pages/press-bio.md'),
-  'utf-8',
-);
 const onepager = readFileSync(
   path.resolve(__dirname, '../src/content/pages/press-product-onepager.md'),
   'utf-8',
@@ -28,20 +24,30 @@ describe('press.astro (TJ-440)', () => {
     expect(page).toMatch(/<h1>[\s\S]*?Press kit[\s\S]*?<\/h1>/);
   });
 
-  it('renders all 8 required sections', () => {
-    // Each section h2 by id, in order
+  it('renders the 7 sections in the post-critique order', () => {
+    // Each section h2 by id. Order matters: hero -> terminal -> one-pager
+    // -> comp -> leaderboard -> assets -> contact.
     const sectionIds = [
+      'cli-heading',
       'onepager-heading',
       'comp-heading',
-      'cli-heading',
       'leaderboard-heading',
       'assets-heading',
-      'founder-heading',
       'contact-heading',
     ];
+    let cursor = 0;
     for (const id of sectionIds) {
-      expect(page).toContain(`id="${id}"`);
+      const idx = page.indexOf(`id="${id}"`, cursor);
+      expect(idx, `expected id="${id}" after offset ${cursor}`).toBeGreaterThan(cursor);
+      cursor = idx;
     }
+  });
+
+  it('does not include a founder section (dropped per critique)', () => {
+    expect(page).not.toMatch(/id="founder-heading"/);
+    expect(page).not.toMatch(/press-founder/);
+    expect(page).not.toMatch(/timothy-jordan\.jpg/);
+    expect(page).not.toMatch(/getEntry\(['"]pages['"], ['"]press-bio['"]\)/);
   });
 
   it('embeds the press contact email (matches existing public footprint)', () => {
@@ -60,11 +66,17 @@ describe('press.astro (TJ-440)', () => {
     for (const row of rows) {
       expect(page).toContain(row);
     }
-    // All 4 competitors named in the column headers
     expect(page).toMatch(/<th[^>]*>a14y<\/th>/);
     expect(page).toMatch(/<th[^>]*>ora\.run<\/th>/);
     expect(page).toMatch(/<th[^>]*>Cloudflare<\/th>/);
     expect(page).toMatch(/<th[^>]*>agentready\.dev<\/th>/);
+  });
+
+  it('renders a comp-table legend (✓ yes · ✗ no · ~ partial)', () => {
+    expect(page).toMatch(/press-comp-legend/);
+    expect(page).toContain('yes');
+    expect(page).toContain('no');
+    expect(page).toContain('partial');
   });
 
   it('embeds the leaderboard via the existing research components (single source of truth)', () => {
@@ -81,7 +93,9 @@ describe('press.astro (TJ-440)', () => {
     expect(page).toMatch(/<TerminalWindow\s+text=\{cliOutput\}/);
   });
 
-  it('lists all 7 brand assets with download links', () => {
+  it('promotes the OG image to its own feature card and lists all 6 logo SVGs', () => {
+    expect(page).toMatch(/press-asset-card--feature/);
+    expect(page).toContain('og-image.png');
     const filenames = [
       'logo-mark.svg',
       'logo-mark--dark.svg',
@@ -89,32 +103,25 @@ describe('press.astro (TJ-440)', () => {
       'logo-lockup--dark.svg',
       'logo-wordmark.svg',
       'logo-wordmark--dark.svg',
-      'og-image.png',
     ];
     for (const f of filenames) {
       expect(page).toContain(f);
     }
   });
 
-  it('renders the founder headshot from public/press/timothy-jordan.jpg', () => {
-    expect(page).toContain('/press/timothy-jordan.jpg');
-    expect(page).toMatch(/alt="Timothy Jordan, creator of a14y"/);
-    expect(page).toMatch(/download="timothy-jordan\.jpg"/);
-  });
-
-  it('imports founder bio + one-pager from the pages content collection', () => {
+  it('imports the one-pager from the pages content collection', () => {
     expect(page).toContain("getEntry('pages', 'press-product-onepager')");
-    expect(page).toContain("getEntry('pages', 'press-bio')");
   });
 
-  it('bio includes the verbatim opening sentence sourced from timothyjordan.com', () => {
-    // Markdown wraps lines, so collapse whitespace before matching prose.
-    const bioFlat = bio.replace(/\s+/g, ' ');
-    expect(bioFlat).toContain('Timothy Jordan is the creator of a14y.');
-    expect(bioFlat).toContain(
-      'two decades of experience working at the intersection of engineering and storytelling',
+  it('pins last_updated to the scorecard release date, not new Date()', () => {
+    // The helper is the source of truth; the executed expression must not
+    // call `new Date()`. Strip line comments before checking, since the
+    // module comment explains *why* we avoid it.
+    const codeOnly = page.replace(/^---[\s\S]*?^---/m, (frontmatter) =>
+      frontmatter.replace(/^\s*\/\/.*$/gm, ''),
     );
-    expect(bioFlat).toContain('VP of Developer Experience at Vercel');
+    expect(page).toMatch(/getScorecardByVersion\(latestScorecard\)\.releasedAt/);
+    expect(codeOnly).not.toMatch(/new\s+Date\s*\(/);
   });
 
   it('one-pager covers the 5 framings (problem, spec, scorecard, tools, proof)', () => {
@@ -123,6 +130,17 @@ describe('press.astro (TJ-440)', () => {
     expect(onepager).toMatch(/\*\*The scorecard\.\*\*/);
     expect(onepager).toMatch(/\*\*The tools\.\*\*/);
     expect(onepager).toMatch(/\*\*The proof\.\*\*/);
+  });
+
+  it('contains no em dashes in the page or the one-pager (PRODUCT.md ban)', () => {
+    expect(page).not.toMatch(/—/);
+    expect(onepager).not.toMatch(/—/);
+  });
+
+  it('header brand mark renders light + dark variants for theme parity', () => {
+    expect(baseLayout).toMatch(/brand-mark--light/);
+    expect(baseLayout).toMatch(/brand-mark--dark/);
+    expect(baseLayout).toMatch(/logo-mark--dark\.svg/);
   });
 
   it('header nav links to /press/', () => {

@@ -5,6 +5,10 @@ import TerminalWindow from '~/components/TerminalWindow.astro';
 import LeaderboardTable from '~/components/research/LeaderboardTable.astro';
 import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
 import {
+  getLatestScorecardVersion,
+  getScorecardByVersion,
+} from '~/lib/scorecard-data';
+import {
   getLeaderboard,
   getResearchData,
   getScoreHistogram,
@@ -12,10 +16,8 @@ import {
 import cliOutput from '~/data/press-cli-output.txt?raw';
 
 const onepager = await getEntry('pages', 'press-product-onepager');
-const bio = await getEntry('pages', 'press-bio');
-if (!onepager || !bio) throw new Error('Missing press content entries');
+if (!onepager) throw new Error('Missing press-product-onepager content entry');
 const { Content: OnepagerContent } = await onepager.render();
-const { Content: BioContent } = await bio.render();
 
 const research = getResearchData();
 const allEntries = getLeaderboard();
@@ -24,39 +26,43 @@ const totalSites = allEntries.length;
 const buckets = getScoreHistogram();
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const lastUpdated = new Date().toISOString().slice(0, 10);
+
+// Pin "last updated" to the latest published scorecard release date.
+// new Date() at build time would drift silently across redeploys; this
+// changes only when the scorecard itself ships a new version.
+const latestScorecard = getLatestScorecardVersion();
+const lastUpdated = getScorecardByVersion(latestScorecard).releasedAt.slice(0, 10);
 
 const pressEmail = 'agentreadability@gmail.com';
 
-interface BrandAsset {
+interface LogoAsset {
   href: string;
   filename: string;
-  format: 'SVG' | 'PNG';
-  variant: 'light' | 'dark' | 'image';
+  format: 'SVG';
+  variant: 'light' | 'dark';
   label: string;
 }
 
-const brandAssets: BrandAsset[] = [
+const logoAssets: LogoAsset[] = [
   { label: 'Mark', href: '/brand/logo-mark.svg', filename: 'logo-mark.svg', format: 'SVG', variant: 'light' },
   { label: 'Mark (dark)', href: '/brand/logo-mark--dark.svg', filename: 'logo-mark--dark.svg', format: 'SVG', variant: 'dark' },
   { label: 'Lockup', href: '/brand/logo-lockup.svg', filename: 'logo-lockup.svg', format: 'SVG', variant: 'light' },
   { label: 'Lockup (dark)', href: '/brand/logo-lockup--dark.svg', filename: 'logo-lockup--dark.svg', format: 'SVG', variant: 'dark' },
   { label: 'Wordmark', href: '/brand/logo-wordmark.svg', filename: 'logo-wordmark.svg', format: 'SVG', variant: 'light' },
   { label: 'Wordmark (dark)', href: '/brand/logo-wordmark--dark.svg', filename: 'logo-wordmark--dark.svg', format: 'SVG', variant: 'dark' },
-  { label: 'Open Graph image', href: '/brand/og-image.png', filename: 'og-image.png', format: 'PNG', variant: 'image' },
 ];
 ---
 
 <BaseLayout
   title="Press kit · a14y"
-  description="Press kit for a14y — agent readability for the web. Logos, screenshots, leaderboard, founder bio, comparison table, and contact for journalists, podcast bookers, and analysts."
+  description="Press kit for a14y, agent readability for the web. Logos, the live CLI output, the leaderboard, a comparison table, and contact for journalists, podcast bookers, and analysts."
   wide
 >
   <section class="hero hero--compact">
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
         <span class="eyebrow-pin">press kit</span>
-        <span>last updated {lastUpdated}</span>
+        <span>scorecard v{latestScorecard} · last updated {lastUpdated}</span>
       </div>
       <h1>Press kit</h1>
       <p class="lead">
@@ -76,6 +82,17 @@ const brandAssets: BrandAsset[] = [
         </a>
       </div>
     </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="cli-heading">
+    <div class="section-head">
+      <h2 id="cli-heading">See it run</h2>
+      <p class="section-sub">
+        a14y scoring its own website. Captured from the open-source CLI;
+        you can reproduce this in your terminal in under a minute.
+      </p>
+    </div>
+    <TerminalWindow text={cliOutput} caption="$ npx a14y a14y.dev" label="a14y CLI output for a14y.dev" />
   </section>
 
   <section class="section" aria-labelledby="onepager-heading">
@@ -152,6 +169,11 @@ const brandAssets: BrandAsset[] = [
           </tr>
         </tbody>
       </table>
+      <p class="press-comp-legend" aria-hidden="true">
+        <span><span class="press-comp-cell--pass">✓</span> yes</span>
+        <span><span class="press-comp-cell--fail">✗</span> no</span>
+        <span><span class="press-comp-cell--warn">~</span> partial</span>
+      </p>
       <p class="press-comp-note">
         Source: a14y competitive analysis. Respectful framings of each tool
         live at <a href="https://ora.run" rel="noopener">ora.run</a>,
@@ -159,17 +181,6 @@ const brandAssets: BrandAsset[] = [
         and <a href="https://agentready.dev" rel="noopener">agentready.dev</a>.
       </p>
     </div>
-  </section>
-
-  <section class="section" aria-labelledby="cli-heading">
-    <div class="section-head">
-      <h2 id="cli-heading">See it run</h2>
-      <p class="section-sub">
-        a14y scoring its own website. Captured from the open-source CLI;
-        you can reproduce this in your terminal in under a minute.
-      </p>
-    </div>
-    <TerminalWindow text={cliOutput} caption="$ npx a14y a14y.dev" label="a14y CLI output for a14y.dev" />
   </section>
 
   <section class="section" aria-labelledby="leaderboard-heading">
@@ -200,8 +211,22 @@ const brandAssets: BrandAsset[] = [
         explicit download links.
       </p>
     </div>
+
+    <article class="press-asset-card press-asset-card--feature press-asset-card--image">
+      <div class="press-asset-preview">
+        <img src={`${base}/brand/og-image.png`} alt="a14y Open Graph image" loading="lazy" />
+      </div>
+      <div class="press-asset-meta">
+        <p class="press-asset-label">Open Graph image</p>
+        <p class="press-asset-filename"><code>og-image.png</code> · PNG · 1200×630</p>
+        <a class="press-asset-download" href={`${base}/brand/og-image.png`} download="og-image.png">
+          Download →
+        </a>
+      </div>
+    </article>
+
     <div class="press-grid">
-      {brandAssets.map((asset) => (
+      {logoAssets.map((asset) => (
         <article class={`press-asset-card press-asset-card--${asset.variant}`}>
           <div class="press-asset-preview">
             <img src={`${base}${asset.href}`} alt={`a14y ${asset.label}`} loading="lazy" />
@@ -218,40 +243,6 @@ const brandAssets: BrandAsset[] = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="founder-heading">
-    <div class="section-head">
-      <h2 id="founder-heading">The founder</h2>
-      <p class="section-sub">
-        Use the bio verbatim in articles, podcast intros, and event programs.
-      </p>
-    </div>
-    <div class="press-founder">
-      <div class="press-founder-portrait">
-        <img
-          src={`${base}/press/timothy-jordan.jpg`}
-          alt="Timothy Jordan, creator of a14y"
-          width="280"
-          height="280"
-          loading="lazy"
-        />
-        <a class="press-asset-download" href={`${base}/press/timothy-jordan.jpg`} download="timothy-jordan.jpg">
-          Download headshot →
-        </a>
-      </div>
-      <div class="press-founder-body">
-        <h3 class="press-founder-name">Timothy Jordan</h3>
-        <div class="press-prose">
-          <BioContent />
-        </div>
-        <ul class="press-founder-links" aria-label="Timothy Jordan online">
-          <li><a href="https://timothyjordan.com" rel="noopener">timothyjordan.com</a></li>
-          <li><a href="https://x.com/timothyjordan" rel="noopener">x.com/timothyjordan</a></li>
-          <li><a href="https://www.linkedin.com/in/captaintimothy/" rel="noopener">LinkedIn</a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   <section class="section section--tight" aria-labelledby="contact-heading">
     <div class="section-head">
       <h2 id="contact-heading">Press contact</h2>
@@ -261,7 +252,10 @@ const brandAssets: BrandAsset[] = [
       <p class="press-contact-email">
         <a href={`mailto:${pressEmail}`}>{pressEmail}</a>
       </p>
-      <p class="press-contact-note">Typical reply time: under 24 hours on weekdays.</p>
+      <p class="press-contact-note">
+        Typical reply time: under 24 hours on weekdays. a14y was
+        created by <a href="https://timothyjordan.com" rel="noopener">Timothy Jordan</a>.
+      </p>
     </div>
   </section>
 </BaseLayout>

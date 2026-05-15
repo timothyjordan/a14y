@@ -199,6 +199,8 @@ hr {
   height: 26px;
   flex: 0 0 auto;
 }
+:root:not([data-theme='dark']) .site-header .brand-mark--dark { display: none; }
+:root[data-theme='dark'] .site-header .brand-mark--light { display: none; }
 .site-header .brand-version {
   font-family: var(--font-mono);
   font-weight: 500;
@@ -1372,8 +1374,25 @@ main.container h2[id] {
   color: color-mix(in oklch, var(--brand-paper) 35%, transparent);
 }
 .press-comp-cell--warn { color: var(--status-warn); }
+.press-comp-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 14px 4px 0;
+  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: color-mix(in oklch, var(--brand-ink) 75%, transparent);
+}
+:root[data-theme='dark'] .press-comp-legend {
+  color: color-mix(in oklch, var(--brand-paper) 75%, transparent);
+}
+.press-comp-legend span {
+  display: inline-flex;
+  gap: 6px;
+  align-items: baseline;
+}
 .press-comp-note {
-  margin: 12px 4px 0;
+  margin: 8px 4px 0;
   font-size: 0.85rem;
   color: color-mix(in oklch, var(--brand-ink) 70%, transparent);
 }
@@ -1518,51 +1537,45 @@ main.container h2[id] {
   font-size: 0.92rem;
 }
 
-/* Founder section */
-.press-founder {
+/* OG image gets its own feature row above the logo grid. The 2:1
+   aspect-ratio image deserves real space; tiling it next to square
+   SVGs makes it feel like an afterthought. Declared AFTER the base
+   .press-asset-card to win on cascade order. */
+.press-asset-card--feature {
   display: grid;
-  grid-template-columns: minmax(160px, 200px) 1fr;
-  gap: 32px;
-  align-items: start;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  margin-bottom: 20px;
 }
 @media (max-width: 640px) {
-  .press-founder { grid-template-columns: 1fr; }
+  .press-asset-card--feature { grid-template-columns: 1fr; }
 }
-.press-founder-portrait {
+.press-asset-card--feature .press-asset-preview {
+  padding: 0;
+  min-height: 0;
+}
+.press-asset-card--feature .press-asset-preview img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  display: block;
+}
+.press-asset-card--feature .press-asset-meta {
+  border-top: none;
+  border-left: 1px solid color-mix(in oklch, var(--brand-ink) 12%, transparent);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  justify-content: center;
+  gap: 4px;
 }
-.press-founder-portrait img {
-  width: 100%;
-  max-width: 200px;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--brand-ink);
+:root[data-theme='dark'] .press-asset-card--feature .press-asset-meta {
+  border-left-color: color-mix(in oklch, var(--brand-paper) 12%, transparent);
 }
-:root[data-theme='dark'] .press-founder-portrait img {
-  border-color: var(--brand-cyan);
+@media (max-width: 640px) {
+  .press-asset-card--feature .press-asset-meta {
+    border-left: none;
+    border-top: 1px solid color-mix(in oklch, var(--brand-ink) 12%, transparent);
+  }
 }
-.press-founder-name {
-  margin: 0 0 12px;
-  font-size: 1.4rem;
-}
-.press-founder-body .press-prose p {
-  margin-bottom: 1em;
-}
-.press-founder-links {
-  margin: 16px 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 0.95rem;
-}
-.press-founder-links a { font-weight: 500; }
 
 /* Contact */
 .press-contact {
