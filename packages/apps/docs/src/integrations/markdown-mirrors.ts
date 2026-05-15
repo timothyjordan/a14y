@@ -34,6 +34,12 @@ const HTML_DERIVED_PAGES: Record<string, string> = {
   // from the mirror. Deriving the mirror from the rendered HTML
   // keeps both representations in sync from a single source.
   'chrome-extension': 'chrome-extension/index.html',
+  // The press page composes content from multiple sources (the
+  // pages collection for bio + one-pager, an inline comp table,
+  // and live research components for the leaderboard). Deriving
+  // the mirror from the rendered HTML keeps every part in sync
+  // without duplicating any of them in a markdown source.
+  press: 'press/index.html',
 };
 
 /**

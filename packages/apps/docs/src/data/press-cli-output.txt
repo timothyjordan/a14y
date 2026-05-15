@@ -1,0 +1,59 @@
+
+Agent Readability Score: 92/100
+  scorecard 0.2.0 (released 2026-04-06) — mode page
+  33 pass · 3 fail · 0 warn · 0 error · 2 n/a (out of 38)
+
+Site checks
+  Discoverability
+    ✓ llms-txt.exists — Found llms.txt at https://a14y.dev/llms.txt
+    ✓ llms-txt.content-type — text/plain; charset=utf-8
+    ✓ llms-txt.non-empty
+    ✓ llms-txt.md-extensions — 84 links checked
+    ✓ robots-txt.exists — https://a14y.dev/robots.txt
+    ✓ robots-txt.allows-ai-bots — Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended
+    ✓ robots-txt.allows-llms-txt
+    ✓ sitemap-xml.exists — https://a14y.dev/sitemap.xml
+    ✓ sitemap-xml.valid — urlset
+    ✓ sitemap-xml.has-lastmod — 85 entries with lastmod
+    ✓ sitemap-md.exists — https://a14y.dev/sitemap.md
+    ✓ sitemap-md.has-structure — 8 headings, 85 links
+    ✓ agents-md.exists — https://a14y.dev/AGENTS.md
+    ✓ agents-md.has-min-sections — Found: installation, configuration, usage
+
+Page checks — https://a14y.dev/
+  HTTP
+    ✓ http.status-200 — 200
+    ✓ http.redirect-chain — 0 hops
+    ✓ http.content-type-html — text/html; charset=utf-8
+    ✓ http.no-noindex-noai — no x-robots-tag
+  HTML metadata
+    ✓ html.canonical-link — https://a14y.dev/
+    ✓ html.meta-description — 195 chars
+    ✓ html.og-title
+    ✓ html.og-description
+    ✓ html.lang-attribute — en
+  Structured data
+    ✓ html.json-ld — 1 block(s)
+    ✓ html.json-ld.date-modified — 2026-05-14T22:13:15.430Z
+    ✓ html.json-ld.breadcrumb
+  Content structure
+    ✓ html.headings — 10 headings
+    ✗ html.text-ratio — 13.4%
+    ✓ html.glossary-link
+  Markdown mirror
+    ✓ markdown.mirror-suffix — https://a14y.dev/index.md
+    ✓ markdown.alternate-link — https://a14y.dev/index.md
+    ✓ markdown.frontmatter
+    ✗ markdown.canonical-header — no Link header
+    ✗ markdown.content-negotiation — text/html; charset=utf-8
+    ✓ markdown.sitemap-section
+  Code
+    ✓ code.language-tags — 2 blocks
+  API
+    - api.schema-link — not an API page
+  Discoverability
+    - discovery.indexed — no site index available
+
+! Single-page review: only https://a14y.dev/ was audited.
+  For a full-site audit (crawls every reachable page) run:
+  a14y https://a14y.dev/ --mode site

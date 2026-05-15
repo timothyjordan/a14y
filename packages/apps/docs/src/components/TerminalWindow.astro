@@ -1,0 +1,28 @@
+---
+interface Props {
+  /** Pre-captured terminal text (ANSI already stripped). */
+  text: string;
+  /** Caption rendered in the chrome bar. e.g. "$ npx a14y a14y.dev". */
+  caption?: string;
+  /** ARIA label override; defaults to a generic terminal label. */
+  label?: string;
+}
+
+const { text, caption, label = 'Terminal output' } = Astro.props;
+
+// The fixture starts with a leading blank line; trim the very first/last
+// blank lines so the rendered window doesn't waste a row top and bottom.
+const body = text.replace(/^\n+/, '').replace(/\n+$/, '');
+---
+
+<figure class="terminal-window" aria-label={label}>
+  <header class="terminal-window-chrome" aria-hidden="true">
+    <span class="terminal-window-dots">
+      <span class="terminal-window-dot terminal-window-dot--close"></span>
+      <span class="terminal-window-dot terminal-window-dot--min"></span>
+      <span class="terminal-window-dot terminal-window-dot--max"></span>
+    </span>
+    {caption && <span class="terminal-window-caption">{caption}</span>}
+  </header>
+  <pre class="terminal-window-body"><code>{body}</code></pre>
+</figure>

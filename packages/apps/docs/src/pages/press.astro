@@ -1,0 +1,267 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import TerminalWindow from '~/components/TerminalWindow.astro';
+import LeaderboardTable from '~/components/research/LeaderboardTable.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import {
+  getLeaderboard,
+  getResearchData,
+  getScoreHistogram,
+} from '~/lib/research-data';
+import cliOutput from '~/data/press-cli-output.txt?raw';
+
+const onepager = await getEntry('pages', 'press-product-onepager');
+const bio = await getEntry('pages', 'press-bio');
+if (!onepager || !bio) throw new Error('Missing press content entries');
+const { Content: OnepagerContent } = await onepager.render();
+const { Content: BioContent } = await bio.render();
+
+const research = getResearchData();
+const allEntries = getLeaderboard();
+const top10 = allEntries.slice(0, 10);
+const totalSites = allEntries.length;
+const buckets = getScoreHistogram();
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lastUpdated = new Date().toISOString().slice(0, 10);
+
+const pressEmail = 'agentreadability@gmail.com';
+
+interface BrandAsset {
+  href: string;
+  filename: string;
+  format: 'SVG' | 'PNG';
+  variant: 'light' | 'dark' | 'image';
+  label: string;
+}
+
+const brandAssets: BrandAsset[] = [
+  { label: 'Mark', href: '/brand/logo-mark.svg', filename: 'logo-mark.svg', format: 'SVG', variant: 'light' },
+  { label: 'Mark (dark)', href: '/brand/logo-mark--dark.svg', filename: 'logo-mark--dark.svg', format: 'SVG', variant: 'dark' },
+  { label: 'Lockup', href: '/brand/logo-lockup.svg', filename: 'logo-lockup.svg', format: 'SVG', variant: 'light' },
+  { label: 'Lockup (dark)', href: '/brand/logo-lockup--dark.svg', filename: 'logo-lockup--dark.svg', format: 'SVG', variant: 'dark' },
+  { label: 'Wordmark', href: '/brand/logo-wordmark.svg', filename: 'logo-wordmark.svg', format: 'SVG', variant: 'light' },
+  { label: 'Wordmark (dark)', href: '/brand/logo-wordmark--dark.svg', filename: 'logo-wordmark--dark.svg', format: 'SVG', variant: 'dark' },
+  { label: 'Open Graph image', href: '/brand/og-image.png', filename: 'og-image.png', format: 'PNG', variant: 'image' },
+];
+---
+
+<BaseLayout
+  title="Press kit · a14y"
+  description="Press kit for a14y — agent readability for the web. Logos, screenshots, leaderboard, founder bio, comparison table, and contact for journalists, podcast bookers, and analysts."
+  wide
+>
+  <section class="hero hero--compact">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">press kit</span>
+        <span>last updated {lastUpdated}</span>
+      </div>
+      <h1>Press kit</h1>
+      <p class="lead">
+        <strong>Agent readability for the web.</strong> Agents (ChatGPT,
+        Claude, Copilot, Cursor) now read most of the web before humans do.
+        a14y is an open spec for making any website discoverable, parseable,
+        and comprehensible to those agents, a versioned scorecard that
+        operationalizes the spec, and a CLI plus Chrome extension that score
+        any site against it.
+      </p>
+      <div class="cta-row press-cta-row">
+        <a class="btn btn--primary" href={`mailto:${pressEmail}`}>
+          Email {pressEmail} →
+        </a>
+        <a class="btn btn--ghost" href="#assets">
+          Brand assets ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="onepager-heading">
+    <div class="section-head">
+      <h2 id="onepager-heading">a14y in one page</h2>
+      <p class="section-sub">
+        The longer description, written for journalists who need the
+        full picture in a single read.
+      </p>
+    </div>
+    <div class="press-prose">
+      <OnepagerContent />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="comp-heading">
+    <div class="section-head">
+      <h2 id="comp-heading">How a14y compares</h2>
+      <p class="section-sub">
+        Three named scorecards exist in this space. a14y is adjacent to
+        each, with a different moat.
+      </p>
+    </div>
+    <div class="press-comp-table-wrap">
+      <table class="press-comp-table">
+        <caption class="sr-only">
+          Capabilities comparison across a14y, ora.run, Cloudflare's
+          isitagentready.com, and agentready.dev.
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="press-comp-row-label" aria-label="Capability"></th>
+            <th scope="col">a14y</th>
+            <th scope="col">ora.run</th>
+            <th scope="col">Cloudflare</th>
+            <th scope="col">agentready.dev</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="press-comp-row-label">Open implementation</th>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+          </tr>
+          <tr>
+            <th scope="row" class="press-comp-row-label">Public leaderboard</th>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+          </tr>
+          <tr>
+            <th scope="row" class="press-comp-row-label">Per-page scores</th>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+          </tr>
+          <tr>
+            <th scope="row" class="press-comp-row-label">CI-friendly (sub-sec)</th>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+          </tr>
+          <tr>
+            <th scope="row" class="press-comp-row-label">Vendor-neutral</th>
+            <td class="press-comp-cell press-comp-cell--pass" aria-label="yes">✓</td>
+            <td class="press-comp-cell press-comp-cell--warn" aria-label="partial">~</td>
+            <td class="press-comp-cell press-comp-cell--fail" aria-label="no">✗</td>
+            <td class="press-comp-cell press-comp-cell--warn" aria-label="partial">~</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="press-comp-note">
+        Source: a14y competitive analysis. Respectful framings of each tool
+        live at <a href="https://ora.run" rel="noopener">ora.run</a>,
+        {' '}<a href="https://isitagentready.com" rel="noopener">isitagentready.com</a>,
+        and <a href="https://agentready.dev" rel="noopener">agentready.dev</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cli-heading">
+    <div class="section-head">
+      <h2 id="cli-heading">See it run</h2>
+      <p class="section-sub">
+        a14y scoring its own website. Captured from the open-source CLI;
+        you can reproduce this in your terminal in under a minute.
+      </p>
+    </div>
+    <TerminalWindow text={cliOutput} caption="$ npx a14y a14y.dev" label="a14y CLI output for a14y.dev" />
+  </section>
+
+  <section class="section" aria-labelledby="leaderboard-heading">
+    <div class="section-head">
+      <h2 id="leaderboard-heading">The leaderboard, live</h2>
+      <p class="section-sub">
+        {totalSites} sites scored against scorecard
+        {' '}v{research.scorecardVersion}. Top 10 below; the full
+        ranking, score histogram, and per-site scorecards are at
+        {' '}<a href={`${base}/research/`}>a14y.dev/research/</a>.
+      </p>
+    </div>
+    <div class="press-leaderboard">
+      <ScoreHistogram buckets={buckets} />
+      <LeaderboardTable entries={top10} scorecardVersion={research.scorecardVersion} />
+      <p class="press-leaderboard-foot">
+        <a href={`${base}/research/`}>See all {totalSites} sites at a14y.dev/research/ →</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="assets" class="section" aria-labelledby="assets-heading">
+    <div class="section-head">
+      <h2 id="assets-heading">Brand assets</h2>
+      <p class="section-sub">
+        Logos as SVG (light + dark variants for any background) plus the
+        Open Graph image. Right-click any preview to save, or use the
+        explicit download links.
+      </p>
+    </div>
+    <div class="press-grid">
+      {brandAssets.map((asset) => (
+        <article class={`press-asset-card press-asset-card--${asset.variant}`}>
+          <div class="press-asset-preview">
+            <img src={`${base}${asset.href}`} alt={`a14y ${asset.label}`} loading="lazy" />
+          </div>
+          <div class="press-asset-meta">
+            <p class="press-asset-label">{asset.label}</p>
+            <p class="press-asset-filename"><code>{asset.filename}</code> · {asset.format}</p>
+            <a class="press-asset-download" href={`${base}${asset.href}`} download={asset.filename}>
+              Download →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="founder-heading">
+    <div class="section-head">
+      <h2 id="founder-heading">The founder</h2>
+      <p class="section-sub">
+        Use the bio verbatim in articles, podcast intros, and event programs.
+      </p>
+    </div>
+    <div class="press-founder">
+      <div class="press-founder-portrait">
+        <img
+          src={`${base}/press/timothy-jordan.jpg`}
+          alt="Timothy Jordan, creator of a14y"
+          width="280"
+          height="280"
+          loading="lazy"
+        />
+        <a class="press-asset-download" href={`${base}/press/timothy-jordan.jpg`} download="timothy-jordan.jpg">
+          Download headshot →
+        </a>
+      </div>
+      <div class="press-founder-body">
+        <h3 class="press-founder-name">Timothy Jordan</h3>
+        <div class="press-prose">
+          <BioContent />
+        </div>
+        <ul class="press-founder-links" aria-label="Timothy Jordan online">
+          <li><a href="https://timothyjordan.com" rel="noopener">timothyjordan.com</a></li>
+          <li><a href="https://x.com/timothyjordan" rel="noopener">x.com/timothyjordan</a></li>
+          <li><a href="https://www.linkedin.com/in/captaintimothy/" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="contact-heading">
+    <div class="section-head">
+      <h2 id="contact-heading">Press contact</h2>
+    </div>
+    <div class="press-contact">
+      <p>For press inquiries, podcast bookings, or interview requests:</p>
+      <p class="press-contact-email">
+        <a href={`mailto:${pressEmail}`}>{pressEmail}</a>
+      </p>
+      <p class="press-contact-note">Typical reply time: under 24 hours on weekdays.</p>
+    </div>
+  </section>
+</BaseLayout>
