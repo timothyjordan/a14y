@@ -24,13 +24,14 @@ describe('press.astro (TJ-440)', () => {
     expect(page).toMatch(/<h1>[\s\S]*?Press kit[\s\S]*?<\/h1>/);
   });
 
-  it('renders the 7 sections in the post-critique order', () => {
+  it('renders the sections in the expected order', () => {
     // Each section h2 by id. Order matters: hero -> terminal -> one-pager
-    // -> comp -> leaderboard -> assets -> contact.
+    // -> leaderboard -> assets -> contact. The competitive comparison
+    // section was removed; that data lives in the competitive-analysis
+    // PDF deliverable instead.
     const sectionIds = [
       'cli-heading',
       'onepager-heading',
-      'comp-heading',
       'leaderboard-heading',
       'assets-heading',
       'contact-heading',
@@ -43,6 +44,13 @@ describe('press.astro (TJ-440)', () => {
     }
   });
 
+  it('does not include the competitive-comparison section (moved to a request-only PDF)', () => {
+    expect(page).not.toMatch(/id="comp-heading"/);
+    expect(page).not.toMatch(/press-comp-table/);
+    expect(page).not.toMatch(/ora\.run/);
+    expect(page).not.toMatch(/agentready\.dev/);
+  });
+
   it('does not include a founder section (dropped per critique)', () => {
     expect(page).not.toMatch(/id="founder-heading"/);
     expect(page).not.toMatch(/press-founder/);
@@ -53,30 +61,6 @@ describe('press.astro (TJ-440)', () => {
   it('embeds the press contact email (matches existing public footprint)', () => {
     expect(page).toContain('mailto:${pressEmail}');
     expect(page).toContain("'agentreadability@gmail.com'");
-  });
-
-  it('renders all 5 comp-table rows verbatim from launch-plan.md', () => {
-    const rows = [
-      'Open implementation',
-      'Public leaderboard',
-      'Per-page scores',
-      'CI-friendly (sub-sec)',
-      'Vendor-neutral',
-    ];
-    for (const row of rows) {
-      expect(page).toContain(row);
-    }
-    expect(page).toMatch(/<th[^>]*>a14y<\/th>/);
-    expect(page).toMatch(/<th[^>]*>ora\.run<\/th>/);
-    expect(page).toMatch(/<th[^>]*>Cloudflare<\/th>/);
-    expect(page).toMatch(/<th[^>]*>agentready\.dev<\/th>/);
-  });
-
-  it('renders a comp-table legend (✓ yes · ✗ no · ~ partial)', () => {
-    expect(page).toMatch(/press-comp-legend/);
-    expect(page).toContain('yes');
-    expect(page).toContain('no');
-    expect(page).toContain('partial');
   });
 
   it('embeds the leaderboard via the existing research components (single source of truth)', () => {
