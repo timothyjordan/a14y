@@ -6,13 +6,11 @@ import {
   getCheckSummariesForScorecard,
 } from '~/lib/scorecard-data';
 import { buildBadgeHtml } from '~/lib/build-badge-html';
-import { getLeaderboard } from '~/lib/research-data';
 import type { BadgeData } from '@a14y/core';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
 const totalChecks = getCheckSummariesForScorecard(latest).length;
-const leaderboardSiteCount = getLeaderboard().length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const runCmd = 'npx a14y your-site.com';
@@ -50,14 +48,14 @@ const heroBadgeDarkHtml = buildBadgeHtml(
 ---
 
 <BaseLayout
-  title="a14y · Lighthouse for AI agents"
-  description="Lighthouse for AI agents. An open spec, open tools, and a public leaderboard for how well AI agents can discover, parse, and comprehend any website."
+  title="a14y: Agent readability for the web"
+  description="Agent readability for the web. An open spec, open tools, and a public leaderboard for how well AI agents can discover, parse, and comprehend any website."
   wide
 >
   <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-text">
       <div class="eyebrow">
-        <span>Open spec, open tools, public leaderboard. Lighthouse for AI agents.</span>
+        <span>Open spec, open tools, public leaderboard.</span>
       </div>
       <h1 id="hero-heading">Agent readability for the web</h1>
       <p class="lead">
@@ -85,34 +83,34 @@ const heroBadgeDarkHtml = buildBadgeHtml(
             aria-label="Copy agent skill install command"
           >Copy</button>
         </span>
-        <div class="cta-row">
-          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
-            <span class="cws-badge-mark" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
-                <circle cx="24" cy="24" r="22" fill="#fff" />
-                <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
-                <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
-                <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
-                <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
-                <circle cx="24" cy="24" r="6" fill="#4285F4" />
-              </svg>
-            </span>
-            <span class="cws-badge-text">
-              <span class="cws-badge-eyebrow">Available in the</span>
-              <span class="cws-badge-store">Chrome Web Store</span>
-            </span>
-          </a>
-          <a
-            class="btn btn--ghost cta-github"
-            href="https://github.com/timothyjordan/a14y"
-            rel="noopener"
-          >
-            Star the GitHub →
-          </a>
-          <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
-            Read the spec →
-          </a>
-        </div>
+      </div>
+      <div class="cta-row">
+        <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
+          <span class="cws-badge-mark" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
+              <circle cx="24" cy="24" r="22" fill="#fff" />
+              <path fill="#EA4335" d="M24 6c6.6 0 12.4 3.6 15.5 8.9H24a9 9 0 0 0-7.8 4.5L9.4 7.8A22 22 0 0 1 24 2v4z" transform="translate(0 0)" />
+              <path fill="#FBBC05" d="M9.4 7.8 16.2 19.4A9 9 0 0 0 15 24c0 1.6.4 3.2 1.2 4.6L9.4 40.2A22 22 0 0 1 2 24c0-6 2.4-11.4 6.4-15.4l1 .8z" transform="translate(0 -.6)" />
+              <path fill="#34A853" d="M24 33a9 9 0 0 0 7.8-4.5L39.5 33.1A22 22 0 0 1 24 46c-5.9 0-11.2-2.3-15.2-6l7.4-12.4A9 9 0 0 0 24 33z" transform="translate(.2 .2)" />
+              <path fill="#4285F4" d="M33 24a9 9 0 0 0-9-9h15.5A22 22 0 0 1 46 24a22 22 0 0 1-6.5 15.6L31.8 28.5A9 9 0 0 0 33 24z" />
+              <circle cx="24" cy="24" r="6" fill="#4285F4" />
+            </svg>
+          </span>
+          <span class="cws-badge-text">
+            <span class="cws-badge-eyebrow">Available in the</span>
+            <span class="cws-badge-store">Chrome Web Store</span>
+          </span>
+        </a>
+        <a
+          class="btn btn--ghost cta-github"
+          href="https://github.com/timothyjordan/a14y"
+          rel="noopener"
+        >
+          Star the GitHub →
+        </a>
+        <a class="btn btn--ghost cta-spec" href={`${base}/spec/`}>
+          Read the spec →
+        </a>
       </div>
     </div>
 
@@ -152,11 +150,9 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         <span class="step-num">03</span>
         <h3>Re-run &amp; share</h3>
         <p>
-          Run again to confirm the score climbed. Then
+          Run again to confirm the score climbed, then
           {' '}<a href={`${base}/badge/`}>embed your badge</a> so
-          agents (and humans) know your site is ready, or
-          {' '}<a href={`${base}/research/`}>see how you stack up
-          on the public leaderboard</a>.
+          agents (and humans) know your site is ready.
         </p>
       </li>
     </ol>
@@ -225,22 +221,6 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         </a>
       </footer>
     </article>
-  </section>
-
-  <section class="section" aria-labelledby="leaderboard-heading">
-    <div class="section-head">
-      <h2 id="leaderboard-heading">A public leaderboard, not a private score</h2>
-      <p class="section-sub">
-        Every site we audit publishes its full SiteRun JSON. Compare
-        against {leaderboardSiteCount} sites, see which checks the top
-        of the leaderboard ships, and put your own up next to them.
-      </p>
-    </div>
-    <p class="leaderboard-teaser-cta">
-      <a class="btn btn--primary" href={`${base}/research/`}>
-        Browse the leaderboard →
-      </a>
-    </p>
   </section>
 
   <section id="tools" class="section" aria-labelledby="tools-heading">
