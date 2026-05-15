@@ -1,0 +1,187 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import TerminalWindow from '~/components/TerminalWindow.astro';
+import LeaderboardTable from '~/components/research/LeaderboardTable.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import {
+  getLatestScorecardVersion,
+  getScorecardByVersion,
+} from '~/lib/scorecard-data';
+import {
+  getLeaderboard,
+  getResearchData,
+  getScoreHistogram,
+} from '~/lib/research-data';
+import cliOutput from '~/data/press-cli-output.txt?raw';
+
+const onepager = await getEntry('pages', 'press-product-onepager');
+if (!onepager) throw new Error('Missing press-product-onepager content entry');
+const { Content: OnepagerContent } = await onepager.render();
+
+const research = getResearchData();
+const allEntries = getLeaderboard();
+const top10 = allEntries.slice(0, 10);
+const totalSites = allEntries.length;
+const buckets = getScoreHistogram();
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Pin "last updated" to the latest published scorecard release date.
+// new Date() at build time would drift silently across redeploys; this
+// changes only when the scorecard itself ships a new version.
+const latestScorecard = getLatestScorecardVersion();
+const lastUpdated = getScorecardByVersion(latestScorecard).releasedAt.slice(0, 10);
+
+const pressEmail = 'agentreadability@gmail.com';
+
+interface LogoAsset {
+  href: string;
+  filename: string;
+  format: 'SVG';
+  variant: 'light' | 'dark';
+  label: string;
+}
+
+const logoAssets: LogoAsset[] = [
+  { label: 'Mark', href: '/brand/logo-mark.svg', filename: 'logo-mark.svg', format: 'SVG', variant: 'light' },
+  { label: 'Mark (dark)', href: '/brand/logo-mark--dark.svg', filename: 'logo-mark--dark.svg', format: 'SVG', variant: 'dark' },
+  { label: 'Lockup', href: '/brand/logo-lockup.svg', filename: 'logo-lockup.svg', format: 'SVG', variant: 'light' },
+  { label: 'Lockup (dark)', href: '/brand/logo-lockup--dark.svg', filename: 'logo-lockup--dark.svg', format: 'SVG', variant: 'dark' },
+  { label: 'Wordmark', href: '/brand/logo-wordmark.svg', filename: 'logo-wordmark.svg', format: 'SVG', variant: 'light' },
+  { label: 'Wordmark (dark)', href: '/brand/logo-wordmark--dark.svg', filename: 'logo-wordmark--dark.svg', format: 'SVG', variant: 'dark' },
+];
+---
+
+<BaseLayout
+  title="Press kit · a14y"
+  description="Press kit for a14y, agent readability for the web. Logos, the live CLI output, the leaderboard, a comparison table, and contact for journalists, podcast bookers, and analysts."
+  wide
+>
+  <section class="hero hero--compact">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">press kit</span>
+        <span>scorecard v{latestScorecard} · last updated {lastUpdated}</span>
+      </div>
+      <h1>Press kit</h1>
+      <p class="lead">
+        <strong>Agent readability for the web.</strong> Agents (ChatGPT,
+        Claude, Copilot, Cursor) now read most of the web before humans do.
+        a14y is an open spec for making any website discoverable, parseable,
+        and comprehensible to those agents, a versioned scorecard that
+        operationalizes the spec, and a CLI plus Chrome extension that score
+        any site against it.
+      </p>
+      <div class="cta-row press-cta-row">
+        <a class="btn btn--primary" href={`mailto:${pressEmail}`}>
+          Email {pressEmail} →
+        </a>
+        <a class="btn btn--ghost" href="#assets">
+          Brand assets ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="cli-heading">
+    <div class="section-head">
+      <h2 id="cli-heading">See it run</h2>
+      <p class="section-sub">
+        a14y scoring its own website. Captured from the open-source CLI;
+        you can reproduce this in your terminal in under a minute.
+      </p>
+    </div>
+    <TerminalWindow text={cliOutput} caption="$ npx a14y a14y.dev" label="a14y CLI output for a14y.dev" />
+  </section>
+
+  <section class="section" aria-labelledby="onepager-heading">
+    <div class="section-head">
+      <h2 id="onepager-heading">a14y in one page</h2>
+      <p class="section-sub">
+        The longer description, written for journalists who need the
+        full picture in a single read.
+      </p>
+    </div>
+    <div class="press-prose">
+      <OnepagerContent />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="leaderboard-heading">
+    <div class="section-head">
+      <h2 id="leaderboard-heading">The leaderboard, live</h2>
+      <p class="section-sub">
+        {totalSites} sites scored against scorecard
+        {' '}v{research.scorecardVersion}. Top 10 below; the full
+        ranking, score histogram, and per-site scorecards are at
+        {' '}<a href={`${base}/leaderboard/`}>a14y.dev/leaderboard/</a>.
+      </p>
+    </div>
+    <div class="press-leaderboard">
+      <ScoreHistogram buckets={buckets} />
+      <LeaderboardTable entries={top10} scorecardVersion={research.scorecardVersion} />
+      <p class="press-leaderboard-foot">
+        <a href={`${base}/leaderboard/`}>See all {totalSites} sites at a14y.dev/leaderboard/ →</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="assets" class="section" aria-labelledby="assets-heading">
+    <div class="section-head">
+      <h2 id="assets-heading">Brand assets</h2>
+      <p class="section-sub">
+        Logos as SVG (light + dark variants for any background) plus a
+        social preview image for posts and link cards. Right-click any
+        preview to save, or use the explicit download links.
+      </p>
+    </div>
+
+    <article class="press-asset-card press-asset-card--feature press-asset-card--image">
+      <div class="press-asset-preview">
+        <img src={`${base}/brand/og-image.png`} alt="a14y social preview image" loading="lazy" />
+      </div>
+      <div class="press-asset-meta">
+        <p class="press-asset-label">Social preview image</p>
+        <p class="press-asset-filename"><code>og-image.png</code> · PNG · 1200×630</p>
+        <p class="press-asset-note">For social posts, link cards, and link unfurls.</p>
+        <a class="press-asset-download" href={`${base}/brand/og-image.png`} download="og-image.png">
+          Download →
+        </a>
+      </div>
+    </article>
+
+    <div class="press-grid">
+      {logoAssets.map((asset) => (
+        <article class={`press-asset-card press-asset-card--${asset.variant}`}>
+          <div class="press-asset-preview">
+            <img src={`${base}${asset.href}`} alt={`a14y ${asset.label}`} loading="lazy" />
+          </div>
+          <div class="press-asset-meta">
+            <p class="press-asset-label">{asset.label}</p>
+            <p class="press-asset-filename"><code>{asset.filename}</code> · {asset.format}</p>
+            <a class="press-asset-download" href={`${base}${asset.href}`} download={asset.filename}>
+              Download →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="contact-heading">
+    <div class="section-head">
+      <h2 id="contact-heading">Press contact</h2>
+    </div>
+    <div class="press-contact">
+      <p>For press inquiries, podcast bookings, or interview requests:</p>
+      <p class="press-contact-email">
+        <a href={`mailto:${pressEmail}`}>{pressEmail}</a>
+      </p>
+      <p class="press-contact-note">
+        Typical reply time: under 24 hours on weekdays. a14y was
+        created by <a href="https://timothyjordan.com" rel="noopener">Timothy Jordan</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

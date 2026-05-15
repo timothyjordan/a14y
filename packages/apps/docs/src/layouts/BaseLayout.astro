@@ -120,7 +120,21 @@ const jsonLd = {
     <header class="site-header">
       <div class="site-header-inner">
         <a class="brand" href={`${base}/`} aria-label="a14y home">
-          <img class="brand-mark" src={`${base}/brand/logo-mark.svg`} width="28" height="28" alt="" />
+          <img
+            class="brand-mark brand-mark--light"
+            src={`${base}/brand/logo-mark.svg`}
+            width="28"
+            height="28"
+            alt=""
+          />
+          <img
+            class="brand-mark brand-mark--dark"
+            src={`${base}/brand/logo-mark--dark.svg`}
+            width="28"
+            height="28"
+            alt=""
+            aria-hidden="true"
+          />
           <span class="brand-word">a14y</span>
           <span class="brand-version" aria-label={`Scorecard ${latest}`}>v{latest}</span>
         </a>
@@ -129,6 +143,7 @@ const jsonLd = {
           <a href={`${base}/scorecards/`}>Scorecard</a>
           <a href={`${base}/#tools`} data-secondary>Tools</a>
           <a href={`${base}/leaderboard/`}>Leaderboard</a>
+          <a href={`${base}/press/`} data-secondary>Press</a>
           <a href="https://github.com/timothyjordan/a14y" rel="noopener" data-secondary>GitHub</a>
           <button
             type="button"

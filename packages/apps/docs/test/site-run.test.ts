@@ -62,6 +62,6 @@ describe('scoreClass', () => {
 
 describe('siteRunUrl', () => {
   it('builds an internal route for a slug', () => {
-    expect(siteRunUrl('react-dev')).toMatch(/\/research\/react-dev\/$/);
+    expect(siteRunUrl('react-dev')).toMatch(/\/leaderboard\/react-dev\/$/);
   });
 });
