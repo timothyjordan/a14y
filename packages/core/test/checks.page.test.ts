@@ -32,6 +32,9 @@ import {
   markdownCanonicalHeader,
   markdownContentNegotiation,
   markdownSitemapSection,
+  markdownNavigationStripped,
+  markdownSizeReduction,
+  markdownValidMarkdown,
   detectFrontmatterKeys,
 } from '../src/checks/page/markdown';
 import { codeLanguageTags } from '../src/checks/page/code';
@@ -329,6 +332,9 @@ describe('html-only guard on non-HTML responses', () => {
       markdownMirrorSuffix,
       markdownAlternateLink,
       markdownContentNegotiation,
+      markdownNavigationStripped,
+      markdownSizeReduction,
+      markdownValidMarkdown,
     ];
     for (const c of checks) {
       const r = await run(c, ctx);

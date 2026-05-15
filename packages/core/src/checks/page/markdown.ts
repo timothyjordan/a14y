@@ -248,9 +248,85 @@ export const markdownSitemapSection: PageCheckSpec = {
   },
 };
 
+/**
+ * Stub registrations for three new check ids pinned in draft.ts.
+ *
+ * These ship in the spec PR (TJ-456) so the `0.3.0-draft` pins resolve and
+ * the docs + tests pair against a registered handler. Each implementation
+ * returns `na` until the impl PR replaces these bodies with the real
+ * heuristics. See AGENTS.md invariant #7 (docs-first for scorecard changes).
+ */
+const STUB_MESSAGE = 'not yet implemented';
+
+export const markdownNavigationStripped: PageCheckSpec = {
+  id: 'markdown.navigation-stripped',
+  scope: 'page',
+  name: 'Markdown mirror has navigation chrome stripped',
+  group: GROUP,
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the markdown mirror body contains no residual <nav>, <header>, <footer>, or <aside> tags.',
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const r = await loadMirror(ctx as PageCheckContext);
+        if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
+        return { status: 'na', message: STUB_MESSAGE };
+      },
+    },
+  },
+};
+
+export const markdownSizeReduction: PageCheckSpec = {
+  id: 'markdown.size-reduction',
+  scope: 'page',
+  name: 'Markdown mirror is meaningfully smaller than the HTML',
+  group: GROUP,
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the markdown mirror body is at least 30% smaller than the HTML response for the same URL.',
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const r = await loadMirror(ctx as PageCheckContext);
+        if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
+        return { status: 'na', message: STUB_MESSAGE };
+      },
+    },
+  },
+};
+
+export const markdownValidMarkdown: PageCheckSpec = {
+  id: 'markdown.valid-markdown',
+  scope: 'page',
+  name: 'Markdown mirror is actually markdown',
+  group: GROUP,
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the markdown mirror body is markdown rather than HTML mis-served with a markdown content type.',
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const r = await loadMirror(ctx as PageCheckContext);
+        if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
+        return { status: 'na', message: STUB_MESSAGE };
+      },
+    },
+  },
+};
+
 registerCheck(markdownMirrorSuffix);
 registerCheck(markdownAlternateLink);
 registerCheck(markdownFrontmatter);
 registerCheck(markdownCanonicalHeader);
 registerCheck(markdownContentNegotiation);
 registerCheck(markdownSitemapSection);
+registerCheck(markdownNavigationStripped);
+registerCheck(markdownSizeReduction);
+registerCheck(markdownValidMarkdown);

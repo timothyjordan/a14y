@@ -1,4 +1,35 @@
 {
   "since": "0.2.0",
-  "changes": []
+  "changes": [
+    {
+      "checkId": "markdown.navigation-stripped",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 34,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/34",
+      "author": "timothyjordan",
+      "authorUrl": "https://github.com/timothyjordan",
+      "mergedAt": "2026-05-15T07:02:36.134Z"
+    },
+    {
+      "checkId": "markdown.size-reduction",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 34,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/34",
+      "author": "timothyjordan",
+      "authorUrl": "https://github.com/timothyjordan",
+      "mergedAt": "2026-05-15T07:02:36.134Z"
+    },
+    {
+      "checkId": "markdown.valid-markdown",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 34,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/34",
+      "author": "timothyjordan",
+      "authorUrl": "https://github.com/timothyjordan",
+      "mergedAt": "2026-05-15T07:02:36.134Z"
+    }
+  ]
 }
