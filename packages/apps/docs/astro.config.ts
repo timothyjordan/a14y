@@ -12,8 +12,16 @@ import { remarkPageSubstitutions } from './src/integrations/page-substitutions-r
 // manifest that lacks a corresponding markdown file will fail the
 // build loudly — matching the runtime guarantee in @a14y/core's
 // getScorecard().
+//
+// When A14Y_BASELINE=1, this config builds the un-enhanced "baseline"
+// variant used by @a14y/benchmark as the "before" in before/after
+// case studies: the agent-readability integrations (discovery files,
+// markdown mirrors) are skipped so the baseline scores low on the
+// scorecard while remaining visually identical for humans.
+const isBaseline = process.env.A14Y_BASELINE === '1';
+
 export default defineConfig({
-  site: 'https://a14y.dev',
+  site: isBaseline ? 'https://baseline.a14y.dev' : 'https://a14y.dev',
   output: 'static',
   trailingSlash: 'always',
   build: {
@@ -52,7 +60,8 @@ export default defineConfig({
   },
   integrations: [
     assertCoverageIntegration(),
-    markdownMirrorsIntegration(),
-    discoveryFilesIntegration(),
+    ...(isBaseline
+      ? []
+      : [markdownMirrorsIntegration(), discoveryFilesIntegration()]),
   ],
 });

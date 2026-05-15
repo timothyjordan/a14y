@@ -11,12 +11,15 @@ yarn-error.log*
 
 # Build artifacts
 dist/
+dist-baseline/
 build/
 .next/ # if using Next.js
 
 # Dependency directories for workspaces
 packages/*/node_modules/
 packages/*/dist/
+packages/*/dist-baseline/
+packages/apps/docs/dist-baseline/
 
 # Editor/IDE files
 .vscode/
