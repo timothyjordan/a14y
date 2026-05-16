@@ -7,11 +7,12 @@
     "dev": "astro dev",
     "predev": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "build": "astro build",
-    "prebuild": "node ../../../scripts/inject-telemetry-config.mjs docs",
+    "prebuild": "node ../../../scripts/inject-telemetry-config.mjs docs && tsx scripts/build-site-og.ts",
     "preview": "node scripts/preview.mjs",
     "pretest": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "test": "vitest run",
     "build:og": "node scripts/build-og-image.mjs",
+    "build:site-og": "tsx scripts/build-site-og.ts",
     "press:capture": "node scripts/capture-press-cli.mjs"
   },
   "dependencies": {
@@ -22,7 +23,9 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@types/turndown": "^5.0.6",
+    "playwright": "^1.49.0",
     "sharp": "^0.33.5",
+    "tsx": "^4.19.2",
     "turndown": "^7.2.4",
     "typescript": "^5.3.3",
     "vitest": "^1.6.1"

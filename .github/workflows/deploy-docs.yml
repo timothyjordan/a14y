@@ -52,6 +52,30 @@ jobs:
       - name: Build @a14y/core
         run: npm run build --workspace @a14y/core
 
+      # The per-site OG image generator (scripts/build-site-og.ts in
+      # @a14y/docs) drives a headless Chromium via Playwright. The
+      # browser binary is cached separately from npm; the OG output
+      # is cached per content-fingerprint of research.json + the
+      # three template files, so unchanged slugs are reused across
+      # runs and only changed slugs re-screenshot.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('packages/apps/docs/package.json') }}
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+        working-directory: packages/apps/docs
+
+      - name: Cache per-site OG screenshots
+        uses: actions/cache@v4
+        with:
+          path: packages/apps/docs/public/leaderboard
+          key: og-cache-v1-${{ hashFiles('packages/apps/docs/src/data/research.json', 'packages/apps/docs/src/lib/build-badge-html.ts', 'packages/apps/docs/src/lib/badge-style.ts', 'packages/apps/docs/src/lib/build-site-og.ts') }}
+          restore-keys: |
+            og-cache-v1-
+
       - name: Build @a14y/docs
         env:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
