@@ -50,6 +50,7 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
   title={`${entry.name} — a14y scorecard`}
   description={`a14y scorecard for ${entry.name}: how well AI agents can discover, parse, and comprehend ${entry.url}. Score ${run.summary.score}/100 against scorecard v${run.scorecardVersion}.`}
   wide={true}
+  ogImage={`${base}/leaderboard/${entry.slug}/og.png`}
 >
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href={`${base}/leaderboard/`}>← Leaderboard</a>

@@ -4,6 +4,8 @@ import Analytics from '~/components/Analytics.astro';
 import ScorecardSubHeader from '~/components/ScorecardSubHeader.astro';
 import { getLatestScorecardVersion, getScorecardByVersion } from '~/lib/scorecard-data';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 interface Props {
   title: string;
   description?: string;
@@ -13,6 +15,12 @@ interface Props {
   showVersionSelector?: boolean;
   /** Opt into a wider content container (used by the landing). */
   wide?: boolean;
+  /**
+   * Path or absolute URL for the OG / Twitter share image. Defaults to
+   * the generic site lockup at `/brand/og-image.png`; per-page handlers
+   * (e.g. `/leaderboard/<slug>/`) point at their own per-site PNG.
+   */
+  ogImage?: string;
 }
 
 const {
@@ -21,9 +29,9 @@ const {
   scorecardVersion = getLatestScorecardVersion(),
   showVersionSelector = false,
   wide = false,
+  ogImage = `${base}/brand/og-image.png`,
 } = Astro.props;
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const latest = getLatestScorecardVersion();
 const latestReleased = getScorecardByVersion(latest).releasedAt;
 
@@ -88,9 +96,9 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="article" />
-    <meta property="og:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={new URL(`${base}/brand/og-image.png`, Astro.site).toString()} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
     <meta name="theme-color" content="oklch(0.985 0.008 90)" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="oklch(0.16 0.025 268)" media="(prefers-color-scheme: dark)" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
