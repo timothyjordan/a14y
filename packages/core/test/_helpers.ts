@@ -1,10 +1,10 @@
-import * as cheerio from 'cheerio';
 import type {
   HttpClient,
   HttpFetchOptions,
   HttpResponse,
   FetchedPage,
 } from '../src/fetch/types';
+import { makeFetchedPage } from '../src/fetch/httpClient';
 import type {
   PageCheckContext,
   SiteCheckContext,
@@ -15,6 +15,12 @@ export interface FakeRoute {
   body?: string;
   status?: number;
   headers?: Record<string, string>;
+  /**
+   * Optional per-route delay (ms) applied before `fetch`/`fetchPage`
+   * resolves. Used by backpressure tests to keep fetch workers from
+   * resolving in the same microtask. Defaults to 0 (synchronous-ish).
+   */
+  delayMs?: number;
 }
 
 /**
@@ -34,13 +40,18 @@ export function fakeHttpClient(routes: Record<string, FakeRoute>): HttpClient {
       redirectChain: [],
     };
   };
+  const maybeDelay = async (url: string): Promise<void> => {
+    const delay = get(url).delayMs ?? 0;
+    if (delay > 0) await new Promise((r) => setTimeout(r, delay));
+  };
   return {
     async fetch(url: string, _options?: HttpFetchOptions) {
+      await maybeDelay(url);
       return buildResponse(url);
     },
     async fetchPage(url: string, _options?: HttpFetchOptions): Promise<FetchedPage> {
-      const resp = buildResponse(url);
-      return { ...resp, $: cheerio.load(resp.body) };
+      await maybeDelay(url);
+      return makeFetchedPage(buildResponse(url));
     },
   };
 }
@@ -66,16 +77,14 @@ export function makePageCtx(
   headers: Record<string, string> = {},
   routes: Record<string, FakeRoute> = {},
 ): PageCheckContext {
-  const $ = cheerio.load(body);
-  const page: FetchedPage = {
+  const page: FetchedPage = makeFetchedPage({
     url,
     originalUrl: url,
     status: 200,
     headers: new Headers({ 'content-type': 'text/html; charset=utf-8', ...headers }),
     body,
-    $,
     redirectChain: [],
-  };
+  });
   return {
     scope: 'page',
     baseUrl,

@@ -16,8 +16,24 @@ export interface FetchedPage {
   headers: Headers;
   /** Raw response body. */
   body: string;
-  /** Cheerio handle over `body`. May be unused for non-HTML responses. */
-  $: CheerioAPI;
+  /**
+   * Cheerio handle over `body`. May be unused for non-HTML responses.
+   *
+   * Backed by a lazy cache: the parsed DOM is built on first access and
+   * dropped by `dispose()`. The next access after dispose re-parses from
+   * `body`. This lets the crawler discard the parsed DOM after link
+   * extraction so pages sitting in the buffer / page-check pending
+   * queue only carry the body string, not the (typically 3–5× larger)
+   * cheerio tree. Callers do not need to coordinate — just read `$`.
+   */
+  readonly $: CheerioAPI;
+  /**
+   * Drop any cached cheerio parse so it can be garbage-collected. A
+   * subsequent read of `$` lazily re-parses from `body`. Safe to call
+   * repeatedly; safe to never call (the page just holds onto its DOM
+   * until the whole `FetchedPage` is dereferenced).
+   */
+  dispose(): void;
   /**
    * Ordered list of intermediate URLs visited before reaching `url`.
    * Length 0 means no redirects; length N means N hops.
