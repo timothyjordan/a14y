@@ -24,16 +24,7 @@ const studies = listCaseStudies();
     </div>
   </section>
 
-  <section class="section" aria-labelledby="case-studies-heading">
-    <div class="section-head">
-      <h2 id="case-studies-heading">Case studies</h2>
-      <p class="section-sub">
-        Each study fixes a single question, runs the same prompt on two
-        versions of a site at different a14y scores, and reports the
-        deltas in tokens, tool calls, wall-clock, and answer quality.
-      </p>
-    </div>
-
+  <section class="section" aria-label="Case studies">
     <ul class="case-study-list" role="list">
       {studies.map((cs) => (
         <li class="case-study-card">
