@@ -19,6 +19,7 @@ export class ConcurrentQueue {
   private active = 0;
   private readonly pending: Array<() => Promise<void>> = [];
   private idleResolvers: Array<() => void> = [];
+  private slotResolvers: Array<() => void> = [];
   private lastStart = 0;
 
   constructor(private readonly opts: ConcurrentQueueOptions) {}
@@ -44,6 +45,28 @@ export class ConcurrentQueue {
     return new Promise<void>((resolve) => {
       this.idleResolvers.push(resolve);
     });
+  }
+
+  /**
+   * Resolves when `active + pending.length < maxInFlight`, i.e. once at
+   * least one outside-task producer could safely call `add` without
+   * pushing total in-flight work past `maxInFlight`. Used by the site
+   * runner to backpressure its `for await` consumer against the
+   * page-check queue so the queue's `pending` array does not balloon
+   * with closures that each capture a full FetchedPage.
+   *
+   * Note: this only gates external producers. Tasks already running
+   * inside the queue can still recursively call `add` without blocking
+   * (the crawler does this for link expansion) — otherwise a worker
+   * would deadlock waiting on capacity that only frees when it itself
+   * finishes.
+   */
+  async waitForSlot(maxInFlight: number): Promise<void> {
+    while (this.active + this.pending.length >= maxInFlight) {
+      await new Promise<void>((resolve) => {
+        this.slotResolvers.push(resolve);
+      });
+    }
   }
 
   private tryDrain(): void {
@@ -74,6 +97,12 @@ export class ConcurrentQueue {
       } else {
         this.tryDrain();
       }
+      // Wake every slot-waiter so each can re-check its bound. Some may
+      // re-arm themselves by pushing back into slotResolvers if their
+      // requested bound is still exceeded.
+      const slotWaiters = this.slotResolvers;
+      this.slotResolvers = [];
+      for (const r of slotWaiters) r();
     }
   }
 }

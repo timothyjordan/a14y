@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import type {
   FetchedPage,
   HttpClient,
@@ -118,11 +119,36 @@ export function createHttpClient(opts: CreateHttpClientOptions = {}): HttpClient
 
   async function fetchPage(url: string, options?: HttpFetchOptions): Promise<FetchedPage> {
     const resp = await doFetch(url, options);
-    // Cheerio is happy with an empty string; pages that aren't HTML simply
-    // produce a $ that finds nothing, which is fine for non-HTML checks.
-    const $ = cheerio.load(resp.body);
-    return { ...resp, $ };
+    return makeFetchedPage(resp);
   }
 
   return { fetch: doFetch, fetchPage };
+}
+
+/**
+ * Wrap an `HttpResponse` into a `FetchedPage` with a lazy/disposable `$`.
+ * Exported so test helpers can produce the exact same shape without
+ * duplicating the getter/dispose plumbing.
+ *
+ * Cheerio parsing is deferred until first read. After `dispose()` the
+ * cached parse is dropped; the next read lazily re-parses from `body`.
+ */
+export function makeFetchedPage(resp: HttpResponse): FetchedPage {
+  let dom: CheerioAPI | null = null;
+  return {
+    url: resp.url,
+    originalUrl: resp.originalUrl,
+    status: resp.status,
+    headers: resp.headers,
+    body: resp.body,
+    redirectChain: resp.redirectChain,
+    get $(): CheerioAPI {
+      // Cheerio is happy with an empty string; non-HTML responses just
+      // produce a $ that finds nothing, which is fine for non-HTML checks.
+      return (dom ??= cheerio.load(resp.body));
+    },
+    dispose(): void {
+      dom = null;
+    },
+  };
 }

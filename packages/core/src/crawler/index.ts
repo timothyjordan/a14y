@@ -36,6 +36,17 @@ export interface CrawlOptions {
   concurrency?: number;
   /** Minimum delay between successive request starts (politeness). */
   politeDelayMs?: number;
+  /**
+   * Maximum number of fetched pages allowed to sit in the iterator
+   * hand-off buffer at once. When the buffer is full, fetch workers
+   * block before pushing their result, naturally stalling so the
+   * crawler does not race ahead of a slow consumer. Each buffered
+   * page holds a full body string + (briefly) a cheerio DOM, so an
+   * unbounded buffer is the dominant memory cost on large crawls.
+   * Defaults to `concurrency` (8) so the buffer can absorb one full
+   * round of worker output without idling them.
+   */
+  maxBufferedPages?: number;
   /** Called whenever a page is discovered or finished. */
   onProgress?: (event: CrawlProgressEvent) => void;
 }
@@ -62,6 +73,7 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
   const max = opts.maxPages ?? DEFAULTS.maxPages;
   const concurrency = opts.concurrency ?? DEFAULTS.concurrency;
   const politeDelayMs = opts.politeDelayMs ?? DEFAULTS.politeDelayMs;
+  const maxBufferedPages = opts.maxBufferedPages ?? concurrency;
   const queue = new ConcurrentQueue({ concurrency, politeDelayMs });
 
   const seeds: SeedCollection = await collectSeeds(opts.siteCtx);
@@ -84,12 +96,21 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
   }
 
   // Buffer + signal pattern to bridge the queue's task callbacks into the
-  // async iterator we yield from.
+  // async iterator we yield from. Bounded by `maxBufferedPages`: when full,
+  // `pushBuffered` awaits a buffer-space slot, which keeps fetch workers
+  // parked inside their task body (still holding one FetchedPage each)
+  // rather than racing ahead and piling completed pages into memory.
   const buffer: DiscoveredPage[] = [];
   let waiter: (() => void) | null = null;
   let done = false;
   let error: Error | null = null;
-  const pushBuffered = (page: DiscoveredPage) => {
+  const bufferSpaceResolvers: Array<() => void> = [];
+  const pushBuffered = async (page: DiscoveredPage): Promise<void> => {
+    while (buffer.length >= maxBufferedPages) {
+      await new Promise<void>((resolve) => {
+        bufferSpaceResolvers.push(resolve);
+      });
+    }
     buffer.push(page);
     if (waiter) {
       const w = waiter;
@@ -104,6 +125,10 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
       w();
     }
   };
+  const wakeBufferSpace = () => {
+    const waiters = bufferSpaceResolvers.splice(0, bufferSpaceResolvers.length);
+    for (const r of waiters) r();
+  };
 
   const visit = (url: string, sources: Set<DiscoverySource>) => {
     if (seen.has(url) || seen.size >= max) return;
@@ -112,7 +137,7 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
       try {
         const page = await opts.http.fetchPage(url);
         const result: DiscoveredPage = { url: page.url, page, sources };
-        pushBuffered(result);
+        await pushBuffered(result);
         opts.onProgress?.({
           type: 'page-fetched',
           url: page.url,
@@ -121,6 +146,13 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
         });
         // Expand from this page's links, tagging them as crawl-discovered.
         const links = extractSameOriginLinks(page, opts.baseUrl);
+        // Drop the parsed cheerio DOM now that link extraction is done.
+        // Page-level checks will lazily re-parse from `body` if/when they
+        // access `page.$`. Without this, every buffered/pending page would
+        // carry both the body string AND the (3–5× heavier) parsed tree
+        // for the duration of its wait — which is exactly the path that
+        // OOM'd the CLI on large doc sites.
+        page.dispose();
         for (const link of links) {
           if (seen.size >= max) break;
           const tag = seedSources.get(link) ?? new Set<DiscoverySource>(['crawl']);
@@ -159,7 +191,13 @@ export async function* crawlSite(opts: CrawlOptions): AsyncIterable<DiscoveredPa
   while (true) {
     if (error) throw error;
     if (buffer.length > 0) {
-      yield buffer.shift()!;
+      const next = buffer.shift()!;
+      // Free a buffer slot so parked fetch workers can push their next
+      // result. Must happen *after* shift but *before* yielding so the
+      // consumer's `await runPage(...)` window overlaps with the next
+      // fetch instead of serializing behind it.
+      wakeBufferSpace();
+      yield next;
       continue;
     }
     if (done) return;

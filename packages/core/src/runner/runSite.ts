@@ -29,10 +29,13 @@ export interface RunOptions {
   concurrency?: number;
   politeDelayMs?: number;
   /**
-   * Page-level check fan-out concurrency. Bounds how many pages have their
-   * checks running at once, which is what bounds peak memory: each in-flight
-   * page holds its cheerio DOM tree until its checks finish. Default 4 keeps
-   * peak heap well under typical renderer caps even on large doc sites.
+   * Page-level check fan-out concurrency. Bounds how many pages have
+   * their checks running at once. Combined with the producer-side
+   * backpressure gate at `waitForSlot(pageCheckConcurrency + 1)`, this
+   * is what actually bounds peak memory: the consumer never lets more
+   * than `pageCheckConcurrency + 1` pages sit in the check queue, and
+   * the crawler buffer caps another `concurrency` (default 8) on top.
+   * Default 4 keeps peak heap small on every shape of site we audit.
    */
   pageCheckConcurrency?: number;
   onProgress?: (event: ProgressEvent) => void;
@@ -113,13 +116,17 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     scorecard.siteChecks.map((c) => runSiteCheck(c, siteCtx, scorecard.version)),
   );
 
-  // Page checks now stream directly from the crawler into a bounded
-  // queue. The previous implementation buffered every DiscoveredPage
-  // (each holding a cheerio DOM tree) in an array first, then fanned
-  // every check out simultaneously — that meant peak memory grew
-  // linearly with the page count and OOM'd the offscreen renderer at
-  // ~300 doc pages. Streaming caps peak memory at
-  // pageCheckConcurrency × pageSize (default 4 × ~5MB ≈ 20MB) instead.
+  // Page checks stream directly from the crawler into a bounded queue.
+  // Two backpressure seams keep peak memory a small constant of the
+  // crawl size:
+  //   (a) the crawler's internal hand-off buffer is capped at
+  //       `concurrency` (default 8) — fetch workers park when full
+  //       rather than piling completed pages into memory.
+  //   (b) the for-await consumer below awaits `waitForSlot` before
+  //       enqueueing each new handlePage task, so this queue's
+  //       `pending` array never grows past `pageCheckConcurrency + 1`.
+  // Without both, an unbounded `pending` here was OOM'ing the CLI at
+  // ~384 pages on doc sites whose pages were a few MB each.
   const pageCheckConcurrency = opts.pageCheckConcurrency ?? 4;
   const pageCheckQueue = new ConcurrentQueue({ concurrency: pageCheckConcurrency });
   const pages: PageReport[] = [];
@@ -182,6 +189,10 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
         url: page.url,
         visited,
       });
+      // Backpressure gate: don't queue another page-check until there
+      // is room for it. `+ 1` keeps workers fed across the runPage
+      // await boundary without doubling the in-flight page set.
+      await pageCheckQueue.waitForSlot(pageCheckConcurrency + 1);
       void handlePage(page);
     }
     await pageCheckQueue.onIdle();
