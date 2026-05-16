@@ -224,25 +224,6 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
     </ul>
   </section>
 
-  <section class="section section--tight study-cta" aria-labelledby="cta-heading">
-    <div class="section-head">
-      <h2 id="cta-heading">Audit your own site</h2>
-      <p class="section-sub">
-        Curious what your site scores? It takes under a minute.
-      </p>
-    </div>
-    <span class="copy-cli copy-cli--block">
-      <span class="copy-cli-label">run</span>
-      <span class="cmd">npx a14y your-site.com</span>
-      <button
-        type="button"
-        class="copy-btn"
-        data-copy="npx a14y your-site.com"
-        aria-label="Copy run command"
-      >Copy</button>
-    </span>
-  </section>
-
   <section class="section" aria-labelledby="appendix-heading">
     <div class="section-head">
       <h2 id="appendix-heading">Appendices</h2>
@@ -344,8 +325,6 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
     color: var(--text-subtle);
     font-weight: 400;
   }
-  .study-cta { padding-top: 8px; }
-  .study-cta .copy-cli--block { display: flex; max-width: 480px; }
   .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
   .study-score-line dt {
     margin: 0;
