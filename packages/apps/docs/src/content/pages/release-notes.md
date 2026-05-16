@@ -3,6 +3,11 @@ title: Release notes · a14y
 description: A reverse-chronological log of what's shipped on a14y.dev, the CLI, the Chrome extension, the scorecard, and the agent skill.
 ---
 
+## 2026-05-16 — First case study at `/research/`: an a14y score halved an agent's token use
+
+- New `/research/` hub on a14y.dev publishes empirical case studies on what a14y actually buys an AI agent. First case study: same Astro docs, same eval task, same agent. Raising the site's a14y score from **37 to 89** cut Claude's token use by **49%**, tool calls by **52%**, and wall-clock by **30%**. Answer quality was statistically indistinguishable (judge 84 ± 3 vs 83 ± 5; both pass 3/3). The first measured answer to "does shipping for agents actually save them work?"
+
+
 ## 2026-05-16 — Per-site OG cards
 
 - Every per-site scorecard under `/leaderboard/[site]/` ships its own Open Graph card, so links shared to social or chat preview the score, the site, and its category at a glance.
@@ -10,7 +15,7 @@ description: A reverse-chronological log of what's shipped on a14y.dev, the CLI,
 
 ## 2026-05-15 — Marketing rebuild + first community-shaped checks
 
-- Rebuilt landing page at a14y.dev: clearer "what it is, who it's for, what running it looks like." (Old `/research/` URL is now `/leaderboard/` to match.)
+- Rebuilt landing page at a14y.dev: clearer "what it is, who it's for, what running it looks like." The old `/research/` leaderboard moved to `/leaderboard/` to make room for case studies.
 - New press kit at `/press/`: one-pager, logo lockups, and ready-to-paste product screenshots.
 - Three new draft scorecard checks under `markdown.*` shipped spec-first, then implementation: a complete end-to-end example for community contributors to model from.
 - Site crawler memory bounded so large-catalog audits no longer OOM.
