@@ -18,10 +18,15 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// DIST_DIR (default 'dist') points at the build output to serve. The
+// baseline build (`npm run build:baseline`) writes to 'dist-baseline',
+// and `npm run preview:baseline` sets DIST_DIR accordingly so both
+// variants can run side-by-side on different ports.
+const DIST_DIR = process.env.DIST_DIR ?? 'dist';
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '..',
-  'dist',
+  DIST_DIR,
 );
 const PORT = Number(process.env.PORT ?? 4321);
 
@@ -122,7 +127,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     await fs.access(ROOT);
   } catch {
     console.error(
-      `[preview] dist directory not found at ${ROOT}. Run \`npm run build --workspace=@a14y/docs\` first.`,
+      `[preview] ${DIST_DIR} directory not found at ${ROOT}. Run the matching build first (\`npm run build --workspace=@a14y/docs\` or \`npm run build:baseline --workspace=@a14y/docs\`).`,
     );
     process.exit(1);
   }

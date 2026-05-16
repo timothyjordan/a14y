@@ -217,10 +217,18 @@ function renderCard(a: RenderArgs): string {
     `border-top:1px solid ${p.border};padding:14px 0 0;margin-top:4px;` +
     `font-family:${MONO_STACK};font-size:11px;line-height:1.5;color:${p.textMuted};`;
 
+  // In the A14Y_BASELINE build, the badge must not link out to the
+  // real (enhanced) site — that would let an agent crawling the
+  // benchmark target fall through to a14y.dev and contaminate the
+  // before/after measurement. The badge still renders as an <a> so
+  // the visual styling is unchanged; only the href is neutralized.
+  const isBaseline =
+    typeof process !== 'undefined' && process.env?.A14Y_BASELINE === '1';
+  const badgeHref = isBaseline ? '#' : 'https://a14y.dev';
   const wrapperOpen =
     a.renderAs === 'div'
       ? `<div class="a14y-badge ${a.cls}" style="${outerStyle}">`
-      : `<a class="a14y-badge ${a.cls}" href="https://a14y.dev" target="_blank" rel="noopener" style="${outerStyle}">`;
+      : `<a class="a14y-badge ${a.cls}" href="${badgeHref}" target="_blank" rel="noopener" style="${outerStyle}">`;
   const wrapperClose = a.renderAs === 'div' ? `</div>` : `</a>`;
 
   return (
