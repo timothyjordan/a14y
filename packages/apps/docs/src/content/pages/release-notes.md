@@ -3,9 +3,8 @@ title: Release notes · a14y
 description: A reverse-chronological log of what's shipped on a14y.dev, the CLI, the Chrome extension, the scorecard, and the agent skill.
 ---
 
-## 2026-05-16 — Benchmark baseline + per-site OG cards
+## 2026-05-16 — Per-site OG cards
 
-- `@a14y/benchmark` now builds the docs site in an `A14Y_BASELINE` mode that strips a14y-specific affordances, so when an agent audits a14y.dev it's evaluating the same un-enhanced surface every other site gets.
 - Every per-site scorecard under `/leaderboard/[site]/` ships its own Open Graph card, so links shared to social or chat preview the score, the site, and its category at a glance.
 
 
