@@ -248,15 +248,7 @@ export const markdownSitemapSection: PageCheckSpec = {
   },
 };
 
-/**
- * Stub registrations for three new check ids pinned in draft.ts.
- *
- * These ship in the spec PR (TJ-456) so the `0.3.0-draft` pins resolve and
- * the docs + tests pair against a registered handler. Each implementation
- * returns `na` until the impl PR replaces these bodies with the real
- * heuristics. See AGENTS.md invariant #7 (docs-first for scorecard changes).
- */
-const STUB_MESSAGE = 'not yet implemented';
+const NAV_CHROME_TAGS = /<(nav|header|footer|aside)\b/gi;
 
 export const markdownNavigationStripped: PageCheckSpec = {
   id: 'markdown.navigation-stripped',
@@ -273,11 +265,20 @@ export const markdownNavigationStripped: PageCheckSpec = {
         if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
-        return { status: 'na', message: STUB_MESSAGE };
+        const matches = (r.body ?? '').match(NAV_CHROME_TAGS);
+        const count = matches?.length ?? 0;
+        return count === 0
+          ? { status: 'pass' }
+          : {
+              status: 'fail',
+              message: `${count} residual nav/header/footer/aside tag(s)`,
+            };
       },
     },
   },
 };
+
+const SIZE_REDUCTION_THRESHOLD = 0.3;
 
 export const markdownSizeReduction: PageCheckSpec = {
   id: 'markdown.size-reduction',
@@ -292,13 +293,34 @@ export const markdownSizeReduction: PageCheckSpec = {
       run: async (ctx) => {
         const skip = htmlOnly(ctx as PageCheckContext);
         if (skip) return skip;
-        const r = await loadMirror(ctx as PageCheckContext);
+        const c = ctx as PageCheckContext;
+        const r = await loadMirror(c);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
-        return { status: 'na', message: STUB_MESSAGE };
+        const htmlBytes = Buffer.byteLength(c.page.body ?? '', 'utf8');
+        if (htmlBytes === 0) return { status: 'na', message: 'empty HTML body' };
+        const mdBytes = Buffer.byteLength(r.body ?? '', 'utf8');
+        if (mdBytes > htmlBytes) {
+          return {
+            status: 'fail',
+            message: `markdown is larger than HTML (${mdBytes}B vs ${htmlBytes}B)`,
+          };
+        }
+        const reduction = 1 - mdBytes / htmlBytes;
+        const pct = (reduction * 100).toFixed(1);
+        return reduction >= SIZE_REDUCTION_THRESHOLD
+          ? { status: 'pass', message: `${pct}% smaller (${mdBytes}B vs ${htmlBytes}B)` }
+          : {
+              status: 'fail',
+              message: `only ${pct}% smaller (${mdBytes}B vs ${htmlBytes}B); need ≥ 30%`,
+            };
       },
     },
   },
 };
+
+const HTML_PROLOGUE = /^\s*(<!doctype\s+html|<html\b|<\?xml\b)/i;
+const HTML_TAG = /<\/?[a-z][\w-]*\b[^>]*>/gi;
+const MARKUP_RATIO_THRESHOLD = 0.3;
 
 export const markdownValidMarkdown: PageCheckSpec = {
   id: 'markdown.valid-markdown',
@@ -309,13 +331,31 @@ export const markdownValidMarkdown: PageCheckSpec = {
     '1.0.0': {
       version: '1.0.0',
       description:
-        'Pass if the markdown mirror body is markdown rather than HTML mis-served with a markdown content type.',
+        'Pass if the markdown mirror body is markdown rather than HTML mis-served with a markdown content type. Fails when the body starts with an HTML prologue or when more than 30% of the body is HTML tag markup.',
       run: async (ctx) => {
         const skip = htmlOnly(ctx as PageCheckContext);
         if (skip) return skip;
         const r = await loadMirror(ctx as PageCheckContext);
         if (!r.found) return { status: 'na', message: 'no mirror to inspect' };
-        return { status: 'na', message: STUB_MESSAGE };
+        const body = r.body ?? '';
+        if (HTML_PROLOGUE.test(body)) {
+          return { status: 'fail', message: 'looks like HTML (HTML prologue at top of body)' };
+        }
+        if (body.length === 0) {
+          return { status: 'na', message: 'empty markdown body' };
+        }
+        const markupChars = (body.match(HTML_TAG) ?? []).reduce(
+          (sum, tag) => sum + tag.length,
+          0,
+        );
+        const ratio = markupChars / body.length;
+        const pct = (ratio * 100).toFixed(1);
+        return ratio <= MARKUP_RATIO_THRESHOLD
+          ? { status: 'pass', message: `${pct}% HTML markup` }
+          : {
+              status: 'fail',
+              message: `body is ${pct}% HTML markup (threshold ≤ 30%)`,
+            };
       },
     },
   },

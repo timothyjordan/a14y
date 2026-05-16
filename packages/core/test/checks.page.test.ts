@@ -427,3 +427,146 @@ describe('page/discovery', () => {
     expect((await run(discoveryIndexed, ctx)).status).toBe('fail');
   });
 });
+
+describe('markdown.navigation-stripped', () => {
+  const HTML_WITH_ALT = `<!doctype html><html lang="en"><head>
+    <link rel="alternate" type="text/markdown" href="/page.md">
+  </head><body><h1>x</h1></body></html>`;
+
+  it('returns na when no mirror exists', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT);
+    expect((await run(markdownNavigationStripped, ctx)).status).toBe('na');
+  });
+
+  it('passes on clean markdown with no chrome tags', async () => {
+    const body = '# Title\n\nProse body with [a link](https://example.com).\n';
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    expect((await run(markdownNavigationStripped, ctx)).status).toBe('pass');
+  });
+
+  it('fails when the markdown body contains residual <nav>', async () => {
+    const body = '# Title\n\n<nav>Home / About</nav>\n\nProse here.';
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    const r = await run(markdownNavigationStripped, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/1 residual/);
+  });
+
+  it('counts header/footer/aside as residual chrome too', async () => {
+    const body = '<header>top</header>\n# Title\n<aside>side</aside>\n<footer>bot</footer>';
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    const r = await run(markdownNavigationStripped, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/3 residual/);
+  });
+});
+
+describe('markdown.size-reduction', () => {
+  const HTML_WITH_ALT = `<!doctype html><html lang="en"><head>
+    <link rel="alternate" type="text/markdown" href="/page.md">
+  </head><body><h1>x</h1></body></html>`;
+
+  it('returns na when no mirror exists', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT);
+    expect((await run(markdownSizeReduction, ctx)).status).toBe('na');
+  });
+
+  it('passes when markdown is meaningfully smaller than HTML (≥30%)', async () => {
+    const html = '<!doctype html><html><body>' + 'x'.repeat(1000) + '</body></html>';
+    const md = '# T\n' + 'y'.repeat(100);
+    const ctx = makePageCtx(BASE, 'https://example.com/page', html, {}, {
+      'https://example.com/page.md': { body: md },
+    });
+    const r = await run(markdownSizeReduction, ctx);
+    expect(r.status).toBe('pass');
+    expect(r.message).toMatch(/smaller/);
+  });
+
+  it('fails when markdown is only marginally smaller (<30% reduction)', async () => {
+    const html = '<!doctype html><html><body>' + 'x'.repeat(1000) + '</body></html>';
+    const md = 'y'.repeat(900);
+    const ctx = makePageCtx(BASE, 'https://example.com/page', html, {}, {
+      'https://example.com/page.md': { body: md },
+    });
+    const r = await run(markdownSizeReduction, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/need ≥ 30%/);
+  });
+
+  it('fails when markdown is larger than HTML', async () => {
+    const html = '<html><body>hi</body></html>';
+    const md = 'y'.repeat(500);
+    const ctx = makePageCtx(BASE, 'https://example.com/page', html, {}, {
+      'https://example.com/page.md': { body: md },
+    });
+    const r = await run(markdownSizeReduction, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/larger than HTML/);
+  });
+});
+
+describe('markdown.valid-markdown', () => {
+  const HTML_WITH_ALT = `<!doctype html><html lang="en"><head>
+    <link rel="alternate" type="text/markdown" href="/page.md">
+  </head><body><h1>x</h1></body></html>`;
+
+  it('returns na when no mirror exists', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT);
+    expect((await run(markdownValidMarkdown, ctx)).status).toBe('na');
+  });
+
+  it('passes on a real markdown body', async () => {
+    const body = `---
+title: Page
+---
+
+# Page
+
+A paragraph of prose, with a [link](https://example.com) and an inline \`code\` span.
+
+- bullet one
+- bullet two
+`;
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    expect((await run(markdownValidMarkdown, ctx)).status).toBe('pass');
+  });
+
+  it('fails when the body starts with <!DOCTYPE html>', async () => {
+    const body = '<!doctype html>\n<html><body><h1>Hi</h1></body></html>';
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    const r = await run(markdownValidMarkdown, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/HTML prologue/);
+  });
+
+  it('fails on a body that is dense HTML without a prologue', async () => {
+    const body =
+      '<div><p>one</p></div><div><p>two</p></div><div><p>three</p></div><div><p>four</p></div>';
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    const r = await run(markdownValidMarkdown, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/% HTML markup/);
+  });
+
+  it('tolerates the occasional inline HTML tag in markdown', async () => {
+    const body =
+      '# Title\n\nFoo<br>bar. Also a <sup>2</sup> exponent.\n\n' +
+      'Plenty of plain text. '.repeat(40);
+    const ctx = makePageCtx(BASE, 'https://example.com/page', HTML_WITH_ALT, {}, {
+      'https://example.com/page.md': { body },
+    });
+    expect((await run(markdownValidMarkdown, ctx)).status).toBe('pass');
+  });
+});
