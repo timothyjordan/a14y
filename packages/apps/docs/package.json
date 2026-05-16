@@ -12,7 +12,8 @@
     "pretest": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "test": "vitest run",
     "build:og": "node scripts/build-og-image.mjs",
-    "press:capture": "node scripts/capture-press-cli.mjs"
+    "press:capture": "node scripts/capture-press-cli.mjs",
+    "press:pdf": "node scripts/build-competitive-overview-pdf.mjs"
   },
   "dependencies": {
     "@a14y/core": "*",
