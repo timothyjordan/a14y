@@ -3,6 +3,40 @@ title: Release notes · a14y
 description: A reverse-chronological log of what's shipped on a14y.dev, the CLI, the Chrome extension, the scorecard, and the agent skill.
 ---
 
+## 2026-05-16 — Benchmark baseline + per-site OG cards
+
+- `@a14y/benchmark` now builds the docs site in an `A14Y_BASELINE` mode that strips a14y-specific affordances, so when an agent audits a14y.dev it's evaluating the same un-enhanced surface every other site gets.
+- Every per-site scorecard under `/leaderboard/[site]/` ships its own Open Graph card, so links shared to social or chat preview the score, the site, and its category at a glance.
+
+
+## 2026-05-15 — Marketing rebuild + first community-shaped checks
+
+- Rebuilt landing page at a14y.dev: clearer "what it is, who it's for, what running it looks like." (Old `/research/` URL is now `/leaderboard/` to match.)
+- New press kit at `/press/`: one-pager, logo lockups, and ready-to-paste product screenshots.
+- Three new draft scorecard checks under `markdown.*` shipped spec-first, then implementation: a complete end-to-end example for community contributors to model from.
+- Site crawler memory bounded so large-catalog audits no longer OOM.
+
+
+## 2026-05-13 — Landing page around the badge + draft scorecard diffs
+
+- Landing page relaunched around the embeddable readability badge: show your score, link to your scorecard, share it anywhere.
+- Draft scorecards now render an inline diff against the latest published version, so reviewers see exactly what would change before it lands.
+
+
+## 2026-05-08 — Shareable scores everywhere + community draft scorecards
+
+- One shareable score summary across the CLI, the Chrome extension, and the agent skill. Every surface emits the same paste-ready output and badge URL.
+- Embeddable a14y badge: any site can drop in a live score badge sourced from a14y.dev.
+- Per-site scorecard pages: each leaderboard entry now has its own deep-link URL with the full check breakdown.
+- Draft scorecard workflow opens contributions: anyone can propose a check change with spec, implementation, and a reviewable diff against the published scorecard.
+
+
+## 2026-05-06 — Chrome Web Store launch + 234-site readability leaderboard
+
+- The a14y Chrome extension is live on the Chrome Web Store. Install once, audit any page from the toolbar.
+- New `/research/` page: an agent-readability leaderboard ranking 234 sites, with score histograms, category breakdowns, a hardest-checks ranking, and a deep-link scorecard for every entry. The first public answer to "how readable is the web for agents?"
+
+
 ## 2026-05-06 — Skill v0.2.0
 
 - Pinned the agent skill at `metadata.version 0.2.0` so installs are versionable and indexable.
