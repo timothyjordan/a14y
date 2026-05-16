@@ -1582,3 +1582,100 @@ main.container h2[id] {
 :root[data-theme='dark'] .press-contact-note {
   color: color-mix(in oklch, var(--brand-paper) 70%, transparent);
 }
+
+/* ------------------------------------------------------------------
+ * Home page evidence strip — scorecard-eval case study (TJ-487).
+ * CLI-summary aesthetic: full-width borders only, monospace labels,
+ * percentage deltas in --brand-cyan via weight + color (no size jumps).
+ * Avoids the SaaS hero-stat-card template.
+ * ------------------------------------------------------------------ */
+.evidence-strip {
+  display: grid;
+  gap: 24px;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.evidence-head { display: grid; gap: 12px; }
+.evidence-heading {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.evidence-copy {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 75ch;
+}
+.evidence-copy strong { font-weight: 700; color: var(--text); }
+.evidence-copy em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+:root[data-theme='dark'] .evidence-copy em { color: var(--brand-cyan); }
+.evidence-copy code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  color: var(--text-muted);
+}
+
+.evidence-table {
+  margin: 0;
+  padding: 16px 0;
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.evidence-row {
+  display: grid;
+  grid-template-columns: 160px 90px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+.evidence-label {
+  margin: 0;
+  color: var(--text-muted);
+}
+.evidence-value {
+  margin: 0;
+  font-weight: 600;
+  color: var(--brand-ink);
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+:root[data-theme='dark'] .evidence-value { color: var(--brand-cyan); }
+.evidence-note {
+  margin: 0;
+  color: var(--text-subtle);
+}
+.evidence-cta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .evidence-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'label value'
+      'note  note';
+    gap: 4px 16px;
+  }
+  .evidence-label { grid-area: label; }
+  .evidence-value { grid-area: value; text-align: right; }
+  .evidence-note { grid-area: note; font-size: 13px; }
+}
