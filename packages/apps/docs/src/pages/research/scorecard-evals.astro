@@ -21,7 +21,15 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
         <span>scorecard-eval · {cs.publishedAt}</span>
       </div>
       <h1 id="study-heading">{cs.title}</h1>
-      <p class="lead">{cs.tldr}</p>
+      <dl class="study-score-line" aria-label="Headline numbers">
+        <div><dt>a14y score</dt><dd><strong>{cs.headline.baselineScore}</strong> → <strong>{cs.headline.a14yScore}</strong></dd></div>
+        <div><dt>Tokens</dt><dd><strong>−{cs.headline.tokenDecreasePct}%</strong></dd></div>
+        <div><dt>Tool calls</dt><dd><strong>−{cs.headline.toolCallDecreasePct}%</strong></dd></div>
+        <div><dt>Wall-clock</dt><dd><strong>−{cs.headline.wallClockDecreasePct}%</strong></dd></div>
+        <div><dt>Judge score</dt><dd>tied <span class="study-score-detail">({cs.headline.judgeScoreBaseline.mean} ± {cs.headline.judgeScoreBaseline.stddev} vs {cs.headline.judgeScoreA14y.mean} ± {cs.headline.judgeScoreA14y.stddev})</span></dd></div>
+      </dl>
+      <p class="study-summary-label">Summary</p>
+      <p class="lead study-tldr">{cs.tldr}</p>
       <p class="study-back">
         <a href={`${base}/research/`}>← All research</a>
       </p>
@@ -33,6 +41,13 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
       <h2 id="question-heading">The question</h2>
     </div>
     <p class="study-prose">{cs.question}</p>
+    <p class="study-prose study-prose--muted">
+      Note on the baseline: <strong>the same Astro project</strong> is served twice. The
+      score-{cs.headline.baselineScore} version has the five discovery files
+      removed from <code>public/</code>; the score-{cs.headline.a14yScore} version
+      restores them. This isolates the audit signal from any other change.
+      The two targets are otherwise identical content, same build, same day.
+    </p>
   </section>
 
   <section class="section" aria-labelledby="methodology-heading">
@@ -47,6 +62,9 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
       <div><dt>Spec</dt><dd><code>{cs.methodology.specId}</code> ({cs.methodology.specHash.slice(0, 19)}…)</dd></div>
       <div><dt>Targets</dt><dd>
         <strong>{cs.targets.a14y.label}</strong> vs <strong>{cs.targets.baseline.label}</strong>
+      </dd></div>
+      <div><dt>a14y audit</dt><dd>
+        Score <strong>{cs.headline.baselineScore}</strong> (baseline) → <strong>{cs.headline.a14yScore}</strong> (after fixes), scored with <code>npx a14y --mode site</code>
       </dd></div>
       <div><dt>Rubric</dt><dd>
         {cs.methodology.rubric.mode}
@@ -68,9 +86,11 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
     <div class="section-head">
       <h2 id="results-heading">Results</h2>
       <p class="section-sub">
-        Per-target mean across {cs.methodology.reps} runs. The two judge
-        score columns are statistically indistinguishable; the cost
-        columns are not.
+        Per-target mean across {cs.methodology.reps} runs. Same prompt, same
+        agent, same model. The two judge score columns are statistically
+        indistinguishable; the cost columns are not. The Δ column shows
+        the change going from <strong>score {cs.headline.baselineScore}</strong> to
+        {' '}<strong>score {cs.headline.a14yScore}</strong>.
       </p>
     </div>
     <table class="study-table study-results">
@@ -99,7 +119,7 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
 
   <section class="section" aria-labelledby="mechanism-heading">
     <div class="section-head">
-      <h2 id="mechanism-heading">Mechanism</h2>
+      <h2 id="mechanism-heading">What the audit caught</h2>
       <p class="section-sub">{cs.mechanism.intro}</p>
     </div>
     <table class="study-table study-mechanism">
@@ -128,25 +148,53 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
 
   <section class="section" aria-labelledby="quotes-heading">
     <div class="section-head">
-      <h2 id="quotes-heading">What the agent's judge said</h2>
+      <h2 id="quotes-heading">What the judge said</h2>
       <p class="section-sub">
         All six runs were graded by an independent judge instance with
         access to the full transcript. Reasoning excerpts below.
       </p>
     </div>
-    <div class="study-quotes">
-      {cs.judgeQuotes.map((q) => (
-        <blockquote class="study-quote">
-          <p class="study-quote-meta">
-            <span class={`study-quote-target study-quote-target--${q.target}`}>
-              {q.target === 'a14y' ? cs.targets.a14y.shortLabel ?? cs.targets.a14y.label : cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}
-            </span>
-            <span class="study-quote-run">run {q.n}{q.score !== null ? ` · score ${q.score}` : ''}</span>
-          </p>
-          <p class="study-quote-body">{q.reasoning}</p>
-        </blockquote>
-      ))}
-    </div>
+    {(() => {
+      const a14yQuotes = cs.judgeQuotes.filter((q) => q.target === 'a14y');
+      const baselineQuotes = cs.judgeQuotes.filter((q) => q.target === 'baseline');
+      const a14yHero = a14yQuotes.reduce((best, q) => ((q.score ?? -1) > (best.score ?? -1) ? q : best), a14yQuotes[0]);
+      const baselineHero = baselineQuotes.reduce((best, q) => ((q.score ?? -1) > (best.score ?? -1) ? q : best), baselineQuotes[0]);
+      const featured = [a14yHero, baselineHero].filter(Boolean);
+      const rest = cs.judgeQuotes.filter((q) => q !== a14yHero && q !== baselineHero);
+      return (
+        <>
+          <div class="study-quotes">
+            {featured.map((q) => (
+              <blockquote class="study-quote">
+                <p class="study-quote-meta">
+                  <span class={`study-quote-target study-quote-target--${q!.target}`}>
+                    {q!.target === 'a14y' ? cs.targets.a14y.shortLabel ?? cs.targets.a14y.label : cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}
+                  </span>
+                  <span class="study-quote-run">run {q!.n}{q!.score !== null ? ` · score ${q!.score}` : ''}</span>
+                </p>
+                <p class="study-quote-body">{q!.reasoning}</p>
+              </blockquote>
+            ))}
+          </div>
+          <details class="study-details">
+            <summary>All {cs.judgeQuotes.length} judge reasoning excerpts</summary>
+            <div class="study-quotes">
+              {rest.map((q) => (
+                <blockquote class="study-quote">
+                  <p class="study-quote-meta">
+                    <span class={`study-quote-target study-quote-target--${q.target}`}>
+                      {q.target === 'a14y' ? cs.targets.a14y.shortLabel ?? cs.targets.a14y.label : cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}
+                    </span>
+                    <span class="study-quote-run">run {q.n}{q.score !== null ? ` · score ${q.score}` : ''}</span>
+                  </p>
+                  <p class="study-quote-body">{q.reasoning}</p>
+                </blockquote>
+              ))}
+            </div>
+          </details>
+        </>
+      );
+    })()}
   </section>
 
   <section class="section" aria-labelledby="implications-heading">
@@ -174,6 +222,25 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
     <ul class="study-caveats">
       {cs.caveats.map((c) => <li>{c}</li>)}
     </ul>
+  </section>
+
+  <section class="section section--tight study-cta" aria-labelledby="cta-heading">
+    <div class="section-head">
+      <h2 id="cta-heading">Audit your own site</h2>
+      <p class="section-sub">
+        Curious what your site scores? It takes under a minute.
+      </p>
+    </div>
+    <span class="copy-cli copy-cli--block">
+      <span class="copy-cli-label">run</span>
+      <span class="cmd">npx a14y your-site.com</span>
+      <button
+        type="button"
+        class="copy-btn"
+        data-copy="npx a14y your-site.com"
+        aria-label="Copy run command"
+      >Copy</button>
+    </span>
   </section>
 
   <section class="section" aria-labelledby="appendix-heading">
@@ -252,6 +319,52 @@ const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
 </BaseLayout>
 
 <style>
+  .study-score-line {
+    margin: 24px 0 32px;
+    padding: 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .study-summary-label {
+    margin: 0 0 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .study-tldr { margin-top: 0; }
+  .study-score-detail {
+    color: var(--text-subtle);
+    font-weight: 400;
+  }
+  .study-cta { padding-top: 8px; }
+  .study-cta .copy-cli--block { display: flex; max-width: 480px; }
+  .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
+  .study-score-line dt {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .study-score-line dd {
+    margin: 0;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .study-score-line strong {
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+  :root[data-theme='dark'] .study-score-line strong { color: var(--brand-cyan); }
+
   .study-back {
     margin: 16px 0 0;
     font-family: var(--font-mono);

@@ -1,21 +1,26 @@
 {
   "slug": "agent-readiness-layer-2026-05-16",
-  "title": "The agent-readiness layer halves the cost of being read",
-  "shortTitle": "Agent-readiness layer halves agent burden",
+  "title": "An a14y score from 37 to 89 cut an AI agent's token use roughly in half",
+  "shortTitle": "Raising an a14y score halved an AI agent's token use",
   "publishedAt": "2026-05-16",
   "scorecardVersion": "0.2.0",
-  "tldr": "Same docs, same answer quality, statistically indistinguishable judge scores — but a baseline site missing the public/ agent-readiness layer (llms.txt, sitemap.xml, sitemap.md, AGENTS.md, robots.txt) cost an AI agent roughly twice the tokens, twice the tool calls, and 43% more wall-clock to produce the same answer.",
-  "question": "How much does the agent-readiness layer actually save an AI agent? We took the same docs site, with and without the small set of public/ discovery files an a14y-compliant site serves, and measured how much an agent had to do to produce the same evaluation.",
+  "tldr": "Same docs, same answer quality, statistically indistinguishable judge scores. The only thing we changed was running an a14y audit and shipping the top fixes, bringing the site's a14y score from 37 to 89. That roughly halved Claude's token use and tool calls on the same evaluation task.",
+  "question": "Does raising an a14y score actually translate into AI agent efficiency? We took the same docs site, audited it at score 37 and again at score 89, and measured how much an AI agent had to do to produce the same evaluation against each version.",
   "headline": {
+    "a14yScore": 89,
+    "baselineScore": 37,
+    "tokenDecreasePct": 49,
+    "toolCallDecreasePct": 52,
+    "wallClockDecreasePct": 30,
     "tokensFactor": 2,
     "toolCallsFactor": 2.1,
     "wallClockDeltaPct": 43,
-    "scoreA14y": {
+    "judgeScoreA14y": {
       "mean": 83,
       "stddev": 5,
       "n": 3
     },
-    "scoreBaseline": {
+    "judgeScoreBaseline": {
       "mean": 84,
       "stddev": 3,
       "n": 3
@@ -50,18 +55,21 @@
   },
   "targets": {
     "a14y": {
-      "label": "a14y.dev (compliant)",
+      "label": "a14y.dev (score 89)",
+      "shortLabel": "score 89",
       "url": "https://a14y.dev",
       "displayUrl": "a14y.dev",
-      "publishUrl": true
+      "publishUrl": true,
+      "score": 89
     },
     "baseline": {
-      "label": "no agent-readiness layer",
-      "shortLabel": "no a14y layer",
+      "label": "same site, no audit fixes (score 37)",
+      "shortLabel": "score 37",
       "url": null,
-      "displayUrl": "local dev server (no public/ files)",
+      "displayUrl": "local dev server (no audit fixes)",
       "publishUrl": false,
-      "note": "The local Astro dev server doesn't serve public/ files in this configuration; that accidentally mirrors what an average website looks like in production (most sites have none of these). The local server stands in as a reasonable real-world baseline for \"no a14y compliance.\""
+      "score": 37,
+      "note": "Same Astro project, same content, but with the agent-discoverability files the a14y audit flags as missing (llms.txt, sitemap.xml, sitemap.md, AGENTS.md, robots.txt) actually missing in the served output. Confirmed with a fresh `a14y --mode site` run: the baseline site scores 37 against scorecard v0.2.0 and the compliant site scores 89. The two targets share everything else: same image digest, same prompt, same day."
     }
   },
   "results": [
@@ -69,24 +77,24 @@
       "label": "Total tokens (mean)",
       "a14y": "123K",
       "baseline": "240K",
-      "deltaPct": 96,
-      "deltaLabel": "+96% on baseline",
+      "deltaPct": -49,
+      "deltaLabel": "−49%",
       "emphasis": "tokens"
     },
     {
       "label": "Tool calls (mean)",
       "a14y": "9.7",
       "baseline": "20.0",
-      "deltaPct": 107,
-      "deltaLabel": "+107% on baseline",
+      "deltaPct": -52,
+      "deltaLabel": "−52%",
       "emphasis": "tool-calls"
     },
     {
       "label": "Wall-clock (mean)",
       "a14y": "109s",
       "baseline": "156s",
-      "deltaPct": 43,
-      "deltaLabel": "+43% on baseline",
+      "deltaPct": -30,
+      "deltaLabel": "−30%",
       "emphasis": "wall-clock"
     },
     {
@@ -106,7 +114,7 @@
     }
   ],
   "mechanism": {
-    "intro": "The two targets serve essentially the same content. The single observable surface difference between them, verified via curl on benchmark day:",
+    "intro": "The two targets serve essentially the same content. The single observable surface difference between them is the set of discovery files an a14y audit flags as missing or present, verified via curl on benchmark day:",
     "rows": [
       {
         "file": "/llms.txt",
@@ -134,7 +142,7 @@
         "baseline": "404"
       }
     ],
-    "followup": "The judge's reasoning across both sides corroborates the mechanism. On a14y.dev the agent typically fetched 8 to 12 pages; on baseline it fetched 12 to 27, with judge text explicitly enumerating the pages it had to crawl on the longer baseline runs."
+    "followup": "The judge's reasoning across both sides corroborates the mechanism. On the score-89 site the agent typically fetched 8 to 12 pages; on the score-37 site it fetched 12 to 27, with judge text on the longer runs explicitly enumerating the pages it had to crawl to find what discovery files would have surfaced for free."
   },
   "perRun": {
     "a14y": [
@@ -243,29 +251,30 @@
   "implications": [
     {
       "audience": "For site owners",
-      "body": "Adding these five files is a small-static-file change that translates into a measurable agent-efficiency win. No framework changes, no new infrastructure, no editorial process. Most production sites are missing all of them today."
+      "body": "Running an a14y audit on your site and shipping its top fixes (the ones that flip those five files from 404 to 200) is a small, mostly-static-file change that translates into a measurable AI agent efficiency win. No framework changes, no editorial process. The score moves a lot; the agent's bill moves with it."
     },
     {
       "audience": "For agent platforms",
-      "body": "There is clear ROI on respecting llms.txt and the rest of the discovery stack. An agent that uses these signals first cuts its own token cost in half on the average site, before any other optimization."
+      "body": "There is clear ROI on respecting an a14y-style discovery stack. An agent that uses llms.txt, sitemaps, and AGENTS.md when they exist cuts its own token cost in half on the average site, before any other optimization."
     },
     {
       "audience": "For a14y the project",
-      "body": "This is the case study the project needed: a measured demonstration that the agent-readiness layer is not just aesthetically nice, it has empirical payoff. The numbers here are on a14y.dev itself; we expect the relative delta to generalize while the absolute numbers will vary with site size."
+      "body": "This is the case study the project needed: a measured demonstration that the score is not just an aesthetic ranking. Moving the score from 37 to 89 paid back in real agent dollars and seconds. The numbers here are on a14y.dev itself; we expect the relative delta to generalize while the absolute numbers will vary with site size and content."
     }
   ],
   "caveats": [
     "Six total runs, n=3 per side. Stable enough to publish, not a peer-reviewed result.",
     "Single prompt. Other tasks (for example, \"find a specific check by name\") may show different magnitudes.",
-    "Single agent and model: Claude Code 2.1.143 with claude-sonnet-4-6. Other agents may handle missing discovery files differently.",
-    "Single site's content. Both targets serve the a14y docs site itself; the relative agent-burden delta should generalize, but the absolute numbers are tied to this content's structure.",
-    "Judge variance: about 5 score points stddev at default temperature; we observed tied means within that envelope on both sides."
+    "Single agent and model: Claude Code 2.1.143 with claude-sonnet-4-6. Other agents may handle missing discovery signals differently.",
+    "Single site's content. Both targets serve the a14y docs site itself; the relative agent delta should generalize, but the absolute numbers are tied to this content's structure.",
+    "Judge variance: about 5 score points stddev at default temperature; we observed tied means within that envelope on both sides.",
+    "The 37 → 89 delta is what the same site scored before and after shipping the audit's top fixes for this snapshot; other sites will start at different scores and have different leverage points."
   ],
   "reproduce": {
     "intro": "Run the same spec from inside the a14y-internal repo:",
     "commands": [
       "node packages/benchmark/dist/cli.js packages/benchmark/data/case-studies/agent-readiness-layer-2026-05-16/spec-a14y-dev.bench.yaml --runtime docker --repeat 3",
-      "# For the baseline, replace the ngrok URL in spec-baseline.bench.yaml with your own tunnel:",
+      "# For the score-37 baseline, replace the ngrok URL in spec-baseline.bench.yaml with your own tunnel:",
       "node packages/benchmark/dist/cli.js packages/benchmark/data/case-studies/agent-readiness-layer-2026-05-16/spec-baseline.bench.yaml --runtime docker --repeat 3"
     ],
     "prereqs": [

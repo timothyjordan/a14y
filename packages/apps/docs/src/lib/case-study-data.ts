@@ -40,11 +40,21 @@ export interface CaseStudy {
 }
 
 export interface CaseStudyHeadline {
+  /** a14y readability score for the compliant target (0-100). */
+  a14yScore: number;
+  /** a14y readability score for the baseline target (0-100). */
+  baselineScore: number;
+  /** Percent decrease in agent token use going from baseline to compliant. */
+  tokenDecreasePct: number;
+  toolCallDecreasePct: number;
+  wallClockDecreasePct: number;
+  /** Baseline-vs-compliant multiplier (e.g. 2.0 = baseline used 2x). */
   tokensFactor: number;
   toolCallsFactor: number;
+  /** Original "+X% on baseline" framing. */
   wallClockDeltaPct: number;
-  scoreA14y: ScoreStats;
-  scoreBaseline: ScoreStats;
+  judgeScoreA14y: ScoreStats;
+  judgeScoreBaseline: ScoreStats;
   passRateA14y: { passed: number; total: number };
   passRateBaseline: { passed: number; total: number };
 }
@@ -78,6 +88,8 @@ export interface CaseStudyTarget {
   url: string | null;
   displayUrl: string;
   publishUrl: boolean;
+  /** a14y readability score for this target (0-100). */
+  score?: number;
   note?: string;
 }
 
@@ -130,7 +142,10 @@ export interface CaseStudyMeta {
   publishedAt: string;
   scorecardVersion: string;
   tldr: string;
-  headlineTokensFactor: number;
+  headlineA14yScore: number;
+  headlineBaselineScore: number;
+  headlineTokenDecreasePct: number;
+  headlineToolCallDecreasePct: number;
 }
 
 /**
@@ -156,7 +171,10 @@ export function listCaseStudies(): CaseStudyMeta[] {
     publishedAt: cs.publishedAt,
     scorecardVersion: cs.scorecardVersion,
     tldr: cs.tldr,
-    headlineTokensFactor: cs.headline.tokensFactor,
+    headlineA14yScore: cs.headline.a14yScore,
+    headlineBaselineScore: cs.headline.baselineScore,
+    headlineTokenDecreasePct: cs.headline.tokenDecreasePct,
+    headlineToolCallDecreasePct: cs.headline.toolCallDecreasePct,
   }));
 }
 
