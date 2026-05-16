@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import {
   buildBadgeHtml,
   BADGE_LIGHT_PALETTE,
@@ -132,5 +132,26 @@ describe('buildBadgeHtml', () => {
   it('still defaults to the <a href="https://a14y.dev"> wrapper when no options are passed', () => {
     const html = buildBadgeHtml(data);
     expect(html).toContain('href="https://a14y.dev"');
+  });
+
+  // In the A14Y_BASELINE build (the un-enhanced "before" site used by
+  // @a14y/benchmark) the badge's outbound href must be neutralized,
+  // otherwise an agent crawling the benchmark target could follow it
+  // to the enhanced a14y.dev and contaminate the measurement.
+  describe('when A14Y_BASELINE=1', () => {
+    const original = process.env.A14Y_BASELINE;
+    beforeEach(() => {
+      process.env.A14Y_BASELINE = '1';
+    });
+    afterEach(() => {
+      if (original === undefined) delete process.env.A14Y_BASELINE;
+      else process.env.A14Y_BASELINE = original;
+    });
+
+    it('neutralizes the badge anchor href to "#"', () => {
+      const html = buildBadgeHtml(data);
+      expect(html).toContain('href="#"');
+      expect(html).not.toContain('href="https://a14y.dev"');
+    });
   });
 });

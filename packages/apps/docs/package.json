@@ -13,7 +13,12 @@
     "test": "vitest run",
     "build:og": "node scripts/build-og-image.mjs",
     "build:site-og": "tsx scripts/build-site-og.ts",
-    "press:capture": "node scripts/capture-press-cli.mjs"
+    "press:capture": "node scripts/capture-press-cli.mjs",
+    "predev:baseline": "node ../../../scripts/inject-telemetry-config.mjs docs && node scripts/clean-baseline-public.mjs",
+    "dev:baseline": "A14Y_BASELINE=1 astro dev --port 4322",
+    "prebuild:baseline": "node ../../../scripts/inject-telemetry-config.mjs docs && node scripts/clean-baseline-public.mjs",
+    "build:baseline": "A14Y_BASELINE=1 astro build --outDir dist-baseline",
+    "preview:baseline": "DIST_DIR=dist-baseline PORT=4322 node scripts/preview.mjs"
   },
   "dependencies": {
     "@a14y/core": "*",
