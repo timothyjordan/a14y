@@ -1,0 +1,108 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { listCaseStudies, caseStudyUrl } from '~/lib/case-study-data';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const studies = listCaseStudies();
+---
+
+<BaseLayout
+  title="Research · a14y"
+  description="Empirical findings about agent readability. How much does raising a site's a14y score actually save an AI agent? Measured results from running real coding agents against real websites at different scores."
+>
+  <section class="hero hero--compact" aria-labelledby="research-heading">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">research</span>
+        <span>Empirical findings about agent readability</span>
+      </div>
+      <h1 id="research-heading">Research</h1>
+      <p class="lead">
+        Measured results from running real AI agents against real
+        websites at different a14y scores.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Case studies">
+    <ul class="case-study-list" role="list">
+      {studies.map((cs) => (
+        <li class="case-study-card">
+          <div class="case-study-card-meta">
+            <span class="eyebrow-pin">v{cs.scorecardVersion}</span>
+            <time datetime={cs.publishedAt}>{cs.publishedAt}</time>
+          </div>
+          <h3 class="case-study-card-title">
+            <a href={caseStudyUrl(cs.slug, base)}>
+              {cs.title}
+            </a>
+          </h3>
+          <p class="case-study-card-tldr">{cs.tldr}</p>
+          <p class="case-study-card-cta">
+            <a href={caseStudyUrl(cs.slug, base)}>
+              Read the case study →
+            </a>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .case-study-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 24px;
+  }
+
+  .case-study-card {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .case-study-card:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-study-card-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .case-study-card-title {
+    font-size: 24px;
+    line-height: 1.25;
+    margin: 0 0 12px;
+  }
+
+  .case-study-card-title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .case-study-card-title a:hover {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .case-study-card-tldr {
+    color: var(--text-muted);
+    margin: 0 0 16px;
+    max-width: 65ch;
+  }
+
+  .case-study-card-cta {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+</style>

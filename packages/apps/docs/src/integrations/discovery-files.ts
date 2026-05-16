@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listAllScorecards } from '../lib/scorecard-data';
 import { getAllSkills, getSkillBody } from '../lib/skills-data';
+import { listCaseStudies, caseStudyUrl } from '../lib/case-study-data';
 
 /**
  * Astro integration that emits the site-level discovery files the
@@ -49,6 +50,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '/privacy/',
           '/press/',
           '/scorecards/',
+          '/research/',
         ];
 
         const allPaths = [...staticPaths];
@@ -57,6 +59,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
           for (const id of Object.keys(card.checks)) {
             allPaths.push(`/scorecards/${card.version}/checks/${id}/`);
           }
+        }
+        for (const study of listCaseStudies()) {
+          allPaths.push(caseStudyUrl(study.slug, ''));
         }
 
         const xmlEntries = allPaths.map(
@@ -83,6 +88,11 @@ export function discoveryFilesIntegration(): AstroIntegration {
         llmsLines.push(`- [Chrome extension](/chrome-extension.md)`);
         llmsLines.push(`- [Press kit](/press.md)`);
         llmsLines.push(`- [Scorecards index](/scorecards.md)`);
+        llmsLines.push(`- [Research](/research.md)`);
+        for (const study of listCaseStudies()) {
+          const path = caseStudyUrl(study.slug, '').replace(/\/$/, '');
+          llmsLines.push(`- [${study.shortTitle}](${path}.md)`);
+        }
         llmsLines.push('');
         for (const card of scorecards) {
           llmsLines.push(`## Scorecard v${card.version}`);

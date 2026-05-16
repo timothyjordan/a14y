@@ -1,0 +1,526 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getCaseStudy } from '~/lib/case-study-data';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cs = getCaseStudy('agent-readiness-layer-2026-05-16');
+
+const formatTokens = (n: number): string =>
+  n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}K` : `${n}`;
+const formatSeconds = (ms: number): string => `${(ms / 1000).toFixed(1)}s`;
+---
+
+<BaseLayout
+  title={`${cs.shortTitle} · a14y research`}
+  description={cs.tldr}
+>
+  <section class="hero hero--compact" aria-labelledby="study-heading">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">v{cs.scorecardVersion}</span>
+        <span>scorecard-eval · {cs.publishedAt}</span>
+      </div>
+      <h1 id="study-heading">{cs.title}</h1>
+      <dl class="study-score-line" aria-label="Headline numbers">
+        <div><dt>a14y score</dt><dd><strong>{cs.headline.baselineScore}</strong> → <strong>{cs.headline.a14yScore}</strong></dd></div>
+        <div><dt>Tokens</dt><dd><strong>−{cs.headline.tokenDecreasePct}%</strong></dd></div>
+        <div><dt>Tool calls</dt><dd><strong>−{cs.headline.toolCallDecreasePct}%</strong></dd></div>
+        <div><dt>Wall-clock</dt><dd><strong>−{cs.headline.wallClockDecreasePct}%</strong></dd></div>
+        <div><dt>Judge score</dt><dd>tied <span class="study-score-detail">({cs.headline.judgeScoreBaseline.mean} ± {cs.headline.judgeScoreBaseline.stddev} vs {cs.headline.judgeScoreA14y.mean} ± {cs.headline.judgeScoreA14y.stddev})</span></dd></div>
+      </dl>
+      <p class="study-summary-label">Summary</p>
+      <p class="lead study-tldr">{cs.tldr}</p>
+      <p class="study-back">
+        <a href={`${base}/research/`}>← All research</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="question-heading">
+    <div class="section-head">
+      <h2 id="question-heading">The question</h2>
+    </div>
+    <p class="study-prose">{cs.question}</p>
+    <p class="study-prose study-prose--muted">
+      Note on the baseline: <strong>the same Astro project</strong> is served twice. The
+      score-{cs.headline.baselineScore} version has the five discovery files
+      removed from <code>public/</code>; the score-{cs.headline.a14yScore} version
+      restores them. This isolates the audit signal from any other change.
+      The two targets are otherwise identical content, same build, same day.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="methodology-heading">
+    <div class="section-head">
+      <h2 id="methodology-heading">Methodology</h2>
+      <p class="section-sub">
+        Two targets, same prompt, same image digest, same day. Three reps
+        per side. The judge is transcript-aware and grades 0–100.
+      </p>
+    </div>
+    <dl class="kv-table">
+      <div><dt>Spec</dt><dd><code>{cs.methodology.specId}</code> ({cs.methodology.specHash.slice(0, 19)}…)</dd></div>
+      <div><dt>Targets</dt><dd>
+        <strong>{cs.targets.a14y.label}</strong> vs <strong>{cs.targets.baseline.label}</strong>
+      </dd></div>
+      <div><dt>a14y audit</dt><dd>
+        Score <strong>{cs.headline.baselineScore}</strong> (baseline) → <strong>{cs.headline.a14yScore}</strong> (after fixes), scored with <code>npx a14y --mode site</code>
+      </dd></div>
+      <div><dt>Rubric</dt><dd>
+        {cs.methodology.rubric.mode}
+        {cs.methodology.rubric.judgeModel ? ` · ${cs.methodology.rubric.judgeModel} grader · ≥70 = pass` : null}
+      </dd></div>
+      <div><dt>Agent</dt><dd>{cs.methodology.agent}</dd></div>
+      <div><dt>Runtime</dt><dd>{cs.methodology.runtime} · <code>{cs.methodology.image}</code></dd></div>
+      <div><dt>Auth</dt><dd>{cs.methodology.authKind}{cs.methodology.authVolume ? ` · ${cs.methodology.authVolume}` : null}</dd></div>
+      <div><dt>Reps</dt><dd>{cs.methodology.reps} per target</dd></div>
+      <div><dt>Date</dt><dd><time datetime={cs.methodology.startedAt}>{cs.publishedAt}</time></dd></div>
+    </dl>
+    <details class="study-details">
+      <summary>The prompt (verbatim)</summary>
+      <pre class="study-pre">{cs.methodology.prompt}</pre>
+    </details>
+  </section>
+
+  <section class="section" aria-labelledby="results-heading">
+    <div class="section-head">
+      <h2 id="results-heading">Results</h2>
+      <p class="section-sub">
+        Per-target mean across {cs.methodology.reps} runs. Same prompt, same
+        agent, same model. The two judge score columns are statistically
+        indistinguishable; the cost columns are not. The Δ column shows
+        the change going from <strong>score {cs.headline.baselineScore}</strong> to
+        {' '}<strong>score {cs.headline.a14yScore}</strong>.
+      </p>
+    </div>
+    <table class="study-table study-results">
+      <thead>
+        <tr>
+          <th scope="col">Metric</th>
+          <th scope="col">{cs.targets.a14y.shortLabel ?? cs.targets.a14y.label}</th>
+          <th scope="col">{cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}</th>
+          <th scope="col">Δ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {cs.results.map((row) => (
+          <tr>
+            <th scope="row">{row.label}</th>
+            <td class="num">{row.a14y}</td>
+            <td class="num">{row.baseline}</td>
+            <td class={`num delta delta--${row.deltaPct === null ? 'tied' : 'up'}`}>
+              {row.deltaLabel}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" aria-labelledby="mechanism-heading">
+    <div class="section-head">
+      <h2 id="mechanism-heading">What the audit caught</h2>
+      <p class="section-sub">{cs.mechanism.intro}</p>
+    </div>
+    <table class="study-table study-mechanism">
+      <thead>
+        <tr>
+          <th scope="col">File</th>
+          <th scope="col">{cs.targets.a14y.shortLabel ?? cs.targets.a14y.label}</th>
+          <th scope="col">{cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {cs.mechanism.rows.map((row) => (
+          <tr>
+            <th scope="row"><code>{row.file}</code></th>
+            <td class={`num status status--${row.a14y === '200' ? 'ok' : 'fail'}`}>{row.a14y}</td>
+            <td class={`num status status--${row.baseline === '200' ? 'ok' : 'fail'}`}>{row.baseline}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    {cs.mechanism.followup ? <p class="study-prose study-prose--muted">{cs.mechanism.followup}</p> : null}
+    {cs.targets.baseline.note ? (
+      <p class="study-prose study-prose--muted"><strong>Note:</strong> {cs.targets.baseline.note}</p>
+    ) : null}
+  </section>
+
+  <section class="section" aria-labelledby="quotes-heading">
+    <div class="section-head">
+      <h2 id="quotes-heading">What the judge said</h2>
+      <p class="section-sub">
+        All six runs were graded by an independent judge instance with
+        access to the full transcript. Reasoning excerpts below.
+      </p>
+    </div>
+    {(() => {
+      const a14yQuotes = cs.judgeQuotes.filter((q) => q.target === 'a14y');
+      const baselineQuotes = cs.judgeQuotes.filter((q) => q.target === 'baseline');
+      const a14yHero = a14yQuotes.reduce((best, q) => ((q.score ?? -1) > (best.score ?? -1) ? q : best), a14yQuotes[0]);
+      const baselineHero = baselineQuotes.reduce((best, q) => ((q.score ?? -1) > (best.score ?? -1) ? q : best), baselineQuotes[0]);
+      const featured = [a14yHero, baselineHero].filter(Boolean);
+      const rest = cs.judgeQuotes.filter((q) => q !== a14yHero && q !== baselineHero);
+      return (
+        <>
+          <div class="study-quotes">
+            {featured.map((q) => (
+              <blockquote class="study-quote">
+                <p class="study-quote-meta">
+                  <span class={`study-quote-target study-quote-target--${q!.target}`}>
+                    {q!.target === 'a14y' ? cs.targets.a14y.shortLabel ?? cs.targets.a14y.label : cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}
+                  </span>
+                  <span class="study-quote-run">run {q!.n}{q!.score !== null ? ` · score ${q!.score}` : ''}</span>
+                </p>
+                <p class="study-quote-body">{q!.reasoning}</p>
+              </blockquote>
+            ))}
+          </div>
+          <details class="study-details">
+            <summary>All {cs.judgeQuotes.length} judge reasoning excerpts</summary>
+            <div class="study-quotes">
+              {rest.map((q) => (
+                <blockquote class="study-quote">
+                  <p class="study-quote-meta">
+                    <span class={`study-quote-target study-quote-target--${q.target}`}>
+                      {q.target === 'a14y' ? cs.targets.a14y.shortLabel ?? cs.targets.a14y.label : cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}
+                    </span>
+                    <span class="study-quote-run">run {q.n}{q.score !== null ? ` · score ${q.score}` : ''}</span>
+                  </p>
+                  <p class="study-quote-body">{q.reasoning}</p>
+                </blockquote>
+              ))}
+            </div>
+          </details>
+        </>
+      );
+    })()}
+  </section>
+
+  <section class="section" aria-labelledby="implications-heading">
+    <div class="section-head">
+      <h2 id="implications-heading">What it means</h2>
+    </div>
+    <div class="study-implications">
+      {cs.implications.map((block) => (
+        <article class="study-implication">
+          <h3>{block.audience}</h3>
+          <p>{block.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="caveats-heading">
+    <div class="section-head">
+      <h2 id="caveats-heading">Caveats</h2>
+      <p class="section-sub">
+        What this study does not show, and where the numbers above
+        should be read with care.
+      </p>
+    </div>
+    <ul class="study-caveats">
+      {cs.caveats.map((c) => <li>{c}</li>)}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="appendix-heading">
+    <div class="section-head">
+      <h2 id="appendix-heading">Appendices</h2>
+    </div>
+
+    <details class="study-details">
+      <summary>Per-run breakdown</summary>
+      <table class="study-table study-perrun">
+        <thead>
+          <tr>
+            <th scope="col">Target</th>
+            <th scope="col">n</th>
+            <th scope="col">Score</th>
+            <th scope="col">Pass</th>
+            <th scope="col">Tokens</th>
+            <th scope="col">Tool calls</th>
+            <th scope="col">Wall-clock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cs.perRun.a14y.map((r) => (
+            <tr>
+              <td>{cs.targets.a14y.shortLabel ?? cs.targets.a14y.label}</td>
+              <td class="num">{r.n}</td>
+              <td class="num">{r.score ?? '—'}</td>
+              <td class="num">{r.passed ? '✓' : '✗'}</td>
+              <td class="num">{formatTokens(r.tokens)}</td>
+              <td class="num">{r.toolCalls}</td>
+              <td class="num">{formatSeconds(r.durationMs)}</td>
+            </tr>
+          ))}
+          {cs.perRun.baseline.map((r) => (
+            <tr>
+              <td>{cs.targets.baseline.shortLabel ?? cs.targets.baseline.label}</td>
+              <td class="num">{r.n}</td>
+              <td class="num">{r.score ?? '—'}</td>
+              <td class="num">{r.passed ? '✓' : '✗'}</td>
+              <td class="num">{formatTokens(r.tokens)}</td>
+              <td class="num">{r.toolCalls}</td>
+              <td class="num">{formatSeconds(r.durationMs)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+
+    <details class="study-details">
+      <summary>Full agent response (highest-scoring run, {cs.targets.a14y.shortLabel ?? cs.targets.a14y.label})</summary>
+      <p class="study-prose study-prose--muted">
+        Run {cs.finalResponse.a14y.n}, judge score {cs.finalResponse.a14y.score ?? '—'}. ~1000 words; this
+        is what the AI agent actually wrote in response to the prompt above.
+      </p>
+      <pre class="study-pre">{cs.finalResponse.a14y.text}</pre>
+    </details>
+
+    <details class="study-details">
+      <summary>Full agent response (highest-scoring run, {cs.targets.baseline.shortLabel ?? cs.targets.baseline.label})</summary>
+      <p class="study-prose study-prose--muted">
+        Run {cs.finalResponse.baseline.n}, judge score {cs.finalResponse.baseline.score ?? '—'}.
+      </p>
+      <pre class="study-pre">{cs.finalResponse.baseline.text}</pre>
+    </details>
+
+    <details class="study-details">
+      <summary>Reproduce this study</summary>
+      <p class="study-prose study-prose--muted">{cs.reproduce.intro}</p>
+      <pre class="study-pre">{cs.reproduce.commands.join('\n')}</pre>
+      <p class="study-prose study-prose--muted">Prerequisites:</p>
+      <ul class="study-caveats">
+        {cs.reproduce.prereqs.map((p) => <li>{p}</li>)}
+      </ul>
+    </details>
+  </section>
+</BaseLayout>
+
+<style>
+  .study-score-line {
+    margin: 24px 0 32px;
+    padding: 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .study-summary-label {
+    margin: 0 0 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .study-tldr { margin-top: 0; }
+  .study-score-detail {
+    color: var(--text-subtle);
+    font-weight: 400;
+  }
+  .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
+  .study-score-line dt {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .study-score-line dd {
+    margin: 0;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .study-score-line strong {
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+  :root[data-theme='dark'] .study-score-line strong { color: var(--brand-cyan); }
+
+  .study-back {
+    margin: 16px 0 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .study-back a { color: var(--text-muted); text-decoration: none; }
+  .study-back a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 4px; }
+
+  .study-prose { max-width: 65ch; color: var(--text); line-height: 1.6; }
+  .study-prose--muted { color: var(--text-muted); }
+
+  .kv-table {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .kv-table > div {
+    display: grid;
+    grid-template-columns: minmax(140px, 200px) 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .kv-table > div:last-child { border-bottom: none; }
+  .kv-table dt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: lowercase;
+  }
+  .kv-table dd { margin: 0; color: var(--text); }
+  .kv-table code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .study-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .study-table th,
+  .study-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: baseline;
+  }
+  .study-table tbody tr:last-child th,
+  .study-table tbody tr:last-child td { border-bottom: none; }
+  .study-table thead th {
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .study-table tbody th[scope='row'] {
+    font-weight: 500;
+    color: var(--text);
+  }
+  .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .study-table .delta--up { color: var(--brand-ink); font-weight: 600; }
+  :root[data-theme='dark'] .study-table .delta--up { color: var(--brand-cyan); }
+  .study-table .delta--tied { color: var(--text-subtle); }
+
+  .study-mechanism .status--ok { color: var(--brand-ink); font-weight: 600; }
+  :root[data-theme='dark'] .study-mechanism .status--ok { color: var(--brand-cyan); }
+  .study-mechanism .status--fail { color: var(--text-subtle); }
+
+  .study-quotes {
+    display: grid;
+    gap: 24px;
+  }
+  .study-quote {
+    margin: 0;
+    padding: 0 0 0 20px;
+    border: none;
+    color: var(--text);
+  }
+  .study-quote-meta {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .study-quote-target {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .study-quote-target--a14y { color: var(--brand-ink); font-weight: 600; }
+  :root[data-theme='dark'] .study-quote-target--a14y { color: var(--brand-cyan); }
+  .study-quote-body {
+    margin: 0;
+    max-width: 65ch;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .study-implications {
+    display: grid;
+    gap: 32px;
+  }
+  .study-implication { max-width: 65ch; }
+  .study-implication h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .study-implication p {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .study-caveats {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    max-width: 65ch;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .study-caveats li {
+    padding-left: 20px;
+    position: relative;
+  }
+  .study-caveats li::before {
+    content: '·';
+    position: absolute;
+    left: 6px;
+    color: var(--text-subtle);
+    font-weight: 700;
+  }
+
+  .study-details {
+    margin: 16px 0;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .study-details summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text);
+    user-select: none;
+    padding: 4px 0;
+  }
+  .study-details summary:hover { color: var(--link); }
+  .study-details[open] summary { color: var(--text-muted); margin-bottom: 12px; }
+  .study-pre {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.55;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 16px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    color: var(--text);
+    margin: 8px 0;
+  }
+</style>

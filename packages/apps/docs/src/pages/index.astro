@@ -7,11 +7,15 @@ import {
 } from '~/lib/scorecard-data';
 import { buildBadgeHtml } from '~/lib/build-badge-html';
 import type { BadgeData } from '@a14y/core';
+import { getCaseStudy, caseStudyUrl } from '~/lib/case-study-data';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
 const totalChecks = getCheckSummariesForScorecard(latest).length;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const evidenceStudy = getCaseStudy('agent-readiness-layer-2026-05-16');
+const evidenceUrl = caseStudyUrl(evidenceStudy.slug, base);
 
 const runCmd = 'npx a14y your-site.com';
 const skillInstallCmd = 'npx skills add timothyjordan/a14y';
@@ -62,6 +66,12 @@ const heroBadgeDarkHtml = buildBadgeHtml(
       <p class="lead">
         Agents now read most of the web before humans do. a14y is the
         open source project making the web readable by those agents.
+        {' '}<a class="lead-evidence-link" href={evidenceUrl}>In one study</a>, raising a site&apos;s
+        a14y score from <strong>{evidenceStudy.headline.baselineScore}</strong> to
+        {' '}<strong>{evidenceStudy.headline.a14yScore}</strong> decreased
+        Claude&apos;s token use by <strong>{evidenceStudy.headline.tokenDecreasePct}%</strong>
+        {' '}and tool calls by <strong>{evidenceStudy.headline.toolCallDecreasePct}%</strong>
+        {' '}with no change in answer quality.
       </p>
       <div class="cta-stack" role="group" aria-label="Try a14y">
         <span class="copy-cli copy-cli--block">

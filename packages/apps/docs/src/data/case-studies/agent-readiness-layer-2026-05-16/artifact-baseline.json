@@ -1,0 +1,433 @@
+{
+  "specId": "scorecard-eval-baseline",
+  "specHash": "sha256:084ba6448157ccc7",
+  "startedAt": "2026-05-16T06:25:05.144Z",
+  "finishedAt": "2026-05-16T06:34:54.996Z",
+  "target": "local dev server (no audit fixes)",
+  "resolvedTarget": "local dev server (no audit fixes)",
+  "prompt": "You're writing a 500–800 word evaluation for the CTO of a typical\nSaaS company who wants to know: \"what should we prioritize to make\nour website more useful to AI agents?\"\n\nRead local dev server (no audit fixes) — including\nthe latest stable v0.2.0 scorecard and a representative cross-section\nof its check pages — and answer:\n\n1. What is a14y measuring? (One paragraph.)\n2. Group the v0.2.0 checks by theme/category, with a one-sentence\n   description of each theme.\n3. The top 3 highest-leverage improvements for an average website\n   that has done nothing yet. For each: name the specific a14y\n   check IDs involved (e.g. `llms-txt.exists`,\n   `html.json-ld.breadcrumb`), explain the underlying agent-\n   behavior payoff (why does an AI agent care?), and give a one-\n   paragraph \"what to do\" that's concrete enough that an engineer\n   could ticket it.\n4. One honest caveat — what's a reasonable critique of investing\n   engineering time in a14y compliance today?\n\nGround every claim in something you actually read on the site.\nCite check IDs by name (not paraphrased).\n",
+  "rubric": {
+    "mode": "judge",
+    "must_include": [],
+    "must_not_include": []
+  },
+  "agents": [
+    {
+      "id": "claude",
+      "version": "2.1.143 (Claude Code)",
+      "isolated": true,
+      "runs": [
+        {
+          "n": 1,
+          "finalResponse": "I now have enough to write the full evaluation.\n\n---\n\n## AI Agent Readability: Evaluating a14y for Prioritization\n\n### 1. What a14y Measures\n\na14y (\"agent readability\") is an open-source auditing framework that measures how well a website serves AI agents — crawlers, coding assistants, retrieval pipelines, and tool-calling agents — rather than human browsers. It runs 38 deterministic checks against any public URL and produces a score from 0–100 expressed as `passed / applicable` checks. The checks are organized across three ascending layers: **Discoverability** (can an agent find the right pages at all?), **Parsing** (once fetched, can an agent extract content efficiently?), and **Comprehension** (once parsed, does the content self-describe its structure, freshness, and meaning?). The project publishes a versioned scorecard (currently v0.2.0) so scores are stable over time and can be gated in CI with flags like `--fail-under 80`. Per the leaderboard, the mean score across 238 tracked sites is 53/100, with only the top performers like PostHog Docs reaching the high 90s.\n\n---\n\n### 2. v0.2.0 Check Themes\n\nThe 38 checks fall into seven practical themes:\n\n| Theme | Checks | What it covers |\n|---|---|---|\n| **Agent entry points** | `llms-txt.*`, `agents-md.*` | Machine-readable sitemaps and skill files that give agents a deterministic crawl start and behavioral context |\n| **Crawl permissions** | `robots-txt.allows-ai-bots`, `robots-txt.allows-llms-txt`, `robots-txt.exists` | Whether known AI crawlers (GPTBot, ClaudeBot, CCBot, Google-Extended) are actually permitted to access the site |\n| **XML/MD Sitemaps** | `sitemap-xml.exists`, `sitemap-xml.valid`, `sitemap-xml.has-lastmod`, `sitemap-md.exists`, `sitemap-md.has-structure` | Freshness signals and structural maps agents use to prioritize re-crawling |\n| **HTTP hygiene** | `http.status-200`, `http.redirect-chain`, `http.content-type-html`, `http.no-noindex-noai` | Whether pages are reachable without redirect waste and haven't been opted out of AI indexing |\n| **HTML metadata** | `html.canonical-link`, `html.meta-description`, `html.og-title`, `html.og-description`, `html.lang-attribute` | Structured signals that let agents reliably extract titles, descriptions, and language without parsing body text |\n| **Structured data** | `html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb` | JSON-LD annotations that tell agents a page's hierarchy position, type, and freshness without nav-menu parsing |\n| **Markdown mirrors** | `markdown.mirror-suffix`, `markdown.alternate-link`, `markdown.frontmatter`, `markdown.canonical-header`, `markdown.content-negotiation`, `markdown.sitemap-section` | `.md` copies of HTML pages that eliminate token-burning HTML noise and improve comprehension accuracy |\n\nThe remaining three checks — `html.headings`, `html.text-ratio`, `html.glossary-link`, `code.language-tags`, `api.schema-link`, `discovery.indexed` — cover content structure, domain vocabulary, and API discoverability.\n\n---\n\n### 3. Top Three Highest-Leverage Improvements\n\n**#1 — Unblock AI crawlers** (`robots-txt.allows-ai-bots`, `robots-txt.allows-llms-txt`)\n\n*Agent-behavior payoff:* If GPTBot, ClaudeBot, CCBot, or Google-Extended are disallowed, your content simply does not enter training corpora or retrieval indexes — every other a14y improvement is moot. The a14y check page notes that many sites block these bots \"unintentionally through generic templates rather than deliberate policy.\"\n\n*What to do:* Pull your current `robots.txt` and audit it for any `Disallow: /` rules under `User-agent: GPTBot`, `ClaudeBot`, `CCBot`, or `Google-Extended`. If found and the block is unintentional, remove those stanzas and redeploy. This is a one-line change per bot and can be ticketed as: *\"Audit robots.txt for unintentional AI bot blocks; remove Disallow rules for GPTBot, ClaudeBot, CCBot, Google-Extended unless blocking is deliberate policy.\"*\n\n---\n\n**#2 — Publish an `llms.txt`** (`llms-txt.exists`, `llms-txt.content-type`, `llms-txt.non-empty`, `llms-txt.md-extensions`)\n\n*Agent-behavior payoff:* The a14y spec calls `llms.txt` \"the agent equivalent of a sitemap\" — it gives AI ingesters a single deterministic starting point listing which pages are worth reading, organized by category, with `.md` links where available. Without it, agents must either crawl blindly or miss your content entirely. The leaderboard shows only 48% of sites publish one.\n\n*What to do:* Create `/llms.txt` as a static plaintext file served with `Content-Type: text/plain`. Structure it with markdown headings for sections (e.g., `## Getting Started`, `## API Reference`) and bulleted links pointing to your most important pages — preferably `.md` mirror URLs. Add this file to your deploy pipeline and ensure `robots.txt` doesn't disallow it. Ticket: *\"Add /llms.txt to site root: text/plain, organized by content category, linking key docs and marketing pages with .md extensions where mirrors exist.\"*\n\n---\n\n**#3 — Add JSON-LD structured data** (`html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb`)\n\n*Agent-behavior payoff:* BreadcrumbList tells an agent where a page sits in the site hierarchy without forcing it to parse nav menus — critical for accurate citations like \"see Billing > Invoices > Export.\" `dateModified` lets retrieval systems know whether content is stale. Together they shift comprehension from probabilistic HTML parsing to deterministic machine-readable signals, reducing hallucinations in agent-generated cross-references.\n\n*What to do:* In your shared page layout template, inject a `<script type=\"application/ld+json\">` block containing (a) a `BreadcrumbList` with `ListItem` entries for each path segment and their URLs, and (b) a `dateModified` field on the primary `WebPage` or `Article` schema pulling from your CMS publish date. Most CMSes and static site generators can emit this from existing metadata. Ticket: *\"Add JSON-LD to page layout: BreadcrumbList reflecting URL path hierarchy and dateModified from content publish date. Verify with Google's Rich Results Test.\"*\n\n---\n\n### 4. One Honest Caveat\n\n**The standard is early and adoption is thin.** a14y v0.2.0 tracks only 238 sites, and the framework itself freely acknowledges it's still establishing its spec. There is currently no published evidence that higher a14y scores translate to measurable downstream outcomes — more agent traffic, better LLM citation rates, or increased product-led growth from AI-sourced discovery. The analogy to SEO is appealing, but SEO had Google's index as a forcing function; there is no equivalent single authority enforcing a14y compliance today. Investing a sprint in `llms.txt` and JSON-LD is low-risk given the implementation cost, but a multi-week markdown mirror build-out should wait until the ROI signal is clearer — or until a specific high-value agent (a sales AI, a developer tool, a major LLM's web retrieval) that your customers actually use demonstrably rewards the investment.",
+          "usage": {
+            "input": 1362,
+            "output": 6195,
+            "cacheCreation": 14110,
+            "cacheRead": 232289,
+            "total": 253956
+          },
+          "toolCalls": [
+            {
+              "name": "ToolSearch",
+              "count": 1
+            },
+            {
+              "name": "WebFetch",
+              "count": 20
+            }
+          ],
+          "durationMs": 148676,
+          "exitCode": 0,
+          "grade": {
+            "mode": "judge",
+            "passed": true,
+            "details": [
+              "judge score 83/100"
+            ],
+            "score": 83,
+            "reasoning": "The response is well-grounded overall: check IDs, statistics (238 sites, 53/100 mean, 48% llms.txt adoption), quotes ('the agent equivalent of a sitemap,' 'BreadcrumbList tells agents where the page sits'), and the four AI bot names are all confirmed in the tool results. The agent successfully visited the scorecard page, leaderboard, spec, and six individual check pages. Minor deductions: the '--fail-under 80' CI flag is not found in any tool result; the seven-theme grouping is the agent's own synthesis that diverges from the site's actual site-level vs page-level structure; and the response exceeds the 500–800 word target significantly, suggesting it didn't fully respect the scope constraint. No major hallucinations, but one ungrounded claim and organizational reframing that wasn't directly drawn from the site."
+          },
+          "transcript": [
+            {
+              "role": "tool",
+              "toolName": "ToolSearch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            }
+          ]
+        },
+        {
+          "n": 2,
+          "finalResponse": "I have everything I need. Writing the evaluation now.\n\n---\n\n# AI Agent Readability: An a14y Evaluation for Your Engineering Backlog\n\n## 1. What a14y Is Measuring\n\na14y (\"agent readability\") is an open-source auditing framework — available as a CLI (`npx a14y your-site.com`), Chrome extension, and coding-agent skill — that scores websites against 38 pass/fail checks organized into three layers: **Discoverability** (can an AI agent find all your pages at all?), **Parsing** (once it lands on a page, can it extract content without fighting through HTML, redirect chains, or bot blocks?), and **Comprehension** (once extracted, does the content self-describe its own context — hierarchy, freshness, terminology — accurately enough for the agent to cite it without hallucinating?). The project's stated philosophy, pulled directly from its spec page, is that \"agent readability is to AI-mediated discovery what SEO was to search: cheap to implement, compounding in return, and increasingly table stakes.\" Version 0.2.0, released April 6, 2026, freezes the current 38-check scorecard.\n\n---\n\n## 2. The v0.2.0 Checks by Theme\n\nThe 38 checks break cleanly into eight themes:\n\n| Theme | Checks | What it covers |\n|---|---|---|\n| **llms.txt presence & quality** | `llms-txt.exists`, `llms-txt.content-type`, `llms-txt.non-empty`, `llms-txt.md-extensions` | Whether the site publishes a plain-text crawl manifest agents can use as a deterministic starting point |\n| **robots.txt / AI bot access** | `robots-txt.exists`, `robots-txt.allows-ai-bots`, `robots-txt.allows-llms-txt` | Whether robots.txt permits rather than inadvertently blocks the four major AI crawlers (GPTBot, ClaudeBot, CCBot, Google-Extended) |\n| **Sitemaps** | `sitemap-xml.exists`, `sitemap-xml.valid`, `sitemap-xml.has-lastmod`, `sitemap-md.exists`, `sitemap-md.has-structure` | Page inventory in both machine-parseable (XML) and agent-friendly (Markdown) formats, with freshness timestamps |\n| **Agent skill file** | `agents-md.exists`, `agents-md.has-min-sections` | An AGENTS.md (or CLAUDE.md / .cursor/rules equivalent) that tells AI coding agents how to interact with the product's codebase or API |\n| **HTTP fundamentals** | `http.status-200`, `http.redirect-chain`, `http.content-type-html`, `http.no-noindex-noai` | Basic delivery hygiene: clean status codes, short redirect chains, correct content types, and no `noai` response headers silently blocking agents |\n| **HTML metadata** | `html.canonical-link`, `html.meta-description`, `html.og-title`, `html.og-description`, `html.lang-attribute` | Standard head-tag signals that anchor page identity and language for agents building citations |\n| **Structured data (JSON-LD)** | `html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb` | Machine-readable schema blocks that convey hierarchy, content type, and content freshness without requiring the agent to infer them from prose |\n| **Markdown mirrors** | `markdown.mirror-suffix`, `markdown.alternate-link`, `markdown.frontmatter`, `markdown.canonical-header`, `markdown.content-negotiation`, `markdown.sitemap-section` | Parallel `.md` versions of HTML pages so agents can ingest content with no HTML parser, no script execution, and no layout noise |\n\n(The remaining checks — `html.headings`, `html.text-ratio`, `html.glossary-link`, `code.language-tags`, `api.schema-link`, `discovery.indexed` — cover content structure, code hygiene, and per-page index confirmation.)\n\n---\n\n## 3. The Three Highest-Leverage Improvements\n\n### Priority 1: Unblock AI crawlers and publish `llms.txt`\n**Checks:** `robots-txt.allows-ai-bots`, `robots-txt.allows-llms-txt`, `llms-txt.exists`, `llms-txt.content-type`, `llms-txt.non-empty`, `llms-txt.md-extensions`\n\n**Why an agent cares:** An agent that can't crawl your site simply doesn't know your product exists. The `robots-txt.allows-ai-bots` check page notes this is \"almost always set inadvertently when authors copy-paste a generic robots.txt template\" — meaning you may already be blocking GPTBot, ClaudeBot, CCBot, and Google-Extended for no reason. Once crawling is permitted, `llms-txt.exists` gives agents a single, deterministic entry point — \"the agent equivalent of a sitemap\" — so they don't have to guess which of your hundreds of URLs are authoritative documentation versus marketing fluff.\n\n**What to do:** First, audit your `robots.txt` for any `Disallow` rules targeting those four user-agent strings and remove them. Takes 15 minutes. Second, create `/llms.txt` at the site root: a plain-text, markdown-formatted file that lists the URLs you most want agents to read, grouped under headings (e.g., `## Docs`, `## API Reference`, `## Pricing`), with each URL pointing to a `.md` version where possible. Commit it, verify it returns `Content-Type: text/plain`, and confirm it is not itself disallowed by `robots.txt`. Estimated effort: one engineer, half a day.\n\n---\n\n### Priority 2: Add JSON-LD structured data to every page\n**Checks:** `html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb`\n\n**Why an agent cares:** Without structured data, an agent reading your pricing page has to infer from prose that it's a pricing page, guess when the prices were last updated, and reconstruct that it lives under `/product/pricing` by parsing navigation HTML. `html.json-ld.breadcrumb` directly tells the agent where in the site hierarchy a page sits — the check page states it enables \"context-aware Q&A and automated link generation.\" `html.json-ld.date-modified` prevents agents from confidently citing your outdated content as current — an LLM that knows a page was last modified eight months ago can hedge appropriately or prompt a user to verify.\n\n**What to do:** Add a `<script type=\"application/ld+json\">` block to your site layout template so every page gets at minimum a `BreadcrumbList` (with one `ListItem` per URL segment, each carrying `position`, `name`, and `item` fields) and a top-level `dateModified` field populated from your CMS or build pipeline. For a Next.js or similar SSG stack, this is a one-time layout change plus a CMS field; for a custom stack, it's a template partial. The check passes on any parseable JSON-LD node — you don't need perfect schema coverage, just the two node types.\n\n---\n\n### Priority 3: Serve markdown mirrors of your documentation\n**Checks:** `markdown.mirror-suffix`, `markdown.alternate-link`, `markdown.frontmatter`, `markdown.content-negotiation`\n\n**Why an agent cares:** The `markdown.mirror-suffix` check page is direct: \"A markdown mirror at `<page>.md` is the cleanest format an agent can ingest — no HTML, no scripts, no styling, just the content.\" For a SaaS company where agents are increasingly used to research integrations, answer support questions, or generate code against your API, the quality of the raw text the agent ingests directly determines the quality of its answers. An agent hitting `/docs/authentication.md` instead of `/docs/authentication` skips your navigation JavaScript, cookie banners, and sidebar menus entirely.\n\n**What to do:** If you use a static site generator (Gatsby, Next.js, Astro, Hugo, Docusaurus), configure it to emit the source `.md` files at their equivalent public URLs — most have a plugin or route handler for this. Add a `<link rel=\"alternate\" type=\"text/markdown\" href=\"/docs/page.md\">` tag in the HTML `<head>` so agents can discover the mirror without guessing. Ensure each `.md` file has YAML frontmatter with at minimum `title`, `description`, `doc_version`, and `last_updated` (the `markdown.frontmatter` check). Start with your top 20 highest-traffic documentation pages, not the whole site.\n\n---\n\n## 4. An Honest Caveat\n\na14y v0.2.0 was released on April 6, 2026 — barely six weeks before this writing — and the standard has not yet demonstrated wide adoption or proved that conforming sites receive meaningfully better treatment from AI agents in practice. The `llms.txt` convention in particular is still emergent; major AI systems including Google's AI Overviews and most RAG pipelines today index sites by parsing HTML directly, not by consulting a crawl manifest. Investing engineering time now is essentially a bet that the ecosystem catches up to the spec, not a response to a proven mechanism. The right framing for a CTO: Priorities 1 and 2 above are worth doing anyway — unblocking crawlers costs almost nothing and has zero downside, and JSON-LD is already best practice for SEO. The markdown mirror work (Priority 3) is the real bet, and should be scoped to documentation pages only until there's clearer signal that agent traffic on those pages is materially improving conversion or retention.",
+          "usage": {
+            "input": 452,
+            "output": 5183,
+            "cacheCreation": 7535,
+            "cacheRead": 144696,
+            "total": 157866
+          },
+          "toolCalls": [
+            {
+              "name": "ToolSearch",
+              "count": 1
+            },
+            {
+              "name": "WebFetch",
+              "count": 11
+            }
+          ],
+          "durationMs": 121645,
+          "exitCode": 0,
+          "grade": {
+            "mode": "judge",
+            "passed": true,
+            "details": [
+              "judge score 88/100"
+            ],
+            "score": 88,
+            "reasoning": "The agent's claims are well-grounded: the three-layer framework (Discoverability, Parsing, Comprehension) is confirmed by tool call 7; the v0.2.0 release date and 38-check count match tool calls 4 and 6; the robots.txt quote about 'copy-paste templates' is verbatim from tool call 12; the breadcrumb quote about 'context-aware Q&A and automated link generation' matches tool call 9; and the markdown mirror quote is verbatim from tool call 10. The check IDs visible in the scorecard preview (llms-txt.exists, llms-txt.content-type, etc.) match, and the agents-md check is confirmed by tool call 11. Minor deductions: the SEO philosophy quote in section 1 doesn't appear in any visible tool result and may be paraphrased/embellished, and several check IDs in the theme table (e.g., html.canonical-link, sitemap-xml.has-lastmod, http.no-noindex-noai) aren't visible in the tool-result previews — they're plausible but unverified from the evidence shown. The agent also visited only 5 individual check pages rather than a broader cross-section of 38."
+          },
+          "transcript": [
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "ToolSearch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            }
+          ]
+        },
+        {
+          "n": 3,
+          "finalResponse": "I have everything I need. Here is the evaluation.\n\n---\n\n## a14y Compliance: An Engineering Priority Assessment for SaaS CTOs\n\n### 1. What a14y Is Measuring\n\na14y (v0.2.0, released April 6, 2026) is an open specification and automated audit tool that measures how well a website can be read, navigated, and understood by AI agents—not human visitors. It borrows the spirit of accessibility (a11y) and applies it to machine consumers: LLM-based agents, coding assistants, and retrieval pipelines. The scorecard's 38 checks span three questions drawn directly from the spec: *Can an agent find every page you want it to read?* (Discoverability), *Once it fetches a page, can it extract content efficiently?* (Parsing), and *Once parsed, does the content self-describe?* (Comprehension). A perfect score means an AI agent can crawl your site's full content graph, parse each page with minimal token waste, and derive semantic meaning without reverse-engineering your navigation UI.\n\n---\n\n### 2. The v0.2.0 Checks, Grouped by Theme\n\nThe 38 checks fall into eight categories across the three layers:\n\n**Discoverability (15 checks — 14 site-level + `discovery.indexed`)**\nEntry-point files that tell agents what exists on your site and whether they're allowed to read it: `llms-txt.*` (5 checks), `robots-txt.*` (3), `sitemap-xml.*` (3), `sitemap-md.*` (2), and `agents-md.*` (2). Think of these as the agent-readable equivalent of a sitemap and a robots.txt combined.\n\n**HTTP Basics (4 checks)**\nTransport-layer hygiene: `http.status-200`, `http.redirect-chain`, `http.content-type-html`, `http.no-noindex-noai`. These ensure an agent can reliably fetch and identify a page before doing anything with it.\n\n**HTML Metadata (5 checks)**\nHead-tag completeness: `html.canonical-link`, `html.meta-description`, `html.og-title`, `html.og-description`, `html.lang-attribute`. Agents use these to identify pages without reading body content.\n\n**Structured Data (3 checks)**\nMachine-readable page semantics: `html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb`. JSON-LD lets agents understand page type, freshness, and hierarchy from a single parseable block.\n\n**Content Structure (3 checks)**\nSignal-to-noise at the body level: `html.headings`, `html.text-ratio`, `html.glossary-link`. The text-ratio check flags JS-heavy pages where agents receive a mostly-empty HTML shell.\n\n**Markdown Mirrors (6 checks)**\nParallel clean-text versions of pages: `markdown.mirror-suffix`, `markdown.alternate-link`, `markdown.frontmatter`, `markdown.canonical-header`, `markdown.content-negotiation`, `markdown.sitemap-section`. The spec describes a `.md` mirror as \"the cleanest format an agent can ingest—no HTML, no scripts, no styling, just the content.\"\n\n**Code & API (2 checks)**\nDeveloper-facing legibility: `code.language-tags` (fenced blocks must declare a language) and `api.schema-link` (API pages must link to an OpenAPI/Swagger schema).\n\n**Agent Skills (2 checks)**\nProject-level orientation for coding agents: `agents-md.exists` and `agents-md.has-min-sections` verify that a file like `AGENTS.md` or `CLAUDE.md` exists and covers at least two of install/config/usage.\n\n---\n\n### 3. Top 3 Highest-Leverage Improvements\n\n**#1 — Publish `llms.txt` and audit `robots.txt`**\n*Checks involved:* `llms-txt.exists`, `llms-txt.content-type`, `llms-txt.non-empty`, `llms-txt.md-extensions`, `robots-txt.exists`, `robots-txt.allows-ai-bots`, `robots-txt.allows-llms-txt`\n\nThe site describes `llms.txt` as \"the agent equivalent of a sitemap\"—without it, an agent must crawl every URL blindly with no signal about what's worth reading. `robots-txt.allows-ai-bots` is the more urgent half: the check found that generic `robots.txt` templates commonly disallow GPTBot, ClaudeBot, CCBot, and Google-Extended unintentionally, which the spec calls \"the explicit 'do not include this site in any LLM' signal.\" This seven-check cluster is the cheapest path to the largest score gain. **What to do:** Audit your `robots.txt` today and confirm none of the four named bots are disallowed (or add explicit `Allow: /` directives for each). Then create `/llms.txt` as a plain-text markdown file organized by section (`## Docs`, `## API`, etc.) with links to your most important pages—links must end in `.md` or `.mdx` to pass `llms-txt.md-extensions`. Total engineering effort: two files, one deploy.\n\n**#2 — Add a complete JSON-LD block to every page template**\n*Checks involved:* `html.json-ld`, `html.json-ld.date-modified`, `html.json-ld.breadcrumb`\n\nJSON-LD is how an agent learns a page's type, age, and position in your site hierarchy without parsing navigation menus. The spec is explicit: \"BreadcrumbList tells agents where the page sits in the site hierarchy without making them parse navigation menus.\" The `dateModified` field lets retrieval pipelines rank content by freshness—critical for documentation sites where agents must know whether a page reflects the current product. All three checks fail if JSON-LD is absent entirely, making this a single template change with a three-check payoff. **What to do:** Add a `<script type=\"application/ld+json\">` block to your base page template. Include `@context: https://schema.org`, an appropriate `@type` (e.g., `TechArticle`, `WebPage`), a `headline`, a `dateModified` timestamp, and a `BreadcrumbList` array with one `ListItem` per level of your URL hierarchy. Most CMSes and SSGs (Next.js, Astro, Hugo) can generate this from frontmatter with a one-time layout change.\n\n**#3 — Serve markdown mirrors of content pages**\n*Checks involved:* `markdown.mirror-suffix`, `markdown.alternate-link`, `markdown.frontmatter`, `markdown.canonical-header`, `markdown.content-negotiation`, `markdown.sitemap-section`\n\nThis is the single densest cluster in the scorecard—six checks, all page-level, all failing together on a typical SPA or CMS site. The payoff is direct: agents ingesting `/docs/install.md` skip all CSS, JavaScript, and nav chrome and receive only the content, reducing token consumption and improving extraction accuracy. **What to do:** If you use a static site generator, check whether it already exposes source markdown via a route (many do). If not, add a build step that writes each page's source `.md` file to a matching public URL (e.g., `/docs/install/` → `/docs/install.md`). Add `<link rel=\"alternate\" type=\"text/markdown\" href=\"/docs/install.md\">` to each HTML `<head>`. Add YAML frontmatter to every `.md` file with at least `title`, `description`, `doc_version`, and `last_updated`. Configure your server to return the `.md` file when a request arrives with `Accept: text/markdown`.\n\n---\n\n### 4. One Honest Caveat\n\na14y v0.2.0 was released April 6, 2026, authored by a single developer under Apache-2.0 with no IETF or W3C standards body backing. The `llms.txt` and `AGENTS.md` conventions it relies on are themselves emergent proposals—agent frameworks don't yet uniformly honor them, and the a14y checks verify static HTTP responses rather than actual agent behavior in the wild. There is a real risk that some of these conventions (especially markdown mirrors and `sitemap.md`) never achieve the critical mass needed for mainstream agent implementations to depend on them. The HTTP basics, robots.txt, and JSON-LD checks overlap with existing SEO best practices and are safe bets regardless; the markdown mirror cluster is the one to watch before committing significant server-side build complexity to it.",
+          "usage": {
+            "input": 1164,
+            "output": 6975,
+            "cacheCreation": 10480,
+            "cacheRead": 288461,
+            "total": 307080
+          },
+          "toolCalls": [
+            {
+              "name": "ToolSearch",
+              "count": 1
+            },
+            {
+              "name": "WebFetch",
+              "count": 26
+            }
+          ],
+          "durationMs": 198335,
+          "exitCode": 0,
+          "grade": {
+            "mode": "judge",
+            "passed": true,
+            "details": [
+              "judge score 82/100"
+            ],
+            "score": 82,
+            "reasoning": "The agent successfully read the homepage, scorecard page, spec page, and 7 specific check pages, and the response is well-grounded: all key quotes ('agent equivalent of a sitemap,' 'BreadcrumbList tells agents where the page sits in the site hierarchy,' 'cleanest format an agent can ingest,' 'explicit do not include this site in any LLM signal') are confirmed in tool results, and the cited check IDs (llms-txt.exists, robots-txt.allows-ai-bots, html.json-ld, html.json-ld.breadcrumb, markdown.mirror-suffix, etc.) all appear in the actual fetched content. The main concerns are a likely fabricated check ID ('discovery.indexed') not confirmed in any tool result, a resulting count discrepancy (agent's grouping sums to 40 checks vs. the confirmed 38), and the Apache-2.0/single-developer caveat that isn't supported by tool evidence — but these are minor issues in an otherwise thorough and well-cited evaluation."
+          },
+          "transcript": [
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "ToolSearch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "tool",
+              "toolName": "WebFetch"
+            },
+            {
+              "role": "assistant"
+            }
+          ]
+        }
+      ],
+      "aggregate": {
+        "durationMsAvg": 156218.66666666666,
+        "durationMsStddev": 38897.402102625485,
+        "totalTokensAvg": 239634,
+        "totalTokensStddev": 75630.97389297589,
+        "toolCallTotalAvg": 20,
+        "passRate": 1,
+        "countOk": 3,
+        "countFailed": 0
+      }
+    }
+  ],
+  "runtime": {
+    "kind": "docker",
+    "engineVersion": "Docker 27.5.1",
+    "image": "a14y/bench-claude:2.1.141-0.1.0",
+    "imageDigest": "a14y/bench-claude@sha256:bbbe50a0190d9e7a5060f3279188a4d030308c121291b9a14b6df5c30697cd51"
+  },
+  "auth": {
+    "kind": "login-volume",
+    "volumeName": "bench-claude-auth"
+  }
+}

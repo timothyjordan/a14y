@@ -1582,3 +1582,24 @@ main.container h2[id] {
 :root[data-theme='dark'] .press-contact-note {
   color: color-mix(in oklch, var(--brand-paper) 70%, transparent);
 }
+
+/* Hero-lead inline highlight for the scorecard-eval study (TJ-487).
+   Pulls visual emphasis to the score delta + the % numbers without
+   breaking the paragraph rhythm of .lead. */
+.lead strong {
+  font-weight: 600;
+  color: var(--brand-ink);
+  font-variant-numeric: tabular-nums;
+}
+:root[data-theme='dark'] .lead strong { color: var(--brand-cyan); }
+.lead-evidence-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--border-strong);
+}
+.lead-evidence-link:hover {
+  text-decoration-color: var(--link);
+  color: var(--link);
+}
