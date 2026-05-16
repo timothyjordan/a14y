@@ -16,28 +16,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const evidenceStudy = getCaseStudy('agent-readiness-layer-2026-05-16');
 const evidenceUrl = caseStudyUrl(evidenceStudy.slug, base);
-const evidenceRows = [
-  {
-    label: 'Tokens used',
-    value: `~${evidenceStudy.headline.tokensFactor}×`,
-    note: 'without the layer',
-  },
-  {
-    label: 'Tool calls',
-    value: `~${evidenceStudy.headline.toolCallsFactor}×`,
-    note: 'without the layer',
-  },
-  {
-    label: 'Wall-clock',
-    value: `+${evidenceStudy.headline.wallClockDeltaPct}%`,
-    note: 'without the layer',
-  },
-  {
-    label: 'Judge score',
-    value: 'tied',
-    note: `${evidenceStudy.headline.scoreA14y.mean} ± ${evidenceStudy.headline.scoreA14y.stddev}  vs  ${evidenceStudy.headline.scoreBaseline.mean} ± ${evidenceStudy.headline.scoreBaseline.stddev}`,
-  },
-];
 
 const runCmd = 'npx a14y your-site.com';
 const skillInstallCmd = 'npx skills add timothyjordan/a14y';
@@ -88,6 +66,12 @@ const heroBadgeDarkHtml = buildBadgeHtml(
       <p class="lead">
         Agents now read most of the web before humans do. a14y is the
         open source project making the web readable by those agents.
+        {' '}<a class="lead-evidence-link" href={evidenceUrl}>In one study</a>, raising a site&apos;s
+        a14y score from <strong>{evidenceStudy.headline.baselineScore}</strong> to
+        {' '}<strong>{evidenceStudy.headline.a14yScore}</strong> decreased
+        Claude&apos;s token use by <strong>{evidenceStudy.headline.tokenDecreasePct}%</strong>
+        {' '}and tool calls by <strong>{evidenceStudy.headline.toolCallDecreasePct}%</strong>
+        {' '}with no change in answer quality.
       </p>
       <div class="cta-stack" role="group" aria-label="Try a14y">
         <span class="copy-cli copy-cli--block">
@@ -150,38 +134,6 @@ const heroBadgeDarkHtml = buildBadgeHtml(
       </span>
       <a class="hero-badge-link" href={`${base}/badge/`}>Embed your own →</a>
     </aside>
-  </section>
-
-  <section class="section section--tight evidence-strip" aria-labelledby="evidence-heading">
-    <div class="evidence-head">
-      <div class="eyebrow">
-        <span class="eyebrow-pin">v{evidenceStudy.scorecardVersion}</span>
-        <span>scorecard-eval · {evidenceStudy.publishedAt}</span>
-      </div>
-      <h2 id="evidence-heading" class="evidence-heading">Evidence</h2>
-      <p class="evidence-copy">
-        <strong>Same docs, same answer.</strong> Adding the agent-readiness
-        layer roughly <em>halves</em> what an AI agent spends to evaluate
-        your site, about <em>{evidenceRows[0].value} the tokens</em> and
-        <em>{evidenceRows[1].value} the tool calls</em> when
-        {' '}<code>llms.txt</code>, sitemap, and <code>AGENTS.md</code> are
-        missing.
-      </p>
-    </div>
-
-    <dl class="evidence-table" role="list">
-      {evidenceRows.map((row) => (
-        <div class="evidence-row" role="listitem">
-          <dt class="evidence-label">{row.label}</dt>
-          <dd class="evidence-value">{row.value}</dd>
-          <dd class="evidence-note">{row.note}</dd>
-        </div>
-      ))}
-    </dl>
-
-    <p class="evidence-cta">
-      <a class="btn btn--ghost" href={evidenceUrl}>Read the case study →</a>
-    </p>
   </section>
 
   <section class="section section--tight" aria-label="How a14y works">
