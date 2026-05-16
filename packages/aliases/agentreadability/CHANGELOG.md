@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.13](https://github.com/timothyjordan/a14y/compare/agentreadability-v0.4.12...agentreadability-v0.4.13) (2026-05-16)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * a14y bumped from 0.4.12 to 0.4.13
+
 ## [0.4.12](https://github.com/timothyjordan/a14y/compare/agentreadability-v0.4.11...agentreadability-v0.4.12) (2026-05-15)
 
 
