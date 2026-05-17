@@ -1,18 +1,39 @@
+# Reconciles packages/core/src/scorecard/draft-changes.json with the
+# net diff between the latest published scorecard and the draft. Runs
+# *after* a PR merges to main and, if the JSON needs an update, opens
+# (or updates) a follow-up PR with the refreshed file.
+#
+# Why this shape (and not pull_request + auto-commit on the contributor
+# branch): the GITHUB_TOKEN is read-only on pull_request events from
+# forks regardless of the permissions: block here, and outside
+# contributors' first PRs don't even get to run workflows until a
+# maintainer clicks "Approve and run." Either way, the auto-commit-back
+# strategy is structurally broken for fork PRs.
+#
+# Operating on main solves both problems: this workflow always runs
+# with a writeable token in the upstream repo's context, regardless of
+# where the original PR came from. The trade-off is that the refresh
+# arrives as a follow-up PR rather than inside the original PR's diff —
+# acceptable because the follow-up is mechanical and one-click
+# mergeable. There is **no auto-merge**: a maintainer reviews and
+# merges the refresh PR like any other change.
+#
+# The refresh PR uses a fixed branch (chore/refresh-draft-diff), so
+# repeated runs overwrite that branch rather than stacking new PRs.
+
 name: Refresh draft diff
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
     paths:
       - 'packages/core/src/scorecard/draft.ts'
       - 'packages/core/src/scorecard/draft-changes.json'
       - 'scripts/refresh-draft-diff.mjs'
       - '.github/workflows/refresh-draft-diff.yml'
-  # Manual trigger covers two cases:
-  #   1. A PR's auto-run didn't fire (fork PR, runner outage, etc.).
-  #   2. Audit / catch-up on `main` for a merged PR whose draft.ts
-  #      changes never went through the auto-refresh — re-runs the
-  #      reconciliation against the current state of main.
+  # Manual catch-up button — re-runs the reconciliation against the
+  # current state of main. Useful if the auto-run failed for infra
+  # reasons or if you want to audit and re-attribute entries.
   workflow_dispatch:
 
 permissions:
@@ -20,23 +41,19 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: refresh-draft-diff-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  # Serialize on main so two rapid merges don't race to push conflicting
+  # updates to the shared refresh branch.
+  group: refresh-draft-diff
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
-          # PR head ref so the eventual `git push` lands on the
-          # contributor's branch. For workflow_dispatch on main, this
-          # falls back to the default branch.
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
-          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           fetch-depth: 0
-          persist-credentials: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -50,24 +67,51 @@ jobs:
       - name: Build @a14y/core
         run: npm run build --workspace @a14y/core
 
-      - name: Refresh draft-changes.json
+      # Attribution comes from the PR associated with the merge commit
+      # that triggered this run. On workflow_dispatch the lookup returns
+      # nothing and the refresh script falls back to "audit" attribution
+      # (pr: 0, author: github.actor) — which is the right semantic for
+      # a manual catch-up run.
+      - name: Resolve merged PR for attribution
+        id: pr
         env:
-          PR_NUMBER: ${{ github.event.pull_request.number || '' }}
-          PR_URL: ${{ github.event.pull_request.html_url || '' }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
-          PR_AUTHOR_URL: ${{ github.event.pull_request.user.html_url || format('https://github.com/{0}', github.actor) }}
-          MERGED_AT: ${{ github.event.pull_request.merged_at || '' }}
-        run: node scripts/refresh-draft-diff.mjs
-
-      - name: Commit and push if the JSON changed
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if git diff --quiet -- packages/core/src/scorecard/draft-changes.json; then
-            echo "No changes to draft-changes.json; nothing to commit."
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add packages/core/src/scorecard/draft-changes.json
-          git commit -m "chore(scorecard): refresh draft changes [skip ci]"
-          git push
+          PR_JSON=$(gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" --jq '.[0]' 2>/dev/null || echo '')
+          {
+            echo "number=$(echo "$PR_JSON" | jq -r '.number // empty')"
+            echo "url=$(echo "$PR_JSON" | jq -r '.html_url // empty')"
+            echo "author=$(echo "$PR_JSON" | jq -r '.user.login // empty')"
+            echo "author_url=$(echo "$PR_JSON" | jq -r '.user.html_url // empty')"
+            echo "merged_at=$(echo "$PR_JSON" | jq -r '.merged_at // empty')"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Refresh draft-changes.json
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          PR_AUTHOR: ${{ steps.pr.outputs.author || github.actor }}
+          PR_AUTHOR_URL: ${{ steps.pr.outputs.author_url || format('https://github.com/{0}', github.actor) }}
+          MERGED_AT: ${{ steps.pr.outputs.merged_at }}
+        run: node scripts/refresh-draft-diff.mjs
+
+      # peter-evans/create-pull-request is a no-op when there's nothing
+      # to commit, and force-updates the existing chore/refresh-draft-diff
+      # branch when there is — so the PR is overwritten in place rather
+      # than stacked. delete-branch: true cleans up after the PR merges.
+      - name: Open or update refresh PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/refresh-draft-diff
+          base: main
+          add-paths: packages/core/src/scorecard/draft-changes.json
+          commit-message: 'chore(scorecard): refresh draft changes [skip ci]'
+          title: 'chore(scorecard): refresh draft changes'
+          body: |
+            Automated refresh of `packages/core/src/scorecard/draft-changes.json`.
+
+            Generated by `.github/workflows/refresh-draft-diff.yml` after a merge to `main` that touched the draft scorecard or its supporting code. The script reconciles the JSON against the live net diff between the latest published scorecard and the draft, attributing new entries to the PR that triggered the run (or to "audit" if dispatched manually).
+
+            Review and merge manually — no auto-merge.
+          delete-branch: true
