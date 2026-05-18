@@ -3,7 +3,9 @@
 
 export {
   validate,
+  validateMulti,
   type RunOptions,
+  type MultiRunOptions,
   type RunMode,
   type ProgressEvent,
   type SiteRun,

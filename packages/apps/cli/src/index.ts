@@ -10,7 +10,7 @@ import {
   listScorecards,
   resolveScorecardSelector,
   runToAgentPrompt,
-  validate,
+  validateMulti,
   type CheckResult,
   type ProgressEvent,
   type SiteRun,
@@ -55,8 +55,8 @@ program
   .option('-m, --mode <mode>', 'page or site', 'page')
   .option(
     '-s, --scorecard <version>',
-    'scorecard version to evaluate against, or "draft" for the in-progress scorecard',
-    LATEST_SCORECARD,
+    `scorecard version to evaluate against, or "draft" for the in-progress scorecard. Repeat the flag to score the same scan against multiple scorecards in one invocation. Defaults to "${LATEST_SCORECARD}".`,
+    (value: string, prev: string[] | undefined) => [...(prev ?? []), value],
   )
   .option('--max-pages <n>', 'maximum pages to crawl in site mode', (v) => parseInt(v, 10), 500)
   .option('--concurrency <n>', 'parallel fetches during crawling', (v) => parseInt(v, 10), 8)
@@ -95,21 +95,44 @@ program
     if (cliInit) await maybeShowFirstRunNotice(cliInit.runtime, options.output);
     const runId = cliInit?.runId;
 
-    // Resolve aliases like "draft" / "latest" up front so telemetry, the
-    // validate() call, and the warning all see the same concrete version.
-    const scorecardVersion = resolveScorecardSelector(options.scorecard);
-    if (isDraftScorecardVersion(scorecardVersion)) {
+    // Resolve every --scorecard selector up front so telemetry, the
+    // validate*() call, and warnings all see the same concrete versions.
+    // Empty array (no --scorecard flag at all) defaults to the latest
+    // shipped scorecard — same behavior as before --scorecard became
+    // repeatable.
+    const rawSelectors: string[] = options.scorecard ?? [LATEST_SCORECARD];
+    const scorecardVersions = Array.from(
+      new Set(rawSelectors.map((s) => resolveScorecardSelector(s))),
+    );
+    const isMulti = scorecardVersions.length > 1;
+    if (isMulti && options.output === 'agent-prompt') {
       console.error(
-        chalk.yellow(
-          `! Using draft scorecard ${scorecardVersion} — checks are subject to change before release.`,
+        chalk.red(
+          '--output agent-prompt is single-scorecard only. Pick one scorecard or use --output json.',
         ),
       );
+      track('cli_error', { command: 'check', phase: 'normalize', error_class: 'InvalidArg' });
+      process.exit(2);
+    }
+    for (const v of scorecardVersions) {
+      if (isDraftScorecardVersion(v)) {
+        console.error(
+          chalk.yellow(
+            `! Using draft scorecard ${v} — checks are subject to change before release.`,
+          ),
+        );
+      }
     }
 
     track('cli_command_invoked', {
       command: 'check',
       mode: options.mode,
-      scorecard_version: scorecardVersion,
+      // Keep the single-scorecard telemetry shape stable; the new
+      // `scorecard_versions` field captures the full list when --scorecard
+      // is repeated. Consumers that grouped by `scorecard_version` keep
+      // working for single-scorecard runs.
+      scorecard_version: scorecardVersions[0],
+      scorecard_versions: scorecardVersions,
       output_format: options.output,
       verbose: options.verbose === true,
       run_id: runId,
@@ -154,13 +177,13 @@ program
       }
     };
 
-    let result: SiteRun;
+    let results: SiteRun[];
     const runStart = Date.now();
     try {
-      result = await validate({
+      results = await validateMulti({
         url: resolvedUrl,
         mode: options.mode,
-        scorecardVersion,
+        scorecardVersions,
         maxPages: options.maxPages,
         concurrency: options.concurrency,
         pageCheckConcurrency: options.pageCheckConcurrency,
@@ -179,40 +202,56 @@ program
       process.exit(1);
     }
 
-    if (spinner) spinner.succeed(`Score: ${result.summary.score}/100`);
+    // `--fail-under` and the spinner "Score: …" line always refer to the
+    // first --scorecard listed on the command line so the meaning is
+    // predictable: the user controls which scorecard is the "primary"
+    // by where they put it. In the single-scorecard case this is
+    // identical to the historical behavior.
+    const primary = results[0];
+    if (spinner) spinner.succeed(`Score: ${primary.summary.score}/100`);
 
     const thresholdBreached =
-      typeof options.failUnder === 'number' && result.summary.score < options.failUnder;
+      typeof options.failUnder === 'number' && primary.summary.score < options.failUnder;
     track('cli_run_completed', {
       mode: options.mode,
-      scorecard_version: result.scorecardVersion,
-      score_bucket: bucketScore(result.summary.score),
-      page_count_bucket: bucketPageCount(result.pages.length),
+      scorecard_version: primary.scorecardVersion,
+      scorecard_versions: results.map((r) => r.scorecardVersion),
+      score_bucket: bucketScore(primary.summary.score),
+      page_count_bucket: bucketPageCount(primary.pages.length),
       duration_ms_bucket: bucketDurationMs(Date.now() - runStart),
-      failed_bucket: bucketIssueCount(result.summary.failed),
-      warned_bucket: bucketIssueCount(result.summary.warned),
-      errored_bucket: bucketIssueCount(result.summary.errored),
+      failed_bucket: bucketIssueCount(primary.summary.failed),
+      warned_bucket: bucketIssueCount(primary.summary.warned),
+      errored_bucket: bucketIssueCount(primary.summary.errored),
       threshold_breached: thresholdBreached,
       run_id: runId,
     });
 
-    if (runId) emitScorecardChecks({ run: result, runId, surface: 'cli' });
+    if (runId) {
+      for (const run of results) emitScorecardChecks({ run, runId, surface: 'cli' });
+    }
 
     if (options.output === 'json') {
       // JSON output goes to stdout so it can be piped into jq.
-      console.log(JSON.stringify(result, null, 2));
+      // Single-scorecard JSON keeps the historical shape (one SiteRun
+      // object); multi-scorecard JSON is the SiteRun[] array so consumers
+      // can iterate over per-scorecard summaries.
+      console.log(JSON.stringify(isMulti ? results : primary, null, 2));
     } else if (options.output === 'agent-prompt') {
       // Markdown fix-prompt for a coding agent. De-duplicates failures
       // by check id and links each entry to its docs detail page.
-      console.log(runToAgentPrompt(result));
+      // Multi-scorecard is rejected up front, so `primary` is the only
+      // run we ever reach this branch with.
+      console.log(runToAgentPrompt(primary));
+    } else if (isMulti) {
+      printMultiScorecardReport(results);
     } else {
-      printTextReport(result);
-      if (options.share !== false) printShareBlock(result);
+      printTextReport(primary);
+      if (options.share !== false) printShareBlock(primary);
     }
 
     if (thresholdBreached) {
       console.error(
-        chalk.red(`\nScore ${result.summary.score} is below threshold ${options.failUnder}`),
+        chalk.red(`\nScore ${primary.summary.score} is below threshold ${options.failUnder}`),
       );
       process.exit(1);
     }
@@ -261,14 +300,17 @@ program.addHelpText(
 Commands in detail:
   check <url>                   Audit a URL or a whole site
     -m, --mode page|site          default: page
-    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one
+    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one.
+                                  Repeat to score the same scan against multiple scorecards
+                                  in one invocation, e.g. -s 0.2.0 -s draft
     --max-pages <n>               default: 500
     --concurrency <n>             default: 8
     --page-check-concurrency <n>  default: 4
     --polite-delay <ms>           default: 250
     -o, --output <format>         text | json | agent-prompt
-    --fail-under <score>          exit 1 if final score < threshold
-    --no-share                    omit the shareable score block
+                                  (multi-scorecard runs require text or json)
+    --fail-under <score>          exit 1 if first scorecard's final score < threshold
+    --no-share                    omit the shareable score block (single scorecard only)
     -v, --verbose                 stream progress events to stderr
 
   scorecards                    List shipped scorecard versions
@@ -370,6 +412,34 @@ function labelForResource(resource: 'llms-txt' | 'sitemap-xml' | 'sitemap-md'): 
     case 'sitemap-md':
       return 'sitemap.md';
   }
+}
+
+function printMultiScorecardReport(runs: SiteRun[]): void {
+  // Multi-scorecard text mode is for at-a-glance comparison. Print one
+  // summary row per scorecard, then the full detail block for the first
+  // listed scorecard (the "primary"). Anyone who needs per-scorecard
+  // detail can re-run with a single --scorecard or pipe --output json.
+  console.log('');
+  console.log(chalk.bold('Multi-scorecard run'));
+  for (const r of runs) {
+    console.log(
+      `  ${scoreColor(r.summary.score)}  v${r.scorecardVersion}  ${chalk.gray(
+        `(${r.scoringMethodology})`,
+      )}  ${chalk.gray(
+        `${r.summary.passed}/${r.summary.applicable} pass · ${r.summary.failed} fail · ${r.summary.warned} warn`,
+      )}`,
+    );
+  }
+  console.log('');
+  console.log(
+    chalk.gray(
+      `Detail view below uses v${runs[0].scorecardVersion}. For per-scorecard detail, ` +
+        `re-run with a single --scorecard or use --output json.`,
+    ),
+  );
+  printTextReport(runs[0]);
+  // Skip the share block — it's tied to one scorecard and would be
+  // ambiguous in multi-mode. Single-scorecard runs still print it.
 }
 
 function printTextReport(run: SiteRun): void {

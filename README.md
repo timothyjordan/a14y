@@ -70,14 +70,17 @@ Commands:
 Commands in detail:
   check <url>                   Audit a URL or a whole site
     -m, --mode page|site          default: page
-    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one
+    -s, --scorecard <version>     scorecard version, or "draft" for the in-progress one.
+                                  Repeat to score the same scan against multiple scorecards
+                                  in one invocation, e.g. -s 0.2.0 -s draft
     --max-pages <n>               default: 500
     --concurrency <n>             default: 8
     --page-check-concurrency <n>  default: 4
     --polite-delay <ms>           default: 250
     -o, --output <format>         text | json | agent-prompt
-    --fail-under <score>          exit 1 if final score < threshold
-    --no-share                    omit the shareable score block
+                                  (multi-scorecard runs require text or json)
+    --fail-under <score>          exit 1 if first scorecard's final score < threshold
+    --no-share                    omit the shareable score block (single scorecard only)
     -v, --verbose                 stream progress events to stderr
 
   scorecards                    List shipped scorecard versions
@@ -97,8 +100,10 @@ Audit a URL or whole site against the a14y scorecard
 Options:
   -m, --mode <mode>             page or site (default: "page")
   -s, --scorecard <version>     scorecard version to evaluate against, or
-                                "draft" for the in-progress scorecard (default:
-                                "0.2.0")
+                                "draft" for the in-progress scorecard. Repeat
+                                the flag to score the same scan against
+                                multiple scorecards in one invocation. Defaults
+                                to "0.2.0".
   --max-pages <n>               maximum pages to crawl in site mode (default:
                                 500)
   --concurrency <n>             parallel fetches during crawling (default: 8)
