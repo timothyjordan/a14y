@@ -7,6 +7,8 @@ import type { HttpClient } from '../fetch/types';
 import { getScorecard, LATEST_SCORECARD } from '../scorecard';
 import { buildCheckDocsUrl } from '../scorecard/docsUrl';
 import type {
+  CheckOutcome,
+  PageCheckContext,
   ResolvedCheck,
   ResolvedScorecard,
   ScoringMethodology,
@@ -14,7 +16,6 @@ import type {
   SiteCheckContext,
 } from '../scorecard/types';
 import { summarize, type CheckResult, type ScoreSummary } from '../score/compute';
-import { runPage } from './runPage';
 
 export type RunMode = 'page' | 'site';
 
@@ -40,6 +41,16 @@ export interface RunOptions {
    */
   pageCheckConcurrency?: number;
   onProgress?: (event: ProgressEvent) => void;
+}
+
+/**
+ * Multi-scorecard variant of `RunOptions`. The crawl + fetch path is
+ * identical; only the scoring fan-out differs. Each version listed here
+ * produces one `SiteRun` in the returned array.
+ */
+export interface MultiRunOptions extends Omit<RunOptions, 'scorecardVersion'> {
+  /** Scorecard versions to evaluate against. Duplicates are de-duped. */
+  scorecardVersions: string[];
 }
 
 export type ProgressEvent =
@@ -86,11 +97,42 @@ export interface SiteRun {
  * it crawls the entire origin via the crawler and runs page checks across
  * every discovered page. Site-level checks always run once per audit so the
  * llms.txt / sitemap / AGENTS.md story is reflected in both modes.
+ *
+ * Thin wrapper around `validateMulti` for the single-scorecard case so the
+ * existing single-scorecard public API doesn't change shape.
  */
 export async function validate(opts: RunOptions): Promise<SiteRun> {
+  const { scorecardVersion, ...rest } = opts;
+  const results = await validateMulti({
+    ...rest,
+    scorecardVersions: [scorecardVersion ?? LATEST_SCORECARD],
+  });
+  return results[0];
+}
+
+/**
+ * Multi-scorecard variant: scores the same crawl against every listed
+ * scorecard version, returning one `SiteRun` per version. Page fetch and
+ * crawl machinery is shared across all scorecards; only the check
+ * dispatch fans out.
+ *
+ * For each unique `(check_id, implementationVersion)` pair across all
+ * resolved scorecards, the underlying check `run()` is invoked exactly
+ * once per context (site context, or one per fetched page). Two
+ * scorecards that pin the same impl share the same `CheckOutcome`
+ * value; two scorecards that pin different impls each get their own.
+ * The resulting `CheckResult` carries the scorecard-specific `docsUrl`
+ * so reports always link to the right version's docs page.
+ */
+export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
   const mode: RunMode = opts.mode ?? 'page';
-  const scorecardVersion = opts.scorecardVersion ?? LATEST_SCORECARD;
-  const scorecard = getScorecard(scorecardVersion);
+  if (opts.scorecardVersions.length === 0) {
+    throw new Error('validateMulti requires at least one scorecard version');
+  }
+  // Dedupe while preserving insertion order so output order is
+  // deterministic and matches what the caller passed in.
+  const versions = Array.from(new Set(opts.scorecardVersions));
+  const scorecards = versions.map((v) => getScorecard(v));
   const http = opts.http ?? createHttpClient();
   const parsedInput = new URL(opts.url);
   const baseUrl = parsedInput.origin + '/';
@@ -102,7 +144,16 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   const shared = new Map<string, unknown>();
   const startedAt = new Date().toISOString();
 
-  opts.onProgress?.({ type: 'started', mode, url: opts.url, scorecardVersion });
+  // The progress stream is single-channel; emit the first scorecard's
+  // version on `started` so the spinner and verbose logs read coherently
+  // for the (overwhelmingly common) single-scorecard case. Multi-scorecard
+  // callers know to use `scorecardVersions` directly.
+  opts.onProgress?.({
+    type: 'started',
+    mode,
+    url: opts.url,
+    scorecardVersion: scorecards[0].version,
+  });
 
   const siteCtx: SiteCheckContext = {
     scope: 'site',
@@ -117,12 +168,16 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
       : undefined,
   };
 
+  // Union the resolved checks across all scorecards. Each unique
+  // `(check_id, implementationVersion)` pair fires once; scorecards that
+  // pin the same pair share the underlying outcome.
+  const siteCheckUnion = buildCheckUnion(scorecards.flatMap((s) => s.siteChecks));
+  const pageCheckUnion = buildCheckUnion(scorecards.flatMap((s) => s.pageChecks));
+
   // Site checks fan out independently of page checks. Kick them off in
   // parallel with page processing so they're ready by the time the crawl
   // finishes.
-  const siteChecksPromise = Promise.all(
-    scorecard.siteChecks.map((c) => runSiteCheck(c, siteCtx, scorecard.version)),
-  );
+  const siteOutcomesPromise = runCheckUnion(siteCheckUnion, siteCtx);
 
   // Page checks stream directly from the crawler into a bounded queue.
   // Two backpressure seams keep peak memory a small constant of the
@@ -137,36 +192,53 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   // ~384 pages on doc sites whose pages were a few MB each.
   const pageCheckConcurrency = opts.pageCheckConcurrency ?? 4;
   const pageCheckQueue = new ConcurrentQueue({ concurrency: pageCheckConcurrency });
-  const pages: PageReport[] = [];
+  // One PageReport accumulator per scorecard. The same fetch produces one
+  // PageReport per scorecard; the scorecards differ only in which
+  // (id, impl) firings they pull out of the per-page outcome map.
+  const pagesByScorecard = new Map<string, PageReport[]>();
+  for (const sc of scorecards) pagesByScorecard.set(sc.version, []);
 
   const handlePage = (input: DiscoveredPage): Promise<void> =>
     pageCheckQueue.add(async () => {
-      const pageRun = await runPage({
-        scorecard,
-        http,
+      const ctx: PageCheckContext = {
+        scope: 'page',
         baseUrl,
+        http,
         shared,
+        url: input.page.url,
         page: input.page,
-      });
-      // Per-page summaries always use flat-pool semantics regardless of the
-      // site-level scoringMethodology: the per-page score is "how many of this
-      // page's applicable checks passed," which is a different question from
-      // the site's aggregate score. Methodology only affects the site summary
-      // below.
-      const summary = summarize(pageRun.checks, 'flat-pool-v1');
-      pages.push({
-        url: pageRun.url,
-        finalUrl: pageRun.finalUrl,
-        status: pageRun.status,
-        sources: [...input.sources],
-        checks: pageRun.checks,
-        summary,
-      });
+      };
+      const pageOutcomes = await runCheckUnion(pageCheckUnion, ctx);
+
+      for (const sc of scorecards) {
+        const checks = sc.pageChecks.map((c) =>
+          buildResult(c, 'page', pageOutcomes, sc.version),
+        );
+        // Per-page summaries always use flat-pool semantics regardless of the
+        // site-level scoringMethodology: the per-page score is "how many of this
+        // page's applicable checks passed," which is a different question from
+        // the site's aggregate score. Methodology only affects the site summary
+        // below.
+        const summary = summarize(checks, 'flat-pool-v1');
+        pagesByScorecard.get(sc.version)!.push({
+          url: input.page.originalUrl,
+          finalUrl: input.page.url,
+          status: input.page.status,
+          sources: [...input.sources],
+          checks,
+          summary,
+        });
+      }
+
+      // Emit page-done for the first scorecard's view of this page so the
+      // single-channel progress stream stays interpretable.
+      const firstPages = pagesByScorecard.get(scorecards[0].version)!;
+      const last = firstPages[firstPages.length - 1];
       opts.onProgress?.({
         type: 'page-done',
-        url: pageRun.finalUrl,
-        passed: summary.passed,
-        total: summary.total,
+        url: last.finalUrl,
+        passed: last.summary.passed,
+        total: last.summary.total,
       });
 
       // Release the FetchedPage so cheerio + the body string can be
@@ -174,9 +246,10 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
       // Also drop this page's per-page cache entries from the shared
       // map (jsonLd parse + markdown mirror body) — they're only ever
       // used by the checks for this same URL.
+      const finalUrl = input.page.url;
       (input as { page: unknown }).page = null;
-      shared.delete(`page:json-ld:${pageRun.finalUrl}`);
-      shared.delete(`page:md-mirror:${pageRun.finalUrl}`);
+      shared.delete(`page:json-ld:${finalUrl}`);
+      shared.delete(`page:md-mirror:${finalUrl}`);
     });
 
   if (mode === 'site') {
@@ -223,66 +296,122 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     await pageCheckQueue.onIdle();
   }
 
-  const siteChecks = await siteChecksPromise;
-  for (const r of siteChecks) opts.onProgress?.({ type: 'site-check-done', result: r });
-
-  // Aggregate every check (site + all pages) into the run-wide score under
-  // the scorecard's pinned scoring methodology.
-  const allChecks: CheckResult[] = [
-    ...siteChecks,
-    ...pages.flatMap((p) => p.checks),
-  ];
-  const summary = summarize(allChecks, scorecard.scoringMethodology);
+  const siteOutcomes = await siteOutcomesPromise;
   const finishedAt = new Date().toISOString();
 
-  opts.onProgress?.({ type: 'finished', summary });
+  // Per-scorecard site-check arrays + final SiteRun assembly.
+  const siteRuns: SiteRun[] = scorecards.map((sc) => {
+    const siteChecks = sc.siteChecks.map((c) =>
+      buildResult(c, 'site', siteOutcomes, sc.version),
+    );
+    const pages = pagesByScorecard.get(sc.version)!;
+    const allChecks: CheckResult[] = [
+      ...siteChecks,
+      ...pages.flatMap((p) => p.checks),
+    ];
+    const summary = summarize(allChecks, sc.scoringMethodology);
+    return {
+      url: opts.url,
+      baseUrl,
+      mode,
+      scorecardVersion: sc.version,
+      scorecardReleasedAt: sc.releasedAt,
+      scoringMethodology: sc.scoringMethodology,
+      startedAt,
+      finishedAt,
+      siteChecks,
+      pages,
+      summary,
+    };
+  });
 
-  return {
-    url: opts.url,
-    baseUrl,
-    mode,
-    scorecardVersion: scorecard.version,
-    scorecardReleasedAt: scorecard.releasedAt,
-    scoringMethodology: scorecard.scoringMethodology,
-    startedAt,
-    finishedAt,
-    siteChecks,
-    pages,
-    summary,
-  };
+  // Emit per-site-check progress events for the first scorecard's view.
+  // Each site-check firing is unique by (id, impl), and the first
+  // scorecard sees a complete set of its pinned checks. Surfacing the
+  // first one's view keeps the existing single-scorecard progress
+  // semantics intact.
+  for (const r of siteRuns[0].siteChecks) {
+    opts.onProgress?.({ type: 'site-check-done', result: r });
+  }
+  opts.onProgress?.({ type: 'finished', summary: siteRuns[0].summary });
+
+  return siteRuns;
 }
 
-async function runSiteCheck(
-  check: ResolvedCheck,
-  ctx: SiteCheckContext,
-  scorecardVersion: string,
-): Promise<CheckResult> {
-  const docsUrl = buildCheckDocsUrl(scorecardVersion, check.id);
-  try {
-    const outcome = await check.run(ctx);
-    return {
-      id: check.id,
-      name: check.name,
-      group: check.group,
-      scope: 'site',
-      implementationVersion: check.implementationVersion,
-      status: outcome.status,
-      message: outcome.message,
-      details: outcome.details,
-      docsUrl,
-    };
-  } catch (e) {
-    return {
-      id: check.id,
-      name: check.name,
-      group: check.group,
-      scope: 'site',
-      implementationVersion: check.implementationVersion,
-      status: 'error',
-      message: (e as Error).message,
-      docsUrl,
-    };
+interface UnionEntry {
+  check: ResolvedCheck;
+}
+
+/**
+ * Build a deduplicated map of `(check_id, implementationVersion) -> ResolvedCheck`.
+ * Two scorecards that pin the same impl of the same check share one entry,
+ * so the underlying `run()` is invoked exactly once per fan-out.
+ */
+function buildCheckUnion(checks: ResolvedCheck[]): Map<string, UnionEntry> {
+  const map = new Map<string, UnionEntry>();
+  for (const c of checks) {
+    const key = unionKey(c.id, c.implementationVersion);
+    if (!map.has(key)) map.set(key, { check: c });
   }
+  return map;
+}
+
+function unionKey(id: string, implementationVersion: string): string {
+  return `${id}@${implementationVersion}`;
+}
+
+/**
+ * Run every unique check in the union against the given context. Each
+ * check's `run()` is invoked exactly once; an unexpected throw is folded
+ * into an `error`-status outcome the same way a single-scorecard run
+ * would have produced. Returns a map keyed by the union key so callers
+ * can dispatch outcomes back into per-scorecard CheckResults.
+ */
+async function runCheckUnion(
+  union: Map<string, UnionEntry>,
+  ctx: SiteCheckContext | PageCheckContext,
+): Promise<Map<string, CheckOutcome>> {
+  const out = new Map<string, CheckOutcome>();
+  await Promise.all(
+    [...union.entries()].map(async ([key, { check }]) => {
+      try {
+        const outcome = await check.run(ctx);
+        out.set(key, outcome);
+      } catch (e) {
+        out.set(key, { status: 'error', message: (e as Error).message });
+      }
+    }),
+  );
+  return out;
+}
+
+function buildResult(
+  check: ResolvedCheck,
+  scope: 'site' | 'page',
+  outcomes: Map<string, CheckOutcome>,
+  scorecardVersion: string,
+): CheckResult {
+  const outcome = outcomes.get(unionKey(check.id, check.implementationVersion));
+  // The union always covers every pinned (id, impl) before we reach this
+  // helper, so a miss is a programmer error rather than a runtime case
+  // to handle gracefully — surface it loudly.
+  if (!outcome) {
+    throw new Error(
+      `Internal: no outcome for ${check.id}@${check.implementationVersion} ` +
+        `while assembling scorecard ${scorecardVersion}`,
+    );
+  }
+  return {
+    id: check.id,
+    name: check.name,
+    group: check.group,
+    scope,
+    implementationVersion: check.implementationVersion,
+    status: outcome.status,
+    message: outcome.message,
+    details: outcome.details,
+    docsUrl: buildCheckDocsUrl(scorecardVersion, check.id),
+  };
 }
 
 // Re-export for ergonomic single import.

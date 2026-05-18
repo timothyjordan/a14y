@@ -285,6 +285,29 @@ For the per-step recipes once you've chosen the right PR, see
 [Adding a new check](#adding-a-new-check) and
 [Updating an existing check](#updating-an-existing-check).
 
+### Validating a draft scorecard against a published one
+
+`a14y check` accepts `--scorecard` repeatedly so a single scan can be
+scored against multiple scorecard versions at once:
+
+```
+a14y check https://example.com --scorecard 0.2.0 --scorecard draft
+```
+
+The crawler still fetches each page exactly once. For every shared
+check id where both scorecards pin the same implementation version, the
+handler runs once and the outcome is reused for both summaries. Where
+they pin different versions (e.g. a bumped check on the draft), each
+version's handler runs against the in-memory page — same fetch, two
+handlers. With `--output json`, the result is an array of `SiteRun`
+objects, one per scorecard version in the order you listed them.
+
+Use this when you've staged a draft change (new pin, bumped impl,
+methodology change) and want to compare its scores against the latest
+published scorecard before cutting. Single-scorecard runs are
+unaffected — output shape, exit code, and share block all stay
+identical to today.
+
 ## Adding a new check
 
 > For non-trivial additions, ship this as the impl PR of a
