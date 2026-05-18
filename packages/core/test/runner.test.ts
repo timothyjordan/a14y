@@ -105,21 +105,121 @@ describe('summarize', () => {
     ).toThrow(/Unknown scoringMethodology/i);
   });
 
-  it('per-check-mean-v1 currently returns flat-pool-v1 numbers (TJ-560 spec PR; TJ-561 replaces the stub)', () => {
-    // This assertion is intentionally STRICT-EQUAL rather than just "doesn't
-    // throw" so that when TJ-561's real per-check-mean implementation lands,
-    // the failure is loud and obvious — the snapshot tests that depend on
-    // scores under the draft scorecard will need to be re-baselined.
-    const docsUrl = 'https://example.test/docs';
-    const results: CheckResult[] = [
-      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
-      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
-      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail', docsUrl },
-      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na', docsUrl },
-    ];
-    const flat = summarize(results, 'flat-pool-v1');
-    const pcm = summarize(results, 'per-check-mean-v1');
-    expect(pcm.score).toBe(flat.score);
+  // Test fixture helper for per-check-mean-v1 tests: builds a CheckResult
+  // for a given check id and status. Trims the boilerplate so the cases
+  // below read as truth tables rather than long object literals.
+  const r = (
+    id: string,
+    status: 'pass' | 'fail' | 'warn' | 'error' | 'na',
+    scope: 'site' | 'page' = 'page',
+  ): CheckResult => ({
+    id,
+    name: id,
+    scope,
+    implementationVersion: '1.0.0',
+    status,
+    docsUrl: `https://example.test/docs/${id}`,
+  });
+
+  describe('per-check-mean-v1', () => {
+    it('returns 100 when every applicable check passes', () => {
+      const results = [
+        r('a', 'pass', 'site'),
+        r('b', 'pass', 'page'),
+        r('c', 'pass', 'page'),
+      ];
+      expect(summarize(results, 'per-check-mean-v1').score).toBe(100);
+    });
+
+    it('returns 0 when every applicable check fails', () => {
+      const results = [
+        r('a', 'fail', 'site'),
+        r('b', 'fail', 'page'),
+        r('c', 'fail', 'page'),
+      ];
+      expect(summarize(results, 'per-check-mean-v1').score).toBe(0);
+    });
+
+    it('returns 0 when no check has any applicable firing (all na)', () => {
+      const results = [
+        r('a', 'na', 'site'),
+        r('b', 'na', 'page'),
+        r('c', 'na', 'page'),
+      ];
+      expect(summarize(results, 'per-check-mean-v1').score).toBe(0);
+    });
+
+    it('returns the single check pass rate when only one check id has firings', () => {
+      const results = [
+        r('a', 'pass'),
+        r('a', 'fail'),
+        r('a', 'pass'),
+        r('a', 'pass'),
+      ];
+      // 3 / 4 = 75
+      expect(summarize(results, 'per-check-mean-v1').score).toBe(75);
+    });
+
+    it('weights two distinct check ids equally even when one fires more often', () => {
+      // The signature divergence from flat-pool: per-check-mean treats each
+      // check id as one observation; flat-pool weighs by firing count.
+      const results = [
+        r('a', 'pass'), // a: 3 applicable, 3 pass → 100%
+        r('a', 'pass'),
+        r('a', 'pass'),
+        r('b', 'fail'), // b: 1 applicable, 0 pass → 0%
+      ];
+      const pcm = summarize(results, 'per-check-mean-v1').score;
+      const flat = summarize(results, 'flat-pool-v1').score;
+      expect(pcm).toBe(50); // mean(100, 0)
+      expect(flat).toBe(75); // 3 / 4
+      expect(pcm).not.toBe(flat);
+    });
+
+    it('is page-count invariant: same per-id pass rates → same score regardless of page count', () => {
+      // 1-page audit: 5 distinct check ids each firing once.
+      const onePage = [
+        r('a', 'pass', 'site'),
+        r('b', 'fail', 'site'),
+        r('c', 'pass', 'site'),
+        r('d', 'pass'),
+        r('e', 'fail'),
+      ];
+      // 100-page audit: same site checks; per-page checks d & e each fire
+      // 100 times with the same per-id pass rates (d 100% pass, e 0% pass).
+      const hundredPages: CheckResult[] = [
+        r('a', 'pass', 'site'),
+        r('b', 'fail', 'site'),
+        r('c', 'pass', 'site'),
+      ];
+      for (let i = 0; i < 100; i++) {
+        hundredPages.push(r('d', 'pass'));
+        hundredPages.push(r('e', 'fail'));
+      }
+      const onePageScore = summarize(onePage, 'per-check-mean-v1').score;
+      const hundredPageScore = summarize(hundredPages, 'per-check-mean-v1').score;
+      // mean of {100, 0, 100, 100, 0} = 60 in both cases.
+      expect(onePageScore).toBe(60);
+      expect(hundredPageScore).toBe(60);
+      expect(onePageScore).toBe(hundredPageScore);
+      // Sanity: flat-pool DOES drift between these two — pages 100% pass
+      // checks dominate the denominator. Confirms the test fixture exercises
+      // the actual page-count-dependence flat-pool has.
+      const flatOne = summarize(onePage, 'flat-pool-v1').score;
+      const flatHundred = summarize(hundredPages, 'flat-pool-v1').score;
+      expect(flatOne).not.toBe(flatHundred);
+    });
+
+    it('drops checks whose status is always na so they do not pull the mean to zero', () => {
+      const results = [
+        r('a', 'pass'), // 100%
+        r('b', 'pass'), // 100%
+        r('c', 'na'), // dropped entirely
+        r('c', 'na'),
+      ];
+      // mean(100, 100) = 100; the na-only check id contributes nothing.
+      expect(summarize(results, 'per-check-mean-v1').score).toBe(100);
+    });
   });
 });
 

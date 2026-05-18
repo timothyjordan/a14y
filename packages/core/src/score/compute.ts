@@ -95,22 +95,12 @@ interface ComputeScoreInput {
  * adding a new methodology means a new branch here plus a new entry in
  * `KNOWN_SCORING_METHODOLOGIES` in `scorecard/index.ts`.
  */
-function computeScore({ passed, applicable, methodology }: ComputeScoreInput): number {
+function computeScore({ results, passed, applicable, methodology }: ComputeScoreInput): number {
   switch (methodology) {
     case 'flat-pool-v1':
       return applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
     case 'per-check-mean-v1':
-      // STUB — TJ-561 replaces this with the real per-check mean algorithm:
-      //   score = round(mean({passed/applicable for each check_id with applicable > 0}))
-      // The spec PR (TJ-560 / this file's edit) ships the manifest pin +
-      // dispatch wiring + docs spec for v0.3.0-draft; the impl PR ships the
-      // real numbers. Per CONTRIBUTING.md's docs-first 2-PR split (lines
-      // 254-286), the stub returns the previous methodology's output so the
-      // contract can be reviewed in isolation without changing any scores.
-      // When TJ-561 lands, the existing snapshot tests will need to be
-      // re-baselined to the new algorithm's output — that re-baselining is
-      // the visible signal that the methodology has actually shipped.
-      return applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
+      return perCheckMeanScore(results);
     default: {
       // Compile-time exhaustiveness: if a new methodology id is added to
       // ScoringMethodology without a matching case here, TypeScript flags
@@ -121,4 +111,41 @@ function computeScore({ passed, applicable, methodology }: ComputeScoreInput): n
       throw new Error(`Unknown scoringMethodology: ${String(_exhaustive)}`);
     }
   }
+}
+
+/**
+ * Implementation of the `per-check-mean-v1` scoring methodology.
+ *
+ *   score = round(mean({ passed / applicable for each check_id where applicable > 0 }))
+ *
+ * Each distinct `check_id` contributes one observation regardless of how many
+ * pages it fires on, so site-wide signals don't get diluted as page count
+ * grows (the bug in `flat-pool-v1`). For 1-page audits this is identical to
+ * `flat-pool-v1`; for site-mode audits inflated cap-hit scores come down
+ * toward a more representative number.
+ *
+ * `na` firings are dropped entirely (no observation contributed). A check id
+ * that returns `na` on every firing does not pull the mean toward zero — it
+ * was simply never applicable to this site. If no check id has any
+ * applicable firing, the score is `0` (matches flat-pool's "no signal"
+ * semantics).
+ *
+ * See `/scorecards/#scoring-methodology` for the docs spec and motivating
+ * example. Pinned by the v0.3.0-draft scorecard and immutable once cut.
+ */
+function perCheckMeanScore(results: CheckResult[]): number {
+  const byCheck = new Map<string, { passed: number; applicable: number }>();
+  for (const r of results) {
+    if (r.status === 'na') continue;
+    const cur = byCheck.get(r.id) ?? { passed: 0, applicable: 0 };
+    cur.applicable += 1;
+    if (r.status === 'pass') cur.passed += 1;
+    byCheck.set(r.id, cur);
+  }
+  if (byCheck.size === 0) return 0;
+  let sum = 0;
+  for (const { passed, applicable } of byCheck.values()) {
+    sum += (passed / applicable) * 100;
+  }
+  return Math.round(sum / byCheck.size);
 }
