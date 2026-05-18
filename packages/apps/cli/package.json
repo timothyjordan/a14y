@@ -1,6 +1,6 @@
 {
   "name": "a14y",
-  "version": "0.4.14",
+  "version": "0.4.15",
   "description": "Agent readability scorer. Audits any website against the versioned a14y scorecard — scores how discoverable, parseable, and comprehensible your site is to AI agents.",
   "license": "Apache-2.0",
   "repository": {
@@ -26,8 +26,8 @@
     "prepack": "node ../../../scripts/inject-telemetry-config.mjs cli && node ../../../scripts/build-readmes.mjs"
   },
   "dependencies": {
-    "@a14y/core": "0.3.14",
-    "@a14y/telemetry": "0.1.11",
+    "@a14y/core": "0.3.15",
+    "@a14y/telemetry": "0.1.12",
     "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "ora": "^5.4.1"
