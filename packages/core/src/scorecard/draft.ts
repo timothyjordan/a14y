@@ -27,7 +27,11 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
   releasedAt: 'unreleased',
   description:
     'Draft scorecard — subject to change before release. PRs adding or revising checks land here, then this manifest is frozen at cut time. See CONTRIBUTING.md.',
-  scoringMethodology: 'flat-pool-v1',
+  // Pinned to per-check-mean-v1 ahead of the v0.3.0 cut. The real impl ships
+  // in TJ-561; until then computeScore() returns flat-pool-v1 numbers as a
+  // stub so this contract change can be reviewed in isolation. See the
+  // "Scoring methodology" section on /scorecards/ for the rationale.
+  scoringMethodology: 'per-check-mean-v1',
   checks: {
     ...SCORECARD_0_2_0.checks,
     'markdown.navigation-stripped': '1.0.0',

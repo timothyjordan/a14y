@@ -56,9 +56,9 @@ describe('scoringMethodology', () => {
     expect(getScorecard('0.2.0').scoringMethodology).toBe('flat-pool-v1');
   });
 
-  it('the draft pins flat-pool-v1 (current state; later scorecards may diverge)', () => {
-    expect(SCORECARD_DRAFT.scoringMethodology).toBe('flat-pool-v1');
-    expect(getScorecard('draft').scoringMethodology).toBe('flat-pool-v1');
+  it('the draft pins per-check-mean-v1 ahead of the v0.3.0 cut', () => {
+    expect(SCORECARD_DRAFT.scoringMethodology).toBe('per-check-mean-v1');
+    expect(getScorecard('draft').scoringMethodology).toBe('per-check-mean-v1');
   });
 
   it('defaults to flat-pool-v1 when a manifest omits the field', () => {

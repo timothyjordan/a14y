@@ -104,6 +104,23 @@ describe('summarize', () => {
       summarize(results, 'imaginary-v9' as unknown as 'flat-pool-v1'),
     ).toThrow(/Unknown scoringMethodology/i);
   });
+
+  it('per-check-mean-v1 currently returns flat-pool-v1 numbers (TJ-560 spec PR; TJ-561 replaces the stub)', () => {
+    // This assertion is intentionally STRICT-EQUAL rather than just "doesn't
+    // throw" so that when TJ-561's real per-check-mean implementation lands,
+    // the failure is loud and obvious — the snapshot tests that depend on
+    // scores under the draft scorecard will need to be re-baselined.
+    const docsUrl = 'https://example.test/docs';
+    const results: CheckResult[] = [
+      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail', docsUrl },
+      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na', docsUrl },
+    ];
+    const flat = summarize(results, 'flat-pool-v1');
+    const pcm = summarize(results, 'per-check-mean-v1');
+    expect(pcm.score).toBe(flat.score);
+  });
 });
 
 describe('validate (single page mode)', () => {
