@@ -81,6 +81,29 @@ describe('summarize', () => {
   it('returns 0 when nothing is applicable', () => {
     expect(summarize([]).score).toBe(0);
   });
+
+  it('produces identical output for the default and explicit flat-pool-v1', () => {
+    // Regression guard: callers that don't pass a methodology must continue
+    // to see flat-pool-v1 numbers byte-identical to the legacy behavior.
+    const docsUrl = 'https://example.test/docs';
+    const results: CheckResult[] = [
+      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'b', name: 'B', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+      { id: 'c', name: 'C', scope: 'page', implementationVersion: '1.0.0', status: 'fail', docsUrl },
+      { id: 'd', name: 'D', scope: 'page', implementationVersion: '1.0.0', status: 'na', docsUrl },
+    ];
+    expect(summarize(results)).toEqual(summarize(results, 'flat-pool-v1'));
+  });
+
+  it('throws on an unknown scoringMethodology', () => {
+    const docsUrl = 'https://example.test/docs';
+    const results: CheckResult[] = [
+      { id: 'a', name: 'A', scope: 'site', implementationVersion: '1.0.0', status: 'pass', docsUrl },
+    ];
+    expect(() =>
+      summarize(results, 'imaginary-v9' as unknown as 'flat-pool-v1'),
+    ).toThrow(/Unknown scoringMethodology/i);
+  });
 });
 
 describe('validate (single page mode)', () => {
@@ -88,6 +111,7 @@ describe('validate (single page mode)', () => {
     const http = fakeHttpClient(buildRoutes());
     const run = await validate({ url: 'https://example.com/', mode: 'page', http });
     expect(run.scorecardVersion).toBe('0.2.0');
+    expect(run.scoringMethodology).toBe('flat-pool-v1');
     expect(run.mode).toBe('page');
     expect(run.siteChecks).toHaveLength(14);
     expect(run.pages).toHaveLength(1);

@@ -27,6 +27,7 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
   releasedAt: 'unreleased',
   description:
     'Draft scorecard — subject to change before release. PRs adding or revising checks land here, then this manifest is frozen at cut time. See CONTRIBUTING.md.',
+  scoringMethodology: 'flat-pool-v1',
   checks: {
     ...SCORECARD_0_2_0.checks,
     'markdown.navigation-stripped': '1.0.0',

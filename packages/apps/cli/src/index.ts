@@ -248,6 +248,9 @@ program
       console.log(chalk.bold(`v${card.version}`) + tag + releasedLine);
       console.log('  ' + card.description);
       console.log(`  ${Object.keys(card.checks).length} checks pinned`);
+      if (card.scoringMethodology) {
+        console.log(`  scoring: ${card.scoringMethodology}`);
+      }
       console.log('');
     }
   });
@@ -374,7 +377,7 @@ function printTextReport(run: SiteRun): void {
   console.log(chalk.bold(`Agent Readability Score: ${run.summary.score}/100`));
   console.log(
     chalk.gray(
-      `  scorecard ${run.scorecardVersion} (released ${run.scorecardReleasedAt}) — mode ${run.mode}`,
+      `  scorecard ${run.scorecardVersion} (released ${run.scorecardReleasedAt}) — mode ${run.mode} — scoring ${run.scoringMethodology}`,
     ),
   );
   console.log(
