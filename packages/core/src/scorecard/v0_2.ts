@@ -16,6 +16,11 @@ export const SCORECARD_0_2_0: ScorecardManifest = {
   releasedAt: '2026-04-06',
   description:
     'Initial public scorecard for the Agent Readability Spec. Covers site discoverability (llms.txt, robots.txt, sitemaps, AGENTS.md) and per-page HTML/markdown/code/API checks.',
+  // The scoringMethodology field was introduced after v0.2.0 shipped. Declaring
+  // it here documents the algorithm that v0.2.0 has always used — see the PR
+  // landing this annotation for the contract-exception note ("metadata fields
+  // documenting existing behavior may be added to frozen manifests").
+  scoringMethodology: 'flat-pool-v1',
   checks: {
     // --- site-level (14) ---
     'llms-txt.exists': '1.0.0',

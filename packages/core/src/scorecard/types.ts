@@ -101,6 +101,21 @@ export type SiteCheckSpec = CheckSpec<SiteCheckContext>;
 export type PageCheckSpec = CheckSpec<PageCheckContext>;
 
 /**
+ * How a scorecard turns per-check pass/fail results into a single 0-100 score.
+ * Pinned per-manifest so scoring evolves through the same immutability contract
+ * as the check set itself — a consumer pinned to v0.2.0 gets the same score
+ * forever, even if a later scorecard adopts a different aggregation.
+ *
+ * - `flat-pool-v1` — `round(100 × passed / applicable)` over the flat pool of
+ *   site + per-page check results. The original v0.2.0 algorithm.
+ *
+ * New variants are added as new string literals and dispatched from
+ * `score/compute.ts`. Once a published manifest references a variant, that
+ * variant's behavior is frozen forever.
+ */
+export type ScoringMethodology = 'flat-pool-v1';
+
+/**
  * A scorecard manifest pins each check id to a single implementation version.
  * Scorecard files (v0_2.ts, v0_3.ts, ...) are FROZEN once shipped; updating a
  * check means publishing a new scorecard version that points at the new impl.
@@ -117,6 +132,12 @@ export interface ScorecardManifest {
   description: string;
   /** Map of check id -> implementation version. */
   checks: Record<string, string>;
+  /**
+   * How this scorecard aggregates check results into a final score. Optional
+   * for backwards compatibility with manifests authored before this field
+   * existed; `getScorecard()` defaults missing values to `'flat-pool-v1'`.
+   */
+  scoringMethodology?: ScoringMethodology;
 }
 
 /**
@@ -137,6 +158,8 @@ export interface ResolvedScorecard {
   version: string;
   releasedAt: string;
   description: string;
+  /** Pinned per-manifest; defaulted by the resolver to `'flat-pool-v1'`. */
+  scoringMethodology: ScoringMethodology;
   siteChecks: ResolvedCheck[];
   pageChecks: ResolvedCheck[];
 }

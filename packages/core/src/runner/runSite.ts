@@ -9,6 +9,7 @@ import { buildCheckDocsUrl } from '../scorecard/docsUrl';
 import type {
   ResolvedCheck,
   ResolvedScorecard,
+  ScoringMethodology,
   SeedProgressEvent,
   SiteCheckContext,
 } from '../scorecard/types';
@@ -64,6 +65,13 @@ export interface SiteRun {
   mode: RunMode;
   scorecardVersion: string;
   scorecardReleasedAt: string;
+  /**
+   * The scorecard-pinned aggregation algorithm that produced `summary.score`.
+   * Consumers (leaderboards, dashboards) read this to know which historical
+   * scoring contract this SiteRun honors; it is part of the immutability
+   * promise alongside `scorecardVersion`.
+   */
+  scoringMethodology: ScoringMethodology;
   startedAt: string;
   finishedAt: string;
   siteChecks: CheckResult[];
@@ -140,7 +148,12 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
         shared,
         page: input.page,
       });
-      const summary = summarize(pageRun.checks);
+      // Per-page summaries always use flat-pool semantics regardless of the
+      // site-level scoringMethodology: the per-page score is "how many of this
+      // page's applicable checks passed," which is a different question from
+      // the site's aggregate score. Methodology only affects the site summary
+      // below.
+      const summary = summarize(pageRun.checks, 'flat-pool-v1');
       pages.push({
         url: pageRun.url,
         finalUrl: pageRun.finalUrl,
@@ -213,12 +226,13 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
   const siteChecks = await siteChecksPromise;
   for (const r of siteChecks) opts.onProgress?.({ type: 'site-check-done', result: r });
 
-  // Aggregate every check (site + all pages) into the run-wide score.
+  // Aggregate every check (site + all pages) into the run-wide score under
+  // the scorecard's pinned scoring methodology.
   const allChecks: CheckResult[] = [
     ...siteChecks,
     ...pages.flatMap((p) => p.checks),
   ];
-  const summary = summarize(allChecks);
+  const summary = summarize(allChecks, scorecard.scoringMethodology);
   const finishedAt = new Date().toISOString();
 
   opts.onProgress?.({ type: 'finished', summary });
@@ -229,6 +243,7 @@ export async function validate(opts: RunOptions): Promise<SiteRun> {
     mode,
     scorecardVersion: scorecard.version,
     scorecardReleasedAt: scorecard.releasedAt,
+    scoringMethodology: scorecard.scoringMethodology,
     startedAt,
     finishedAt,
     siteChecks,

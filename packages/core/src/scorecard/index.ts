@@ -4,6 +4,7 @@ import type {
   ResolvedCheck,
   ResolvedScorecard,
   ScorecardManifest,
+  ScoringMethodology,
 } from './types';
 import { getCheck } from './registry';
 import { SCORECARD_0_2_0 } from './v0_2';
@@ -36,6 +37,26 @@ export const DRAFT_SCORECARD_VERSION = SCORECARD_DRAFT.version;
 /** True if the given scorecard version string is a draft (semver pre-release `-draft`). */
 export function isDraftScorecardVersion(version: string): boolean {
   return version.endsWith('-draft');
+}
+
+/**
+ * Every scoring methodology the runner knows how to dispatch on. Updated when
+ * a new variant lands in `score/compute.ts`. Resolver uses this list to reject
+ * manifests that pin an unknown methodology rather than silently scoring zero.
+ */
+const KNOWN_SCORING_METHODOLOGIES: readonly ScoringMethodology[] = [
+  'flat-pool-v1',
+] as const;
+
+function resolveScoringMethodology(manifest: ScorecardManifest): ScoringMethodology {
+  const declared = manifest.scoringMethodology ?? 'flat-pool-v1';
+  if (!KNOWN_SCORING_METHODOLOGIES.includes(declared)) {
+    throw new Error(
+      `Scorecard ${manifest.version} declares unknown scoringMethodology "${declared}". ` +
+        `Known methodologies: ${KNOWN_SCORING_METHODOLOGIES.join(', ')}.`,
+    );
+  }
+  return declared;
 }
 
 /**
@@ -115,6 +136,7 @@ export function getScorecard(version: string = LATEST_SCORECARD): ResolvedScorec
     version: manifest.version,
     releasedAt: manifest.releasedAt,
     description: manifest.description,
+    scoringMethodology: resolveScoringMethodology(manifest),
     siteChecks,
     pageChecks,
   };

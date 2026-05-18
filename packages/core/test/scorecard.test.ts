@@ -6,6 +6,8 @@ import {
   listScorecards,
 } from '../src/scorecard';
 import { SCORECARD_0_2_0 } from '../src/scorecard/v0_2';
+import { SCORECARD_DRAFT } from '../src/scorecard/draft';
+import type { ScorecardManifest } from '../src/scorecard/types';
 
 describe('scorecard registry', () => {
   it('exposes v0.2.0 as the latest scorecard', () => {
@@ -44,6 +46,57 @@ describe('scorecard registry', () => {
     for (const c of [...resolved.siteChecks, ...resolved.pageChecks]) {
       expect(c.implementationVersion).toBe('1.0.0');
       expect(typeof c.run).toBe('function');
+    }
+  });
+});
+
+describe('scoringMethodology', () => {
+  it('v0.2.0 pins flat-pool-v1', () => {
+    expect(SCORECARD_0_2_0.scoringMethodology).toBe('flat-pool-v1');
+    expect(getScorecard('0.2.0').scoringMethodology).toBe('flat-pool-v1');
+  });
+
+  it('the draft pins flat-pool-v1 (current state; later scorecards may diverge)', () => {
+    expect(SCORECARD_DRAFT.scoringMethodology).toBe('flat-pool-v1');
+    expect(getScorecard('draft').scoringMethodology).toBe('flat-pool-v1');
+  });
+
+  it('defaults to flat-pool-v1 when a manifest omits the field', () => {
+    // Backwards-compat: third-party manifests authored before this field
+    // existed must still resolve. The default must be flat-pool-v1 because
+    // that's the algorithm every existing consumer was using before the
+    // field landed.
+    const legacy: ScorecardManifest = {
+      version: '9.9.9-legacy-test',
+      releasedAt: 'never',
+      description: 'legacy manifest without scoringMethodology',
+      checks: { ...SCORECARD_0_2_0.checks },
+    };
+    SCORECARDS[legacy.version] = legacy;
+    try {
+      expect(getScorecard(legacy.version).scoringMethodology).toBe('flat-pool-v1');
+    } finally {
+      delete SCORECARDS[legacy.version];
+    }
+  });
+
+  it('throws when a manifest pins an unknown scoringMethodology', () => {
+    const bad: ScorecardManifest = {
+      version: '9.9.9-bad-methodology-test',
+      releasedAt: 'never',
+      description: 'manifest with unknown scoringMethodology',
+      checks: { ...SCORECARD_0_2_0.checks },
+      // Intentionally widened: simulate a future variant landing in the type
+      // without a matching dispatch branch.
+      scoringMethodology: 'imaginary-v9' as unknown as 'flat-pool-v1',
+    };
+    SCORECARDS[bad.version] = bad;
+    try {
+      expect(() => getScorecard(bad.version)).toThrow(
+        /unknown scoringMethodology "imaginary-v9"/i,
+      );
+    } finally {
+      delete SCORECARDS[bad.version];
     }
   });
 });

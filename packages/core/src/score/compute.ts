@@ -1,4 +1,4 @@
-import type { CheckStatus } from '../scorecard/types';
+import type { CheckStatus, ScoringMethodology } from '../scorecard/types';
 
 export interface CheckResult {
   id: string;
@@ -35,11 +35,23 @@ export interface ScoreSummary {
 }
 
 /**
- * Aggregate any number of check results into a single ScoreSummary. The
- * formula matches the agent readability spec: only `pass` counts toward
- * the numerator, only non-`na` checks count toward the denominator.
+ * Aggregate any number of check results into a single ScoreSummary.
+ *
+ * The pass/fail/warn/error/na counts are methodology-independent — they
+ * always reflect what each check returned. The headline `score` is computed
+ * by `computeScore()` according to the scorecard's pinned methodology, so
+ * different scorecards can adopt different aggregation rules without
+ * silently changing the scores of consumers pinned to an older scorecard.
+ *
+ * The `methodology` parameter defaults to `'flat-pool-v1'` for backwards
+ * compatibility with callers that don't know about scorecard methodology
+ * (e.g. ad-hoc test fixtures); the runner always passes the scorecard's
+ * declared methodology explicitly.
  */
-export function summarize(results: CheckResult[]): ScoreSummary {
+export function summarize(
+  results: CheckResult[],
+  methodology: ScoringMethodology = 'flat-pool-v1',
+): ScoreSummary {
   let passed = 0;
   let failed = 0;
   let warned = 0;
@@ -66,6 +78,35 @@ export function summarize(results: CheckResult[]): ScoreSummary {
   }
   const total = results.length;
   const applicable = total - na;
-  const score = applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
+  const score = computeScore({ results, passed, applicable, methodology });
   return { passed, failed, warned, errored, na, total, applicable, score };
+}
+
+interface ComputeScoreInput {
+  results: CheckResult[];
+  passed: number;
+  applicable: number;
+  methodology: ScoringMethodology;
+}
+
+/**
+ * Dispatch the headline score on the scorecard's pinned methodology.
+ * Each branch is the frozen scoring algorithm for that methodology id;
+ * adding a new methodology means a new branch here plus a new entry in
+ * `KNOWN_SCORING_METHODOLOGIES` in `scorecard/index.ts`.
+ */
+function computeScore({ passed, applicable, methodology }: ComputeScoreInput): number {
+  switch (methodology) {
+    case 'flat-pool-v1':
+      return applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
+    default: {
+      // Compile-time exhaustiveness: if a new methodology id is added to
+      // ScoringMethodology without a matching case here, TypeScript flags
+      // this assignment as the only branch where `methodology` is not
+      // `never`. The runtime throw is defense-in-depth in case the type
+      // is widened in test code.
+      const _exhaustive: never = methodology;
+      throw new Error(`Unknown scoringMethodology: ${String(_exhaustive)}`);
+    }
+  }
 }
