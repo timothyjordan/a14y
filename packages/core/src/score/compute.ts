@@ -99,6 +99,18 @@ function computeScore({ passed, applicable, methodology }: ComputeScoreInput): n
   switch (methodology) {
     case 'flat-pool-v1':
       return applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
+    case 'per-check-mean-v1':
+      // STUB — TJ-561 replaces this with the real per-check mean algorithm:
+      //   score = round(mean({passed/applicable for each check_id with applicable > 0}))
+      // The spec PR (TJ-560 / this file's edit) ships the manifest pin +
+      // dispatch wiring + docs spec for v0.3.0-draft; the impl PR ships the
+      // real numbers. Per CONTRIBUTING.md's docs-first 2-PR split (lines
+      // 254-286), the stub returns the previous methodology's output so the
+      // contract can be reviewed in isolation without changing any scores.
+      // When TJ-561 lands, the existing snapshot tests will need to be
+      // re-baselined to the new algorithm's output — that re-baselining is
+      // the visible signal that the methodology has actually shipped.
+      return applicable === 0 ? 0 : Math.round((passed / applicable) * 100);
     default: {
       // Compile-time exhaustiveness: if a new methodology id is added to
       // ScoringMethodology without a matching case here, TypeScript flags

@@ -46,6 +46,7 @@ export function isDraftScorecardVersion(version: string): boolean {
  */
 const KNOWN_SCORING_METHODOLOGIES: readonly ScoringMethodology[] = [
   'flat-pool-v1',
+  'per-check-mean-v1',
 ] as const;
 
 function resolveScoringMethodology(manifest: ScorecardManifest): ScoringMethodology {

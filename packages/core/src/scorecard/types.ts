@@ -107,13 +107,21 @@ export type PageCheckSpec = CheckSpec<PageCheckContext>;
  * forever, even if a later scorecard adopts a different aggregation.
  *
  * - `flat-pool-v1` — `round(100 × passed / applicable)` over the flat pool of
- *   site + per-page check results. The original v0.2.0 algorithm.
+ *   site + per-page check results. The original v0.2.0 algorithm. Site-wide
+ *   check signals get diluted as page count grows because every page's
+ *   per-page-check firings join the same denominator.
+ * - `per-check-mean-v1` — `round(mean({passed/applicable for each check_id
+ *   with applicable > 0}))`. Each distinct check identity contributes one
+ *   observation regardless of how many pages it fires on; eliminates the
+ *   page-count dependence in site-wide check signals. Introduced in the
+ *   v0.3.0-draft scorecard. See the "Scoring methodology" section on
+ *   /scorecards/ for the rationale + worked example.
  *
  * New variants are added as new string literals and dispatched from
  * `score/compute.ts`. Once a published manifest references a variant, that
  * variant's behavior is frozen forever.
  */
-export type ScoringMethodology = 'flat-pool-v1';
+export type ScoringMethodology = 'flat-pool-v1' | 'per-check-mean-v1';
 
 /**
  * A scorecard manifest pins each check id to a single implementation version.
