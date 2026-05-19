@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.13](https://github.com/timothyjordan/a14y/compare/telemetry-v0.1.12...telemetry-v0.1.13) (2026-05-19)
+
+
+### Features
+
+* **extension:** emit per-check scorecard_check_result events with run_id (TJ-351) ([641a95d](https://github.com/timothyjordan/a14y/commit/641a95da113abbd40314b97b9eb1e5a21d501921))
+* per-check scorecard analytics with run_id correlation (TJ-351) ([794f4d0](https://github.com/timothyjordan/a14y/commit/794f4d0e1743fd9a23b3f70390a0e75ff504f706))
+* **telemetry:** add scorecard run-id + per-check event helpers (TJ-351) ([47b40db](https://github.com/timothyjordan/a14y/commit/47b40db6c7caec0b0d261fc3d17685c66422a8d7))
+
+
+### Bug Fixes
+
+* **telemetry:** ship a README so npm consumers see package docs (TJ-409) ([#5](https://github.com/timothyjordan/a14y/issues/5)) ([0ba068f](https://github.com/timothyjordan/a14y/commit/0ba068f5d65f52fd9d4d6780f8b074a55c5e308b))
+
 ## [0.1.12](https://github.com/timothyjordan/a14y/compare/telemetry-v0.1.11...telemetry-v0.1.12) (2026-05-18)
 
 
