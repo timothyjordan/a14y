@@ -104,6 +104,16 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toContain('markdown.size-reduction');
       expect(out).toContain('markdown.valid-markdown');
     });
+
+    it('renders a Methodology subheading linking both methodology pages', () => {
+      // The draft pins per-check-mean-v1 vs v0.2.0's flat-pool-v1 (PR #53).
+      // The change must surface as its own subsection so an agent reading the
+      // .md mirror sees the same algorithm-change context the HTML page shows.
+      const out = renderScorecardDiffSection(getDraftScorecardVersion());
+      expect(out).toMatch(/^### Methodology/m);
+      expect(out).toContain('/scorecards/methodologies/flat-pool-v1/');
+      expect(out).toContain('/scorecards/methodologies/per-check-mean-v1/');
+    });
   });
 
   describe('renderDraftChangesPage', () => {
@@ -121,6 +131,13 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toContain('markdown.navigation-stripped');
       expect(out).toContain('markdown.size-reduction');
       expect(out).toContain('markdown.valid-markdown');
+    });
+
+    it('emits a Methodology bullet linking both methodology pages', () => {
+      const out = renderDraftChangesPage(getDraftScorecardVersion());
+      expect(out).toContain('**Methodology**');
+      expect(out).toContain('/scorecards/methodologies/flat-pool-v1/');
+      expect(out).toContain('/scorecards/methodologies/per-check-mean-v1/');
     });
   });
 

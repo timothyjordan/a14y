@@ -114,8 +114,8 @@ export type PageCheckSpec = CheckSpec<PageCheckContext>;
  *   with applicable > 0}))`. Each distinct check identity contributes one
  *   observation regardless of how many pages it fires on; eliminates the
  *   page-count dependence in site-wide check signals. Introduced in the
- *   v0.3.0-draft scorecard. See the "Scoring methodology" section on
- *   /scorecards/ for the rationale + worked example.
+ *   v0.3.0-draft scorecard. See /scorecards/methodologies/per-check-mean-v1/
+ *   for the rationale + worked example.
  *
  * New variants are added as new string literals and dispatched from
  * `score/compute.ts`. Once a published manifest references a variant, that
