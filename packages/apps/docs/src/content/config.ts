@@ -44,4 +44,21 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { checks, pages };
+/**
+ * Schema for scoring-methodology authoring content. The id matches the
+ * `scoringMethodology` value pinned by one or more scorecard manifests in
+ * @a14y/core, and the body is the canonical writeup of the algorithm
+ * (formula, rationale, worked example). Both the per-scorecard methodology
+ * chip and the methodology-bumped diff entry link here for explanation.
+ */
+const methodologies = defineCollection({
+  type: 'content',
+  schema: z.object({
+    id: z.enum(['flat-pool-v1', 'per-check-mean-v1']),
+    title: z.string(),
+    description: z.string(),
+    appliesTo: z.array(z.string()),
+  }),
+});
+
+export const collections = { checks, pages, methodologies };

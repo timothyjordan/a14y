@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { listAllScorecards } from '~/lib/scorecard-data';
+
+const methodologies = (await getCollection('methodologies')).sort((a, b) =>
+  a.data.id.localeCompare(b.data.id),
+);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const allCards = listAllScorecards();
+function pinnedBy(id: string): string[] {
+  return allCards
+    .filter((c) => (c.scoringMethodology ?? 'flat-pool-v1') === id)
+    .map((c) => c.version);
+}
+---
+
+<BaseLayout
+  title="Scoring methodologies · a14y"
+  description="Every scoring algorithm ever pinned by an a14y scorecard. Each scorecard freezes its methodology so historical scores stay reproducible."
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">methodologies</span>
+        <span>frozen per scorecard · trend cleanly forever</span>
+      </div>
+      <h1>Scoring methodologies</h1>
+      <p class="lead">
+        How each a14y scorecard turns per-check pass/fail/na results into a
+        single 0–100 number. The algorithm is pinned alongside the check set
+        so it can evolve without retroactively changing the scores of older
+        scorecards.
+      </p>
+    </div>
+  </section>
+
+  <ul class="check-list">
+    {methodologies.map((entry) => {
+      const pins = pinnedBy(entry.data.id);
+      return (
+        <li>
+          <a class="check-card" href={`${base}/scorecards/methodologies/${entry.data.id}/`}>
+            <span class="name"><code>{entry.data.id}</code></span>
+            <span class="desc">{entry.data.description}</span>
+            <span class="id">
+              {pins.length > 0
+                ? `pinned by ${pins.map((v) => `v${v}`).join(', ')}`
+                : 'not currently pinned by any scorecard'}
+            </span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</BaseLayout>
