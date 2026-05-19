@@ -3,6 +3,7 @@ import { ConcurrentQueue } from '../../crawler/queue';
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
 import { wellKnownCandidates } from './_wellKnown';
+import { isW3CDateTime } from '../_dateValidation';
 
 const SHARED_KEY = 'site:sitemap-xml';
 /**
@@ -42,6 +43,14 @@ export interface SitemapXmlResource {
 const parser = new XMLParser({
   ignoreAttributes: true,
   isArray: (name) => name === 'url' || name === 'sitemap',
+  // Pretty-printed sitemaps emit `<lastmod>\n  2026-04-01\n</lastmod>` and
+  // year-only values like `<lastmod>2026</lastmod>`. With parseTagValue's
+  // default of true, the parser strips surrounding whitespace but also
+  // coerces numeric-looking strings to numbers — which would route a
+  // declared `<lastmod>` into the "missing" bucket in the 1.1.0 check.
+  // Disable coercion so values stay as strings, and trim in the mapper.
+  parseTagValue: false,
+  trimValues: true,
 });
 
 interface ParsedSitemap {
@@ -61,9 +70,17 @@ function parseSitemapBody(body: string): ParsedSitemap {
   }
   const root = (xml as { urlset?: unknown; sitemapindex?: unknown }) ?? {};
   if (root.urlset) {
-    const urls = ((root.urlset as { url?: Array<{ loc?: string; lastmod?: string }> }).url ?? [])
+    const urls = ((root.urlset as { url?: Array<{ loc?: unknown; lastmod?: unknown }> }).url ?? [])
       .filter((u) => typeof u.loc === 'string')
-      .map((u) => ({ loc: u.loc as string, lastmod: u.lastmod }));
+      .map((u) => {
+        // Coerce defensively: even with parseTagValue: false a future
+        // schema change or extension could surface non-string values.
+        // Empty `<lastmod></lastmod>` parses to "" — treat it as
+        // absent so the 1.1.0 check reports "missing" (consistent
+        // with omitting the element), not "invalid date".
+        const raw = u.lastmod == null ? undefined : String(u.lastmod);
+        return { loc: u.loc as string, lastmod: raw === '' ? undefined : raw };
+      });
     return { ok: true, kind: 'urlset', entries: urls, childSitemaps: [] };
   }
   if (root.sitemapindex) {
@@ -239,6 +256,33 @@ export const sitemapXmlHasLastmod: SiteCheckSpec = {
               status: 'fail',
               message: `${missing}/${entries.length} entries missing <lastmod>`,
             };
+      },
+    },
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if every <url> in sitemap.xml has a <lastmod> child whose value parses as a W3C Datetime (the format sitemaps.org requires).',
+      run: async (ctx) => {
+        const r = await loadSitemapXml(ctx as SiteCheckContext);
+        if (!r.found || !r.parsed) return { status: 'na', message: 'sitemap.xml unavailable' };
+        const entries = r.entries ?? [];
+        if (entries.length === 0) {
+          return { status: 'warn', message: 'sitemap.xml has no <url> entries' };
+        }
+        const missing = entries.filter((e) => !e.lastmod).length;
+        const invalid = entries.filter(
+          (e) => typeof e.lastmod === 'string' && !isW3CDateTime(e.lastmod),
+        ).length;
+        if (missing === 0 && invalid === 0) {
+          return { status: 'pass', message: `${entries.length} entries with valid lastmod` };
+        }
+        const parts: string[] = [];
+        if (missing > 0) parts.push(`${missing} missing <lastmod>`);
+        if (invalid > 0) parts.push(`${invalid} with invalid date`);
+        return {
+          status: 'fail',
+          message: `${parts.join(', ')} of ${entries.length} entries`,
+        };
       },
     },
   },

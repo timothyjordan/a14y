@@ -1,6 +1,7 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
 import { htmlOnly } from './_htmlOnly';
+import { isIso8601DateOrDateTime } from '../_dateValidation';
 
 const SHARED_KEY_PREFIX = 'page:json-ld:';
 
@@ -97,6 +98,29 @@ export const htmlJsonLdDateModified: PageCheckSpec = {
         return found
           ? { status: 'pass', message: String(found.dateModified) }
           : { status: 'fail', message: 'no dateModified anywhere in JSON-LD' };
+      },
+    },
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if any JSON-LD node on the page contains a dateModified parseable as a schema.org Date or DateTime (ISO 8601 — YYYY-MM-DD or full date-time with timezone designator). Calendar values must be real.',
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const r = parseJsonLd(ctx as PageCheckContext);
+        if (r.blocks.length === 0) return { status: 'na', message: 'no JSON-LD on page' };
+        const present = r.flat
+          .map((n) => n.dateModified)
+          .filter((v): v is string => typeof v === 'string' && v.length > 0);
+        if (present.length === 0) {
+          return { status: 'fail', message: 'no dateModified anywhere in JSON-LD' };
+        }
+        const valid = present.find(isIso8601DateOrDateTime);
+        if (valid) return { status: 'pass', message: valid };
+        return {
+          status: 'fail',
+          message: `${present.length} dateModified value(s) present but not a valid schema.org Date/DateTime (e.g. ${present[0]})`,
+        };
       },
     },
   },
