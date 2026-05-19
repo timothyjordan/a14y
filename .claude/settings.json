@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "impeccable@pbakaus/impeccable": true,
+    "superpowers@obra/superpowers-marketplace": true
+  }
+}
