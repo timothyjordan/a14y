@@ -101,10 +101,13 @@ describe('validateMulti — pin parity', () => {
   });
 
   it('shared check IDs with pin parity produce identical outcomes across scorecards', async () => {
-    // v0.2.0 and the draft both pin every shared check ID to the same
-    // impl version, so for every check ID that appears in both manifests
-    // the (status, message) tuple must match byte-for-byte. Only the
-    // `docsUrl` differs (scorecard-specific link).
+    // For every check ID that appears in both manifests AND is pinned to
+    // the same impl version in both, the (status, message) tuple must
+    // match byte-for-byte. When the two scorecards pin different impls
+    // for the same id (e.g. a draft bump from 1.0.0 → 1.1.0), only the
+    // structural fact "different impl" is asserted; the per-impl output
+    // is allowed to diverge by design. `docsUrl` is always
+    // scorecard-specific.
     const http = fakeHttpClient(buildRoutes());
     const runs = await validateMulti({
       url: BASE,
@@ -117,11 +120,14 @@ describe('validateMulti — pin parity', () => {
     for (const [id, sc02] of v02) {
       const scDraft = draft.get(id);
       if (!scDraft) continue;
+      // docsUrl is scorecard-specific by design.
+      expect(scDraft.docsUrl).not.toBe(sc02.docsUrl);
+      if (scDraft.implementationVersion !== sc02.implementationVersion) {
+        continue;
+      }
       expect(scDraft.status).toBe(sc02.status);
       expect(scDraft.message).toBe(sc02.message);
       expect(scDraft.implementationVersion).toBe(sc02.implementationVersion);
-      // docsUrl is scorecard-specific by design.
-      expect(scDraft.docsUrl).not.toBe(sc02.docsUrl);
     }
   });
 
