@@ -1218,6 +1218,20 @@ a.chip code { color: inherit; }
   margin-top: 8px;
 }
 
+/* Scoring-methodology detail page h1: the heading IS the algorithm
+   identifier (e.g. `per-check-mean-v1`), so it reads as code rather
+   than prose. Strip the inline-code chrome (background, border,
+   small-font) so the monospace identifier renders at hero scale
+   without looking like a tag. */
+.scoring-title code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+}
+
 /* Scorecard sub-header. Sticky strip below the primary nav, used only
    on scorecard pages so the version dropdown lives outside the main
    menu. The `top` offset matches the primary header's
