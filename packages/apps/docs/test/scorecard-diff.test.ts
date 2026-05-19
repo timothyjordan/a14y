@@ -92,10 +92,12 @@ describe('diffScorecards', () => {
     );
   });
 
-  it('reports today\'s draft-vs-latest with the new markdown.* checks added', () => {
-    // The draft has diverged from the latest published scorecard: TJ-456
-    // landed three new markdown.* checks (spec PR). If a future PR removes
-    // or bumps them, update this assertion to match.
+  it('reports today\'s draft-vs-latest with the new markdown.* checks added and the modified-date checks bumped', () => {
+    // The draft has diverged from the latest published scorecard:
+    //   - TJ-456 landed three new markdown.* checks (additions).
+    //   - The modified-date pair was bumped 1.0.0 → 1.1.0 to require
+    //     the value to parse as the spec-defined date format.
+    // If a future PR removes / further bumps these, update this assertion.
     const diff = getDraftDiff();
     expect(diff.added.map((a) => a.id).sort()).toEqual([
       'markdown.navigation-stripped',
@@ -103,7 +105,14 @@ describe('diffScorecards', () => {
       'markdown.valid-markdown',
     ]);
     expect(diff.removed).toEqual([]);
-    expect(diff.bumped).toEqual([]);
+    expect(
+      diff.bumped
+        .map((b) => ({ id: b.id, fromImpl: b.fromImpl, toImpl: b.toImpl }))
+        .sort((a, b) => a.id.localeCompare(b.id)),
+    ).toEqual([
+      { id: 'html.json-ld.date-modified', fromImpl: '1.0.0', toImpl: '1.1.0' },
+      { id: 'sitemap-xml.has-lastmod', fromImpl: '1.0.0', toImpl: '1.1.0' },
+    ]);
   });
 });
 
@@ -114,9 +123,11 @@ describe('getDraftDiffEntries', () => {
       .map((e) => (e.kind === 'methodology-bumped' ? '' : e.id))
       .sort();
     expect(checkIds).toEqual([
+      'html.json-ld.date-modified',
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',
+      'sitemap-xml.has-lastmod',
     ]);
   });
 
