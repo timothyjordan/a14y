@@ -1,6 +1,6 @@
 ---
 /**
- * One-line `+N · M bumped · K removed [· ± methodology] vs v{latest}` chip
+ * One-line `+N · M bumped · K removed [· → methodology] vs v{latest}` chip
  * rendered on the scorecards index page next to the draft entry. Renders
  * nothing when the draft is verbatim identical to the latest published —
  * that avoids noise before the first contribution lands.
@@ -29,7 +29,7 @@ const hasAny =
     {methodologyBump && (
       <>
         {' · '}
-        <span class="diff-summary-methodology">± methodology</span>
+        <span class="diff-summary-methodology">→ methodology</span>
       </>
     )}
     {' '}vs v{latest}

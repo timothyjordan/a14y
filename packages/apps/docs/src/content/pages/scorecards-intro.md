@@ -24,6 +24,10 @@ the algorithm can evolve without retroactively changing the scores
 of older scorecards. A consumer pinned to `v0.2.0` keeps getting the
 v0.2.0 algorithm forever, even after later scorecards adopt newer ones.
 
-Every known algorithm is documented under [Scoring methodologies](/scorecards/scoring/).
-Methodology changes between scorecard versions are recorded on each draft's
-changes page like any other contribution.
+Each scorecard pins exactly one algorithm. v0.2.0 ships
+[`flat-pool-v1`](/scorecards/scoring/flat-pool-v1/); the v0.3.0 draft
+introduces [`per-check-mean-v1`](/scorecards/scoring/per-check-mean-v1/)
+to fix a page-count weighting issue in flat-pool. See
+[every shipped algorithm](/scorecards/scoring/) for the formulas and
+worked examples. Methodology changes between scorecard versions are
+recorded on each draft's changes page like any other contribution.

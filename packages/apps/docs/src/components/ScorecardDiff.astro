@@ -63,7 +63,7 @@ function checkHref(entry: CheckEntry): string {
         <span class="diff-chip diff-chip-bumped">{counts.bumped} bumped</span>
         <span class="diff-chip diff-chip-removed">−{counts.removed} removed</span>
         {methodologyEntry && (
-          <span class="diff-chip diff-chip-methodology">± methodology</span>
+          <span class="diff-chip diff-chip-methodology">→ methodology</span>
         )}
         <a class="diff-all-link" href={`${base}/scorecards/${draftVersion}/changes/`}>View all changes →</a>
       </p>
@@ -77,7 +77,7 @@ function checkHref(entry: CheckEntry): string {
 
   {methodologyEntry && (
     <div class="diff-methodology-row">
-      <span class="diff-kind">± methodology</span>
+      <span class="diff-kind">→ methodology</span>
       <span class="diff-name">Scoring methodology</span>
       <span class="diff-version">
         <a href={getMethodologyHref(methodologyEntry.fromMethodology)}><code>{methodologyEntry.fromMethodology}</code></a>
