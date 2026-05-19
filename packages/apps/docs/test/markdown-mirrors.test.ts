@@ -5,6 +5,7 @@ import {
   renderScorecardVersionChecks,
   renderScorecardDiffSection,
   renderDraftChangesPage,
+  renderFrozenChangesPage,
 } from '../src/integrations/markdown-mirrors';
 import {
   getDraftScorecardVersion,
@@ -138,6 +139,21 @@ describe('markdown-mirrors helpers', () => {
       expect(out).toContain('**Methodology**');
       expect(out).toContain('/scorecards/scoring/flat-pool-v1/');
       expect(out).toContain('/scorecards/scoring/per-check-mean-v1/');
+    });
+  });
+
+  describe('renderFrozenChangesPage', () => {
+    // Regression for the dropdown-404 bug (TJ-598): /<frozen>/changes/ used
+    // to 404 because the page only existed for the draft. The mirror needs
+    // to emit a static pointer body so direct-link + dropdown switches both
+    // resolve to real markdown.
+    it('renders a pointer body linking the draft and release notes', () => {
+      const out = renderFrozenChangesPage(getLatestScorecardVersion());
+      expect(out).toContain(`v${getLatestScorecardVersion()}`);
+      expect(out).toContain('/scorecards/draft/changes/');
+      expect(out).toContain('/release-notes/');
+      expect(out).not.toContain('**Added**');
+      expect(out).not.toContain('**Bumped**');
     });
   });
 

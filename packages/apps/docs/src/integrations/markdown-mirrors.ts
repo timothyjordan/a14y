@@ -264,9 +264,15 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             const resolvedVersion =
               version === 'draft' ? getDraftScorecardVersion() : version;
             const latestPub = getLatestScorecardVersion();
-            title = `Draft scorecard changes vs v${latestPub} · a14y`;
-            description = `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latestPub}.`;
-            body = renderDraftChangesPage(resolvedVersion);
+            if (isDraftScorecardVersion(resolvedVersion)) {
+              title = `Draft scorecard changes vs v${latestPub} · a14y`;
+              description = `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latestPub}.`;
+              body = renderDraftChangesPage(resolvedVersion);
+            } else {
+              title = `Scorecard v${resolvedVersion} · frozen · a14y`;
+              description = `Scorecard v${resolvedVersion} is frozen; its check set and scoring methodology no longer change. The in-flight diff lives on the draft.`;
+              body = renderFrozenChangesPage(resolvedVersion);
+            }
           } else if (pagesSlug && (await readIfExists(path.join(pagesContentDir, `${pagesSlug}.md`))) !== null) {
             const sourcePath = path.join(pagesContentDir, `${pagesSlug}.md`);
             const raw = (await readIfExists(sourcePath))!;
@@ -598,6 +604,22 @@ export function renderScorecardDiffSection(draftVersion: string): string {
     lines.push('');
   }
   return lines.join('\n').replace(/\n+$/, '');
+}
+
+/**
+ * Frozen-version `/changes/` mirror. Frozen scorecards never accrue a
+ * rolling diff after release, so the page is a static pointer at the
+ * draft's changes page plus a link back to the version overview.
+ * Exists so that switching versions in the dropdown from
+ * `/scorecards/<draft>/changes/` does not 404 when landing on a frozen
+ * version's `/changes/` URL.
+ */
+export function renderFrozenChangesPage(version: string): string {
+  return [
+    `Scorecard [v${version}](/scorecards/${version}/) is frozen. Its check set and scoring methodology never change after release, so there is no rolling diff to show here.`,
+    '',
+    'New checks, impl bumps, and methodology changes land on the [draft scorecard\'s changes page](/scorecards/draft/changes/) and are cut into a new frozen version on release. See [release notes](/release-notes/) for the published history.',
+  ].join('\n');
 }
 
 /**
