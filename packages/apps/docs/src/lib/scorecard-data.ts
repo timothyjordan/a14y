@@ -12,7 +12,8 @@ import {
   listScorecards,
   loadDraftChanges,
   resolveScorecardSelector,
-  type DraftChange,
+  type DraftCheckChange,
+  type DraftMethodologyChange,
   type ResolvedCheck,
   type ResolvedScorecard,
   type ScorecardManifest,
@@ -178,44 +179,129 @@ export function diffScorecards(fromVersion: string, toVersion: string): Scorecar
  * with attribution data from `draft-changes.json`. Entries with no matching
  * attribution record carry `attribution: null` (the most common case until
  * the refresh-draft-diff workflow records them post-merge).
+ *
+ * Discriminated union: `methodology-bumped` entries describe a change to the
+ * scorecard's `scoringMethodology` field and have no `id`/impl version; the
+ * other three describe check-level changes and have an `id`.
  */
-export interface DraftDiffEntry {
-  id: string;
-  kind: 'added' | 'removed' | 'bumped';
-  fromImpl?: string;
-  toImpl?: string;
-  attribution: DraftChange | null;
-}
+export type DraftDiffEntry =
+  | {
+      kind: 'added';
+      id: string;
+      toImpl: string;
+      attribution: DraftCheckChange | null;
+    }
+  | {
+      kind: 'removed';
+      id: string;
+      fromImpl: string;
+      attribution: DraftCheckChange | null;
+    }
+  | {
+      kind: 'bumped';
+      id: string;
+      fromImpl: string;
+      toImpl: string;
+      attribution: DraftCheckChange | null;
+    }
+  | {
+      kind: 'methodology-bumped';
+      fromMethodology: string;
+      toMethodology: string;
+      attribution: DraftMethodologyChange | null;
+    };
 
 export function getDraftDiff(): ScorecardDiff {
   return diffScorecards(LATEST_SCORECARD, DRAFT_SCORECARD_VERSION);
 }
 
+export interface MethodologyDiff {
+  fromMethodology: string;
+  toMethodology: string;
+}
+
+export function getDraftMethodologyDiff(): MethodologyDiff | null {
+  const latest = getScorecard(resolveScorecardSelector(LATEST_SCORECARD));
+  const draft = getScorecard(resolveScorecardSelector(DRAFT_SCORECARD_VERSION));
+  if (latest.scoringMethodology === draft.scoringMethodology) return null;
+  return {
+    fromMethodology: latest.scoringMethodology,
+    toMethodology: draft.scoringMethodology,
+  };
+}
+
+export function getMethodologyHref(id: string): string {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return `${base}/scorecards/methodologies/${id}/`;
+}
+
 export function getDraftDiffEntries(): DraftDiffEntry[] {
   const diff = getDraftDiff();
+  const methodologyBump = getDraftMethodologyDiff();
   const attributions = loadDraftChanges().changes;
-  const find = (id: string, kind: DraftDiffEntry['kind']): DraftChange | null =>
-    attributions.find((c) => c.checkId === id && c.kind === kind) ?? null;
 
-  return [
-    ...diff.added.map((c): DraftDiffEntry => ({
-      id: c.id,
+  const findCheck = (
+    id: string,
+    kind: 'added' | 'removed' | 'bumped',
+  ): DraftCheckChange | null => {
+    const found = attributions.find(
+      (c) => c.kind === kind && 'checkId' in c && c.checkId === id,
+    );
+    return (found as DraftCheckChange | undefined) ?? null;
+  };
+
+  const findMethodology = (
+    fromMethodology: string,
+    toMethodology: string,
+  ): DraftMethodologyChange | null => {
+    const found = attributions.find(
+      (c) =>
+        c.kind === 'methodology-bumped' &&
+        c.fromMethodology === fromMethodology &&
+        c.toMethodology === toMethodology,
+    );
+    return (found as DraftMethodologyChange | undefined) ?? null;
+  };
+
+  const entries: DraftDiffEntry[] = [];
+
+  if (methodologyBump) {
+    entries.push({
+      kind: 'methodology-bumped',
+      fromMethodology: methodologyBump.fromMethodology,
+      toMethodology: methodologyBump.toMethodology,
+      attribution: findMethodology(
+        methodologyBump.fromMethodology,
+        methodologyBump.toMethodology,
+      ),
+    });
+  }
+
+  for (const c of diff.added) {
+    entries.push({
       kind: 'added',
-      toImpl: c.toImpl,
-      attribution: find(c.id, 'added'),
-    })),
-    ...diff.bumped.map((c): DraftDiffEntry => ({
       id: c.id,
+      toImpl: c.toImpl,
+      attribution: findCheck(c.id, 'added'),
+    });
+  }
+  for (const c of diff.bumped) {
+    entries.push({
       kind: 'bumped',
+      id: c.id,
       fromImpl: c.fromImpl,
       toImpl: c.toImpl,
-      attribution: find(c.id, 'bumped'),
-    })),
-    ...diff.removed.map((c): DraftDiffEntry => ({
-      id: c.id,
+      attribution: findCheck(c.id, 'bumped'),
+    });
+  }
+  for (const c of diff.removed) {
+    entries.push({
       kind: 'removed',
+      id: c.id,
       fromImpl: c.fromImpl,
-      attribution: find(c.id, 'removed'),
-    })),
-  ];
+      attribution: findCheck(c.id, 'removed'),
+    });
+  }
+
+  return entries;
 }
