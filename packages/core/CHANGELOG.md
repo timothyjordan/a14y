@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.3.17](https://github.com/timothyjordan/a14y/compare/core-v0.3.16...core-v0.3.17) (2026-05-19)
+
+
+### Features
+
+* **core,cli:** repeatable --scorecard flag for multi-scorecard scans (TJ-580) ([#55](https://github.com/timothyjordan/a14y/issues/55)) ([eccdbfd](https://github.com/timothyjordan/a14y/commit/eccdbfd953b8fa2bb3960cb672e10e600f8dbaa0))
+* **core:** add 1.1.0 modified-date checks that validate the date string (TJ-610) ([#58](https://github.com/timothyjordan/a14y/issues/58)) ([37fb634](https://github.com/timothyjordan/a14y/commit/37fb6343c369ba0a190afa428fb474b86a1178e2))
+* **core:** add scoringMethodology to ScorecardManifest (TJ-559) ([#51](https://github.com/timothyjordan/a14y/issues/51)) ([bcce8cf](https://github.com/timothyjordan/a14y/commit/bcce8cf59520605ddfdbfe2ea7545f25f5721ef5))
+* **core:** implement per-check-mean-v1 scoring (TJ-561) ([#54](https://github.com/timothyjordan/a14y/issues/54)) ([c1e3c42](https://github.com/timothyjordan/a14y/commit/c1e3c421745a7778611746c07f47310ce4eb9084))
+* **core:** seed-loading progress events (TJ-235) ([cbcb419](https://github.com/timothyjordan/a14y/commit/cbcb41964e84259731822054b018f088299b48fe))
+* **core:** spec for per-check-mean-v1 scoring methodology (TJ-560) ([#53](https://github.com/timothyjordan/a14y/issues/53)) ([e3fb669](https://github.com/timothyjordan/a14y/commit/e3fb669657c2a7dbc0f29afd0ba2605fc65c9927))
+* **docs:** a14y.dev landing redesign + manual light/dark toggle ([#19](https://github.com/timothyjordan/a14y/issues/19)) ([a9ff3cc](https://github.com/timothyjordan/a14y/commit/a9ff3cc55acdc0eae26fb57bc2b8a69ded78f1ef))
+* **docs:** render draft scorecard diff vs latest published (TJ-416) ([#28](https://github.com/timothyjordan/a14y/issues/28)) ([a4fa1af](https://github.com/timothyjordan/a14y/commit/a4fa1af73379c71116541aa1dd1c8a4c3f2b9d89))
+* introduce draft scorecard workflow for community contributions (TJ-408) ([#9](https://github.com/timothyjordan/a14y/issues/9)) ([431471e](https://github.com/timothyjordan/a14y/commit/431471eef5d6bee2464a31dcdc9b859de7afc01e))
+* **scorecard:** impl — real handlers for three markdown.* checks (TJ-456) ([#39](https://github.com/timothyjordan/a14y/issues/39)) ([1ef2da7](https://github.com/timothyjordan/a14y/commit/1ef2da75d5f53086588858c8b957d02a85838930))
+* **scorecard:** methodology-bumped diff + /scorecards/scoring/ ([#57](https://github.com/timothyjordan/a14y/issues/57)) ([26e4d41](https://github.com/timothyjordan/a14y/commit/26e4d414f29733900edd96e0f3d5ed40b6f4306c))
+* **scorecard:** pin draft to 1.1.0 modified-date checks (TJ-611) ([#59](https://github.com/timothyjordan/a14y/issues/59)) ([4d448ac](https://github.com/timothyjordan/a14y/commit/4d448acf0afab13c398675a729417f4b11e38e84))
+* **scorecard:** spec — three markdown.* draft checks (TJ-456, TJ-288) ([#34](https://github.com/timothyjordan/a14y/issues/34)) ([14c7576](https://github.com/timothyjordan/a14y/commit/14c7576d6252fe1f8c222b1c91c3947c8d383f57))
+* shareable score summary across CLI, extension, and skill (TJ-376) ([#8](https://github.com/timothyjordan/a14y/issues/8)) ([7ce0c0b](https://github.com/timothyjordan/a14y/commit/7ce0c0b9ed8b47489f7623f56847d63fe802ea2d))
+* website badge for sharing a14y scores (TJ-420) ([#16](https://github.com/timothyjordan/a14y/issues/16)) ([77e498a](https://github.com/timothyjordan/a14y/commit/77e498a7ed6970b62bd7578e567375c3f4918332))
+
+
+### Bug Fixes
+
+* **ci:** make release publish job tolerate workspace bumps (TJ-240) ([#33](https://github.com/timothyjordan/a14y/issues/33)) ([fbd1ffe](https://github.com/timothyjordan/a14y/commit/fbd1ffebb811239d40d1e4c71781f88f83d08746))
+* **core:** bound site crawler memory so large sites no longer OOM (TJ-480, TJ-481) ([#40](https://github.com/timothyjordan/a14y/issues/40)) ([9ce3951](https://github.com/timothyjordan/a14y/commit/9ce395128e4a0f92d3e7cf00507719c7c70038d5))
+* **core:** build dist via prepare script so consumers get usable @a14y/core (TJ-470) ([#36](https://github.com/timothyjordan/a14y/issues/36)) ([db74df8](https://github.com/timothyjordan/a14y/commit/db74df87702871ad59f913e29cc74873b9992ab4))
+* **core:** parallelize sitemapindex children with bounded concurrency (TJ-234) ([745a906](https://github.com/timothyjordan/a14y/commit/745a9063618705265d16409a332553a01da5a52d))
+* **core:** per-request timeout in httpClient (TJ-233) ([7396c30](https://github.com/timothyjordan/a14y/commit/7396c304d22ae8547ca71b52a5dfb35bc59658f2))
+* **core:** point DOCS_BASE_URL at canonical a14y.dev (TJ-395) ([#70](https://github.com/timothyjordan/a14y/issues/70)) ([f744bbf](https://github.com/timothyjordan/a14y/commit/f744bbf60776629ee440f30b438aa1b579c5f851))
+* stop crawler discovering phantom URLs from .md mirrors ([#50](https://github.com/timothyjordan/a14y/issues/50)) ([978dedd](https://github.com/timothyjordan/a14y/commit/978dedd535df89103ab28e79125278a6f6322d1c))
+
 ## [0.3.16](https://github.com/timothyjordan/a14y/compare/core-v0.3.15...core-v0.3.16) (2026-05-19)
 
 
