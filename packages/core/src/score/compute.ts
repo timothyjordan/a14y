@@ -130,8 +130,9 @@ function computeScore({ results, passed, applicable, methodology }: ComputeScore
  * applicable firing, the score is `0` (matches flat-pool's "no signal"
  * semantics).
  *
- * See `/scorecards/#scoring-methodology` for the docs spec and motivating
- * example. Pinned by the v0.3.0-draft scorecard and immutable once cut.
+ * See `/scorecards/scoring/per-check-mean-v1/` for the docs spec and
+ * motivating example. Pinned by the v0.3.0-draft scorecard and
+ * immutable once cut.
  */
 function perCheckMeanScore(results: CheckResult[]): number {
   const byCheck = new Map<string, { passed: number; applicable: number }>();

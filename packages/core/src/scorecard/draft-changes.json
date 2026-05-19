@@ -30,6 +30,16 @@
       "author": "timothyjordan",
       "authorUrl": "https://github.com/timothyjordan",
       "mergedAt": "2026-05-15T07:02:36.134Z"
+    },
+    {
+      "kind": "methodology-bumped",
+      "fromMethodology": "flat-pool-v1",
+      "toMethodology": "per-check-mean-v1",
+      "pr": 53,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/53",
+      "author": "timothyjordan",
+      "authorUrl": "https://github.com/timothyjordan",
+      "mergedAt": "2026-05-18T22:01:02Z"
     }
   ]
 }

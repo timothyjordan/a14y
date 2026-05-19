@@ -6,41 +6,60 @@ import {
   getDraftDiffEntries,
   getDraftScorecardVersion,
   getLatestScorecardVersion,
+  getMethodologyHref,
   isDraftScorecardVersion,
+  listAllScorecards,
+  listPublishedScorecards,
   type DraftDiffEntry,
 } from '~/lib/scorecard-data';
 
 /**
  * Release-notes-style page listing every recorded change to the draft
  * scorecard vs the latest published version, with attribution + PR links.
- * Emitted only for draft versions (the literal draft version string + the
- * `/scorecards/draft/` alias). Frozen versions 404 on `/changes/`.
+ *
+ * Generated for every scorecard version plus the literal `/scorecards/draft/`
+ * alias. Frozen versions render a short "this scorecard is frozen; the
+ * in-flight diff lives on the draft" body — that path exists so the version
+ * dropdown can switch between draft and frozen `/changes/` URLs without 404ing.
  */
 export const getStaticPaths = (() => {
   const draftVersion = getDraftScorecardVersion();
-  return [
-    { params: { version: draftVersion }, props: { resolvedVersion: draftVersion } },
-    { params: { version: 'draft' }, props: { resolvedVersion: draftVersion } },
-  ];
+  const paths = listAllScorecards().map((card) => ({
+    params: { version: card.version },
+    props: { resolvedVersion: card.version },
+  }));
+  paths.push({ params: { version: 'draft' }, props: { resolvedVersion: draftVersion } });
+  return paths;
 }) satisfies GetStaticPaths;
 
 const resolvedVersion = Astro.props.resolvedVersion as string;
 const latest = getLatestScorecardVersion();
-const entries = getDraftDiffEntries();
+const isDraft = isDraftScorecardVersion(resolvedVersion);
+const entries = isDraft ? getDraftDiffEntries() : [];
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-if (!isDraftScorecardVersion(resolvedVersion)) {
-  throw new Error(`Draft changes page requested for non-draft version "${resolvedVersion}"`);
-}
+// Predecessor lookup for the frozen body: listPublishedScorecards is
+// lex-sorted ascending, so the predecessor is the entry immediately
+// before this one. First release => null and we render the "no
+// predecessor to diff against" copy instead.
+const publishedVersions = listPublishedScorecards().map((c) => c.version);
+const idx = publishedVersions.indexOf(resolvedVersion);
+const predecessorVersion = idx > 0 ? publishedVersions[idx - 1] : null;
 
-function checkName(entry: DraftDiffEntry): string {
+type CheckEntry = Extract<DraftDiffEntry, { kind: 'added' | 'bumped' | 'removed' }>;
+
+function checkName(entry: CheckEntry): string {
   const lookupVersion = entry.kind === 'removed' ? latest : resolvedVersion;
   return getCheckSummary(lookupVersion, entry.id)?.name ?? entry.id;
 }
 
-function checkHref(entry: DraftDiffEntry): string {
+function checkHref(entry: CheckEntry): string {
   const lookupVersion = entry.kind === 'removed' ? latest : resolvedVersion;
   return `${base}/scorecards/${lookupVersion}/checks/${entry.id}/`;
+}
+
+function sortKey(entry: DraftDiffEntry): string {
+  return entry.kind === 'methodology-bumped' ? '__methodology__' : entry.id;
 }
 
 // Sort attributed entries by mergedAt desc (most recent first); pending
@@ -51,35 +70,79 @@ const sorted = [...entries].sort((a, b) => {
   }
   if (a.attribution) return -1;
   if (b.attribution) return 1;
-  return a.id.localeCompare(b.id);
+  return sortKey(a).localeCompare(sortKey(b));
 });
 ---
 
 <BaseLayout
-  title={`Draft scorecard changes vs v${latest} · a14y`}
-  description={`Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latest}, with GitHub attribution.`}
+  title={isDraft
+    ? `Draft scorecard changes vs v${latest} · a14y`
+    : `Scorecard v${resolvedVersion} · frozen · a14y`}
+  description={isDraft
+    ? `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latest}, with GitHub attribution.`
+    : predecessorVersion === null
+      ? `Scorecard v${resolvedVersion} is the first scorecard release and has no predecessor to diff against.`
+      : `Scorecard v${resolvedVersion} shipped as the successor to v${predecessorVersion}; see release notes for the prose summary of what changed at cut time.`}
   scorecardVersion={resolvedVersion}
   showVersionSelector
 >
-  <section class="hero">
-    <div class="hero-text" style="grid-column: 1 / -1;">
-      <div class="eyebrow">
-        <span class="eyebrow-pin">draft changes</span>
-        <span>vs v{latest}</span>
+  {isDraft ? (
+    <>
+      <section class="hero">
+        <div class="hero-text" style="grid-column: 1 / -1;">
+          <div class="eyebrow">
+            <span class="eyebrow-pin">draft changes</span>
+            <span>vs v{latest}</span>
+          </div>
+          <h1>Draft scorecard changes</h1>
+          <p class="lead">
+            Every recorded change to the in-progress scorecard
+            <code>{resolvedVersion}</code> vs the latest published
+            <a href={`${base}/scorecards/${latest}/`}>v{latest}</a>. Attribution is
+            recorded automatically by the
+            <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#diff-refresh-workflow" rel="noopener">refresh-draft-diff workflow</a>
+            on every PR that touches the draft manifest.
+          </p>
+        </div>
+      </section>
+    </>
+  ) : predecessorVersion === null ? (
+    <section class="hero">
+      <div class="hero-text" style="grid-column: 1 / -1;">
+        <div class="eyebrow">
+          <span class="eyebrow-pin">frozen</span>
+          <span>scorecard v{resolvedVersion}</span>
+        </div>
+        <h1>First scorecard release</h1>
+        <p class="lead">
+          Scorecard <a href={`${base}/scorecards/${resolvedVersion}/`}>v{resolvedVersion}</a>
+          is the first scorecard release and therefore doesn't have a changelist.
+          See the <a href={`${base}/scorecards/draft/changes/`}>draft scorecard's changes page</a>
+          for what's in flight for the next release.
+        </p>
       </div>
-      <h1>Draft scorecard changes</h1>
-      <p class="lead">
-        Every recorded change to the in-progress scorecard
-        <code>{resolvedVersion}</code> vs the latest published
-        <a href={`${base}/scorecards/${latest}/`}>v{latest}</a>. Attribution is
-        recorded automatically by the
-        <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#diff-refresh-workflow" rel="noopener">refresh-draft-diff workflow</a>
-        on every PR that touches the draft manifest.
-      </p>
-    </div>
-  </section>
+    </section>
+  ) : (
+    <section class="hero">
+      <div class="hero-text" style="grid-column: 1 / -1;">
+        <div class="eyebrow">
+          <span class="eyebrow-pin">frozen</span>
+          <span>scorecard v{resolvedVersion}</span>
+        </div>
+        <h1>Frozen scorecard</h1>
+        <p class="lead">
+          Scorecard <a href={`${base}/scorecards/${resolvedVersion}/`}>v{resolvedVersion}</a>
+          shipped as the successor to <a href={`${base}/scorecards/${predecessorVersion}/`}>v{predecessorVersion}</a>;
+          see <a href={`${base}/release-notes/`}>release notes</a> for the
+          prose summary of what changed at cut time. The
+          <a href={`${base}/scorecards/draft/changes/`}>draft scorecard's changes page</a>
+          tracks the next release's in-flight diff.
+        </p>
+      </div>
+    </section>
+  )}
 
-  {sorted.length === 0 ? (
+  {isDraft && (sorted.length === 0 ? (
     <p class="lead">
       No contributions yet. The draft is currently identical to v{latest}. See
       <a href="https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#scorecard-lifecycle" rel="noopener">CONTRIBUTING.md</a>
@@ -87,7 +150,32 @@ const sorted = [...entries].sort((a, b) => {
     </p>
   ) : (
     <ol class="changes-list">
-      {sorted.map((entry) => (
+      {sorted.map((entry) => entry.kind === 'methodology-bumped' ? (
+        <li class="change-entry change-entry-methodology">
+          <header>
+            <span class="change-kind change-kind-methodology">methodology</span>
+            <span class="change-name">Scoring methodology</span>
+          </header>
+          <div class="change-version">
+            <a href={getMethodologyHref(entry.fromMethodology)}><code>{entry.fromMethodology}</code></a>
+            {' → '}
+            <a href={getMethodologyHref(entry.toMethodology)}><code>{entry.toMethodology}</code></a>
+          </div>
+          {entry.attribution ? (
+            <footer class="change-attribution">
+              <a href={entry.attribution.authorUrl} rel="noopener">@{entry.attribution.author}</a>
+              {' · '}
+              <a href={entry.attribution.prUrl} rel="noopener">PR #{entry.attribution.pr}</a>
+              {' · '}
+              <time datetime={entry.attribution.mergedAt}>{entry.attribution.mergedAt.slice(0, 10)}</time>
+            </footer>
+          ) : (
+            <footer class="change-attribution change-attribution-pending">
+              attribution pending — the refresh-draft-diff workflow hasn't run for this change yet
+            </footer>
+          )}
+        </li>
+      ) : (
         <li class={`change-entry change-entry-${entry.kind}`}>
           <header>
             <span class={`change-kind change-kind-${entry.kind}`}>{entry.kind}</span>
@@ -115,7 +203,7 @@ const sorted = [...entries].sort((a, b) => {
         </li>
       ))}
     </ol>
-  )}
+  ))}
 </BaseLayout>
 
 <style>
@@ -128,19 +216,16 @@ const sorted = [...entries].sort((a, b) => {
   }
   .change-entry {
     border: 1px solid var(--border);
-    border-left-width: 3px;
     border-radius: var(--radius);
     padding: 14px 18px;
     background: var(--surface);
     display: grid;
     gap: 6px;
   }
-  .change-entry-added { border-left-color: var(--scope-page); }
-  .change-entry-bumped { border-left-color: var(--signal); }
-  .change-entry-removed {
-    border-left-color: var(--text-subtle);
-    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
-  }
+  .change-entry-added { background: color-mix(in oklch, var(--scope-page) 3%, var(--surface)); }
+  .change-entry-bumped { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
+  .change-entry-removed { background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface)); }
+  .change-entry-methodology { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
   .change-entry header {
     display: flex;
     align-items: baseline;
@@ -165,6 +250,10 @@ const sorted = [...entries].sort((a, b) => {
     border-color: color-mix(in oklch, var(--signal) 50%, var(--border));
   }
   .change-kind-removed { color: var(--text-subtle); }
+  .change-kind-methodology {
+    color: var(--signal);
+    border-color: color-mix(in oklch, var(--signal) 50%, var(--border));
+  }
   .change-id {
     font-family: var(--font-mono);
     font-size: 14px;
@@ -181,6 +270,10 @@ const sorted = [...entries].sort((a, b) => {
     font-family: var(--font-mono);
     font-size: 13px;
     color: var(--text-subtle);
+  }
+  .change-version code {
+    font-family: inherit;
+    font-size: inherit;
   }
   .change-attribution {
     font-size: 13px;

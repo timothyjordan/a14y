@@ -1,15 +1,22 @@
 ---
 /**
- * One-line `+N · M bumped · K removed vs v{latest}` chip rendered on the
- * scorecards index page next to the draft entry. Renders nothing when the
- * draft is verbatim identical to the latest published — that avoids noise
- * before the first contribution lands.
+ * One-line `+N · M bumped · K removed [· → methodology] vs v{latest}` chip
+ * rendered on the scorecards index page next to the draft entry. Renders
+ * nothing when the draft is verbatim identical to the latest published —
+ * that avoids noise before the first contribution lands.
  */
-import { getDraftDiff, getLatestScorecardVersion } from '~/lib/scorecard-data';
+import {
+  getDraftDiff,
+  getDraftMethodologyDiff,
+  getLatestScorecardVersion,
+} from '~/lib/scorecard-data';
 
 const diff = getDraftDiff();
+const methodologyBump = getDraftMethodologyDiff();
 const latest = getLatestScorecardVersion();
-const hasAny = diff.added.length + diff.bumped.length + diff.removed.length > 0;
+const hasAny =
+  diff.added.length + diff.bumped.length + diff.removed.length > 0 ||
+  methodologyBump !== null;
 ---
 
 {hasAny && (
@@ -19,6 +26,12 @@ const hasAny = diff.added.length + diff.bumped.length + diff.removed.length > 0;
     <span class="diff-summary-bumped">{diff.bumped.length} bumped</span>
     {' · '}
     <span class="diff-summary-removed">−{diff.removed.length} removed</span>
+    {methodologyBump && (
+      <>
+        {' · '}
+        <span class="diff-summary-methodology">→ methodology</span>
+      </>
+    )}
     {' '}vs v{latest}
   </span>
 )}
@@ -35,4 +48,5 @@ const hasAny = diff.added.length + diff.bumped.length + diff.removed.length > 0;
   .diff-summary-added { color: var(--scope-page); }
   .diff-summary-bumped { color: var(--signal); }
   .diff-summary-removed { color: var(--text-subtle); }
+  .diff-summary-methodology { color: var(--signal); }
 </style>

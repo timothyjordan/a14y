@@ -4,8 +4,10 @@ import {
   diffScorecards,
   getDraftDiff,
   getDraftDiffEntries,
+  getDraftMethodologyDiff,
   getLatestScorecardVersion,
   getDraftScorecardVersion,
+  getMethodologyHref,
 } from '../src/lib/scorecard-data';
 
 describe('diffCheckMaps', () => {
@@ -107,11 +109,54 @@ describe('diffScorecards', () => {
 
 describe('getDraftDiffEntries', () => {
   it('returns one entry per check that has diverged from the latest published', () => {
-    const ids = getDraftDiffEntries().map((e) => e.id).sort();
-    expect(ids).toEqual([
+    const checkIds = getDraftDiffEntries()
+      .filter((e) => e.kind !== 'methodology-bumped')
+      .map((e) => (e.kind === 'methodology-bumped' ? '' : e.id))
+      .sort();
+    expect(checkIds).toEqual([
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',
     ]);
+  });
+
+  it('includes a methodology-bumped entry for the v0.2.0 → v0.3.0-draft change', () => {
+    const entries = getDraftDiffEntries();
+    const methodology = entries.find((e) => e.kind === 'methodology-bumped');
+    expect(methodology, 'expected a methodology-bumped entry').toBeDefined();
+    if (methodology?.kind !== 'methodology-bumped') return; // narrows for TS
+    expect(methodology.fromMethodology).toBe('flat-pool-v1');
+    expect(methodology.toMethodology).toBe('per-check-mean-v1');
+    // PR #53 is the seed; if a later PR changes the methodology again, this
+    // attribution will move to that PR — update the assertion at that point.
+    expect(methodology.attribution).not.toBeNull();
+    expect(methodology.attribution?.pr).toBe(53);
+  });
+
+  it('places the methodology entry first when it exists', () => {
+    // Methodology bumps are scorecard-wide and should read above the per-check
+    // changes in every consumer that doesn't re-sort.
+    const entries = getDraftDiffEntries();
+    expect(entries[0]?.kind).toBe('methodology-bumped');
+  });
+});
+
+describe('getDraftMethodologyDiff', () => {
+  it('returns the current v0.2.0 → v0.3.0-draft methodology bump', () => {
+    const diff = getDraftMethodologyDiff();
+    expect(diff).not.toBeNull();
+    expect(diff?.fromMethodology).toBe('flat-pool-v1');
+    expect(diff?.toMethodology).toBe('per-check-mean-v1');
+  });
+});
+
+describe('getMethodologyHref', () => {
+  it('builds the canonical /scorecards/scoring/<id>/ URL', () => {
+    expect(getMethodologyHref('flat-pool-v1')).toMatch(
+      /\/scorecards\/scoring\/flat-pool-v1\/$/,
+    );
+    expect(getMethodologyHref('per-check-mean-v1')).toMatch(
+      /\/scorecards\/scoring\/per-check-mean-v1\/$/,
+    );
   });
 });

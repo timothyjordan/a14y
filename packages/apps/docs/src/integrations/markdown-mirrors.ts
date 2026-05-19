@@ -228,6 +228,33 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               ? `\n\n${renderScorecardDiffSection(sc.version)}`
               : '';
             body = `${sc.description}\n\n${checksSection}${diffSection}`;
+          } else if (pagesSlug === 'scoring-index') {
+            title = 'Scoring methodologies · a14y';
+            description =
+              'Every scoring algorithm ever pinned by an a14y scorecard. Each scorecard freezes its methodology so historical scores stay reproducible.';
+            body = renderScoringIndex();
+          } else if (pagesSlug === 'scoring-detail') {
+            const idMatch = cleanPath.match(/^scorecards\/scoring\/([^/]+)$/);
+            const methodologyId = idMatch?.[1];
+            if (!methodologyId) {
+              throw new Error(`Could not extract scoring methodology id from ${cleanPath}`);
+            }
+            const scoringDir = path.join(docsRoot, 'src/content/scoring');
+            const raw = await readIfExists(
+              path.join(scoringDir, `${methodologyId}.md`),
+            );
+            if (raw === null) {
+              throw new Error(
+                `Scoring methodology source not found for ${methodologyId} at ${scoringDir}`,
+              );
+            }
+            const parsed = parseFrontmatter(raw);
+            title = String(parsed.frontmatter.title ?? `${methodologyId} · scoring methodology`);
+            description = String(
+              parsed.frontmatter.description ??
+                `a14y scoring methodology · ${methodologyId}`,
+            );
+            body = parsed.body;
           } else if (pagesSlug === 'scorecards-version-changes') {
             const versionMatch = cleanPath.match(/^scorecards\/([^/]+)\/changes$/);
             const version = versionMatch?.[1];
@@ -237,9 +264,15 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             const resolvedVersion =
               version === 'draft' ? getDraftScorecardVersion() : version;
             const latestPub = getLatestScorecardVersion();
-            title = `Draft scorecard changes vs v${latestPub} · a14y`;
-            description = `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latestPub}.`;
-            body = renderDraftChangesPage(resolvedVersion);
+            if (isDraftScorecardVersion(resolvedVersion)) {
+              title = `Draft scorecard changes vs v${latestPub} · a14y`;
+              description = `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latestPub}.`;
+              body = renderDraftChangesPage(resolvedVersion);
+            } else {
+              title = `Scorecard v${resolvedVersion} · frozen · a14y`;
+              description = `Scorecard v${resolvedVersion} is frozen; its check set and scoring methodology no longer change. The in-flight diff lives on the draft.`;
+              body = renderFrozenChangesPage(resolvedVersion);
+            }
           } else if (pagesSlug && (await readIfExists(path.join(pagesContentDir, `${pagesSlug}.md`))) !== null) {
             const sourcePath = path.join(pagesContentDir, `${pagesSlug}.md`);
             const raw = (await readIfExists(sourcePath))!;
@@ -394,6 +427,8 @@ export function resolvePagesSlug(cleanPath: string): string | null {
   if (cleanPath === 'release-notes') return 'release-notes';
   if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
   if (cleanPath === 'scorecards') return 'scorecards';
+  if (cleanPath === 'scorecards/scoring') return 'scoring-index';
+  if (/^scorecards\/scoring\/[^/]+$/.test(cleanPath)) return 'scoring-detail';
   if (/^scorecards\/[^/]+\/changes$/.test(cleanPath)) return 'scorecards-version-changes';
   if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';
   return null;
@@ -482,9 +517,40 @@ export function renderScorecardVersionChecks(version: string): string {
 }
 
 /**
+ * Render the /scorecards/scoring/ index mirror. Source-of-truth is the
+ * scorecard registry — listing every methodology a manifest currently pins
+ * keeps the mirror in sync as the set evolves without a separate index file.
+ */
+export function renderScoringIndex(): string {
+  const cards = listAllScorecards();
+  const byMethodology = new Map<string, string[]>();
+  for (const card of cards) {
+    const id = card.scoringMethodology ?? 'flat-pool-v1';
+    const list = byMethodology.get(id) ?? [];
+    list.push(card.version);
+    byMethodology.set(id, list);
+  }
+  const ids = [...byMethodology.keys()].sort();
+  const lines: string[] = [
+    'How each a14y scorecard turns per-check pass/fail/na results into a single 0–100 number. The algorithm is pinned alongside the check set so it can evolve without retroactively changing the scores of older scorecards.',
+    '',
+    '## Methodologies',
+    '',
+  ];
+  for (const id of ids) {
+    const pins = byMethodology.get(id) ?? [];
+    const versions = pins.map((v) => `v${v}`).join(', ');
+    lines.push(
+      `- [\`${id}\`](/scorecards/scoring/${id}/) — pinned by ${versions}`,
+    );
+  }
+  return lines.join('\n');
+}
+
+/**
  * Inline diff section appended to the draft scorecard's markdown mirror so
- * agents reading the .md see the same added/bumped/removed listing the HTML
- * page shows. Mirrors `ScorecardDiff.astro` in shape and empty-state copy.
+ * agents reading the .md see the same listing the HTML page shows. Mirrors
+ * `ScorecardDiff.astro` in shape and empty-state copy.
  */
 export function renderScorecardDiffSection(draftVersion: string): string {
   const latest = getLatestScorecardVersion();
@@ -494,6 +560,20 @@ export function renderScorecardDiffSection(draftVersion: string): string {
     lines.push('_No changes yet. The draft is currently identical to the latest published scorecard._');
     return lines.join('\n');
   }
+
+  const methodology = entries.find((e) => e.kind === 'methodology-bumped');
+  if (methodology && methodology.kind === 'methodology-bumped') {
+    const attribution = methodology.attribution
+      ? ` (by [@${methodology.attribution.author}](${methodology.attribution.authorUrl}) in [PR #${methodology.attribution.pr}](${methodology.attribution.prUrl}))`
+      : ' _(attribution pending)_';
+    lines.push('### Methodology');
+    lines.push('');
+    lines.push(
+      `- Scoring methodology: [\`${methodology.fromMethodology}\`](/scorecards/scoring/${methodology.fromMethodology}/) → [\`${methodology.toMethodology}\`](/scorecards/scoring/${methodology.toMethodology}/)${attribution}`,
+    );
+    lines.push('');
+  }
+
   const sections: Array<{ kind: 'added' | 'bumped' | 'removed'; heading: string }> = [
     { kind: 'added', heading: 'Added' },
     { kind: 'bumped', heading: 'Bumped' },
@@ -505,6 +585,7 @@ export function renderScorecardDiffSection(draftVersion: string): string {
     lines.push(`### ${section.heading}`);
     lines.push('');
     for (const e of rows) {
+      if (e.kind === 'methodology-bumped') continue;
       const lookupVersion = e.kind === 'removed' ? latest : draftVersion;
       const name = getCheckSummary(lookupVersion, e.id)?.name ?? e.id;
       const versionLabel =
@@ -526,6 +607,32 @@ export function renderScorecardDiffSection(draftVersion: string): string {
 }
 
 /**
+ * Frozen-version `/changes/` mirror. Frozen scorecards never accrue a
+ * rolling diff after release. Branches on whether this is the first
+ * release (no predecessor) so the body reads honestly in both cases.
+ * Exists so the version dropdown can switch from the draft's `/changes/`
+ * page to a frozen `/changes/` URL without 404ing.
+ */
+export function renderFrozenChangesPage(version: string): string {
+  const publishedVersions = listPublishedScorecards().map((c) => c.version);
+  const idx = publishedVersions.indexOf(version);
+  const predecessorVersion = idx > 0 ? publishedVersions[idx - 1] : null;
+
+  if (predecessorVersion === null) {
+    return [
+      `Scorecard [v${version}](/scorecards/${version}/) is the first scorecard release and therefore doesn't have a changelist.`,
+      '',
+      'See the [draft scorecard\'s changes page](/scorecards/draft/changes/) for what\'s in flight for the next release.',
+    ].join('\n');
+  }
+  return [
+    `Scorecard [v${version}](/scorecards/${version}/) shipped as the successor to [v${predecessorVersion}](/scorecards/${predecessorVersion}/); see [release notes](/release-notes/) for the prose summary of what changed at cut time.`,
+    '',
+    'The [draft scorecard\'s changes page](/scorecards/draft/changes/) tracks the next release\'s in-flight diff.',
+  ].join('\n');
+}
+
+/**
  * Full markdown body for the /scorecards/<draft>/changes/ release-notes
  * page. Mirrors the .astro page in shape and empty-state copy.
  */
@@ -544,18 +651,33 @@ export function renderDraftChangesPage(draftVersion: string): string {
     return lines.join('\n');
   }
 
+  const sortKey = (e: typeof entries[number]): string =>
+    e.kind === 'methodology-bumped' ? '__methodology__' : e.id;
+
   const sorted = [...entries].sort((a, b) => {
     if (a.attribution && b.attribution) {
       return b.attribution.mergedAt.localeCompare(a.attribution.mergedAt);
     }
     if (a.attribution) return -1;
     if (b.attribution) return 1;
-    return a.id.localeCompare(b.id);
+    return sortKey(a).localeCompare(sortKey(b));
   });
 
   lines.push('## Changes');
   lines.push('');
   for (const e of sorted) {
+    const attribution = e.attribution
+      ? `_${e.attribution.mergedAt.slice(0, 10)} · by [@${e.attribution.author}](${e.attribution.authorUrl}) · [PR #${e.attribution.pr}](${e.attribution.prUrl})_`
+      : '_attribution pending — the refresh-draft-diff workflow hasn\'t run for this change yet_';
+
+    if (e.kind === 'methodology-bumped') {
+      lines.push(
+        `- **Methodology** [\`${e.fromMethodology}\`](/scorecards/scoring/${e.fromMethodology}/) → [\`${e.toMethodology}\`](/scorecards/scoring/${e.toMethodology}/)`,
+      );
+      lines.push(`  ${attribution}`);
+      continue;
+    }
+
     const lookupVersion = e.kind === 'removed' ? latest : draftVersion;
     const name = getCheckSummary(lookupVersion, e.id)?.name ?? e.id;
     const versionLabel =
@@ -565,9 +687,6 @@ export function renderDraftChangesPage(draftVersion: string): string {
           ? `v${e.fromImpl} → v${e.toImpl}`
           : `was v${e.fromImpl}`;
     const kindLabel = e.kind.charAt(0).toUpperCase() + e.kind.slice(1);
-    const attribution = e.attribution
-      ? `_${e.attribution.mergedAt.slice(0, 10)} · by [@${e.attribution.author}](${e.attribution.authorUrl}) · [PR #${e.attribution.pr}](${e.attribution.prUrl})_`
-      : '_attribution pending — the refresh-draft-diff workflow hasn\'t run for this change yet_';
     lines.push(
       `- **${kindLabel}** [\`${e.id}\`](/scorecards/${lookupVersion}/checks/${e.id}.md) — ${name} · ${versionLabel}`,
     );

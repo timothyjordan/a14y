@@ -24,42 +24,10 @@ the algorithm can evolve without retroactively changing the scores
 of older scorecards. A consumer pinned to `v0.2.0` keeps getting the
 v0.2.0 algorithm forever, even after later scorecards adopt newer ones.
 
-### `flat-pool-v1` *(v0.2.0)*
-
-The original algorithm:
-
-```
-score = round(100 × passed / applicable)
-```
-
-`applicable` is the flat pool of every check firing (site-wide checks
-plus per-page checks across every page audited) that didn't return
-`na`. Simple and intuitive at small scales, but site-wide signals get
-diluted as page count grows: a 500-page audit pushes the site-wide
-checks down to ~0.1% of the denominator, while a 1-page audit puts
-them at ~40%. Different `--max-pages` settings produce different
-effective weightings for the same site's site-wide signals.
-
-### `per-check-mean-v1` *(v0.3.0-draft)*
-
-Introduced in the v0.3.0-draft to fix the page-count dependence:
-
-```
-score = round(mean({ passed/applicable for each check_id where applicable > 0 }))
-```
-
-Each distinct check identity contributes one observation, regardless
-of how many pages it fires on. Site-wide checks and per-page checks
-sit on equal footing per check id; the cap a site is crawled at no
-longer changes the weighting of its site-wide signals. For 1-page
-audits the score is identical to `flat-pool-v1`; for site-mode audits
-inflated cap-hit scores come down toward a more representative number
-(e.g. posthog-docs 97 → 41 on a 500-page audit, where the 97 was
-masking a long tail of failing per-page checks via high `na` rates).
-
-The published draft contract for `per-check-mean-v1` ships before its
-real implementation, per the docs-first 2-PR split documented in
-[`CONTRIBUTING.md`](https://github.com/timothyjordan/a14y/blob/main/CONTRIBUTING.md#docs-first-for-scorecard-changes).
-Until the impl PR lands, `v0.3.0-draft` scores are computed with the
-`flat-pool-v1` formula as a placeholder, with the contract change
-visible in the `scoringMethodology` field of every SiteRun.
+Each scorecard pins exactly one algorithm. v0.2.0 ships
+[`flat-pool-v1`](/scorecards/scoring/flat-pool-v1/); the v0.3.0 draft
+introduces [`per-check-mean-v1`](/scorecards/scoring/per-check-mean-v1/)
+to fix a page-count weighting issue in flat-pool. See
+[every shipped algorithm](/scorecards/scoring/) for the formulas and
+worked examples. Methodology changes between scorecard versions are
+recorded on each draft's changes page like any other contribution.

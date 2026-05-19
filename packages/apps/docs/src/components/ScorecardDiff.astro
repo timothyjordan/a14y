@@ -1,8 +1,8 @@
 ---
 /**
  * Inline diff block rendered on every draft scorecard page. Shows added,
- * bumped, and removed check ids vs the latest published scorecard, with
- * GitHub attribution where the refresh-draft-diff workflow has recorded it.
+ * bumped, removed, and methodology changes vs the latest published scorecard,
+ * with GitHub attribution where the refresh-draft-diff workflow has recorded it.
  *
  * Always renders — even when there are no changes — so the empty state
  * teaches visitors what to expect once a contribution lands.
@@ -11,6 +11,7 @@ import {
   getCheckSummary,
   getDraftDiffEntries,
   getLatestScorecardVersion,
+  getMethodologyHref,
   type DraftDiffEntry,
 } from '~/lib/scorecard-data';
 
@@ -24,7 +25,13 @@ const latest = getLatestScorecardVersion();
 const entries = getDraftDiffEntries();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const counts = entries.reduce(
+const methodologyEntry = entries.find((e) => e.kind === 'methodology-bumped');
+const checkEntries = entries.filter(
+  (e): e is Extract<DraftDiffEntry, { kind: 'added' | 'bumped' | 'removed' }> =>
+    e.kind !== 'methodology-bumped',
+);
+
+const counts = checkEntries.reduce(
   (acc, e) => {
     acc[e.kind] += 1;
     return acc;
@@ -32,14 +39,16 @@ const counts = entries.reduce(
   { added: 0, bumped: 0, removed: 0 },
 );
 
-function checkName(entry: DraftDiffEntry): string {
+type CheckEntry = Extract<DraftDiffEntry, { kind: 'added' | 'bumped' | 'removed' }>;
+
+function checkName(entry: CheckEntry): string {
   // Removed checks may no longer be in the draft; fall back to the latest
   // published manifest where they still exist.
   const lookupVersion = entry.kind === 'removed' ? latest : draftVersion;
   return getCheckSummary(lookupVersion, entry.id)?.name ?? entry.id;
 }
 
-function checkHref(entry: DraftDiffEntry): string {
+function checkHref(entry: CheckEntry): string {
   const lookupVersion = entry.kind === 'removed' ? latest : draftVersion;
   return `${base}/scorecards/${lookupVersion}/checks/${entry.id}/`;
 }
@@ -53,6 +62,9 @@ function checkHref(entry: DraftDiffEntry): string {
         <span class="diff-chip diff-chip-added">+{counts.added} new</span>
         <span class="diff-chip diff-chip-bumped">{counts.bumped} bumped</span>
         <span class="diff-chip diff-chip-removed">−{counts.removed} removed</span>
+        {methodologyEntry && (
+          <span class="diff-chip diff-chip-methodology">→ methodology</span>
+        )}
         <a class="diff-all-link" href={`${base}/scorecards/${draftVersion}/changes/`}>View all changes →</a>
       </p>
     ) : (
@@ -63,9 +75,30 @@ function checkHref(entry: DraftDiffEntry): string {
     )}
   </header>
 
-  {entries.length > 0 && (
+  {methodologyEntry && (
+    <div class="diff-methodology-row">
+      <span class="diff-kind">→ methodology</span>
+      <span class="diff-name">Scoring methodology</span>
+      <span class="diff-version">
+        <a href={getMethodologyHref(methodologyEntry.fromMethodology)}><code>{methodologyEntry.fromMethodology}</code></a>
+        {' → '}
+        <a href={getMethodologyHref(methodologyEntry.toMethodology)}><code>{methodologyEntry.toMethodology}</code></a>
+      </span>
+      {methodologyEntry.attribution ? (
+        <span class="diff-attribution">
+          by <a href={methodologyEntry.attribution.authorUrl} rel="noopener">@{methodologyEntry.attribution.author}</a>
+          {' · '}
+          <a href={methodologyEntry.attribution.prUrl} rel="noopener">#{methodologyEntry.attribution.pr}</a>
+        </span>
+      ) : (
+        <span class="diff-attribution diff-attribution-pending">attribution pending</span>
+      )}
+    </div>
+  )}
+
+  {checkEntries.length > 0 && (
     <ul class="diff-list">
-      {entries.map((entry) => (
+      {checkEntries.map((entry) => (
         <li class={`diff-row diff-row-${entry.kind}`}>
           <span class="diff-kind">
             {entry.kind === 'added' && '+ added'}
@@ -145,9 +178,49 @@ function checkHref(entry: DraftDiffEntry): string {
   .diff-chip-removed {
     color: var(--text-subtle);
   }
+  .diff-chip-methodology {
+    color: var(--signal);
+    border-color: color-mix(in oklch, var(--signal) 50%, var(--border));
+  }
   .diff-all-link {
     margin-left: auto;
     font-size: 13px;
+  }
+  .diff-methodology-row {
+    display: grid;
+    grid-template-columns: minmax(110px, max-content) 1fr max-content;
+    grid-template-areas:
+      'kind name version'
+      '. attribution attribution';
+    align-items: baseline;
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: color-mix(in oklch, var(--signal) 4%, var(--surface));
+    font-size: 14px;
+  }
+  .diff-methodology-row .diff-kind { grid-area: kind; color: var(--signal); }
+  .diff-methodology-row .diff-name { grid-area: name; color: var(--text-muted); }
+  .diff-methodology-row .diff-version {
+    grid-area: version;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+  .diff-methodology-row .diff-version code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .diff-methodology-row .diff-attribution {
+    grid-area: attribution;
+    font-size: 12.5px;
+    color: var(--text-subtle);
+  }
+  .diff-methodology-row .diff-attribution-pending {
+    font-style: italic;
   }
   .diff-list {
     list-style: none;
@@ -167,17 +240,15 @@ function checkHref(entry: DraftDiffEntry): string {
     row-gap: 4px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    border-left-width: 3px;
     border-radius: var(--radius);
     background: var(--surface);
     font-size: 14px;
   }
-  .diff-row-added { border-left-color: var(--scope-page); }
-  .diff-row-bumped { border-left-color: var(--signal); }
-  .diff-row-removed {
-    border-left-color: var(--text-subtle);
-    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
-  }
+  .diff-row-added { background: color-mix(in oklch, var(--scope-page) 3%, var(--surface)); }
+  .diff-row-bumped { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
+  .diff-row-removed { background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface)); }
+  .diff-row-added .diff-kind { color: var(--scope-page); }
+  .diff-row-bumped .diff-kind { color: var(--signal); }
   .diff-kind {
     grid-area: kind;
     font-family: var(--font-mono);
@@ -214,7 +285,7 @@ function checkHref(entry: DraftDiffEntry): string {
     font-style: italic;
   }
   @media (max-width: 640px) {
-    .diff-row {
+    .diff-row, .diff-methodology-row {
       grid-template-columns: 1fr;
       grid-template-areas:
         'kind'
@@ -223,6 +294,13 @@ function checkHref(entry: DraftDiffEntry): string {
         'version'
         'attribution';
       row-gap: 2px;
+    }
+    .diff-methodology-row {
+      grid-template-areas:
+        'kind'
+        'name'
+        'version'
+        'attribution';
     }
   }
 </style>

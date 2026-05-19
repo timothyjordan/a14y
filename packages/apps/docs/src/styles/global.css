@@ -1100,6 +1100,22 @@ main.container h2[id] {
 .chip.site { color: var(--scope-site); border-color: color-mix(in oklch, var(--scope-site) 50%, var(--border)); }
 .chip.page { color: var(--scope-page); border-color: color-mix(in oklch, var(--scope-page) 50%, var(--border)); }
 
+/* Anchor chips carry a hover/focus treatment so the affordance reads as
+   interactive — disambiguates the chip-as-link surface from the static
+   metadata chips that live in the same row. */
+a.chip {
+  text-decoration: none;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+a.chip:hover,
+a.chip:focus-visible {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: var(--surface-alt);
+  text-decoration: none;
+}
+a.chip code { color: inherit; }
+
 .group-section { margin-top: 40px; }
 .group-section h2 {
   display: flex;
@@ -1153,6 +1169,67 @@ main.container h2[id] {
   font-size: 14px;
   margin-top: 6px;
   line-height: 1.5;
+}
+
+/* Scoring-methodology cards on /scorecards/scoring/. Visually mirrors
+   .check-card today, but kept as a distinct class so future treatments
+   of a scoring algorithm card (worked-example previews, applied-versions
+   sparklines) can diverge without dragging check cards along. */
+.scoring-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.scoring-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: block;
+  transition: border-color 160ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+.scoring-card:hover {
+  border-color: var(--border-strong);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.scoring-card .name {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.scoring-card .desc {
+  display: block;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.scoring-card .id {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-subtle);
+  margin-top: 8px;
+}
+
+/* Scoring-methodology detail page h1: the heading IS the algorithm
+   identifier (e.g. `per-check-mean-v1`), so it reads as code rather
+   than prose. Strip the inline-code chrome (background, border,
+   small-font) so the monospace identifier renders at hero scale
+   without looking like a tag. */
+.scoring-title code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
 }
 
 /* Scorecard sub-header. Sticky strip below the primary nav, used only
