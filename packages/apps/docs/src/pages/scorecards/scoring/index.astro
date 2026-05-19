@@ -36,12 +36,12 @@ function pinnedBy(id: string): string[] {
     </div>
   </section>
 
-  <ul class="check-list">
+  <ul class="scoring-list">
     {entries.map((entry) => {
       const pins = pinnedBy(entry.data.id);
       return (
         <li>
-          <a class="check-card" href={`${base}/scorecards/scoring/${entry.data.id}/`}>
+          <a class="scoring-card" href={`${base}/scorecards/scoring/${entry.data.id}/`}>
             <span class="name"><code>{entry.data.id}</code></span>
             <span class="desc">{entry.data.description}</span>
             <span class="id">
