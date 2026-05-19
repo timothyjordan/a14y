@@ -9,6 +9,7 @@ import {
   getMethodologyHref,
   isDraftScorecardVersion,
   listAllScorecards,
+  listPublishedScorecards,
   type DraftDiffEntry,
 } from '~/lib/scorecard-data';
 
@@ -36,6 +37,14 @@ const latest = getLatestScorecardVersion();
 const isDraft = isDraftScorecardVersion(resolvedVersion);
 const entries = isDraft ? getDraftDiffEntries() : [];
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Predecessor lookup for the frozen body: listPublishedScorecards is
+// lex-sorted ascending, so the predecessor is the entry immediately
+// before this one. First release => null and we render the "no
+// predecessor to diff against" copy instead.
+const publishedVersions = listPublishedScorecards().map((c) => c.version);
+const idx = publishedVersions.indexOf(resolvedVersion);
+const predecessorVersion = idx > 0 ? publishedVersions[idx - 1] : null;
 
 type CheckEntry = Extract<DraftDiffEntry, { kind: 'added' | 'bumped' | 'removed' }>;
 
@@ -71,7 +80,9 @@ const sorted = [...entries].sort((a, b) => {
     : `Scorecard v${resolvedVersion} · frozen · a14y`}
   description={isDraft
     ? `Every recorded change to the in-progress scorecard ${resolvedVersion} vs the latest published v${latest}, with GitHub attribution.`
-    : `Scorecard v${resolvedVersion} is frozen; its check set and scoring methodology no longer change. The in-flight diff lives on the draft.`}
+    : predecessorVersion === null
+      ? `Scorecard v${resolvedVersion} is the first scorecard release and has no predecessor to diff against.`
+      : `Scorecard v${resolvedVersion} shipped as the successor to v${predecessorVersion}; see release notes for the prose summary of what changed at cut time.`}
   scorecardVersion={resolvedVersion}
   showVersionSelector
 >
@@ -95,6 +106,22 @@ const sorted = [...entries].sort((a, b) => {
         </div>
       </section>
     </>
+  ) : predecessorVersion === null ? (
+    <section class="hero">
+      <div class="hero-text" style="grid-column: 1 / -1;">
+        <div class="eyebrow">
+          <span class="eyebrow-pin">frozen</span>
+          <span>scorecard v{resolvedVersion}</span>
+        </div>
+        <h1>First scorecard release</h1>
+        <p class="lead">
+          Scorecard <a href={`${base}/scorecards/${resolvedVersion}/`}>v{resolvedVersion}</a>
+          is the first scorecard release and therefore doesn't have a changelist.
+          See the <a href={`${base}/scorecards/draft/changes/`}>draft scorecard's changes page</a>
+          for what's in flight for the next release.
+        </p>
+      </div>
+    </section>
   ) : (
     <section class="hero">
       <div class="hero-text" style="grid-column: 1 / -1;">
@@ -102,16 +129,14 @@ const sorted = [...entries].sort((a, b) => {
           <span class="eyebrow-pin">frozen</span>
           <span>scorecard v{resolvedVersion}</span>
         </div>
-        <h1>No in-flight changes</h1>
+        <h1>Frozen scorecard</h1>
         <p class="lead">
           Scorecard <a href={`${base}/scorecards/${resolvedVersion}/`}>v{resolvedVersion}</a>
-          is frozen. Its check set and scoring methodology never change after
-          release, so there is no rolling diff to show here. New checks,
-          impl bumps, and methodology changes land on the
+          shipped as the successor to <a href={`${base}/scorecards/${predecessorVersion}/`}>v{predecessorVersion}</a>;
+          see <a href={`${base}/release-notes/`}>release notes</a> for the
+          prose summary of what changed at cut time. The
           <a href={`${base}/scorecards/draft/changes/`}>draft scorecard's changes page</a>
-          and are cut into a new frozen version on release. See
-          <a href={`${base}/release-notes/`}>release notes</a> for the
-          published history.
+          tracks the next release's in-flight diff.
         </p>
       </div>
     </section>

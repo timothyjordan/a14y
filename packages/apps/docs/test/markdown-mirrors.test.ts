@@ -147,13 +147,17 @@ describe('markdown-mirrors helpers', () => {
     // to 404 because the page only existed for the draft. The mirror needs
     // to emit a static pointer body so direct-link + dropdown switches both
     // resolve to real markdown.
-    it('renders a pointer body linking the draft and release notes', () => {
+    it('frames a first-release version as "no predecessor to diff against"', () => {
+      // v0.2.0 is currently the first (and only) published release. The
+      // copy must reflect that, not a generic "scorecard is frozen" body.
       const out = renderFrozenChangesPage(getLatestScorecardVersion());
       expect(out).toContain(`v${getLatestScorecardVersion()}`);
+      expect(out).toContain('first scorecard release');
       expect(out).toContain('/scorecards/draft/changes/');
-      expect(out).toContain('/release-notes/');
       expect(out).not.toContain('**Added**');
       expect(out).not.toContain('**Bumped**');
+      // No "successor to" framing when this version IS the first.
+      expect(out).not.toContain('successor to');
     });
   });
 

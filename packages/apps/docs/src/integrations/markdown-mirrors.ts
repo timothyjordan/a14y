@@ -608,17 +608,27 @@ export function renderScorecardDiffSection(draftVersion: string): string {
 
 /**
  * Frozen-version `/changes/` mirror. Frozen scorecards never accrue a
- * rolling diff after release, so the page is a static pointer at the
- * draft's changes page plus a link back to the version overview.
- * Exists so that switching versions in the dropdown from
- * `/scorecards/<draft>/changes/` does not 404 when landing on a frozen
- * version's `/changes/` URL.
+ * rolling diff after release. Branches on whether this is the first
+ * release (no predecessor) so the body reads honestly in both cases.
+ * Exists so the version dropdown can switch from the draft's `/changes/`
+ * page to a frozen `/changes/` URL without 404ing.
  */
 export function renderFrozenChangesPage(version: string): string {
+  const publishedVersions = listPublishedScorecards().map((c) => c.version);
+  const idx = publishedVersions.indexOf(version);
+  const predecessorVersion = idx > 0 ? publishedVersions[idx - 1] : null;
+
+  if (predecessorVersion === null) {
+    return [
+      `Scorecard [v${version}](/scorecards/${version}/) is the first scorecard release and therefore doesn't have a changelist.`,
+      '',
+      'See the [draft scorecard\'s changes page](/scorecards/draft/changes/) for what\'s in flight for the next release.',
+    ].join('\n');
+  }
   return [
-    `Scorecard [v${version}](/scorecards/${version}/) is frozen. Its check set and scoring methodology never change after release, so there is no rolling diff to show here.`,
+    `Scorecard [v${version}](/scorecards/${version}/) shipped as the successor to [v${predecessorVersion}](/scorecards/${predecessorVersion}/); see [release notes](/release-notes/) for the prose summary of what changed at cut time.`,
     '',
-    'New checks, impl bumps, and methodology changes land on the [draft scorecard\'s changes page](/scorecards/draft/changes/) and are cut into a new frozen version on release. See [release notes](/release-notes/) for the published history.',
+    'The [draft scorecard\'s changes page](/scorecards/draft/changes/) tracks the next release\'s in-flight diff.',
   ].join('\n');
 }
 
