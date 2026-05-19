@@ -149,4 +149,6 @@ export {
   type DraftChange,
   type DraftChangeKind,
   type DraftChangesFile,
+  type DraftCheckChange,
+  type DraftMethodologyChange,
 } from './draft-changes';

@@ -1,20 +1,27 @@
 import draftChangesJson from './draft-changes.json';
 
-export type DraftChangeKind = 'added' | 'removed' | 'bumped';
+export type DraftChangeKind = 'added' | 'removed' | 'bumped' | 'methodology-bumped';
 
-export interface DraftChange {
-  checkId: string;
-  kind: DraftChangeKind;
-  /** Previous implementation version. Present on `removed` and `bumped`. */
-  fromImpl?: string;
-  /** New implementation version. Present on `added` and `bumped`. */
-  toImpl?: string;
+interface DraftChangeAttribution {
   pr: number;
   prUrl: string;
   author: string;
   authorUrl: string;
   mergedAt: string;
 }
+
+export type DraftCheckChange =
+  | ({ kind: 'added'; checkId: string; toImpl: string } & DraftChangeAttribution)
+  | ({ kind: 'removed'; checkId: string; fromImpl: string } & DraftChangeAttribution)
+  | ({ kind: 'bumped'; checkId: string; fromImpl: string; toImpl: string } & DraftChangeAttribution);
+
+export type DraftMethodologyChange = {
+  kind: 'methodology-bumped';
+  fromMethodology: string;
+  toMethodology: string;
+} & DraftChangeAttribution;
+
+export type DraftChange = DraftCheckChange | DraftMethodologyChange;
 
 export interface DraftChangesFile {
   /** Baseline published scorecard version the draft is diffed against. */
