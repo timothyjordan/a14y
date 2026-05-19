@@ -24,6 +24,6 @@ the algorithm can evolve without retroactively changing the scores
 of older scorecards. A consumer pinned to `v0.2.0` keeps getting the
 v0.2.0 algorithm forever, even after later scorecards adopt newer ones.
 
-Every known algorithm is documented under [Methodologies](/scorecards/methodologies/).
+Every known algorithm is documented under [Scoring methodologies](/scorecards/scoring/).
 Methodology changes between scorecard versions are recorded on each draft's
 changes page like any other contribution.

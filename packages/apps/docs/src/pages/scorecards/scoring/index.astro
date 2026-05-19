@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { listAllScorecards } from '~/lib/scorecard-data';
 
-const methodologies = (await getCollection('methodologies')).sort((a, b) =>
+const entries = (await getCollection('scoring')).sort((a, b) =>
   a.data.id.localeCompare(b.data.id),
 );
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -23,7 +23,7 @@ function pinnedBy(id: string): string[] {
   <section class="hero">
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
-        <span class="eyebrow-pin">methodologies</span>
+        <span class="eyebrow-pin">scoring</span>
         <span>frozen per scorecard · trend cleanly forever</span>
       </div>
       <h1>Scoring methodologies</h1>
@@ -37,11 +37,11 @@ function pinnedBy(id: string): string[] {
   </section>
 
   <ul class="check-list">
-    {methodologies.map((entry) => {
+    {entries.map((entry) => {
       const pins = pinnedBy(entry.data.id);
       return (
         <li>
-          <a class="check-card" href={`${base}/scorecards/methodologies/${entry.data.id}/`}>
+          <a class="check-card" href={`${base}/scorecards/scoring/${entry.data.id}/`}>
             <span class="name"><code>{entry.data.id}</code></span>
             <span class="desc">{entry.data.description}</span>
             <span class="id">

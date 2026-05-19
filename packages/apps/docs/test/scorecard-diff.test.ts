@@ -151,12 +151,12 @@ describe('getDraftMethodologyDiff', () => {
 });
 
 describe('getMethodologyHref', () => {
-  it('builds the canonical /scorecards/methodologies/<id>/ URL', () => {
+  it('builds the canonical /scorecards/scoring/<id>/ URL', () => {
     expect(getMethodologyHref('flat-pool-v1')).toMatch(
-      /\/scorecards\/methodologies\/flat-pool-v1\/$/,
+      /\/scorecards\/scoring\/flat-pool-v1\/$/,
     );
     expect(getMethodologyHref('per-check-mean-v1')).toMatch(
-      /\/scorecards\/methodologies\/per-check-mean-v1\/$/,
+      /\/scorecards\/scoring\/per-check-mean-v1\/$/,
     );
   });
 });

@@ -4,7 +4,7 @@ import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 
 export const getStaticPaths = (async () => {
-  const entries = await getCollection('methodologies');
+  const entries = await getCollection('scoring');
   return entries.map((entry) => ({
     params: { id: entry.data.id },
     props: { entryId: entry.data.id },
@@ -12,8 +12,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entryId } = Astro.props;
-const entry = await getEntry('methodologies', entryId);
-if (!entry) throw new Error(`Methodology ${entryId} not found`);
+const entry = await getEntry('scoring', entryId);
+if (!entry) throw new Error(`Scoring methodology ${entryId} not found`);
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -22,8 +22,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <section class="hero">
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
-        <span class="eyebrow-pin">methodology</span>
-        <span>scoring algorithm · pinned per scorecard</span>
+        <span class="eyebrow-pin">scoring</span>
+        <span>algorithm · pinned per scorecard</span>
       </div>
       <h1><code>{entry.data.id}</code></h1>
       <p class="lead">{entry.data.description}</p>
@@ -40,7 +40,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <Content />
 
   <p class="lead" style="margin-top: 32px;">
-    See <a href={`${base}/scorecards/methodologies/`}>all methodologies</a> or
+    See <a href={`${base}/scorecards/scoring/`}>all scoring methodologies</a> or
     <a href={`${base}/scorecards/`}>browse scorecards</a> to see which methodology
     each version pins.
   </p>

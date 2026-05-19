@@ -228,24 +228,24 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               ? `\n\n${renderScorecardDiffSection(sc.version)}`
               : '';
             body = `${sc.description}\n\n${checksSection}${diffSection}`;
-          } else if (pagesSlug === 'methodologies-index') {
+          } else if (pagesSlug === 'scoring-index') {
             title = 'Scoring methodologies · a14y';
             description =
               'Every scoring algorithm ever pinned by an a14y scorecard. Each scorecard freezes its methodology so historical scores stay reproducible.';
-            body = renderMethodologiesIndex();
-          } else if (pagesSlug === 'methodology-detail') {
-            const idMatch = cleanPath.match(/^scorecards\/methodologies\/([^/]+)$/);
+            body = renderScoringIndex();
+          } else if (pagesSlug === 'scoring-detail') {
+            const idMatch = cleanPath.match(/^scorecards\/scoring\/([^/]+)$/);
             const methodologyId = idMatch?.[1];
             if (!methodologyId) {
-              throw new Error(`Could not extract methodology id from ${cleanPath}`);
+              throw new Error(`Could not extract scoring methodology id from ${cleanPath}`);
             }
-            const methodologyDir = path.join(docsRoot, 'src/content/methodologies');
+            const scoringDir = path.join(docsRoot, 'src/content/scoring');
             const raw = await readIfExists(
-              path.join(methodologyDir, `${methodologyId}.md`),
+              path.join(scoringDir, `${methodologyId}.md`),
             );
             if (raw === null) {
               throw new Error(
-                `Methodology source not found for ${methodologyId} at ${methodologyDir}`,
+                `Scoring methodology source not found for ${methodologyId} at ${scoringDir}`,
               );
             }
             const parsed = parseFrontmatter(raw);
@@ -421,8 +421,8 @@ export function resolvePagesSlug(cleanPath: string): string | null {
   if (cleanPath === 'release-notes') return 'release-notes';
   if (cleanPath === 'privacy') return 'privacy';   // resolved to privacy-intro/-tail
   if (cleanPath === 'scorecards') return 'scorecards';
-  if (cleanPath === 'scorecards/methodologies') return 'methodologies-index';
-  if (/^scorecards\/methodologies\/[^/]+$/.test(cleanPath)) return 'methodology-detail';
+  if (cleanPath === 'scorecards/scoring') return 'scoring-index';
+  if (/^scorecards\/scoring\/[^/]+$/.test(cleanPath)) return 'scoring-detail';
   if (/^scorecards\/[^/]+\/changes$/.test(cleanPath)) return 'scorecards-version-changes';
   if (/^scorecards\/[^/]+$/.test(cleanPath)) return 'scorecards-version';
   return null;
@@ -511,11 +511,11 @@ export function renderScorecardVersionChecks(version: string): string {
 }
 
 /**
- * Render the /scorecards/methodologies/ index mirror. Source-of-truth is the
+ * Render the /scorecards/scoring/ index mirror. Source-of-truth is the
  * scorecard registry — listing every methodology a manifest currently pins
  * keeps the mirror in sync as the set evolves without a separate index file.
  */
-export function renderMethodologiesIndex(): string {
+export function renderScoringIndex(): string {
   const cards = listAllScorecards();
   const byMethodology = new Map<string, string[]>();
   for (const card of cards) {
@@ -535,7 +535,7 @@ export function renderMethodologiesIndex(): string {
     const pins = byMethodology.get(id) ?? [];
     const versions = pins.map((v) => `v${v}`).join(', ');
     lines.push(
-      `- [\`${id}\`](/scorecards/methodologies/${id}/) — pinned by ${versions}`,
+      `- [\`${id}\`](/scorecards/scoring/${id}/) — pinned by ${versions}`,
     );
   }
   return lines.join('\n');
@@ -563,7 +563,7 @@ export function renderScorecardDiffSection(draftVersion: string): string {
     lines.push('### Methodology');
     lines.push('');
     lines.push(
-      `- Scoring methodology: [\`${methodology.fromMethodology}\`](/scorecards/methodologies/${methodology.fromMethodology}/) → [\`${methodology.toMethodology}\`](/scorecards/methodologies/${methodology.toMethodology}/)${attribution}`,
+      `- Scoring methodology: [\`${methodology.fromMethodology}\`](/scorecards/scoring/${methodology.fromMethodology}/) → [\`${methodology.toMethodology}\`](/scorecards/scoring/${methodology.toMethodology}/)${attribution}`,
     );
     lines.push('');
   }
@@ -640,7 +640,7 @@ export function renderDraftChangesPage(draftVersion: string): string {
 
     if (e.kind === 'methodology-bumped') {
       lines.push(
-        `- **Methodology** [\`${e.fromMethodology}\`](/scorecards/methodologies/${e.fromMethodology}/) → [\`${e.toMethodology}\`](/scorecards/methodologies/${e.toMethodology}/)`,
+        `- **Methodology** [\`${e.fromMethodology}\`](/scorecards/scoring/${e.fromMethodology}/) → [\`${e.toMethodology}\`](/scorecards/scoring/${e.toMethodology}/)`,
       );
       lines.push(`  ${attribution}`);
       continue;

@@ -232,7 +232,7 @@ export function getDraftMethodologyDiff(): MethodologyDiff | null {
 
 export function getMethodologyHref(id: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-  return `${base}/scorecards/methodologies/${id}/`;
+  return `${base}/scorecards/scoring/${id}/`;
 }
 
 export function getDraftDiffEntries(): DraftDiffEntry[] {

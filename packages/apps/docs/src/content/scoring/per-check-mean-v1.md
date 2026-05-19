@@ -7,7 +7,7 @@ appliesTo:
 ---
 
 Introduced in the v0.3.0-draft to fix the page-count dependence in
-[`flat-pool-v1`](/scorecards/methodologies/flat-pool-v1/):
+[`flat-pool-v1`](/scorecards/scoring/flat-pool-v1/):
 
 ```
 score = round(mean({ passed/applicable for each check_id where applicable > 0 }))
