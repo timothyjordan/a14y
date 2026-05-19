@@ -18,14 +18,14 @@
  *
  * Reconciliation rules:
  *
- *   - For every net-diff change (added / removed / bumped) not yet recorded
- *     in draft-changes.json, append a new entry attributed to the current
- *     PR (or to "audit" if PR context is empty).
+ *   - For every net-diff change (added / removed / bumped / methodology-bumped)
+ *     not yet recorded in draft-changes.json, append a new entry attributed to
+ *     the current PR (or to "audit" if PR context is empty).
  *   - For every entry already in draft-changes.json that still matches a
  *     net-diff change, preserve its original attribution.
- *   - For every entry whose check id + kind no longer appears in the net
- *     diff (because a later PR superseded the earlier one), drop it. This
- *     is the conflict-resolution behavior.
+ *   - For every entry whose key no longer appears in the net diff (because a
+ *     later PR superseded the earlier one), drop it. This is the
+ *     conflict-resolution behavior.
  *
  * The script imports compiled core, so the workflow must build core before
  * invoking it. Local preview mode does the same — run
@@ -44,21 +44,24 @@ const JSON_PATH = path.join(REPO_ROOT, 'packages/core/src/scorecard/draft-change
 const args = new Set(process.argv.slice(2));
 const isLocal = args.has('--local');
 
+const METHODOLOGY_NET_KEY = 'methodology-bumped::root';
+
 const core = await loadCore();
 const { SCORECARDS, LATEST_SCORECARD, DRAFT_SCORECARD_VERSION, loadDraftChanges } = core;
 
-const latestChecks = SCORECARDS[LATEST_SCORECARD]?.checks;
-const draftChecks = SCORECARDS[DRAFT_SCORECARD_VERSION]?.checks;
-if (!latestChecks || !draftChecks) {
+const latestManifest = SCORECARDS[LATEST_SCORECARD];
+const draftManifest = SCORECARDS[DRAFT_SCORECARD_VERSION];
+if (!latestManifest || !draftManifest) {
   console.error(
     `Could not load scorecards. Available: ${Object.keys(SCORECARDS).join(', ')}`,
   );
   process.exit(1);
 }
 
-const netDiff = diffCheckMaps(latestChecks, draftChecks);
+const netDiff = diffCheckMaps(latestManifest.checks, draftManifest.checks);
+const methodologyBump = diffMethodology(latestManifest, draftManifest);
 const existing = loadDraftChanges();
-const reconciled = reconcile(existing, netDiff);
+const reconciled = reconcile(existing, netDiff, methodologyBump);
 
 if (isLocal) {
   printPreview(existing, reconciled);
@@ -113,16 +116,40 @@ function diffCheckMaps(from, to) {
   return { added, removed, bumped };
 }
 
-function reconcile(existing, netDiff) {
-  const netKey = (entry) => `${entry.kind}::${entry.checkId}`;
+function diffMethodology(fromManifest, toManifest) {
+  const fromMethodology = fromManifest.scoringMethodology ?? 'flat-pool-v1';
+  const toMethodology = toManifest.scoringMethodology ?? 'flat-pool-v1';
+  if (fromMethodology === toMethodology) return null;
+  return { fromMethodology, toMethodology };
+}
+
+function entryNetKey(entry) {
+  if (entry.kind === 'methodology-bumped') return METHODOLOGY_NET_KEY;
+  return `${entry.kind}::${entry.checkId}`;
+}
+
+function reconcile(existing, netDiff, methodologyBump) {
   const netKeys = new Set();
   for (const c of netDiff.added) netKeys.add(`added::${c.id}`);
   for (const c of netDiff.bumped) netKeys.add(`bumped::${c.id}`);
   for (const c of netDiff.removed) netKeys.add(`removed::${c.id}`);
+  if (methodologyBump) netKeys.add(METHODOLOGY_NET_KEY);
 
-  // Keep only entries that still match a net-diff change.
-  const kept = existing.changes.filter((entry) => netKeys.has(netKey(entry)));
-  const keptKeys = new Set(kept.map(netKey));
+  // Keep only entries that still match a net-diff change. For methodology
+  // entries, also require that the from/to pair still matches — otherwise the
+  // bump direction changed and the old attribution no longer applies.
+  const kept = existing.changes.filter((entry) => {
+    if (!netKeys.has(entryNetKey(entry))) return false;
+    if (entry.kind === 'methodology-bumped') {
+      return (
+        methodologyBump !== null &&
+        entry.fromMethodology === methodologyBump.fromMethodology &&
+        entry.toMethodology === methodologyBump.toMethodology
+      );
+    }
+    return true;
+  });
+  const keptKeys = new Set(kept.map(entryNetKey));
 
   const attribution = buildAttributionContext();
   const fresh = [];
@@ -158,13 +185,23 @@ function reconcile(existing, netDiff) {
       ...attribution,
     });
   }
+  if (methodologyBump && !keptKeys.has(METHODOLOGY_NET_KEY)) {
+    fresh.push({
+      kind: 'methodology-bumped',
+      fromMethodology: methodologyBump.fromMethodology,
+      toMethodology: methodologyBump.toMethodology,
+      ...attribution,
+    });
+  }
 
   const merged = [...kept, ...fresh];
   merged.sort((a, b) => {
     const at = a.mergedAt ?? '';
     const bt = b.mergedAt ?? '';
     if (at !== bt) return at.localeCompare(bt);
-    return a.checkId.localeCompare(b.checkId);
+    const aKey = a.checkId ?? '__methodology__';
+    const bKey = b.checkId ?? '__methodology__';
+    return aKey.localeCompare(bKey);
   });
 
   return {
