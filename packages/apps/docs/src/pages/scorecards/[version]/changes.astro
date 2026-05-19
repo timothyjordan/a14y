@@ -160,20 +160,16 @@ const sorted = [...entries].sort((a, b) => {
   }
   .change-entry {
     border: 1px solid var(--border);
-    border-left-width: 3px;
     border-radius: var(--radius);
     padding: 14px 18px;
     background: var(--surface);
     display: grid;
     gap: 6px;
   }
-  .change-entry-added { border-left-color: var(--scope-page); }
-  .change-entry-bumped { border-left-color: var(--signal); }
-  .change-entry-removed {
-    border-left-color: var(--text-subtle);
-    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
-  }
-  .change-entry-methodology { border-left-color: var(--signal); }
+  .change-entry-added { background: color-mix(in oklch, var(--scope-page) 3%, var(--surface)); }
+  .change-entry-bumped { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
+  .change-entry-removed { background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface)); }
+  .change-entry-methodology { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
   .change-entry header {
     display: flex;
     align-items: baseline;

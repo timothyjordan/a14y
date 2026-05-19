@@ -197,13 +197,11 @@ function checkHref(entry: CheckEntry): string {
     row-gap: 4px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    border-left-width: 3px;
-    border-left-color: var(--signal);
     border-radius: var(--radius);
-    background: var(--surface);
+    background: color-mix(in oklch, var(--signal) 4%, var(--surface));
     font-size: 14px;
   }
-  .diff-methodology-row .diff-kind { grid-area: kind; }
+  .diff-methodology-row .diff-kind { grid-area: kind; color: var(--signal); }
   .diff-methodology-row .diff-name { grid-area: name; color: var(--text-muted); }
   .diff-methodology-row .diff-version {
     grid-area: version;
@@ -242,17 +240,15 @@ function checkHref(entry: CheckEntry): string {
     row-gap: 4px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    border-left-width: 3px;
     border-radius: var(--radius);
     background: var(--surface);
     font-size: 14px;
   }
-  .diff-row-added { border-left-color: var(--scope-page); }
-  .diff-row-bumped { border-left-color: var(--signal); }
-  .diff-row-removed {
-    border-left-color: var(--text-subtle);
-    background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface));
-  }
+  .diff-row-added { background: color-mix(in oklch, var(--scope-page) 3%, var(--surface)); }
+  .diff-row-bumped { background: color-mix(in oklch, var(--signal) 4%, var(--surface)); }
+  .diff-row-removed { background: color-mix(in oklch, var(--text-subtle) 6%, var(--surface)); }
+  .diff-row-added .diff-kind { color: var(--scope-page); }
+  .diff-row-bumped .diff-kind { color: var(--signal); }
   .diff-kind {
     grid-area: kind;
     font-family: var(--font-mono);
