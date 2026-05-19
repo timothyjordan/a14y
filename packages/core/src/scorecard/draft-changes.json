@@ -40,6 +40,28 @@
       "author": "timothyjordan",
       "authorUrl": "https://github.com/timothyjordan",
       "mergedAt": "2026-05-18T22:01:02Z"
+    },
+    {
+      "checkId": "html.json-ld.date-modified",
+      "kind": "bumped",
+      "fromImpl": "1.0.0",
+      "toImpl": "1.1.0",
+      "pr": 13,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/13",
+      "author": "jesserobbins",
+      "authorUrl": "https://github.com/jesserobbins",
+      "mergedAt": "2026-05-19T04:45:01Z"
+    },
+    {
+      "checkId": "sitemap-xml.has-lastmod",
+      "kind": "bumped",
+      "fromImpl": "1.0.0",
+      "toImpl": "1.1.0",
+      "pr": 13,
+      "prUrl": "https://github.com/timothyjordan/a14y/pull/13",
+      "author": "jesserobbins",
+      "authorUrl": "https://github.com/jesserobbins",
+      "mergedAt": "2026-05-19T04:45:01Z"
     }
   ]
 }
