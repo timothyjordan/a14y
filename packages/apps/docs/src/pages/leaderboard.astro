@@ -11,13 +11,53 @@ import {
   getLeaderboard,
   getLlmsTxtAdoption,
   getMostCommonTopFailure,
+  getPromotedScorecard,
   getResearchData,
+  getResearchDataFor,
   getScoreHistogram,
+  listAvailableScorecards,
+  type LeaderboardEntry,
+  type ResearchData,
   type SiteCategory,
 } from '~/lib/research-data';
 
-const research = getResearchData();
-const entries = getLeaderboard();
+// Multi-scorecard selector data. When the publish step (TJ-583) has
+// emitted `src/data/leaderboard/<version>.json` files, render the
+// selector + per-version client-side swapping. Otherwise fall back to
+// the legacy single-scorecard view.
+const availableVersions = listAvailableScorecards();
+const promoted = getPromotedScorecard();
+const isMultiScorecard = availableVersions.length > 1;
+const legacy = getResearchData();
+// In multi-mode the page renders the promoted version by default so
+// the initial paint matches what the selector points at. In legacy
+// mode (no per-version files yet) the existing research.json is the
+// only data source.
+const initialVersion = isMultiScorecard && promoted ? promoted : legacy.scorecardVersion;
+const research: ResearchData = isMultiScorecard && promoted
+  ? getResearchDataFor(promoted)
+  : legacy;
+// When per-version files are present they cover the selector list;
+// otherwise the implicit "list" is just the legacy version.
+const selectorVersions = isMultiScorecard ? availableVersions : [legacy.scorecardVersion];
+// Embed the lightweight LeaderboardEntry arrays for every version so
+// the client can re-rank the table without round-tripping. Score
+// distribution / category bars / hardest checks stay rendered for the
+// promoted version — they're computed derivatives that would balloon
+// the bundle if duplicated per version; a follow-up issue can wire
+// them up if the comparison story needs it.
+const entriesByVersion: Record<string, LeaderboardEntry[]> = isMultiScorecard
+  ? Object.fromEntries(
+      availableVersions.map((v) => [v, getResearchDataFor(v).sites] as const),
+    )
+  : { [legacy.scorecardVersion]: legacy.sites };
+const methodologyByVersion: Record<string, string | undefined> = isMultiScorecard
+  ? Object.fromEntries(
+      availableVersions.map((v) => [v, getResearchDataFor(v).scoringMethodology] as const),
+    )
+  : { [legacy.scorecardVersion]: legacy.scoringMethodology };
+
+const entries = research.sites;
 const hist = getScoreHistogram();
 const catStats = getCategoryStats();
 const hardestChecks = getHardestChecks();
@@ -36,6 +76,11 @@ const generatedLabel = isNaN(generated.getTime())
 const meanScore = entries.length
   ? Math.round((entries.reduce((s, e) => s + e.score, 0) / entries.length) * 10) / 10
   : 0;
+
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+function methodologyUrl(methodology: string | undefined): string {
+  return methodology ? `${base}/scorecards/scoring/${methodology}/` : `${base}/scorecards/`;
+}
 ---
 
 <BaseLayout
@@ -47,8 +92,36 @@ const meanScore = entries.length
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
         <span class="eyebrow-pin">leaderboard</span>
-        <span>scorecard v{research.scorecardVersion} · updated {generatedLabel}</span>
+        <span data-eyebrow-meta>
+          scorecard v<span data-active-version>{research.scorecardVersion}</span> · updated {generatedLabel}
+        </span>
       </div>
+      {isMultiScorecard && (
+        <div class="scorecard-selector" data-scorecard-selector>
+          <label class="selector-label" for="scorecard-select">Scorecard:</label>
+          <select id="scorecard-select" data-scorecard-select>
+            {selectorVersions.map((v) => (
+              <option value={v} selected={v === initialVersion}>
+                v{v}
+                {v === promoted ? ' (latest)' : ''}
+              </option>
+            ))}
+          </select>
+          <span class="selector-meta">
+            scoring:
+            {selectorVersions.map((v) => (
+              <a
+                class="methodology-link"
+                href={methodologyUrl(methodologyByVersion[v])}
+                data-version={v}
+                hidden={v !== initialVersion}
+              >
+                <code>{methodologyByVersion[v] ?? '—'}</code>
+              </a>
+            ))}
+          </span>
+        </div>
+      )}
       <h1>How well do agents see the web?</h1>
       <p class="lead research-lead">
         Most of the web was built for human eyes. AI agents (coding
@@ -130,6 +203,21 @@ const meanScore = entries.length
       No sites match your filters. <button type="button" data-filter-reset-link>Reset filters</button>.
     </p>
     <LeaderboardTable entries={entries} scorecardVersion={research.scorecardVersion} />
+    {isMultiScorecard && (
+      <script
+        type="application/json"
+        data-leaderboard-versions
+        set:html={JSON.stringify({
+          initialVersion,
+          promoted,
+          entriesByVersion,
+          methodologyByVersion,
+          methodologyBase: `${base}/scorecards/scoring/`,
+          checkDocsBase: `${base}/scorecards/`,
+          siteRunBase: `${base}/leaderboard/`,
+        })}
+      />
+    )}
     <nav class="pager" aria-label="Leaderboard pagination" data-pager>
       <button type="button" class="pager-btn" data-pager-prev disabled aria-label="Previous page">←</button>
       <span class="pager-status" data-pager-status>Page 1</span>
@@ -226,6 +314,64 @@ const meanScore = entries.length
     max-width: 64ch;
     font-size: 18px;
     line-height: 1.6;
+  }
+
+  /* Scorecard selector sits below the eyebrow chip, above the H1. The
+     methodology link is anchored next to the dropdown so the rubric
+     contract (version + scoring algorithm) reads as one unit. */
+  .scorecard-selector {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin: 8px 0 16px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-alt);
+    font-size: 13px;
+  }
+  .selector-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .scorecard-selector select {
+    appearance: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text);
+  }
+  .scorecard-selector select:focus {
+    outline: 2px solid color-mix(in oklch, var(--brand-ink) 30%, transparent);
+    border-color: var(--border-strong);
+  }
+  .selector-meta {
+    color: var(--text-subtle);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .methodology-link {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .methodology-link[hidden] { display: none; }
+  .methodology-link code {
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+  .methodology-link:hover code {
+    border-color: var(--border-strong);
   }
 
   /* TOC reads as a "what's next" tail to the lead paragraph rather than
@@ -484,6 +630,148 @@ const meanScore = entries.length
 </style>
 
 <script is:inline>
+  // Vanilla JS: swap leaderboard data between scorecard versions based on
+  // ?scorecard=<v>. Runs before the filter/pager IIFE so by the time it
+  // captures `var rows = document.querySelectorAll('.lb-row')`, the rows
+  // already reflect the active version. On selector change we rebuild
+  // <tbody>, then re-fire the filter/pager via a custom event so the new
+  // rows pick up the existing filter state.
+  (function () {
+    var dataNode = document.querySelector('[data-leaderboard-versions]');
+    var selector = document.querySelector('[data-scorecard-select]');
+    if (!dataNode || !selector) return; // single-scorecard mode
+    var payload;
+    try {
+      payload = JSON.parse(dataNode.textContent || '{}');
+    } catch (e) {
+      return;
+    }
+    var byVersion = payload.entriesByVersion || {};
+    var methodologyByVersion = payload.methodologyByVersion || {};
+    var methodologyBase = payload.methodologyBase || '';
+    var checkDocsBase = payload.checkDocsBase || '';
+    var siteRunBase = payload.siteRunBase || '';
+
+    function categoryLabel(cat) {
+      var map = {
+        'docs-platform': 'Docs platform',
+        'dev-tool': 'Dev tool',
+        'enterprise': 'Enterprise SaaS',
+        'reference': 'Reference',
+        'consumer': 'Consumer'
+      };
+      return map[cat] || cat;
+    }
+    function scoreBand(score) {
+      if (score >= 85) return 'excellent';
+      if (score >= 70) return 'good';
+      if (score >= 50) return 'fair';
+      return 'poor';
+    }
+    function hostOf(url) {
+      try {
+        return new URL(url).host.replace(/^www\./, '');
+      } catch (e) {
+        return url;
+      }
+    }
+    function escape(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Rebuild the leaderboard <tbody> + per-row data attributes for
+    // `version`. Mirrors LeaderboardTable.astro's row markup; if that
+    // template changes, this string must change with it.
+    function renderRows(version) {
+      var entries = byVersion[version] || [];
+      var html = '';
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        var href = siteRunBase + e.slug + '/?scorecard=' + encodeURIComponent(version);
+        var topFailures = (e.topFailures || []).slice(0, 2).map(function (id) {
+          return '<a class="lb-fail-id" href="' + checkDocsBase + escape(version) + '/checks/' + escape(id) + '/">' + escape(id) + '</a>';
+        }).join('');
+        var more = (e.topFailures && e.topFailures.length > 2)
+          ? '<span class="lb-fail-more" title="' + escape(e.topFailures.slice(2).join(', ')) + '">+' + (e.topFailures.length - 2) + '</span>'
+          : '';
+        var failCell = (e.topFailures && e.topFailures.length)
+          ? '<span class="lb-fails">' + topFailures + more + '</span>'
+          : '<span class="lb-no-fail">none</span>';
+        html +=
+          '<tr class="lb-row"' +
+            ' data-slug="' + escape(e.slug) + '"' +
+            ' data-href="' + escape(href) + '"' +
+            ' data-name="' + escape(e.name.toLowerCase()) + '"' +
+            ' data-category="' + escape(e.category) + '"' +
+            ' data-score="' + escape(e.score) + '">' +
+            '<td class="col-rank"><span class="rank">' + (i + 1) + '</span></td>' +
+            '<td class="col-name">' +
+              '<a href="' + escape(href) + '">' +
+                '<span class="lb-name">' + escape(e.name) + '</span>' +
+                '<span class="lb-host">' + escape(hostOf(e.url)) + '</span>' +
+              '</a>' +
+            '</td>' +
+            '<td class="col-cat">' +
+              '<span class="chip cat-' + escape(e.category) + '">' + escape(categoryLabel(e.category)) + '</span>' +
+            '</td>' +
+            '<td class="col-score">' +
+              '<span class="score-pill score-' + scoreBand(e.score) + '">' + escape(e.score) + '</span>' +
+            '</td>' +
+            '<td class="col-fail">' + failCell + '</td>' +
+          '</tr>';
+      }
+      return html;
+    }
+
+    function activate(version, opts) {
+      var tbody = document.querySelector('.leaderboard tbody');
+      if (!tbody) return;
+      tbody.innerHTML = renderRows(version);
+
+      // Mirror eyebrow + methodology link to the new version.
+      var versionLabel = document.querySelector('[data-active-version]');
+      if (versionLabel) versionLabel.textContent = version;
+      var methLinks = document.querySelectorAll('.methodology-link');
+      for (var i = 0; i < methLinks.length; i++) {
+        var v = methLinks[i].getAttribute('data-version');
+        if (v === version) methLinks[i].removeAttribute('hidden');
+        else methLinks[i].setAttribute('hidden', 'hidden');
+      }
+
+      // Keep selector in sync (handles initial load from URL).
+      if (selector.value !== version) selector.value = version;
+
+      // Reflect in URL without scrolling. Skip on the initial sync so
+      // the canonical `/leaderboard/` link doesn't accidentally become
+      // `/leaderboard/?scorecard=<promoted>` for crawlers.
+      if (opts && opts.pushUrl) {
+        var url = new URL(window.location.href);
+        if (version === payload.promoted) url.searchParams.delete('scorecard');
+        else url.searchParams.set('scorecard', version);
+        window.history.replaceState({}, '', url.toString());
+      }
+
+      // Notify the filter/pager script that the row set changed so it
+      // can re-snapshot and re-apply. The IIFE below listens for this.
+      document.dispatchEvent(new CustomEvent('leaderboard:rows-changed'));
+    }
+
+    // Initial sync from ?scorecard=<v>. Falls back to the promoted /
+    // server-rendered version when the param is missing or invalid.
+    var params = new URLSearchParams(window.location.search);
+    var requested = params.get('scorecard');
+    var startVersion = (requested && byVersion[requested]) ? requested : payload.initialVersion;
+    if (startVersion !== payload.initialVersion) {
+      // Only rebuild if the URL asked for a different version than what
+      // was server-rendered.
+      activate(startVersion, { pushUrl: false });
+    }
+
+    selector.addEventListener('change', function () {
+      activate(selector.value, { pushUrl: true });
+    });
+  })();
+
   // Vanilla JS: filter + paginate the leaderboard. No framework runtime;
   // the full table is rendered statically and we toggle row visibility
   // in two passes: filter (name + category) decides which rows MATCH,
@@ -498,9 +786,20 @@ const meanScore = entries.length
     var resetBtn = bar.querySelector('[data-filter-reset]');
     var emptyMsg = document.querySelector('[data-filter-empty]');
     var emptyResetLink = emptyMsg && emptyMsg.querySelector('[data-filter-reset-link]');
+    // `rows` and `totalRows` re-read from the DOM when the
+    // leaderboard:rows-changed event fires (i.e. after the scorecard
+    // selector rebuilds <tbody>), so version swaps keep the filter
+    // operating on the live row set.
     var rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
     var counter = document.querySelector('[data-visible-count]');
     var totalRows = rows.length;
+
+    document.addEventListener('leaderboard:rows-changed', function () {
+      rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+      totalRows = rows.length;
+      currentPage = 1;
+      apply();
+    });
 
     var pager = document.querySelector('[data-pager]');
     var prevBtn = pager && pager.querySelector('[data-pager-prev]');
