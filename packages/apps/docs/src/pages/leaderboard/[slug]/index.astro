@@ -7,8 +7,8 @@ import CheckResultCard from '~/components/research/CheckResultCard.astro';
 import PageDetails from '~/components/research/PageDetails.astro';
 import {
   CATEGORY_LABELS,
+  getLatestAvailableScorecard,
   getLeaderboard,
-  getPromotedScorecard,
 } from '~/lib/research-data';
 import {
   listSiteRunSlugs,
@@ -36,15 +36,15 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-// In multi-scorecard mode we render the promoted version statically,
+// In multi-scorecard mode we render the latest version statically,
 // but discover every other version's SiteRun ahead of the
 // `?scorecard=<v>` switch so the JS swap is instantaneous (no fetch).
 // In single-scorecard mode the versioned list is empty and the page
 // behaves exactly as before.
 const versionedScorecards = listVersionedRunScorecards();
-const promoted = getPromotedScorecard();
+const latest = getLatestAvailableScorecard();
 const isMultiScorecard = versionedScorecards.length > 1;
-const defaultVersion = promoted ?? undefined;
+const defaultVersion = latest ?? undefined;
 const run = (await loadSiteRun(entry.slug, defaultVersion))!;
 
 interface VersionedRunSummary {
@@ -125,7 +125,24 @@ function methodologyUrl(methodology: string | undefined): string {
     <div class="site-meta">
       <span class={`chip cat-${entry.category}`}>{CATEGORY_LABELS[entry.category]}</span>
       <span class={`chip ${isSite ? 'site' : 'page'}`}>{isSite ? 'site scan' : 'page check'}</span>
-      <span class="meta-text">scorecard v<span data-active-version>{run.scorecardVersion}</span></span>
+      <span class="meta-text">
+        scorecard{' '}
+        {isMultiScorecard && versionedSummaries.length > 1 ? (
+          <label class="eyebrow-select" aria-label="Scorecard version">
+            <select data-site-scorecard-select>
+              {versionedSummaries.map((vs) => (
+                <option
+                  value={vs.scorecardVersion}
+                  selected={vs.scorecardVersion === run.scorecardVersion}
+                >v{vs.scorecardVersion}</option>
+              ))}
+            </select>
+            <span class="eyebrow-select-caret" aria-hidden="true">▾</span>
+          </label>
+        ) : (
+          <>v<span data-active-version>{run.scorecardVersion}</span></>
+        )}
+      </span>
       {scannedAt && (
         <span class="meta-text">
           scanned <span data-active-scanned>{scannedAt}</span>
@@ -133,28 +150,10 @@ function methodologyUrl(methodology: string | undefined): string {
       )}
       {runMethodology && (
         <a class="meta-link" href={methodologyUrl(runMethodology)} data-methodology-link>
-          scoring: <code data-active-methodology>{runMethodology}</code>
+          scored <span data-active-methodology>{runMethodology}</span>
         </a>
       )}
     </div>
-    {isMultiScorecard && versionedSummaries.length > 1 && (
-      <div class="scorecard-selector site-selector" data-site-scorecard-selector>
-        <label class="selector-label" for="site-scorecard-select">Scorecard:</label>
-        <select id="site-scorecard-select" data-site-scorecard-select>
-          {versionedSummaries.map((vs) => (
-            <option value={vs.scorecardVersion} selected={vs.scorecardVersion === run.scorecardVersion}>
-              v{vs.scorecardVersion}
-              {vs.scorecardVersion === promoted ? ' (latest)' : ''}
-              {' · '}
-              {vs.summary.score}/100
-            </option>
-          ))}
-        </select>
-        <span class="selector-note">
-          Switch versions for a quick summary; full per-page detail loads on the version-specific URL.
-        </span>
-      </div>
-    )}
   </header>
   <hr class="header-rule" />
 
@@ -177,7 +176,7 @@ function methodologyUrl(methodology: string | undefined): string {
       type="application/json"
       data-site-versions
       set:html={JSON.stringify({
-        promoted,
+        latest,
         slug: entry.slug,
         siteRunBase: `${base}/leaderboard/`,
         methodologyBase: `${base}/scorecards/scoring/`,
@@ -316,60 +315,53 @@ function methodologyUrl(methodology: string | undefined): string {
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--text-subtle);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--text-subtle) 30%, transparent);
+    text-underline-offset: 2px;
   }
-  .meta-link code {
+  .meta-link:hover {
     color: var(--text-muted);
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 11px;
+    text-decoration-color: currentColor;
   }
-  .meta-link:hover code { border-color: var(--border-strong); color: var(--text); }
   .meta-link[hidden] { display: none; }
 
-  /* Per-site scorecard selector sits in the header above the rule and
-     scorecard hero. Mirrors the dropdown chrome used on /leaderboard/
-     so a user who switched there sees the same shape here. */
-  .site-selector {
+  /* Shared with the /leaderboard/ eyebrow selector: inline <select>
+     with native chrome stripped so the control reads as part of the
+     mono meta-text. Dashed underline + ▾ caret signal interactivity
+     without becoming a UI box. */
+  .eyebrow-select {
     display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    margin: 14px 0 0;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-alt);
-    font-size: 13px;
+    align-items: baseline;
+    gap: 2px;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px dashed color-mix(in oklch, var(--text-subtle) 60%, transparent);
   }
-  .site-selector .selector-label {
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .eyebrow-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    line-height: inherit;
+    outline: none;
   }
-  .site-selector select {
-    appearance: auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 4px 8px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text);
+  .eyebrow-select select::-ms-expand { display: none; }
+  .eyebrow-select:hover {
+    border-bottom-color: color-mix(in oklch, var(--text-muted) 70%, transparent);
   }
-  .site-selector select:focus {
-    outline: 2px solid color-mix(in oklch, var(--brand-ink) 30%, transparent);
-    border-color: var(--border-strong);
+  .eyebrow-select:focus-within {
+    border-bottom-color: var(--text);
+    border-bottom-style: solid;
   }
-  .selector-note {
+  .eyebrow-select-caret {
+    font-size: 0.85em;
     color: var(--text-subtle);
-    font-size: 12px;
-    max-width: 38ch;
-    line-height: 1.4;
+    line-height: 1;
   }
 
   /* Scorecard hero: a card whose only status signal is the big colored
@@ -564,18 +556,18 @@ function methodologyUrl(methodology: string | undefined): string {
       if (selector.value !== version) selector.value = version;
 
       // Update the back-to-leaderboard link to preserve the scorecard
-      // selection on the way back. Use the bare path for the promoted
+      // selection on the way back. Use the bare path for the latest
       // version so the canonical URL is clean.
       var backLink = document.querySelector('[data-back-link]');
       if (backLink) {
         var href = payload.leaderboardBase;
-        if (version !== payload.promoted) href += '?scorecard=' + encodeURIComponent(version);
+        if (version !== payload.latest) href += '?scorecard=' + encodeURIComponent(version);
         backLink.setAttribute('href', href);
       }
 
       if (opts && opts.pushUrl) {
         var url = new URL(window.location.href);
-        if (version === payload.promoted) url.searchParams.delete('scorecard');
+        if (version === payload.latest) url.searchParams.delete('scorecard');
         else url.searchParams.set('scorecard', version);
         window.history.replaceState({}, '', url.toString());
       }

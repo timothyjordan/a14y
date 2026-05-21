@@ -16,6 +16,7 @@
 import type { SiteRun } from '@a14y/core';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { compareScorecardVersions, getLatestAvailableScorecard } from './research-data';
 
 const RUNS_DIR = resolve(process.cwd(), 'src', 'data', 'runs');
 const LEADERBOARD_DIR = resolve(process.cwd(), 'src', 'data', 'leaderboard');
@@ -40,6 +41,9 @@ const SLUGS: string[] = (() => {
  * legacy `src/data/runs/<slug>.json` (which mirrors the promoted
  * version for backwards-compat). Discovered at build time so the
  * directory is allowed to be absent on single-scorecard publishes.
+ *
+ * Sorted newest → oldest so the per-site scorecard selector renders
+ * the latest version first, matching the leaderboard root convention.
  */
 const VERSIONED_RUN_VERSIONS: string[] = (() => {
   if (!existsSync(LEADERBOARD_DIR)) return [];
@@ -48,7 +52,7 @@ const VERSIONED_RUN_VERSIONS: string[] = (() => {
       .filter((d) => d.isDirectory())
       .map((d) => d.name)
       .filter((name) => existsSync(join(LEADERBOARD_DIR, name, 'runs')))
-      .sort();
+      .sort((a, b) => compareScorecardVersions(b, a));
   } catch {
     return [];
   }
@@ -100,8 +104,17 @@ export function scoreClass(score: number): 'pass' | 'warn' | 'fail' {
 /**
  * Build the path to a per-site scorecard page, honoring BASE_URL so it
  * works both at the root and under a deploy-prefix.
+ *
+ * When `version` is provided and isn't the latest available scorecard,
+ * a `?scorecard=<version>` query is appended so the per-site page lands
+ * on the selected version (its swap script reads the param on load).
+ * The latest version uses the bare path so the canonical URL stays
+ * clean — same convention as the leaderboard root URL.
  */
-export function siteRunUrl(slug: string): string {
+export function siteRunUrl(slug: string, version?: string): string {
   const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
-  return `${base}/leaderboard/${slug}/`;
+  const latest = getLatestAvailableScorecard();
+  const carry = version && version !== latest;
+  const query = carry ? `?scorecard=${encodeURIComponent(version)}` : '';
+  return `${base}/leaderboard/${slug}/${query}`;
 }

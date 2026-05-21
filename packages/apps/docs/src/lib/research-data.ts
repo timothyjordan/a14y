@@ -132,7 +132,15 @@ const VERSIONED: VersionedLeaderboards = (() => {
     const version = f.slice(0, -'.json'.length);
     try {
       const raw = readFileSync(join(LEADERBOARD_DIR, f), 'utf8');
-      byVersion[version] = JSON.parse(raw) as ResearchData;
+      const parsed = JSON.parse(raw) as ResearchData;
+      // Skip leaderboards with no sites. The user-facing "latest" picker
+      // is supposed to surface only versions with actual audit data —
+      // a stub file (or an in-progress publish that wrote the leaderboard
+      // before its runs/) shouldn't be selectable. Empty-leaderboard
+      // versions are silently dropped from `versions`.
+      if (Array.isArray(parsed.sites) && parsed.sites.length > 0) {
+        byVersion[version] = parsed;
+      }
     } catch {
       // Skip malformed file; the version is dropped from the selector.
     }
@@ -146,24 +154,80 @@ const VERSIONED: VersionedLeaderboards = (() => {
       promoted = null;
     }
   }
-  const versions = Object.keys(byVersion).sort();
+  // Sort newest → oldest. The UI defaults to the newest version with
+  // data, and the selector lists versions in this order, so a user
+  // hitting `/leaderboard/` lands on the most current scores by
+  // default and the older versions read as "back in the day" rows
+  // beneath. `compareScorecardVersions` handles semver semantics
+  // (numeric major/minor/patch, pre-release < release).
+  const versions = Object.keys(byVersion).sort((a, b) => compareScorecardVersions(b, a));
   return { versions, byVersion, promoted };
 })();
 
 /**
+ * Compare two scorecard version strings using semver-ish rules:
+ *   - major.minor.patch compared numerically (so 10.0.0 > 9.0.0).
+ *   - within the same base, a pre-release suffix (e.g. `-draft`) sorts
+ *     BELOW the corresponding release. So `0.3.0-draft` < `0.3.0`.
+ *   - pre-releases at the same base are ordered alphabetically by suffix.
+ *
+ * Returns a negative number when a < b, 0 when equal, positive when a > b
+ * — Array.prototype.sort contract.
+ */
+export function compareScorecardVersions(a: string, b: string): number {
+  const parse = (v: string): { parts: number[]; pre: string } => {
+    const dash = v.indexOf('-');
+    const base = dash === -1 ? v : v.slice(0, dash);
+    const pre = dash === -1 ? '' : v.slice(dash + 1);
+    const parts = base.split('.').map((n) => {
+      const x = parseInt(n, 10);
+      return Number.isFinite(x) ? x : 0;
+    });
+    return { parts, pre };
+  };
+  const pa = parse(a);
+  const pb = parse(b);
+  const len = Math.max(pa.parts.length, pb.parts.length);
+  for (let i = 0; i < len; i++) {
+    const x = pa.parts[i] ?? 0;
+    const y = pb.parts[i] ?? 0;
+    if (x !== y) return x - y;
+  }
+  if (pa.pre === pb.pre) return 0;
+  // Released > pre-release at the same base (`0.3.0` > `0.3.0-draft`).
+  if (!pa.pre) return 1;
+  if (!pb.pre) return -1;
+  return pa.pre < pb.pre ? -1 : 1;
+}
+
+/**
  * Returns the list of scorecard versions for which a per-version
- * leaderboard file is available. Empty in single-scorecard mode (no
- * `leaderboard/` directory yet) — pages should fall back to the legacy
- * `getResearchData()` in that case.
+ * leaderboard file is available, sorted newest → oldest by semver.
+ * Empty in single-scorecard mode (no `leaderboard/` directory yet) —
+ * pages should fall back to the legacy `getResearchData()` in that case.
  */
 export function listAvailableScorecards(): string[] {
   return [...VERSIONED.versions];
 }
 
 /**
- * The scorecard version that `latest.json` aliases. Drives the default
- * selector position. Returns null when no per-version data is available
- * yet — callers should use `data.scorecardVersion` as the fallback.
+ * The newest scorecard version that has audit data on disk. Drives the
+ * default selector position on `/leaderboard/` and the canonical URL
+ * convention (bare path = latest; `?scorecard=<v>` for any older one).
+ * Returns null when no per-version data is available yet — callers
+ * should fall back to `getResearchData().scorecardVersion`.
+ */
+export function getLatestAvailableScorecard(): string | null {
+  return VERSIONED.versions[0] ?? null;
+}
+
+/**
+ * The scorecard version that `latest.json` aliases (set by the publish
+ * step's `--promote` flag). Controls which version's data is mirrored
+ * into the legacy `research.json` + `runs/` paths for the docs site's
+ * pre-multi-scorecard consumers. Distinct from `getLatestAvailableScorecard()`,
+ * which always returns the newest version present regardless of what
+ * the operator promoted. Returns null when `latest.json` is absent.
  */
 export function getPromotedScorecard(): string | null {
   return VERSIONED.promoted;

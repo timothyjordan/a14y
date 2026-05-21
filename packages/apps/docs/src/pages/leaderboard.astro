@@ -8,10 +8,10 @@ import {
   CATEGORY_LABELS,
   getCategoryStats,
   getHardestChecks,
+  getLatestAvailableScorecard,
   getLeaderboard,
   getLlmsTxtAdoption,
   getMostCommonTopFailure,
-  getPromotedScorecard,
   getResearchData,
   getResearchDataFor,
   getScoreHistogram,
@@ -25,17 +25,21 @@ import {
 // emitted `src/data/leaderboard/<version>.json` files, render the
 // selector + per-version client-side swapping. Otherwise fall back to
 // the legacy single-scorecard view.
+//
+// `availableVersions` is already sorted newest → oldest by
+// `research-data.ts` (semver-aware), so the selector and the pane
+// loop both read in user-facing "most recent first" order without
+// extra work. The default view is `latest` — the newest version with
+// audit data on disk. The publish step's `--promote` flag still
+// controls which version's data is mirrored into the legacy
+// research.json path, but it no longer drives the UI default.
 const availableVersions = listAvailableScorecards();
-const promoted = getPromotedScorecard();
+const latest = getLatestAvailableScorecard();
 const isMultiScorecard = availableVersions.length > 1;
 const legacy = getResearchData();
-// In multi-mode the page renders the promoted version by default so
-// the initial paint matches what the selector points at. In legacy
-// mode (no per-version files yet) the existing research.json is the
-// only data source.
-const initialVersion = isMultiScorecard && promoted ? promoted : legacy.scorecardVersion;
-const research: ResearchData = isMultiScorecard && promoted
-  ? getResearchDataFor(promoted)
+const initialVersion = isMultiScorecard && latest ? latest : legacy.scorecardVersion;
+const research: ResearchData = isMultiScorecard && latest
+  ? getResearchDataFor(latest)
   : legacy;
 // When per-version files are present they cover the selector list;
 // otherwise the implicit "list" is just the legacy version.
@@ -43,7 +47,7 @@ const selectorVersions = isMultiScorecard ? availableVersions : [legacy.scorecar
 // Embed the lightweight LeaderboardEntry arrays for every version so
 // the client can re-rank the table without round-tripping. Score
 // distribution / category bars / hardest checks stay rendered for the
-// promoted version — they're computed derivatives that would balloon
+// latest version — they're computed derivatives that would balloon
 // the bundle if duplicated per version; a follow-up issue can wire
 // them up if the comparison story needs it.
 const entriesByVersion: Record<string, LeaderboardEntry[]> = isMultiScorecard
@@ -93,35 +97,33 @@ function methodologyUrl(methodology: string | undefined): string {
       <div class="eyebrow">
         <span class="eyebrow-pin">leaderboard</span>
         <span data-eyebrow-meta>
-          scorecard v<span data-active-version>{research.scorecardVersion}</span> · updated {generatedLabel}
+          scorecard{' '}
+          {isMultiScorecard ? (
+            <label class="eyebrow-select" aria-label="Scorecard version">
+              <select data-scorecard-select>
+                {selectorVersions.map((v) => (
+                  <option value={v} selected={v === initialVersion}>
+                    v{v}
+                  </option>
+                ))}
+              </select>
+              <span class="eyebrow-select-caret" aria-hidden="true">▾</span>
+            </label>
+          ) : (
+            <>v<span data-active-version>{research.scorecardVersion}</span></>
+          )}
+          {' · scored '}
+          {selectorVersions.map((v) => (
+            <a
+              class="eyebrow-methodology"
+              href={methodologyUrl(methodologyByVersion[v])}
+              data-version={v}
+              hidden={isMultiScorecard && v !== initialVersion}
+            >{methodologyByVersion[v] ?? 'flat-pool-v1'}</a>
+          ))}
+          {' · updated '}{generatedLabel}
         </span>
       </div>
-      {isMultiScorecard && (
-        <div class="scorecard-selector" data-scorecard-selector>
-          <label class="selector-label" for="scorecard-select">Scorecard:</label>
-          <select id="scorecard-select" data-scorecard-select>
-            {selectorVersions.map((v) => (
-              <option value={v} selected={v === initialVersion}>
-                v{v}
-                {v === promoted ? ' (latest)' : ''}
-              </option>
-            ))}
-          </select>
-          <span class="selector-meta">
-            scoring:
-            {selectorVersions.map((v) => (
-              <a
-                class="methodology-link"
-                href={methodologyUrl(methodologyByVersion[v])}
-                data-version={v}
-                hidden={v !== initialVersion}
-              >
-                <code>{methodologyByVersion[v] ?? '—'}</code>
-              </a>
-            ))}
-          </span>
-        </div>
-      )}
       <h1>How well do agents see the web?</h1>
       <p class="lead research-lead">
         Most of the web was built for human eyes. AI agents (coding
@@ -202,19 +204,22 @@ function methodologyUrl(methodology: string | undefined): string {
     <p class="filter-empty" data-filter-empty hidden role="status">
       No sites match your filters. <button type="button" data-filter-reset-link>Reset filters</button>.
     </p>
-    <LeaderboardTable entries={entries} scorecardVersion={research.scorecardVersion} />
+    {isMultiScorecard ? (
+      selectorVersions.map((v) => (
+        <div class="leaderboard-pane" data-version={v} hidden={v !== initialVersion}>
+          <LeaderboardTable entries={entriesByVersion[v]} scorecardVersion={v} />
+        </div>
+      ))
+    ) : (
+      <LeaderboardTable entries={entries} scorecardVersion={research.scorecardVersion} />
+    )}
     {isMultiScorecard && (
       <script
         type="application/json"
         data-leaderboard-versions
         set:html={JSON.stringify({
           initialVersion,
-          promoted,
-          entriesByVersion,
-          methodologyByVersion,
-          methodologyBase: `${base}/scorecards/scoring/`,
-          checkDocsBase: `${base}/scorecards/`,
-          siteRunBase: `${base}/leaderboard/`,
+          latest,
         })}
       />
     )}
@@ -316,63 +321,57 @@ function methodologyUrl(methodology: string | undefined): string {
     line-height: 1.6;
   }
 
-  /* Scorecard selector sits below the eyebrow chip, above the H1. The
-     methodology link is anchored next to the dropdown so the rubric
-     contract (version + scoring algorithm) reads as one unit. */
-  .scorecard-selector {
+  /* Inline scorecard selector lives in the eyebrow. Native <select>
+     chrome is stripped so the control reads as part of the mono
+     12px sentence; a dashed underline + ▾ caret are the only hints
+     it's interactive. Keeps the editorial hero flow (eyebrow → H1 →
+     lead) intact — controls don't get their own box. */
+  .eyebrow-select {
     display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    margin: 8px 0 16px;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-alt);
-    font-size: 13px;
+    align-items: baseline;
+    gap: 2px;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px dashed color-mix(in oklch, var(--text-muted) 60%, transparent);
   }
-  .selector-label {
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .eyebrow-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    line-height: inherit;
+    /* Native focus ring would jump the baseline; supply our own on the
+       label wrapper instead. */
+    outline: none;
   }
-  .scorecard-selector select {
-    appearance: auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 4px 8px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text);
+  .eyebrow-select select::-ms-expand { display: none; }
+  .eyebrow-select:hover {
+    border-bottom-color: color-mix(in oklch, var(--text) 60%, transparent);
   }
-  .scorecard-selector select:focus {
-    outline: 2px solid color-mix(in oklch, var(--brand-ink) 30%, transparent);
-    border-color: var(--border-strong);
+  .eyebrow-select:focus-within {
+    border-bottom-color: var(--text);
+    border-bottom-style: solid;
   }
-  .selector-meta {
+  .eyebrow-select-caret {
+    font-size: 0.85em;
     color: var(--text-subtle);
-    font-family: var(--font-mono);
-    font-size: 12px;
+    line-height: 1;
   }
-  .methodology-link {
-    color: var(--text-muted);
-    text-decoration: none;
+  .eyebrow-methodology {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--text-muted) 30%, transparent);
+    text-underline-offset: 2px;
   }
-  .methodology-link[hidden] { display: none; }
-  .methodology-link code {
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 11px;
+  .eyebrow-methodology:hover {
+    text-decoration-color: currentColor;
   }
-  .methodology-link:hover code {
-    border-color: var(--border-strong);
-  }
+  .eyebrow-methodology[hidden] { display: none; }
 
   /* TOC reads as a "what's next" tail to the lead paragraph rather than
      a bordered separator strip. No background, no rules — just an inline
@@ -630,140 +629,80 @@ function methodologyUrl(methodology: string | undefined): string {
 </style>
 
 <script is:inline>
-  // Vanilla JS: swap leaderboard data between scorecard versions based on
-  // ?scorecard=<v>. Runs before the filter/pager IIFE so by the time it
-  // captures `var rows = document.querySelectorAll('.lb-row')`, the rows
-  // already reflect the active version. On selector change we rebuild
-  // <tbody>, then re-fire the filter/pager via a custom event so the new
-  // rows pick up the existing filter state.
+  // Vanilla JS: swap visibility between pre-rendered leaderboard panes
+  // based on ?scorecard=<v>. Each version's rows are server-rendered by
+  // Astro inside its own <div class="leaderboard-pane" data-version="...">,
+  // so they inherit the scoped CSS attributes that LeaderboardTable.astro
+  // emits. We never build rows in JS — that would lose scoping and strip
+  // the row styling. We just toggle [hidden] on each pane.
   (function () {
     var dataNode = document.querySelector('[data-leaderboard-versions]');
     var selector = document.querySelector('[data-scorecard-select]');
-    if (!dataNode || !selector) return; // single-scorecard mode
+    var panes = document.querySelectorAll('.leaderboard-pane');
+    if (!dataNode || !selector || panes.length === 0) return; // single-scorecard mode
+
     var payload;
     try {
       payload = JSON.parse(dataNode.textContent || '{}');
     } catch (e) {
       return;
     }
-    var byVersion = payload.entriesByVersion || {};
-    var methodologyByVersion = payload.methodologyByVersion || {};
-    var methodologyBase = payload.methodologyBase || '';
-    var checkDocsBase = payload.checkDocsBase || '';
-    var siteRunBase = payload.siteRunBase || '';
 
-    function categoryLabel(cat) {
-      var map = {
-        'docs-platform': 'Docs platform',
-        'dev-tool': 'Dev tool',
-        'enterprise': 'Enterprise SaaS',
-        'reference': 'Reference',
-        'consumer': 'Consumer'
-      };
-      return map[cat] || cat;
-    }
-    function scoreBand(score) {
-      if (score >= 85) return 'excellent';
-      if (score >= 70) return 'good';
-      if (score >= 50) return 'fair';
-      return 'poor';
-    }
-    function hostOf(url) {
-      try {
-        return new URL(url).host.replace(/^www\./, '');
-      } catch (e) {
-        return url;
-      }
-    }
-    function escape(s) {
-      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    // Rebuild the leaderboard <tbody> + per-row data attributes for
-    // `version`. Mirrors LeaderboardTable.astro's row markup; if that
-    // template changes, this string must change with it.
-    function renderRows(version) {
-      var entries = byVersion[version] || [];
-      var html = '';
-      for (var i = 0; i < entries.length; i++) {
-        var e = entries[i];
-        var href = siteRunBase + e.slug + '/?scorecard=' + encodeURIComponent(version);
-        var topFailures = (e.topFailures || []).slice(0, 2).map(function (id) {
-          return '<a class="lb-fail-id" href="' + checkDocsBase + escape(version) + '/checks/' + escape(id) + '/">' + escape(id) + '</a>';
-        }).join('');
-        var more = (e.topFailures && e.topFailures.length > 2)
-          ? '<span class="lb-fail-more" title="' + escape(e.topFailures.slice(2).join(', ')) + '">+' + (e.topFailures.length - 2) + '</span>'
-          : '';
-        var failCell = (e.topFailures && e.topFailures.length)
-          ? '<span class="lb-fails">' + topFailures + more + '</span>'
-          : '<span class="lb-no-fail">none</span>';
-        html +=
-          '<tr class="lb-row"' +
-            ' data-slug="' + escape(e.slug) + '"' +
-            ' data-href="' + escape(href) + '"' +
-            ' data-name="' + escape(e.name.toLowerCase()) + '"' +
-            ' data-category="' + escape(e.category) + '"' +
-            ' data-score="' + escape(e.score) + '">' +
-            '<td class="col-rank"><span class="rank">' + (i + 1) + '</span></td>' +
-            '<td class="col-name">' +
-              '<a href="' + escape(href) + '">' +
-                '<span class="lb-name">' + escape(e.name) + '</span>' +
-                '<span class="lb-host">' + escape(hostOf(e.url)) + '</span>' +
-              '</a>' +
-            '</td>' +
-            '<td class="col-cat">' +
-              '<span class="chip cat-' + escape(e.category) + '">' + escape(categoryLabel(e.category)) + '</span>' +
-            '</td>' +
-            '<td class="col-score">' +
-              '<span class="score-pill score-' + scoreBand(e.score) + '">' + escape(e.score) + '</span>' +
-            '</td>' +
-            '<td class="col-fail">' + failCell + '</td>' +
-          '</tr>';
-      }
-      return html;
+    // Map version -> pane element for O(1) lookup on every swap.
+    var paneByVersion = {};
+    for (var p = 0; p < panes.length; p++) {
+      var v = panes[p].getAttribute('data-version');
+      if (v) paneByVersion[v] = panes[p];
     }
 
     function activate(version, opts) {
-      var tbody = document.querySelector('.leaderboard tbody');
-      if (!tbody) return;
-      tbody.innerHTML = renderRows(version);
+      if (!paneByVersion[version]) return;
 
-      // Mirror eyebrow + methodology link to the new version.
-      var versionLabel = document.querySelector('[data-active-version]');
-      if (versionLabel) versionLabel.textContent = version;
-      var methLinks = document.querySelectorAll('.methodology-link');
-      for (var i = 0; i < methLinks.length; i++) {
-        var v = methLinks[i].getAttribute('data-version');
-        if (v === version) methLinks[i].removeAttribute('hidden');
-        else methLinks[i].setAttribute('hidden', 'hidden');
+      // Toggle pane visibility. Browsers respect [hidden] = display:none
+      // by default; we don't override it for .leaderboard-pane so the
+      // inactive panes are fully hidden (taking no layout space).
+      for (var i = 0; i < panes.length; i++) {
+        if (panes[i].getAttribute('data-version') === version) {
+          panes[i].removeAttribute('hidden');
+        } else {
+          panes[i].setAttribute('hidden', 'hidden');
+        }
+      }
+
+      // Methodology link is one of several pre-rendered anchors (one per
+      // version); show only the one that matches.
+      var methLinks = document.querySelectorAll('.eyebrow-methodology');
+      for (var j = 0; j < methLinks.length; j++) {
+        var mv = methLinks[j].getAttribute('data-version');
+        if (mv === version) methLinks[j].removeAttribute('hidden');
+        else methLinks[j].setAttribute('hidden', 'hidden');
       }
 
       // Keep selector in sync (handles initial load from URL).
       if (selector.value !== version) selector.value = version;
 
-      // Reflect in URL without scrolling. Skip on the initial sync so
-      // the canonical `/leaderboard/` link doesn't accidentally become
-      // `/leaderboard/?scorecard=<promoted>` for crawlers.
+      // Reflect in URL without scrolling. The bare `/leaderboard/` URL
+      // always represents the latest version, so we drop the query
+      // when the selection equals it — keeps the canonical path clean.
       if (opts && opts.pushUrl) {
         var url = new URL(window.location.href);
-        if (version === payload.promoted) url.searchParams.delete('scorecard');
+        if (version === payload.latest) url.searchParams.delete('scorecard');
         else url.searchParams.set('scorecard', version);
         window.history.replaceState({}, '', url.toString());
       }
 
-      // Notify the filter/pager script that the row set changed so it
-      // can re-snapshot and re-apply. The IIFE below listens for this.
+      // Notify the filter/pager script that the active row set changed
+      // so it can re-snapshot from the now-visible pane.
       document.dispatchEvent(new CustomEvent('leaderboard:rows-changed'));
     }
 
-    // Initial sync from ?scorecard=<v>. Falls back to the promoted /
-    // server-rendered version when the param is missing or invalid.
+    // Initial sync from ?scorecard=<v>. Falls back to the server-rendered
+    // initialVersion when the param is missing or refers to an unknown
+    // version.
     var params = new URLSearchParams(window.location.search);
     var requested = params.get('scorecard');
-    var startVersion = (requested && byVersion[requested]) ? requested : payload.initialVersion;
+    var startVersion = (requested && paneByVersion[requested]) ? requested : payload.initialVersion;
     if (startVersion !== payload.initialVersion) {
-      // Only rebuild if the URL asked for a different version than what
-      // was server-rendered.
       activate(startVersion, { pushUrl: false });
     }
 
@@ -786,16 +725,23 @@ function methodologyUrl(methodology: string | undefined): string {
     var resetBtn = bar.querySelector('[data-filter-reset]');
     var emptyMsg = document.querySelector('[data-filter-empty]');
     var emptyResetLink = emptyMsg && emptyMsg.querySelector('[data-filter-reset-link]');
-    // `rows` and `totalRows` re-read from the DOM when the
-    // leaderboard:rows-changed event fires (i.e. after the scorecard
-    // selector rebuilds <tbody>), so version swaps keep the filter
-    // operating on the live row set.
-    var rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+    // In multi-scorecard mode each version's table is server-rendered
+    // inside a .leaderboard-pane; only one is :not([hidden]) at any
+    // time. Scope `.lb-row` collection to that visible pane so the
+    // filter and pager only see the active version's rows. Single-
+    // scorecard mode has no panes; the selector falls back to
+    // every .lb-row on the page (same as the historical behavior).
+    function collectRows() {
+      var paneRows = document.querySelectorAll('.leaderboard-pane:not([hidden]) .lb-row');
+      if (paneRows.length) return Array.prototype.slice.call(paneRows);
+      return Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+    }
+    var rows = collectRows();
     var counter = document.querySelector('[data-visible-count]');
     var totalRows = rows.length;
 
     document.addEventListener('leaderboard:rows-changed', function () {
-      rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+      rows = collectRows();
       totalRows = rows.length;
       currentPage = 1;
       apply();
