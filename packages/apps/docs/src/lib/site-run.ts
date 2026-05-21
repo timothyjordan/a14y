@@ -14,10 +14,12 @@
  * shape the CLI and extension produce.
  */
 import type { SiteRun } from '@a14y/core';
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { compareScorecardVersions, getLatestAvailableScorecard } from './research-data';
 
 const RUNS_DIR = resolve(process.cwd(), 'src', 'data', 'runs');
+const LEADERBOARD_DIR = resolve(process.cwd(), 'src', 'data', 'leaderboard');
 
 const SLUGS: string[] = (() => {
   try {
@@ -33,10 +35,55 @@ const SLUGS: string[] = (() => {
   }
 })();
 
-export async function loadSiteRun(slug: string): Promise<SiteRun | null> {
+/**
+ * Per-version SiteRun lookup. After TJ-583 publish runs, runs land at
+ * `src/data/leaderboard/<version>/runs/<slug>.json` alongside the
+ * legacy `src/data/runs/<slug>.json` (which mirrors the promoted
+ * version for backwards-compat). Discovered at build time so the
+ * directory is allowed to be absent on single-scorecard publishes.
+ *
+ * Sorted newest → oldest so the per-site scorecard selector renders
+ * the latest version first, matching the leaderboard root convention.
+ */
+const VERSIONED_RUN_VERSIONS: string[] = (() => {
+  if (!existsSync(LEADERBOARD_DIR)) return [];
+  try {
+    return readdirSync(LEADERBOARD_DIR, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name)
+      .filter((name) => existsSync(join(LEADERBOARD_DIR, name, 'runs')))
+      .sort((a, b) => compareScorecardVersions(b, a));
+  } catch {
+    return [];
+  }
+})();
+
+/**
+ * Load the SiteRun for a slug. When `version` is provided and a
+ * per-version run file exists, that file is read; otherwise the legacy
+ * `runs/<slug>.json` is returned. Returns null if the slug isn't
+ * known to either tree.
+ */
+export async function loadSiteRun(slug: string, version?: string): Promise<SiteRun | null> {
+  if (version) {
+    const versioned = join(LEADERBOARD_DIR, version, 'runs', `${slug}.json`);
+    if (existsSync(versioned)) {
+      const raw = readFileSync(versioned, 'utf8');
+      return JSON.parse(raw) as SiteRun;
+    }
+  }
   if (!SLUGS.includes(slug)) return null;
   const raw = readFileSync(join(RUNS_DIR, `${slug}.json`), 'utf8');
   return JSON.parse(raw) as SiteRun;
+}
+
+/**
+ * Scorecard versions for which a `leaderboard/<version>/runs/`
+ * directory was published. Empty in single-scorecard mode. Callers use
+ * this to know which selector options to render on per-site pages.
+ */
+export function listVersionedRunScorecards(): string[] {
+  return [...VERSIONED_RUN_VERSIONS];
 }
 
 export function listSiteRunSlugs(): string[] {
@@ -57,8 +104,17 @@ export function scoreClass(score: number): 'pass' | 'warn' | 'fail' {
 /**
  * Build the path to a per-site scorecard page, honoring BASE_URL so it
  * works both at the root and under a deploy-prefix.
+ *
+ * When `version` is provided and isn't the latest available scorecard,
+ * a `?scorecard=<version>` query is appended so the per-site page lands
+ * on the selected version (its swap script reads the param on load).
+ * The latest version uses the bare path so the canonical URL stays
+ * clean — same convention as the leaderboard root URL.
  */
-export function siteRunUrl(slug: string): string {
+export function siteRunUrl(slug: string, version?: string): string {
   const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
-  return `${base}/leaderboard/${slug}/`;
+  const latest = getLatestAvailableScorecard();
+  const carry = version && version !== latest;
+  const query = carry ? `?scorecard=${encodeURIComponent(version)}` : '';
+  return `${base}/leaderboard/${slug}/${query}`;
 }

@@ -7,9 +7,15 @@ import CheckResultCard from '~/components/research/CheckResultCard.astro';
 import PageDetails from '~/components/research/PageDetails.astro';
 import {
   CATEGORY_LABELS,
+  getLatestAvailableScorecard,
   getLeaderboard,
 } from '~/lib/research-data';
-import { listSiteRunSlugs, loadSiteRun, scoreClass } from '~/lib/site-run';
+import {
+  listSiteRunSlugs,
+  listVersionedRunScorecards,
+  loadSiteRun,
+  scoreClass,
+} from '~/lib/site-run';
 
 export const getStaticPaths = (() => {
   // Return only the params + the lightweight LeaderboardEntry. The full
@@ -30,7 +36,56 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const run = (await loadSiteRun(entry.slug))!;
+// In multi-scorecard mode we render the latest version statically,
+// but discover every other version's SiteRun ahead of the
+// `?scorecard=<v>` switch so the JS swap is instantaneous (no fetch).
+// In single-scorecard mode the versioned list is empty and the page
+// behaves exactly as before.
+const versionedScorecards = listVersionedRunScorecards();
+const latest = getLatestAvailableScorecard();
+const isMultiScorecard = versionedScorecards.length > 1;
+const defaultVersion = latest ?? undefined;
+const run = (await loadSiteRun(entry.slug, defaultVersion))!;
+
+interface VersionedRunSummary {
+  scorecardVersion: string;
+  scorecardReleasedAt: string;
+  scoringMethodology?: string;
+  finishedAt: string;
+  summary: SiteRun['summary'];
+  pages: number;
+  passSiteChecks: number;
+  totalSiteChecks: number;
+}
+
+// Snapshot of the metadata that differs between versions. Embedded as
+// JSON to let the client toggle the headline numbers without fetching
+// other versions' full SiteRun payloads. We deliberately don't ship
+// other versions' per-page details — that would multiply page size
+// 2-3× — instead the version switcher links to the per-version URL
+// for users who want the full breakdown.
+const versionedSummaries: VersionedRunSummary[] = [];
+if (isMultiScorecard) {
+  for (const v of versionedScorecards) {
+    try {
+      const otherRun = await loadSiteRun(entry.slug, v);
+      if (!otherRun) continue;
+      versionedSummaries.push({
+        scorecardVersion: otherRun.scorecardVersion,
+        scorecardReleasedAt: otherRun.scorecardReleasedAt,
+        scoringMethodology: (otherRun as SiteRun & { scoringMethodology?: string }).scoringMethodology,
+        finishedAt: otherRun.finishedAt,
+        summary: otherRun.summary,
+        pages: otherRun.pages.length,
+        passSiteChecks: otherRun.siteChecks.filter((c) => c.status === 'pass').length,
+        totalSiteChecks: otherRun.siteChecks.length,
+      });
+    } catch {
+      // Skip versions where this slug has no run file (e.g. headlessSkip
+      // sites that only ran under the older scorecard).
+    }
+  }
+}
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isSite = run.mode === 'site';
@@ -39,11 +94,16 @@ const scannedAt = (() => {
   return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
 })();
 const passSiteChecks = run.siteChecks.filter((c) => c.status === 'pass').length;
+const runMethodology = (run as SiteRun & { scoringMethodology?: string }).scoringMethodology;
 
 const PAGE_SIZE = 50;
 const totalPages = run.pages.length;
 const isPaginated = totalPages > PAGE_SIZE;
 const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
+
+function methodologyUrl(methodology: string | undefined): string {
+  return methodology ? `${base}/scorecards/scoring/${methodology}/` : `${base}/scorecards/`;
+}
 ---
 
 <BaseLayout
@@ -53,7 +113,7 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
   ogImage={`${base}/leaderboard/${entry.slug}/og.png`}
 >
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href={`${base}/leaderboard/`}>← Leaderboard</a>
+    <a href={`${base}/leaderboard/`} data-back-link>← Leaderboard</a>
   </nav>
 
   <header class="scorecard-page-header">
@@ -65,18 +125,66 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
     <div class="site-meta">
       <span class={`chip cat-${entry.category}`}>{CATEGORY_LABELS[entry.category]}</span>
       <span class={`chip ${isSite ? 'site' : 'page'}`}>{isSite ? 'site scan' : 'page check'}</span>
-      <span class="meta-text">scorecard v{run.scorecardVersion}</span>
-      {scannedAt && <span class="meta-text">scanned {scannedAt}</span>}
+      <span class="meta-text">
+        scorecard{' '}
+        {isMultiScorecard && versionedSummaries.length > 1 ? (
+          <label class="eyebrow-select" aria-label="Scorecard version">
+            <select data-site-scorecard-select>
+              {versionedSummaries.map((vs) => (
+                <option
+                  value={vs.scorecardVersion}
+                  selected={vs.scorecardVersion === run.scorecardVersion}
+                >v{vs.scorecardVersion}</option>
+              ))}
+            </select>
+            <span class="eyebrow-select-caret" aria-hidden="true">▾</span>
+          </label>
+        ) : (
+          <>v<span data-active-version>{run.scorecardVersion}</span></>
+        )}
+      </span>
+      {scannedAt && (
+        <span class="meta-text">
+          scanned <span data-active-scanned>{scannedAt}</span>
+        </span>
+      )}
+      {runMethodology && (
+        <a class="meta-link" href={methodologyUrl(runMethodology)} data-methodology-link>
+          scored <span data-active-methodology>{runMethodology}</span>
+        </a>
+      )}
     </div>
   </header>
   <hr class="header-rule" />
 
   <section class="scorecard-hero">
-    <span class={`score-number score-${scoreClass(run.summary.score)}`}>{run.summary.score}</span>
+    <span
+      class={`score-number score-${scoreClass(run.summary.score)}`}
+      data-active-score
+      data-score-class={scoreClass(run.summary.score)}
+    >{run.summary.score}</span>
     <p class="score-meta">
-      out of 100 <span class="dot">·</span> scorecard v{run.scorecardVersion} <span class="dot">·</span> {run.summary.passed}/{run.summary.applicable} checks passed <span class="dot">·</span> {totalPages} {totalPages === 1 ? 'page' : 'pages'}
+      out of 100 <span class="dot">·</span>
+      scorecard v<span data-active-version>{run.scorecardVersion}</span> <span class="dot">·</span>
+      <span data-active-passed>{run.summary.passed}</span>/<span data-active-applicable>{run.summary.applicable}</span> checks passed <span class="dot">·</span>
+      <span data-active-pages>{totalPages}</span> {totalPages === 1 ? 'page' : 'pages'}
     </p>
   </section>
+
+  {isMultiScorecard && versionedSummaries.length > 1 && (
+    <script
+      type="application/json"
+      data-site-versions
+      set:html={JSON.stringify({
+        latest,
+        slug: entry.slug,
+        siteRunBase: `${base}/leaderboard/`,
+        methodologyBase: `${base}/scorecards/scoring/`,
+        leaderboardBase: `${base}/leaderboard/`,
+        summaries: versionedSummaries,
+      })}
+    />
+  )}
 
   {run.siteChecks.length > 0 && (
     <section class="research-section">
@@ -203,6 +311,58 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
     font-size: 12px;
     color: var(--text-subtle);
   }
+  .meta-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-subtle);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--text-subtle) 30%, transparent);
+    text-underline-offset: 2px;
+  }
+  .meta-link:hover {
+    color: var(--text-muted);
+    text-decoration-color: currentColor;
+  }
+  .meta-link[hidden] { display: none; }
+
+  /* Shared with the /leaderboard/ eyebrow selector: inline <select>
+     with native chrome stripped so the control reads as part of the
+     mono meta-text. Dashed underline + ▾ caret signal interactivity
+     without becoming a UI box. */
+  .eyebrow-select {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px dashed color-mix(in oklch, var(--text-subtle) 60%, transparent);
+  }
+  .eyebrow-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    line-height: inherit;
+    outline: none;
+  }
+  .eyebrow-select select::-ms-expand { display: none; }
+  .eyebrow-select:hover {
+    border-bottom-color: color-mix(in oklch, var(--text-muted) 70%, transparent);
+  }
+  .eyebrow-select:focus-within {
+    border-bottom-color: var(--text);
+    border-bottom-style: solid;
+  }
+  .eyebrow-select-caret {
+    font-size: 0.85em;
+    color: var(--text-subtle);
+    line-height: 1;
+  }
 
   /* Scorecard hero: a card whose only status signal is the big colored
      score number. No side stripes (the colored numeral is louder than
@@ -323,6 +483,106 @@ const pageCount = Math.max(1, Math.ceil(totalPages / PAGE_SIZE));
 </style>
 
 <script is:inline>
+  // Vanilla JS: scorecard version switcher on the per-site page. Updates
+  // the headline (score, checks-passed, scorecard version, methodology
+  // link) in place. Per-page detail (the full Pages section) is NOT
+  // swapped — different versions can have different page-check sets and
+  // serializing every other version's full run inline would 2-3× the
+  // page weight. Switching to a version pushes ?scorecard=<v> into the
+  // URL so links land coherently; the back link to /leaderboard/ also
+  // carries the selection.
+  (function () {
+    var dataNode = document.querySelector('[data-site-versions]');
+    var selector = document.querySelector('[data-site-scorecard-select]');
+    if (!dataNode || !selector) return;
+    var payload;
+    try {
+      payload = JSON.parse(dataNode.textContent || '{}');
+    } catch (e) {
+      return;
+    }
+    var summaries = payload.summaries || [];
+    var byVersion = {};
+    for (var i = 0; i < summaries.length; i++) byVersion[summaries[i].scorecardVersion] = summaries[i];
+
+    function scoreClass(score) {
+      if (score >= 90) return 'pass';
+      if (score >= 70) return 'warn';
+      return 'fail';
+    }
+
+    function activate(version, opts) {
+      var s = byVersion[version];
+      if (!s) return;
+      var setText = function (sel, value) {
+        var el = document.querySelector(sel);
+        if (el) el.textContent = String(value);
+      };
+      var setAllText = function (sel, value) {
+        var els = document.querySelectorAll(sel);
+        for (var i = 0; i < els.length; i++) els[i].textContent = String(value);
+      };
+      // Score number + color band.
+      var scoreEl = document.querySelector('[data-active-score]');
+      if (scoreEl) {
+        scoreEl.textContent = String(s.summary.score);
+        var oldClass = scoreEl.getAttribute('data-score-class') || '';
+        if (oldClass) scoreEl.classList.remove('score-' + oldClass);
+        var newClass = scoreClass(s.summary.score);
+        scoreEl.classList.add('score-' + newClass);
+        scoreEl.setAttribute('data-score-class', newClass);
+      }
+      setAllText('[data-active-version]', version);
+      setText('[data-active-passed]', s.summary.passed);
+      setText('[data-active-applicable]', s.summary.applicable);
+      setText('[data-active-pages]', s.pages);
+      if (s.finishedAt) {
+        var d = new Date(s.finishedAt);
+        if (!isNaN(d.getTime())) {
+          setText('[data-active-scanned]', d.toISOString().slice(0, 10));
+        }
+      }
+      var methLink = document.querySelector('[data-methodology-link]');
+      var methCode = document.querySelector('[data-active-methodology]');
+      if (s.scoringMethodology) {
+        if (methCode) methCode.textContent = s.scoringMethodology;
+        if (methLink) {
+          methLink.setAttribute('href', payload.methodologyBase + s.scoringMethodology + '/');
+          methLink.removeAttribute('hidden');
+        }
+      } else if (methLink) {
+        methLink.setAttribute('hidden', 'hidden');
+      }
+      if (selector.value !== version) selector.value = version;
+
+      // Update the back-to-leaderboard link to preserve the scorecard
+      // selection on the way back. Use the bare path for the latest
+      // version so the canonical URL is clean.
+      var backLink = document.querySelector('[data-back-link]');
+      if (backLink) {
+        var href = payload.leaderboardBase;
+        if (version !== payload.latest) href += '?scorecard=' + encodeURIComponent(version);
+        backLink.setAttribute('href', href);
+      }
+
+      if (opts && opts.pushUrl) {
+        var url = new URL(window.location.href);
+        if (version === payload.latest) url.searchParams.delete('scorecard');
+        else url.searchParams.set('scorecard', version);
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var requested = params.get('scorecard');
+    var initial = (requested && byVersion[requested]) ? requested : selector.value;
+    if (initial !== selector.value) activate(initial, { pushUrl: false });
+
+    selector.addEventListener('change', function () {
+      activate(selector.value, { pushUrl: true });
+    });
+  })();
+
   // Vanilla pager for the per-site Pages section. Rows are pre-rendered and
   // toggled via [hidden]. Same DOM shape as the leaderboard pager so styles
   // cascade and the keyboard/aria semantics match.

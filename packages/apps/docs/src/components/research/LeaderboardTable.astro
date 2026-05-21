@@ -41,14 +41,14 @@ function hostOf(url: string): string {
         <tr
           class="lb-row"
           data-slug={entry.slug}
-          data-href={siteRunUrl(entry.slug)}
+          data-href={siteRunUrl(entry.slug, scorecardVersion)}
           data-name={entry.name.toLowerCase()}
           data-category={entry.category}
           data-score={entry.score}
         >
           <td class="col-rank"><span class="rank">{i + 1}</span></td>
           <td class="col-name">
-            <a href={siteRunUrl(entry.slug)}>
+            <a href={siteRunUrl(entry.slug, scorecardVersion)}>
               <span class="lb-name">{entry.name}</span>
               <span class="lb-host">{hostOf(entry.url)}</span>
             </a>
