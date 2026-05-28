@@ -1,0 +1,225 @@
+{
+  "url": "https://www.teladochealth.com/",
+  "baseUrl": "https://www.teladochealth.com/",
+  "mode": "page",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T11:32:59.857Z",
+  "finishedAt": "2026-05-27T11:33:01.001Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.teladochealth.com/errors/404"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "warn",
+      "message": "Content-Type is \"text/html;charset=utf-8\", expected text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "status": "warn",
+      "message": "llms.txt contains no links to evaluate"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.teladochealth.com/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.teladochealth.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "urlset"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "1981 entries with valid lastmod"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "pass",
+      "message": "https://www.teladochealth.com/errors/404"
+    },
+    {
+      "id": "sitemap-md.has-structure",
+      "status": "fail",
+      "message": "sitemap.md is missing headings or links"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "pass",
+      "message": "https://www.teladochealth.com/errors/404"
+    },
+    {
+      "id": "agents-md.has-min-sections",
+      "status": "fail",
+      "message": "Found only: (none)"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.teladochealth.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html;charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.teladochealth.com/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "172 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "2 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "35 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "13.9%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.teladochealth.com/errors/404"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "no Link header"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html;charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "markdown.navigation-stripped",
+          "status": "fail",
+          "message": "11 residual nav/header/footer/aside tag(s)"
+        },
+        {
+          "id": "markdown.size-reduction",
+          "status": "pass",
+          "message": "55.2% smaller (93074B vs 207851B)"
+        },
+        {
+          "id": "markdown.valid-markdown",
+          "status": "fail",
+          "message": "looks like HTML (HTML prologue at top of body)"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 3,
+        "total": 27,
+        "applicable": 24,
+        "score": 54
+      }
+    }
+  ],
+  "summary": {
+    "passed": 23,
+    "failed": 13,
+    "warned": 2,
+    "errored": 0,
+    "na": 3,
+    "total": 41,
+    "applicable": 38,
+    "score": 61
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "url": "https://www.worldbank.org/",
+  "baseUrl": "https://www.worldbank.org/",
+  "mode": "page",
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "scoringMethodology": "flat-pool-v1",
+  "startedAt": "2026-05-27T11:42:15.105Z",
+  "finishedAt": "2026-05-27T11:42:19.241Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.worldbank.org/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.worldbank.org/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "44633 entries with lastmod"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "fail",
+      "message": "No agent skill file found"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.worldbank.org/ext/en/home",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.worldbank.org/ext/en/home"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "136 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "10 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.worldbank.org/ext/en/home.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "no Link header"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 3,
+        "total": 24,
+        "applicable": 21,
+        "score": 62
+      }
+    }
+  ],
+  "summary": {
+    "passed": 19,
+    "failed": 11,
+    "warned": 0,
+    "errored": 0,
+    "na": 8,
+    "total": 38,
+    "applicable": 30,
+    "score": 63
+  }
+}
