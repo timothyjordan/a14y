@@ -92,14 +92,20 @@ describe('diffScorecards', () => {
     );
   });
 
-  it('reports today\'s draft-vs-latest with the new markdown.* checks added and the modified-date checks bumped', () => {
+  it('reports today\'s draft-vs-latest with the new checks added and the modified-date checks bumped', () => {
     // The draft has diverged from the latest published scorecard:
     //   - TJ-456 landed three new markdown.* checks (additions).
+    //   - A14Y-101 landed three agent-specific checks from Google's AI
+    //     optimization guide (html.ssr-content, discovery.no-duplicate-content,
+    //     http.no-interstitial) as additions.
     //   - The modified-date pair was bumped 1.0.0 → 1.1.0 to require
     //     the value to parse as the spec-defined date format.
     // If a future PR removes / further bumps these, update this assertion.
     const diff = getDraftDiff();
     expect(diff.added.map((a) => a.id).sort()).toEqual([
+      'discovery.no-duplicate-content',
+      'html.ssr-content',
+      'http.no-interstitial',
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',
@@ -123,7 +129,10 @@ describe('getDraftDiffEntries', () => {
       .map((e) => (e.kind === 'methodology-bumped' ? '' : e.id))
       .sort();
     expect(checkIds).toEqual([
+      'discovery.no-duplicate-content',
       'html.json-ld.date-modified',
+      'html.ssr-content',
+      'http.no-interstitial',
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',

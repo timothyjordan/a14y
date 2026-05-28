@@ -62,6 +62,36 @@
       "author": "jesserobbins",
       "authorUrl": "https://github.com/jesserobbins",
       "mergedAt": "2026-05-19T04:45:01Z"
+    },
+    {
+      "checkId": "discovery.no-duplicate-content",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 0,
+      "prUrl": "",
+      "author": "unknown",
+      "authorUrl": "",
+      "mergedAt": "2026-05-28T22:08:42.906Z"
+    },
+    {
+      "checkId": "html.ssr-content",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 0,
+      "prUrl": "",
+      "author": "unknown",
+      "authorUrl": "",
+      "mergedAt": "2026-05-28T22:08:42.906Z"
+    },
+    {
+      "checkId": "http.no-interstitial",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 0,
+      "prUrl": "",
+      "author": "unknown",
+      "authorUrl": "",
+      "mergedAt": "2026-05-28T22:08:42.906Z"
     }
   ]
 }
