@@ -43,5 +43,14 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
     'markdown.navigation-stripped': '1.0.0',
     'markdown.size-reduction': '1.0.0',
     'markdown.valid-markdown': '1.0.0',
+    // Agent-specific checks drawn from Google's AI optimization guide —
+    // signals it endorses that Lighthouse doesn't already cover, sharpened
+    // for agents that (unlike Googlebot) don't run JS or click through
+    // consent walls. Spec PR: pinned with na-returning placeholders so the
+    // contract can be reviewed; detection ships in the impl PR. See the
+    // check pages under /scorecards/draft/checks/ for the rationale.
+    'html.ssr-content': '1.0.0',
+    'discovery.no-duplicate-content': '1.0.0',
+    'http.no-interstitial': '1.0.0',
   },
 };

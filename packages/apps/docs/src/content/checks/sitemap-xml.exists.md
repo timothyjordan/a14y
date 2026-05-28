@@ -10,6 +10,8 @@ why: >
 references:
   - title: "sitemaps.org spec"
     url: https://www.sitemaps.org/protocol.html
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides

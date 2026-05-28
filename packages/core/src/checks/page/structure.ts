@@ -77,6 +77,31 @@ export const htmlGlossaryLink: PageCheckSpec = {
   },
 };
 
+/**
+ * Spec placeholder ahead of the impl PR. The contract: pass if the
+ * server-rendered HTML (the initial response body, before any client-side
+ * JavaScript runs) already carries the page's substantive text — agents
+ * like Anthropic's and Perplexity's crawlers do not execute JS, so an
+ * empty SPA shell that hydrates on the client is invisible to them even
+ * when Googlebot can render it. Returns `na` until the detector ships,
+ * so it contributes nothing to the draft score in the meantime.
+ */
+export const htmlSsrContent: PageCheckSpec = {
+  id: 'html.ssr-content',
+  scope: 'page',
+  name: 'Initial HTML contains substantive text',
+  group: GROUP,
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the server-rendered HTML already contains the page\'s main text (no JS execution required). Spec placeholder — detection ships in the follow-up implementation PR.',
+      run: async () => ({ status: 'na', message: 'spec placeholder — detection ships in the impl PR' }),
+    },
+  },
+};
+
 registerCheck(htmlHeadings);
 registerCheck(htmlTextRatio);
 registerCheck(htmlGlossaryLink);
+registerCheck(htmlSsrContent);

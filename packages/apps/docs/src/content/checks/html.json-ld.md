@@ -12,6 +12,8 @@ references:
     url: https://www.w3.org/TR/json-ld11/
   - title: "Schema.org"
     url: https://schema.org
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides
