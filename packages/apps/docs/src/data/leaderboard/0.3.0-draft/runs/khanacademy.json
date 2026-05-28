@@ -1,0 +1,216 @@
+{
+  "url": "https://www.khanacademy.org/",
+  "baseUrl": "https://www.khanacademy.org/",
+  "mode": "page",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T11:33:05.124Z",
+  "finishedAt": "2026-05-27T11:33:06.950Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.khanacademy.org/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "warn",
+      "message": "Content-Type is \"text/html\", expected text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "status": "warn",
+      "message": "llms.txt contains no links to evaluate"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.khanacademy.org/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "fail",
+      "message": "Blocks: GPTBot"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.khanacademy.org/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "200 entries with valid lastmod"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "pass",
+      "message": "https://www.khanacademy.org/sitemap.md"
+    },
+    {
+      "id": "sitemap-md.has-structure",
+      "status": "fail",
+      "message": "sitemap.md is missing headings or links"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "pass",
+      "message": "https://www.khanacademy.org/AGENTS.md"
+    },
+    {
+      "id": "agents-md.has-min-sections",
+      "status": "fail",
+      "message": "Found only: (none)"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.khanacademy.org/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.khanacademy.org/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 0 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "0.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.khanacademy.org/index.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "no Link header"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "markdown.navigation-stripped",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.size-reduction",
+          "status": "fail",
+          "message": "markdown is larger than HTML (297295B vs 297279B)"
+        },
+        {
+          "id": "markdown.valid-markdown",
+          "status": "fail",
+          "message": "looks like HTML (HTML prologue at top of body)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 15,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 27,
+        "applicable": 22,
+        "score": 32
+      }
+    }
+  ],
+  "summary": {
+    "passed": 16,
+    "failed": 18,
+    "warned": 2,
+    "errored": 0,
+    "na": 5,
+    "total": 41,
+    "applicable": 36,
+    "score": 44
+  }
+}

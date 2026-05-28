@@ -1,0 +1,103 @@
+{
+  "url": "https://www.uber.com/",
+  "baseUrl": "https://www.uber.com/",
+  "mode": "page",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T10:42:02.103Z",
+  "finishedAt": "2026-05-27T10:42:51.654Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.uber.com/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.uber.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "3664992 entries with valid lastmod"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "fail",
+      "message": "No agent skill file found"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.uber.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 406"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        }
+      ],
+      "summary": {
+        "passed": 2,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 23,
+        "total": 27,
+        "applicable": 4,
+        "score": 50
+      }
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 5,
+    "warned": 0,
+    "errored": 0,
+    "na": 28,
+    "total": 41,
+    "applicable": 13,
+    "score": 62
+  }
+}

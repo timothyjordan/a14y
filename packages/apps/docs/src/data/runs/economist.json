@@ -1,0 +1,153 @@
+{
+  "url": "https://www.economist.com/",
+  "baseUrl": "https://www.economist.com/",
+  "mode": "page",
+  "scorecardVersion": "0.2.0",
+  "scorecardReleasedAt": "2026-04-06",
+  "scoringMethodology": "flat-pool-v1",
+  "startedAt": "2026-05-27T11:38:45.419Z",
+  "finishedAt": "2026-05-27T11:38:47.046Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.economist.com/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "fail",
+      "message": "Blocks: GPTBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "fail",
+      "message": "No agent skill file found"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.economist.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 403"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 0 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "58.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 8,
+        "total": 24,
+        "applicable": 16,
+        "score": 31
+      }
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 16,
+    "warned": 0,
+    "errored": 0,
+    "na": 15,
+    "total": 38,
+    "applicable": 23,
+    "score": 30
+  }
+}

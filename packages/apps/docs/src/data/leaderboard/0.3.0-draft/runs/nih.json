@@ -1,0 +1,162 @@
+{
+  "url": "https://www.nih.gov/",
+  "baseUrl": "https://www.nih.gov/",
+  "mode": "page",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T10:46:41.864Z",
+  "finishedAt": "2026-05-27T10:46:43.461Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.nih.gov/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.nih.gov/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "urlset"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "fail",
+      "message": "1 missing <lastmod>, 2605 with invalid date of 2606 entries"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "fail",
+      "message": "No agent skill file found"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.nih.gov/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.nih.gov/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "379 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "6.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 11,
+        "total": 27,
+        "applicable": 16,
+        "score": 56
+      }
+    }
+  ],
+  "summary": {
+    "passed": 14,
+    "failed": 11,
+    "warned": 0,
+    "errored": 0,
+    "na": 16,
+    "total": 41,
+    "applicable": 25,
+    "score": 56
+  }
+}

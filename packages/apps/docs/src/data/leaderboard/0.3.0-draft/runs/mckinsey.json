@@ -1,0 +1,58 @@
+{
+  "url": "https://www.mckinsey.com/",
+  "baseUrl": "https://www.mckinsey.com/",
+  "mode": "site",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T11:20:41.100Z",
+  "finishedAt": "2026-05-27T11:28:41.159Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "fail",
+      "message": "/robots.txt not reachable"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "No robots.txt; defaults to allow all"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass",
+      "message": "No robots.txt"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "fail",
+      "message": "No agent skill file found"
+    }
+  ],
+  "pages": [],
+  "summary": {
+    "passed": 2,
+    "failed": 5,
+    "warned": 0,
+    "errored": 0,
+    "na": 7,
+    "total": 14,
+    "applicable": 7,
+    "score": 29
+  }
+}

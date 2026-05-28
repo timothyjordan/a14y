@@ -1,0 +1,180 @@
+{
+  "url": "https://www.paypal.com/",
+  "baseUrl": "https://www.paypal.com/",
+  "mode": "page",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
+  "startedAt": "2026-05-27T11:29:28.106Z",
+  "finishedAt": "2026-05-27T11:31:29.821Z",
+  "siteChecks": [
+    {
+      "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.paypal.com/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "status": "fail",
+      "message": "151/151 links are not .md/.mdx"
+    },
+    {
+      "id": "robots-txt.exists",
+      "status": "pass",
+      "message": "https://www.paypal.com/robots.txt"
+    },
+    {
+      "id": "robots-txt.allows-ai-bots",
+      "status": "pass",
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+    },
+    {
+      "id": "robots-txt.allows-llms-txt",
+      "status": "pass"
+    },
+    {
+      "id": "sitemap-xml.exists",
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
+    },
+    {
+      "id": "sitemap-md.exists",
+      "status": "fail",
+      "message": "sitemap.md not reachable"
+    },
+    {
+      "id": "agents-md.exists",
+      "status": "pass",
+      "message": "https://www.paypal.com/.cursor/rules"
+    },
+    {
+      "id": "agents-md.has-min-sections",
+      "status": "fail",
+      "message": "Found only: (none)"
+    }
+  ],
+  "pages": [
+    {
+      "finalUrl": "https://www.paypal.com/us/home",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.paypal.com/us/home"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "117 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "4 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "41 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "30.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 9,
+        "total": 27,
+        "applicable": 18,
+        "score": 67
+      }
+    }
+  ],
+  "summary": {
+    "passed": 19,
+    "failed": 10,
+    "warned": 0,
+    "errored": 0,
+    "na": 12,
+    "total": 41,
+    "applicable": 29,
+    "score": 66
+  }
+}
