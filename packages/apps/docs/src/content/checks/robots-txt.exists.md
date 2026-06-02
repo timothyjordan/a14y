@@ -12,6 +12,8 @@ references:
     url: https://www.robotstxt.org/robotstxt.html
   - title: "Google: Robots.txt"
     url: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides

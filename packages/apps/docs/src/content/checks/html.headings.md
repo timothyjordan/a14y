@@ -10,6 +10,8 @@ why: >
 references:
   - title: "MDN: Heading elements"
     url: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides

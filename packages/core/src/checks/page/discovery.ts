@@ -34,4 +34,30 @@ export const discoveryIndexed: PageCheckSpec = {
   },
 };
 
+/**
+ * Spec placeholder ahead of the impl PR. The contract: across a full
+ * site crawl, fail if multiple announced URLs collapse to the same
+ * canonical (or otherwise serve duplicate content). Duplicate URLs waste
+ * an agent's token budget re-reading the same material, and waste crawl
+ * resources — Google flags the same problem for AI search. Like
+ * `discovery.indexed`, this is meaningful only with a site-wide view, so
+ * it returns `na` in single-page mode (and, for now, everywhere — the
+ * detector ships in the follow-up implementation PR).
+ */
+export const discoveryNoDuplicateContent: PageCheckSpec = {
+  id: 'discovery.no-duplicate-content',
+  scope: 'page',
+  name: 'Page is not a duplicate of another crawled URL',
+  group: 'Discoverability',
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the page does not share its canonical with another announced URL (no duplicate content across the crawl). N/A in single-page mode. Spec placeholder — detection ships in the follow-up implementation PR.',
+      run: async () => ({ status: 'na', message: 'spec placeholder — detection ships in the impl PR' }),
+    },
+  },
+};
+
 registerCheck(discoveryIndexed);
+registerCheck(discoveryNoDuplicateContent);

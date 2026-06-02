@@ -12,6 +12,8 @@ references:
     url: https://html.spec.whatwg.org/multipage/links.html#link-type-canonical
   - title: "Google: Canonical URLs"
     url: https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides

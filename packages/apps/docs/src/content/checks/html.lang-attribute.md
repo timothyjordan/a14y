@@ -10,6 +10,8 @@ why: >
 references:
   - title: "HTML spec: lang attribute"
     url: https://html.spec.whatwg.org/multipage/dom.html#the-lang-and-xml:lang-attributes
+  - title: "Google: AI optimization guide"
+    url: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 ---
 
 ## How the check decides

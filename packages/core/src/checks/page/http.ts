@@ -94,7 +94,31 @@ export const httpNoNoindexNoai: PageCheckSpec = {
   },
 };
 
+/**
+ * Spec placeholder ahead of the impl PR. The contract: fail if the page's
+ * main content is hidden behind a blocking interstitial in the initial
+ * render — a full-page cookie/consent wall, age gate, or login modal.
+ * Human visitors click "Accept"; AI crawlers cannot, so the content is
+ * effectively invisible to them. Returns `na` until the detector ships,
+ * so it contributes nothing to the draft score in the meantime.
+ */
+export const httpNoInterstitial: PageCheckSpec = {
+  id: 'http.no-interstitial',
+  scope: 'page',
+  name: 'Content is not gated behind a blocking interstitial',
+  group: 'HTTP',
+  implementations: {
+    '1.0.0': {
+      version: '1.0.0',
+      description:
+        'Pass if the initial render is not dominated by a consent/cookie/login interstitial that hides the main content from agents. Spec placeholder — detection ships in the follow-up implementation PR.',
+      run: async () => ({ status: 'na', message: 'spec placeholder — detection ships in the impl PR' }),
+    },
+  },
+};
+
 registerCheck(httpStatus200);
 registerCheck(httpRedirectChain);
 registerCheck(httpContentTypeHtml);
 registerCheck(httpNoNoindexNoai);
+registerCheck(httpNoInterstitial);
