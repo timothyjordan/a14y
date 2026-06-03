@@ -14,13 +14,14 @@ describe('loadDraftChanges', () => {
     expect(methodology[0].pr).toBe(53);
   });
 
-  it('surfaces the six check-level "added" entries pinned in the draft (PR #34 markdown trio + PR #64 Google-AIO trio)', () => {
+  it('surfaces the seven check-level "added" entries pinned in the draft (PR #34 markdown trio + PR #64 Google-AIO trio + discovery.in-page-link)', () => {
     const { changes } = loadDraftChanges();
     const checkIds = changes
       .filter((c): c is Extract<DraftChange, { kind: 'added' }> => c.kind === 'added')
       .map((c) => c.checkId)
       .sort();
     expect(checkIds).toEqual([
+      'discovery.in-page-link',
       'discovery.no-duplicate-content',
       'html.ssr-content',
       'http.no-interstitial',

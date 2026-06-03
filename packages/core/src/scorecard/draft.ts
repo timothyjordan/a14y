@@ -52,5 +52,11 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
     'html.ssr-content': '1.0.0',
     'discovery.no-duplicate-content': '1.0.0',
     'http.no-interstitial': '1.0.0',
+    // Discoverability: an agent can find your agent files in-page. Shipping
+    // the files isn't enough; given a bare URL an agent crawls HTML and may
+    // never probe for them, so a visible in-page "For agents" link is what
+    // surfaces them. Site-wide, depth-aware (top-level pass, deeper-only warn).
+    // Spec PR: na-returning placeholder; detection ships in the impl PR.
+    'discovery.in-page-link': '1.0.0',
   },
 };

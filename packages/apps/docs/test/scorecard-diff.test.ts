@@ -98,11 +98,14 @@ describe('diffScorecards', () => {
     //   - A14Y-101 landed three agent-specific checks from Google's AI
     //     optimization guide (html.ssr-content, discovery.no-duplicate-content,
     //     http.no-interstitial) as additions.
+    //   - TJ-676 landed discovery.in-page-link (agent files linked in-page)
+    //     as a spec-PR addition.
     //   - The modified-date pair was bumped 1.0.0 → 1.1.0 to require
     //     the value to parse as the spec-defined date format.
     // If a future PR removes / further bumps these, update this assertion.
     const diff = getDraftDiff();
     expect(diff.added.map((a) => a.id).sort()).toEqual([
+      'discovery.in-page-link',
       'discovery.no-duplicate-content',
       'html.ssr-content',
       'http.no-interstitial',
@@ -129,6 +132,7 @@ describe('getDraftDiffEntries', () => {
       .map((e) => (e.kind === 'methodology-bumped' ? '' : e.id))
       .sort();
     expect(checkIds).toEqual([
+      'discovery.in-page-link',
       'discovery.no-duplicate-content',
       'html.json-ld.date-modified',
       'html.ssr-content',
