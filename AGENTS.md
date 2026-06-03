@@ -29,16 +29,22 @@ human-readable version, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
    filename and the pin in `draft.ts`.** The coverage gate fails the
    build otherwise.
 6. **If your change touches `draft.ts`, the `refresh-draft-diff`
-   workflow MUST run before the PR is merged.** It regenerates
-   `packages/core/src/scorecard/draft-changes.json` — the attribution
-   data the docs site reads to render each diff entry on
-   `/scorecards/draft/` and `/scorecards/draft/changes/`. It auto-runs
-   on each push to PRs that modify `draft.ts`. If it didn't run (fork
-   PR, workflow disabled, merged before the run completed), trigger
-   it manually from `Actions → Refresh draft diff → Run workflow`. To
-   preview the would-be JSON without pushing, run
-   `node scripts/refresh-draft-diff.mjs --local`. Verify
-   `draft-changes.json` reflects the net diff before requesting review.
+   workflow reconciles `draft-changes.json` after you merge.** That
+   JSON holds the attribution data the docs site reads to render each
+   diff entry on `/scorecards/draft/` and `/scorecards/draft/changes/`.
+   The workflow runs on **push to `main`** (i.e. after your PR merges),
+   not on the PR branch, because an auto-commit-back to the contributor
+   branch is structurally broken for fork PRs (read-only
+   `GITHUB_TOKEN`). It regenerates the JSON against the live net diff
+   and opens a **separate follow-up PR** (`chore/refresh-draft-diff`)
+   that attributes new entries to the PR that triggered it; a maintainer
+   reviews and merges that follow-up like any other change (there is no
+   auto-merge). You do not need to run anything on your own PR. To
+   preview the would-be JSON before merging, run
+   `node scripts/refresh-draft-diff.mjs --local` and eyeball that it
+   reflects the net diff. If the post-merge run fails for infra reasons,
+   trigger a catch-up from `Actions → Refresh draft diff → Run
+   workflow`.
 7. **Non-trivial scorecard changes ship docs-first.** Split into two
    PRs: a **spec PR** (the check's `.md` page + the `draft.ts` pin,
    plus a stub `'1.1.0'` implementation copying the prior version
@@ -122,9 +128,11 @@ Before opening a PR, confirm:
 - [ ] If anything under `docs/templates/` or `docs/fragments/`
       changed: `npm run docs` was run and the regenerated READMEs are
       committed.
-- [ ] If `draft.ts` changed: the `refresh-draft-diff` workflow ran on
-      the PR head and `packages/core/src/scorecard/draft-changes.json`
-      reflects the net diff with attribution. See
+- [ ] If `draft.ts` changed: you previewed the reconciled
+      `packages/core/src/scorecard/draft-changes.json` with
+      `node scripts/refresh-draft-diff.mjs --local` and it reflects the
+      net diff. The `refresh-draft-diff` workflow opens the attributed
+      follow-up PR after this PR merges to `main`. See
       [CONTRIBUTING → Diff refresh workflow](./CONTRIBUTING.md#diff-refresh-workflow).
 - [ ] If non-trivial rubric change: docs-first split was used — the
       spec PR landed before this impl PR (see invariant #7).
