@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { makePageCtx } from './_helpers';
 import type { PageCheckSpec } from '../src/scorecard/types';
+import { pageLinksToAgentFile } from '../src/checks/site/inPageLink';
 
 import {
   httpStatus200,
@@ -685,5 +686,53 @@ describe('http.no-interstitial', () => {
       'content-type': 'text/markdown',
     });
     expect((await run(httpNoInterstitial, ctx)).status).toBe('na');
+  });
+});
+
+describe('pageLinksToAgentFile', () => {
+  const at = (url: string, html: string) => makePageCtx(BASE, url, html).page;
+
+  it('matches an absolute link to /llms.txt', () => {
+    expect(
+      pageLinksToAgentFile(at('https://example.com/', '<a href="/llms.txt">For agents</a>')),
+    ).toBe(true);
+  });
+
+  it('matches AGENTS.md, sitemap.md, and llms-full.txt regardless of location', () => {
+    expect(pageLinksToAgentFile(at('https://example.com/', '<a href="/AGENTS.md">x</a>'))).toBe(
+      true,
+    );
+    expect(
+      pageLinksToAgentFile(at('https://example.com/', '<a href="/docs/sitemap.md">x</a>')),
+    ).toBe(true);
+    expect(
+      pageLinksToAgentFile(at('https://example.com/', '<a href="/.well-known/llms-full.txt">x</a>')),
+    ).toBe(true);
+  });
+
+  it('matches a relative href', () => {
+    expect(
+      pageLinksToAgentFile(at('https://example.com/docs/', '<a href="llms.txt">x</a>')),
+    ).toBe(true);
+  });
+
+  it("matches a link to the page's own .md mirror", () => {
+    expect(
+      pageLinksToAgentFile(
+        at('https://example.com/install', '<a href="/install.md">Markdown</a>'),
+      ),
+    ).toBe(true);
+  });
+
+  it('ignores links to another site', () => {
+    expect(
+      pageLinksToAgentFile(at('https://example.com/', '<a href="https://other.com/llms.txt">x</a>')),
+    ).toBe(false);
+  });
+
+  it('returns false when there are no agent links', () => {
+    expect(
+      pageLinksToAgentFile(at('https://example.com/', '<a href="/about">About</a>')),
+    ).toBe(false);
   });
 });
