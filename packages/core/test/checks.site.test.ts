@@ -20,6 +20,11 @@ import {
 } from '../src/checks/site/sitemapXml';
 import { sitemapMdExists, sitemapMdHasStructure } from '../src/checks/site/sitemapMd';
 import { agentsMdExists, agentsMdHasMinSections } from '../src/checks/site/agentsMd';
+import {
+  discoveryNoDuplicateContent,
+  CANONICAL_INDEX_KEY,
+} from '../src/checks/site/duplicateContent';
+import { DISCOVERY_INDEXED_KEY } from '../src/checks/page/discovery';
 
 const BASE = 'https://example.com';
 
@@ -276,5 +281,64 @@ describe('site/agentsMd', () => {
       'https://example.com/AGENTS.md': { body: oneSection },
     });
     expect((await run(agentsMdHasMinSections, ctx)).status).toBe('fail');
+  });
+});
+
+describe('discovery.no-duplicate-content', () => {
+  // Helper: build a site context with the runner-provided shared keys
+  // already populated, simulating an after-pages firing.
+  function withCanonicalIndex(
+    pairs: [originalUrl: string, canonical: string][],
+    opts: { siteMode?: boolean } = { siteMode: true },
+  ) {
+    const ctx = makeSiteCtx(BASE, {});
+    if (opts.siteMode !== false) {
+      ctx.shared.set(DISCOVERY_INDEXED_KEY, new Set(pairs.map(([u]) => u)));
+    }
+    ctx.shared.set(CANONICAL_INDEX_KEY, new Map(pairs));
+    return ctx;
+  }
+
+  it('declares phase: after-pages so the runner defers it past page fan-out', () => {
+    expect(
+      discoveryNoDuplicateContent.implementations['1.0.0'].phase,
+    ).toBe('after-pages');
+  });
+
+  it('passes when every announced URL has a distinct canonical', async () => {
+    const ctx = withCanonicalIndex([
+      ['https://example.com/a', 'https://example.com/a'],
+      ['https://example.com/b', 'https://example.com/b'],
+      ['https://example.com/c', 'https://example.com/c'],
+    ]);
+    const r = await run(discoveryNoDuplicateContent, ctx);
+    expect(r.status).toBe('pass');
+    expect(r.message).toMatch(/3 URLs/);
+  });
+
+  it('fails when two URLs share the same canonical', async () => {
+    const ctx = withCanonicalIndex([
+      ['https://example.com/page', 'https://example.com/page'],
+      ['https://example.com/page?ref=nav', 'https://example.com/page'],
+      ['https://example.com/other', 'https://example.com/other'],
+    ]);
+    const r = await run(discoveryNoDuplicateContent, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/1 canonical group/);
+    expect(r.message).toContain('https://example.com/page');
+  });
+
+  it('returns na in single-page mode (no DISCOVERY_INDEXED_KEY published)', async () => {
+    const ctx = withCanonicalIndex(
+      [['https://example.com/only', 'https://example.com/only']],
+      { siteMode: false },
+    );
+    expect((await run(discoveryNoDuplicateContent, ctx)).status).toBe('na');
+  });
+
+  it('returns na when the canonical index is missing entirely', async () => {
+    const ctx = makeSiteCtx(BASE, {});
+    ctx.shared.set(DISCOVERY_INDEXED_KEY, new Set<string>());
+    expect((await run(discoveryNoDuplicateContent, ctx)).status).toBe('na');
   });
 });

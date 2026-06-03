@@ -14,6 +14,7 @@ import '../checks/site/robotsTxt';
 import '../checks/site/sitemapXml';
 import '../checks/site/sitemapMd';
 import '../checks/site/agentsMd';
+import '../checks/site/duplicateContent';
 
 // Page-level checks (TJ-97).
 import '../checks/page/http';

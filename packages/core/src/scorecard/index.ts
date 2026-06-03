@@ -126,6 +126,7 @@ export function getScorecard(version: string = LATEST_SCORECARD): ResolvedScorec
       group: spec.group,
       implementationVersion: impl.version,
       description: impl.description,
+      phase: spec.scope === 'site' ? impl.phase : undefined,
       run: impl.run as (ctx: CheckContext) => Promise<CheckOutcome>,
     };
 

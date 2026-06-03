@@ -1,5 +1,6 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { PageCheckContext, PageCheckSpec } from '../../scorecard/types';
+import { htmlOnly } from './_htmlOnly';
 
 export const httpStatus200: PageCheckSpec = {
   id: 'http.status-200',
@@ -94,14 +95,24 @@ export const httpNoNoindexNoai: PageCheckSpec = {
   },
 };
 
-/**
- * Spec placeholder ahead of the impl PR. The contract: fail if the page's
- * main content is hidden behind a blocking interstitial in the initial
- * render — a full-page cookie/consent wall, age gate, or login modal.
- * Human visitors click "Accept"; AI crawlers cannot, so the content is
- * effectively invisible to them. Returns `na` until the detector ships,
- * so it contributes nothing to the draft score in the meantime.
- */
+// Known consent / age-gate / login-wall platforms by their canonical
+// DOM markers (id or class) in the initial HTML response. Each entry is
+// a `(selector, label)` pair so the failure message names what was
+// detected. Conservative on purpose: only widely-deployed platforms,
+// only their well-known markers — anything narrower would over-fire on
+// inline banners that don't actually block content.
+const NAMED_INTERSTITIALS: { selector: string; label: string }[] = [
+  { selector: '#onetrust-consent-sdk', label: 'OneTrust' },
+  { selector: '.onetrust-pc-dark-filter', label: 'OneTrust' },
+  { selector: '#CybotCookiebotDialog', label: 'Cookiebot' },
+  { selector: '#truste-consent-track', label: 'TrustArc' },
+  { selector: '.truste_overlay', label: 'TrustArc' },
+  { selector: '.truste_box_overlay', label: 'TrustArc' },
+  { selector: '#cmpwrapper', label: 'Sourcepoint' },
+  { selector: '#sp_message_container_1', label: 'Sourcepoint' },
+  { selector: '#qc-cmp2-container', label: 'Quantcast Choice' },
+];
+
 export const httpNoInterstitial: PageCheckSpec = {
   id: 'http.no-interstitial',
   scope: 'page',
@@ -111,8 +122,40 @@ export const httpNoInterstitial: PageCheckSpec = {
     '1.0.0': {
       version: '1.0.0',
       description:
-        'Pass if the initial render is not dominated by a consent/cookie/login interstitial that hides the main content from agents. Spec placeholder — detection ships in the follow-up implementation PR.',
-      run: async () => ({ status: 'na', message: 'spec placeholder — detection ships in the impl PR' }),
+        'Pass if the initial HTML response does not contain a known consent-platform interstitial (OneTrust, Cookiebot, TrustArc, Sourcepoint, Quantcast) or a top-level open dialog. AI crawlers cannot click "Accept", so a blocking modal hides the content from them entirely.',
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const c = ctx as PageCheckContext;
+        const $ = c.page.$;
+        for (const { selector, label } of NAMED_INTERSTITIALS) {
+          if ($(selector).length > 0) {
+            return {
+              status: 'fail',
+              message: `${label} interstitial in initial HTML (${selector})`,
+            };
+          }
+        }
+        // Generic open <dialog>. The `open` attribute is what makes it
+        // a blocking modal — closed dialogs are inert.
+        if ($('dialog[open]').length > 0) {
+          return {
+            status: 'fail',
+            message: 'open <dialog> in initial HTML',
+          };
+        }
+        // ARIA dialog mounted directly on <body>. Inline dialogs nested
+        // under article/main are almost always content widgets, not
+        // overlays — only body-level ones meaningfully block.
+        const bodyLevelDialogs = $('body > [role="dialog"]');
+        if (bodyLevelDialogs.length > 0) {
+          return {
+            status: 'fail',
+            message: 'body-level [role="dialog"] in initial HTML',
+          };
+        }
+        return { status: 'pass' };
+      },
     },
   },
 };

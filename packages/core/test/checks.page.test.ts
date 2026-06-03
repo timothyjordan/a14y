@@ -7,6 +7,7 @@ import {
   httpRedirectChain,
   httpContentTypeHtml,
   httpNoNoindexNoai,
+  httpNoInterstitial,
 } from '../src/checks/page/http';
 import {
   htmlCanonicalLink,
@@ -24,6 +25,7 @@ import {
   htmlHeadings,
   htmlTextRatio,
   htmlGlossaryLink,
+  htmlSsrContent,
 } from '../src/checks/page/structure';
 import {
   markdownMirrorSuffix,
@@ -568,5 +570,120 @@ A paragraph of prose, with a [link](https://example.com) and an inline \`code\` 
       'https://example.com/page.md': { body },
     });
     expect((await run(markdownValidMarkdown, ctx)).status).toBe('pass');
+  });
+});
+
+describe('html.ssr-content', () => {
+  it('passes when the initial body carries 50+ words', async () => {
+    const body = `<!doctype html><html><body><main>${'word '.repeat(60)}</main></body></html>`;
+    const ctx = makePageCtx(BASE, 'https://example.com/page', body);
+    const r = await run(htmlSsrContent, ctx);
+    expect(r.status).toBe('pass');
+    expect(r.message).toMatch(/words in initial HTML/);
+  });
+
+  it('fails on a typical SPA shell that only has a root div', async () => {
+    const body = `<!doctype html><html><body><div id="root"></div><script src="/app.js"></script></body></html>`;
+    const ctx = makePageCtx(BASE, 'https://example.com/page', body);
+    const r = await run(htmlSsrContent, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/looks like a JS-rendered shell/);
+  });
+
+  it('strips script/style/noscript/template before counting', async () => {
+    // 30 words of real content + a noscript and a template that would
+    // each push word count over 50 if they were counted.
+    const realText = 'word '.repeat(30);
+    const body = `<!doctype html><html><body>
+      <main>${realText}</main>
+      <noscript>${'spam '.repeat(100)}</noscript>
+      <template>${'spam '.repeat(100)}</template>
+      <style>body { color: ${'red '.repeat(100)} }</style>
+      <script>${'spam '.repeat(100)}</script>
+    </body></html>`;
+    const ctx = makePageCtx(BASE, 'https://example.com/page', body);
+    const r = await run(htmlSsrContent, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/only 30 words/);
+  });
+
+  it('returns na on non-HTML responses', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/p.md', 'irrelevant', {
+      'content-type': 'text/markdown',
+    });
+    expect((await run(htmlSsrContent, ctx)).status).toBe('na');
+  });
+});
+
+describe('http.no-interstitial', () => {
+  const PLAIN = `<!doctype html><html><body><main><h1>Hi</h1><p>read me</p></main></body></html>`;
+
+  it('passes on a normal page with no consent platform or open dialog', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/p', PLAIN);
+    expect((await run(httpNoInterstitial, ctx)).status).toBe('pass');
+  });
+
+  it('fails when OneTrust is in the initial HTML', async () => {
+    const body = `<!doctype html><html><body>
+      <div id="onetrust-consent-sdk">consent wall</div>
+      <main>hi</main>
+    </body></html>`;
+    const ctx = makePageCtx(BASE, 'https://example.com/p', body);
+    const r = await run(httpNoInterstitial, ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/OneTrust/);
+  });
+
+  it('fails when Cookiebot dialog is present', async () => {
+    const body = `<!doctype html><html><body>
+      <div id="CybotCookiebotDialog">accept?</div>
+      <main>hi</main>
+    </body></html>`;
+    expect((await run(httpNoInterstitial, makePageCtx(BASE, 'https://example.com/p', body))).status).toBe('fail');
+  });
+
+  it('fails on TrustArc and Sourcepoint and Quantcast markers', async () => {
+    for (const sel of ['truste_overlay', 'cmpwrapper', 'qc-cmp2-container']) {
+      const isClass = sel === 'truste_overlay';
+      const attr = isClass ? `class="${sel}"` : `id="${sel}"`;
+      const body = `<!doctype html><html><body><div ${attr}>wall</div><main>hi</main></body></html>`;
+      const r = await run(httpNoInterstitial, makePageCtx(BASE, 'https://example.com/p', body));
+      expect(r.status).toBe('fail');
+    }
+  });
+
+  it('fails on a top-level open <dialog>', async () => {
+    const body = `<!doctype html><html><body>
+      <dialog open>sign in</dialog>
+      <main>hi</main>
+    </body></html>`;
+    const r = await run(httpNoInterstitial, makePageCtx(BASE, 'https://example.com/p', body));
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/dialog/);
+  });
+
+  it('fails on a body-level [role="dialog"]', async () => {
+    const body = `<!doctype html><html><body>
+      <div role="dialog">sign in</div>
+      <main>hi</main>
+    </body></html>`;
+    const r = await run(httpNoInterstitial, makePageCtx(BASE, 'https://example.com/p', body));
+    expect(r.status).toBe('fail');
+  });
+
+  it('does not fire on an inline [role="dialog"] nested under main', async () => {
+    // Content widgets that use role="dialog" inside a section shouldn't
+    // be confused with overlays.
+    const body = `<!doctype html><html><body>
+      <main><section><div role="dialog">tooltip-like widget</div></section></main>
+    </body></html>`;
+    expect((await run(httpNoInterstitial, makePageCtx(BASE, 'https://example.com/p', body))).status).toBe('pass');
+  });
+
+  it('returns na on non-HTML responses', async () => {
+    const ctx = makePageCtx(BASE, 'https://example.com/p.md', 'irrelevant', {
+      'content-type': 'text/markdown',
+    });
+    expect((await run(httpNoInterstitial, ctx)).status).toBe('na');
   });
 });

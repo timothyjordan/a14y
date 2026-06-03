@@ -2,6 +2,7 @@ import { crawlSite, type DiscoveredPage, type DiscoverySource } from '../crawler
 import { ConcurrentQueue } from '../crawler/queue';
 import { collectSeeds } from '../crawler/sources';
 import { DISCOVERY_INDEXED_KEY } from '../checks/page/discovery';
+import { CANONICAL_INDEX_KEY } from '../checks/site/duplicateContent';
 import { createHttpClient } from '../fetch/httpClient';
 import type { HttpClient } from '../fetch/types';
 import { getScorecard, LATEST_SCORECARD } from '../scorecard';
@@ -171,13 +172,23 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
   // Union the resolved checks across all scorecards. Each unique
   // `(check_id, implementationVersion)` pair fires once; scorecards that
   // pin the same pair share the underlying outcome.
-  const siteCheckUnion = buildCheckUnion(scorecards.flatMap((s) => s.siteChecks));
+  const allSiteChecks = scorecards.flatMap((s) => s.siteChecks);
+  // Split site checks by phase. `before-pages` (default) fan out in
+  // parallel with the page crawl; `after-pages` defer until the page
+  // queue is idle and the per-page aggregates they need (canonical
+  // index, etc.) have been published to `shared`.
+  const beforePagesUnion = buildCheckUnion(
+    allSiteChecks.filter((c) => (c.phase ?? 'before-pages') === 'before-pages'),
+  );
+  const afterPagesUnion = buildCheckUnion(
+    allSiteChecks.filter((c) => c.phase === 'after-pages'),
+  );
   const pageCheckUnion = buildCheckUnion(scorecards.flatMap((s) => s.pageChecks));
 
-  // Site checks fan out independently of page checks. Kick them off in
-  // parallel with page processing so they're ready by the time the crawl
-  // finishes.
-  const siteOutcomesPromise = runCheckUnion(siteCheckUnion, siteCtx);
+  // Before-pages site checks fan out independently of page checks. Kick
+  // them off in parallel with page processing so they're ready by the
+  // time the crawl finishes.
+  const beforePagesOutcomesPromise = runCheckUnion(beforePagesUnion, siteCtx);
 
   // Page checks stream directly from the crawler into a bounded queue.
   // Two backpressure seams keep peak memory a small constant of the
@@ -197,6 +208,12 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
   // (id, impl) firings they pull out of the per-page outcome map.
   const pagesByScorecard = new Map<string, PageReport[]>();
   for (const sc of scorecards) pagesByScorecard.set(sc.version, []);
+
+  // Per-page canonical accumulator consumed by after-pages site checks
+  // (currently `discovery.no-duplicate-content`). Populated inside
+  // `handlePage` while `ctx.page.$` is still live, then published into
+  // `shared` once the page queue drains.
+  const canonicalIndex = new Map<string, string>();
 
   const handlePage = (input: DiscoveredPage): Promise<void> =>
     pageCheckQueue.add(async () => {
@@ -240,6 +257,25 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
         passed: last.summary.passed,
         total: last.summary.total,
       });
+
+      // Record this page's canonical for after-pages site checks. Done
+      // here while `ctx.page.$` is still live, before disposal.
+      // Non-HTML responses use their own URL — they can't share a
+      // canonical with anyone, so this keeps them out of dup groups.
+      try {
+        const ct = (input.page.headers.get('content-type') ?? '').toLowerCase();
+        if (ct.includes('text/html')) {
+          const href = input.page.$('link[rel="canonical"]').attr('href')?.trim();
+          const canonical = href
+            ? new URL(href, input.page.url).href
+            : input.page.originalUrl;
+          canonicalIndex.set(input.page.originalUrl, canonical);
+        } else {
+          canonicalIndex.set(input.page.originalUrl, input.page.originalUrl);
+        }
+      } catch {
+        canonicalIndex.set(input.page.originalUrl, input.page.originalUrl);
+      }
 
       // Release the FetchedPage so cheerio + the body string can be
       // garbage-collected before the next page's checks claim a slot.
@@ -296,7 +332,21 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
     await pageCheckQueue.onIdle();
   }
 
-  const siteOutcomes = await siteOutcomesPromise;
+  // Page fan-out is done. Publish the canonical index so after-pages
+  // site checks (e.g. discovery.no-duplicate-content) can read it.
+  shared.set(CANONICAL_INDEX_KEY, canonicalIndex);
+
+  // Run after-pages site checks now that everything they need is in
+  // `shared`. Then merge their outcomes with the before-pages set so
+  // the rest of the assembly can be scorecard-agnostic.
+  const [beforePagesOutcomes, afterPagesOutcomes] = await Promise.all([
+    beforePagesOutcomesPromise,
+    runCheckUnion(afterPagesUnion, siteCtx),
+  ]);
+  const siteOutcomes = new Map<string, CheckOutcome>([
+    ...beforePagesOutcomes,
+    ...afterPagesOutcomes,
+  ]);
   const finishedAt = new Date().toISOString();
 
   // Per-scorecard site-check arrays + final SiteRun assembly.

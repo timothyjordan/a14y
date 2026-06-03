@@ -15,11 +15,11 @@ references:
     url: https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
 ---
 
-> **Status: spec.** This check is pinned in the `0.3.0-draft` scorecard with a placeholder that returns N/A while the detector is implemented. The contract below is what it will assert once detection ships; it does not yet affect your score.
-
 ## How the check decides
 
-The check reads the initial HTML response — the bytes the server returns before any client-side JavaScript runs — and measures how much visible text is present after stripping `<script>`, `<style>`, and `<noscript>`. It passes if the server-rendered body already carries the page's substantive content, and fails if the body is an empty shell whose text only appears after hydration.
+The check reads the initial HTML response — the bytes the server returns before any client-side JavaScript runs — clones the `<body>`, removes `<script>`, `<style>`, `<noscript>`, and `<template>` content, and counts the words of visible text that remain. It passes at **50 words or more** and fails below that threshold.
+
+The 50-word floor is loose on purpose. Thin but legitimate pages — 404s, contact stubs, single-tile landings — sit well below 100 words and shouldn't be penalised. What the threshold catches is the unambiguous failure mode: a body that's only framework boot tags and an empty root div, where the actual text only materialises after hydration.
 
 ## How to implement it
 

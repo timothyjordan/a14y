@@ -79,6 +79,15 @@ export interface CheckImpl<C extends CheckContext = CheckContext> {
   /** Semver. Bumped whenever observable behavior changes. */
   version: string;
   description: string;
+  /**
+   * When this site-level impl wants to run, relative to the page fan-out.
+   * Defaults to `'before-pages'` — the historical behavior where every site
+   * check runs in parallel with page crawling. Use `'after-pages'` for site
+   * checks that need cross-page aggregates (e.g. canonical dedup); the
+   * runner defers them until the page queue is idle and publishes the
+   * collected data into `shared` first. Ignored on page-scope impls.
+   */
+  phase?: 'before-pages' | 'after-pages';
   run: (ctx: C) => Promise<CheckOutcome>;
 }
 
@@ -159,6 +168,8 @@ export interface ResolvedCheck {
   group?: string;
   implementationVersion: string;
   description: string;
+  /** Mirrors `CheckImpl.phase` for site checks; undefined for page checks. */
+  phase?: 'before-pages' | 'after-pages';
   run: (ctx: CheckContext) => Promise<CheckOutcome>;
 }
 
