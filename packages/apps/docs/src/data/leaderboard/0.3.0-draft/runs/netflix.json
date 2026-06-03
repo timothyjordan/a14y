@@ -2,9 +2,9 @@
   "url": "https://www.netflix.com/",
   "baseUrl": "https://www.netflix.com/",
   "mode": "page",
-  "scorecardVersion": "0.2.0",
-  "scorecardReleasedAt": "2026-04-06",
-  "scoringMethodology": "flat-pool-v1",
+  "scorecardVersion": "0.3.0-draft",
+  "scorecardReleasedAt": "unreleased",
+  "scoringMethodology": "per-check-mean-v1",
   "startedAt": "2026-06-03T07:17:07.799Z",
   "finishedAt": "2026-06-03T07:17:09.897Z",
   "siteChecks": [
@@ -170,28 +170,51 @@
           "id": "markdown.sitemap-section",
           "status": "fail",
           "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "markdown.navigation-stripped",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.size-reduction",
+          "status": "pass",
+          "message": "99.4% smaller (20566B vs 3167231B)"
+        },
+        {
+          "id": "markdown.valid-markdown",
+          "status": "fail",
+          "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "450 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 9,
+        "passed": 14,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 53
+        "total": 29,
+        "applicable": 24,
+        "score": 58
       }
     }
   ],
   "summary": {
-    "passed": 16,
-    "failed": 14,
+    "passed": 20,
+    "failed": 15,
     "warned": 2,
     "errored": 0,
-    "na": 6,
-    "total": 38,
-    "applicable": 32,
-    "score": 50
+    "na": 8,
+    "total": 45,
+    "applicable": 37,
+    "score": 54
   }
 }
