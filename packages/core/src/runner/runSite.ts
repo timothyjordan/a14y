@@ -3,6 +3,7 @@ import { ConcurrentQueue } from '../crawler/queue';
 import { collectSeeds } from '../crawler/sources';
 import { DISCOVERY_INDEXED_KEY } from '../checks/page/discovery';
 import { CANONICAL_INDEX_KEY } from '../checks/site/duplicateContent';
+import { AGENT_LINKS_INDEX_KEY, pageLinksToAgentFile } from '../checks/site/inPageLink';
 import { createHttpClient } from '../fetch/httpClient';
 import type { HttpClient } from '../fetch/types';
 import { getScorecard, LATEST_SCORECARD } from '../scorecard';
@@ -214,6 +215,10 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
   // `handlePage` while `ctx.page.$` is still live, then published into
   // `shared` once the page queue drains.
   const canonicalIndex = new Map<string, string>();
+  // Per-page `originalUrl -> hasAgentLink` accumulator consumed by the
+  // after-pages `discovery.in-page-link` check. Recorded for HTML pages only
+  // (non-HTML responses aren't in-page link sources).
+  const agentLinkIndex = new Map<string, boolean>();
 
   const handlePage = (input: DiscoveredPage): Promise<void> =>
     pageCheckQueue.add(async () => {
@@ -270,6 +275,7 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
             ? new URL(href, input.page.url).href
             : input.page.originalUrl;
           canonicalIndex.set(input.page.originalUrl, canonical);
+          agentLinkIndex.set(input.page.originalUrl, pageLinksToAgentFile(input.page));
         } else {
           canonicalIndex.set(input.page.originalUrl, input.page.originalUrl);
         }
@@ -335,6 +341,7 @@ export async function validateMulti(opts: MultiRunOptions): Promise<SiteRun[]> {
   // Page fan-out is done. Publish the canonical index so after-pages
   // site checks (e.g. discovery.no-duplicate-content) can read it.
   shared.set(CANONICAL_INDEX_KEY, canonicalIndex);
+  shared.set(AGENT_LINKS_INDEX_KEY, agentLinkIndex);
 
   // Run after-pages site checks now that everything they need is in
   // `shared`. Then merge their outcomes with the before-pages set so

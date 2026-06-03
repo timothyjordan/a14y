@@ -80,7 +80,7 @@ async function loadMirror(ctx: PageCheckContext): Promise<MarkdownMirror> {
   return result;
 }
 
-function mirrorCandidates(pageUrl: string): string[] {
+export function mirrorCandidates(pageUrl: string): string[] {
   const u = new URL(pageUrl);
   const path = u.pathname;
   // Strip a trailing slash and any .html extension before appending .md/.mdx

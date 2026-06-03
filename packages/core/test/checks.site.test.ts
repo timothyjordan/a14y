@@ -24,7 +24,7 @@ import {
   discoveryNoDuplicateContent,
   CANONICAL_INDEX_KEY,
 } from '../src/checks/site/duplicateContent';
-import { discoveryInPageLink } from '../src/checks/site/inPageLink';
+import { discoveryInPageLink, AGENT_LINKS_INDEX_KEY } from '../src/checks/site/inPageLink';
 import { DISCOVERY_INDEXED_KEY } from '../src/checks/page/discovery';
 
 const BASE = 'https://example.com';
@@ -345,13 +345,74 @@ describe('discovery.no-duplicate-content', () => {
 });
 
 describe('discovery.in-page-link', () => {
+  // Helper: build a site context with the runner-provided shared keys
+  // already populated, simulating an after-pages firing.
+  function withAgentLinks(
+    pairs: [originalUrl: string, hasLink: boolean][],
+    opts: { siteMode?: boolean; sitePrefix?: string } = {},
+  ) {
+    const ctx = makeSiteCtx(BASE, {}, opts.sitePrefix);
+    if (opts.siteMode !== false) {
+      ctx.shared.set(DISCOVERY_INDEXED_KEY, new Set(pairs.map(([u]) => u)));
+    }
+    ctx.shared.set(AGENT_LINKS_INDEX_KEY, new Map(pairs));
+    return ctx;
+  }
+
   it('declares phase: after-pages so the runner defers it past page fan-out', () => {
     expect(discoveryInPageLink.implementations['1.0.0'].phase).toBe('after-pages');
   });
 
-  it('returns na as a spec placeholder until the detector ships', async () => {
-    const r = await run(discoveryInPageLink, makeSiteCtx(BASE, {}));
-    expect(r.status).toBe('na');
-    expect(r.message).toMatch(/spec placeholder/);
+  it('passes when the homepage links to an agent file', async () => {
+    const ctx = withAgentLinks([
+      ['https://example.com/', true],
+      ['https://example.com/about', false],
+    ]);
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('pass');
+  });
+
+  it('passes when a first-level page (e.g. /docs) links to an agent file', async () => {
+    const ctx = withAgentLinks([
+      ['https://example.com/', false],
+      ['https://example.com/docs', true],
+    ]);
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('pass');
+  });
+
+  it('warns when only a deeper page links to an agent file', async () => {
+    const ctx = withAgentLinks([
+      ['https://example.com/', false],
+      ['https://example.com/docs/agents', true],
+    ]);
+    const r = await run(discoveryInPageLink, ctx);
+    expect(r.status).toBe('warn');
+    expect(r.message).toContain('https://example.com/docs/agents');
+  });
+
+  it('fails when no crawled page links to an agent file', async () => {
+    const ctx = withAgentLinks([
+      ['https://example.com/', false],
+      ['https://example.com/docs', false],
+    ]);
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('fail');
+  });
+
+  it('treats the subpath root as top-level for subpath-hosted sites', async () => {
+    const ctx = withAgentLinks([['https://example.com/docs/', true]], {
+      sitePrefix: '/docs',
+    });
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('pass');
+  });
+
+  it('returns na in single-page mode (no DISCOVERY_INDEXED_KEY published)', async () => {
+    const ctx = withAgentLinks([['https://example.com/', true]], { siteMode: false });
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('na');
+  });
+
+  it('returns na when no pages were recorded', async () => {
+    const ctx = makeSiteCtx(BASE, {});
+    ctx.shared.set(DISCOVERY_INDEXED_KEY, new Set<string>());
+    ctx.shared.set(AGENT_LINKS_INDEX_KEY, new Map<string, boolean>());
+    expect((await run(discoveryInPageLink, ctx)).status).toBe('na');
   });
 });

@@ -16,8 +16,6 @@ references:
     url: https://agents.md/
 ---
 
-> **Status: spec.** This check is pinned in the `0.3.0-draft` scorecard with a placeholder that returns N/A while the detector is implemented. The contract below is what it will assert once detection ships; it does not yet affect your score.
-
 ## How the check decides
 
 The check runs once per site, after every page has been fetched. While each page's HTML is still parsed, it looks for an in-DOM `<a href>` that resolves to an agent-discovery file: `/llms.txt` (or `/llms-full.txt`), `/sitemap.md`, `/AGENTS.md`, or that page's own `.md` mirror. It then grades by *where* such a link lives:

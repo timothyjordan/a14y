@@ -535,3 +535,132 @@ describe('after-pages site checks', () => {
     expect(dup!.message).toMatch(/single-page mode/);
   });
 });
+
+describe('after-pages: discovery.in-page-link', () => {
+  // Helper: an HTML page declaring its own canonical, with enough body text
+  // for html.ssr-content, optionally carrying an in-page agent-file link.
+  function html(opts: { self: string; agentHref?: string; links?: string[] }): string {
+    const agent = opts.agentHref ? `<a href="${opts.agentHref}">For agents</a>` : '';
+    const links = (opts.links ?? []).map((h) => `<a href="${h}">l</a>`).join('');
+    return `<!doctype html><html lang="en"><head>
+      <link rel="canonical" href="${opts.self}">
+    </head><body><main>${agent}${links}${'word '.repeat(60)}</main></body></html>`;
+  }
+  const HTML = { 'content-type': 'text/html; charset=utf-8' };
+  const inPageLink = (run: Awaited<ReturnType<typeof validate>>) =>
+    run.siteChecks.find((c) => c.id === 'discovery.in-page-link');
+
+  it("passes when the homepage links to an agent file", async () => {
+    const sitemap = `<urlset>
+      <url><loc>https://example.com/</loc></url>
+      <url><loc>https://example.com/docs/agents</loc></url>
+    </urlset>`;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': { body: sitemap },
+      'https://example.com/': {
+        body: html({ self: 'https://example.com/', agentHref: '/llms.txt' }),
+        headers: HTML,
+      },
+      'https://example.com/docs/agents': {
+        body: html({ self: 'https://example.com/docs/agents' }),
+        headers: HTML,
+      },
+      'https://example.com/llms.txt': {
+        body: '# llms',
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      },
+    };
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http: fakeHttpClient(routes),
+      scorecardVersion: 'draft',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const link = inPageLink(run);
+    expect(link).toBeDefined();
+    expect(link!.status).toBe('pass');
+  });
+
+  it("warns when only a deeper page links to an agent file", async () => {
+    const sitemap = `<urlset>
+      <url><loc>https://example.com/</loc></url>
+      <url><loc>https://example.com/docs/agents</loc></url>
+    </urlset>`;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': { body: sitemap },
+      'https://example.com/': {
+        body: html({ self: 'https://example.com/', links: ['/docs/agents'] }),
+        headers: HTML,
+      },
+      'https://example.com/docs/agents': {
+        body: html({ self: 'https://example.com/docs/agents', agentHref: '/llms.txt' }),
+        headers: HTML,
+      },
+      'https://example.com/llms.txt': {
+        body: '# llms',
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      },
+    };
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http: fakeHttpClient(routes),
+      scorecardVersion: 'draft',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const link = inPageLink(run);
+    expect(link).toBeDefined();
+    expect(link!.status).toBe('warn');
+    expect(link!.message).toContain('https://example.com/docs/agents');
+  });
+
+  it("fails when no crawled page links to an agent file", async () => {
+    const sitemap = `<urlset>
+      <url><loc>https://example.com/</loc></url>
+      <url><loc>https://example.com/about</loc></url>
+    </urlset>`;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': { body: sitemap },
+      'https://example.com/': {
+        body: html({ self: 'https://example.com/', links: ['/about'] }),
+        headers: HTML,
+      },
+      'https://example.com/about': {
+        body: html({ self: 'https://example.com/about' }),
+        headers: HTML,
+      },
+    };
+    const run = await validate({
+      url: 'https://example.com/',
+      mode: 'site',
+      http: fakeHttpClient(routes),
+      scorecardVersion: 'draft',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const link = inPageLink(run);
+    expect(link).toBeDefined();
+    expect(link!.status).toBe('fail');
+  });
+
+  it('returns na in single-page mode', async () => {
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/': {
+        body: html({ self: 'https://example.com/', agentHref: '/llms.txt' }),
+        headers: HTML,
+      },
+    };
+    const run = await validate({
+      url: 'https://example.com/',
+      http: fakeHttpClient(routes),
+      scorecardVersion: 'draft',
+    });
+    const link = inPageLink(run);
+    expect(link).toBeDefined();
+    expect(link!.status).toBe('na');
+    expect(link!.message).toMatch(/single-page mode/);
+  });
+});
