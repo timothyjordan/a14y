@@ -92,6 +92,16 @@
       "author": "unknown",
       "authorUrl": "",
       "mergedAt": "2026-05-28T22:08:42.906Z"
+    },
+    {
+      "checkId": "discovery.in-page-link",
+      "kind": "added",
+      "toImpl": "1.0.0",
+      "pr": 0,
+      "prUrl": "",
+      "author": "unknown",
+      "authorUrl": "",
+      "mergedAt": "2026-06-03T00:00:00.000Z"
     }
   ]
 }

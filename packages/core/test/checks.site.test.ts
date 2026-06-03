@@ -24,6 +24,7 @@ import {
   discoveryNoDuplicateContent,
   CANONICAL_INDEX_KEY,
 } from '../src/checks/site/duplicateContent';
+import { discoveryInPageLink } from '../src/checks/site/inPageLink';
 import { DISCOVERY_INDEXED_KEY } from '../src/checks/page/discovery';
 
 const BASE = 'https://example.com';
@@ -340,5 +341,17 @@ describe('discovery.no-duplicate-content', () => {
     const ctx = makeSiteCtx(BASE, {});
     ctx.shared.set(DISCOVERY_INDEXED_KEY, new Set<string>());
     expect((await run(discoveryNoDuplicateContent, ctx)).status).toBe('na');
+  });
+});
+
+describe('discovery.in-page-link', () => {
+  it('declares phase: after-pages so the runner defers it past page fan-out', () => {
+    expect(discoveryInPageLink.implementations['1.0.0'].phase).toBe('after-pages');
+  });
+
+  it('returns na as a spec placeholder until the detector ships', async () => {
+    const r = await run(discoveryInPageLink, makeSiteCtx(BASE, {}));
+    expect(r.status).toBe('na');
+    expect(r.message).toMatch(/spec placeholder/);
   });
 });
