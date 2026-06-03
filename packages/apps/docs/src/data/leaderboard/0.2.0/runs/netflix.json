@@ -4,8 +4,9 @@
   "mode": "page",
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
-  "startedAt": "2026-05-09T08:28:42.282Z",
-  "finishedAt": "2026-05-09T08:28:43.913Z",
+  "scoringMethodology": "flat-pool-v1",
+  "startedAt": "2026-06-03T07:17:07.799Z",
+  "finishedAt": "2026-06-03T07:17:09.897Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -54,7 +55,7 @@
     {
       "id": "sitemap-md.exists",
       "status": "pass",
-      "message": "https://www.netflix.com/NotFound?prev=https%3A%2F%2Fwww.netflix.com%2Fdocs%2Fsitemap.md"
+      "message": "https://www.netflix.com/NotFound?prev=https%3A%2F%2Fwww.netflix.com%2Fsitemap.md"
     },
     {
       "id": "sitemap-md.has-structure",
