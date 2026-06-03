@@ -438,3 +438,100 @@ describe('validate (site mode)', () => {
     expect(indexed.status).toBe('fail');
   });
 });
+
+describe('after-pages site checks', () => {
+  // Helper: HTML page that declares its canonical and carries enough
+  // body text to satisfy html.ssr-content. Keeps the test fixtures
+  // narrowly focused on the dup-content question.
+  function html(canonical: string): string {
+    return `<!doctype html><html lang="en"><head>
+      <link rel="canonical" href="${canonical}">
+    </head><body><main>${'word '.repeat(60)}</main></body></html>`;
+  }
+
+  it("publishes a canonical index and fires the dup-content check with status 'fail' when two URLs share a canonical", async () => {
+    const sitemap = `<urlset>
+      <url><loc>https://example.com/a</loc></url>
+      <url><loc>https://example.com/a?ref=nav</loc></url>
+    </urlset>`;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': { body: sitemap },
+      'https://example.com/a': {
+        body: html('https://example.com/a'),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+      'https://example.com/a?ref=nav': {
+        body: html('https://example.com/a'),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+    };
+    const http = fakeHttpClient(routes);
+    const run = await validate({
+      url: 'https://example.com/a',
+      mode: 'site',
+      http,
+      scorecardVersion: 'draft',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const dup = run.siteChecks.find(
+      (c) => c.id === 'discovery.no-duplicate-content',
+    );
+    expect(dup).toBeDefined();
+    expect(dup!.status).toBe('fail');
+    expect(dup!.message).toContain('https://example.com/a');
+  });
+
+  it("fires the dup-content check with status 'pass' when every URL has a distinct canonical", async () => {
+    const sitemap = `<urlset>
+      <url><loc>https://example.com/a</loc></url>
+      <url><loc>https://example.com/b</loc></url>
+    </urlset>`;
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/sitemap.xml': { body: sitemap },
+      'https://example.com/a': {
+        body: html('https://example.com/a'),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+      'https://example.com/b': {
+        body: html('https://example.com/b'),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+    };
+    const http = fakeHttpClient(routes);
+    const run = await validate({
+      url: 'https://example.com/a',
+      mode: 'site',
+      http,
+      scorecardVersion: 'draft',
+      concurrency: 4,
+      politeDelayMs: 0,
+    });
+    const dup = run.siteChecks.find(
+      (c) => c.id === 'discovery.no-duplicate-content',
+    );
+    expect(dup).toBeDefined();
+    expect(dup!.status).toBe('pass');
+  });
+
+  it('returns na for dup-content in single-page mode', async () => {
+    const routes: Record<string, FakeRoute> = {
+      'https://example.com/only': {
+        body: html('https://example.com/only'),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+      },
+    };
+    const http = fakeHttpClient(routes);
+    const run = await validate({
+      url: 'https://example.com/only',
+      http,
+      scorecardVersion: 'draft',
+    });
+    const dup = run.siteChecks.find(
+      (c) => c.id === 'discovery.no-duplicate-content',
+    );
+    expect(dup).toBeDefined();
+    expect(dup!.status).toBe('na');
+    expect(dup!.message).toMatch(/single-page mode/);
+  });
+});

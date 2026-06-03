@@ -15,11 +15,17 @@ references:
     url: https://developers.google.com/search/docs/appearance/page-experience
 ---
 
-> **Status: spec.** This check is pinned in the `0.3.0-draft` scorecard with a placeholder that returns N/A while the detector is implemented. The contract below is what it will assert once detection ships; it does not yet affect your score.
-
 ## How the check decides
 
-The check inspects the initial render for a blocking overlay that covers the main content — an open `<dialog>`, a `role="dialog"` element, or a known consent-banner pattern (OneTrust, TrustArc, Cookiebot) paired with a scroll-locked body. It passes when the main content is reachable without dismissing anything, and fails when an interstitial dominates the first render.
+The check scans the initial HTML response for three patterns that almost always indicate a blocking overlay:
+
+1. **Named consent platforms** — DOM markers for OneTrust (`#onetrust-consent-sdk`, `.onetrust-pc-dark-filter`), Cookiebot (`#CybotCookiebotDialog`), TrustArc (`#truste-consent-track`, `.truste_overlay`, `.truste_box_overlay`), Sourcepoint (`#cmpwrapper`, `#sp_message_container_1`), and Quantcast Choice (`#qc-cmp2-container`).
+2. **`<dialog open>`** — a modal dialog that's already open when the page loads.
+3. **Body-level `[role="dialog"]`** — an ARIA dialog mounted directly under `<body>`. Inline dialogs nested under `<article>` or `<main>` are almost always content widgets, not blocking overlays, and don't trigger the check.
+
+It passes when none of the above is present in the initial HTML.
+
+The heuristic is deliberately conservative: only widely-deployed platforms and only their well-known markers, so it doesn't fire on inline cookie banners that don't actually block content.
 
 ## How to implement it
 

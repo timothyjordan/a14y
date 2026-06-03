@@ -1,8 +1,8 @@
 ---
 id: discovery.no-duplicate-content
-title: Page is not a duplicate of another crawled URL
+title: No URLs share a canonical with another announced URL
 group: Discoverability
-scope: page
+scope: site
 why: >
   When several URLs serve the same content, an agent spends its limited token budget re-reading
   material it already has, and crawlers waste fetches that could have reached new pages. Google
@@ -15,11 +15,9 @@ references:
     url: https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
 ---
 
-> **Status: spec.** This check is pinned in the `0.3.0-draft` scorecard with a placeholder that returns N/A while the detector is implemented. The contract below is what it will assert once detection ships; it does not yet affect your score.
-
 ## How the check decides
 
-During a full-site crawl, the check groups every announced URL by the canonical it declares (falling back to the fetched URL when no `<link rel="canonical">` is present). A page passes if its canonical group contains only itself; it fails if two or more distinct announced URLs collapse to the same canonical, which means the site is serving the same content under multiple addresses. In single-page mode there is no site-wide view, so the check returns N/A.
+The check runs once per site, after every page has been fetched. For each crawled URL it records the resolved `<link rel="canonical">` href (falling back to the fetched URL when no canonical is declared), then groups URLs by canonical. The site passes when every canonical is claimed by at most one URL, and fails when two or more URLs collapse to the same canonical — the message names how many duplicate groups were found and shows one example pair. In single-page mode there is no site-wide view, so the check returns N/A.
 
 ## How to implement it
 

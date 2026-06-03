@@ -77,15 +77,12 @@ export const htmlGlossaryLink: PageCheckSpec = {
   },
 };
 
-/**
- * Spec placeholder ahead of the impl PR. The contract: pass if the
- * server-rendered HTML (the initial response body, before any client-side
- * JavaScript runs) already carries the page's substantive text — agents
- * like Anthropic's and Perplexity's crawlers do not execute JS, so an
- * empty SPA shell that hydrates on the client is invisible to them even
- * when Googlebot can render it. Returns `na` until the detector ships,
- * so it contributes nothing to the draft score in the meantime.
- */
+// Word count floor for the initial HTML to count as "substantive."
+// Loose by design: many legitimate but thin pages (404s, contact stubs,
+// landing tiles) sit well below 100 words. 50 lets those through and
+// only flags the body-is-just-framework-boot-tags case.
+const SSR_MIN_WORDS = 50;
+
 export const htmlSsrContent: PageCheckSpec = {
   id: 'html.ssr-content',
   scope: 'page',
@@ -94,9 +91,24 @@ export const htmlSsrContent: PageCheckSpec = {
   implementations: {
     '1.0.0': {
       version: '1.0.0',
-      description:
-        'Pass if the server-rendered HTML already contains the page\'s main text (no JS execution required). Spec placeholder — detection ships in the follow-up implementation PR.',
-      run: async () => ({ status: 'na', message: 'spec placeholder — detection ships in the impl PR' }),
+      description: `Pass if the initial HTML response (no JS executed) carries at least ${SSR_MIN_WORDS} words of visible text after stripping <script>, <style>, <noscript>, and <template>. Agents like Anthropic's, Perplexity's, and OpenAI's SearchBot do not run JS, so an SPA shell that hydrates client-side is invisible to them even when Googlebot can render it.`,
+      run: async (ctx) => {
+        const skip = htmlOnly(ctx as PageCheckContext);
+        if (skip) return skip;
+        const page = (ctx as PageCheckContext).page;
+        const $body = page.$('body').clone();
+        // Strip code, styling, no-JS fallback, and inert template
+        // content so we measure only what an agent would actually read.
+        $body.find('script, style, noscript, template').remove();
+        const text = $body.text().replace(/\s+/g, ' ').trim();
+        const words = text ? text.split(' ').length : 0;
+        return words >= SSR_MIN_WORDS
+          ? { status: 'pass', message: `${words} words in initial HTML` }
+          : {
+              status: 'fail',
+              message: `only ${words} words in initial HTML (looks like a JS-rendered shell)`,
+            };
+      },
     },
   },
 };
