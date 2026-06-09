@@ -111,7 +111,7 @@ export const htmlJsonLdDateModified: PageCheckSpec = {
         if (r.blocks.length === 0) return { status: 'na', message: 'no JSON-LD on page' };
         const present = r.flat
           .map((n) => n.dateModified)
-          .filter((v): v is string => typeof v === 'string' && v.length > 0);
+          .filter((v): v is string => typeof v === 'string');
         if (present.length === 0) {
           return { status: 'fail', message: 'no dateModified anywhere in JSON-LD' };
         }
