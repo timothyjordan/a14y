@@ -221,35 +221,35 @@ contributor and PR. That listing is rendered from
 `packages/core/src/scorecard/draft-changes.json`, which is regenerated
 by the **`refresh-draft-diff`** GitHub workflow.
 
-Three flows cover every case:
+The workflow runs **after** a merge to `main`, not inside the PR. It
+recomputes the net diff, reconciles it against the existing
+`draft-changes.json` (entries whose check id no longer appears in the
+net diff are dropped; that's how conflict resolution works when a
+later commit reverts an earlier one), and, if the JSON needs updating,
+opens a follow-up PR with the refreshed file. **There is no
+auto-merge:** a maintainer reviews and merges the refresh PR like any
+other change. Two flows cover every case:
 
-1. **Default path (auto-run).** Every PR that modifies `draft.ts`
-   automatically triggers `refresh-draft-diff` on each push. The
-   workflow recomputes the net diff, reconciles it against the
-   existing `draft-changes.json` (entries whose check id no longer
-   appears in the net diff are dropped — that's how conflict
-   resolution works when a later commit reverts an earlier one), and
-   commits the updated JSON back to the PR branch with
-   `chore(scorecard): refresh draft changes [skip ci]`. No action
-   needed from you beyond rebasing if you have local commits.
-2. **Manual trigger.** If the auto-run didn't fire (workflow disabled,
-   a push collision, etc.), trigger it by hand:
-   `Actions → Refresh draft diff → Run workflow → <branch>`. To preview
-   what the workflow would produce without pushing, run
-   `node scripts/refresh-draft-diff.mjs --local` against your working
-   tree — it prints the would-be JSON and exits.
-3. **Audit / catch-up.** If a PR merged with `draft.ts` changes but
-   `draft-changes.json` is now stale (it didn't pick up the change),
-   trigger the workflow on `main` via `workflow_dispatch`. It detects
-   any unrecorded net change, attributes it to the most recent PR that
-   touched the relevant entry (via `git log --follow -L`), and commits
-   the refreshed JSON directly to `main`.
+1. **Auto-run on merge to `main`.** A push to `main` that touches
+   `draft.ts`, `draft-changes.json`, `scripts/refresh-draft-diff.mjs`,
+   or the workflow file triggers `refresh-draft-diff`. Attribution for
+   any new entries comes from the PR associated with the merge commit
+   (resolved via `gh api repos/{repo}/commits/{sha}/pulls`). The
+   refreshed JSON arrives as a PR on the fixed `chore/refresh-draft-diff`
+   branch. Repeated runs force-update that branch in place rather than
+   stacking new PRs, and the run is a no-op when nothing changed. No
+   action needed from you beyond reviewing and merging that follow-up.
+2. **Manual catch-up (`workflow_dispatch`).** If the auto-run didn't
+   fire (infra failure, a push collision, etc.) or you want to
+   re-reconcile against the current state of `main`, trigger it by hand:
+   `Actions → Refresh draft diff → Run workflow`. There's no PR context
+   on a manual run, so the script falls back to "audit" attribution
+   (`pr: 0`, author = the actor who triggered the run). Output is the
+   same follow-up PR.
 
-> **Fork PRs.** GitHub does not let workflows from fork PRs push
-> commits back to the PR branch. For fork contributions, a maintainer
-> needs to rebase the branch locally and re-push so the workflow can
-> attribute under the maintainer push, or merge and then run the
-> audit/catch-up flow on `main`.
+To preview what the workflow would produce without pushing, run
+`node scripts/refresh-draft-diff.mjs --local` against your working tree;
+it prints the would-be JSON and exits.
 
 ### Docs-first for scorecard changes
 
