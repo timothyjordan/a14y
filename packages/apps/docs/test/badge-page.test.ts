@@ -28,10 +28,18 @@ describe('badge.astro (TJ-423)', () => {
     expect(page).not.toMatch(/name="badge-theme"[^>]*value="auto"/);
   });
 
-  it('renders an empty-state explainer for the no-params case', () => {
+  it('renders an empty-state explainer for the no-params case (TJ-642 refined copy)', () => {
     expect(page).toMatch(/id="badge-empty"/);
-    expect(page).toMatch(/npx\s+a14y\s+your-site\.com/i);
+    // First path: CLI flow with the verified flag spelling
+    expect(page).toMatch(/npx\s+a14y\s+check\s+yoursite\.com/i);
+    // Second path: leaderboard link as the "already scanned" route
+    expect(page).toMatch(/\/leaderboard\/`}>leaderboard</);
+    // Fallback: extension link kept as a third option
     expect(page).toMatch(/\/chrome-extension\/`}>a14y Chrome extension</);
+  });
+
+  it('points new visitors at the embed guide from the lead copy (TJ-642 activation)', () => {
+    expect(page).toMatch(/\/badge\/how-to-embed\/`}>Read the embed guide</);
   });
 
   it('imports the URL parser from @a14y/core and the HTML builder from ~/lib', () => {

@@ -1,0 +1,177 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout
+  title="How to embed your a14y badge"
+  description="Step-by-step guide for embedding the Agent-Ready badge on your site, README, or docs. Three sources, two themes, one snippet."
+>
+  <section class="hero">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">guide</span>
+        <span>embed your badge</span>
+      </div>
+      <h1>How to embed your a14y badge</h1>
+      <p class="lead">
+        The Agent-Ready badge is a self-contained HTML snippet that
+        shows your site's agent readability score and links back to
+        the full report. No external scripts, no tracking pixels, no
+        runtime dependencies.
+      </p>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <h2>1. Get your embed snippet</h2>
+    <ol type="a">
+      <li>
+        <strong>From the leaderboard.</strong> Find your site on the
+        {' '}<a href={`${base}/leaderboard/`}>public leaderboard</a>{' '}
+        and click <strong>Badge</strong> on its row. The badge page
+        opens pre-filled with your latest score.
+      </li>
+      <li>
+        <strong>From the CLI.</strong> Run
+        {' '}<code>npx a14y check yoursite.com --scorecard 0.3.0-draft</code>.
+        The CLI prints a shareable badge URL when the scan finishes.
+        Open it.
+      </li>
+      <li>
+        <strong>From the
+        {' '}<a href={`${base}/chrome-extension/`}>Chrome extension</a>.</strong>
+        Run a scan, then click <strong>Share score → Embed badge</strong>.
+        The badge page opens with the snippet ready to copy.
+      </li>
+    </ol>
+  </section>
+
+  <section class="guide-section">
+    <h2>2. Pick a theme</h2>
+    <p>
+      Light and dark are the two options. The theme picker on the
+      badge page updates the snippet and the URL together, so the
+      copied HTML matches what you see in the preview.
+    </p>
+    <p class="muted">
+      The badge is a self-contained SVG inside the HTML. It does not
+      respect the embedding site's dark-mode toggle on its own. Pick
+      the theme that matches the page where the badge will live.
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>3. Paste it in</h2>
+    <p>Common spots:</p>
+    <dl>
+      <dt>HTML page (docs, marketing site, blog post)</dt>
+      <dd>Paste the snippet into the HTML where the badge should appear. The snippet brings its own inline styles, so it does not inherit your site's typography.</dd>
+
+      <dt>GitHub or GitLab README</dt>
+      <dd>
+        The snippet is HTML, and GitHub renders inline HTML inside
+        markdown. Paste it directly into your README.md. If your
+        platform does not allow inline HTML (e.g. PyPI long
+        descriptions, npm READMEs in some renderers), use the
+        markdown-image fallback below.
+      </dd>
+
+      <dt>Markdown-only environments (npm, PyPI, etc.)</dt>
+      <dd>
+        Image-only badges are not yet supported as a first-class
+        export. For now, screenshot the rendered badge from the
+        {' '}<a href={`${base}/badge/`}>/badge/</a>{' '}
+        page and host it next to your README. An SVG-only variant
+        is tracked at
+        {' '}<a href="https://linear.app/timothyjordan/issue/TJ-747" rel="noopener">TJ-747</a>.
+      </dd>
+
+      <dt>Footer or about page</dt>
+      <dd>The badge is ~280 by ~120 pixels at default scale. It fits cleanly into a footer "credibility row" alongside other status badges.</dd>
+    </dl>
+  </section>
+
+  <section class="guide-section">
+    <h2>4. Keep it fresh</h2>
+    <p>
+      Scores can change as your site changes and as the scorecard
+      evolves. Re-run
+      {' '}<code>npx a14y check yoursite.com --scorecard 0.3.0-draft</code>{' '}
+      whenever you ship a significant docs change, paste the new
+      snippet in, and the embed updates.
+    </p>
+    <p class="muted">
+      Each badge snapshot is pinned to a scorecard version (the
+      <code>v=</code> param in the URL). If you embed a badge for
+      v0.2.0 and we later release v0.3.0, your existing embed keeps
+      rendering against v0.2.0 until you replace it.
+    </p>
+  </section>
+
+  <section class="guide-section guide-cta">
+    <h2>Ready?</h2>
+    <p>
+      Find your site on the
+      {' '}<a href={`${base}/leaderboard/`}>leaderboard</a>{' '}
+      or run a fresh scan with
+      {' '}<code>npx a14y check yoursite.com --scorecard 0.3.0-draft</code>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .guide-section {
+    margin-top: 2.5rem;
+    max-width: 68ch;
+  }
+  .guide-section h2 {
+    margin-bottom: 0.5rem;
+  }
+  .guide-section p {
+    margin: 0.5rem 0 0.75rem;
+    line-height: 1.6;
+  }
+  .guide-section ol,
+  .guide-section ul {
+    line-height: 1.6;
+    padding-left: 1.25rem;
+  }
+  .guide-section ol li {
+    margin-bottom: 0.6rem;
+  }
+  .guide-section dl {
+    margin: 0.75rem 0 0;
+  }
+  .guide-section dt {
+    font-weight: 600;
+    margin-top: 0.9rem;
+  }
+  .guide-section dd {
+    margin: 0.25rem 0 0;
+    padding-left: 0;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .guide-section .muted {
+    color: var(--text-muted);
+    font-size: 0.94em;
+  }
+  .guide-section code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.92em;
+    padding: 1px 5px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .guide-cta {
+    margin-top: 3rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg, 14px);
+  }
+  .guide-cta h2 {
+    margin-top: 0;
+  }
+</style>

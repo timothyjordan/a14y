@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import type { LeaderboardEntry } from '~/lib/research-data';
 import type { SiteRun } from '@a14y/core';
+import { buildBadgeUrl } from '@a14y/core';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CheckResultCard from '~/components/research/CheckResultCard.astro';
 import PageDetails from '~/components/research/PageDetails.astro';
@@ -169,6 +170,12 @@ function methodologyUrl(methodology: string | undefined): string {
       <span data-active-passed>{run.summary.passed}</span>/<span data-active-applicable>{run.summary.applicable}</span> checks passed <span class="dot">·</span>
       <span data-active-pages>{totalPages}</span> {totalPages === 1 ? 'page' : 'pages'}
     </p>
+    <a
+      class="embed-badge-cta"
+      href={buildBadgeUrl(run)}
+      data-embed-badge-link
+      aria-label={`Embed Agent-Ready badge for ${entry.name}`}
+    >Embed your badge ↗</a>
   </section>
 
   {isMultiScorecard && versionedSummaries.length > 1 && (
@@ -401,6 +408,23 @@ function methodologyUrl(methodology: string | undefined): string {
     line-height: 1.55;
   }
   .score-meta .dot { color: var(--text-subtle); margin: 0 4px; }
+  .embed-badge-cta {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    transition: border-color 120ms ease, background 120ms ease;
+  }
+  .embed-badge-cta:hover {
+    background: var(--surface-alt);
+    border-color: var(--text);
+  }
 
   .research-section { margin-top: 48px; }
   .research-section h2 {

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout
   title="Embed your a14y badge"
@@ -14,7 +15,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
       <h1>Embed your a14y badge</h1>
       <p class="lead">
         Drop the HTML below into your site to show off your agent
-        readability score.
+        readability score. New to this?
+        {' '}<a href={`${base}/badge/how-to-embed/`}>Read the embed guide</a>.
       </p>
     </div>
   </section>
@@ -30,13 +32,27 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 
     <div id="badge-preview" class="badge-preview" aria-live="polite"></div>
 
-    <p id="badge-empty" class="badge-empty" hidden>
-      No score data in the URL.<br />
-      Run <code>npx a14y your-site.com</code> to print a share link,
-      or click <strong>Share score → Embed badge</strong> on the
-      report page in the
-      {' '}<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/chrome-extension/`}>a14y Chrome extension</a>.
-    </p>
+    <div id="badge-empty" class="badge-empty" hidden>
+      <p>
+        <strong>No score data in the URL.</strong> Here are two ways to get one.
+      </p>
+      <ol>
+        <li>
+          Run <code>npx a14y check yoursite.com</code>. The CLI prints
+          your badge URL when the scan finishes; open it to see your
+          embed snippet.
+        </li>
+        <li>
+          Already scanned? Find your site on the
+          {' '}<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/leaderboard/`}>leaderboard</a>{' '}
+          and click <strong>embed</strong> on its row to copy the snippet from there.
+        </li>
+      </ol>
+      <p class="badge-empty-fallback">
+        You can also click <strong>Share score → Embed badge</strong> in the
+        {' '}<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/chrome-extension/`}>a14y Chrome extension</a>.
+      </p>
+    </div>
   </section>
 
   <section class="badge-embed">
@@ -165,6 +181,25 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
   }
   .badge-empty[hidden] {
     display: none;
+  }
+  .badge-empty p {
+    margin: 0 0 0.75rem;
+  }
+  .badge-empty ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    line-height: 1.55;
+  }
+  .badge-empty ol li {
+    margin-bottom: 0.5rem;
+  }
+  .badge-empty ol li:last-child {
+    margin-bottom: 0;
+  }
+  .badge-empty-fallback {
+    font-size: 0.92em;
+    color: var(--text-subtle);
+    margin: 0;
   }
 
   .badge-embed {

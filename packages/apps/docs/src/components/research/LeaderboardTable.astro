@@ -1,5 +1,11 @@
 ---
-import { CATEGORY_LABELS, checkDocsUrl, scoreBand, type LeaderboardEntry } from '~/lib/research-data';
+import {
+  CATEGORY_LABELS,
+  checkDocsUrl,
+  leaderboardEntryBadgeUrl,
+  scoreBand,
+  type LeaderboardEntry,
+} from '~/lib/research-data';
 import { siteRunUrl } from '~/lib/site-run';
 
 interface Props {
@@ -34,6 +40,7 @@ function hostOf(url: string): string {
         <th scope="col" class="col-cat">Category</th>
         <th scope="col" class="col-score">Score</th>
         <th scope="col" class="col-fail">Top failures</th>
+        <th scope="col" class="col-badge">Badge</th>
       </tr>
     </thead>
     <tbody>
@@ -74,6 +81,13 @@ function hostOf(url: string): string {
                 )}
               </span>
             )}
+          </td>
+          <td class="col-badge">
+            <a
+              class="lb-badge-link"
+              href={leaderboardEntryBadgeUrl(entry, scorecardVersion)}
+              aria-label={`Embed Agent-Ready badge for ${entry.name}`}
+            >Badge</a>
           </td>
         </tr>
       ))}
@@ -137,6 +151,26 @@ function hostOf(url: string): string {
     width: 90px;
     text-align: right;
     font-variant-numeric: tabular-nums;
+  }
+  .col-badge {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+  }
+  .lb-badge-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+  .lb-badge-link:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
   }
   .score-pill {
     display: inline-block;
@@ -231,7 +265,8 @@ function hostOf(url: string): string {
       grid-template-areas:
         "rank name  score"
         "rank cat   score"
-        "fail fail  fail";
+        "fail fail  fail"
+        "badge badge badge";
       gap: 6px 12px;
       padding: 14px 4px;
       border-bottom: 1px solid var(--border);
@@ -245,6 +280,7 @@ function hostOf(url: string): string {
     .col-fail  { grid-area: fail; }
     .col-fail .lb-fails { gap: 4px; }
     .lb-fail-id { font-size: 10px; padding: 2px 5px; }
+    .col-badge { grid-area: badge; width: auto; text-align: left; }
   }
 </style>
 
