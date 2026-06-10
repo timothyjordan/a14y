@@ -18,7 +18,10 @@
     "dev:baseline": "A14Y_BASELINE=1 astro dev --port 4322",
     "prebuild:baseline": "node ../../../scripts/inject-telemetry-config.mjs docs && node scripts/clean-baseline-public.mjs",
     "build:baseline": "A14Y_BASELINE=1 astro build --outDir dist-baseline",
-    "preview:baseline": "DIST_DIR=dist-baseline PORT=4322 node scripts/preview.mjs"
+    "preview:baseline": "DIST_DIR=dist-baseline PORT=4322 node scripts/preview.mjs",
+    "prebuild:variant": "node ../../../scripts/inject-telemetry-config.mjs docs && node scripts/clean-baseline-public.mjs",
+    "build:variant": "astro build --outDir dist-${A14Y_VARIANT_SLUG:-variant}",
+    "preview:variant": "DIST_DIR=dist-${A14Y_VARIANT_SLUG:-variant} node scripts/preview.mjs"
   },
   "dependencies": {
     "@a14y/core": "*",

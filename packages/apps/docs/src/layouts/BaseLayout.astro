@@ -3,6 +3,7 @@ import '~/styles/global.css';
 import Analytics from '~/components/Analytics.astro';
 import ScorecardSubHeader from '~/components/ScorecardSubHeader.astro';
 import { getLatestScorecardVersion, getScorecardByVersion } from '~/lib/scorecard-data';
+import { isFeatureEnabled, enabledFeatures } from '~/lib/features';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -35,10 +36,13 @@ const {
 const latest = getLatestScorecardVersion();
 const latestReleased = getScorecardByVersion(latest).releasedAt;
 
-// Baseline build (A14Y_BASELINE=1) strips agent-readability artifacts
-// from <head> and the footer for use as the "before" in
-// @a14y/benchmark before/after case studies. See BASELINE.md.
-const isBaseline = process.env.A14Y_BASELINE === '1';
+// Per-feature gating for the ablation study (TJ-647 / TJ-650).
+// Each feature flag controls one `<head>` artifact. A14Y_BASELINE=1
+// turns all features off (the legacy "baseline" build). The
+// `noAgentFeatures` shortcut still drives the all-or-nothing footer
+// column since that's not a separately-checked feature.
+// See src/lib/features.ts and BASELINE.md.
+const noAgentFeatures = enabledFeatures.size === 0;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 
@@ -91,17 +95,13 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {!isBaseline && <meta name="description" content={description} />}
+    {isFeatureEnabled('meta-description') && <meta name="description" content={description} />}
     <title>{title}</title>
-    {!isBaseline && (
-      <>
-        <link rel="canonical" href={canonicalUrl} />
-        <link rel="alternate" type="text/markdown" href={mirrorHref} />
-        <link rel="agent-skills" href={new URL(`${base}/.well-known/agent-skills/index.json`, Astro.site).toString()} />
-      </>
-    )}
+    {isFeatureEnabled('canonical-link') && <link rel="canonical" href={canonicalUrl} />}
+    {isFeatureEnabled('md-mirrors') && <link rel="alternate" type="text/markdown" href={mirrorHref} />}
+    {isFeatureEnabled('agent-skills') && <link rel="agent-skills" href={new URL(`${base}/.well-known/agent-skills/index.json`, Astro.site).toString()} />}
     <link rel="icon" type="image/svg+xml" href={`${base}/brand/favicon.svg`} />
-    {!isBaseline && (
+    {isFeatureEnabled('og-tags') && (
       <>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
@@ -120,7 +120,7 @@ const jsonLd = {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    {!isBaseline && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {isFeatureEnabled('json-ld') && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <Analytics />
     <script is:inline>
       // Set data-theme before first paint to prevent FOUC. Light is
@@ -279,7 +279,7 @@ const jsonLd = {
             <li><a href={`${base}/privacy/`}>Privacy</a></li>
           </ul>
         </div>
-        {!isBaseline && (
+        {!noAgentFeatures && (
           <div class="footer-col">
             <h4>For agents</h4>
             <ul>

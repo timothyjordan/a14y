@@ -81,6 +81,33 @@ build (e.g. via Cloudflare Pages), so external researchers and CI can
 target the baseline without standing up a local server. Not yet
 deployed — local-only is sufficient for the benchmark tool.
 
+## Per-feature variant builds (a14y-internal study, local working tree only)
+
+> Added for the a14y-internal [TJ-647](https://linear.app/timothyjordan/issue/TJ-647) per-feature ablation study. This is **local-only** working-tree code, not committed upstream. When the study ends the working tree gets reverted (or, if reusable, lands via a separate authorized PR).
+
+`A14Y_BASELINE=1` toggles all agent-readability features at once. The per-feature ablation needs finer control: build one variant per individual feature so the benchmark can attribute its delta. Driven by `A14Y_FEATURES=<comma-list>` plus `A14Y_VARIANT_SLUG=<name>` (controls the `dist-<slug>/` output dir + the absolute `site:` URL suffix).
+
+The mechanism lives in `src/lib/features.ts`. Precedence:
+
+| env | enabledFeatures | typical use |
+|---|---|---|
+| `A14Y_BASELINE=1` | empty set | baseline build (legacy, unchanged) |
+| `A14Y_FEATURES=<csv>` | exactly those | per-variant builds for the ablation |
+| neither | all 11 | normal production build (unchanged) |
+
+The 11 toggleable features:
+
+`llms-txt`, `robots-txt`, `sitemap-xml`, `sitemap-md`, `agents-md`, `agent-skills`, `md-mirrors`, `canonical-link`, `meta-description`, `og-tags`, `json-ld`.
+
+Build + serve one variant locally:
+
+```bash
+A14Y_FEATURES=llms-txt A14Y_VARIANT_SLUG=only-llms-txt npm run -w @a14y/docs build:variant
+A14Y_VARIANT_SLUG=only-llms-txt PORT=4401 npm run -w @a14y/docs preview:variant
+```
+
+Each invocation writes to `dist-${A14Y_VARIANT_SLUG}/` and serves it on the given `PORT`. Multiple variants can coexist on disk and be served on different ports for the benchmark to hit them in parallel.
+
 ## Score expectation
 
 The enhanced site (a14y.dev) self-scores 92/100 on the v0.2.0

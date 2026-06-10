@@ -3,6 +3,11 @@ import { assertCoverageIntegration } from './src/lib/assert-coverage';
 import { markdownMirrorsIntegration } from './src/integrations/markdown-mirrors';
 import { discoveryFilesIntegration } from './src/integrations/discovery-files';
 import { remarkPageSubstitutions } from './src/integrations/page-substitutions-remark';
+import {
+  anyDiscoveryFeatureEnabled,
+  isFeatureEnabled,
+  variantSlug,
+} from './src/lib/features';
 
 // Astro config for the a14y documentation site.
 //
@@ -13,15 +18,16 @@ import { remarkPageSubstitutions } from './src/integrations/page-substitutions-r
 // build loudly — matching the runtime guarantee in @a14y/core's
 // getScorecard().
 //
-// When A14Y_BASELINE=1, this config builds the un-enhanced "baseline"
-// variant used by @a14y/benchmark as the "before" in before/after
-// case studies: the agent-readability integrations (discovery files,
-// markdown mirrors) are skipped so the baseline scores low on the
-// scorecard while remaining visually identical for humans.
-const isBaseline = process.env.A14Y_BASELINE === '1';
+// Variant builds (TJ-647 / TJ-650): per-feature toggles are read from
+// the `src/lib/features.ts` helper, which decomposes the legacy
+// `A14Y_BASELINE=1` boolean into individual A14Y_FEATURES entries.
+// A14Y_BASELINE=1 still means "all features off" (backwards-compat).
 
 export default defineConfig({
-  site: isBaseline ? 'https://baseline.a14y.dev' : 'https://a14y.dev',
+  site:
+    variantSlug === 'all'
+      ? 'https://a14y.dev'
+      : `https://${variantSlug}.a14y.dev`,
   output: 'static',
   trailingSlash: 'always',
   build: {
@@ -60,8 +66,7 @@ export default defineConfig({
   },
   integrations: [
     assertCoverageIntegration(),
-    ...(isBaseline
-      ? []
-      : [markdownMirrorsIntegration(), discoveryFilesIntegration()]),
+    ...(isFeatureEnabled('md-mirrors') ? [markdownMirrorsIntegration()] : []),
+    ...(anyDiscoveryFeatureEnabled() ? [discoveryFilesIntegration()] : []),
   ],
 });

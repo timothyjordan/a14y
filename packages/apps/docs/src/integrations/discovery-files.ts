@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { listAllScorecards } from '../lib/scorecard-data';
 import { getAllSkills, getSkillBody } from '../lib/skills-data';
 import { listCaseStudies, caseStudyUrl } from '../lib/case-study-data';
+import { isFeatureEnabled } from '../lib/features';
 
 /**
  * Astro integration that emits the site-level discovery files the
@@ -64,17 +65,20 @@ export function discoveryFilesIntegration(): AstroIntegration {
           allPaths.push(caseStudyUrl(study.slug, ''));
         }
 
-        const xmlEntries = allPaths.map(
-          (p) =>
-            `  <url>\n    <loc>${escapeXml(`${origin}${p}`)}</loc>\n    <lastmod>${lastmodIso}</lastmod>\n  </url>`,
-        );
-        const xml =
-          `<?xml version="1.0" encoding="UTF-8"?>\n` +
-          `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-          xmlEntries.join('\n') +
-          `\n</urlset>\n`;
-        await fs.writeFile(path.join(publicDir, 'sitemap.xml'), xml, 'utf8');
+        if (isFeatureEnabled('sitemap-xml')) {
+          const xmlEntries = allPaths.map(
+            (p) =>
+              `  <url>\n    <loc>${escapeXml(`${origin}${p}`)}</loc>\n    <lastmod>${lastmodIso}</lastmod>\n  </url>`,
+          );
+          const xml =
+            `<?xml version="1.0" encoding="UTF-8"?>\n` +
+            `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+            xmlEntries.join('\n') +
+            `\n</urlset>\n`;
+          await fs.writeFile(path.join(publicDir, 'sitemap.xml'), xml, 'utf8');
+        }
 
+        if (isFeatureEnabled('llms-txt')) {
         const llmsLines: string[] = [];
         llmsLines.push('# a14y scorecard documentation');
         llmsLines.push('');
@@ -106,19 +110,23 @@ export function discoveryFilesIntegration(): AstroIntegration {
         llmsLines.push('---');
         llmsLines.push(`Full sitemap: [/sitemap.md](/sitemap.md)`);
         await fs.writeFile(path.join(publicDir, 'llms.txt'), llmsLines.join('\n'), 'utf8');
+        }
 
-        await fs.writeFile(
-          path.join(publicDir, 'robots.txt'),
-          [
-            'User-agent: *',
-            'Allow: /',
-            '',
-            `Sitemap: ${sitemapXmlUrl}`,
-            '',
-          ].join('\n'),
-          'utf8',
-        );
+        if (isFeatureEnabled('robots-txt')) {
+          await fs.writeFile(
+            path.join(publicDir, 'robots.txt'),
+            [
+              'User-agent: *',
+              'Allow: /',
+              '',
+              `Sitemap: ${sitemapXmlUrl}`,
+              '',
+            ].join('\n'),
+            'utf8',
+          );
+        }
 
+        if (isFeatureEnabled('sitemap-md')) {
         const groups = new Map<string, string[]>();
         for (const url of allPaths) {
           const segments = url.split('/').filter(Boolean);
@@ -148,7 +156,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
           smdLines.push('');
         }
         await fs.writeFile(path.join(publicDir, 'sitemap.md'), smdLines.join('\n'), 'utf8');
+        }
 
+        if (isFeatureEnabled('agents-md')) {
         const agentsMd = [
           '# a14y',
           '',
@@ -195,7 +205,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
           '',
         ].join('\n');
         await fs.writeFile(path.join(publicDir, 'AGENTS.md'), agentsMd, 'utf8');
+        }
 
+        if (isFeatureEnabled('agent-skills')) {
         const skillsDir = path.join(publicDir, '.well-known', 'agent-skills');
         const skills = await getAllSkills();
         if (skills.length > 0) {
@@ -233,6 +245,7 @@ export function discoveryFilesIntegration(): AstroIntegration {
           // build logs.
           // eslint-disable-next-line no-console
           console.log(`[a14y-discovery] wrote agent-skills index → ${indexUrl}`);
+        }
         }
       },
     },
