@@ -18,6 +18,7 @@
  * missing import.
  */
 import researchData from '~/data/research.json';
+import { BADGE_BASE_URL } from '@a14y/core';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
@@ -293,6 +294,34 @@ export function scoreBand(score: number): 'excellent' | 'good' | 'fair' | 'poor'
   if (score >= 70) return 'good';
   if (score >= 50) return 'fair';
   return 'poor';
+}
+
+/**
+ * Build the badge embed URL for a leaderboard row. Mirrors @a14y/core's
+ * `buildBadgeUrl()` query-key contract for the flattened LeaderboardEntry
+ * shape (LeaderboardEntry hoists `score` to the top level instead of
+ * nesting it under `summary`, so a SiteRun → URL helper doesn't fit).
+ * Kept in sync by the `leaderboard-badge-url.test.ts` sync test.
+ */
+export function leaderboardEntryBadgeUrl(
+  entry: LeaderboardEntry,
+  scorecardVersion: string,
+): string {
+  const u = new URL('/badge/', BADGE_BASE_URL);
+  const q = u.searchParams;
+  q.set('s', String(entry.score));
+  q.set('v', scorecardVersion);
+  q.set('a', String(entry.summary.applicable));
+  q.set('t', String(entry.summary.total));
+  q.set('p', String(entry.summary.passed));
+  q.set('f', String(entry.summary.failed));
+  q.set('w', String(entry.summary.warned));
+  q.set('e', String(entry.summary.errored));
+  q.set('n', String(entry.summary.na));
+  q.set('d', entry.scannedAt.slice(0, 10));
+  q.set('m', entry.mode);
+  q.set('u', entry.url);
+  return u.toString();
 }
 
 /**
