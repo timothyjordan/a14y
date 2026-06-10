@@ -129,6 +129,14 @@ describe('html.json-ld.date-modified 1.1.0', () => {
     expect(r.message).toMatch(/no dateModified/);
   });
 
+  it('fails as present-but-invalid when dateModified is an empty string', async () => {
+    const ctx = makePageCtx(BASE, `${BASE}/p`, pageHtmlWithDateModified(''));
+    const r = await impl.run(ctx);
+    expect(r.status).toBe('fail');
+    expect(r.message).toMatch(/present but not a valid/);
+    expect(r.message).not.toMatch(/no dateModified/);
+  });
+
   it('fails when dateModified is present but not a valid date', async () => {
     const ctx = makePageCtx(BASE, `${BASE}/p`, pageHtmlWithDateModified('yesterday'));
     const r = await impl.run(ctx);
