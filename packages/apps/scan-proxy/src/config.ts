@@ -19,6 +19,12 @@ export const PROXY_USER_AGENT = 'a14y/0.4 (+https://github.com/timothyjordan/a14
 /** Headers the browser is allowed to read off the proxied response. */
 export const EXPOSED_HEADERS = 'x-a14y-status, content-type, location';
 
-/** Token-bucket rate limit applied per client IP. */
-export const RATE_LIMIT_CAPACITY = 30;
-export const RATE_LIMIT_REFILL_PER_SEC = 1;
+/** Token-bucket rate limit applied per client IP.
+ *
+ *  One page-mode audit fans out into ~20-40 well-known probes (the page plus
+ *  robots.txt / llms.txt / sitemap / AGENTS.md and their variants), so the
+ *  burst capacity must sit comfortably above a single scan or normal use trips
+ *  it. The refill rate is what actually throttles sustained abuse; the hard
+ *  cost ceiling is Cloud Run `--max-instances`. */
+export const RATE_LIMIT_CAPACITY = 150;
+export const RATE_LIMIT_REFILL_PER_SEC = 5;
