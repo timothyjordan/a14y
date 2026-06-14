@@ -2,8 +2,9 @@
 export const ALLOWED_ORIGINS: readonly string[] = [
   'https://a14y.dev',
   'https://baseline.a14y.dev',
-  'http://localhost:3000', // docs dev server
+  'http://localhost:4321', // docs dev server (astro default)
   'http://localhost:4322', // docs baseline dev server
+  'http://localhost:3000', // alternate docs dev port
 ];
 
 /** Largest upstream body we will relay, in bytes. */
