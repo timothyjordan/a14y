@@ -8,6 +8,7 @@ import {
 import { buildBadgeHtml } from '~/lib/build-badge-html';
 import type { BadgeData } from '@a14y/core';
 import { getCaseStudy, caseStudyUrl } from '~/lib/case-study-data';
+import ScanWidget from '~/components/ScanWidget.astro';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
@@ -135,6 +136,8 @@ const heroBadgeDarkHtml = buildBadgeHtml(
       <a class="hero-badge-link" href={`${base}/badge/`}>Embed your own →</a>
     </aside>
   </section>
+
+  <ScanWidget />
 
   <section class="section section--tight" aria-label="How a14y works">
     <ol class="steps">

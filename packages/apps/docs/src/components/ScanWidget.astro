@@ -1,0 +1,321 @@
+---
+// Homepage "scan your site" widget. The audit runs entirely client-side via
+// @a14y/core (loaded lazily on first scan), routing cross-origin fetches
+// through the scan proxy. See src/lib/scan/run-scan.ts.
+---
+
+<section class="scan-band" id="scan" aria-labelledby="scan-heading">
+  <div class="scan-inner">
+    <div class="scan-head">
+      <h2 id="scan-heading">Scan your site</h2>
+      <p class="scan-sub">
+        See how readable a page is to AI agents, right now. Runs in your
+        browser using the same engine as the CLI — no install required.
+      </p>
+    </div>
+
+    <form class="scan-form" data-scan-form novalidate>
+      <input
+        type="url"
+        inputmode="url"
+        autocomplete="url"
+        spellcheck="false"
+        class="scan-input"
+        data-scan-input
+        placeholder="your-site.com"
+        aria-label="Site URL to scan"
+        required
+      />
+      <button type="submit" class="btn scan-submit" data-scan-submit>Scan</button>
+    </form>
+
+    <p class="scan-privacy">
+      Scanned URLs are fetched through an a14y proxy and are not stored.
+    </p>
+
+    <p class="scan-status" data-scan-status role="status" aria-live="polite" hidden></p>
+    <div class="scan-results" data-scan-results hidden></div>
+  </div>
+</section>
+
+<script>
+  import { initScanWidget } from '../lib/scan/run-scan';
+  initScanWidget();
+</script>
+
+<!--
+  Styles are global (not Astro-scoped) because the results DOM is created at
+  runtime in run-scan.ts; scoped styles only attach to build-time markup.
+  Every selector is namespaced under .scan-* to avoid leaking.
+-->
+<style is:global>
+  .scan-band {
+    margin: 2.5rem auto 0;
+    padding: 1.75rem clamp(1rem, 4vw, 2.25rem);
+    max-width: var(--max-width);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.5);
+    box-shadow: var(--shadow-card);
+  }
+
+  .scan-head h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.4rem;
+  }
+  .scan-sub {
+    margin: 0;
+    max-width: 65ch;
+    color: color-mix(in oklch, var(--text) 82%, transparent);
+  }
+
+  .scan-form {
+    display: flex;
+    gap: 0.6rem;
+    margin: 1.1rem 0 0.5rem;
+    flex-wrap: wrap;
+  }
+  .scan-input {
+    flex: 1 1 18rem;
+    min-width: 0;
+    padding: 0.65rem 0.85rem;
+    font: inherit;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+  }
+  .scan-input:focus-visible {
+    outline: 2px solid color-mix(in oklch, var(--link) 60%, transparent);
+    outline-offset: 1px;
+  }
+  .scan-submit {
+    flex: 0 0 auto;
+    padding-inline: 1.5rem;
+  }
+  .scan-submit.is-busy {
+    opacity: 0.65;
+    cursor: progress;
+  }
+
+  .scan-privacy {
+    margin: 0;
+    font-size: 0.8rem;
+    color: color-mix(in oklch, var(--text) 70%, transparent);
+  }
+
+  .scan-status {
+    margin: 0.9rem 0 0;
+    font-size: 0.95rem;
+  }
+  .scan-status[data-kind='busy'] {
+    color: var(--link);
+  }
+  .scan-status[data-kind='error'] {
+    color: var(--status-fail);
+  }
+
+  .scan-results {
+    margin-top: 1.4rem;
+    animation: scan-reveal 0.25s ease-out both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scan-results {
+      animation: none;
+    }
+  }
+  @keyframes scan-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Score header */
+  .scan-score-row {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+  }
+  .scan-score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: 2px solid currentColor;
+    line-height: 1;
+  }
+  .scan-score-num {
+    font-size: 2.6rem;
+    font-weight: 700;
+  }
+  .scan-score-outof {
+    font-size: 1rem;
+    opacity: 0.7;
+  }
+  .scan-score--pass {
+    color: var(--status-pass);
+  }
+  .scan-score--warn {
+    color: var(--status-warn);
+  }
+  .scan-score--fail {
+    color: var(--status-fail);
+  }
+  .scan-score-meta {
+    color: var(--text);
+  }
+  .scan-score-title {
+    margin: 0;
+    font-weight: 600;
+  }
+  .scan-score-sub {
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+    color: color-mix(in oklch, var(--text) 75%, transparent);
+  }
+  .scan-score-url {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: color-mix(in oklch, var(--text) 68%, transparent);
+    overflow-wrap: anywhere;
+  }
+
+  /* Check groups */
+  .scan-group {
+    margin-top: 1.3rem;
+  }
+  .scan-group-head {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+  .scan-check-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .scan-check-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.7rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+  }
+  .scan-check-link:hover {
+    border-color: var(--border-strong);
+  }
+  /* Status is carried by the tag chip + a full-border tint, not a side stripe. */
+  .scan-check--fail .scan-check-link,
+  .scan-check--error .scan-check-link {
+    background: color-mix(in oklch, var(--status-fail) 7%, var(--bg));
+    border-color: color-mix(in oklch, var(--status-fail) 32%, var(--border));
+  }
+  .scan-check--warn .scan-check-link {
+    background: color-mix(in oklch, var(--status-warn) 8%, var(--bg));
+    border-color: color-mix(in oklch, var(--status-warn) 32%, var(--border));
+  }
+  .scan-check-tag {
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    color: var(--bg);
+  }
+  .scan-check--fail .scan-check-tag,
+  .scan-check--error .scan-check-tag {
+    background: var(--status-fail);
+  }
+  .scan-check--warn .scan-check-tag {
+    background: var(--status-warn);
+  }
+  .scan-check--pass .scan-check-tag {
+    background: var(--status-pass);
+  }
+  .scan-check-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .scan-check-id {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .scan-check-msg {
+    font-size: 0.82rem;
+    color: color-mix(in oklch, var(--text) 78%, transparent);
+  }
+
+  .scan-hidden {
+    display: none;
+  }
+  .scan-more {
+    margin-top: 0.5rem;
+  }
+
+  .scan-passed {
+    margin-top: 1rem;
+  }
+  .scan-passed > summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.3rem 0;
+  }
+  .scan-passed[open] > summary {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Actions */
+  .scan-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .scan-actions-note {
+    font-size: 0.82rem;
+    color: color-mix(in oklch, var(--text) 72%, transparent);
+  }
+
+  /* Full-experience CTA */
+  .scan-cta {
+    margin-top: 1.5rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: var(--radius);
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+  }
+  .scan-cta-head {
+    margin: 0;
+    font-weight: 700;
+  }
+  .scan-cta-body {
+    margin: 0.25rem 0 0.8rem;
+    max-width: 60ch;
+    color: color-mix(in oklch, var(--text) 80%, transparent);
+  }
+  .scan-cta-links {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .scan-cta-link {
+    text-decoration: none;
+  }
+</style>
