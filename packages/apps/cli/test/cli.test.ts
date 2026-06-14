@@ -1,7 +1,8 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
-import { mkdtempSync, rmSync } from 'node:fs';
+import http from 'node:http';
+import { mkdtempSync, rmSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { describe, expect, it, beforeAll, afterAll } from 'vitest';
 
@@ -192,5 +193,83 @@ describe('a14y CLI', () => {
       expect(err.stderr).toContain('Invalid --output');
       expect(err.stderr).toContain('agent-prompt');
     }
+  });
+});
+
+describe('a14y skills (TJ-822)', () => {
+  // Serve the repo's real SKILL.md from a throwaway local server so the spawned
+  // binary exercises the full fetch -> write path without touching the public
+  // network. A14Y_SKILL_SOURCE_URL points the CLI at this server.
+  let server: http.Server;
+  let sourceUrl: string;
+  let installRoot: string;
+
+  beforeAll(async () => {
+    const skillBody = readFileSync(
+      path.resolve(__dirname, '../../../../skills/a14y/SKILL.md'),
+      'utf8',
+    );
+    server = http.createServer((_req, res) => {
+      res.writeHead(200, { 'content-type': 'text/markdown' });
+      res.end(skillBody);
+    });
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+    const addr = server.address();
+    const port = typeof addr === 'object' && addr ? addr.port : 0;
+    sourceUrl = `http://127.0.0.1:${port}/SKILL.md`;
+    installRoot = mkdtempSync(path.join(tmpdir(), 'a14y-skills-test-'));
+  });
+
+  afterAll(async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    try {
+      rmSync(installRoot, { recursive: true, force: true });
+    } catch {
+      // best-effort
+    }
+  });
+
+  it('lists skills flags in `a14y skills --help`', async () => {
+    const { stdout } = await exec('node', [CLI, 'skills', '--help'], { env: envForCli() });
+    expect(stdout).toContain('--target');
+    expect(stdout).toContain('--local');
+    expect(stdout).toContain('--check');
+    expect(stdout).toContain('--force');
+  });
+
+  it('the `update` form resolves to the same skills command', async () => {
+    const { stdout } = await exec('node', [CLI, 'skills', 'update', '--help'], { env: envForCli() });
+    expect(stdout).toContain('--target');
+    expect(stdout).toContain('Install or update the a14y agent skill');
+  });
+
+  it('lists `skills [update]` in the top-level help', async () => {
+    const { stdout } = await exec('node', [CLI, '--help'], { env: envForCli() });
+    expect(stdout).toContain('skills [update]');
+  });
+
+  it('does not rewrite `a14y skills` to `a14y check skills`', async () => {
+    // If the default-to-check shim mis-fired, this would invoke `check` and the
+    // skills-only `--target` flag would be unknown. Seeing the skills help proves
+    // `skills` is in KNOWN_COMMANDS.
+    const { stdout } = await exec('node', [CLI, 'skills', '--help'], { env: envForCli() });
+    expect(stdout).not.toContain('--max-pages');
+    expect(stdout).toContain('--target');
+  });
+
+  it('installs, is idempotent, and reports no drift on --check', async () => {
+    const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
+
+    const first = await exec('node', [CLI, 'skills', '--target', installRoot, '--output', 'json'], { env });
+    const firstJson = JSON.parse(first.stdout);
+    expect(firstJson.summary.created).toBe(1);
+    expect(existsSync(path.join(installRoot, 'a14y', 'SKILL.md'))).toBe(true);
+
+    const second = await exec('node', [CLI, 'skills', '--target', installRoot, '--output', 'json'], { env });
+    expect(JSON.parse(second.stdout).summary.unchanged).toBe(1);
+
+    // --check on an up-to-date install exits 0.
+    const check = await exec('node', [CLI, 'skills', '--target', installRoot, '--check'], { env });
+    expect(check.stdout).toContain('Up to date');
   });
 });

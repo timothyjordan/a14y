@@ -45,15 +45,18 @@ Agent readability scorer — audits any website against the versioned a14y
 scorecard
 
 Options:
-  -V, --version          output the version number
-  --no-telemetry         disable anonymous usage telemetry for this run
-  -h, --help             display help for command
+  -V, --version              output the version number
+  --no-telemetry             disable anonymous usage telemetry for this run
+  -h, --help                 display help for command
 
 Commands:
-  check [options] <url>  Audit a URL or whole site against the a14y scorecard
-  scorecards [options]   List every shipped scorecard version and the checks
-                         each one pins
-  help [command]         display help for command
+  check [options] <url>      Audit a URL or whole site against the a14y
+                             scorecard
+  scorecards [options]       List every shipped scorecard version and the
+                             checks each one pins
+  skills [options] [action]  Install or update the a14y agent skill for your
+                             coding agents (idempotent)
+  help [command]             display help for command
 
 Commands in detail:
   check <url>                   Audit a URL or a whole site
@@ -72,6 +75,15 @@ Commands in detail:
     -v, --verbose                 stream progress events to stderr
 
   scorecards                    List shipped scorecard versions
+    -o, --output <format>         text | json
+
+  skills [update]               Install or update the a14y agent skill (idempotent)
+    --global                      install to the home dir (default)
+    --local, --project            install into the current project instead
+    --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect
+    --agent <name>                restrict to one agent (repeatable)
+    --check, --dry-run            report drift without writing (exit 1 on drift)
+    --force                       overwrite a user-modified target or symlink
     -o, --output <format>         text | json
 
 Run 'a14y help <command>' (or 'a14y <command> --help') for full details.
@@ -115,6 +127,35 @@ Usage: a14y scorecards [options]
 List every shipped scorecard version and the checks each one pins
 
 Options:
+  -o, --output <format>  text or json (default: "text")
+  -h, --help             display help for command
+```
+
+### `a14y help skills`
+
+```text
+Usage: a14y skills [options] [action]
+
+Install or update the a14y agent skill for your coding agents (idempotent)
+
+Arguments:
+  action                 optional "update" keyword; install and update are the
+                         same idempotent operation
+
+Options:
+  --global               install into your home directory (default)
+  --local                install into the current project instead of the home
+                         directory
+  --project              alias for --local
+  --target <dir>         write the skill to <dir>/a14y/SKILL.md, bypassing
+                         agent auto-detection
+  --agent <name>         restrict to a specific agent (repeatable) (default:
+                         [])
+  --check                report what would change without writing (exits 1 on
+                         drift)
+  --dry-run              alias for --check
+  --force                overwrite a user-modified target or write through a
+                         symlink
   -o, --output <format>  text or json (default: "text")
   -h, --help             display help for command
 ```

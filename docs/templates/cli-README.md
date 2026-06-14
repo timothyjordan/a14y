@@ -22,4 +22,8 @@ The sections below are generated from the CLI's own `--help` output, so they sta
 
 <!-- cli-help: scorecards -->
 
+### `a14y help skills`
+
+<!-- cli-help: skills -->
+
 <!-- include: fragments/_license.md -->

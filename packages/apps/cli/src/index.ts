@@ -32,6 +32,7 @@ import {
   track,
 } from './telemetry';
 import { emitScorecardChecks } from './scorecardEvents';
+import { runSkillsCommand } from './skills';
 
 const STATUS_ICON: Record<CheckResult['status'], string> = {
   pass: chalk.green('✓'),
@@ -294,6 +295,43 @@ program
     }
   });
 
+program
+  .command('skills')
+  .argument('[action]', 'optional "update" keyword; install and update are the same idempotent operation')
+  .description('Install or update the a14y agent skill for your coding agents (idempotent)')
+  .option('--global', 'install into your home directory (default)')
+  .option('--local', 'install into the current project instead of the home directory')
+  .option('--project', 'alias for --local')
+  .option('--target <dir>', 'write the skill to <dir>/a14y/SKILL.md, bypassing agent auto-detection')
+  .option(
+    '--agent <name>',
+    'restrict to a specific agent (repeatable)',
+    (value: string, prev: string[]) => [...prev, value],
+    [],
+  )
+  .option('--check', 'report what would change without writing (exits 1 on drift)')
+  .option('--dry-run', 'alias for --check')
+  .option('--force', 'overwrite a user-modified target or write through a symlink')
+  .option('-o, --output <format>', 'text or json', 'text')
+  .action(async (action: string | undefined, options, command) => {
+    if (options.output !== 'text' && options.output !== 'json') {
+      console.error(chalk.red(`Invalid --output "${options.output}", expected "text" or "json"`));
+      track('cli_error', { command: 'skills', phase: 'normalize', error_class: 'InvalidArg' });
+      process.exit(2);
+    }
+    const cliInit = command.parent?.cliInit as Awaited<ReturnType<typeof initCliTelemetry>> | undefined;
+    const exitCode = await runSkillsCommand(
+      { ...options, action },
+      {
+        runId: cliInit?.runId,
+        stdout: (line) => console.log(line),
+        stderr: (line) => console.error(chalk.red(line)),
+        track,
+      },
+    );
+    if (exitCode !== 0) process.exit(exitCode);
+  });
+
 program.addHelpText(
   'after',
   `
@@ -316,6 +354,15 @@ Commands in detail:
   scorecards                    List shipped scorecard versions
     -o, --output <format>         text | json
 
+  skills [update]               Install or update the a14y agent skill (idempotent)
+    --global                      install to the home dir (default)
+    --local, --project            install into the current project instead
+    --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect
+    --agent <name>                restrict to one agent (repeatable)
+    --check, --dry-run            report drift without writing (exit 1 on drift)
+    --force                       overwrite a user-modified target or symlink
+    -o, --output <format>         text | json
+
 Run 'a14y help <command>' (or 'a14y <command> --help') for full details.
 Tip: 'check' is the default — 'a14y <url>' works the same as 'a14y check <url>'.
 `,
@@ -324,7 +371,7 @@ Tip: 'check' is the default — 'a14y <url>' works the same as 'a14y check <url>
 // Default to the `check` subcommand when the first positional is neither a
 // known command nor a flag. `a14y example.com` should behave the same as
 // `a14y check example.com`.
-const KNOWN_COMMANDS = new Set(['check', 'scorecards', 'help']);
+const KNOWN_COMMANDS = new Set(['check', 'scorecards', 'skills', 'help']);
 const argv = process.argv.slice();
 const firstPositional = argv.findIndex((a, i) => i >= 2 && !a.startsWith('-'));
 if (firstPositional !== -1 && !KNOWN_COMMANDS.has(argv[firstPositional])) {
