@@ -1,0 +1,20 @@
+{
+  "name": "@a14y/scan-proxy",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tiny CORS proxy (Google Cloud Run) that lets the a14y website run audits client-side. Adds CORS headers and an x-a14y-status envelope so @a14y/core's fetch layer works from a browser.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  }
+}
