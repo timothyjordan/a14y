@@ -6,12 +6,14 @@ a14y ships an [agent skill](https://agentskills.io/specification) that any spec-
 npx skills add timothyjordan/a14y
 ```
 
-The a14y CLI can also install and update the skill itself, which is handy if you already have a14y on your `PATH`. It is idempotent (installs if missing, updates if present) and auto-detects which coding agents you have configured:
+The a14y CLI can also install, update, and uninstall the skill itself, which is handy if you already have a14y on your `PATH`. It is idempotent (installs if missing, updates if present), auto-detects which coding agents you have configured, and shows a checklist before writing:
 
 ```bash
-npx -y a14y skills            # install/update globally (~/.claude/skills, ...)
-npx -y a14y skills --local    # install into the current project instead
-npx -y a14y skills --check    # report whether your copy is out of date
+npx -y a14y skill              # install/update for detected agents (~/.claude/skills, ...)
+npx -y a14y skill --link       # one shared copy in .agents/skills, symlinked from each agent
+npx -y a14y skill --local      # install into the current project instead
+npx -y a14y skill --check      # report whether your copy is out of date
+npx -y a14y skill uninstall    # remove it from every agent and the shared dir
 ```
 
 The skill detects a running local dev server (or falls back to your live URL), runs the audit, proposes a prioritized fix plan, and tracks score deltas across runs in `AGENTS.md`. Source: [`skills/a14y/SKILL.md`](./skills/a14y/SKILL.md).

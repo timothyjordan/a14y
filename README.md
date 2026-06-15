@@ -40,12 +40,14 @@ a14y ships an [agent skill](https://agentskills.io/specification) that any spec-
 npx skills add timothyjordan/a14y
 ```
 
-The a14y CLI can also install and update the skill itself, which is handy if you already have a14y on your `PATH`. It is idempotent (installs if missing, updates if present) and auto-detects which coding agents you have configured:
+The a14y CLI can also install, update, and uninstall the skill itself, which is handy if you already have a14y on your `PATH`. It is idempotent (installs if missing, updates if present), auto-detects which coding agents you have configured, and shows a checklist before writing:
 
 ```bash
-npx -y a14y skills            # install/update globally (~/.claude/skills, ...)
-npx -y a14y skills --local    # install into the current project instead
-npx -y a14y skills --check    # report whether your copy is out of date
+npx -y a14y skill              # install/update for detected agents (~/.claude/skills, ...)
+npx -y a14y skill --link       # one shared copy in .agents/skills, symlinked from each agent
+npx -y a14y skill --local      # install into the current project instead
+npx -y a14y skill --check      # report whether your copy is out of date
+npx -y a14y skill uninstall    # remove it from every agent and the shared dir
 ```
 
 The skill detects a running local dev server (or falls back to your live URL), runs the audit, proposes a prioritized fix plan, and tracks score deltas across runs in `AGENTS.md`. Source: [`skills/a14y/SKILL.md`](./skills/a14y/SKILL.md).
@@ -65,18 +67,18 @@ Agent readability scorer — audits any website against the versioned a14y
 scorecard
 
 Options:
-  -V, --version              output the version number
-  --no-telemetry             disable anonymous usage telemetry for this run
-  -h, --help                 display help for command
+  -V, --version             output the version number
+  --no-telemetry            disable anonymous usage telemetry for this run
+  -h, --help                display help for command
 
 Commands:
-  check [options] <url>      Audit a URL or whole site against the a14y
-                             scorecard
-  scorecards [options]       List every shipped scorecard version and the
-                             checks each one pins
-  skills [options] [action]  Install or update the a14y agent skill for your
-                             coding agents (idempotent)
-  help [command]             display help for command
+  check [options] <url>     Audit a URL or whole site against the a14y
+                            scorecard
+  scorecards [options]      List every shipped scorecard version and the checks
+                            each one pins
+  skill [options] [action]  Install, update, or uninstall the a14y agent skill
+                            for your coding agents (idempotent)
+  help [command]            display help for command
 
 Commands in detail:
   check <url>                   Audit a URL or a whole site
@@ -97,14 +99,16 @@ Commands in detail:
   scorecards                    List shipped scorecard versions
     -o, --output <format>         text | json
 
-  skills [update]               Install or update the a14y agent skill (idempotent)
-    --global                      install to the home dir (default)
-    --local, --project            install into the current project instead
+  skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
+    --global                      act on the home dir (default)
+    --local, --project            act on the current project instead
+    --link                        symlink mode: shared copy in .agents/skills
+    --copy                        copy mode: a SKILL.md per agent (default)
     --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect
     --agent <name>                restrict to one agent (repeatable)
     --check, --dry-run            report drift without writing (exit 1 on drift)
     --force                       overwrite a user-modified target or symlink
-    -y, --yes                     install to all detected agents (no checklist)
+    -y, --yes                     act on all detected agents (no checklist)
     -o, --output <format>         text | json
 
 Run 'a14y help <command>' (or 'a14y <command> --help') for full details.

@@ -10,18 +10,32 @@ export class SkillsConfigError extends Error {
   }
 }
 
+export type TargetKind = 'copy' | 'canonical' | 'link';
+
 export interface SkillTarget {
-  /** Agent keys that resolve to this file (>1 when they share a skills dir). */
+  /**
+   * - `copy`: a real SKILL.md written into the agent's own skills dir.
+   * - `canonical`: the single shared SKILL.md (`.agents/skills/a14y/SKILL.md`)
+   *   used by the symlink install mode.
+   * - `link`: a symlink at an agent's `a14y` dir pointing at the canonical dir.
+   */
+  kind: TargetKind;
+  /** Agent keys served by this target (>1 when they share a path). */
   agents: string[];
   /** Combined human label, e.g. "Cline + Zed". */
   label: string;
-  /** Directory that contains `<SKILL_NAME>/SKILL.md`. */
-  skillsDir: string;
-  /** Absolute path to the SKILL.md file we read/write. */
-  filePath: string;
+  /** copy/canonical: the SKILL.md file path. link: the `a14y` symlink path. */
+  managedPath: string;
+  /** link only: absolute canonical `a14y` directory the symlink points at. */
+  linkTo?: string;
 }
 
 /** `<skillsDir>/a14y/SKILL.md`. */
 export function skillFile(skillsDir: string): string {
   return path.join(skillsDir, SKILL_NAME, SKILL_FILENAME);
+}
+
+/** `<skillsDir>/a14y`. */
+export function skillDir(skillsDir: string): string {
+  return path.join(skillsDir, SKILL_NAME);
 }

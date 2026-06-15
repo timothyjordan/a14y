@@ -139,3 +139,14 @@ export const DEFAULT_AGENT = 'claude';
 export function agentByName(name: string): AgentEntry | undefined {
   return AGENT_REGISTRY.find((a) => a.name === name);
 }
+
+/**
+ * The shared cross-agent skills directory (the `.agents/skills` standard). Used
+ * as the canonical home for the symlink install mode: the skill lives here once
+ * and each agent links to it.
+ */
+export function sharedSkillsDir(ctx: PathCtx, scope: 'global' | 'local'): string {
+  return scope === 'global'
+    ? inHome(ctx, '.agents', 'skills')
+    : inCwd(ctx, '.agents', 'skills');
+}

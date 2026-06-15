@@ -196,7 +196,7 @@ describe('a14y CLI', () => {
   });
 });
 
-describe('a14y skills (TJ-822)', () => {
+describe('a14y skill (TJ-822)', () => {
   // Serve the repo's real SKILL.md from a throwaway local server so the spawned
   // binary exercises the full fetch -> write path without touching the public
   // network. A14Y_SKILL_SOURCE_URL points the CLI at this server.
@@ -217,7 +217,7 @@ describe('a14y skills (TJ-822)', () => {
     const addr = server.address();
     const port = typeof addr === 'object' && addr ? addr.port : 0;
     sourceUrl = `http://127.0.0.1:${port}/SKILL.md`;
-    installRoot = mkdtempSync(path.join(tmpdir(), 'a14y-skills-test-'));
+    installRoot = mkdtempSync(path.join(tmpdir(), 'a14y-skill-test-'));
   });
 
   afterAll(async () => {
@@ -229,47 +229,71 @@ describe('a14y skills (TJ-822)', () => {
     }
   });
 
-  it('lists skills flags in `a14y skills --help`', async () => {
-    const { stdout } = await exec('node', [CLI, 'skills', '--help'], { env: envForCli() });
+  it('lists skill flags in `a14y skill --help`', async () => {
+    const { stdout } = await exec('node', [CLI, 'skill', '--help'], { env: envForCli() });
     expect(stdout).toContain('--target');
-    expect(stdout).toContain('--local');
+    expect(stdout).toContain('--link');
     expect(stdout).toContain('--check');
     expect(stdout).toContain('--force');
   });
 
-  it('the `update` form resolves to the same skills command', async () => {
-    const { stdout } = await exec('node', [CLI, 'skills', 'update', '--help'], { env: envForCli() });
+  it('the `uninstall` form resolves to the same skill command', async () => {
+    const { stdout } = await exec('node', [CLI, 'skill', 'uninstall', '--help'], { env: envForCli() });
     expect(stdout).toContain('--target');
-    expect(stdout).toContain('Install or update the a14y agent skill');
+    expect(stdout).toContain('Install, update, or uninstall the a14y agent skill');
   });
 
-  it('lists `skills [update]` in the top-level help', async () => {
+  it('lists `skill [install|update|uninstall]` in the top-level help', async () => {
     const { stdout } = await exec('node', [CLI, '--help'], { env: envForCli() });
-    expect(stdout).toContain('skills [update]');
+    expect(stdout).toContain('skill [install|update|uninstall]');
   });
 
-  it('does not rewrite `a14y skills` to `a14y check skills`', async () => {
+  it('does not rewrite `a14y skill` to `a14y check skill`', async () => {
     // If the default-to-check shim mis-fired, this would invoke `check` and the
-    // skills-only `--target` flag would be unknown. Seeing the skills help proves
-    // `skills` is in KNOWN_COMMANDS.
-    const { stdout } = await exec('node', [CLI, 'skills', '--help'], { env: envForCli() });
+    // skill-only `--target` flag would be unknown. Seeing the skill help proves
+    // `skill` is in KNOWN_COMMANDS.
+    const { stdout } = await exec('node', [CLI, 'skill', '--help'], { env: envForCli() });
     expect(stdout).not.toContain('--max-pages');
     expect(stdout).toContain('--target');
   });
 
-  it('installs, is idempotent, and reports no drift on --check', async () => {
+  it('installs to an explicit --target and is idempotent', async () => {
     const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
+    const skillFile = path.join(installRoot, 'a14y', 'SKILL.md');
 
-    const first = await exec('node', [CLI, 'skills', '--target', installRoot, '--output', 'json'], { env });
-    const firstJson = JSON.parse(first.stdout);
-    expect(firstJson.summary.created).toBe(1);
-    expect(existsSync(path.join(installRoot, 'a14y', 'SKILL.md'))).toBe(true);
+    const first = await exec('node', [CLI, 'skill', 'install', '--target', installRoot, '--output', 'json'], { env });
+    expect(JSON.parse(first.stdout).summary.created).toBe(1);
+    expect(existsSync(skillFile)).toBe(true);
 
-    const second = await exec('node', [CLI, 'skills', '--target', installRoot, '--output', 'json'], { env });
+    const second = await exec('node', [CLI, 'skill', '--target', installRoot, '--output', 'json'], { env });
     expect(JSON.parse(second.stdout).summary.unchanged).toBe(1);
 
-    // --check on an up-to-date install exits 0.
-    const check = await exec('node', [CLI, 'skills', '--target', installRoot, '--check'], { env });
+    const check = await exec('node', [CLI, 'skill', '--target', installRoot, '--check'], { env });
     expect(check.stdout).toContain('Up to date');
+  });
+
+  it('round-trips install then uninstall for a project-local agent', async () => {
+    const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
+    const proj = mkdtempSync(path.join(tmpdir(), 'a14y-skill-proj-'));
+    const claudeSkill = path.join(proj, '.claude', 'skills', 'a14y', 'SKILL.md');
+    try {
+      const installed = await exec(
+        'node',
+        [CLI, 'skill', 'install', '--agent', 'claude', '--local', '--yes', '--output', 'json'],
+        { env, cwd: proj },
+      );
+      expect(JSON.parse(installed.stdout).summary.created).toBe(1);
+      expect(existsSync(claudeSkill)).toBe(true);
+
+      const removed = await exec(
+        'node',
+        [CLI, 'skill', 'uninstall', '--local', '--yes', '--output', 'json'],
+        { env, cwd: proj },
+      );
+      expect(JSON.parse(removed.stdout).summary.removed).toBeGreaterThanOrEqual(1);
+      expect(existsSync(claudeSkill)).toBe(false);
+    } finally {
+      rmSync(proj, { recursive: true, force: true });
+    }
   });
 });

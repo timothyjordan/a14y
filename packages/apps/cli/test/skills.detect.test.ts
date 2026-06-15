@@ -4,6 +4,7 @@ import {
   buildTargets,
   detectAgents,
   explicitTarget,
+  scanInstalled,
 } from '../src/skills/detect';
 import { agentByName, type PathCtx } from '../src/skills/registry';
 import { SkillsConfigError } from '../src/skills/paths';
@@ -11,59 +12,52 @@ import type { FsFacade } from '../src/skills/fsFacade';
 
 const ctx: PathCtx = { home: '/home/u', cwd: '/work', env: {} };
 
-function fsWithDirs(dirs: string[]): FsFacade {
-  const set = new Set(dirs);
+type DirEntry = { isSymbolicLink: boolean; isDirectory: boolean };
+
+function stubFs(opts: {
+  dirs?: string[];
+  files?: Record<string, string>;
+  symlinks?: string[];
+}): FsFacade {
+  const dirs = new Set(opts.dirs ?? []);
+  const files = new Map(Object.entries(opts.files ?? {}));
+  const links = new Set(opts.symlinks ?? []);
   return {
-    async readFile() {
-      return null;
+    async readFile(p) {
+      return files.has(p) ? files.get(p)! : null;
     },
     async writeFile() {},
     async mkdirp() {},
-    async lstat() {
+    async lstat(p): Promise<DirEntry | null> {
+      if (links.has(p)) return { isSymbolicLink: true, isDirectory: false };
+      if (files.has(p)) return { isSymbolicLink: false, isDirectory: false };
+      if (dirs.has(p)) return { isSymbolicLink: false, isDirectory: true };
       return null;
     },
+    async readlink() {
+      return null;
+    },
+    async symlink() {},
+    async rm() {},
     async dirExists(p) {
-      return set.has(p);
+      return dirs.has(p);
     },
   };
 }
 
-describe('buildTargets', () => {
-  it('resolves a global install to the agent home skills dir', () => {
+describe('buildTargets — copy mode', () => {
+  it('resolves a global copy to the agent home skills dir', () => {
     const [t] = buildTargets([agentByName('claude')!], 'global', ctx);
-    expect(t.filePath).toBe('/home/u/.claude/skills/a14y/SKILL.md');
-    expect(t.agents).toEqual(['claude']);
-  });
-
-  it('resolves a local install under the cwd', () => {
-    const [t] = buildTargets([agentByName('windsurf')!], 'local', ctx);
-    expect(t.filePath).toBe('/work/.windsurf/skills/a14y/SKILL.md');
-  });
-
-  it('dedupes agents that share a skills directory', () => {
-    // Cline and Zed both use ~/.agents/skills globally.
-    const targets = buildTargets(
-      [agentByName('cline')!, agentByName('zed')!],
-      'global',
-      ctx,
-    );
-    expect(targets).toHaveLength(1);
-    expect(targets[0].filePath).toBe('/home/u/.agents/skills/a14y/SKILL.md');
-    expect(targets[0].agents.sort()).toEqual(['cline', 'zed']);
-    expect(targets[0].label).toContain('Cline');
-    expect(targets[0].label).toContain('Zed');
+    expect(t.kind).toBe('copy');
+    expect(t.managedPath).toBe('/home/u/.claude/skills/a14y/SKILL.md');
   });
 
   it('honours CODEX_HOME and XDG_CONFIG_HOME overrides', () => {
-    const envCtx: PathCtx = {
-      home: '/home/u',
-      cwd: '/work',
-      env: { CODEX_HOME: '/custom/codex', XDG_CONFIG_HOME: '/cfg' },
-    };
-    expect(buildTargets([agentByName('codex')!], 'global', envCtx)[0].filePath).toBe(
-      '/custom/codex/skills/a14y/SKILL.md',
+    const e: PathCtx = { home: '/home/u', cwd: '/work', env: { CODEX_HOME: '/cx', XDG_CONFIG_HOME: '/cfg' } };
+    expect(buildTargets([agentByName('codex')!], 'global', e)[0].managedPath).toBe(
+      '/cx/skills/a14y/SKILL.md',
     );
-    expect(buildTargets([agentByName('opencode')!], 'global', envCtx)[0].filePath).toBe(
+    expect(buildTargets([agentByName('opencode')!], 'global', e)[0].managedPath).toBe(
       '/cfg/opencode/skills/a14y/SKILL.md',
     );
   });
@@ -75,20 +69,54 @@ describe('buildTargets', () => {
   });
 });
 
+describe('buildTargets — link mode', () => {
+  it('emits one canonical target plus a symlink per agent', () => {
+    const targets = buildTargets(
+      [agentByName('claude')!, agentByName('cursor')!],
+      'global',
+      ctx,
+      'link',
+    );
+    const canonical = targets.find((t) => t.kind === 'canonical')!;
+    expect(canonical.managedPath).toBe('/home/u/.agents/skills/a14y/SKILL.md');
+    const links = targets.filter((t) => t.kind === 'link');
+    expect(links.map((l) => l.managedPath).sort()).toEqual([
+      '/home/u/.claude/skills/a14y',
+      '/home/u/.cursor/skills/a14y',
+    ]);
+    expect(links[0].linkTo).toBe('/home/u/.agents/skills/a14y');
+  });
+
+  it('folds agents that already use .agents/skills into the canonical (no extra link)', () => {
+    // Cline + Zed both resolve to ~/.agents/skills globally.
+    const targets = buildTargets(
+      [agentByName('cline')!, agentByName('zed')!],
+      'global',
+      ctx,
+      'link',
+    );
+    expect(targets).toHaveLength(1);
+    expect(targets[0].kind).toBe('canonical');
+    expect(targets[0].label).toContain('Cline');
+    expect(targets[0].label).toContain('Zed');
+  });
+});
+
 describe('detectAgents', () => {
   it('detects agents whose marker dir exists', async () => {
-    const fs = fsWithDirs(['/home/u/.claude', '/home/u/.gemini']);
+    const fs = stubFs({ dirs: ['/home/u/.claude', '/home/u/.gemini'] });
     const found = (await detectAgents(ctx, fs)).map((a) => a.name);
-    expect(found).toContain('claude');
-    expect(found).toContain('gemini');
+    expect(found).toEqual(expect.arrayContaining(['claude', 'gemini']));
     expect(found).not.toContain('cursor');
   });
 
-  it('detects Antigravity only via its nested marker, not plain Gemini', async () => {
-    const onlyGemini = await detectAgents(ctx, fsWithDirs(['/home/u/.gemini']));
-    expect(onlyGemini.map((a) => a.name)).not.toContain('antigravity');
-    const withAg = await detectAgents(ctx, fsWithDirs(['/home/u/.gemini/antigravity']));
-    expect(withAg.map((a) => a.name)).toContain('antigravity');
+  it('detects Antigravity only via its nested marker', async () => {
+    expect((await detectAgents(ctx, stubFs({ dirs: ['/home/u/.gemini'] }))).map((a) => a.name)).not.toContain(
+      'antigravity',
+    );
+    expect(
+      (await detectAgents(ctx, stubFs({ dirs: ['/home/u/.gemini/antigravity'] }))).map((a) => a.name),
+    ).toContain('antigravity');
   });
 });
 
@@ -97,9 +125,42 @@ describe('agentTargets / explicitTarget', () => {
     expect(() => agentTargets(['nope'], 'global', ctx)).toThrow(SkillsConfigError);
   });
 
-  it('builds an explicit --target path, ignoring scope and the registry', () => {
+  it('builds an explicit --target path', () => {
     const t = explicitTarget('out/dir', ctx);
     expect(t.agents).toEqual(['custom']);
-    expect(t.filePath).toBe('/work/out/dir/a14y/SKILL.md');
+    expect(t.managedPath).toBe('/work/out/dir/a14y/SKILL.md');
+  });
+});
+
+describe('scanInstalled', () => {
+  const skill = `---\nname: a14y\nmetadata:\n  version: "0.2.0"\n---\nbody`;
+
+  it('finds copy installs (our dirs) and ignores foreign a14y dirs', async () => {
+    const fs = stubFs({
+      dirs: ['/home/u/.claude/skills/a14y', '/home/u/.gemini/skills/a14y'],
+      files: {
+        '/home/u/.claude/skills/a14y/SKILL.md': skill,
+        '/home/u/.gemini/skills/a14y/SKILL.md': '---\nname: not-ours\n---\nx',
+      },
+    });
+    const found = await scanInstalled(ctx, 'global', fs);
+    const paths = found.map((f) => f.path);
+    expect(paths).toContain('/home/u/.claude/skills/a14y');
+    expect(paths).not.toContain('/home/u/.gemini/skills/a14y'); // foreign, left alone
+    expect(found.find((f) => f.path === '/home/u/.claude/skills/a14y')).toMatchObject({
+      kind: 'dir',
+      version: '0.2.0',
+    });
+  });
+
+  it('finds symlink installs', async () => {
+    const fs = stubFs({ symlinks: ['/home/u/.cursor/skills/a14y'] });
+    const found = await scanInstalled(ctx, 'global', fs);
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatchObject({ path: '/home/u/.cursor/skills/a14y', kind: 'link' });
+  });
+
+  it('returns nothing when the skill is not installed', async () => {
+    expect(await scanInstalled(ctx, 'global', stubFs({}))).toEqual([]);
   });
 });

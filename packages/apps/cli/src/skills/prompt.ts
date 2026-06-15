@@ -21,6 +21,38 @@ export type PromptSelect = (
   choices: SelectChoice[],
 ) => Promise<string[] | null>;
 
+export type InstallMethod = 'copy' | 'link';
+
+/** Ask whether to copy the skill into each agent or share one copy via symlinks. */
+export type PromptMethod = (message: string) => Promise<InstallMethod | null>;
+
+export const promptInstallMethod: PromptMethod = async (message) => {
+  let cancelled = false;
+  const res = await prompts(
+    {
+      type: 'select',
+      name: 'method',
+      message,
+      initial: 0,
+      choices: [
+        {
+          title: 'Copy into each agent',
+          value: 'copy',
+          description: "a SKILL.md in every agent's own skills dir",
+        },
+        {
+          title: 'Shared copy + symlinks',
+          value: 'link',
+          description: 'one copy in .agents/skills, symlinked from each agent',
+        },
+      ],
+    },
+    { onCancel: () => (cancelled = true) },
+  );
+  if (cancelled || !res || (res.method !== 'copy' && res.method !== 'link')) return null;
+  return res.method;
+};
+
 export const promptSelectTargets: PromptSelect = async (message, choices) => {
   let cancelled = false;
   const res = await prompts(
