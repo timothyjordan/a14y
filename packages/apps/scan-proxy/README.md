@@ -76,7 +76,27 @@ gcloud run deploy a14y-scan-proxy \
   --no-vpc-connector
 ```
 
-Then set `PUBLIC_SCAN_PROXY_URL` in the docs build to the printed service URL.
+Then set `PUBLIC_SCAN_PROXY_URL` in the docs build to the printed service URL
+(repo Settings > Secrets and variables > Actions > Variables).
+
+### Automated deploy (GitHub Actions)
+
+`.github/workflows/deploy-scan-proxy.yml` builds and deploys this service on
+every push to `main` that touches `packages/apps/scan-proxy/**` (and on manual
+dispatch), gated on the unit tests. It authenticates with Workload Identity
+Federation (no stored key). One-time setup by a maintainer with GCP access:
+
+1. Create a deployer service account and a Workload Identity Federation
+   pool/provider bound to this repo.
+2. Grant the deployer SA: `roles/run.admin`, `roles/cloudbuild.builds.editor`,
+   `roles/artifactregistry.writer`, `roles/storage.admin`,
+   `roles/iam.serviceAccountUser` (and allow unauthenticated invocation if org
+   policy restricts it).
+3. Add repo config: secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` and
+   `GCP_SERVICE_ACCOUNT`; variables `GCP_PROJECT_ID` and optional `GCP_REGION`.
+
+Until `GCP_PROJECT_ID` is set, the deploy job skips cleanly and manual deploy
+(above) is the fallback.
 
 ### Cost controls (set these every deploy)
 
