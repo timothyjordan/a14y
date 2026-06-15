@@ -312,6 +312,7 @@ program
   .option('--check', 'report what would change without writing (exits 1 on drift)')
   .option('--dry-run', 'alias for --check')
   .option('--force', 'overwrite a user-modified target or write through a symlink')
+  .option('-y, --yes', 'skip the interactive checklist and install to all detected agents')
   .option('-o, --output <format>', 'text or json', 'text')
   .action(async (action: string | undefined, options, command) => {
     if (options.output !== 'text' && options.output !== 'json') {
@@ -361,6 +362,7 @@ Commands in detail:
     --agent <name>                restrict to one agent (repeatable)
     --check, --dry-run            report drift without writing (exit 1 on drift)
     --force                       overwrite a user-modified target or symlink
+    -y, --yes                     install to all detected agents (no checklist)
     -o, --output <format>         text | json
 
 Run 'a14y help <command>' (or 'a14y <command> --help') for full details.

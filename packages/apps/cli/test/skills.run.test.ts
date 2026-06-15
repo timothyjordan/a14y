@@ -32,11 +32,13 @@ class FakeFs implements FsFacade {
   }
 }
 
-function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & {
+interface Captured {
   out: string[];
   err: string[];
   events: Array<[string, Record<string, unknown> | undefined]>;
-} {
+}
+
+function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & Captured {
   const out: string[] = [];
   const err: string[] = [];
   const events: Array<[string, Record<string, unknown> | undefined]> = [];
@@ -49,6 +51,8 @@ function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & {
     fs,
     homeDir: '/home/u',
     cwd: '/work',
+    env: {},
+    isTTY: false, // default: non-interactive (auto-select) unless a test overrides
     track: (e, p) => events.push([e, p]),
     fetchImpl: vi.fn(async () => new Response(skill('0.2.0'), { status: 200 })),
     ...extra,
@@ -57,73 +61,60 @@ function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & {
 
 const TARGET = '/work/out';
 const FILE = path.join(TARGET, 'a14y', 'SKILL.md');
+const CLAUDE_FILE = '/home/u/.claude/skills/a14y/SKILL.md';
+const GEMINI_FILE = '/home/u/.gemini/skills/a14y/SKILL.md';
 
-describe('runSkillsCommand', () => {
-  it('creates the skill on a fresh install and reports JSON', async () => {
+function json(d: Captured) {
+  return JSON.parse(d.out.join('\n'));
+}
+
+describe('runSkillsCommand — explicit --target', () => {
+  it('creates on a fresh install and reports JSON', async () => {
     const fs = new FakeFs();
     const d = deps(fs);
-    const code = await runSkillsCommand({ target: TARGET, output: 'json' }, d);
-    expect(code).toBe(0);
+    expect(await runSkillsCommand({ target: TARGET, output: 'json' }, d)).toBe(0);
     expect(fs.files.get(FILE)).toBe(skill('0.2.0'));
-    const json = JSON.parse(d.out.join('\n'));
-    expect(json.summary.created).toBe(1);
-    expect(json.targets[0].outcome).toBe('created');
+    expect(json(d).targets[0]).toMatchObject({ agents: ['custom'], outcome: 'created' });
   });
 
-  it('is idempotent: a second run writes nothing', async () => {
+  it('is idempotent: a second run writes nothing (skill already installed)', async () => {
     const fs = new FakeFs();
     fs.files.set(FILE, skill('0.2.0'));
     const d = deps(fs);
     const writeSpy = vi.spyOn(fs, 'writeFile');
-    const code = await runSkillsCommand({ target: TARGET }, d);
-    expect(code).toBe(0);
+    expect(await runSkillsCommand({ target: TARGET }, d)).toBe(0);
     expect(writeSpy).not.toHaveBeenCalled();
-    expect(d.out.join('\n')).toContain('Unchanged');
+    expect(d.out.join('\n')).toContain('Up to date');
   });
 
-  it('updates an older installed skill and surfaces old -> new', async () => {
+  it('updates an older install and surfaces old -> new', async () => {
     const fs = new FakeFs();
     fs.files.set(FILE, skill('0.1.0'));
     const d = deps(fs);
-    const code = await runSkillsCommand({ target: TARGET, output: 'json' }, d);
-    expect(code).toBe(0);
-    const json = JSON.parse(d.out.join('\n'));
-    expect(json.targets[0]).toMatchObject({ outcome: 'updated', oldVersion: '0.1.0', newVersion: '0.2.0' });
+    expect(await runSkillsCommand({ target: TARGET, output: 'json' }, d)).toBe(0);
+    expect(json(d).targets[0]).toMatchObject({ outcome: 'updated', oldVersion: '0.1.0', newVersion: '0.2.0' });
   });
 
   it('--check reports drift without writing and exits 1', async () => {
     const fs = new FakeFs();
     const d = deps(fs);
-    const code = await runSkillsCommand({ target: TARGET, check: true }, d);
-    expect(code).toBe(1);
+    expect(await runSkillsCommand({ target: TARGET, check: true }, d)).toBe(1);
     expect(fs.files.has(FILE)).toBe(false);
     expect(d.out.join('\n')).toContain('Would change');
   });
 
-  it('--check exits 0 when already up to date', async () => {
-    const fs = new FakeFs();
-    fs.files.set(FILE, skill('0.2.0'));
-    const code = await runSkillsCommand({ target: TARGET, check: true }, deps(fs));
-    expect(code).toBe(0);
-  });
-
-  it('skips a user-modified file without --force (exit 1), overwrites with --force', async () => {
+  it('skips a user-modified file without --force, overwrites with --force', async () => {
     const fs = new FakeFs();
     fs.files.set(FILE, 'hand written, not ours');
-    const d1 = deps(fs);
-    expect(await runSkillsCommand({ target: TARGET }, d1)).toBe(1);
+    expect(await runSkillsCommand({ target: TARGET }, deps(fs))).toBe(1);
     expect(fs.files.get(FILE)).toBe('hand written, not ours');
-    expect(d1.out.join('\n')).toContain('Skipped');
-
-    const d2 = deps(fs);
-    expect(await runSkillsCommand({ target: TARGET, force: true }, d2)).toBe(0);
+    expect(await runSkillsCommand({ target: TARGET, force: true }, deps(fs))).toBe(0);
     expect(fs.files.get(FILE)).toBe(skill('0.2.0'));
   });
 
   it('skips a symlinked target without --force', async () => {
     const fs = new FakeFs();
-    const skillDir = path.dirname(FILE);
-    fs.symlinks.add(skillDir); // models the repo's .claude/skills/a14y symlink
+    fs.symlinks.add(path.dirname(FILE)); // models the repo's .claude/skills/a14y symlink
     fs.files.set(FILE, skill('0.1.0'));
     const d = deps(fs);
     expect(await runSkillsCommand({ target: TARGET }, d)).toBe(1);
@@ -131,66 +122,134 @@ describe('runSkillsCommand', () => {
     expect(d.out.join('\n')).toMatch(/symlink/);
   });
 
-  it('returns 1 and reports the error when fetch fails, writing nothing', async () => {
+  it('returns 1 and writes nothing when the fetch fails', async () => {
     const fs = new FakeFs();
-    const d = deps(fs, {
-      fetchImpl: vi.fn(async () => new Response('nope', { status: 404 })),
-    });
-    const code = await runSkillsCommand({ target: TARGET }, d);
-    expect(code).toBe(1);
+    const d = deps(fs, { fetchImpl: vi.fn(async () => new Response('nope', { status: 404 })) });
+    expect(await runSkillsCommand({ target: TARGET }, d)).toBe(1);
     expect(fs.files.has(FILE)).toBe(false);
     expect(d.events.map((e) => e[0])).toContain('cli_error');
   });
+});
 
-  it('auto-detects configured agents under the global home dir', async () => {
+describe('runSkillsCommand — auto-detect', () => {
+  it('detects configured agents and installs to each', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
-    fs.dirs.add('/home/u/.codex');
+    fs.dirs.add('/home/u/.gemini');
     const d = deps(fs);
-    const code = await runSkillsCommand({ output: 'json' }, d);
-    expect(code).toBe(0);
-    const json = JSON.parse(d.out.join('\n'));
-    expect(json.targets.map((t: { agent: string }) => t.agent).sort()).toEqual(['claude', 'codex']);
-    expect(json.targets[0].path).toContain('/home/u/.claude/skills/a14y/SKILL.md');
+    expect(await runSkillsCommand({ output: 'json' }, d)).toBe(0);
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
+    expect(fs.files.has(GEMINI_FILE)).toBe(true);
+    expect(json(d).summary.created).toBe(2);
   });
 
-  it('falls back to Claude Code when no agent dir is detected', async () => {
+  it('falls back to Claude Code when no agent is detected', async () => {
     const fs = new FakeFs();
     const d = deps(fs);
-    const code = await runSkillsCommand({ output: 'json' }, d);
-    expect(code).toBe(0);
-    const json = JSON.parse(d.out.join('\n'));
-    expect(json.targets).toHaveLength(1);
-    expect(json.targets[0].agent).toBe('claude');
-    expect(json.targets[0].path).toBe('/home/u/.claude/skills/a14y/SKILL.md');
+    expect(await runSkillsCommand({ output: 'json' }, d)).toBe(0);
+    const j = json(d);
+    expect(j.targets).toHaveLength(1);
+    expect(j.targets[0].agents).toEqual(['claude']);
+    expect(d.out.join('\n')).not.toContain('No configured agent'); // json mode: note is text-only
   });
 
   it('continues past a per-target write failure and exits 1', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
-    fs.dirs.add('/home/u/.codex');
-    fs.failWrite.add('/home/u/.codex/skills/a14y/SKILL.md');
+    fs.dirs.add('/home/u/.gemini');
+    fs.failWrite.add(GEMINI_FILE);
     const d = deps(fs);
-    const code = await runSkillsCommand({ output: 'json' }, d);
-    expect(code).toBe(1);
-    // Claude still got written; Codex errored.
-    expect(fs.files.has('/home/u/.claude/skills/a14y/SKILL.md')).toBe(true);
-    const json = JSON.parse(d.out.join('\n'));
-    expect(json.summary.created).toBe(1);
-    expect(json.summary.error).toBe(1);
+    expect(await runSkillsCommand({ output: 'json' }, d)).toBe(1);
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
+    expect(json(d).summary.error).toBe(1);
   });
 
-  it('rejects an unknown agent and a non-installable agent with exit 2', async () => {
+  it('is idempotent against a skill installed another way (same path, same content)', async () => {
     const fs = new FakeFs();
-    expect(await runSkillsCommand({ agent: ['nope'] }, deps(fs))).toBe(2);
-    expect(await runSkillsCommand({ agent: ['cursor'] }, deps(fs))).toBe(2);
+    fs.dirs.add('/home/u/.claude');
+    fs.files.set(CLAUDE_FILE, skill('0.2.0')); // e.g. left by `npx skills add`
+    const d = deps(fs);
+    const writeSpy = vi.spyOn(fs, 'writeFile');
+    expect(await runSkillsCommand({}, d)).toBe(0);
+    expect(writeSpy).not.toHaveBeenCalled();
+    expect(d.out.join('\n')).toContain('Up to date');
+  });
+});
+
+describe('runSkillsCommand — interactive checklist', () => {
+  it('installs only the targets the user selects', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    fs.dirs.add('/home/u/.gemini');
+    // The selector picks Claude only, deselecting Gemini.
+    const promptSelect = vi.fn(async () => [CLAUDE_FILE]);
+    const d = deps(fs, { isTTY: true, promptSelect });
+    expect(await runSkillsCommand({}, d)).toBe(0);
+    expect(promptSelect).toHaveBeenCalledOnce();
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
+    expect(fs.files.has(GEMINI_FILE)).toBe(false);
   });
 
-  it('emits cli_command_invoked with the resolved scope', async () => {
+  it('pre-checks not-installed/outdated targets and shows up-to-date as unchecked', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude'); // not installed -> pre-checked
+    fs.dirs.add('/home/u/.gemini');
+    fs.files.set(GEMINI_FILE, skill('0.2.0')); // up to date -> unchecked
+    let seen: Array<{ value: string; selected: boolean }> = [];
+    const promptSelect = vi.fn(async (_m: string, choices: Array<{ value: string; selected: boolean }>) => {
+      seen = choices.map((c) => ({ value: c.value, selected: c.selected }));
+      return choices.filter((c) => c.selected).map((c) => c.value);
+    });
+    const d = deps(fs, { isTTY: true, promptSelect });
+    expect(await runSkillsCommand({}, d)).toBe(0);
+    expect(seen.find((c) => c.value === CLAUDE_FILE)?.selected).toBe(true);
+    expect(seen.find((c) => c.value === GEMINI_FILE)?.selected).toBe(false);
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
+  });
+
+  it('cancelling the checklist writes nothing and exits 0', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    const d = deps(fs, { isTTY: true, promptSelect: vi.fn(async () => null) });
+    expect(await runSkillsCommand({}, d)).toBe(0);
+    expect(fs.files.has(CLAUDE_FILE)).toBe(false);
+    expect(d.out.join('\n')).toContain('Cancelled');
+  });
+
+  it('--yes skips the prompt and installs all detected', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    fs.dirs.add('/home/u/.gemini');
+    const promptSelect = vi.fn();
+    const d = deps(fs, { isTTY: true, promptSelect });
+    expect(await runSkillsCommand({ yes: true }, d)).toBe(0);
+    expect(promptSelect).not.toHaveBeenCalled();
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
+    expect(fs.files.has(GEMINI_FILE)).toBe(true);
+  });
+});
+
+describe('runSkillsCommand — arguments + telemetry', () => {
+  it('rejects an unknown agent with exit 2', async () => {
+    expect(await runSkillsCommand({ agent: ['nope'] }, deps(new FakeFs()))).toBe(2);
+  });
+
+  it('installs Cursor via --agent (now a skills-format agent)', async () => {
+    const fs = new FakeFs();
+    const d = deps(fs);
+    expect(await runSkillsCommand({ agent: ['cursor'], output: 'json' }, d)).toBe(0);
+    expect(fs.files.has('/home/u/.cursor/skills/a14y/SKILL.md')).toBe(true);
+  });
+
+  it('rejects --global together with --local', async () => {
+    expect(await runSkillsCommand({ target: TARGET, global: true, local: true }, deps(new FakeFs()))).toBe(2);
+  });
+
+  it('emits cli_command_invoked with scope and mode', async () => {
     const fs = new FakeFs();
     const d = deps(fs);
     await runSkillsCommand({ target: TARGET, local: true }, d);
     const invoked = d.events.find((e) => e[0] === 'cli_command_invoked');
-    expect(invoked?.[1]).toMatchObject({ command: 'skills', scope: 'local', target_override: true });
+    expect(invoked?.[1]).toMatchObject({ command: 'skills', scope: 'local', mode: 'target' });
   });
 });

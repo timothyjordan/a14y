@@ -1,21 +1,13 @@
 import os from 'node:os';
 import path from 'node:path';
-import {
-  AGENT_REGISTRY,
-  DEFAULT_AGENT,
-  INSTALLABLE_AGENTS,
-  type AgentEntry,
-} from './registry';
-import {
-  resolveTargets,
-  SkillsConfigError,
-  type Scope,
-  type SkillTarget,
-} from './paths';
+import { agentByName, DEFAULT_AGENT, type PathCtx } from './registry';
+import { SkillsConfigError, type Scope, type SkillTarget } from './paths';
+import { agentTargets, buildTargets, detectAgents, explicitTarget } from './detect';
 import { fetchSkill, skillSourceUrl, SkillFetchError } from './fetch';
 import { nodeFs, type FsFacade } from './fsFacade';
 import { parseSkillVersion } from './frontmatter';
 import { planTarget, type SkillAction, type TargetPlan } from './plan';
+import { promptSelectTargets, type PromptSelect, type SelectChoice } from './prompt';
 
 type FetchImpl = (input: string, init?: RequestInit) => Promise<Response>;
 type TrackFn = (event: string, props?: Record<string, unknown>) => void;
@@ -31,6 +23,8 @@ export interface RunSkillsOptions {
   check?: boolean;
   dryRun?: boolean;
   force?: boolean;
+  /** Skip the interactive checklist and install to all detected agents. */
+  yes?: boolean;
   output?: 'text' | 'json';
 }
 
@@ -43,7 +37,10 @@ export interface RunSkillsDeps {
   fs?: FsFacade;
   homeDir?: string;
   cwd?: string;
+  env?: Record<string, string | undefined>;
   track?: TrackFn;
+  isTTY?: boolean;
+  promptSelect?: PromptSelect;
 }
 
 type Outcome =
@@ -56,8 +53,13 @@ type Outcome =
   | 'would-update'
   | 'would-skip';
 
+interface PlanEntry {
+  target: SkillTarget;
+  plan: TargetPlan;
+}
+
 interface TargetResult {
-  agent: string;
+  agents: string[];
   label: string;
   path: string;
   action: SkillAction;
@@ -69,9 +71,10 @@ interface TargetResult {
 }
 
 /**
- * Install or update the a14y agent skill. Idempotent: re-running is a no-op when
- * nothing changed. Returns the process exit code (0 success; 1 on fetch/write
- * failure, a skipped conflict, or `--check` drift; 2 on bad arguments).
+ * Install or update the a14y agent skill across the user's coding agents.
+ * Auto-detects which agents are configured, shows a checklist, and only writes
+ * what changed (idempotent — re-running, or running after a `npx skills add`
+ * install, is a no-op when the on-disk skill already matches).
  */
 export async function runSkillsCommand(
   opts: RunSkillsOptions,
@@ -79,11 +82,15 @@ export async function runSkillsCommand(
 ): Promise<number> {
   const fs = deps.fs ?? nodeFs;
   const track: TrackFn = deps.track ?? (() => {});
-  const homeDir = deps.homeDir ?? os.homedir();
+  const home = deps.homeDir ?? os.homedir();
   const cwd = deps.cwd ?? process.cwd();
+  const env = deps.env ?? process.env;
+  const ctx: PathCtx = { home, cwd, env };
   const output = opts.output ?? 'text';
   const dryRun = Boolean(opts.check || opts.dryRun);
   const force = Boolean(opts.force);
+  const isTTY = deps.isTTY ?? Boolean(process.stdout.isTTY);
+  const promptSelect = deps.promptSelect ?? promptSelectTargets;
 
   if (opts.action && opts.action !== 'update') {
     deps.stderr(`Unknown skills action "${opts.action}". Usage: a14y skills [update]`);
@@ -91,68 +98,33 @@ export async function runSkillsCommand(
   }
 
   const wantsLocal = Boolean(opts.local || opts.project);
-  const wantsGlobal = Boolean(opts.global);
-  if (wantsLocal && wantsGlobal) {
+  if (wantsLocal && opts.global) {
     deps.stderr('Pass only one of --global or --local.');
     return 2;
   }
   const scope: Scope = wantsLocal ? 'local' : 'global';
 
-  // Resolve which agents to install for.
-  const explicitTarget = opts.target;
-  let agents: AgentEntry[] = [];
+  // Resolve targets: explicit dir, explicit agents, or auto-detection.
+  let targets: SkillTarget[];
+  let mode: 'detect' | 'agent' | 'target';
   let usedDefaultAgent = false;
-  if (!explicitTarget) {
-    const requested = opts.agent ?? [];
-    if (requested.length > 0) {
-      const byName = new Map(AGENT_REGISTRY.map((a) => [a.name, a]));
-      for (const name of requested) {
-        const entry = byName.get(name);
-        if (!entry) {
-          deps.stderr(
-            `Unknown agent "${name}". Known agents: ${AGENT_REGISTRY.map((a) => a.name).join(', ')}.`,
-          );
-          return 2;
-        }
-        if (!entry.installable) {
-          deps.stderr(
-            `Agent "${entry.label}" uses a different skill format (${entry.skillsDir}); ` +
-              `SKILL.md can't be installed there by copying. Use \`npx skills add timothyjordan/a14y\` for that agent.`,
-          );
-          return 2;
-        }
-        if (!agents.includes(entry)) agents.push(entry);
-      }
+  try {
+    if (opts.target) {
+      targets = [explicitTarget(opts.target, ctx)];
+      mode = 'target';
+    } else if ((opts.agent ?? []).length > 0) {
+      targets = agentTargets(opts.agent!, scope, ctx);
+      mode = 'agent';
     } else {
-      // Auto-detect: install for every installable agent already configured
-      // under the chosen scope; fall back to Claude Code in a fresh project.
-      const base = scope === 'global' ? homeDir : cwd;
-      for (const a of INSTALLABLE_AGENTS) {
-        if (await fs.dirExists(path.join(base, a.rootDir))) agents.push(a);
-      }
-      if (agents.length === 0) {
-        const fallback = INSTALLABLE_AGENTS.find((a) => a.name === DEFAULT_AGENT);
-        if (fallback) agents.push(fallback);
+      const detected = await detectAgents(ctx, fs);
+      if (detected.length > 0) {
+        targets = buildTargets(detected, scope, ctx);
+      } else {
+        targets = buildTargets([agentByName(DEFAULT_AGENT)!], scope, ctx);
         usedDefaultAgent = true;
       }
+      mode = 'detect';
     }
-  }
-
-  track('cli_command_invoked', {
-    command: 'skills',
-    scope,
-    dry_run: dryRun,
-    force,
-    agent_count: explicitTarget ? 1 : agents.length,
-    target_override: Boolean(explicitTarget),
-    output_format: output,
-    run_id: deps.runId,
-  });
-
-  // Resolve concrete file paths.
-  let targets: SkillTarget[];
-  try {
-    targets = resolveTargets({ scope, homeDir, cwd, agents, explicitTarget });
   } catch (e) {
     if (e instanceof SkillsConfigError) {
       deps.stderr(e.message);
@@ -167,8 +139,19 @@ export async function runSkillsCommand(
     throw e;
   }
 
-  // Download the skill.
   const source = skillSourceUrl();
+  track('cli_command_invoked', {
+    command: 'skills',
+    scope,
+    mode,
+    dry_run: dryRun,
+    force,
+    target_count: targets.length,
+    output_format: output,
+    run_id: deps.runId,
+  });
+
+  // Download the skill.
   let fetched: string;
   try {
     fetched = await fetchSkill({ fetchImpl: deps.fetchImpl });
@@ -184,8 +167,8 @@ export async function runSkillsCommand(
   }
   const newVersion = parseSkillVersion(fetched);
 
-  // Plan each target (read current content + symlink status).
-  const plans: TargetPlan[] = [];
+  // Plan each target (read current content + symlink status to detect drift).
+  const entries: PlanEntry[] = [];
   for (const target of targets) {
     const skillDir = path.dirname(target.filePath);
     const [fileStat, dirStat, current] = await Promise.all([
@@ -194,45 +177,78 @@ export async function runSkillsCommand(
       fs.readFile(target.filePath),
     ]);
     const isSymlink = Boolean(fileStat?.isSymbolicLink || dirStat?.isSymbolicLink);
-    plans.push(planTarget({ target, fetched, current, isSymlink, force }));
+    entries.push({ target, plan: planTarget({ target, fetched, current, isSymlink, force }) });
   }
 
-  // Dry run: report, write nothing.
+  // Dry run: report statuses, write nothing.
   if (dryRun) {
-    const results: TargetResult[] = plans.map((p) => ({
-      ...toBaseResult(p),
-      outcome:
-        p.action === 'create'
+    const results = entries.map((e) =>
+      toResult(
+        e,
+        e.plan.action === 'create'
           ? 'would-create'
-          : p.action === 'update'
+          : e.plan.action === 'update'
             ? 'would-update'
-            : p.action === 'conflict'
+            : e.plan.action === 'conflict'
               ? 'would-skip'
               : 'unchanged',
-    }));
-    const drift = plans.some((p) => p.action !== 'unchanged');
-    report({ deps, output, source, scope, dryRun, newVersion, results, usedDefaultAgent });
-    return drift ? 1 : 0;
+        e.plan.action === 'conflict' ? e.plan.conflictReason : undefined,
+      ),
+    );
+    report({ deps, output, source, scope, dryRun, newVersion, results, usedDefaultAgent, home });
+    return entries.some((e) => e.plan.action !== 'unchanged') ? 1 : 0;
+  }
+
+  // Decide which targets to write. In detected mode on a TTY we show a
+  // checklist; otherwise (explicit --agent/--target, --yes, or non-TTY) we
+  // auto-select everything that needs a create/update.
+  const actionable = entries.filter((e) => e.plan.action !== 'unchanged');
+  const interactive = mode === 'detect' && isTTY && !opts.yes && actionable.length > 0;
+  let selected: Set<string>;
+  if (interactive) {
+    const choices: SelectChoice[] = entries.map((e) => {
+      const s = statusOf(e.plan);
+      return {
+        value: e.target.filePath,
+        title: `${e.target.label}  ${tildify(e.target.filePath, home)}`,
+        hint: s.text,
+        selected: s.preChecked,
+      };
+    });
+    const chosen = await promptSelect('Install or update the a14y skill for:', choices);
+    if (chosen === null) {
+      deps.stdout('Cancelled — nothing was changed.');
+      return 0;
+    }
+    selected = new Set(chosen);
+  } else {
+    selected = new Set(
+      entries.filter((e) => statusOf(e.plan).preChecked).map((e) => e.target.filePath),
+    );
   }
 
   // Apply.
   const results: TargetResult[] = [];
-  for (const p of plans) {
-    const base = toBaseResult(p);
-    if (p.action === 'unchanged') {
-      results.push({ ...base, outcome: 'unchanged' });
+  for (const e of entries) {
+    const a = e.plan.action;
+    if (a === 'unchanged') {
+      results.push(toResult(e, 'unchanged'));
       continue;
     }
-    if (p.action === 'conflict') {
-      results.push({ ...base, outcome: 'skipped', reason: p.conflictReason });
+    if (!selected.has(e.target.filePath)) {
+      results.push(toResult(e, 'skipped', a === 'conflict' ? e.plan.conflictReason : 'deselected'));
+      continue;
+    }
+    if (a === 'conflict') {
+      results.push(toResult(e, 'skipped', e.plan.conflictReason));
       continue;
     }
     try {
-      await fs.mkdirp(path.dirname(p.target.filePath));
-      await fs.writeFile(p.target.filePath, fetched);
-      results.push({ ...base, outcome: p.action === 'create' ? 'created' : 'updated' });
-    } catch (e) {
-      results.push({ ...base, outcome: 'error', reason: (e as Error).message });
+      await fs.mkdirp(path.dirname(e.target.filePath));
+      await fs.writeFile(e.target.filePath, fetched);
+      results.push(toResult(e, a === 'create' ? 'created' : 'updated'));
+    } catch (err) {
+      results.push(toResult(e, 'error', (err as Error).message));
     }
   }
 
@@ -241,27 +257,49 @@ export async function runSkillsCommand(
     created: counts.created,
     updated: counts.updated,
     unchanged: counts.unchanged,
-    conflicts: counts.skipped,
+    skipped: counts.skipped,
     errors: counts.error,
-    old_version: results.find((r) => r.outcome === 'updated')?.oldVersion ?? null,
     new_version: newVersion,
     run_id: deps.runId,
   });
+  report({ deps, output, source, scope, dryRun, newVersion, results, usedDefaultAgent, home });
 
-  report({ deps, output, source, scope, dryRun, newVersion, results, usedDefaultAgent });
-  return counts.error > 0 || counts.skipped > 0 ? 1 : 0;
+  // Non-interactive conflicts are unresolved problems the user should notice;
+  // an interactively-deselected conflict is the user's own choice.
+  const hadAutoConflict = !interactive && entries.some((e) => e.plan.action === 'conflict');
+  return counts.error > 0 || hadAutoConflict ? 1 : 0;
 }
 
-function toBaseResult(p: TargetPlan): Omit<TargetResult, 'outcome'> {
+function statusOf(p: TargetPlan): { text: string; preChecked: boolean } {
+  switch (p.action) {
+    case 'create':
+      return { text: 'not installed', preChecked: true };
+    case 'update':
+      return {
+        text:
+          p.oldVersion && p.newVersion
+            ? `outdated ${p.oldVersion} -> ${p.newVersion}`
+            : 'installed, will update',
+        preChecked: true,
+      };
+    case 'unchanged':
+      return { text: 'up to date', preChecked: false };
+    case 'conflict':
+      return { text: p.conflictReason ?? 'conflict', preChecked: false };
+  }
+}
+
+function toResult(e: PlanEntry, outcome: Outcome, reason?: string): TargetResult {
   return {
-    agent: p.target.agent,
-    label: p.target.label,
-    path: p.target.filePath,
-    action: p.action,
-    oldVersion: p.oldVersion,
-    newVersion: p.newVersion,
-    isSymlink: p.isSymlink,
-    reason: p.conflictReason,
+    agents: e.target.agents,
+    label: e.target.label,
+    path: e.target.filePath,
+    action: e.plan.action,
+    outcome,
+    oldVersion: e.plan.oldVersion,
+    newVersion: e.plan.newVersion,
+    isSymlink: e.plan.isSymlink,
+    reason,
   };
 }
 
@@ -277,6 +315,11 @@ function tally(results: TargetResult[]) {
   return counts;
 }
 
+function tildify(p: string, home: string): string {
+  if (home && (p === home || p.startsWith(home + path.sep))) return '~' + p.slice(home.length);
+  return p;
+}
+
 interface ReportArgs {
   deps: RunSkillsDeps;
   output: 'text' | 'json';
@@ -286,12 +329,12 @@ interface ReportArgs {
   newVersion: string | null;
   results: TargetResult[];
   usedDefaultAgent: boolean;
+  home: string;
 }
 
 function report(args: ReportArgs): void {
   const { deps, output, results } = args;
   if (output === 'json') {
-    const counts = tally(results);
     deps.stdout(
       JSON.stringify(
         {
@@ -300,7 +343,7 @@ function report(args: ReportArgs): void {
           dryRun: args.dryRun,
           version: args.newVersion,
           targets: results.map((r) => ({
-            agent: r.agent,
+            agents: r.agents,
             label: r.label,
             path: r.path,
             action: r.action,
@@ -310,7 +353,7 @@ function report(args: ReportArgs): void {
             isSymlink: r.isSymlink,
             ...(r.reason ? { reason: r.reason } : {}),
           })),
-          summary: counts,
+          summary: tally(results),
         },
         null,
         2,
@@ -319,22 +362,20 @@ function report(args: ReportArgs): void {
     return;
   }
 
-  // Text output.
   deps.stdout(`a14y skill ${args.dryRun ? 'check' : 'install'} — source ${args.source}`);
   if (args.usedDefaultAgent) {
     deps.stdout(
-      'No agent directory detected; defaulting to Claude Code (.claude/skills). ' +
-        'Use --agent or --target to choose another.',
+      'No configured agent detected; defaulting to Claude Code. Use --agent or --target to choose another.',
     );
   }
   for (const r of results) {
-    deps.stdout('  ' + formatLine(r));
+    deps.stdout('  ' + formatLine(r, args.home));
   }
   const c = tally(results);
   const summary = [
     c.created ? `${c.created} ${args.dryRun ? 'to create' : 'created'}` : null,
     c.updated ? `${c.updated} ${args.dryRun ? 'to update' : 'updated'}` : null,
-    c.unchanged ? `${c.unchanged} unchanged` : null,
+    c.unchanged ? `${c.unchanged} up to date` : null,
     c.skipped ? `${c.skipped} skipped` : null,
     c.error ? `${c.error} failed` : null,
   ]
@@ -349,23 +390,26 @@ function report(args: ReportArgs): void {
   }
 }
 
-function formatLine(r: TargetResult): string {
-  const ver =
-    r.outcome === 'updated' || r.outcome === 'would-update'
-      ? `(${r.oldVersion ?? '?'} → ${r.newVersion ?? '?'})`
-      : r.newVersion
-        ? `(${r.newVersion})`
-        : '';
-  const label: Record<Outcome, string> = {
-    created: 'Created  ',
+function formatLine(r: TargetResult, home: string): string {
+  const labels: Record<Outcome, string> = {
+    created: 'Installed',
     updated: 'Updated  ',
-    unchanged: 'Unchanged',
+    unchanged: 'Up to date',
     skipped: 'Skipped  ',
     error: 'Failed   ',
-    'would-create': 'Create   ',
+    'would-create': 'Install  ',
     'would-update': 'Update   ',
     'would-skip': 'Skip     ',
   };
+  const ver =
+    r.outcome === 'updated' || r.outcome === 'would-update'
+      ? `(${r.oldVersion ?? '?'} -> ${r.newVersion ?? '?'})`
+      : r.newVersion
+        ? `(${r.newVersion})`
+        : '';
   const tail = r.reason ? `  — ${r.reason}` : '';
-  return `${label[r.outcome]} ${r.path} ${ver}${tail}`.replace(/\s+$/, '');
+  return `${labels[r.outcome]}  ${r.label}  ${tildify(r.path, home)} ${ver}${tail}`.replace(
+    /\s+$/,
+    '',
+  );
 }
