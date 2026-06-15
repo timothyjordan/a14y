@@ -79,6 +79,12 @@ jobs:
       - name: Build @a14y/docs
         env:
           GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
+          # Public URL of the Cloud Run scan proxy that powers the homepage
+          # "scan a page" widget. Set as a repo Variable (Settings > Secrets
+          # and variables > Actions > Variables). Not secret: it ships in
+          # client JS. When unset, the widget shows a "not available" state
+          # instead of failing.
+          PUBLIC_SCAN_PROXY_URL: ${{ vars.PUBLIC_SCAN_PROXY_URL }}
         run: npm run build --workspace @a14y/docs
 
       - name: Configure Pages
