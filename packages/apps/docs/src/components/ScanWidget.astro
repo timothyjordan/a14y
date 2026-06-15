@@ -2,6 +2,17 @@
 // Homepage "scan your site" widget. The audit runs entirely client-side via
 // @a14y/core (loaded lazily on first scan), routing cross-origin fetches
 // through the scan proxy. See src/lib/scan/run-scan.ts.
+import {
+  listAllScorecards,
+  getLatestScorecardVersion,
+  isDraftScorecardVersion,
+} from '~/lib/scorecard-data';
+
+// Versions are read at build time from @a14y/core, so a newly released
+// scorecard appears here automatically on the next docs deploy (the
+// deploy-docs workflow rebuilds after each Release). Default to latest stable.
+const scorecards = listAllScorecards();
+const latestVersion = getLatestScorecardVersion();
 ---
 
 <section class="scan-band" id="scan" aria-labelledby="scan-heading">
@@ -28,6 +39,17 @@
       />
       <button type="submit" class="btn btn--primary scan-submit" data-scan-submit>Scan</button>
     </form>
+
+    <div class="scan-options">
+      <label class="scan-scorecard-label" for="scan-scorecard">Scorecard</label>
+      <select id="scan-scorecard" class="scan-scorecard" data-scan-scorecard>
+        {scorecards.map((card) => (
+          <option value={card.version} selected={card.version === latestVersion}>
+            v{card.version}{isDraftScorecardVersion(card.version) ? ' (draft)' : ''}
+          </option>
+        ))}
+      </select>
+    </div>
 
     <p class="scan-privacy">
       Scanned URLs are fetched through an a14y proxy and are not stored.
@@ -97,6 +119,30 @@
   .scan-submit.is-busy {
     opacity: 0.65;
     cursor: progress;
+  }
+
+  .scan-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.6rem;
+  }
+  .scan-scorecard-label {
+    font-size: 0.85rem;
+    color: color-mix(in oklch, var(--text) 78%, transparent);
+  }
+  .scan-scorecard {
+    font: inherit;
+    font-size: 0.88rem;
+    padding: 0.3rem 0.5rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+  }
+  .scan-scorecard:focus-visible {
+    outline: 2px solid color-mix(in oklch, var(--link) 60%, transparent);
+    outline-offset: 1px;
   }
 
   .scan-privacy {

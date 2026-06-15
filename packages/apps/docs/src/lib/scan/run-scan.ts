@@ -18,6 +18,7 @@ export function initScanWidget(root: ParentNode = document): void {
   if (!form) return;
   const input = form.querySelector<HTMLInputElement>('[data-scan-input]');
   const submit = form.querySelector<HTMLButtonElement>('[data-scan-submit]');
+  const scorecardSelect = root.querySelector<HTMLSelectElement>('[data-scan-scorecard]');
   const statusEl = root.querySelector<HTMLElement>('[data-scan-status]');
   const resultsEl = root.querySelector<HTMLElement>('[data-scan-results]');
   if (!input || !submit || !statusEl || !resultsEl) return;
@@ -38,13 +39,15 @@ export function initScanWidget(root: ParentNode = document): void {
       return;
     }
 
+    const scorecardVersion = scorecardSelect?.value || undefined;
+
     running = true;
     setBusy(submit, true);
     resultsEl.hidden = true;
     resultsEl.replaceChildren();
     showStatus(statusEl, 'Loading the scan engine…', 'busy');
 
-    void runScan(target, statusEl, resultsEl)
+    void runScan(target, scorecardVersion, statusEl, resultsEl)
       .catch((err) => showStatus(statusEl, scanErrorMessage(err), 'error'))
       .finally(() => {
         running = false;
@@ -53,7 +56,12 @@ export function initScanWidget(root: ParentNode = document): void {
   });
 }
 
-async function runScan(target: string, statusEl: HTMLElement, resultsEl: HTMLElement): Promise<void> {
+async function runScan(
+  target: string,
+  scorecardVersion: string | undefined,
+  statusEl: HTMLElement,
+  resultsEl: HTMLElement,
+): Promise<void> {
   const { validate, createHttpClient, runToAgentPrompt } = await import('@a14y/core');
   const http = createHttpClient({ fetchImpl: createProxyFetch(SCAN_PROXY_URL) });
 
@@ -61,6 +69,7 @@ async function runScan(target: string, statusEl: HTMLElement, resultsEl: HTMLEle
   const run = await validate({
     url: target,
     mode: 'page',
+    scorecardVersion,
     http,
     onProgress: (event) => onProgress(event, statusEl, target),
   });
