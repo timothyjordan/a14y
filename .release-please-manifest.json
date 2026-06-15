@@ -1,8 +1,8 @@
 {
-  "packages/apps/cli": "0.4.21",
-  "packages/aliases/agentready": "0.4.21",
-  "packages/aliases/agentreadability": "0.4.21",
-  "packages/core": "0.3.21",
-  "packages/telemetry": "0.1.18",
-  "packages/apps/extension": "0.5.20"
+  "packages/apps/cli": "0.4.22",
+  "packages/aliases/agentready": "0.4.22",
+  "packages/aliases/agentreadability": "0.4.22",
+  "packages/core": "0.3.22",
+  "packages/telemetry": "0.1.19",
+  "packages/apps/extension": "0.5.21"
 }
