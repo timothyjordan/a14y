@@ -1,6 +1,6 @@
 ---
 title: Privacy · a14y (tail)
-description: Privacy policy continued — system-wide opt-out, CLI, extension, website scan, retention, contact, changelog.
+description: Privacy policy continued: system-wide opt-out, CLI, extension, website scan, retention, contact, changelog.
 ---
 
 For a system-wide opt-out, install Google's

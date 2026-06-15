@@ -4,7 +4,7 @@ export interface RateLimiter {
 }
 
 export interface RateLimiterOptions {
-  /** Bucket size — the most requests allowed in a burst. */
+  /** Bucket size: the most requests allowed in a burst. */
   capacity: number;
   /** Tokens added back per second. */
   refillPerSec: number;
@@ -15,7 +15,7 @@ export interface RateLimiterOptions {
 /**
  * A small in-memory token-bucket limiter, keyed by client IP. Per-instance
  * only (Cloud Run may run several instances), so it blunts obvious abuse
- * rather than enforcing a global quota — the hard ceiling is `--max-instances`.
+ * rather than enforcing a global quota; the hard ceiling is `--max-instances`.
  */
 export function createRateLimiter(opts: RateLimiterOptions): RateLimiter {
   const { capacity, refillPerSec } = opts;

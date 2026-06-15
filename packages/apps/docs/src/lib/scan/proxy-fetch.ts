@@ -6,7 +6,7 @@
  * The proxy answers a successful relay with HTTP 200 and the real upstream
  * status in `x-a14y-status`. We rebuild a `Response` carrying that status (and
  * the passed-through `content-type` / `location`) so core's manual redirect
- * handling works exactly as it does in Node and the extension — the browser
+ * handling works exactly as it does in Node and the extension; the browser
  * never auto-follows or opaque-redirects a cross-origin hop.
  *
  * A proxy-level failure (blocked target, rate limit, upstream error, oversized
@@ -25,7 +25,7 @@ export function createProxyFetch(proxyUrl: string, fetchImpl: ProxyFetch = fetch
     const res = await fetchImpl(`${base}/?url=${encodeURIComponent(target)}`, {
       method: init?.method ?? 'GET',
       signal: init?.signal,
-      // No credentials, and no `user-agent` (browsers forbid setting it — the
+      // No credentials, and no `user-agent` (browsers forbid setting it; the
       // proxy stamps the real a14y UA on the upstream request).
     });
 

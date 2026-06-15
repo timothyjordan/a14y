@@ -41,6 +41,6 @@ const server = createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  // Coarse startup log only — never logs target URLs.
+  // Coarse startup log only; never logs target URLs.
   console.log(`a14y scan-proxy listening on :${port}`);
 });

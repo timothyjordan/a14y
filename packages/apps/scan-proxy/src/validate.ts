@@ -11,7 +11,7 @@ const BLOCKED_HOSTNAMES = new Set(['localhost', '0.0.0.0', '::', '[::]']);
  * ports (port scanning), and literal addresses inside loopback / private /
  * link-local ranges or cloud-metadata hosts. This checks the literal host in
  * the URL; it does not resolve DNS, so a public name that resolves to a
- * private IP (DNS rebinding) is out of scope here — the deploy runs with no
+ * private IP (DNS rebinding) is out of scope here; the deploy runs with no
  * VPC connector, so the proxy has no route to private networks anyway.
  */
 export function validateTargetUrl(raw: string | null): ValidationResult {
@@ -59,7 +59,7 @@ function isPrivateOrLoopbackIp(host: string): boolean {
   if (host.includes(':')) {
     // IPv6 literal.
     if (host === '::1') return true; // loopback
-    // IPv4-mapped (::ffff:a.b.c.d) — check the embedded v4.
+    // IPv4-mapped (::ffff:a.b.c.d): check the embedded v4.
     const mapped = host.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/);
     if (mapped) {
       const inner = parseIpv4(mapped[1]);

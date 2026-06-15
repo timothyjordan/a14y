@@ -83,7 +83,7 @@ Then set `PUBLIC_SCAN_PROXY_URL` in the docs build to the printed service URL.
 Cloud Run has no hard "stop at $X" switch, so cost is capped in layers:
 
 1. **`--max-instances=5` (primary ceiling).** Compute is billed per instance-time;
-   capping instances bounds spend deterministically even under an abuse spike —
+   capping instances bounds spend deterministically even under an abuse spike;
    excess traffic queues/sheds instead of scaling cost up. `--min-instances=0`
    keeps idle cost at $0 (trade-off: occasional ~1–2s cold start).
 2. **Per-IP rate limiting** (in the handler) blunts abuse before it scales instances.

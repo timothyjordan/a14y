@@ -217,17 +217,13 @@ function copyFixList(run: SiteRun, runToAgentPrompt: (run: SiteRun) => string): 
 function fullExperienceCta(): HTMLElement {
   const cta = el('aside', 'scan-cta');
   const heading = el('p', 'scan-cta-head');
-  heading.textContent = 'This is a single-page preview.';
+  heading.textContent = 'Scan your whole site';
   const body = el('p', 'scan-cta-body');
   body.textContent =
-    'Get the full experience: scan your whole site with the CLI, the agent skill, or the Chrome extension, then ship the fixes.';
+    'This preview covers one page. The CLI, the agent skill, and the Chrome extension run the same checks across your entire site, then hand you the fixes.';
 
   const links = el('div', 'scan-cta-links');
-  links.append(
-    ctaLink('#cli', 'Use the CLI →'),
-    ctaLink('#skill', 'Run the skill →'),
-    ctaLink('#chrome-extension', 'Get the extension →'),
-  );
+  links.append(ctaLink('#tools', 'Install the tools →'));
 
   cta.append(heading, body, links);
   return cta;
@@ -235,7 +231,7 @@ function fullExperienceCta(): HTMLElement {
 
 function ctaLink(href: string, text: string): HTMLAnchorElement {
   const a = document.createElement('a');
-  a.className = 'btn scan-cta-link';
+  a.className = 'btn btn--primary scan-cta-link';
   a.href = href;
   a.textContent = text;
   return a;
