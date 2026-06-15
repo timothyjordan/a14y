@@ -282,6 +282,84 @@ describe('skill — interactive picker', () => {
   });
 });
 
+describe('skill install --project', () => {
+  const P_CLAUDE = '/work/.claude/skills/a14y/SKILL.md';
+  const P_CURSOR = '/work/.cursor/skills/a14y/SKILL.md';
+  const P_AGENTS = '/work/.agents/skills/a14y/SKILL.md';
+
+  it('non-interactively installs the default agents plus .agents into the cwd', async () => {
+    const fs = new FakeFs();
+    const d = deps(fs, { yes: true });
+    expect(await runSkillsCommand({ project: true, yes: true, output: 'json' }, d)).toBe(0);
+    // claude/cursor/copilot default agents + the shared .agents copy.
+    expect(fs.files.has(P_CLAUDE)).toBe(true);
+    expect(fs.files.has(P_CURSOR)).toBe(true);
+    expect(fs.files.has('/work/.github/skills/a14y/SKILL.md')).toBe(true);
+    expect(fs.files.has(P_AGENTS)).toBe(true);
+  });
+
+  it('shows the project directory and a how-to-switch note', async () => {
+    const fs = new FakeFs();
+    const d = deps(fs, { yes: true });
+    await runSkillsCommand({ project: true, yes: true }, d);
+    const out = d.out.join('\n');
+    expect(out).toContain('Project directory: /work');
+    expect(out).toContain('re-run from inside it');
+  });
+
+  it('interactive: writes only the chosen what + agents', async () => {
+    const fs = new FakeFs();
+    // 1st picker (what) -> per-agent + agents; 2nd picker (agents) -> claude only.
+    const promptSelect = vi
+      .fn()
+      .mockResolvedValueOnce(['per-agent', 'agents'])
+      .mockResolvedValueOnce(['claude']);
+    const d = deps(fs, { isTTY: true, promptSelect });
+    expect(await runSkillsCommand({ project: true }, d)).toBe(0);
+    expect(promptSelect).toHaveBeenCalledTimes(2);
+    expect(fs.files.has(P_CLAUDE)).toBe(true);
+    expect(fs.files.has(P_AGENTS)).toBe(true);
+    expect(fs.files.has(P_CURSOR)).toBe(false);
+  });
+
+  it('interactive: choosing only .agents skips the agent picker', async () => {
+    const fs = new FakeFs();
+    const promptSelect = vi.fn().mockResolvedValueOnce(['agents']);
+    const d = deps(fs, { isTTY: true, promptSelect });
+    expect(await runSkillsCommand({ project: true }, d)).toBe(0);
+    expect(promptSelect).toHaveBeenCalledOnce(); // no second (agent) prompt
+    expect(fs.files.has(P_AGENTS)).toBe(true);
+    expect(fs.files.has(P_CLAUDE)).toBe(false);
+  });
+
+  it('honours --agent for the per-agent set', async () => {
+    const fs = new FakeFs();
+    const d = deps(fs, { yes: true });
+    expect(await runSkillsCommand({ project: true, yes: true, agent: ['cursor'] }, d)).toBe(0);
+    expect(fs.files.has(P_CURSOR)).toBe(true);
+    expect(fs.files.has(P_CLAUDE)).toBe(false);
+    expect(fs.files.has(P_AGENTS)).toBe(true);
+  });
+
+  it('cancelling the first picker changes nothing', async () => {
+    const fs = new FakeFs();
+    const d = deps(fs, { isTTY: true, promptSelect: vi.fn(async () => null) });
+    expect(await runSkillsCommand({ project: true }, d)).toBe(0);
+    expect(fs.files.size).toBe(0);
+    expect(d.out.join('\n')).toContain('Cancelled');
+  });
+});
+
+describe('skill install — tip', () => {
+  it('points users at --project after a normal install', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    const d = deps(fs, { yes: true });
+    await runSkillsCommand({ yes: true }, d);
+    expect(d.out.join('\n')).toContain('a14y skill install --project');
+  });
+});
+
 describe('skill uninstall', () => {
   it('removes a copy install', async () => {
     const fs = new FakeFs();

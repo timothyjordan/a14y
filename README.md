@@ -45,10 +45,12 @@ The a14y CLI can also install, update, and uninstall the skill itself, which is 
 ```bash
 npx -y a14y skill              # install/update for detected agents (~/.claude/skills, ...)
 npx -y a14y skill --link       # one shared copy in .agents/skills, symlinked from each agent
-npx -y a14y skill --local      # install into the current project instead
+npx -y a14y skill --project    # guided install into the current project, so collaborators share it
 npx -y a14y skill --check      # report whether your copy is out of date
 npx -y a14y skill uninstall    # remove it from every agent and the shared dir
 ```
+
+Run `a14y skill --project` from inside a repository to commit the skill alongside your code, so everyone working in that repo gets it.
 
 The skill detects a running local dev server (or falls back to your live URL), runs the audit, proposes a prioritized fix plan, and tracks score deltas across runs in `AGENTS.md`. Source: [`skills/a14y/SKILL.md`](./skills/a14y/SKILL.md).
 
@@ -101,7 +103,8 @@ Commands in detail:
 
   skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
     --global                      act on the home dir (default)
-    --local, --project            act on the current project instead
+    --local                       act on the current project instead
+    --project                     guided project install (for collaborators)
     --link                        symlink mode: shared copy in .agents/skills
     --copy                        copy mode: a SKILL.md per agent (default)
     --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect

@@ -301,7 +301,7 @@ program
   .description('Install, update, or uninstall the a14y agent skill for your coding agents (idempotent)')
   .option('--global', 'act on your home directory (default)')
   .option('--local', 'act on the current project instead of the home directory')
-  .option('--project', 'alias for --local')
+  .option('--project', 'guided install into the current project so collaborators share the skill')
   .option('--link', 'symlink mode: one shared copy in .agents/skills, linked from each agent')
   .option('--copy', 'copy mode: a SKILL.md in each agent\'s own skills dir (default)')
   .option('--target <dir>', 'write the skill to <dir>/a14y/SKILL.md, bypassing agent auto-detection')
@@ -359,7 +359,8 @@ Commands in detail:
 
   skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
     --global                      act on the home dir (default)
-    --local, --project            act on the current project instead
+    --local                       act on the current project instead
+    --project                     guided project install (for collaborators)
     --link                        symlink mode: shared copy in .agents/skills
     --copy                        copy mode: a SKILL.md per agent (default)
     --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect

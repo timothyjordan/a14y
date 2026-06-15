@@ -79,7 +79,8 @@ Commands in detail:
 
   skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
     --global                      act on the home dir (default)
-    --local, --project            act on the current project instead
+    --local                       act on the current project instead
+    --project                     guided project install (for collaborators)
     --link                        symlink mode: shared copy in .agents/skills
     --copy                        copy mode: a SKILL.md per agent (default)
     --target <dir>                write to <dir>/a14y/SKILL.md, skip auto-detect
@@ -149,7 +150,8 @@ Options:
   --global               act on your home directory (default)
   --local                act on the current project instead of the home
                          directory
-  --project              alias for --local
+  --project              guided install into the current project so
+                         collaborators share the skill
   --link                 symlink mode: one shared copy in .agents/skills,
                          linked from each agent
   --copy                 copy mode: a SKILL.md in each agent's own skills dir

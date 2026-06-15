@@ -272,6 +272,25 @@ describe('a14y skill (TJ-822)', () => {
     expect(check.stdout).toContain('Up to date');
   });
 
+  it('skill install --project installs into the cwd for collaborators', async () => {
+    const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
+    const proj = mkdtempSync(path.join(tmpdir(), 'a14y-skill-collab-'));
+    try {
+      const { stdout } = await exec(
+        'node',
+        [CLI, 'skill', 'install', '--project', '--yes', '--agent', 'claude', '--output', 'json'],
+        { env, cwd: proj },
+      );
+      const summary = JSON.parse(stdout).summary;
+      expect(summary.created).toBeGreaterThanOrEqual(1);
+      // Claude's project dir + the shared .agents/skills copy.
+      expect(existsSync(path.join(proj, '.claude', 'skills', 'a14y', 'SKILL.md'))).toBe(true);
+      expect(existsSync(path.join(proj, '.agents', 'skills', 'a14y', 'SKILL.md'))).toBe(true);
+    } finally {
+      rmSync(proj, { recursive: true, force: true });
+    }
+  });
+
   it('round-trips install then uninstall for a project-local agent', async () => {
     const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
     const proj = mkdtempSync(path.join(tmpdir(), 'a14y-skill-proj-'));

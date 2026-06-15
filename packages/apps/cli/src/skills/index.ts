@@ -1,7 +1,14 @@
 import os from 'node:os';
 import path from 'node:path';
-import { AGENT_REGISTRY, agentByName, DEFAULT_AGENT, type AgentEntry, type PathCtx } from './registry';
-import { SkillsConfigError, type Scope, type SkillTarget } from './paths';
+import {
+  AGENT_REGISTRY,
+  agentByName,
+  DEFAULT_AGENT,
+  sharedSkillsDir,
+  type AgentEntry,
+  type PathCtx,
+} from './registry';
+import { skillFile, SkillsConfigError, type Scope, type SkillTarget } from './paths';
 import {
   agentTargets,
   buildTargets,
@@ -155,7 +162,9 @@ export async function runSkillsCommand(
     scope,
   };
 
-  return action === 'uninstall' ? runUninstall(c) : runInstall(c, action);
+  if (action === 'uninstall') return runUninstall(c);
+  if (opts.project) return runProjectInstall(c, action);
+  return runInstall(c, action);
 }
 
 async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number> {
@@ -271,7 +280,156 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     run_id: deps.runId,
   });
 
-  // 4. Download the skill.
+  const code = await installTargets(c, { targets, action, method, usedDefaultAgent });
+
+  // Point users at the project install once a normal (global) install lands.
+  if (code === 0 && !c.dryRun && c.output === 'text' && mode !== 'target') {
+    deps.stdout('');
+    deps.stdout('Tip: to install for a specific project so collaborators share the skill, run');
+    deps.stdout('  a14y skill install --project');
+    deps.stdout('from inside that project’s directory.');
+  }
+  return code;
+}
+
+/**
+ * Guided install into the current project so collaborators share the skill.
+ * Asks what to write (per-agent dirs and/or a shared `.agents/skills`) and, for
+ * per-agent, which agents (Claude, Codex, Copilot, Cursor checked by default).
+ */
+async function runProjectInstall(c: Ctx, action: 'install' | 'update'): Promise<number> {
+  const { opts, deps, track } = c;
+  c.scope = 'local';
+  const interactive = c.isTTY && !opts.yes && !c.dryRun;
+  const select = deps.promptSelect ?? promptSelectTargets;
+  const DEFAULT_PROJECT_AGENTS = ['claude', 'codex', 'copilot', 'cursor'];
+
+  if (c.output === 'text') {
+    deps.stdout('Installing the a14y skill into this project so collaborators share it.');
+    deps.stdout(`Project directory: ${c.ctx.cwd}`);
+    deps.stdout('To install into a different project, exit and re-run from inside it.');
+    deps.stdout('');
+  }
+
+  // What to write: per-agent dirs and/or the shared .agents/skills dir.
+  let what: string[];
+  if (interactive) {
+    const chosen = await select('Install in this project as:', [
+      {
+        value: 'per-agent',
+        title: 'Per-agent directories (.claude/skills, .cursor/skills, …)',
+        hint: '',
+        selected: true,
+      },
+      { value: 'agents', title: 'Shared .agents/skills (one copy)', hint: '', selected: true },
+    ]);
+    if (chosen === null) {
+      deps.stdout('Cancelled — nothing was changed.');
+      return 0;
+    }
+    what = chosen;
+  } else {
+    what = ['per-agent', 'agents'];
+  }
+  if (what.length === 0) {
+    deps.stdout('Nothing selected — nothing to do.');
+    return 0;
+  }
+
+  // Which agents (only when writing per-agent dirs).
+  let agents: AgentEntry[] = [];
+  if (what.includes('per-agent')) {
+    if ((opts.agent ?? []).length > 0) {
+      try {
+        agentTargets(opts.agent!, 'local', c.ctx, 'copy'); // validate names
+      } catch (e) {
+        return failConfig(c, e);
+      }
+      agents = opts.agent!.map((n) => agentByName(n)!);
+    } else if (interactive) {
+      const choices: SelectChoice[] = AGENT_REGISTRY.map((a) => ({
+        value: a.name,
+        title: `${a.label} (${a.localDir})`,
+        hint: '',
+        selected: DEFAULT_PROJECT_AGENTS.includes(a.name),
+      }));
+      const chosen = await select('Which agents?', choices);
+      if (chosen === null) {
+        deps.stdout('Cancelled — nothing was changed.');
+        return 0;
+      }
+      agents = chosen.map((n) => agentByName(n)!).filter(Boolean);
+    } else {
+      agents = DEFAULT_PROJECT_AGENTS.map((n) => agentByName(n)!);
+    }
+  }
+
+  // Build targets: per-agent copies + an optional shared .agents/skills copy.
+  let targets: SkillTarget[] = [];
+  try {
+    if (agents.length > 0) targets.push(...buildTargets(agents, 'local', c.ctx, 'copy'));
+  } catch (e) {
+    return failConfig(c, e);
+  }
+  if (what.includes('agents')) {
+    targets.push({
+      kind: 'copy',
+      agents: ['shared'],
+      label: 'Shared (.agents/skills)',
+      managedPath: skillFile(sharedSkillsDir(c.ctx, 'local')),
+    });
+  }
+  targets = dedupeByPath(targets);
+  if (targets.length === 0) {
+    deps.stdout('Nothing selected — nothing to do.');
+    return 0;
+  }
+
+  track('cli_command_invoked', {
+    command: 'skill',
+    action,
+    scope: 'local',
+    mode: 'project',
+    method: 'copy',
+    dry_run: c.dryRun,
+    force: c.force,
+    target_count: targets.length,
+    output_format: c.output,
+    run_id: deps.runId,
+  });
+
+  return installTargets(c, { targets, action, method: 'copy', usedDefaultAgent: false });
+}
+
+/** Merge copy targets that resolve to the same file (e.g. a `.agents/skills`
+ *  agent and the explicit shared copy). */
+function dedupeByPath(targets: SkillTarget[]): SkillTarget[] {
+  const byPath = new Map<string, SkillTarget>();
+  for (const t of targets) {
+    const hit = byPath.get(t.managedPath);
+    if (hit) {
+      hit.agents = [...new Set([...hit.agents, ...t.agents])];
+      if (!hit.label.includes(t.label)) hit.label = `${hit.label} + ${t.label}`;
+    } else {
+      byPath.set(t.managedPath, { ...t });
+    }
+  }
+  return [...byPath.values()];
+}
+
+/** Shared fetch -> plan -> (dry-run report | apply) -> report tail. */
+async function installTargets(
+  c: Ctx,
+  opts: {
+    targets: SkillTarget[];
+    action: 'install' | 'update';
+    method: InstallMethod;
+    usedDefaultAgent: boolean;
+  },
+): Promise<number> {
+  const { deps, track } = c;
+  const { targets, action, method, usedDefaultAgent } = opts;
+
   let fetched: string;
   try {
     fetched = await fetchSkill({ fetchImpl: deps.fetchImpl });
@@ -287,13 +445,11 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
   }
   const newVersion = parseSkillVersion(fetched);
 
-  // 5. Plan every target.
   const entries: PlanEntry[] = [];
   for (const target of targets) {
     entries.push({ target, plan: await planOne(c, target, fetched, newVersion) });
   }
 
-  // Dry run: report and stop.
   if (c.dryRun) {
     const results = entries.map((e) =>
       toResult(
@@ -312,7 +468,6 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     return entries.some((e) => e.plan.action !== 'unchanged') ? 1 : 0;
   }
 
-  // 6. Apply every chosen target (selection already happened in the picker).
   // Canonical first so symlinks have something to point at.
   const ordered = [...entries].sort((a, b) =>
     a.target.kind === 'canonical' ? -1 : b.target.kind === 'canonical' ? 1 : 0,
