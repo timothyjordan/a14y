@@ -204,6 +204,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
         } else {
           deps.stdout('No configured harnesses detected.');
         }
+        deps.stdout(''); // blank line before the picker prompt
         const detectedNames = matches.map((m) => m.agent.name);
         const choices: AgentChoice[] = AGENT_REGISTRY.map((a) => ({
           name: a.name,
