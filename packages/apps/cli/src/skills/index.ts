@@ -1,11 +1,11 @@
 import os from 'node:os';
 import path from 'node:path';
-import { agentByName, DEFAULT_AGENT, type AgentEntry, type PathCtx } from './registry';
+import { AGENT_REGISTRY, agentByName, DEFAULT_AGENT, type AgentEntry, type PathCtx } from './registry';
 import { SkillsConfigError, type Scope, type SkillTarget } from './paths';
 import {
   agentTargets,
   buildTargets,
-  detectAgents,
+  detectAgentMatches,
   explicitTarget,
   scanInstalled,
   type InstallMethod,
@@ -16,9 +16,12 @@ import { nodeFs, type FsFacade } from './fsFacade';
 import { parseSkillVersion } from './frontmatter';
 import { planFile, planLink, type SkillAction, type TargetPlan } from './plan';
 import {
-  promptInstallMethod,
+  promptChooseAgents,
+  promptLocation,
   promptSelectTargets,
-  type PromptMethod,
+  type AgentChoice,
+  type PromptChooseAgents,
+  type PromptLocation,
   type PromptSelect,
   type SelectChoice,
 } from './prompt';
@@ -61,7 +64,8 @@ export interface RunSkillsDeps {
   track?: TrackFn;
   isTTY?: boolean;
   promptSelect?: PromptSelect;
-  promptMethod?: PromptMethod;
+  promptChooseAgents?: PromptChooseAgents;
+  promptLocation?: PromptLocation;
 }
 
 type Outcome =
@@ -162,7 +166,12 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     return 2;
   }
 
-  // Resolve which agents we're targeting.
+  const scopeFlag: Scope | null = opts.local || opts.project ? 'local' : opts.global ? 'global' : null;
+  const methodFlag: InstallMethod | null = opts.link ? 'link' : opts.copy ? 'copy' : null;
+  const interactiveBase = c.isTTY && !opts.yes && !c.dryRun;
+
+  // 1. Choose harnesses (agents). In interactive detect mode this is the
+  // Impeccable-style "detected only / customize" + full picker.
   let agents: AgentEntry[];
   let mode: 'detect' | 'agent' | 'target';
   let usedDefaultAgent = false;
@@ -173,51 +182,78 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
       mode = 'target';
       agents = [];
     } else if ((opts.agent ?? []).length > 0) {
-      // Validate names early (buildTargets needs the method, set below).
-      agentTargets(opts.agent!, c.scope, c.ctx, 'copy');
-      mode = 'agent';
+      agentTargets(opts.agent!, 'global', c.ctx, 'copy'); // validate names
       agents = opts.agent!.map((n) => agentByName(n)!);
+      mode = 'agent';
     } else {
-      const detected = await detectAgents(c.ctx, fs);
-      if (detected.length > 0) {
-        agents = detected;
+      mode = 'detect';
+      const matches = await detectAgentMatches(c.ctx, fs);
+      if (interactiveBase) {
+        if (matches.length > 0) {
+          deps.stdout('Detected harnesses:');
+          for (const m of matches) deps.stdout(`  ${m.agent.label}  ${tildify(m.dir, c.home)}`);
+        } else {
+          deps.stdout('No configured harnesses detected.');
+        }
+        const detectedNames = matches.map((m) => m.agent.name);
+        const choices: AgentChoice[] = AGENT_REGISTRY.map((a) => ({
+          name: a.name,
+          title: `${a.label} (${a.localDir})`,
+          selected:
+            detectedNames.includes(a.name) ||
+            (matches.length === 0 && a.name === DEFAULT_AGENT),
+        }));
+        const chosen = await (deps.promptChooseAgents ?? promptChooseAgents)(
+          { names: detectedNames, labels: matches.map((m) => m.agent.label) },
+          choices,
+        );
+        if (chosen === null) {
+          deps.stdout('Cancelled — nothing was changed.');
+          return 0;
+        }
+        if (chosen.length === 0) {
+          deps.stdout('No harnesses selected — nothing to do.');
+          return 0;
+        }
+        agents = chosen.map((n) => agentByName(n)!).filter(Boolean);
+      } else if (matches.length > 0) {
+        agents = matches.map((m) => m.agent);
       } else {
         agents = [agentByName(DEFAULT_AGENT)!];
         usedDefaultAgent = true;
       }
-      mode = 'detect';
     }
   } catch (e) {
     return failConfig(c, e);
   }
 
-  const interactive = mode === 'detect' && c.isTTY && !opts.yes && !c.dryRun;
-
-  // Resolve the install method (copy vs symlink). --target is copy-only.
+  // 2. Choose where: a shared global location (symlinked) or this project.
+  // Flags win; otherwise prompt interactively; otherwise default global copy.
+  let scope: Scope;
   let method: InstallMethod;
   if (explicit) {
+    scope = scopeFlag ?? 'global';
     method = 'copy';
-  } else if (opts.link) {
-    method = 'link';
-  } else if (opts.copy) {
-    method = 'copy';
-  } else if (interactive) {
-    const chosen = await (deps.promptMethod ?? promptInstallMethod)(
-      'How should the skill be installed?',
-    );
-    if (chosen === null) {
+  } else if (scopeFlag || methodFlag) {
+    scope = scopeFlag ?? 'global';
+    method = methodFlag ?? 'copy';
+  } else if (interactiveBase && mode !== 'target') {
+    const loc = await (deps.promptLocation ?? promptLocation)();
+    if (loc === null) {
       deps.stdout('Cancelled — nothing was changed.');
       return 0;
     }
-    method = chosen;
+    [scope, method] = loc === 'global-shared' ? (['global', 'link'] as const) : (['local', 'copy'] as const);
   } else {
+    scope = 'global';
     method = 'copy';
   }
+  c.scope = scope; // report() reads this
 
-  // Build concrete targets.
+  // 3. Build concrete targets.
   let targets: SkillTarget[];
   try {
-    targets = explicit ? [explicit] : buildTargets(agents, c.scope, c.ctx, method);
+    targets = explicit ? [explicit] : buildTargets(agents, scope, c.ctx, method);
   } catch (e) {
     return failConfig(c, e);
   }
@@ -225,7 +261,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
   track('cli_command_invoked', {
     command: 'skill',
     action,
-    scope: c.scope,
+    scope,
     mode,
     method,
     dry_run: c.dryRun,
@@ -235,7 +271,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     run_id: deps.runId,
   });
 
-  // Download the skill.
+  // 4. Download the skill.
   let fetched: string;
   try {
     fetched = await fetchSkill({ fetchImpl: deps.fetchImpl });
@@ -251,7 +287,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
   }
   const newVersion = parseSkillVersion(fetched);
 
-  // Plan every target.
+  // 5. Plan every target.
   const entries: PlanEntry[] = [];
   for (const target of targets) {
     entries.push({ target, plan: await planOne(c, target, fetched, newVersion) });
@@ -276,45 +312,8 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     return entries.some((e) => e.plan.action !== 'unchanged') ? 1 : 0;
   }
 
-  // Decide which targets to write.
-  const actionable = entries.filter((e) => e.plan.action !== 'unchanged');
-  let selected: Set<string>;
-  if (interactive && actionable.length > 0) {
-    const choices: SelectChoice[] = entries.map((e) => {
-      const s = statusOf(e.plan);
-      return {
-        value: e.target.managedPath,
-        title: `${e.target.label}  ${tildify(e.target.managedPath, c.home)}`,
-        hint: s.text,
-        selected: s.preChecked,
-      };
-    });
-    const chosen = await (deps.promptSelect ?? promptSelectTargets)(
-      `Install or update the a14y skill (${method === 'link' ? 'shared + symlinks' : 'copy'}) for:`,
-      choices,
-    );
-    if (chosen === null) {
-      deps.stdout('Cancelled — nothing was changed.');
-      return 0;
-    }
-    selected = new Set(chosen);
-  } else {
-    selected = new Set(
-      entries.filter((e) => statusOf(e.plan).preChecked).map((e) => e.target.managedPath),
-    );
-  }
-
-  // In symlink mode a selected link needs the canonical copy in place, so pull
-  // it in even if the user didn't tick its row (it's an implementation detail).
-  if (method === 'link') {
-    const canonical = entries.find((e) => e.target.kind === 'canonical');
-    const anyLink = entries.some(
-      (e) => e.target.kind === 'link' && selected.has(e.target.managedPath),
-    );
-    if (canonical && anyLink) selected.add(canonical.target.managedPath);
-  }
-
-  // Apply — canonical first (link targets depend on it).
+  // 6. Apply every chosen target (selection already happened in the picker).
+  // Canonical first so symlinks have something to point at.
   const ordered = [...entries].sort((a, b) =>
     a.target.kind === 'canonical' ? -1 : b.target.kind === 'canonical' ? 1 : 0,
   );
@@ -323,10 +322,6 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
     const a = e.plan.action;
     if (a === 'unchanged') {
       results.push(toResult(e, 'unchanged'));
-      continue;
-    }
-    if (!selected.has(e.target.managedPath)) {
-      results.push(toResult(e, 'skipped', a === 'conflict' ? e.plan.conflictReason : 'deselected'));
       continue;
     }
     if (a === 'conflict') {
@@ -355,8 +350,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
   });
   report(c, { source: skillSourceUrl(), newVersion, results, usedDefaultAgent });
 
-  const hadAutoConflict = !interactive && entries.some((e) => e.plan.action === 'conflict');
-  return counts.error > 0 || hadAutoConflict ? 1 : 0;
+  return counts.error > 0 || entries.some((e) => e.plan.action === 'conflict') ? 1 : 0;
 }
 
 async function planOne(
@@ -501,25 +495,6 @@ function failConfig(c: Ctx, e: unknown): number {
     return 2;
   }
   throw e;
-}
-
-function statusOf(p: TargetPlan): { text: string; preChecked: boolean } {
-  switch (p.action) {
-    case 'create':
-      return { text: 'not installed', preChecked: true };
-    case 'update':
-      return {
-        text:
-          p.oldVersion && p.newVersion
-            ? `outdated ${p.oldVersion} -> ${p.newVersion}`
-            : 'installed, will update',
-        preChecked: true,
-      };
-    case 'unchanged':
-      return { text: 'up to date', preChecked: false };
-    case 'conflict':
-      return { text: p.conflictReason ?? 'conflict', preChecked: false };
-  }
 }
 
 function toResult(e: PlanEntry, outcome: Outcome, reason?: string): TargetResult {

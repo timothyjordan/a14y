@@ -74,7 +74,8 @@ function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & C
     env: {},
     isTTY: false,
     // Prompts default to safe stubs so a stray interactive path never blocks.
-    promptMethod: vi.fn(async () => 'copy' as const),
+    promptChooseAgents: vi.fn(async (detected: { names: string[] }) => detected.names),
+    promptLocation: vi.fn(async () => 'local-project' as const),
     promptSelect: vi.fn(async (_m: string, choices: Array<{ value: string; selected: boolean }>) =>
       choices.filter((c) => c.selected).map((c) => c.value),
     ),
@@ -198,48 +199,84 @@ describe('skill install — symlink mode (--link)', () => {
   });
 });
 
-describe('skill — interactive checklist', () => {
-  it('installs only the selected targets', async () => {
+describe('skill — interactive picker', () => {
+  it('installs only the harnesses chosen in the picker (this project)', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
     fs.dirs.add('/home/u/.gemini');
-    const promptSelect = vi.fn(async () => [CLAUDE_FILE]);
-    const d = deps(fs, { isTTY: true, promptSelect });
+    const promptChooseAgents = vi.fn(async () => ['claude']);
+    const promptLocation = vi.fn(async () => 'local-project' as const);
+    const d = deps(fs, { isTTY: true, promptChooseAgents, promptLocation });
     expect(await runSkillsCommand({}, d)).toBe(0);
-    expect(promptSelect).toHaveBeenCalledOnce();
-    expect(fs.files.has(CLAUDE_FILE)).toBe(true);
-    expect(fs.files.has(GEMINI_FILE)).toBe(false);
+    expect(promptChooseAgents).toHaveBeenCalledOnce();
+    expect(fs.files.has('/work/.claude/skills/a14y/SKILL.md')).toBe(true);
+    expect(fs.files.has('/work/.gemini/skills/a14y/SKILL.md')).toBe(false);
   });
 
-  it('asks for the install method when neither --link nor --copy is given', async () => {
+  it('shared-global location writes the canonical copy and symlinks each agent', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
-    const promptMethod = vi.fn(async () => 'link' as const);
-    const d = deps(fs, { isTTY: true, promptMethod });
+    const d = deps(fs, {
+      isTTY: true,
+      promptChooseAgents: vi.fn(async () => ['claude', 'cursor']),
+      promptLocation: vi.fn(async () => 'global-shared' as const),
+    });
     expect(await runSkillsCommand({}, d)).toBe(0);
-    expect(promptMethod).toHaveBeenCalledOnce();
     expect(fs.files.has('/home/u/.agents/skills/a14y/SKILL.md')).toBe(true);
+    expect(fs.links.get('/home/u/.claude/skills/a14y')).toBe('/home/u/.agents/skills/a14y');
+    expect(fs.links.get('/home/u/.cursor/skills/a14y')).toBe('/home/u/.agents/skills/a14y');
   });
 
-  it('cancelling the method prompt writes nothing', async () => {
+  it('shows detected harnesses and offers the full supported list pre-checked by detection', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
-    const d = deps(fs, { isTTY: true, promptMethod: vi.fn(async () => null) });
+    let detected: { names: string[]; labels: string[] } | undefined;
+    let choices: Array<{ name: string; selected: boolean }> = [];
+    const promptChooseAgents = vi.fn(async (det: typeof detected, all: typeof choices) => {
+      detected = det;
+      choices = all;
+      return det!.names;
+    });
+    const d = deps(fs, { isTTY: true, promptChooseAgents });
+    await runSkillsCommand({}, d);
+    expect(detected!.names).toEqual(['claude']);
+    expect(choices).toHaveLength(11); // every supported harness is offered
+    expect(choices.find((x) => x.name === 'claude')?.selected).toBe(true);
+    expect(choices.find((x) => x.name === 'cursor')?.selected).toBe(false);
+    expect(d.out.join('\n')).toContain('Detected harnesses:');
+  });
+
+  it('cancelling the harness picker changes nothing', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    const d = deps(fs, { isTTY: true, promptChooseAgents: vi.fn(async () => null) });
     expect(await runSkillsCommand({}, d)).toBe(0);
     expect(fs.files.size).toBe(0);
     expect(d.out.join('\n')).toContain('Cancelled');
+  });
+
+  it('cancelling the location prompt changes nothing', async () => {
+    const fs = new FakeFs();
+    fs.dirs.add('/home/u/.claude');
+    const d = deps(fs, {
+      isTTY: true,
+      promptChooseAgents: vi.fn(async (det: { names: string[] }) => det.names),
+      promptLocation: vi.fn(async () => null),
+    });
+    expect(await runSkillsCommand({}, d)).toBe(0);
+    expect(fs.files.size).toBe(0);
   });
 
   it('--yes skips both prompts and installs to all detected', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
     fs.dirs.add('/home/u/.gemini');
-    const promptSelect = vi.fn();
-    const promptMethod = vi.fn();
-    const d = deps(fs, { isTTY: true, yes: true, promptSelect, promptMethod });
+    const promptChooseAgents = vi.fn();
+    const promptLocation = vi.fn();
+    const d = deps(fs, { isTTY: true, yes: true, promptChooseAgents, promptLocation });
     expect(await runSkillsCommand({ yes: true }, d)).toBe(0);
-    expect(promptSelect).not.toHaveBeenCalled();
-    expect(promptMethod).not.toHaveBeenCalled();
+    expect(promptChooseAgents).not.toHaveBeenCalled();
+    expect(promptLocation).not.toHaveBeenCalled();
     expect(fs.files.has(CLAUDE_FILE)).toBe(true);
     expect(fs.files.has(GEMINI_FILE)).toBe(true);
   });

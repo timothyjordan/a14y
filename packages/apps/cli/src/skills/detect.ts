@@ -2,6 +2,7 @@ import path from 'node:path';
 import {
   AGENT_REGISTRY,
   agentByName,
+  localSkillsDir,
   sharedSkillsDir,
   type AgentEntry,
   type PathCtx,
@@ -30,7 +31,7 @@ function requireBase(ctx: PathCtx, scope: Scope): void {
 }
 
 function agentSkillsDir(a: AgentEntry, scope: Scope, ctx: PathCtx): string {
-  return scope === 'global' ? a.globalSkillsDir(ctx) : a.localSkillsDir(ctx);
+  return scope === 'global' ? a.globalSkillsDir(ctx) : localSkillsDir(a, ctx);
 }
 
 /** Copy targets: a real SKILL.md in each agent's own skills dir (deduped). */
@@ -111,18 +112,29 @@ export function buildTargets(
     : buildCopyTargets(agents, scope, ctx);
 }
 
-/** Detect which registered agents are configured under the given scope. */
-export async function detectAgents(ctx: PathCtx, fs: FsFacade): Promise<AgentEntry[]> {
-  const detected: AgentEntry[] = [];
+export interface DetectMatch {
+  agent: AgentEntry;
+  /** The marker directory that matched (shown to the user). */
+  dir: string;
+}
+
+/** Detect configured agents along with the marker dir that matched. */
+export async function detectAgentMatches(ctx: PathCtx, fs: FsFacade): Promise<DetectMatch[]> {
+  const matches: DetectMatch[] = [];
   for (const a of AGENT_REGISTRY) {
     for (const dir of a.detectDirs(ctx)) {
       if (await fs.dirExists(dir)) {
-        detected.push(a);
+        matches.push({ agent: a, dir });
         break;
       }
     }
   }
-  return detected;
+  return matches;
+}
+
+/** Detect which registered agents are configured under the given scope. */
+export async function detectAgents(ctx: PathCtx, fs: FsFacade): Promise<AgentEntry[]> {
+  return (await detectAgentMatches(ctx, fs)).map((m) => m.agent);
 }
 
 /** Targets for an explicit `--agent <name>` selection. Throws on unknown names. */

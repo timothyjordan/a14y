@@ -1,10 +1,9 @@
 import path from 'node:path';
 
-// The single a14y agent skill and the coding agents we install it for. Paths
-// follow the agent-skills convention (a `skills/` directory of SKILL.md skills),
-// which has converged across the ecosystem — so the same SKILL.md installs
-// everywhere. Detection and path resolution take an injected context so the
-// orchestrator stays pure and unit-testable.
+// The single a14y agent skill and the coding agents ("harnesses") we install it
+// for. Paths follow the agent-skills convention (a `skills/` directory of
+// SKILL.md skills). Detection and path resolution take an injected context so
+// the orchestrator stays pure and unit-testable.
 
 export const SKILL_NAME = 'a14y';
 export const SKILL_FILENAME = 'SKILL.md';
@@ -21,24 +20,19 @@ export interface PathCtx {
 export interface AgentEntry {
   /** Stable key used by `--agent`. */
   name: string;
-  /** Human label for output. */
+  /** Human label for output, e.g. "Claude Code". */
   label: string;
   /** Dirs whose existence marks the agent as configured (any match detects it). */
   detectDirs(ctx: PathCtx): string[];
   /** Absolute skills directory for a global (home) install. */
   globalSkillsDir(ctx: PathCtx): string;
-  /** Absolute skills directory for a project-local install (under cwd). */
-  localSkillsDir(ctx: PathCtx): string;
+  /** Relative skills dir for a project-local install + the label shown in the
+   *  harness picker, e.g. ".cursor/skills". */
+  localDir: string;
 }
-
-// Project-local convention shared by several agents (the `.agents/` standard).
-const AGENTS_LOCAL = ['.agents', 'skills'];
 
 function inHome(ctx: PathCtx, ...segs: string[]): string {
   return path.join(ctx.home, ...segs);
-}
-function inCwd(ctx: PathCtx, ...segs: string[]): string {
-  return path.join(ctx.cwd, ...segs);
 }
 function xdgConfigHome(ctx: PathCtx): string {
   const x = ctx.env.XDG_CONFIG_HOME?.trim();
@@ -59,79 +53,84 @@ export const AGENT_REGISTRY: AgentEntry[] = [
     label: 'Claude Code',
     detectDirs: (c) => [claudeConfigDir(c)],
     globalSkillsDir: (c) => path.join(claudeConfigDir(c), 'skills'),
-    localSkillsDir: (c) => inCwd(c, '.claude', 'skills'),
+    localDir: '.claude/skills',
   },
   {
     name: 'cursor',
     label: 'Cursor',
     detectDirs: (c) => [inHome(c, '.cursor')],
     globalSkillsDir: (c) => inHome(c, '.cursor', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.cursor/skills',
   },
   {
     name: 'copilot',
     label: 'GitHub Copilot',
     detectDirs: (c) => [inHome(c, '.copilot')],
     globalSkillsDir: (c) => inHome(c, '.copilot', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.github/skills',
   },
   {
     name: 'gemini',
     label: 'Gemini CLI',
     detectDirs: (c) => [inHome(c, '.gemini')],
     globalSkillsDir: (c) => inHome(c, '.gemini', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.gemini/skills',
   },
   {
     name: 'codex',
     label: 'Codex',
     detectDirs: (c) => [codexHome(c)],
     globalSkillsDir: (c) => path.join(codexHome(c), 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.agents/skills',
   },
   {
     name: 'windsurf',
     label: 'Windsurf',
     detectDirs: (c) => [inHome(c, '.codeium', 'windsurf')],
     globalSkillsDir: (c) => inHome(c, '.codeium', 'windsurf', 'skills'),
-    localSkillsDir: (c) => inCwd(c, '.windsurf', 'skills'),
+    localDir: '.windsurf/skills',
   },
   {
     name: 'antigravity',
     label: 'Antigravity',
     detectDirs: (c) => [inHome(c, '.gemini', 'antigravity')],
     globalSkillsDir: (c) => inHome(c, '.gemini', 'antigravity', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.agents/skills',
   },
   {
     name: 'cline',
     label: 'Cline',
     detectDirs: (c) => [inHome(c, '.cline')],
     globalSkillsDir: (c) => inHome(c, '.agents', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.agents/skills',
   },
   {
     name: 'opencode',
     label: 'OpenCode',
     detectDirs: (c) => [path.join(xdgConfigHome(c), 'opencode')],
     globalSkillsDir: (c) => path.join(xdgConfigHome(c), 'opencode', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.opencode/skills',
   },
   {
     name: 'roo',
     label: 'Roo Code',
     detectDirs: (c) => [inHome(c, '.roo')],
     globalSkillsDir: (c) => inHome(c, '.roo', 'skills'),
-    localSkillsDir: (c) => inCwd(c, '.roo', 'skills'),
+    localDir: '.roo/skills',
   },
   {
     name: 'zed',
     label: 'Zed',
     detectDirs: (c) => [path.join(xdgConfigHome(c), 'zed')],
     globalSkillsDir: (c) => inHome(c, '.agents', 'skills'),
-    localSkillsDir: (c) => inCwd(c, ...AGENTS_LOCAL),
+    localDir: '.agents/skills',
   },
 ];
+
+/** Absolute project-local skills dir for an agent. */
+export function localSkillsDir(a: AgentEntry, ctx: PathCtx): string {
+  return path.join(ctx.cwd, ...a.localDir.split('/'));
+}
 
 /** Fallback agent when nothing is auto-detected in a fresh environment. */
 export const DEFAULT_AGENT = 'claude';
@@ -148,5 +147,5 @@ export function agentByName(name: string): AgentEntry | undefined {
 export function sharedSkillsDir(ctx: PathCtx, scope: 'global' | 'local'): string {
   return scope === 'global'
     ? inHome(ctx, '.agents', 'skills')
-    : inCwd(ctx, '.agents', 'skills');
+    : path.join(ctx.cwd, '.agents', 'skills');
 }
