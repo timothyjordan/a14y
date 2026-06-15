@@ -7,10 +7,10 @@
 <section class="scan-band" id="scan" aria-labelledby="scan-heading">
   <div class="scan-inner">
     <div class="scan-head">
-      <h2 id="scan-heading">Scan your site</h2>
+      <h2 id="scan-heading">Scan a page now</h2>
       <p class="scan-sub">
-        See how readable a page is to AI agents, right now. Runs in your
-        browser using the same engine as the CLI, no install required.
+        Runs in your browser using the same engine as the CLI for a single
+        page, no install required.
       </p>
     </div>
 
@@ -50,9 +50,10 @@
 -->
 <style is:global>
   .scan-band {
-    margin: 2.5rem auto 0;
+    /* Full content width so the band's edges line up with the section
+       cards below it (main.container--wide is 1120px). */
+    margin: 2.5rem 0 0;
     padding: 1.75rem clamp(1rem, 4vw, 2.25rem);
-    max-width: var(--max-width);
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: calc(var(--radius) * 1.5);
