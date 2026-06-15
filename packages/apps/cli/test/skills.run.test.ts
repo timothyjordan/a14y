@@ -75,7 +75,7 @@ function deps(fs: FakeFs, extra: Partial<RunSkillsDeps> = {}): RunSkillsDeps & C
     isTTY: false,
     // Prompts default to safe stubs so a stray interactive path never blocks.
     promptChooseAgents: vi.fn(async (detected: { names: string[] }) => detected.names),
-    promptLocation: vi.fn(async () => 'local-project' as const),
+    promptLocation: vi.fn(async () => 'each-agent' as const),
     promptSelect: vi.fn(async (_m: string, choices: Array<{ value: string; selected: boolean }>) =>
       choices.filter((c) => c.selected).map((c) => c.value),
     ),
@@ -200,17 +200,17 @@ describe('skill install — symlink mode (--link)', () => {
 });
 
 describe('skill — interactive picker', () => {
-  it('installs only the harnesses chosen in the picker (this project)', async () => {
+  it('installs only the harnesses chosen in the picker (each-agent copy)', async () => {
     const fs = new FakeFs();
     fs.dirs.add('/home/u/.claude');
     fs.dirs.add('/home/u/.gemini');
     const promptChooseAgents = vi.fn(async () => ['claude']);
-    const promptLocation = vi.fn(async () => 'local-project' as const);
+    const promptLocation = vi.fn(async () => 'each-agent' as const);
     const d = deps(fs, { isTTY: true, promptChooseAgents, promptLocation });
     expect(await runSkillsCommand({}, d)).toBe(0);
     expect(promptChooseAgents).toHaveBeenCalledOnce();
-    expect(fs.files.has('/work/.claude/skills/a14y/SKILL.md')).toBe(true);
-    expect(fs.files.has('/work/.gemini/skills/a14y/SKILL.md')).toBe(false);
+    expect(fs.files.has(CLAUDE_FILE)).toBe(true); // ~/.claude/skills/a14y/SKILL.md
+    expect(fs.files.has(GEMINI_FILE)).toBe(false);
   });
 
   it('shared-global location writes the canonical copy and symlinks each agent', async () => {

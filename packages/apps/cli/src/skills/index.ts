@@ -243,7 +243,7 @@ async function runInstall(c: Ctx, action: 'install' | 'update'): Promise<number>
       deps.stdout('Cancelled — nothing was changed.');
       return 0;
     }
-    [scope, method] = loc === 'global-shared' ? (['global', 'link'] as const) : (['local', 'copy'] as const);
+    [scope, method] = loc === 'global-shared' ? (['global', 'link'] as const) : (['global', 'copy'] as const);
   } else {
     scope = 'global';
     method = 'copy';

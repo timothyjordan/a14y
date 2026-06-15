@@ -1,7 +1,16 @@
 import prompts from 'prompts';
+import chalk from 'chalk';
 
-const NAV_SELECT = '↑/↓ move, enter to confirm';
-const NAV_MULTI = '↑/↓ move, space to select, enter to confirm';
+// Navigation hints rendered in the secondary (dim) color, matching the
+// library's own hint styling. `select` greys its `hint` automatically;
+// `multiselect` renders the `instructions` string verbatim, so we dim it.
+const HINT_SELECT = 'Use arrow-keys, enter to confirm.';
+const HINT_MULTI = chalk.gray('Use arrow-keys, space to select, enter to confirm.');
+
+/** A blank line after a prompt, for breathing room before the next output. */
+function spacer(): void {
+  process.stdout.write('\n');
+}
 
 export interface SelectChoice {
   /** The value returned when chosen. */
@@ -29,8 +38,8 @@ export const promptSelectTargets: PromptSelect = async (message, choices) => {
     {
       type: 'multiselect',
       name: 'paths',
-      message: `${message}\n  ${NAV_MULTI}`,
-      instructions: false,
+      message,
+      instructions: HINT_MULTI,
       choices: choices.map((c) => ({
         title: c.title,
         value: c.value,
@@ -40,6 +49,7 @@ export const promptSelectTargets: PromptSelect = async (message, choices) => {
     },
     { onCancel: () => (cancelled = true) },
   );
+  spacer();
   if (cancelled || !res || !Array.isArray(res.paths)) return null;
   return res.paths as string[];
 };
@@ -74,7 +84,8 @@ export const promptChooseAgents: PromptChooseAgents = async (detected, all) => {
       {
         type: 'select',
         name: 'v',
-        message: `Install for detected harnesses only, or add more?\n  ${NAV_SELECT}`,
+        message: 'Install for detected harnesses only, or add more?',
+        hint: HINT_SELECT,
         initial: 0,
         choices: [
           { title: `Detected only (${detected.labels.join(', ')})`, value: 'detected' },
@@ -83,6 +94,7 @@ export const promptChooseAgents: PromptChooseAgents = async (detected, all) => {
       },
       { onCancel },
     );
+    spacer();
     if (cancelled) return null;
     if (pick.v === 'detected') return detected.names;
   }
@@ -91,19 +103,20 @@ export const promptChooseAgents: PromptChooseAgents = async (detected, all) => {
     {
       type: 'multiselect',
       name: 'v',
-      message: `Select harnesses\n  ${NAV_MULTI}`,
-      instructions: false,
+      message: 'Select harnesses',
+      instructions: HINT_MULTI,
       choices: all.map((c) => ({ title: c.title, value: c.name, selected: c.selected })),
     },
     { onCancel },
   );
+  spacer();
   if (cancelled || !Array.isArray(res.v)) return null;
   return res.v as string[];
 };
 
-export type InstallLocation = 'global-shared' | 'local-project';
+export type InstallLocation = 'global-shared' | 'each-agent';
 
-/** Ask whether to install once globally (shared + symlinks) or into this project. */
+/** Ask whether to install once globally (shared + symlinks) or a copy per agent. */
 export type PromptLocation = () => Promise<InstallLocation | null>;
 
 export const promptLocation: PromptLocation = async () => {
@@ -112,7 +125,8 @@ export const promptLocation: PromptLocation = async () => {
     {
       type: 'select',
       name: 'v',
-      message: `Where should the skill be installed?\n  ${NAV_SELECT}`,
+      message: 'Where should the skill be installed?',
+      hint: HINT_SELECT,
       initial: 0,
       choices: [
         {
@@ -121,14 +135,15 @@ export const promptLocation: PromptLocation = async () => {
           description: 'one copy in ~/.agents/skills, symlinked from each agent',
         },
         {
-          title: 'This project',
-          value: 'local-project',
-          description: "a copy in each agent's dir under the current project",
+          title: 'Each agent',
+          value: 'each-agent',
+          description: "a copy in each agent's own directory",
         },
       ],
     },
     { onCancel: () => (cancelled = true) },
   );
-  if (cancelled || (res.v !== 'global-shared' && res.v !== 'local-project')) return null;
+  spacer();
+  if (cancelled || (res.v !== 'global-shared' && res.v !== 'each-agent')) return null;
   return res.v;
 };
