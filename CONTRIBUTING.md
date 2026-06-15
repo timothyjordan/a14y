@@ -46,6 +46,7 @@ invariants below.
 - [Adding a new check](#adding-a-new-check)
 - [Updating an existing check](#updating-an-existing-check)
 - [Adding a new page](#adding-a-new-page)
+- [Adding a coding agent to the skill installer](#adding-a-coding-agent-to-the-skill-installer)
 - [Local development](#local-development)
 - [Tests](#tests)
 - [Visual / design parity](#visual--design-parity)
@@ -61,6 +62,7 @@ invariants below.
 | Edit prose on the docs site | [Editing the docs site](#editing-the-docs-site-a14ydev) → "Prose-heavy pages" |
 | Change the design or layout of the site | [Editing the docs site](#editing-the-docs-site-a14ydev) → "Design-heavy pages", then [Visual / design parity](#visual--design-parity) |
 | Add a brand-new page | [Adding a new page](#adding-a-new-page) |
+| Add a coding agent to `a14y skill` | [Adding a coding agent to the skill installer](#adding-a-coding-agent-to-the-skill-installer) |
 | Fix a typo in a `README.md` | Don't — edit `docs/templates/` or `docs/fragments/`, run `npm run docs` |
 | Test the CLI / extension / site by hand | [`TESTING.md`](./TESTING.md) |
 | Cut or ship a release | [`RELEASING.md`](./RELEASING.md) |
@@ -363,6 +365,57 @@ positives, etc.):
      in `src/integrations/markdown-mirrors.ts`.
 4. The site emits an `<link rel="alternate" type="text/markdown">`
    pointing at the mirror automatically once the URL is registered.
+
+## Adding a coding agent to the skill installer
+
+The `a14y skill` command installs the agent skill for a fixed set of
+coding agents ("harnesses"). They are all defined in one place:
+`packages/apps/cli/src/skills/registry.ts`, in the `AGENT_REGISTRY`
+array. Detection, the interactive picker, `--agent`, copy/symlink
+installs, and `uninstall` all iterate over that array, so adding one
+entry flows through every code path automatically.
+
+1. Append an entry to `AGENT_REGISTRY`:
+
+   ```ts
+   {
+     name: 'kiro',                                       // --agent key (stable, lowercase)
+     label: 'Kiro',                                      // shown in the picker and output
+     detectDirs: (c) => [inHome(c, '.kiro')],            // dirs whose existence = "configured"
+     globalSkillsDir: (c) => inHome(c, '.kiro', 'skills'), // where a global install writes
+     localDir: '.kiro/skills',                           // project-local dir + picker label
+   },
+   ```
+
+   - `detectDirs` returns one or more **absolute** dirs; the agent is
+     auto-detected if any exists. Use the helpers already in the file —
+     `inHome`, `xdgConfigHome(ctx)`, and the env-aware `claudeConfigDir` /
+     `codexHome`. Add a small helper if your agent keys off its own env
+     var.
+   - `globalSkillsDir` is usually `~/.<agent>/skills`.
+   - `localDir` is the relative path used for `--project` / `--local`
+     installs and as the picker label (e.g. `Kiro (.kiro/skills)`). Use
+     `.agents/skills` if the agent reads the shared cross-agent
+     convention instead of its own directory — agents that share that
+     path dedupe automatically.
+
+2. If the new agent should be one of the defaults pre-checked in the
+   `a14y skill --project` picker, add its `name` to
+   `DEFAULT_PROJECT_AGENTS` in `packages/apps/cli/src/skills/index.ts`.
+   (`DEFAULT_AGENT` in the registry is the single fallback used when
+   nothing is detected.)
+
+3. Update the agent-count assertions in
+   `packages/apps/cli/test/skills.detect.test.ts` (the "every supported
+   harness is offered" test pins the registry length), then run
+   `npm test --workspace a14y`.
+
+4. The CLI README lists the flags from `--help`, so if you changed help
+   text run `npm run docs` and commit the regenerated READMEs.
+
+> The skill content itself is the same `SKILL.md` for every agent — this
+> registry only controls **where** it is installed and **how** an agent
+> is detected, not what the skill says.
 
 ## Local development
 

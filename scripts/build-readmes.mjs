@@ -8,6 +8,7 @@
 //   <!-- include: fragments/foo.md -->    literal file include (relative to docs/)
 //   <!-- cli-help: check -->              runs `a14y help check`, inlines in a fenced text block
 //   <!-- cli-help: scorecards -->         same for scorecards
+//   <!-- cli-help: skill -->              same for skill
 //   <!-- cli-help: root -->               runs `a14y --help` (top-level)
 //   {{name}} / {{bin}} / {{label}}        variable substitution (alias template only)
 
@@ -54,7 +55,7 @@ function cliHelp(kind) {
   const args =
     kind === 'root'
       ? ['--help']
-      : kind === 'check' || kind === 'scorecards'
+      : kind === 'check' || kind === 'scorecards' || kind === 'skill'
         ? ['help', kind]
         : null;
   if (!args) throw new Error(`Unknown cli-help kind: ${kind}`);
