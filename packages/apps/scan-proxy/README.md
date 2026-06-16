@@ -24,7 +24,9 @@ with the browser client (`createProxyFetch` in `@a14y/docs`):
   failure, oversized body) returns a non-200 **without** `x-a14y-status`. The client
   treats the absence of that header as a hard failure to surface to the user.
 
-`GET /healthz` returns `ok` for Cloud Run health checks.
+`GET /health` returns `ok` for a quick liveness check. (Cloud Run reserves
+`/healthz` at its frontend, so the proxy uses `/health` as the canonical path;
+both work when running the server locally.)
 
 ### Safety guards
 

@@ -41,7 +41,9 @@ export async function handleProxy(request: Request, deps: ProxyDeps = {}): Promi
   }
 
   const url = new URL(request.url);
-  if (url.pathname === '/healthz') {
+  // `/healthz` is reserved by Cloud Run's Google Frontend and never reaches the
+  // container, so the canonical health path is `/health` (both are accepted).
+  if (url.pathname === '/health' || url.pathname === '/healthz') {
     return new Response('ok', { status: 200, headers: { 'content-type': 'text/plain' } });
   }
 

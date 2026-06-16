@@ -74,11 +74,13 @@ describe('handleProxy', () => {
     expect(res.headers.get('x-a14y-status')).toBeNull();
   });
 
-  it('serves /healthz without a proxy fetch', async () => {
-    const f = stubFetch(new Response('should not be called'));
-    const res = await handleProxy(req(null, { path: '/healthz' }), { fetchImpl: f.impl });
-    expect(res.status).toBe(200);
-    expect(f.calls.length).toBe(0);
+  it('serves /health and /healthz without a proxy fetch', async () => {
+    for (const path of ['/health', '/healthz']) {
+      const f = stubFetch(new Response('should not be called'));
+      const res = await handleProxy(req(null, { path }), { fetchImpl: f.impl });
+      expect(res.status).toBe(200);
+      expect(f.calls.length).toBe(0);
+    }
   });
 
   it('rejects disallowed methods (no envelope -> proxy-level error)', async () => {
