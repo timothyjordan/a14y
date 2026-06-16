@@ -10,13 +10,18 @@
 ## Install
 
 ```bash
-# One-shot
+# Recommended — install a14y globally and set up the agent skill in one step
+npx a14y install
+
+# One-shot audit, no install
 npx a14y https://example.com
 
-# Install globally
+# Install globally by hand
 npm install -g a14y
 a14y https://example.com
 ```
+
+`npx a14y install` runs `npm install -g a14y` and then `a14y skill install`, so the CLI lands on your `PATH` and your coding agents pick up the a14y skill.
 
 The CLI also ships under two alias names for discoverability: `agentready` and `agentreadability`. All three run the same binary.
 
@@ -80,6 +85,8 @@ Commands:
                             each one pins
   skill [options] [action]  Install, update, or uninstall the a14y agent skill
                             for your coding agents (idempotent)
+  install [options]         Install a14y globally (npm i -g a14y), then install
+                            the agent skill
   help [command]            display help for command
 
 Commands in detail:
@@ -100,6 +107,9 @@ Commands in detail:
 
   scorecards                    List shipped scorecard versions
     -o, --output <format>         text | json
+
+  install                       Install a14y globally, then install the agent skill
+    (accepts the same flags as 'skill' below — e.g. --project, --link, -y)
 
   skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
     --global                      act on the home dir (default)

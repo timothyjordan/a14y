@@ -291,6 +291,32 @@ describe('a14y skill (TJ-822)', () => {
     }
   });
 
+  it('`a14y install` runs the skill install (global step skipped) and lists its flags', async () => {
+    const help = await exec('node', [CLI, 'install', '--help'], { env: envForCli() });
+    expect(help.stdout).toContain('--project');
+    expect(help.stdout).toContain('--link');
+    expect(help.stdout).toContain('--target');
+    // Top-level help lists the command, and the shim must not rewrite it.
+    const top = await exec('node', [CLI, '--help'], { env: envForCli() });
+    expect(top.stdout).toMatch(/\n {2}install\b/);
+    expect(help.stdout).not.toContain('--max-pages'); // proves it isn't `check install`
+
+    // End-to-end with the global npm step skipped.
+    const proj = mkdtempSync(path.join(tmpdir(), 'a14y-install-'));
+    try {
+      const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl, A14Y_INSTALL_SKIP_GLOBAL: '1' });
+      const { stdout } = await exec(
+        'node',
+        [CLI, 'install', '--target', proj, '--yes', '--output', 'json'],
+        { env },
+      );
+      expect(JSON.parse(stdout).summary.created).toBe(1);
+      expect(existsSync(path.join(proj, 'a14y', 'SKILL.md'))).toBe(true);
+    } finally {
+      rmSync(proj, { recursive: true, force: true });
+    }
+  });
+
   it('round-trips install then uninstall for a project-local agent', async () => {
     const env = envForCli({ A14Y_SKILL_SOURCE_URL: sourceUrl });
     const proj = mkdtempSync(path.join(tmpdir(), 'a14y-skill-proj-'));
