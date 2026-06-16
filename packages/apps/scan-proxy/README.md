@@ -72,9 +72,12 @@ gcloud run deploy a14y-scan-proxy \
   --concurrency=40 \
   --cpu=1 \
   --memory=256Mi \
-  --timeout=35s \
-  --no-vpc-connector
+  --timeout=35s
 ```
+
+(A new Cloud Run service has no VPC connector by default, so it has no route
+to private networks. Older `gcloud` versions don't recognize the explicit
+`--no-vpc-connector` flag, so it's omitted here.)
 
 Then set `PUBLIC_SCAN_PROXY_URL` in the docs build to the printed service URL
 (repo Settings > Secrets and variables > Actions > Variables).

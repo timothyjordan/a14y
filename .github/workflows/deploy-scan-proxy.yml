@@ -76,6 +76,8 @@ jobs:
           region: ${{ vars.GCP_REGION || 'us-central1' }}
           # Cost controls (mirror packages/apps/scan-proxy/README.md): hard
           # instance ceiling caps spend; min-instances=0 keeps idle cost $0.
+          # No VPC connector is attached (the default), so the service has no
+          # route to private networks.
           flags: >-
             --allow-unauthenticated
             --min-instances=0
@@ -84,4 +86,3 @@ jobs:
             --cpu=1
             --memory=256Mi
             --timeout=35s
-            --no-vpc-connector
