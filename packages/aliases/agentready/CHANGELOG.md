@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.24](https://github.com/timothyjordan/a14y/compare/agentready-v0.4.23...agentready-v0.4.24) (2026-06-16)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * a14y bumped from 0.4.23 to 0.4.24
+
 ## [0.4.23](https://github.com/timothyjordan/a14y/compare/agentready-v0.4.22...agentready-v0.4.23) (2026-06-16)
 
 
