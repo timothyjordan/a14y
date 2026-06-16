@@ -1,6 +1,6 @@
 ---
 title: Privacy · a14y (tail)
-description: Privacy policy continued — system-wide opt-out, CLI, extension, retention, contact, changelog.
+description: Privacy policy continued: system-wide opt-out, CLI, extension, website scan, retention, contact, changelog.
 ---
 
 For a system-wide opt-out, install Google's
@@ -32,6 +32,16 @@ Google's overview of GA data controls is at
 Data resides on Google's global infrastructure. We have not enabled Google
 Signals or ad personalization on the property.
 
+## Website scan
+
+The homepage "scan your site" widget runs the audit in your browser. A browser
+cannot fetch another site's files across origins, so the page and its
+`robots.txt`, `llms.txt`, `sitemap.xml`, and `AGENTS.md` are fetched through an
+a14y scan proxy that adds the headers the browser needs. The proxy relays each
+response and does not store or log the URLs you scan. The score and the fix list
+are computed and shown entirely on your device; nothing about the scanned site is
+sent to analytics.
+
 ## What the extension still stores locally
 
 The Chrome extension uses `chrome.storage.local` to remember
@@ -52,7 +62,8 @@ Questions, concerns, or security reports can go to
 
 ## Changelog
 
-- **v3 ({{LAST_UPDATED}}):** CLI and extension now record per-check scorecard outcomes (stable check id + status), grouped by an ephemeral random run id. Replaces the previous "per-check scorecard details not collected" guarantee. URLs and page content remain off-limits.
+- **v4 ({{LAST_UPDATED}}):** added the in-browser website scan. Scanned URLs are relayed through the a14y scan proxy to satisfy browser CORS; they are not stored or logged, and scan results stay on your device.
+- **v3 (2026-05-06):** CLI and extension now record per-check scorecard outcomes (stable check id + status), grouped by an ephemeral random run id. Replaces the previous "per-check scorecard details not collected" guarantee. URLs and page content remain off-limits.
 - **v2 (2026-04-28):** introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.
 - **v1:** "no telemetry, no third parties." Superseded by v2.
 

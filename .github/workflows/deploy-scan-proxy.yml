@@ -1,0 +1,88 @@
+name: Deploy scan proxy
+
+# Builds and deploys packages/apps/scan-proxy to Google Cloud Run.
+#
+# One-time setup (done by a maintainer with GCP access):
+#   1. Create a deployer service account and a Workload Identity Federation
+#      pool/provider for this GitHub repo (keyless auth; no JSON key to store).
+#   2. Grant the deployer SA the roles a source deploy needs:
+#        roles/run.admin                 (create/update the service)
+#        roles/cloudbuild.builds.editor  (build the container)
+#        roles/artifactregistry.writer   (push the image)
+#        roles/storage.admin             (Cloud Build staging bucket)
+#        roles/iam.serviceAccountUser    (act as the Run runtime SA)
+#      and allow unauthenticated invocation (run.services.setIamPolicy) if your
+#      org policy restricts it.
+#   3. Add repo secrets/variables:
+#        secret  GCP_WORKLOAD_IDENTITY_PROVIDER  (the full provider resource name)
+#        secret  GCP_SERVICE_ACCOUNT             (deployer SA email)
+#        var     GCP_PROJECT_ID
+#        var     GCP_REGION                      (optional; defaults to us-central1)
+#
+# Until those exist, this workflow no-ops (the guard job below skips deploy).
+# Manual deploy via `gcloud run deploy` (see packages/apps/scan-proxy/README.md)
+# remains the fallback.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/apps/scan-proxy/**'
+      - '.github/workflows/deploy-scan-proxy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # required for Workload Identity Federation
+
+concurrency:
+  group: deploy-scan-proxy
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Unit tests
+        run: npm test --workspace @a14y/scan-proxy
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    # Skip cleanly when the GCP credentials haven't been configured yet, so the
+    # workflow doesn't hard-fail on repos/forks without secrets.
+    if: ${{ vars.GCP_PROJECT_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: a14y-scan-proxy
+          source: packages/apps/scan-proxy
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          region: ${{ vars.GCP_REGION || 'us-central1' }}
+          # Cost controls (mirror packages/apps/scan-proxy/README.md): hard
+          # instance ceiling caps spend; min-instances=0 keeps idle cost $0.
+          # No VPC connector is attached (the default), so the service has no
+          # route to private networks.
+          flags: >-
+            --allow-unauthenticated
+            --min-instances=0
+            --max-instances=5
+            --concurrency=40
+            --cpu=1
+            --memory=256Mi
+            --timeout=35s
