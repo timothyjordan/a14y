@@ -82,6 +82,8 @@ const heroBadgeDarkHtml = buildBadgeHtml(
             type="button"
             class="copy-btn"
             data-copy={runCmd}
+            data-install-intent="cli"
+            data-install-source="hero"
             aria-label="Copy run command"
           >Copy</button>
         </span>
@@ -92,12 +94,14 @@ const heroBadgeDarkHtml = buildBadgeHtml(
             type="button"
             class="copy-btn"
             data-copy={skillInstallCmd}
+            data-install-intent="skill"
+            data-install-source="hero"
             aria-label="Copy agent skill install command"
           >Copy</button>
         </span>
       </div>
       <div class="cta-row">
-        <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="a14y on the Chrome Web Store">
+        <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" data-install-intent="extension" data-install-source="hero" aria-label="a14y on the Chrome Web Store">
           <span class="cws-badge-mark" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
               <circle cx="24" cy="24" r="22" fill="#fff" />
@@ -173,7 +177,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
 
     <aside class="steps-skill-callout" aria-label="Skip the manual loop">
       <p>Or skip the manual loop. The agent skill runs all three steps for you.</p>
-      <a class="btn btn--ghost" href="#skill">Install the skill →</a>
+      <a class="btn btn--ghost" href="#skill" data-install-intent="skill" data-install-source="steps">Install the skill →</a>
     </aside>
   </section>
 
@@ -271,6 +275,8 @@ const heroBadgeDarkHtml = buildBadgeHtml(
               type="button"
               class="tool-cmd-copy"
               data-copy={runCmd}
+              data-install-intent="cli"
+              data-install-source="tools"
               aria-label="Copy run command"
             >Copy</button>
           </div>
@@ -284,13 +290,15 @@ const heroBadgeDarkHtml = buildBadgeHtml(
               type="button"
               class="tool-cmd-copy"
               data-copy="npm install -g a14y && a14y your-site.com"
+              data-install-intent="cli"
+              data-install-source="tools"
               aria-label="Copy install and run command"
             >Copy</button>
           </div>
         </div>
         <div class="tool-actions">
           <a class="btn btn--ghost" href="https://github.com/timothyjordan/a14y" rel="noopener">GitHub →</a>
-          <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener">View on npm →</a>
+          <a class="btn btn--ghost" href="https://www.npmjs.com/package/a14y" rel="noopener" data-install-intent="cli" data-install-source="tools">View on npm →</a>
         </div>
       </article>
 
@@ -312,7 +320,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           the failing check&apos;s fix guidance.
         </p>
         <div class="tool-cmd-block tool-cmd-block--badge">
-          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" aria-label="Install a14y from the Chrome Web Store">
+          <a class="cws-badge" href={chromeWebStoreUrl} rel="noopener" data-install-intent="extension" data-install-source="tools" aria-label="Install a14y from the Chrome Web Store">
             <span class="cws-badge-mark" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" focusable="false">
                 <circle cx="24" cy="24" r="22" fill="#fff" />
@@ -330,7 +338,7 @@ const heroBadgeDarkHtml = buildBadgeHtml(
           </a>
         </div>
         <div class="tool-actions">
-          <a class="btn btn--ghost" href={`${base}/chrome-extension/`}>Manual install →</a>
+          <a class="btn btn--ghost" href={`${base}/chrome-extension/`} data-install-intent="extension" data-install-source="tools">Manual install →</a>
         </div>
       </article>
 
@@ -360,6 +368,8 @@ const heroBadgeDarkHtml = buildBadgeHtml(
               type="button"
               class="tool-cmd-copy"
               data-copy={skillInstallCmd}
+              data-install-intent="skill"
+              data-install-source="tools"
               aria-label="Copy install command"
             >Copy</button>
           </div>

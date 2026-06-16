@@ -10,6 +10,7 @@
 import type { CheckResult, ProgressEvent as ScanProgressEvent, SiteRun } from '@a14y/core';
 import { SCAN_PROXY_URL } from './config';
 import { createProxyFetch } from './proxy-fetch';
+import { classifyScanError, issueBucket, scoreBucket, trackEvent } from '../analytics';
 
 type StatusKind = 'busy' | 'error';
 
@@ -31,6 +32,7 @@ export function initScanWidget(root: ParentNode = document): void {
 
     const target = normalizeUrl(input.value);
     if (!target) {
+      trackEvent('scan_error', { error_class: 'invalid_url' });
       showStatus(statusEl, 'Enter a valid site URL, like example.com', 'error');
       return;
     }
@@ -46,9 +48,13 @@ export function initScanWidget(root: ParentNode = document): void {
     resultsEl.hidden = true;
     resultsEl.replaceChildren();
     showStatus(statusEl, 'Loading the scan engine…', 'busy');
+    trackEvent('scan_started', { scorecard_version: scorecardVersion ?? 'latest' });
 
     void runScan(target, scorecardVersion, statusEl, resultsEl)
-      .catch((err) => showStatus(statusEl, scanErrorMessage(err), 'error'))
+      .catch((err) => {
+        trackEvent('scan_error', { error_class: classifyScanError(err) });
+        showStatus(statusEl, scanErrorMessage(err), 'error');
+      })
       .finally(() => {
         running = false;
         setBusy(submit, false);
@@ -72,6 +78,12 @@ async function runScan(
     scorecardVersion,
     http,
     onProgress: (event) => onProgress(event, statusEl, target),
+  });
+
+  trackEvent('scan_completed', {
+    score_bucket: scoreBucket(run.summary.score),
+    scorecard_version: run.scorecardVersion,
+    failed_bucket: issueBucket(run.summary.failed),
   });
 
   renderResults(resultsEl, run, runToAgentPrompt);
@@ -204,6 +216,7 @@ function copyFixList(run: SiteRun, runToAgentPrompt: (run: SiteRun) => string): 
   button.className = 'btn btn--ghost scan-copy';
   button.textContent = 'Copy fix list';
   button.addEventListener('click', () => {
+    trackEvent('scan_copy_fixlist');
     void navigator.clipboard
       .writeText(runToAgentPrompt(run))
       .then(() => {
@@ -232,7 +245,10 @@ function fullExperienceCta(): HTMLElement {
     'This preview covers one page. The CLI, the agent skill, and the Chrome extension run the same checks across your entire site, then hand you the fixes.';
 
   const links = el('div', 'scan-cta-links');
-  links.append(ctaLink('#tools', 'Install the tools →'));
+  const ctaButton = ctaLink('#tools', 'Install the tools →');
+  ctaButton.dataset.installIntent = 'tools';
+  ctaButton.dataset.installSource = 'scan_results';
+  links.append(ctaButton);
 
   cta.append(heading, body, links);
   return cta;
