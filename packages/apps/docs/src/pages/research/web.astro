@@ -8,21 +8,29 @@ import {
   bulkMeanScore,
   getBulkLeaderboard,
   getDefaultBulkVersion,
-  listBulkVersions,
 } from '~/lib/bulk-data';
 
 // EMBARGOED (TJ-549): web-scale bulk leaderboard. Stays on a local branch until
 // launch. Entries are pre-slimmed (host/score/signal-bitmask/top-2-failures) so
 // the whole ~50k-row set embeds once and the table paginates + searches it
 // client-side — only ~50 rows live in the DOM at a time.
-const versions = listBulkVersions();
 const version = getDefaultBulkVersion();
 const lb = version ? getBulkLeaderboard(version) : null;
+
+// The CrUX most-visited list we sample (see fetch-crux.ts DEFAULT_CRUX_URL).
+const CRUX_LIST_URL = 'https://github.com/zakird/crux-top-lists/blob/main/data/global/current.csv.gz';
 
 const hist = lb ? bulkHistogramBuckets(lb) : [];
 const adoption = lb ? bulkAdoptionPct(lb) : { llmsTxt: 0, agentsMd: 0, sitemap: 0, robots: 0 };
 const meanScore = lb ? bulkMeanScore(lb) : 0;
-const generatedLabel = lb ? new Date(lb.generatedAt).toISOString().slice(0, 10) : '';
+const generatedHuman = lb
+  ? new Date(lb.generatedAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC', // the batch's canonical (UTC) date, not the build machine's
+    })
+  : '';
 
 // The data the client renders from. `r` (rank) is the row's position in the
 // score-sorted set, so it stays meaningful while filtered.
@@ -42,16 +50,21 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
       </div>
       <h1>How agent-ready is the web?</h1>
       {lb ? (
-        <p class="lead research-lead">
-          Page-mode agent-readability scores for <strong>{lb.totalScanned.toLocaleString()}</strong> of
-          the world's most-visited origins (the CrUX most-visited list, deduped to one per registrable
-          domain and filtered for adult/gambling/spam). Source <code>{lb.source}</code>, generated {generatedLabel}.
-        </p>
+        <>
+          <p class="lead research-lead">
+            Page-mode agent-readability scores for <strong>{lb.totalScanned.toLocaleString()}</strong> of
+            the world's most-visited origins.
+          </p>
+          <ul class="hero-footnote">
+            <li>
+              The <a href={CRUX_LIST_URL} target="_blank" rel="noopener">CrUX 100k</a> most-visited list,
+              deduped to one per registrable domain and filtered for adult/gambling/spam.
+            </li>
+            <li>Generated {generatedHuman}.</li>
+          </ul>
+        </>
       ) : (
         <p class="lead research-lead">No bulk leaderboard data found in <code>src/data/bulk/</code>.</p>
-      )}
-      {versions.length > 1 && (
-        <p class="page-toc">Scorecards available: {versions.join(', ')} (selector is a follow-up).</p>
       )}
     </div>
   </section>
@@ -216,7 +229,38 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
   .visible-count { color: var(--text-subtle); font-size: 13px; margin: 14px 0 8px; }
   .filter-empty { color: var(--text-muted); }
 
-  /* table */
+  /* hero methodology footnote */
+  .hero-footnote {
+    list-style: none; margin: 10px 0 0; padding: 0; max-width: 64ch;
+    color: var(--text-subtle); font-size: 13px; line-height: 1.5;
+  }
+  .hero-footnote li { padding-left: 14px; position: relative; }
+  .hero-footnote li::before { content: '·'; position: absolute; left: 2px; }
+  .hero-footnote a { color: var(--brand-ink); }
+
+  /* Table/row styles live in the GLOBAL block below: the body rows are created
+     in JS (document.createElement), so they never receive Astro's scope
+     attribute and scoped selectors wouldn't match them. */
+
+  /* pager */
+  .pager { display: flex; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .pager[hidden] { display: none; }
+  .pager-btn {
+    appearance: none; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 6px 12px; font-family: var(--font-mono);
+    font-size: 12px; cursor: pointer;
+  }
+  .pager-btn:disabled { opacity: 0.4; cursor: default; }
+  .pager-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+</style>
+
+<!-- Global: the leaderboard body rows are built in JS (document.createElement),
+     so they never get Astro's scoped data attribute — scoped selectors wouldn't
+     match them and the table would render unstyled. These class names are
+     page-specific, so global scope is safe. -->
+<style is:global>
   .lb-table { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .lb-head, .lb-row {
     display: grid;
@@ -237,25 +281,10 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
   .band-fair { color: #ca8a04; }
   .band-poor { color: #dc2626; }
   .col-signals { display: inline-flex; flex-wrap: wrap; gap: 4px; }
-  .sig {
-    font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 999px;
-    border: 1px solid var(--border);
-  }
+  .sig { font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); }
   .sig.on { background: color-mix(in oklch, var(--brand-ink) 16%, var(--surface)); color: var(--text); border-color: color-mix(in oklch, var(--brand-ink) 40%, var(--border)); }
   .sig.off { color: var(--text-subtle); opacity: 0.5; }
   .col-fails { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-  /* pager */
-  .pager { display: flex; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-  .pager[hidden] { display: none; }
-  .pager-btn {
-    appearance: none; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 6px 12px; font-family: var(--font-mono);
-    font-size: 12px; cursor: pointer;
-  }
-  .pager-btn:disabled { opacity: 0.4; cursor: default; }
-  .pager-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
   @media (max-width: 760px) {
     .lb-head { display: none; }
