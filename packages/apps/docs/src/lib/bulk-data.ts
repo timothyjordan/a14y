@@ -12,13 +12,6 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { compareScorecardVersions, type ScoreHistogramBucket } from '~/lib/research-data';
 
-export interface BulkSignals {
-  llmsTxt: boolean;
-  agentsMd: boolean;
-  sitemap: boolean;
-  robots: boolean;
-}
-
 export interface BulkAdoption {
   total: number;
   llmsTxt: number;
@@ -27,25 +20,29 @@ export interface BulkAdoption {
   robots: number;
 }
 
+/**
+ * Compact per-site entry. The data files are pre-slimmed (50k+ rows at 100k):
+ * heavy per-entry `summary` objects are dropped and signals packed to a bitmask
+ * so the page can embed the whole set and paginate/search it client-side.
+ */
 export interface BulkEntry {
-  slug: string;
-  origin: string;
-  url: string;
-  score: number;
-  summary: {
-    passed: number;
-    failed: number;
-    warned: number;
-    errored: number;
-    na: number;
-    total: number;
-    applicable: number;
-    score: number;
-  };
-  topFailures: string[];
-  signals: BulkSignals;
-  scannedAt: string;
+  /** Host without scheme, e.g. "www.example.com". Link is `https://<o>`. */
+  o: string;
+  /** Score 0-100. */
+  s: number;
+  /** Signal bitmask: 1=llms.txt, 2=AGENTS.md, 4=sitemap, 8=robots.txt. */
+  g: number;
+  /** Up to 2 top failing check ids. */
+  f: string[];
 }
+
+/** Bit positions for the `g` signal bitmask, in display order. */
+export const SIGNAL_BITS = [
+  { key: 'llmsTxt', bit: 1, label: 'llms.txt' },
+  { key: 'agentsMd', bit: 2, label: 'AGENTS.md' },
+  { key: 'sitemap', bit: 4, label: 'sitemap' },
+  { key: 'robots', bit: 8, label: 'robots.txt' },
+] as const;
 
 export interface BulkLeaderboard {
   kind: 'bulk';
@@ -133,5 +130,5 @@ export function bulkAdoptionPct(lb: BulkLeaderboard): Record<keyof Omit<BulkAdop
 
 export function bulkMeanScore(lb: BulkLeaderboard): number {
   if (!lb.entries.length) return 0;
-  return Math.round((lb.entries.reduce((s, e) => s + e.score, 0) / lb.entries.length) * 10) / 10;
+  return Math.round((lb.entries.reduce((sum, e) => sum + e.s, 0) / lb.entries.length) * 10) / 10;
 }
