@@ -39,8 +39,10 @@ cannot fetch another site's files across origins, so the page and its
 `robots.txt`, `llms.txt`, `sitemap.xml`, and `AGENTS.md` are fetched through an
 a14y scan proxy that adds the headers the browser needs. The proxy relays each
 response and does not store or log the URLs you scan. The score and the fix list
-are computed and shown entirely on your device; nothing about the scanned site is
-sent to analytics.
+are computed and shown entirely on your device. The scan does emit the same kind
+of anonymous usage analytics as the rest of the site, under the same opt-out
+described above: that a scan ran, a coarse score bucket, the scorecard version,
+and clicks on install links. The scanned URL and page content are never included.
 
 ## What the extension still stores locally
 
@@ -62,7 +64,7 @@ Questions, concerns, or security reports can go to
 
 ## Changelog
 
-- **v4 ({{LAST_UPDATED}}):** added the in-browser website scan. Scanned URLs are relayed through the a14y scan proxy to satisfy browser CORS; they are not stored or logged, and scan results stay on your device.
+- **v4 ({{LAST_UPDATED}}):** added the in-browser website scan. Scanned URLs are relayed through the a14y scan proxy to satisfy browser CORS; they are not stored or logged, and scan results stay on your device. The scan emits anonymous usage analytics (that a scan ran, a coarse score bucket, the scorecard version) and install-link clicks under the standard opt-out; the scanned URL is never included.
 - **v3 (2026-05-06):** CLI and extension now record per-check scorecard outcomes (stable check id + status), grouped by an ephemeral random run id. Replaces the previous "per-check scorecard details not collected" guarantee. URLs and page content remain off-limits.
 - **v2 (2026-04-28):** introduced opt-out anonymous telemetry across the website, CLI, and Chrome extension.
 - **v1:** "no telemetry, no third parties." Superseded by v2.

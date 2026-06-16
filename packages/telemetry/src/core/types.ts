@@ -7,6 +7,8 @@ export type EventName =
   | 'cli_run_completed'
   | 'cli_error'
   | 'cli_telemetry_disabled'
+  | 'cli_skill_applied'
+  | 'cli_skill_removed'
   | 'ext_installed'
   | 'ext_audit_started'
   | 'ext_audit_completed'
@@ -14,6 +16,11 @@ export type EventName =
   | 'ext_settings_changed'
   | 'docs_section_view'
   | 'outbound_click'
+  | 'scan_started'
+  | 'scan_completed'
+  | 'scan_error'
+  | 'scan_copy_fixlist'
+  | 'tool_install_intent'
   | 'scorecard_check_result';
 
 export type EventParamValue = string | number | boolean;

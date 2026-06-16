@@ -1,7 +1,7 @@
 ## Install
 
 ```bash
-# Recommended — install a14y globally and set up the agent skill in one step
+# Recommended: install a14y globally and set up the agent skill in one step
 npx a14y install
 
 # One-shot audit, no install

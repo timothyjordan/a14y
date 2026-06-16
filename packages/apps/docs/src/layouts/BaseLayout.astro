@@ -329,5 +329,11 @@ const jsonLd = {
         });
       })();
     </script>
+    <script>
+      // Site-wide adoption-funnel tracking: turns [data-install-intent] clicks
+      // into a tool_install_intent GA event (no-op when GA is opted out).
+      import { initInstallIntentTracking } from '../lib/analytics';
+      initInstallIntentTracking();
+    </script>
   </body>
 </html>
