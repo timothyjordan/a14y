@@ -1,0 +1,388 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import { scoreBand } from '~/lib/research-data';
+import {
+  bulkAdoptionPct,
+  bulkHistogramBuckets,
+  bulkMeanScore,
+  getBulkLeaderboard,
+  getDefaultBulkVersion,
+  listBulkVersions,
+} from '~/lib/bulk-data';
+
+// EMBARGOED (TJ-549): web-scale bulk leaderboard. This page renders the bulk
+// CrUX batch and is intended to stay on a local branch until launch.
+const versions = listBulkVersions();
+const version = getDefaultBulkVersion();
+const lb = version ? getBulkLeaderboard(version) : null;
+
+const SIGNAL_KEYS = ['llmsTxt', 'agentsMd', 'sitemap', 'robots'] as const;
+const SIGNAL_LABELS: Record<(typeof SIGNAL_KEYS)[number], string> = {
+  llmsTxt: 'llms.txt',
+  agentsMd: 'AGENTS.md',
+  sitemap: 'sitemap',
+  robots: 'robots.txt',
+};
+
+const hist = lb ? bulkHistogramBuckets(lb) : [];
+const adoption = lb ? bulkAdoptionPct(lb) : { llmsTxt: 0, agentsMd: 0, sitemap: 0, robots: 0 };
+const meanScore = lb ? bulkMeanScore(lb) : 0;
+const generatedLabel = lb ? new Date(lb.generatedAt).toISOString().slice(0, 10) : '';
+
+function displayHost(origin: string): string {
+  return origin.replace(/^https?:\/\//, '').replace(/\/$/, '');
+}
+---
+
+<BaseLayout
+  title="Web leaderboard: agent readability at scale"
+  description="How AI-agent-ready is the web? Page-mode scores for the CrUX most-visited origins, with llms.txt / AGENTS.md / sitemap / robots.txt adoption."
+  wide={true}
+>
+  <section class="hero hero--compact">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">bulk</span>
+        <span>web-scale · page mode{version ? ` · scorecard v${version}` : ''}</span>
+      </div>
+      <h1>How agent-ready is the web?</h1>
+      {lb ? (
+        <p class="lead research-lead">
+          Page-mode agent-readability scores for <strong>{lb.totalScanned.toLocaleString()}</strong> of
+          the world's most-visited origins (CrUX top-10k, filtered and deduped). Source
+          <code>{lb.source}</code>, generated {generatedLabel}.
+        </p>
+      ) : (
+        <p class="lead research-lead">No bulk leaderboard data found in <code>src/data/bulk/</code>.</p>
+      )}
+      {versions.length > 1 && (
+        <p class="page-toc">Scorecards available: {versions.join(', ')} (selector is a follow-up).</p>
+      )}
+    </div>
+  </section>
+
+  {lb && (
+    <>
+      <section class="research-stats">
+        <div class="stat">
+          <span class="stat-value">{lb.totalScanned.toLocaleString()}</span>
+          <span class="stat-label">Sites scored</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{meanScore}</span>
+          <span class="stat-label">Mean score</span>
+        </div>
+        {SIGNAL_KEYS.map((k) => (
+          <div class="stat">
+            <span class="stat-value">{adoption[k]}%</span>
+            <span class="stat-label">{SIGNAL_LABELS[k]}</span>
+          </div>
+        ))}
+      </section>
+
+      <section class="research-section" id="score-distribution">
+        <header class="section-header"><h2>Score distribution</h2></header>
+        <p class="section-lead">
+          Sites per 20-point score bucket. Most of the popular web scores low in page mode —
+          agent-readiness signals are still rare at scale.
+        </p>
+        <ScoreHistogram buckets={hist} />
+      </section>
+
+      <section class="research-section" id="adoption">
+        <header class="section-header"><h2>Signal adoption</h2></header>
+        <p class="section-lead">Share of scored sites exposing each agent-readiness signal.</p>
+        <div class="adopt">
+          {SIGNAL_KEYS.map((k) => (
+            <div class="adopt-row">
+              <span class="adopt-label">{SIGNAL_LABELS[k]}</span>
+              <span class="adopt-track"><span class="adopt-fill" style={`width:${adoption[k]}%`}></span></span>
+              <span class="adopt-val">{adoption[k]}%</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="research-section" id="leaderboard">
+        <header class="section-header">
+          <h2>Leaderboard</h2>
+          <div class="filter-bar" data-research-filter>
+            <label class="search">
+              <span class="sr-only">Search by domain</span>
+              <input type="search" placeholder="Search domain…" data-filter-name autocomplete="off" />
+            </label>
+            <div class="sig-toggles">
+              {SIGNAL_KEYS.map((k) => (
+                <label class="sig-toggle">
+                  <input type="checkbox" data-filter-signal value={k} />
+                  has {SIGNAL_LABELS[k]}
+                </label>
+              ))}
+            </div>
+            <button type="button" class="reset-btn" data-filter-reset hidden>Reset</button>
+          </div>
+        </header>
+        <p class="visible-count" data-visible-count>Showing {lb.totalScanned.toLocaleString()} sites.</p>
+        <p class="filter-empty" data-filter-empty hidden>
+          No sites match. <button type="button" class="linklike" data-filter-reset-link>Reset filters.</button>
+        </p>
+
+        <div class="lb-table" role="table" aria-label="Bulk leaderboard">
+          <div class="lb-head" role="row">
+            <span role="columnheader" class="col-rank">#</span>
+            <span role="columnheader" class="col-site">Domain</span>
+            <span role="columnheader" class="col-score">Score</span>
+            <span role="columnheader" class="col-signals">Signals</span>
+            <span role="columnheader" class="col-fails">Top failures</span>
+          </div>
+          {lb.entries.map((e, i) => {
+            const present = SIGNAL_KEYS.filter((k) => e.signals[k]);
+            return (
+              <div
+                class="lb-row"
+                role="row"
+                data-name={displayHost(e.origin).toLowerCase()}
+                data-signals={present.join(' ')}
+                hidden={i >= 50}
+              >
+                <span role="cell" class="col-rank">{i + 1}</span>
+                <span role="cell" class="col-site">
+                  <a href={e.url} target="_blank" rel="noopener nofollow">{displayHost(e.origin)}</a>
+                </span>
+                <span role="cell" class={`col-score band-${scoreBand(e.score)}`}>{e.score}</span>
+                <span role="cell" class="col-signals">
+                  {SIGNAL_KEYS.map((k) => (
+                    <span class={`sig ${e.signals[k] ? 'on' : 'off'}`} title={SIGNAL_LABELS[k]}>
+                      {SIGNAL_LABELS[k]}
+                    </span>
+                  ))}
+                </span>
+                <span role="cell" class="col-fails">{e.topFailures.slice(0, 3).join(', ') || '—'}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <nav class="pager" data-pager hidden>
+          <button type="button" class="pager-btn" data-pager-prev>Prev</button>
+          <span class="pager-status" data-pager-status></span>
+          <button type="button" class="pager-btn" data-pager-next>Next</button>
+          <button type="button" class="pager-toggle" data-pager-show-all aria-pressed="false">Show all</button>
+        </nav>
+      </section>
+
+      <section class="research-section research-method" id="how-this-is-built">
+        <header class="section-header"><h2>How this is built</h2></header>
+        <p class="section-lead">
+          Origins come from the CrUX most-visited list, deduped to one per registrable domain and
+          filtered for adult/gambling/spam. Each homepage is scored in page mode against scorecard
+          v{version}. Unreachable origins (DNS/TLS failures, bot/geo blocks) are dropped.
+        </p>
+      </section>
+    </>
+  )}
+</BaseLayout>
+
+<style>
+  .research-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 24px 0 32px;
+  }
+  .stat {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+  }
+
+  .research-section { margin: 40px 0; }
+  .section-header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .section-lead { max-width: 64ch; color: var(--text-muted); margin: 6px 0 16px; }
+
+  /* adoption bars */
+  .adopt { display: flex; flex-direction: column; gap: 10px; max-width: 560px; }
+  .adopt-row { display: grid; grid-template-columns: 90px 1fr 48px; align-items: center; gap: 12px; }
+  .adopt-label { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+  .adopt-track { height: 12px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .adopt-fill { display: block; height: 100%; background: color-mix(in oklch, var(--brand-ink) 45%, var(--surface)); }
+  :root[data-theme='dark'] .adopt-fill { background: color-mix(in oklch, var(--brand-cyan) 50%, var(--surface)); }
+  .adopt-val { font-family: var(--font-mono); font-size: 13px; text-align: right; }
+
+  /* filter bar */
+  .filter-bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .search input {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 6px 10px; font-size: 13px; min-width: 200px;
+  }
+  .sig-toggles { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .sig-toggle {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+    border: 1px solid var(--border); border-radius: 999px;
+    font-family: var(--font-mono); font-size: 12px; cursor: pointer;
+  }
+  .reset-btn, .linklike {
+    appearance: none; background: none; border: none; color: var(--brand-ink);
+    cursor: pointer; font: inherit; text-decoration: underline; padding: 0;
+  }
+  .visible-count { color: var(--text-subtle); font-size: 13px; margin: 14px 0 8px; }
+  .filter-empty { color: var(--text-muted); }
+
+  /* table */
+  .lb-table { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .lb-head, .lb-row {
+    display: grid;
+    grid-template-columns: 56px minmax(180px, 1.6fr) 64px minmax(220px, 1.2fr) minmax(160px, 1.4fr);
+    align-items: center; gap: 12px; padding: 8px 14px;
+  }
+  .lb-head {
+    background: var(--surface-alt); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-subtle); font-family: var(--font-mono);
+  }
+  .lb-row { border-top: 1px solid var(--border); font-size: 14px; }
+  .lb-row[hidden] { display: none; }
+  .col-rank { font-family: var(--font-mono); color: var(--text-subtle); }
+  .col-site a { color: var(--text); text-decoration: none; }
+  .col-site a:hover { text-decoration: underline; }
+  .col-score { font-family: var(--font-mono); font-weight: 700; text-align: right; }
+  .band-excellent { color: #15803d; }
+  .band-good { color: #65a30d; }
+  .band-fair { color: #ca8a04; }
+  .band-poor { color: #dc2626; }
+  .col-signals { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+  .sig {
+    font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+  .sig.on { background: color-mix(in oklch, var(--brand-ink) 16%, var(--surface)); color: var(--text); border-color: color-mix(in oklch, var(--brand-ink) 40%, var(--border)); }
+  .sig.off { color: var(--text-subtle); opacity: 0.5; }
+  .col-fails { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* pager */
+  .pager { display: flex; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .pager[hidden] { display: none; }
+  .pager-btn, .pager-toggle {
+    appearance: none; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 6px 12px; font-family: var(--font-mono);
+    font-size: 12px; cursor: pointer;
+  }
+  .pager-btn:disabled { opacity: 0.4; cursor: default; }
+  .pager-toggle[aria-pressed='true'] { background: var(--surface-alt); border-color: var(--border-strong); }
+  .pager-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  @media (max-width: 760px) {
+    .lb-head { display: none; }
+    .lb-row { grid-template-columns: 40px 1fr 56px; row-gap: 4px; }
+    .col-signals, .col-fails { grid-column: 2 / -1; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var PAGE_SIZE = 50;
+    var bar = document.querySelector('[data-research-filter]');
+    if (!bar) return;
+    var nameInput = bar.querySelector('[data-filter-name]');
+    var sigBoxes = bar.querySelectorAll('[data-filter-signal]');
+    var resetBtn = bar.querySelector('[data-filter-reset]');
+    var emptyMsg = document.querySelector('[data-filter-empty]');
+    var emptyResetLink = emptyMsg && emptyMsg.querySelector('[data-filter-reset-link]');
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.lb-row'));
+    var totalRows = rows.length;
+    var counter = document.querySelector('[data-visible-count]');
+    var pager = document.querySelector('[data-pager]');
+    var prevBtn = pager && pager.querySelector('[data-pager-prev]');
+    var nextBtn = pager && pager.querySelector('[data-pager-next]');
+    var pagerStatus = pager && pager.querySelector('[data-pager-status]');
+    var showAllBtn = pager && pager.querySelector('[data-pager-show-all]');
+    var currentPage = 1;
+    var showAll = false;
+
+    function activeSignals() {
+      var on = [];
+      sigBoxes.forEach(function (cb) { if (cb.checked) on.push(cb.value); });
+      return on;
+    }
+    function defaultsActive() {
+      if (nameInput && nameInput.value) return false;
+      for (var i = 0; i < sigBoxes.length; i++) if (sigBoxes[i].checked) return false;
+      return true;
+    }
+
+    function apply() {
+      var q = (nameInput && nameInput.value || '').trim().toLowerCase();
+      var need = activeSignals();
+      var matching = [];
+      rows.forEach(function (row) {
+        var name = row.getAttribute('data-name') || '';
+        var sigs = (row.getAttribute('data-signals') || '').split(' ');
+        var hasAll = need.every(function (s) { return sigs.indexOf(s) >= 0; });
+        if ((q === '' || name.indexOf(q) >= 0) && hasAll) matching.push(row);
+      });
+
+      var totalPages = showAll || matching.length === 0 ? 1 : Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      var sliceStart = showAll ? 0 : (currentPage - 1) * PAGE_SIZE;
+      var sliceEnd = showAll ? matching.length : sliceStart + PAGE_SIZE;
+      rows.forEach(function (row) { row.setAttribute('hidden', 'hidden'); });
+      for (var i = sliceStart; i < sliceEnd && i < matching.length; i++) matching[i].removeAttribute('hidden');
+
+      var shown = Math.min(matching.length - sliceStart, sliceEnd - sliceStart);
+      if (shown < 0) shown = 0;
+      if (counter) {
+        if (matching.length === 0) counter.textContent = 'Showing 0 of ' + totalRows + ' sites.';
+        else if (showAll || matching.length <= PAGE_SIZE) counter.textContent = 'Showing ' + matching.length + ' of ' + totalRows + ' sites.';
+        else counter.textContent = 'Showing ' + (sliceStart + 1) + '–' + (sliceStart + shown) + ' of ' + matching.length + (matching.length === totalRows ? '' : ' filtered') + ' sites.';
+      }
+      if (emptyMsg) matching.length === 0 ? emptyMsg.removeAttribute('hidden') : emptyMsg.setAttribute('hidden', 'hidden');
+      if (resetBtn) defaultsActive() ? resetBtn.setAttribute('hidden', 'hidden') : resetBtn.removeAttribute('hidden');
+      if (pager) {
+        matching.length <= PAGE_SIZE ? pager.setAttribute('hidden', 'hidden') : pager.removeAttribute('hidden');
+        if (prevBtn) prevBtn.disabled = showAll || currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = showAll || currentPage >= totalPages;
+        if (pagerStatus) pagerStatus.textContent = showAll ? 'All ' + matching.length : 'Page ' + currentPage + ' of ' + totalPages;
+        if (showAllBtn) { showAllBtn.setAttribute('aria-pressed', showAll ? 'true' : 'false'); showAllBtn.textContent = showAll ? 'Paginate' : 'Show all'; }
+      }
+    }
+
+    function reset() {
+      if (nameInput) nameInput.value = '';
+      sigBoxes.forEach(function (cb) { cb.checked = false; });
+      currentPage = 1; apply();
+      if (nameInput) nameInput.focus();
+    }
+    if (nameInput) nameInput.addEventListener('input', function () { currentPage = 1; apply(); });
+    sigBoxes.forEach(function (cb) { cb.addEventListener('change', function () { currentPage = 1; apply(); }); });
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
+    function changePage(delta) {
+      currentPage += delta; apply();
+      var anchor = document.getElementById('leaderboard');
+      if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { changePage(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { changePage(1); });
+    if (showAllBtn) showAllBtn.addEventListener('click', function () { showAll = !showAll; apply(); });
+    apply();
+  })();
+</script>
