@@ -33,6 +33,7 @@ import {
 } from './telemetry';
 import { emitScorecardChecks } from './scorecardEvents';
 import { runSkillsCommand } from './skills';
+import { runInstallCommand } from './install';
 
 const STATUS_ICON: Record<CheckResult['status'], string> = {
   pass: chalk.green('✓'),
@@ -335,6 +336,45 @@ program
     if (exitCode !== 0) process.exit(exitCode);
   });
 
+program
+  .command('install')
+  .description('Install a14y globally (npm i -g a14y), then install the agent skill')
+  .option('--global', 'install the skill into your home directory (default)')
+  .option('--local', 'install the skill into the current project instead')
+  .option('--project', 'guided skill install into the current project (for collaborators)')
+  .option('--link', 'symlink mode: one shared copy in .agents/skills, linked from each agent')
+  .option('--copy', 'copy mode: a SKILL.md in each agent\'s own skills dir (default)')
+  .option('--target <dir>', 'write the skill to <dir>/a14y/SKILL.md, bypassing agent auto-detection')
+  .option(
+    '--agent <name>',
+    'restrict to a specific agent (repeatable)',
+    (value: string, prev: string[]) => [...prev, value],
+    [],
+  )
+  .option('--check', 'preview without writing (skips the global install too)')
+  .option('--dry-run', 'alias for --check')
+  .option('--force', 'overwrite a user-modified target or write through a symlink')
+  .option('-y, --yes', 'skip the interactive checklist and act on all detected agents')
+  .option('-o, --output <format>', 'text or json', 'text')
+  .action(async (options, command) => {
+    if (options.output !== 'text' && options.output !== 'json') {
+      console.error(chalk.red(`Invalid --output "${options.output}", expected "text" or "json"`));
+      track('cli_error', { command: 'install', phase: 'normalize', error_class: 'InvalidArg' });
+      process.exit(2);
+    }
+    const cliInit = command.parent?.cliInit as Awaited<ReturnType<typeof initCliTelemetry>> | undefined;
+    const exitCode = await runInstallCommand(
+      { ...options },
+      {
+        runId: cliInit?.runId,
+        stdout: (line) => console.log(line),
+        stderr: (line) => console.error(chalk.red(line)),
+        track,
+      },
+    );
+    if (exitCode !== 0) process.exit(exitCode);
+  });
+
 program.addHelpText(
   'after',
   `
@@ -357,6 +397,9 @@ Commands in detail:
   scorecards                    List shipped scorecard versions
     -o, --output <format>         text | json
 
+  install                       Install a14y globally, then install the agent skill
+    (accepts the same flags as 'skill' below — e.g. --project, --link, -y)
+
   skill [install|update|uninstall]  Manage the a14y agent skill (idempotent; default: install)
     --global                      act on the home dir (default)
     --local                       act on the current project instead
@@ -378,7 +421,7 @@ Tip: 'check' is the default — 'a14y <url>' works the same as 'a14y check <url>
 // Default to the `check` subcommand when the first positional is neither a
 // known command nor a flag. `a14y example.com` should behave the same as
 // `a14y check example.com`.
-const KNOWN_COMMANDS = new Set(['check', 'scorecards', 'skill', 'help']);
+const KNOWN_COMMANDS = new Set(['check', 'scorecards', 'skill', 'install', 'help']);
 const argv = process.argv.slice();
 const firstPositional = argv.findIndex((a, i) => i >= 2 && !a.startsWith('-'));
 if (firstPositional !== -1 && !KNOWN_COMMANDS.has(argv[firstPositional])) {
