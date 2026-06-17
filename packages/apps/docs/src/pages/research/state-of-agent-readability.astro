@@ -42,7 +42,7 @@ for (const s of sorted) {
   else if (s >= 50) bands.fair++;
   else bands.poor++;
 }
-const topScore = entries.length ? entries[0].s : 0;
+const topScore = sorted.length ? sorted[sorted.length - 1] : 0;
 
 // Signal combinations from the bitmask (1=llms.txt, 2=AGENTS.md, 4=sitemap, 8=robots).
 let allFour = 0;
@@ -84,12 +84,13 @@ const BAND_ROWS = [
           </dl>
           <p class="study-summary-label">Summary</p>
           <p class="lead study-tldr">
-            We scored the {num(total)} most-visited websites for how well an AI agent can discover, parse,
-            and comprehend them. The web has its SEO-era plumbing — {adoption.robots}% expose a robots.txt —
-            but it has not adopted the agent-era layer: only {adoption.llmsTxt}% ship an <code>llms.txt</code> and
-            {' '}{adoption.agentsMd}% an <code>AGENTS.md</code>. The median site scores {median}/100; not one
-            scored "excellent." And the fix is cheap: raising a site's a14y score roughly halves what an agent
-            spends to use it.
+            <strong>On most of the popular web, an AI agent burns roughly twice the tokens it should.</strong><br /><br />
+            We scored the {num(total)} most-visited websites for how well an agent can discover, parse, and
+            comprehend them. The plumbing search engines asked for is everywhere: {adoption.robots}% expose a
+            robots.txt. The layer agents need is not. Only {adoption.llmsTxt}% ship an <code>llms.txt</code> and
+            {' '}{adoption.agentsMd}% an <code>AGENTS.md</code>. The median site scores {median}/100, and not one
+            of the {num(total)} scored "excellent." Raising a site's a14y score roughly halves the tokens an
+            agent spends to use it. The web is wide open here, and almost no one has moved.
           </p>
         </>
       ) : (
@@ -104,16 +105,16 @@ const BAND_ROWS = [
       <section class="section section--tight" aria-labelledby="question-heading">
         <div class="section-head"><h2 id="question-heading">The question</h2></div>
         <p class="study-prose">
-          AI agents are becoming a primary way people reach the web — they read sites, follow links, and
-          synthesize answers on a user's behalf. So a practical question for every site owner: <strong>can an
-          agent actually use my site?</strong> a14y answers that with a versioned scorecard. This is the first
-          time we've run it across the web at scale, to ask the bigger version of the same question: is the
-          <em> web</em> ready for agents?
+          AI agents are becoming a primary way people reach the web. They read sites, follow links, and
+          synthesize answers on someone's behalf. That raises a concrete question for every site owner:
+          {' '}<strong>can an agent use my site efficiently?</strong> The a14y scorecard answers it for one site.
+          We ran it across the web at scale to ask the bigger version: is the <em>web</em> ready for agents?
         </p>
         <p class="study-prose study-prose--muted">
-          "Ready" here is concrete and mechanical: does the site expose the files and structure an agent needs —
-          a parseable <code>llms.txt</code>, an <code>AGENTS.md</code>, a sitemap, clean robots rules, semantic
-          HTML — measured by the {cs.scorecardVersion} scorecard's checks. It does not measure content quality.
+          "Ready" here is mechanical, not subjective. Does the site expose what an agent needs to find and parse
+          it: a usable <code>llms.txt</code>, an <code>AGENTS.md</code>, a sitemap, clean robots rules, semantic
+          HTML, all measured by the v{cs.scorecardVersion} scorecard's checks. It does not judge the quality of
+          the content itself.
         </p>
       </section>
 
@@ -127,8 +128,8 @@ const BAND_ROWS = [
         </div>
         <dl class="kv-table">
           <div><dt>Source</dt><dd>CrUX top-100k most-visited origins (<a href="https://github.com/zakird/crux-top-lists/blob/main/data/global/current.csv.gz" target="_blank" rel="noopener">zakird/crux-top-lists</a>, global)</dd></div>
-          <div><dt>Sample</dt><dd><strong>{num(total)}</strong> scored — 100,000 rows → {num(64746)} after dedup to one per registrable domain → {num(total)} reachable &amp; not adult/gambling/spam</dd></div>
-          <div><dt>Mode</dt><dd>Page mode — each site's homepage, not a full-site crawl</dd></div>
+          <div><dt>Sample</dt><dd><strong>{num(total)}</strong> scored: 100,000 rows → {num(64746)} after dedup to one per registrable domain → {num(total)} reachable &amp; not adult/gambling/spam</dd></div>
+          <div><dt>Mode</dt><dd>Page mode: each site's homepage, not a full-site crawl</dd></div>
           <div><dt>Scorecard</dt><dd><code>v{cs.scorecardVersion}</code> · 38 checks, scored 0–100</dd></div>
           <div><dt>Tool</dt><dd><code>npx a14y</code> (the same audit anyone can run)</dd></div>
           <div><dt>Infra</dt><dd>Sharded across 64 Cloud Run tasks; run data archived in object storage</dd></div>
@@ -136,9 +137,9 @@ const BAND_ROWS = [
           <div><dt>Date</dt><dd><time>{generatedHuman}</time></dd></div>
         </dl>
         <p class="study-prose study-prose--muted">
-          Page mode is deliberate: scoring one homepage per site keeps a 50,000-site survey tractable and
+          Page mode is deliberate. Scoring one homepage per site keeps a survey this size tractable and
           comparable. It proxies a site's agent readiness; it does not capture readiness that lives deeper in
-          a site.
+          the site.
         </p>
       </section>
 
@@ -165,10 +166,10 @@ const BAND_ROWS = [
           </tbody>
         </table>
         <p class="study-prose">
-          The popular web clusters in the middle and below: <strong>{pct(bands.poor)}%</strong> score below 50,
-          and just <strong>{pct(bands.good + bands.excellent)}%</strong> clear 70. <strong>Not one site in the
-          top {num(total)} scored "excellent" (85+)</strong> — the single best was {topScore}. Whatever the web
-          was optimized for, it wasn't agents.
+          The popular web clusters in the middle and below. <strong>{pct(bands.poor)}%</strong> of sites score
+          under 50, and only <strong>{pct(bands.good + bands.excellent)}%</strong> clear 70. <strong>Not one site
+          in the top {num(total)} scored "excellent" (85 or above)</strong>; the single best managed {topScore}.
+          Whatever the web was optimized for, it wasn't agents.
         </p>
       </section>
 
@@ -189,11 +190,11 @@ const BAND_ROWS = [
           </tbody>
         </table>
         <p class="study-prose">
-          The split is stark. The signals search engines taught the web to ship are near-universal —
-          {' '}<strong>{adoption.robots}%</strong> have a robots.txt. The signals agents need are not:
-          {' '}<strong>{adoption.llmsTxt}%</strong> ship an <code>llms.txt</code>, <strong>{adoption.agentsMd}%</strong> an
-          {' '}<code>AGENTS.md</code>. Only <strong>{pct(allFour)}%</strong> expose all four; <strong>{pct(noAgentLayer)}%</strong>
-          {' '}have neither agent-native file. The web learned to be readable by crawlers two decades ago — it
+          The split is stark. The signals search engines taught the web to ship are near-universal:
+          {' '}<strong>{adoption.robots}%</strong> have a robots.txt. The signals agents need are not. Only
+          {' '}<strong>{adoption.llmsTxt}%</strong> ship an <code>llms.txt</code> and <strong>{adoption.agentsMd}%</strong> an
+          {' '}<code>AGENTS.md</code>. Just <strong>{pct(allFour)}%</strong> expose all four, and <strong>{pct(noAgentLayer)}%</strong>
+          {' '}have neither agent-native file. The web learned to be readable by crawlers two decades ago. It
           hasn't yet learned to be readable by agents.
         </p>
       </section>
@@ -203,8 +204,9 @@ const BAND_ROWS = [
           <h2 id="fix-heading">And the fix works</h2>
           <p class="section-sub">
             The gap matters because closing it pays off. In a controlled A/B
-            (<a href={`${base}/research/scorecard-evals/`}>full case study</a>), the same site served with vs.
-            without the agent-readiness layer changed an AI agent's cost sharply — with no loss in answer quality.
+            (<a href={`${base}/research/scorecard-evals/`}>full case study</a>), serving the same site with the
+            agent-readiness layer, versus without it, sharply cut what an AI agent spent to use it, with no loss
+            in answer quality.
           </p>
         </div>
         <dl class="study-score-line" aria-label="Efficiency result">
@@ -216,9 +218,9 @@ const BAND_ROWS = [
         </dl>
         <p class="study-prose">
           Raising one site's a14y score from {cs.headline.baselineScore} to {cs.headline.a14yScore} cut the
-          agent's token use ~{cs.headline.tokenDecreasePct}% and its tool calls ~{cs.headline.toolCallDecreasePct}%,
+          agent's token use about {cs.headline.tokenDecreasePct}% and its tool calls about {cs.headline.toolCallDecreasePct}%,
           while an independent judge rated the answers statistically indistinguishable. Put the two findings
-          together: <strong>the agent-readiness layer roughly halves what an agent spends to use a site — and
+          together. <strong>The agent-readiness layer roughly halves what an agent spends to use a site, and
           {' '}{100 - Math.round(adoption.llmsTxt)}% of the most-visited web hasn't shipped it.</strong>
         </p>
       </section>
@@ -229,24 +231,25 @@ const BAND_ROWS = [
           <article class="study-implication">
             <h3>For site owners</h3>
             <p>
-              Agent readiness is still a near-empty field — roughly three in four popular sites haven't shipped
-              the layer, and none has it fully dialed in. It's a cheap, early-mover advantage: run <code>npx a14y</code>
-              {' '}on your site, ship the top fixes, and roughly halve what every agent spends to use you.
+              Agent readiness is still a near-empty field. Roughly three in four popular sites haven't shipped
+              the layer, and none has it fully dialed in. That makes it a cheap, early-mover advantage: run
+              {' '}<code>npx a14y</code> on your site, ship the top fixes, and roughly halve what every agent
+              spends to use you.
             </p>
           </article>
           <article class="study-implication">
             <h3>For agent &amp; model builders</h3>
             <p>
-              The signals you'd want to lean on can't be assumed yet: only about 1 in 4 popular sites expose an
-              {' '}<code>llms.txt</code> or <code>AGENTS.md</code>. Agents still have to do the expensive thing —
-              fetch and parse raw HTML — most of the time. This dataset quantifies exactly where the gaps are.
+              The signals you'd want to lean on can't be assumed yet. Only about 1 in 4 popular sites expose an
+              {' '}<code>llms.txt</code> or <code>AGENTS.md</code>, so most of the time agents still fall back to
+              the expensive path: fetching and parsing raw HTML. This dataset quantifies exactly where the gaps are.
             </p>
           </article>
           <article class="study-implication">
             <h3>For the a14y project</h3>
             <p>
               This is the baseline. We'll re-run the survey on each scorecard release and track whether the web's
-              agent readiness moves — a standing measure of how the agent-readable web is (or isn't) being built.
+              agent readiness moves: a standing measure of how the agent-readable web is (or isn't) being built.
             </p>
           </article>
         </div>
@@ -258,7 +261,7 @@ const BAND_ROWS = [
           <p class="section-sub">What this survey does not show, and where to read the numbers with care.</p>
         </div>
         <ul class="study-caveats">
-          <li><strong>Page mode.</strong> Each site is scored on its homepage only — a proxy for the site, not a full-crawl verdict. Sites whose agent readiness lives in deeper sections are understated.</li>
+          <li><strong>Page mode.</strong> Each site is scored on its homepage only, a proxy for the site rather than a full-crawl verdict. Sites whose agent readiness lives in deeper sections are understated.</li>
           <li><strong>Point-in-time.</strong> A single snapshot ({generatedHuman}). Sites change; this is a frame, not a film.</li>
           <li><strong>Popularity bias.</strong> CrUX skews toward large, heavily-trafficked sites; the long tail of the web likely looks different.</li>
           <li><strong>Reachable sites only.</strong> Origins that didn't answer (DNS/TLS failures, bot or geo blocks) are dropped, so the sample is the reachable popular web.</li>
