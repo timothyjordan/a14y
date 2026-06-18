@@ -31,7 +31,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 ---
 
 <BaseLayout
-  title="Which agent-readiness features actually move the needle · a14y research"
+  title="Which agent-readiness features actually matter · a14y research"
   description="A per-feature ablation of the agent-readiness layer. We toggled each of 11 features on and off and measured what each one is worth to an AI agent. Markdown mirrors and meta descriptions do most of the work; one feature actively hurts; and different agents react completely differently."
 >
   <section class="hero hero--compact" aria-labelledby="paper-heading">
@@ -40,7 +40,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         <span class="eyebrow-pin">v0.2.0</span>
         <span>ablation · {published} · 24 variants, 3 agents</span>
       </div>
-      <h1 id="paper-heading">Which agent-readiness features actually move the needle</h1>
+      <h1 id="paper-heading">Which agent-readiness features actually matter</h1>
       <dl class="study-score-line" aria-label="Headline numbers">
         <div><dt>Full layer (Claude)</dt><dd><strong>−47%</strong><span class="study-score-detail"> tokens</span></dd></div>
         <div><dt>Best single feature</dt><dd><strong>−48.6%</strong><span class="study-score-detail"> md-mirrors</span></dd></div>
@@ -148,8 +148,8 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         <p>
           Alone, a markdown mirror cuts Claude's tokens 48.6%, more than any other feature and more than the full
           layer combined. But remove it from a full site and the cost is only 10.3%, because llms.txt, sitemap.md,
-          and a meta description can partly cover for it. Starting from zero, though, a mirror is the highest-leverage
-          thing you can ship.
+          and a meta description can partly cover for it. Starting from zero, though, a mirror is the
+          highest-impact thing you can ship.
         </p>
       </article>
       <article class="study-implication">
@@ -184,13 +184,13 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 
   <section class="section" aria-labelledby="quality-heading">
     <div class="section-head">
-      <h2 id="quality-heading">The features made it faster, not smarter</h2>
+      <h2 id="quality-heading">Faster and more efficient, not smarter</h2>
     </div>
     <p class="study-prose">
       Efficiency is only half the question. We re-graded every answer with a judge against the canonical answers.
       Claude's answer quality is essentially flat at about 75 of 100 across all 24 variants, while token use swings
       2×. The discovery layer makes Claude reach the answer with less work; it does not change whether the answer is
-      right. That is the clean version of the win: cheaper, not more or less accurate.
+      right. That is the clean version of the win: the same answers, reached with far less effort.
     </p>
     <p class="study-prose study-prose--muted">
       The re-grade also corrected the record. Our first pass used a strict substring rubric, and one question's
@@ -209,14 +209,14 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
       Claude is the only agent whose fully featured build beats its own stripped baseline. <strong>Codex goes the
       other way: features make it 86% more expensive</strong> (its all-on build is its single worst configuration),
       and the extra spend buys no accuracy. The judge scored Codex at 40.6 of 100, against Claude's 74.5 and
-      Cursor's 71.4. Codex seems to treat discovery files as a list of things to go read rather than a map to jump
-      through, so every feature is another rabbit hole.
+      Cursor's 71.4. Codex seems to treat discovery files as a reading list rather than a jump list, so every
+      feature is another rabbit hole to follow.
     </p>
     <p class="study-prose">
       <strong>Cursor depends on one file.</strong> Its quality matches Claude's, but its cost is wildly variable,
       and removing <code>llms.txt</code> from a full site triples it (+217%), the largest single effect anywhere in
-      the study. Cursor really does read llms.txt and lean on it to navigate. This is the black box again: the same
-      file is load-bearing for one agent, redundant for another, and a distraction-adjacent signal for a third.
+      the study. Cursor really does read llms.txt and lean on it to navigate. This is the black box again: a signal
+      one agent leans on hard, another barely notices.
     </p>
   </section>
 
@@ -240,7 +240,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
           profiles for the same content, as Claude and Codex show. The outsized pull of the meta description
           suggests agents spend real effort early on "what is this page about"; surfacing that cheaply may matter
           more than richer discovery. And the agent-skills directory needs clearer semantics: more than one agent
-          failed to benefit from it, and Claude was actively slowed by it.
+          failed to benefit from it, and Claude was slowed by it.
         </p>
       </article>
       <article class="study-implication">
