@@ -2,20 +2,19 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { listCaseStudies, caseStudyUrl } from '~/lib/case-study-data';
 import { getBulkLeaderboard, getDefaultBulkVersion } from '~/lib/bulk-data';
+import { STATE_OF_AGENT_READABILITY_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const studies = listCaseStudies();
 
-// Standalone survey article (not a case study). Pull its headline numbers live
-// so the blurb never drifts from the data on the page.
+// Standalone survey article (not a case study). Headline numbers are live so the
+// blurb never drifts from the data; the date is the fixed publish date.
 const bulkVersion = getDefaultBulkVersion();
 const bulkLb = bulkVersion ? getBulkLeaderboard(bulkVersion) : null;
 const bulkTotal = bulkLb?.totalScanned ?? 0;
 const bulkScores = bulkLb ? bulkLb.entries.map((e) => e.s).sort((a, b) => a - b) : [];
 const bulkMedian = bulkScores.length ? bulkScores[Math.floor(bulkScores.length / 2)] : 0;
-const bulkDate = bulkLb
-  ? new Date(bulkLb.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
-  : '';
+const surveyDate = formatPublishDate(STATE_OF_AGENT_READABILITY_PUBLISHED);
 const surveyUrl = `${base}/research/state-of-agent-readability/`;
 ---
 
@@ -43,7 +42,7 @@ const surveyUrl = `${base}/research/state-of-agent-readability/`;
         <li class="case-study-card">
           <div class="case-study-card-meta">
             <span class="eyebrow-pin">v{bulkVersion}</span>
-            <time>{bulkDate}</time>
+            <time datetime={STATE_OF_AGENT_READABILITY_PUBLISHED}>{surveyDate}</time>
           </div>
           <h3 class="case-study-card-title">
             <a href={surveyUrl}>The State of Agent Readability on the Web</a>
@@ -62,7 +61,7 @@ const surveyUrl = `${base}/research/state-of-agent-readability/`;
         <li class="case-study-card">
           <div class="case-study-card-meta">
             <span class="eyebrow-pin">v{cs.scorecardVersion}</span>
-            <time datetime={cs.publishedAt}>{cs.publishedAt}</time>
+            <time datetime={cs.publishedAt}>{formatPublishDate(cs.publishedAt)}</time>
           </div>
           <h3 class="case-study-card-title">
             <a href={caseStudyUrl(cs.slug, base)}>

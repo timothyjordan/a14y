@@ -12,6 +12,7 @@ import {
   themeForCheck,
   checkAdoptionPct,
 } from '~/lib/bulk-data';
+import { STATE_OF_AGENT_READABILITY_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
 
 // EMBARGOED (TJ-854 / TJ-549): web-scale "state of agent readability" paper.
 // Stays on a local branch until launch. Survey numbers are read live from the
@@ -30,6 +31,9 @@ const hist = lb ? bulkHistogramBuckets(lb) : [];
 const generatedHuman = lb
   ? new Date(lb.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
   : '';
+// Fixed publish date for the header (stays put across re-aggregations / edits);
+// generatedHuman remains the data-snapshot date used in caveats + reproduce.
+const publishedHuman = formatPublishDate(STATE_OF_AGENT_READABILITY_PUBLISHED);
 
 const pct = (n: number): number => (total ? Math.round((n / total) * 1000) / 10 : 0);
 const num = (n: number): string => n.toLocaleString('en-US');
@@ -149,7 +153,7 @@ const draftOnly = (draftLb?.checkAdoption ?? [])
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
         <span class="eyebrow-pin">v{version}</span>
-        <span>web survey · {generatedHuman} · {num(total)} sites</span>
+        <span>web survey · {publishedHuman} · {num(total)} sites</span>
       </div>
       <h1 id="paper-heading">The State of Agent Readability on the Web</h1>
       {lb ? (
@@ -169,7 +173,8 @@ const draftOnly = (draftLb?.checkAdoption ?? [])
             robots.txt. The layer agents need is not. Only {adoption.llmsTxt}% ship an <code>llms.txt</code> and
             {' '}{adoption.agentsMd}% an <code>AGENTS.md</code>. The median site scores {median}/100, and not one
             of the {num(total)} scored "excellent." Raising a site's a14y score roughly halves the tokens an
-            agent spends to use it. The web is wide open here, and almost no one has moved.
+            agent spends to use it. The web is wide open for improvement and 
+            <a href={`${base}/leaderboard/`}>very few</a> have moved.
           </p>
         </>
       ) : (
@@ -268,8 +273,8 @@ const draftOnly = (draftLb?.checkAdoption ?? [])
         </p>
         <p class="study-prose">
           The signals agents need are not just rare, they are often a mirage. {pctOfAll('llms-txt.exists')}% ship
-          {' '}an <code>llms.txt</code>, and most are real ({ofApp('llms-txt.non-empty')}% are non-empty). But the
-          {' '}other agent files mostly answer with a 200 instead of a usable document:
+          {' '}an <code>llms.txt</code>, and most are real ({ofApp('llms-txt.non-empty')}% are non-empty). The
+          {' '}other agent files mostly answer with a 200 but not a usable document:
           {' '}{pctOfAll('agents-md.exists')}% appear to have an <code>AGENTS.md</code> while only
           {' '}{ofAppP('agents-md.has-min-sections')}% carry the expected sections, and {pctOfAll('sitemap-md.exists')}%
           {' '}answer at <code>/sitemap.md</code> while only {ofAppP('sitemap-md.has-structure')}% are a real
