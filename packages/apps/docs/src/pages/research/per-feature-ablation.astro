@@ -1,0 +1,336 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { FEATURE_ABLATION_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
+
+// EMBARGOED (TJ-647 / TJ-652): per-feature ablation of the agent-readiness layer.
+// Stays on a local branch until launch. Numbers are from the 2026-06-04 benchmark
+// run (packages/benchmark/data/ablations/per-feature-2026-06-04, a14y-internal):
+// 24 variants x 3 agents x 3 reps = 216 runs. Claude dual-anchor deltas below.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const published = formatPublishDate(FEATURE_ABLATION_PUBLISHED);
+
+// Claude per-feature dual-anchor deltas, from ablation-deltas.csv.
+//   sparse = feature alone vs baseline (327,596 tokens/run)
+//   dense  = feature removed from the full site vs all-on (173,626 tokens/run)
+// Negative = fewer tokens (better). Sorted by the sparse effect.
+const MATRIX = [
+  { feature: 'md-mirrors', sparse: -48.6, dense: 10.3, reading: 'Biggest win alone; partly substitutable in a full site' },
+  { feature: 'agents-md', sparse: -45.5, dense: -1.9, reading: 'Huge alone, redundant once llms.txt + mirrors exist' },
+  { feature: 'meta-description', sparse: -43.0, dense: 43.3, reading: 'Irreplaceable; nothing else substitutes for it' },
+  { feature: 'canonical-link', sparse: -40.4, dense: 13.0, reading: 'Moderate marginal value' },
+  { feature: 'og-tags', sparse: -40.0, dense: 13.2, reading: 'Moderate marginal value' },
+  { feature: 'agent-skills', sparse: -35.1, dense: -7.8, reading: 'Helps alone, distracts when stacked' },
+  { feature: 'llms-txt', sparse: -31.6, dense: 25.4, reading: 'Meaningful marginal value' },
+  { feature: 'sitemap-md', sparse: -28.6, dense: 12.2, reading: 'Moderate marginal value' },
+  { feature: 'robots-txt', sparse: -25.7, dense: 23.7, reading: 'Meaningful marginal value' },
+  { feature: 'json-ld', sparse: -25.3, dense: 6.5, reading: 'Small marginal value' },
+  { feature: 'sitemap-xml', sparse: -16.3, dense: 3.8, reading: 'Smallest effect' },
+];
+
+const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
+---
+
+<BaseLayout
+  title="Which agent-readiness features actually move the needle · a14y research"
+  description="A per-feature ablation of the agent-readiness layer. We toggled each of 11 features on and off and measured what each one is worth to an AI agent. Markdown mirrors and meta descriptions do most of the work; one feature actively hurts; and different agents react completely differently."
+>
+  <section class="hero hero--compact" aria-labelledby="paper-heading">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">v0.2.0</span>
+        <span>ablation · {published} · 24 variants, 3 agents</span>
+      </div>
+      <h1 id="paper-heading">Which agent-readiness features actually move the needle</h1>
+      <dl class="study-score-line" aria-label="Headline numbers">
+        <div><dt>Full layer (Claude)</dt><dd><strong>−47%</strong><span class="study-score-detail"> tokens</span></dd></div>
+        <div><dt>Best single feature</dt><dd><strong>−48.6%</strong><span class="study-score-detail"> md-mirrors</span></dd></div>
+        <div><dt>Answer quality</dt><dd><strong>flat</strong><span class="study-score-detail"> ~75/100 across all variants</span></dd></div>
+        <div><dt>Agents tested</dt><dd><strong>3</strong><span class="study-score-detail"> and they disagree</span></dd></div>
+      </dl>
+      <p class="study-summary-label">Summary</p>
+      <p class="lead study-tldr">
+        <strong>Ship a markdown mirror and a real meta description first. Skip the agent-skills directory.</strong><br /><br />
+        We took a14y.dev, toggled each of its 11 agent-readiness features on and off, and measured what each one
+        is worth to an AI agent doing a real retrieval task. For Claude, the full discovery layer cuts token use
+        about 47%, and a markdown mirror alone does most of that. But the features do not simply add up: some
+        substitute for each other, one (the agent-skills directory) actively makes things worse, and a judge
+        re-grade found the answers stayed exactly as accurate. The features make the agent faster, not smarter.
+        And the picture changes entirely depending on which agent is reading.
+      </p>
+      <p class="study-back"><a href={`${base}/research/`}>← All research</a></p>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="question-heading">
+    <div class="section-head"><h2 id="question-heading">The question</h2></div>
+    <p class="study-prose">
+      The a14y scorecard rewards a long list of agent-readiness features. A fair question for any site owner with
+      finite time: which of them actually pay off, and do they stack or just overlap? So we ablated them. Starting
+      from a stripped site, we added each feature alone to see what it buys (call it <strong>sparse</strong>). Then,
+      starting from a fully featured site, we removed each feature one at a time to see what it costs
+      (<strong>dense</strong>). The gap between those two numbers is where the interesting behavior lives.
+    </p>
+    <p class="study-prose study-prose--muted">
+      One caveat belongs up front, not in a footnote: this is a black box, and it is moving fast. None of these
+      signals is a ratified web standard. <code>llms.txt</code>, for instance, is a good idea, not a spec, and it
+      does not look like most agents go hunting for it on their own. But if an agent does encounter it, because you
+      linked it, referenced it in robots.txt, or told the agent to look, it can help a lot. So read these results
+      as a snapshot of how today's agents behave with today's signals, not as laws of nature. They will shift as
+      the agents do.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="method-heading">
+    <div class="section-head">
+      <h2 id="method-heading">Methodology</h2>
+      <p class="section-sub">
+        A focused retrieval probe run against 24 builds of the same site, each exposing a different subset of
+        a14y's features, across three coding agents.
+      </p>
+    </div>
+    <dl class="kv-table">
+      <div><dt>Probe</dt><dd>5 fact-retrieval questions about a14y.dev (a scorecard version, specific check IDs, a threshold). The site's discovery structure decides how much the agent has to crawl to answer.</dd></div>
+      <div><dt>Features</dt><dd>11 toggles: <code>llms-txt</code>, <code>robots-txt</code>, <code>sitemap-xml</code>, <code>sitemap-md</code>, <code>agents-md</code>, <code>agent-skills</code>, <code>md-mirrors</code>, <code>canonical-link</code>, <code>meta-description</code>, <code>og-tags</code>, <code>json-ld</code></dd></div>
+      <div><dt>Variants</dt><dd><code>baseline</code> (all off), <code>only-X</code> (each feature alone), <code>all-except-X</code> (each removed from full), and <code>all</code> = 24 builds</dd></div>
+      <div><dt>Sparse vs dense</dt><dd>Sparse = <code>only-X</code> vs baseline (what a feature buys from zero). Dense = <code>all-except-X</code> vs all (what removing it costs from a full site).</dd></div>
+      <div><dt>Runs</dt><dd>24 variants × 3 agents × 3 repeats = <strong>216 runs</strong>, ~6.7 hours wall-clock</dd></div>
+      <div><dt>Agents</dt><dd>Claude Code, Codex CLI, Cursor. Gemini omitted (CLI deprecated)</dd></div>
+      <div><dt>Metrics</dt><dd>Tokens per run (efficiency) and a judge re-grade of answer quality against canonical answers (effectiveness)</dd></div>
+      <div><dt>Date</dt><dd><time datetime={FEATURE_ABLATION_PUBLISHED}>{published}</time></dd></div>
+    </dl>
+    <p class="study-prose study-prose--muted">
+      The matrix below is Claude, the agent that behaved most coherently. Codex and Cursor come after, and they do
+      not agree with Claude or with each other.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="matrix-heading">
+    <div class="section-head">
+      <h2 id="matrix-heading">What each feature is worth (Claude)</h2>
+      <p class="section-sub">
+        Token change for each feature, alone and removed-from-full. Negative is fewer tokens. The full layer saves
+        47%, but markdown mirrors alone save 48.6%, so the discovery features hit diminishing returns fast.
+      </p>
+    </div>
+    <table class="study-table">
+      <thead>
+        <tr>
+          <th scope="col">Feature</th>
+          <th scope="col">Alone</th>
+          <th scope="col">Removed</th>
+          <th scope="col">Reading</th>
+        </tr>
+      </thead>
+      <tbody>
+        {MATRIX.map((r) => (
+          <tr>
+            <th scope="row"><code>{r.feature}</code></th>
+            <td class="num">{pctFmt(r.sparse)}</td>
+            <td class="num">{pctFmt(r.dense)}</td>
+            <td class="behind">{r.reading}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="study-prose study-prose--muted">
+      "Alone" is the feature added to a stripped site (sparse). "Removed" is the feature taken out of a full site
+      (dense); a positive number means removing it costs the agent more, a negative number means the agent did
+      better without it.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="findings-heading">
+    <div class="section-head"><h2 id="findings-heading">Four findings</h2></div>
+    <div class="study-implications">
+      <article class="study-implication">
+        <h3>Markdown mirrors are the biggest single win</h3>
+        <p>
+          Alone, a markdown mirror cuts Claude's tokens 48.6%, more than any other feature and more than the full
+          layer combined. But remove it from a full site and the cost is only 10.3%, because llms.txt, sitemap.md,
+          and a meta description can partly cover for it. Starting from zero, though, a mirror is the highest-leverage
+          thing you can ship.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>A meta description is uniquely irreplaceable</h3>
+        <p>
+          It cuts 43.0% alone and costs 43.3% to remove. Nothing else in the matrix is that symmetric. Every other
+          feature substitutes for something; the meta description does a job none of the others can. The likely
+          reason: it short-circuits the "what is this page even about" step an agent does early in its navigation.
+          Surfacing that one line cheaply seems to matter more than any amount of structured discovery.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>AGENTS.md is redundant once you have the basics</h3>
+        <p>
+          Alone it is huge (−45.5%), but removing it from a full site costs nothing (−1.9%, within noise). The
+          combination of llms.txt and markdown mirrors already carries the information it would. So AGENTS.md is a
+          fine choice if it is the easiest file for you to maintain, but it is not pulling independent weight when
+          the rest of the layer is present.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>The agent-skills directory is actively distracting</h3>
+        <p>
+          It helps a little alone (−35.1%), but in a full site, removing it makes Claude faster (−7.8%). The
+          <code>.well-known/agent-skills/</code> index appears to pull Claude into a wrong-direction exploration
+          when other signals are already present. It is the only clear "stop doing this" in the study, small in
+          absolute tokens but consistent.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="quality-heading">
+    <div class="section-head">
+      <h2 id="quality-heading">The features made it faster, not smarter</h2>
+    </div>
+    <p class="study-prose">
+      Efficiency is only half the question. We re-graded every answer with a judge against the canonical answers.
+      Claude's answer quality is essentially flat at about 75 of 100 across all 24 variants, while token use swings
+      2×. The discovery layer makes Claude reach the answer with less work; it does not change whether the answer is
+      right. That is the clean version of the win: cheaper, not more or less accurate.
+    </p>
+    <p class="study-prose study-prose--muted">
+      The re-grade also corrected the record. Our first pass used a strict substring rubric, and one question's
+      canonical answer ("5%") matched inside a wrong answer ("15%"), so every agent "passed" a question they all
+      actually got wrong. The judge caught it. Pass-rate numbers from the first draft were inflated by that bug;
+      the quality figures here come from the re-grade.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="agents-heading">
+    <div class="section-head">
+      <h2 id="agents-heading">Different agents, different web</h2>
+      <p class="section-sub">The per-feature guidance above is Claude's. The other two agents tell different stories.</p>
+    </div>
+    <p class="study-prose">
+      Claude is the only agent whose fully featured build beats its own stripped baseline. <strong>Codex goes the
+      other way: features make it 86% more expensive</strong> (its all-on build is its single worst configuration),
+      and the extra spend buys no accuracy. The judge scored Codex at 40.6 of 100, against Claude's 74.5 and
+      Cursor's 71.4. Codex seems to treat discovery files as a list of things to go read rather than a map to jump
+      through, so every feature is another rabbit hole.
+    </p>
+    <p class="study-prose">
+      <strong>Cursor depends on one file.</strong> Its quality matches Claude's, but its cost is wildly variable,
+      and removing <code>llms.txt</code> from a full site triples it (+217%), the largest single effect anywhere in
+      the study. Cursor really does read llms.txt and lean on it to navigate. This is the black box again: the same
+      file is load-bearing for one agent, redundant for another, and a distraction-adjacent signal for a third.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="means-heading">
+    <div class="section-head"><h2 id="means-heading">What to ship</h2></div>
+    <div class="study-implications">
+      <article class="study-implication">
+        <h3>For site owners</h3>
+        <p>
+          Assuming Claude-class agents are your main readers: ship a markdown mirror first, it is the largest win
+          and the hardest to substitute. Always include a meta description; it is cheap and uniquely irreplaceable.
+          Add llms.txt and sitemap.md as a pair (they back each other up). Treat AGENTS.md as optional once you have
+          mirrors and llms.txt. And skip <code>.well-known/agent-skills/</code> unless you have a specific reason to
+          publish skills.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>For agent and model builders</h3>
+        <p>
+          A discovery file can be read as a jump list or as a reading list, and those have very different cost
+          profiles for the same content, as Claude and Codex show. The outsized pull of the meta description
+          suggests agents spend real effort early on "what is this page about"; surfacing that cheaply may matter
+          more than richer discovery. And the agent-skills directory needs clearer semantics: more than one agent
+          failed to benefit from it, and Claude was actively slowed by it.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>For everyone, while this is still a black box</h3>
+        <p>
+          These are not standards, and the agents are changing under us. Linking your agent files so they get found
+          matters as much as having them. The safe bets are the ones that held across agents and map to plain
+          readability: a clean mirror and a real description. We will re-run this as the agents evolve.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="caveats-heading">
+    <div class="section-head">
+      <h2 id="caveats-heading">Caveats</h2>
+      <p class="section-sub">Where to read these numbers with care.</p>
+    </div>
+    <ul class="study-caveats">
+      <li><strong>One task.</strong> A 5-question retrieval probe. Long-form summarization, code generation, or multi-hop reasoning could rank the features very differently. The defensible generalization is "for focused retrieval."</li>
+      <li><strong>One site.</strong> Every variant serves the same a14y.dev content; only the discovery scaffolding changes. Whether the deltas hold on other sites is untested.</li>
+      <li><strong>Three agents.</strong> Claude, Codex, Cursor. Gemini was omitted (CLI deprecated). The "agents disagree" finding probably understates the real diversity.</li>
+      <li><strong>Rubric bug.</strong> The original strict-substring rubric scored a universally-wrong question as passing ("5%" inside "15%"). Quality figures here use the judge re-grade; the first-draft pass rates were inflated.</li>
+      <li><strong>Mirror quality is a lower bound.</strong> The mirrors used v0.2.0-style output. v0.3.0-draft tightens mirror checks, so a fully compliant mirror could save more than 48.6%.</li>
+      <li><strong>Cursor's tool calls are missing.</strong> The adapter did not capture per-tool data, so Cursor's cost is interpretable but the "why" is not.</li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="reproduce-heading">
+    <div class="section-head"><h2 id="reproduce-heading">Reproduce</h2></div>
+    <p class="study-prose study-prose--muted">
+      Score any single site with the same tool the probe drove:
+    </p>
+    <pre class="study-pre">npx a14y https://example.com</pre>
+    <p class="study-prose study-prose--muted">
+      The ablation builds the same site 24 ways by toggling each feature, then runs an identical retrieval probe
+      against each build across the three agents and aggregates tokens and judge-graded quality. Source data: the
+      2026-06-04 per-feature ablation, 216 runs.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  /* House style shared with /research/scorecard-evals/ and the survey; scoped, so copied here. */
+  .study-score-line {
+    margin: 24px 0 32px; padding: 16px 0; display: flex; flex-wrap: wrap; gap: 32px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 14px;
+  }
+  .study-summary-label {
+    margin: 0 0 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .study-tldr { margin-top: 0; }
+  .study-score-detail { color: var(--text-subtle); font-weight: 400; }
+  .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
+  .study-score-line dt { margin: 0; color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-score-line dd { margin: 0; color: var(--text); font-variant-numeric: tabular-nums; }
+  .study-score-line strong { font-weight: 600; color: var(--brand-ink); }
+  :root[data-theme='dark'] .study-score-line strong { color: var(--brand-cyan); }
+
+  .study-back { margin: 16px 0 0; font-family: var(--font-mono); font-size: 13px; }
+  .study-back a { color: var(--text-muted); text-decoration: none; }
+  .study-back a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 4px; }
+
+  .study-prose { max-width: 65ch; color: var(--text); line-height: 1.6; }
+  .study-prose--muted { color: var(--text-muted); }
+
+  .kv-table { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .kv-table > div { display: grid; grid-template-columns: minmax(140px, 200px) 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .kv-table > div:last-child { border-bottom: none; }
+  .kv-table dt { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); text-transform: lowercase; }
+  .kv-table dd { margin: 0; color: var(--text); }
+  .kv-table code { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+
+  .study-table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 14px; margin: 16px 0 0; }
+  .study-table th, .study-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: baseline; }
+  .study-table tbody tr:last-child th, .study-table tbody tr:last-child td { border-bottom: none; }
+  .study-table thead th { font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; border-bottom: 1px solid var(--border-strong); }
+  .study-table tbody th[scope='row'] { font-weight: 500; color: var(--text); }
+  .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .study-table .behind { color: var(--text-muted); font-family: var(--font-sans, inherit); }
+
+  .study-implications { display: grid; gap: 32px; }
+  .study-implication { max-width: 65ch; }
+  .study-implication h3 { margin: 0 0 8px; font-size: 15px; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-implication p { margin: 0; color: var(--text); line-height: 1.6; }
+
+  .study-caveats { padding: 0; margin: 0; list-style: none; display: grid; gap: 12px; max-width: 65ch; color: var(--text-muted); line-height: 1.6; }
+  .study-caveats li { padding-left: 20px; position: relative; }
+  .study-caveats li::before { content: '·'; position: absolute; left: 6px; color: var(--text-subtle); font-weight: 700; }
+
+  .study-pre { font-family: var(--font-mono); font-size: 13px; line-height: 1.55; background: var(--surface-alt); border: 1px solid var(--border); padding: 16px; overflow-x: auto; white-space: pre-wrap; color: var(--text); margin: 8px 0; }
+</style>

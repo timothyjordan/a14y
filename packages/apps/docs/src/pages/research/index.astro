@@ -2,7 +2,11 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { listCaseStudies, caseStudyUrl } from '~/lib/case-study-data';
 import { getBulkLeaderboard, getDefaultBulkVersion } from '~/lib/bulk-data';
-import { STATE_OF_AGENT_READABILITY_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
+import {
+  STATE_OF_AGENT_READABILITY_PUBLISHED,
+  FEATURE_ABLATION_PUBLISHED,
+  formatPublishDate,
+} from '~/lib/research-meta';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const studies = listCaseStudies();
@@ -16,6 +20,9 @@ const bulkScores = bulkLb ? bulkLb.entries.map((e) => e.s).sort((a, b) => a - b)
 const bulkMedian = bulkScores.length ? bulkScores[Math.floor(bulkScores.length / 2)] : 0;
 const surveyDate = formatPublishDate(STATE_OF_AGENT_READABILITY_PUBLISHED);
 const surveyUrl = `${base}/research/state-of-agent-readability/`;
+
+const ablationDate = formatPublishDate(FEATURE_ABLATION_PUBLISHED);
+const ablationUrl = `${base}/research/per-feature-ablation/`;
 ---
 
 <BaseLayout
@@ -57,6 +64,23 @@ const surveyUrl = `${base}/research/state-of-agent-readability/`;
           </p>
         </li>
       )}
+      <li class="case-study-card">
+        <div class="case-study-card-meta">
+          <span class="eyebrow-pin">v0.2.0</span>
+          <time datetime={FEATURE_ABLATION_PUBLISHED}>{ablationDate}</time>
+        </div>
+        <h3 class="case-study-card-title">
+          <a href={ablationUrl}>Which agent-readiness features actually move the needle</a>
+        </h3>
+        <p class="case-study-card-tldr">
+          We toggled each of a14y's 11 agent-readiness features on and off to measure what each one is worth to an
+          AI agent. Markdown mirrors and meta descriptions do most of the work, the agent-skills directory actively
+          hurts, and different agents react completely differently.
+        </p>
+        <p class="case-study-card-cta">
+          <a href={ablationUrl}>Read the study →</a>
+        </p>
+      </li>
       {studies.map((cs) => (
         <li class="case-study-card">
           <div class="case-study-card-meta">
