@@ -20,6 +20,15 @@ export interface BulkAdoption {
   robots: number;
 }
 
+export interface BulkCheckAdoption {
+  checkId: string;
+  name: string;
+  group?: string;
+  scope: 'site' | 'page';
+  applicable: number;
+  passing: number;
+}
+
 /**
  * Compact per-site entry. The data files are pre-slimmed (50k+ rows at 100k):
  * heavy per-entry `summary` objects are dropped and signals packed to a bitmask
@@ -52,6 +61,7 @@ export interface BulkLeaderboard {
   source: string;
   totalScanned: number;
   adoption: BulkAdoption;
+  checkAdoption: BulkCheckAdoption[];
   scoreHistogram: Array<{ bucket: string; count: number }>;
   entries: BulkEntry[];
 }
@@ -131,4 +141,28 @@ export function bulkAdoptionPct(lb: BulkLeaderboard): Record<keyof Omit<BulkAdop
 export function bulkMeanScore(lb: BulkLeaderboard): number {
   if (!lb.entries.length) return 0;
   return Math.round((lb.entries.reduce((sum, e) => sum + e.s, 0) / lb.entries.length) * 10) / 10;
+}
+
+/** Display theme per check-id prefix, in narrative order. */
+const THEME_RULES: Array<[RegExp, string]> = [
+  [/^llms-txt\.|^robots-txt\.|^sitemap-|^agents-md\.|^discovery\./, 'Discoverability'],
+  [/^markdown\./, 'Markdown mirror'],
+  [/^html\.json-ld/, 'Structured data'],
+  [/^html\.(headings|text-ratio|glossary|ssr-content)/, 'Content structure'],
+  [/^html\./, 'HTML metadata'],
+  [/^http\./, 'HTTP'],
+  [/^code\./, 'Code'],
+  [/^api\./, 'API'],
+];
+
+export function themeForCheck(checkId: string): string {
+  for (const [re, theme] of THEME_RULES) if (re.test(checkId)) return theme;
+  return 'Other';
+}
+
+export function checkAdoptionPct(c: BulkCheckAdoption, total: number): { ofAll: number; ofApplicable: number } {
+  return {
+    ofAll: total ? Math.round((c.passing / total) * 100) : 0,
+    ofApplicable: c.applicable ? Math.round((c.passing / c.applicable) * 100) : 0,
+  };
 }

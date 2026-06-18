@@ -9,6 +9,8 @@ import {
   bulkMeanScore,
   getBulkLeaderboard,
   getDefaultBulkVersion,
+  themeForCheck,
+  checkAdoptionPct,
 } from '~/lib/bulk-data';
 
 // EMBARGOED (TJ-854 / TJ-549): web-scale "state of agent readability" paper.
@@ -60,6 +62,20 @@ const BAND_ROWS = [
   { label: 'Fair (50–69)', n: bands.fair },
   { label: 'Poor (0–49)', n: bands.poor },
 ];
+
+const ca = lb ? lb.checkAdoption : [];
+const byId = new Map(ca.map((c) => [c.checkId, c]));
+const pctOfAll = (id: string): number => {
+  const c = byId.get(id);
+  return c ? checkAdoptionPct(c, total).ofAll : 0;
+};
+const THEME_ORDER = ['Discoverability', 'Markdown mirror', 'Structured data', 'Content structure', 'HTML metadata', 'HTTP'];
+const themed = THEME_ORDER.map((theme) => ({
+  theme,
+  rows: ca.filter((c) => themeForCheck(c.checkId) === theme && c.applicable > 0)
+    .map((c) => ({ ...c, ...checkAdoptionPct(c, total) }))
+    .sort((a, b) => a.ofAll - b.ofAll),
+})).filter((g) => g.rows.length);
 ---
 
 <BaseLayout
@@ -176,26 +192,39 @@ const BAND_ROWS = [
       <section class="section" aria-labelledby="adopt-heading">
         <div class="section-head">
           <h2 id="adopt-heading">Results: the agent-era layer is missing</h2>
-          <p class="section-sub">Share of sites exposing each agent-readiness signal.</p>
+          <p class="section-sub">Adoption of every check the scorecard runs, across all {num(total)} sites.</p>
         </div>
-        <table class="study-table">
-          <thead>
-            <tr><th scope="col">Signal</th><th scope="col">Era</th><th scope="col">Adoption</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row"><code>robots.txt</code></th><td>SEO</td><td class="num">{adoption.robots}%</td></tr>
-            <tr><th scope="row">sitemap</th><td>SEO</td><td class="num">{adoption.sitemap}%</td></tr>
-            <tr><th scope="row"><code>llms.txt</code></th><td>agent</td><td class="num">{adoption.llmsTxt}%</td></tr>
-            <tr><th scope="row"><code>AGENTS.md</code></th><td>agent</td><td class="num">{adoption.agentsMd}%</td></tr>
-          </tbody>
-        </table>
         <p class="study-prose">
-          The split is stark. The signals search engines taught the web to ship are near-universal:
-          {' '}<strong>{adoption.robots}%</strong> have a robots.txt. The signals agents need are not. Only
-          {' '}<strong>{adoption.llmsTxt}%</strong> ship an <code>llms.txt</code> and <strong>{adoption.agentsMd}%</strong> an
-          {' '}<code>AGENTS.md</code>. Just <strong>{pct(allFour)}%</strong> expose all four, and <strong>{pct(noAgentLayer)}%</strong>
-          {' '}have neither agent-native file. The web learned to be readable by crawlers two decades ago. It
-          hasn't yet learned to be readable by agents.
+          The signals search engines taught the web to ship are broad: {pctOfAll('robots-txt.exists')}%
+          {' '}expose a robots.txt and {pctOfAll('sitemap-xml.exists')}% a sitemap. But only
+          {' '}{pctOfAll('robots-txt.allows-ai-bots')}% actually let the major AI crawlers in, so close to one in
+          {' '}five of the most-visited sites blocks them outright. The signals agents need are rarer still:
+          {' '}{pctOfAll('llms-txt.exists')}% ship an <code>llms.txt</code>, {pctOfAll('agents-md.exists')}% an
+          {' '}<code>AGENTS.md</code>, and {pctOfAll('sitemap-md.exists')}% a markdown sitemap. A markdown mirror,
+          {' '}the cleanest format an agent can read, is advertised by {pctOfAll('markdown.mirror-suffix')}%, but a
+          {' '}glossary link shows up on just {pctOfAll('html.glossary-link')}%.
+        </p>
+        {themed.map((g) => (
+          <table class="study-table">
+            <thead>
+              <tr><th scope="col">{g.theme}</th><th scope="col">Of all</th><th scope="col">Of applicable</th></tr>
+            </thead>
+            <tbody>
+              {g.rows.map((r) => (
+                <tr>
+                  <th scope="row"><code>{r.checkId}</code></th>
+                  <td class="num">{r.ofAll}%</td>
+                  <td class="num">{r.applicable < total ? `${r.ofApplicable}%` : 'n/a'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ))}
+        <p class="study-prose study-prose--muted">
+          "Of applicable" excludes sites where a check does not apply (for example, the markdown sub-checks only
+          apply once a mirror exists). Three crawl-dependent checks (<code>discovery.in-page-link</code>,
+          {' '}<code>discovery.indexed</code>, <code>discovery.no-duplicate-content</code>) need a multi-page crawl
+          and were not measured by this single-page survey.
         </p>
       </section>
 
