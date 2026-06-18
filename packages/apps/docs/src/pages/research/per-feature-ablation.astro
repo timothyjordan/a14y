@@ -49,13 +49,13 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
       </dl>
       <p class="study-summary-label">Summary</p>
       <p class="lead study-tldr">
-        <strong>Ship a markdown mirror and a real meta description first. Skip the agent-skills directory.</strong><br /><br />
+        <strong>Ship a markdown mirror and a real meta description first. Skip the agent-skills directory for now.</strong><br /><br />
         We took a14y.dev, toggled each of its 11 agent-readiness features on and off, and measured what each one
         is worth to an AI agent doing a real retrieval task. For Claude, the full discovery layer cuts token use
         about 47%, and a markdown mirror alone does most of that. But the features do not simply add up: some
         substitute for each other, one (the agent-skills directory) actively makes things worse, and a judge
-        re-grade found the answers stayed exactly as accurate. The features make the agent faster, not smarter.
-        And the picture changes entirely depending on which agent is reading.
+        re-grade found the answers stayed exactly as accurate. The features make the agent faster and more
+        efficient, not smarter. And the picture changes entirely depending on which agent is reading.
       </p>
       <p class="study-back"><a href={`${base}/research/`}>← All research</a></p>
     </div>
@@ -134,8 +134,8 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
     </table>
     <p class="study-prose study-prose--muted">
       "Alone" is the feature added to a stripped site (sparse). "Removed" is the feature taken out of a full site
-      (dense); a positive number means removing it costs the agent more, a negative number means the agent did
-      better without it.
+      (dense). A negative number for the Alone column means fewer tokens required with the feature. A positive
+      number in the Removed column means more tokens required without the feature.
     </p>
   </section>
 
