@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "a14y (Agent Readability)",
   "short_name": "a14y",
-  "version": "0.5.25",
+  "version": "0.5.26",
   "description": "Score how well any website is readable by AI agents like ChatGPT, Claude, Copilot, and Cursor.",
   "author": "Timothy Jordan",
   "homepage_url": "https://a14y.dev",
