@@ -286,6 +286,10 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
   .sig.off { color: var(--text-subtle); opacity: 0.5; }
   .col-fails { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+  .lb-scan-toggle { font: inherit; color: var(--link); background: none; border: none; padding: 0; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
+  .lb-scan-toggle:hover { color: var(--link-hover); }
+  .lb-scan-drawer { display: block; padding: 0.5rem 14px 1rem; border-top: 1px solid var(--border); }
+
   @media (max-width: 760px) {
     .lb-head { display: none; }
     .lb-row { grid-template-columns: 40px 1fr 56px; row-gap: 4px; }
@@ -293,96 +297,136 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
   }
 </style>
 
-<script is:inline>
-  (function () {
-    var PAGE_SIZE = 50;
-    var node = document.querySelector('[data-lb-data]');
-    var body = document.querySelector('[data-lb-body]');
-    if (!node || !body) return;
-    var DATA = [];
+<script>
+  import { scanInto } from '~/lib/scan/run-scan';
+
+  const PAGE_SIZE = 50;
+  const node = document.querySelector('[data-lb-data]');
+  const body = document.querySelector('[data-lb-body]');
+  if (node && body) {
+    let DATA: Array<{ r: number; o: string; s: number; g: number; f?: string[] }> = [];
     try { DATA = JSON.parse(node.textContent || '[]'); } catch (e) { DATA = []; }
 
     // bit -> label, in display order (mirrors SIGNAL_BITS in bulk-data.ts)
-    var SIGS = [
+    const SIGS = [
       { bit: 1, label: 'llms.txt' },
       { bit: 2, label: 'AGENTS.md' },
       { bit: 4, label: 'sitemap' },
       { bit: 8, label: 'robots.txt' },
     ];
 
-    var bar = document.querySelector('[data-research-filter]');
-    var nameInput = bar && bar.querySelector('[data-filter-name]');
-    var sigBoxes = bar ? bar.querySelectorAll('[data-filter-signal]') : [];
-    var resetBtn = bar && bar.querySelector('[data-filter-reset]');
-    var emptyMsg = document.querySelector('[data-filter-empty]');
-    var emptyResetLink = emptyMsg && emptyMsg.querySelector('[data-filter-reset-link]');
-    var counter = document.querySelector('[data-visible-count]');
-    var pager = document.querySelector('[data-pager]');
-    var prevBtn = pager && pager.querySelector('[data-pager-prev]');
-    var nextBtn = pager && pager.querySelector('[data-pager-next]');
-    var pagerStatus = pager && pager.querySelector('[data-pager-status]');
+    const bar = document.querySelector('[data-research-filter]');
+    const nameInput = bar && bar.querySelector<HTMLInputElement>('[data-filter-name]');
+    const sigBoxes = bar ? bar.querySelectorAll<HTMLInputElement>('[data-filter-signal]') : ([] as HTMLInputElement[]);
+    const resetBtn = bar && bar.querySelector<HTMLButtonElement>('[data-filter-reset]');
+    const emptyMsg = document.querySelector<HTMLElement>('[data-filter-empty]');
+    const emptyResetLink = emptyMsg && emptyMsg.querySelector<HTMLButtonElement>('[data-filter-reset-link]');
+    const counter = document.querySelector<HTMLElement>('[data-visible-count]');
+    const pager = document.querySelector<HTMLElement>('[data-pager]');
+    const prevBtn = pager && pager.querySelector<HTMLButtonElement>('[data-pager-prev]');
+    const nextBtn = pager && pager.querySelector<HTMLButtonElement>('[data-pager-next]');
+    const pagerStatus = pager && pager.querySelector<HTMLElement>('[data-pager-status]');
 
-    var currentPage = 1;
-    var TOTAL = DATA.length;
+    let currentPage = 1;
+    const TOTAL = DATA.length;
 
-    function band(s) { return s >= 85 ? 'excellent' : s >= 70 ? 'good' : s >= 50 ? 'fair' : 'poor'; }
-    function cell(cls, txt) {
-      var el = document.createElement('span');
+    function band(s: number): string { return s >= 85 ? 'excellent' : s >= 70 ? 'good' : s >= 50 ? 'fair' : 'poor'; }
+    function cell(cls: string, txt: string): HTMLSpanElement {
+      const el = document.createElement('span');
       el.className = cls; el.setAttribute('role', 'cell'); el.textContent = txt;
       return el;
     }
-    function rowEl(e) {
-      var row = document.createElement('div');
+    function rowPair(e: { r: number; o: string; s: number; g: number; f?: string[] }): [HTMLDivElement, HTMLDivElement] {
+      const row = document.createElement('div');
       row.className = 'lb-row'; row.setAttribute('role', 'row');
       row.appendChild(cell('col-rank', String(e.r)));
-      var site = document.createElement('span');
+
+      const site = document.createElement('span');
       site.className = 'col-site'; site.setAttribute('role', 'cell');
-      var a = document.createElement('a');
-      a.href = 'https://' + e.o; a.target = '_blank'; a.rel = 'noopener nofollow'; a.textContent = e.o;
-      site.appendChild(a);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lb-scan-toggle';
+      btn.textContent = e.o;
+      btn.setAttribute('aria-expanded', 'false');
+      site.appendChild(btn);
       row.appendChild(site);
+
       row.appendChild(cell('col-score band-' + band(e.s), String(e.s)));
-      var sig = document.createElement('span');
+
+      const sig = document.createElement('span');
       sig.className = 'col-signals'; sig.setAttribute('role', 'cell');
       SIGS.forEach(function (s) {
-        var c = document.createElement('span');
+        const c = document.createElement('span');
         c.className = 'sig ' + ((e.g & s.bit) ? 'on' : 'off');
         c.title = s.label; c.textContent = s.label; sig.appendChild(c);
       });
       row.appendChild(sig);
       row.appendChild(cell('col-fails', e.f && e.f.length ? e.f.join(', ') : '—'));
-      return row;
+
+      const drawer = document.createElement('div');
+      drawer.className = 'lb-scan-drawer';
+      drawer.hidden = true;
+
+      const status = document.createElement('p');
+      status.className = 'scan-status';
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+      status.hidden = true;
+
+      const results = document.createElement('div');
+      results.className = 'scan-results';
+      results.hidden = true;
+
+      drawer.append(status, results);
+
+      let scanned = false;
+      btn.addEventListener('click', () => {
+        const open = drawer.hidden;
+        drawer.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        if (open && !scanned) {
+          scanned = true;
+          void scanInto({ url: 'https://' + e.o, statusEl: status, resultsEl: results });
+        }
+      });
+
+      return [row, drawer];
     }
 
-    function activeBits() {
-      var bits = 0;
-      Array.prototype.forEach.call(sigBoxes, function (cb) { if (cb.checked) bits |= parseInt(cb.value, 10); });
+    function activeBits(): number {
+      let bits = 0;
+      sigBoxes.forEach(function (cb) { if (cb.checked) bits |= parseInt(cb.value, 10); });
       return bits;
     }
-    function defaultsActive() {
+    function defaultsActive(): boolean {
       if (nameInput && nameInput.value) return false;
-      for (var i = 0; i < sigBoxes.length; i++) if (sigBoxes[i].checked) return false;
+      for (let i = 0; i < sigBoxes.length; i++) if ((sigBoxes as NodeListOf<HTMLInputElement>)[i].checked) return false;
       return true;
     }
 
     function render() {
-      var q = (nameInput && nameInput.value || '').trim().toLowerCase();
-      var need = activeBits();
-      var matching = DATA;
+      const q = (nameInput && nameInput.value || '').trim().toLowerCase();
+      const need = activeBits();
+      let matching = DATA;
       if (q !== '' || need !== 0) {
         matching = DATA.filter(function (e) {
           return (q === '' || e.o.indexOf(q) >= 0) && (e.g & need) === need;
         });
       }
-      var totalPages = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+      const totalPages = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
       if (currentPage > totalPages) currentPage = totalPages;
       if (currentPage < 1) currentPage = 1;
-      var start = (currentPage - 1) * PAGE_SIZE;
-      var slice = matching.slice(start, start + PAGE_SIZE);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const slice = matching.slice(start, start + PAGE_SIZE);
 
-      var frag = document.createDocumentFragment();
-      slice.forEach(function (e) { frag.appendChild(rowEl(e)); });
-      body.replaceChildren(frag);
+      const frag = document.createDocumentFragment();
+      slice.forEach(function (e) {
+        const [row, drawer] = rowPair(e);
+        frag.appendChild(row);
+        frag.appendChild(drawer);
+      });
+      (body as Element).replaceChildren(frag);
 
       if (counter) {
         if (matching.length === 0) counter.textContent = 'Showing 0 of ' + TOTAL.toLocaleString() + ' sites.';
@@ -403,23 +447,23 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
     function onFilter() { currentPage = 1; render(); }
     function reset() {
       if (nameInput) nameInput.value = '';
-      Array.prototype.forEach.call(sigBoxes, function (cb) { cb.checked = false; });
+      sigBoxes.forEach(function (cb) { cb.checked = false; });
       currentPage = 1; render();
       if (nameInput) nameInput.focus();
     }
-    function changePage(d) {
+    function changePage(d: number) {
       currentPage += d; render();
-      var anchor = document.getElementById('leaderboard');
+      const anchor = document.getElementById('leaderboard');
       if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }
 
     if (nameInput) nameInput.addEventListener('input', onFilter);
-    Array.prototype.forEach.call(sigBoxes, function (cb) { cb.addEventListener('change', onFilter); });
+    sigBoxes.forEach(function (cb) { cb.addEventListener('change', onFilter); });
     if (resetBtn) resetBtn.addEventListener('click', reset);
     if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
     if (prevBtn) prevBtn.addEventListener('click', function () { changePage(-1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { changePage(1); });
 
     render();
-  })();
+  }
 </script>
