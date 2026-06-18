@@ -3,7 +3,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
 import { getCaseStudy } from '~/lib/case-study-data';
 import {
-  SIGNAL_BITS,
   bulkAdoptionPct,
   bulkHistogramBuckets,
   bulkMeanScore,
@@ -195,14 +194,14 @@ const themed = THEME_ORDER.map((theme) => ({
           <p class="section-sub">Adoption of every check the scorecard runs, across all {num(total)} sites.</p>
         </div>
         <p class="study-prose">
-          The signals search engines taught the web to ship are broad: {pctOfAll('robots-txt.exists')}%
+          The signals search engines taught the web to ship are nearly everywhere: {pctOfAll('robots-txt.exists')}%
           {' '}expose a robots.txt and {pctOfAll('sitemap-xml.exists')}% a sitemap. But only
-          {' '}{pctOfAll('robots-txt.allows-ai-bots')}% actually let the major AI crawlers in, so close to one in
-          {' '}five of the most-visited sites blocks them outright. The signals agents need are rarer still:
+          {' '}{pctOfAll('robots-txt.allows-ai-bots')}% actually let the major AI crawlers in, so close to a fifth
+          {' '}of the most-visited sites block them outright. The signals agents need are far rarer:
           {' '}{pctOfAll('llms-txt.exists')}% ship an <code>llms.txt</code>, {pctOfAll('agents-md.exists')}% an
           {' '}<code>AGENTS.md</code>, and {pctOfAll('sitemap-md.exists')}% a markdown sitemap. A markdown mirror,
-          {' '}the cleanest format an agent can read, is advertised by {pctOfAll('markdown.mirror-suffix')}%, but a
-          {' '}glossary link shows up on just {pctOfAll('html.glossary-link')}%.
+          {' '}the cleanest format an agent can read, is advertised by {pctOfAll('markdown.mirror-suffix')}%, and a
+          {' '}glossary link by just {pctOfAll('html.glossary-link')}%.
         </p>
         {themed.map((g) => (
           <table class="study-table">
