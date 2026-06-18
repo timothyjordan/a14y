@@ -31,7 +31,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 ---
 
 <BaseLayout
-  title="Which agent-readiness features actually matter · a14y research"
+  title="Which agent-readiness features actually pay off · a14y research"
   description="A per-feature ablation of the agent-readiness layer. We toggled each of 11 features on and off and measured what each one is worth to an AI agent. Markdown mirrors and meta descriptions do most of the work; one feature actively hurts; and different agents react completely differently."
 >
   <section class="hero hero--compact" aria-labelledby="paper-heading">
@@ -40,7 +40,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         <span class="eyebrow-pin">v0.2.0</span>
         <span>ablation · {published} · 24 variants, 3 agents</span>
       </div>
-      <h1 id="paper-heading">Which agent-readiness features actually matter</h1>
+      <h1 id="paper-heading">Which agent-readiness features actually pay off</h1>
       <dl class="study-score-line" aria-label="Headline numbers">
         <div><dt>Full layer (Claude)</dt><dd><strong>−47%</strong><span class="study-score-detail"> tokens</span></dd></div>
         <div><dt>Best single feature</dt><dd><strong>−48.6%</strong><span class="study-score-detail"> md-mirrors</span></dd></div>
