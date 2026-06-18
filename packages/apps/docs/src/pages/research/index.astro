@@ -1,9 +1,22 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { listCaseStudies, caseStudyUrl } from '~/lib/case-study-data';
+import { getBulkLeaderboard, getDefaultBulkVersion } from '~/lib/bulk-data';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const studies = listCaseStudies();
+
+// Standalone survey article (not a case study). Pull its headline numbers live
+// so the blurb never drifts from the data on the page.
+const bulkVersion = getDefaultBulkVersion();
+const bulkLb = bulkVersion ? getBulkLeaderboard(bulkVersion) : null;
+const bulkTotal = bulkLb?.totalScanned ?? 0;
+const bulkScores = bulkLb ? bulkLb.entries.map((e) => e.s).sort((a, b) => a - b) : [];
+const bulkMedian = bulkScores.length ? bulkScores[Math.floor(bulkScores.length / 2)] : 0;
+const bulkDate = bulkLb
+  ? new Date(bulkLb.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+  : '';
+const surveyUrl = `${base}/research/state-of-agent-readability/`;
 ---
 
 <BaseLayout
@@ -26,6 +39,25 @@ const studies = listCaseStudies();
 
   <section class="section" aria-label="Case studies">
     <ul class="case-study-list" role="list">
+      {bulkLb && (
+        <li class="case-study-card">
+          <div class="case-study-card-meta">
+            <span class="eyebrow-pin">v{bulkVersion}</span>
+            <time>{bulkDate}</time>
+          </div>
+          <h3 class="case-study-card-title">
+            <a href={surveyUrl}>The State of Agent Readability on the Web</a>
+          </h3>
+          <p class="case-study-card-tldr">
+            We scored the {bulkTotal.toLocaleString('en-US')} most-visited websites for how ready they are for AI
+            agents. The median scores {bulkMedian} of 100, not one scored "excellent," and the agent-era layer
+            (llms.txt, AGENTS.md, markdown mirrors) is mostly missing or only half-built.
+          </p>
+          <p class="case-study-card-cta">
+            <a href={surveyUrl}>Read the survey →</a>
+          </p>
+        </li>
+      )}
       {studies.map((cs) => (
         <li class="case-study-card">
           <div class="case-study-card-meta">
