@@ -1,6 +1,6 @@
 {
   "slug": "agent-readiness-layer-2026-05-16",
-  "title": "An a14y score from 37 to 89 cut an AI agent's token use roughly in half",
+  "title": "Raising an a14y score from 37 to 89 halved an AI agent's token use",
   "shortTitle": "Raising an a14y score halved an AI agent's token use",
   "publishedAt": "2026-05-16",
   "scorecardVersion": "0.2.0",
@@ -251,11 +251,11 @@
   "implications": [
     {
       "audience": "For site owners",
-      "body": "Running an a14y audit on your site and shipping its top fixes (the ones that flip those five files from 404 to 200) is a small, mostly-static-file change that translates into a measurable AI agent efficiency win. No framework changes, no editorial process. The score moves a lot; the agent's bill moves with it."
+      "body": "Run an a14y audit, ship its top fixes (the ones that flip those five files from 404 to 200), and you make a small, mostly-static-file change that measurably cuts what an AI agent has to do to use your site. No framework changes, no editorial process. The score moves a lot, and the agent's bill moves with it."
     },
     {
       "audience": "For agent platforms",
-      "body": "There is clear ROI on respecting an a14y-style discovery stack. An agent that uses llms.txt, sitemaps, and AGENTS.md when they exist cuts its own token cost in half on the average site, before any other optimization."
+      "body": "Respecting an a14y-style discovery stack pays off directly. An agent that uses llms.txt, sitemaps, and AGENTS.md when they exist cuts its own token cost in half on the average site, before any other optimization."
     },
     {
       "audience": "For a14y the project",
