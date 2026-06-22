@@ -1,9 +1,7 @@
 # Contributors
 
-a14y is an open spec, a versioned scorecard, and a CLI plus Chrome extension
-that score how cleanly any website can be read by AI agents. It gets better
-because of the people below: folks who write checks, edit the docs, sharpen the
-scorecard, and stress-test the spec. Thank you.
+a14y gets better because of the people below: folks who write checks, edit the
+docs, sharpen the scorecard, and stress-test the spec. Thank you.
 
 - **Timothy Jordan** ([@timothyjordan](https://github.com/timothyjordan)):
   creator and maintainer. The CLI, the `@a14y/core` library, the Chrome
