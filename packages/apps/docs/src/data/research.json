@@ -1,7 +1,7 @@
 {
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
-  "generatedAt": "2026-06-03T20:55:08.788Z",
+  "generatedAt": "2026-06-22T18:45:19.419Z",
   "sites": [
     {
       "slug": "agentsh",
@@ -352,6 +352,31 @@
         "markdown.sitemap-section"
       ],
       "scannedAt": "2026-05-27T05:03:07.654Z"
+    },
+    {
+      "slug": "sanity-learn",
+      "name": "Sanity Learn",
+      "url": "https://www.sanity.io/learn",
+      "category": "docs-platform",
+      "mode": "site",
+      "score": 73,
+      "summary": {
+        "passed": 6322,
+        "failed": 2292,
+        "warned": 0,
+        "errored": 0,
+        "na": 3400,
+        "total": 12014,
+        "applicable": 8614
+      },
+      "topFailures": [
+        "markdown.canonical-header",
+        "markdown.frontmatter",
+        "markdown.sitemap-section",
+        "html.json-ld.breadcrumb",
+        "discovery.indexed"
+      ],
+      "scannedAt": "2026-06-22T18:44:20.997Z"
     },
     {
       "slug": "render-docs",
@@ -8114,8 +8139,8 @@
       },
       {
         "category": "docs-platform",
-        "n": 123,
-        "meanScore": 52.7,
+        "n": 124,
+        "meanScore": 52.9,
         "medianScore": 56
       },
       {
@@ -8184,7 +8209,7 @@
         "from": 70,
         "to": 79,
         "label": "70-79",
-        "n": 22
+        "n": 23
       },
       {
         "from": 80,
@@ -8205,7 +8230,7 @@
         "name": "API pages link to a machine-readable schema",
         "group": "API",
         "scope": "page",
-        "applicableSites": 84,
+        "applicableSites": 85,
         "passingSites": 0,
         "passRate": 0
       },
@@ -8214,7 +8239,7 @@
         "name": "Markdown mirror has required frontmatter",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 135,
+        "applicableSites": 136,
         "passingSites": 0,
         "passRate": 0
       },
@@ -8223,7 +8248,7 @@
         "name": "Markdown mirror sends canonical Link header",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 135,
+        "applicableSites": 136,
         "passingSites": 1,
         "passRate": 0.007
       },
@@ -8232,7 +8257,7 @@
         "name": "Markdown mirror includes a Sitemap section",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 134,
+        "applicableSites": 135,
         "passingSites": 1,
         "passRate": 0.007
       },
@@ -8241,7 +8266,7 @@
         "name": "Links to a glossary or terminology page",
         "group": "Content structure",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 3,
         "passRate": 0.009
       },
@@ -8250,7 +8275,7 @@
         "name": "HTML declares <link rel=\"alternate\" type=\"text/markdown\">",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 8,
         "passRate": 0.025
       },
@@ -8259,7 +8284,7 @@
         "name": "Server returns markdown for Accept: text/markdown",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 11,
         "passRate": 0.034
       },
@@ -8268,7 +8293,7 @@
         "name": "JSON-LD declares dateModified",
         "group": "Structured data",
         "scope": "page",
-        "applicableSites": 156,
+        "applicableSites": 157,
         "passingSites": 6,
         "passRate": 0.038
       },
@@ -8277,70 +8302,70 @@
         "name": "llms.txt links use .md or .mdx",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 146,
-        "passingSites": 13,
-        "passRate": 0.089
+        "applicableSites": 147,
+        "passingSites": 14,
+        "passRate": 0.095
       },
       {
         "checkId": "sitemap-md.has-structure",
         "name": "sitemap.md has headings and links",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 59,
-        "passingSites": 7,
-        "passRate": 0.119
+        "applicableSites": 60,
+        "passingSites": 8,
+        "passRate": 0.133
       },
       {
         "checkId": "markdown.mirror-suffix",
         "name": "Has .md or .mdx mirror",
         "group": "Markdown mirror",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 43,
-        "passRate": 0.135
+        "passRate": 0.134
       },
       {
         "checkId": "code.language-tags",
         "name": "Code blocks declare a language",
         "group": "Code",
         "scope": "page",
-        "applicableSites": 123,
+        "applicableSites": 124,
         "passingSites": 20,
-        "passRate": 0.163
+        "passRate": 0.161
       },
       {
         "checkId": "html.json-ld.breadcrumb",
         "name": "JSON-LD declares a BreadcrumbList",
         "group": "Structured data",
         "scope": "page",
-        "applicableSites": 156,
+        "applicableSites": 157,
         "passingSites": 26,
-        "passRate": 0.167
+        "passRate": 0.166
       },
       {
         "checkId": "sitemap-md.exists",
         "name": "sitemap.md is published",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 59,
-        "passRate": 0.182
+        "applicableSites": 325,
+        "passingSites": 60,
+        "passRate": 0.185
       },
       {
         "checkId": "html.json-ld",
         "name": "Has parseable JSON-LD block",
         "group": "Structured data",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 66,
-        "passRate": 0.207
+        "passRate": 0.206
       },
       {
         "checkId": "html.meta-description",
         "name": "Has meta description (>= 50 chars)",
         "group": "HTML metadata",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 77,
         "passRate": 0.241
       },
@@ -8349,7 +8374,7 @@
         "name": "Has og:description",
         "group": "HTML metadata",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 84,
         "passRate": 0.263
       },
@@ -8358,7 +8383,7 @@
         "name": "Has at least 3 section headings",
         "group": "Content structure",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 92,
         "passRate": 0.288
       },
@@ -8367,134 +8392,134 @@
         "name": "AGENTS.md (or equivalent) is published",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 100,
-        "passRate": 0.309
+        "applicableSites": 325,
+        "passingSites": 101,
+        "passRate": 0.311
       },
       {
         "checkId": "agents-md.has-min-sections",
         "name": "agent skill file documents at least 2 of install/config/usage",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 100,
-        "passingSites": 33,
-        "passRate": 0.33
+        "applicableSites": 101,
+        "passingSites": 34,
+        "passRate": 0.337
       },
       {
         "checkId": "discovery.indexed",
         "name": "Page is indexed by sitemap, llms.txt, or sitemap.md",
         "group": "Discoverability",
         "scope": "page",
-        "applicableSites": 206,
+        "applicableSites": 207,
         "passingSites": 72,
-        "passRate": 0.35
+        "passRate": 0.348
       },
       {
         "checkId": "html.og-title",
         "name": "Has og:title",
         "group": "HTML metadata",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 123,
-        "passRate": 0.386
+        "passRate": 0.384
       },
       {
         "checkId": "html.canonical-link",
         "name": "Has <link rel=\"canonical\">",
         "group": "HTML metadata",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 124,
-        "passRate": 0.389
+        "passRate": 0.388
       },
       {
         "checkId": "sitemap-xml.has-lastmod",
         "name": "sitemap entries include <lastmod>",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 190,
-        "passingSites": 74,
-        "passRate": 0.389
+        "applicableSites": 191,
+        "passingSites": 75,
+        "passRate": 0.393
       },
       {
         "checkId": "html.text-ratio",
         "name": "Text-to-HTML ratio is above 15%",
         "group": "Content structure",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 130,
-        "passRate": 0.408
+        "passRate": 0.406
       },
       {
         "checkId": "llms-txt.exists",
         "name": "llms.txt is published",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 146,
-        "passRate": 0.451
+        "applicableSites": 325,
+        "passingSites": 147,
+        "passRate": 0.452
       },
       {
         "checkId": "http.status-200",
         "name": "Page returns HTTP 200",
         "group": "HTTP",
         "scope": "page",
-        "applicableSites": 322,
+        "applicableSites": 323,
         "passingSites": 158,
-        "passRate": 0.491
+        "passRate": 0.489
       },
       {
         "checkId": "http.content-type-html",
         "name": "Content-Type is text/html; charset=utf-8",
         "group": "HTTP",
         "scope": "page",
-        "applicableSites": 321,
+        "applicableSites": 322,
         "passingSites": 193,
-        "passRate": 0.601
+        "passRate": 0.599
       },
       {
         "checkId": "sitemap-xml.exists",
         "name": "sitemap.xml is published",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 212,
-        "passRate": 0.654
+        "applicableSites": 325,
+        "passingSites": 213,
+        "passRate": 0.655
       },
       {
         "checkId": "html.lang-attribute",
         "name": "Root <html> has lang attribute",
         "group": "HTML metadata",
         "scope": "page",
-        "applicableSites": 319,
+        "applicableSites": 320,
         "passingSites": 212,
-        "passRate": 0.665
+        "passRate": 0.663
       },
       {
         "checkId": "llms-txt.content-type",
         "name": "llms.txt served as text/plain",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 146,
-        "passingSites": 110,
-        "passRate": 0.753
+        "applicableSites": 147,
+        "passingSites": 111,
+        "passRate": 0.755
       },
       {
         "checkId": "http.redirect-chain",
         "name": "Redirect chain is at most 1 hop",
         "group": "HTTP",
         "scope": "page",
-        "applicableSites": 322,
+        "applicableSites": 323,
         "passingSites": 267,
-        "passRate": 0.829
+        "passRate": 0.827
       },
       {
         "checkId": "robots-txt.allows-ai-bots",
         "name": "robots.txt allows AI bots",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 272,
+        "applicableSites": 325,
+        "passingSites": 273,
         "passRate": 0.84
       },
       {
@@ -8502,8 +8527,8 @@
         "name": "robots.txt is published",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 286,
+        "applicableSites": 325,
+        "passingSites": 287,
         "passRate": 0.883
       },
       {
@@ -8511,35 +8536,35 @@
         "name": "sitemap.xml parses as urlset or sitemapindex",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 212,
-        "passingSites": 190,
-        "passRate": 0.896
+        "applicableSites": 213,
+        "passingSites": 191,
+        "passRate": 0.897
       },
       {
         "checkId": "robots-txt.allows-llms-txt",
         "name": "robots.txt does not disallow llms.txt",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 324,
-        "passingSites": 306,
-        "passRate": 0.944
+        "applicableSites": 325,
+        "passingSites": 307,
+        "passRate": 0.945
       },
       {
         "checkId": "http.no-noindex-noai",
         "name": "x-robots-tag does not block agents",
         "group": "HTTP",
         "scope": "page",
-        "applicableSites": 322,
+        "applicableSites": 323,
         "passingSites": 309,
-        "passRate": 0.96
+        "passRate": 0.957
       },
       {
         "checkId": "llms-txt.non-empty",
         "name": "llms.txt is not empty",
         "group": "Discoverability",
         "scope": "site",
-        "applicableSites": 146,
-        "passingSites": 144,
+        "applicableSites": 147,
+        "passingSites": 145,
         "passRate": 0.986
       }
     ]
