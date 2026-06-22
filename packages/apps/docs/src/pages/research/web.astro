@@ -13,7 +13,7 @@ import {
 // EMBARGOED (TJ-549): web-scale bulk leaderboard. Stays on a local branch until
 // launch. Entries are pre-slimmed (host/score/signal-bitmask/top-2-failures) so
 // the whole ~50k-row set embeds once and the table paginates + searches it
-// client-side — only ~50 rows live in the DOM at a time.
+// client-side; only ~50 rows live in the DOM at a time.
 const version = getDefaultBulkVersion();
 const lb = version ? getBulkLeaderboard(version) : null;
 
@@ -91,8 +91,8 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
       <section class="research-section" id="score-distribution">
         <header class="section-header"><h2>Score distribution</h2></header>
         <p class="section-lead">
-          Sites per 20-point score bucket. Most of the popular web scores low in page mode —
-          agent-readiness signals are still rare at scale.
+          Sites per 20-point score bucket. Most of the popular web scores low in page mode.
+          Agent-readiness signals are still rare at scale.
         </p>
         <ScoreHistogram buckets={hist} />
       </section>
@@ -257,7 +257,7 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
 </style>
 
 <!-- Global: the leaderboard body rows are built in JS (document.createElement),
-     so they never get Astro's scoped data attribute — scoped selectors wouldn't
+     so they never get Astro's scoped data attribute, so scoped selectors wouldn't
      match them and the table would render unstyled. These class names are
      page-specific, so global scope is safe. -->
 <style is:global>
@@ -362,7 +362,7 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
         c.title = s.label; c.textContent = s.label; sig.appendChild(c);
       });
       row.appendChild(sig);
-      row.appendChild(cell('col-fails', e.f && e.f.length ? e.f.join(', ') : '—'));
+      row.appendChild(cell('col-fails', e.f && e.f.length ? e.f.join(', ') : 'none'));
 
       const drawer = document.createElement('div');
       drawer.className = 'lb-scan-drawer';
