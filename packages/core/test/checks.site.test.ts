@@ -416,3 +416,72 @@ describe('discovery.in-page-link', () => {
     expect((await run(discoveryInPageLink, ctx)).status).toBe('na');
   });
 });
+
+// TJ-872: the 1.1.0 *.exists impls (wired into the 0.3.0-draft scorecard)
+// reject soft-200 HTML so "exists" reflects a real file, while the 1.0.0 impls
+// (v0.2.0) keep their any-2xx behavior.
+describe('discovery *.exists 1.1.0 rejects soft-200 HTML', () => {
+  const run110 = (spec: SiteCheckSpec, ctx: ReturnType<typeof makeSiteCtx>) =>
+    spec.implementations['1.1.0'].run(ctx);
+
+  const HTML_SHELL =
+    '<!doctype html><html><head><title>404</title></head><body>Not found</body></html>';
+
+  const cases: Array<{
+    name: string;
+    spec: SiteCheckSpec;
+    url: string;
+    realBody: string;
+    realType: string;
+  }> = [
+    {
+      name: 'sitemap-md.exists',
+      spec: sitemapMdExists,
+      url: 'https://example.com/sitemap.md',
+      realBody: '# Sitemap\n- [Home](/index.md)\n',
+      realType: 'text/markdown',
+    },
+    {
+      name: 'agents-md.exists',
+      spec: agentsMdExists,
+      url: 'https://example.com/AGENTS.md',
+      realBody: '# AGENTS\n## Installation\nnpm i\n## Usage\nrun it\n',
+      realType: 'text/markdown',
+    },
+    {
+      name: 'llms-txt.exists',
+      spec: llmsTxtExists,
+      url: 'https://example.com/llms.txt',
+      realBody: '# Docs\n[Intro](/intro.md)\n',
+      realType: 'text/plain',
+    },
+  ];
+
+  for (const c of cases) {
+    it(`${c.name}: passes on a real (non-HTML) file`, async () => {
+      const ctx = makeSiteCtx(BASE, {
+        [c.url]: { body: c.realBody, headers: { 'content-type': c.realType } },
+      });
+      expect((await run110(c.spec, ctx)).status).toBe('pass');
+    });
+
+    it(`${c.name}: fails on a soft-200 HTML shell`, async () => {
+      const ctx = makeSiteCtx(BASE, {
+        [c.url]: { body: HTML_SHELL, headers: { 'content-type': 'text/html; charset=utf-8' } },
+      });
+      expect((await run110(c.spec, ctx)).status).toBe('fail');
+    });
+
+    it(`${c.name}: 1.0.0 still passes on the same HTML shell (v0.2.0 unchanged)`, async () => {
+      const ctx = makeSiteCtx(BASE, {
+        [c.url]: { body: HTML_SHELL, headers: { 'content-type': 'text/html; charset=utf-8' } },
+      });
+      expect((await run(c.spec, ctx)).status).toBe('pass');
+    });
+
+    it(`${c.name}: fails when the file is absent (404)`, async () => {
+      const ctx = makeSiteCtx(BASE, {});
+      expect((await run110(c.spec, ctx)).status).toBe('fail');
+    });
+  }
+});
