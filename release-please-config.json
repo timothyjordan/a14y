@@ -11,7 +11,6 @@
     "packages/apps/cli": {
       "package-name": "a14y",
       "component": "a14y",
-      "draft": true,
       "extra-files": [
         {
           "type": "generic",
@@ -21,23 +20,19 @@
     },
     "packages/aliases/agentready": {
       "package-name": "agentready",
-      "component": "agentready",
-      "draft": true
+      "component": "agentready"
     },
     "packages/aliases/agentreadability": {
       "package-name": "agentreadability",
-      "component": "agentreadability",
-      "draft": true
+      "component": "agentreadability"
     },
     "packages/core": {
       "package-name": "@a14y/core",
-      "component": "core",
-      "draft": true
+      "component": "core"
     },
     "packages/telemetry": {
       "package-name": "@a14y/telemetry",
-      "component": "telemetry",
-      "draft": true
+      "component": "telemetry"
     },
     "packages/apps/extension": {
       "package-name": "@a14y/extension",
