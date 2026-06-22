@@ -1,6 +1,9 @@
 import type { EventParamValue } from './types';
 
-const PII_KEY_RE = /url|href|host|email|\bip\b/i;
+// `ip` is matched as a standalone token or one delimited by non-alphanumerics
+// (e.g. client_ip, ip_address). A `\b` boundary would miss those because `_` is
+// a word character, so the raw IP (PII under GDPR) would leak to GA4.
+const PII_KEY_RE = /url|href|host|email|(^|[^a-z0-9])ip([^a-z0-9]|$)/i;
 const PATH_KEY_RE = /(^|_)path($|_)/i;
 const GA4_EVENT_NAME_RE = /^[a-zA-Z][a-zA-Z0-9_]{0,39}$/;
 const MAX_PARAM_NAME = 40;
