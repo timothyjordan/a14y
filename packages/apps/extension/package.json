@@ -1,6 +1,6 @@
 {
   "name": "@a14y/extension",
-  "version": "0.5.30",
+  "version": "0.5.31",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-icons.mjs && node ../../../scripts/inject-telemetry-config.mjs extension",
@@ -12,8 +12,8 @@
     "package": "node scripts/package-extension.mjs"
   },
   "dependencies": {
-    "@a14y/core": "0.3.31",
-    "@a14y/telemetry": "0.1.28"
+    "@a14y/core": "0.3.32",
+    "@a14y/telemetry": "0.1.29"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.25",
