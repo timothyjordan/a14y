@@ -27,6 +27,37 @@ const MATRIX = [
   { feature: 'sitemap-xml', sparse: -16.3, dense: 3.8, reading: 'Smallest effect' },
 ];
 
+// Codex and Cursor per-feature deltas, same source and dual-anchor method as the
+// Claude MATRIX above (sparse = only-X vs baseline, dense = all-except-X vs all),
+// from ablation-deltas.csv. Feature order matches the Claude table for comparison.
+const CODEX_MATRIX = [
+  { feature: 'md-mirrors', sparse: 24.7, dense: -42.1 },
+  { feature: 'agents-md', sparse: 9.8, dense: -52.4 },
+  { feature: 'meta-description', sparse: 23.4, dense: -30.1 },
+  { feature: 'canonical-link', sparse: 10.1, dense: -41.0 },
+  { feature: 'og-tags', sparse: 34.0, dense: -37.8 },
+  { feature: 'agent-skills', sparse: 25.7, dense: -42.6 },
+  { feature: 'llms-txt', sparse: 8.7, dense: -21.5 },
+  { feature: 'sitemap-md', sparse: 3.6, dense: -25.6 },
+  { feature: 'robots-txt', sparse: 21.8, dense: -31.0 },
+  { feature: 'json-ld', sparse: 12.4, dense: -45.4 },
+  { feature: 'sitemap-xml', sparse: -16.0, dense: -43.0 },
+];
+
+const CURSOR_MATRIX = [
+  { feature: 'md-mirrors', sparse: 87.5, dense: 61.7 },
+  { feature: 'agents-md', sparse: 119.9, dense: 85.5 },
+  { feature: 'meta-description', sparse: 69.6, dense: 162.3 },
+  { feature: 'canonical-link', sparse: 1.8, dense: 5.5 },
+  { feature: 'og-tags', sparse: -40.7, dense: 12.4 },
+  { feature: 'agent-skills', sparse: 64.1, dense: 47.0 },
+  { feature: 'llms-txt', sparse: 83.3, dense: 216.9 },
+  { feature: 'sitemap-md', sparse: 89.8, dense: -3.1 },
+  { feature: 'robots-txt', sparse: 45.3, dense: 18.7 },
+  { feature: 'json-ld', sparse: -7.4, dense: 72.4 },
+  { feature: 'sitemap-xml', sparse: 14.3, dense: 83.8 },
+];
+
 const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 ---
 
@@ -218,6 +249,53 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
       the study. Cursor really does read llms.txt and lean on it to navigate. This is the black box again: a signal
       one agent leans on hard, another barely notices.
     </p>
+
+    <details class="agent-matrix">
+      <summary>Codex matrix: every feature is a cost</summary>
+      <p class="study-prose study-prose--muted">
+        Same columns as Claude's table (Alone = feature added to a stripped site; Removed = feature
+        taken out of a full site; negative means fewer tokens). For Codex the signs invert: almost every
+        feature adds tokens alone, and removing any one from the full build makes it cheaper, so the
+        all-on build is its single worst configuration.
+      </p>
+      <table class="study-table">
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Alone</th><th scope="col">Removed</th></tr>
+        </thead>
+        <tbody>
+          {CODEX_MATRIX.map((r) => (
+            <tr>
+              <th scope="row"><code>{r.feature}</code></th>
+              <td class="num">{pctFmt(r.sparse)}</td>
+              <td class="num">{pctFmt(r.dense)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+
+    <details class="agent-matrix">
+      <summary>Cursor matrix: large, erratic, anchored on llms.txt</summary>
+      <p class="study-prose study-prose--muted">
+        Cursor's effects are large and inconsistent. Removing <code>llms.txt</code> from the full build
+        is the single biggest effect anywhere in the study (+216.9%), evidence that Cursor really does
+        lean on that one file to navigate.
+      </p>
+      <table class="study-table">
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Alone</th><th scope="col">Removed</th></tr>
+        </thead>
+        <tbody>
+          {CURSOR_MATRIX.map((r) => (
+            <tr>
+              <th scope="row"><code>{r.feature}</code></th>
+              <td class="num">{pctFmt(r.sparse)}</td>
+              <td class="num">{pctFmt(r.dense)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
   </section>
 
   <section class="section" aria-labelledby="means-heading">
@@ -323,6 +401,12 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
   .study-table tbody th[scope='row'] { font-weight: 500; color: var(--text); }
   .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
   .study-table .behind { color: var(--text-muted); font-family: var(--font-sans, inherit); }
+
+  .agent-matrix { margin: 16px 0 0; border-top: 1px solid var(--border); }
+  .agent-matrix > summary { cursor: pointer; padding: 12px 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+  .agent-matrix > summary:hover { color: var(--link); }
+  .agent-matrix[open] > summary { color: var(--text); }
+  .agent-matrix .study-prose { margin-top: 8px; }
 
   .study-implications { display: grid; gap: 32px; }
   .study-implication { max-width: 65ch; }
