@@ -9,7 +9,7 @@ automated.
 
 | Surface | Trigger | Versioned by | Distribution | Manual step |
 |---|---|---|---|---|
-| `@a14y/core`, `@a14y/telemetry`, `a14y` CLI, `agentready`, `agentreadability` | merge release-please PR | release-please from Conventional Commits | npm (provenance via OIDC) | optional: promote draft GitHub Release |
+| `@a14y/core`, `@a14y/telemetry`, `a14y` CLI, `agentready`, `agentreadability` | merge release-please PR | release-please from Conventional Commits | npm (provenance via OIDC) | none (release notes are auto-published; edit after the fact if needed) |
 | Chrome extension (`@a14y/extension`) | merge release-please PR | release-please from `feat(extension):` / `fix(extension):` | `.zip` attached to `extension-v<version>` GitHub Release | upload `.zip` to Chrome Web Store |
 | Docs site (a14y.dev) | push to `main` (paths-filtered) **or** completion of any Release run | none | GitHub Pages | none |
 | Release notes page (a14y.dev/release-notes/) | edit `packages/apps/docs/src/content/pages/release-notes.md` | none — hand-curated | Deployed with docs site | write the entry |
@@ -40,8 +40,10 @@ plugin.
 **What merging the PR does:**
 
 1. release-please re-runs on the merge commit, sees the manifest match,
-   creates git tags (`core-v0.3.2`, `a14y-v0.4.2`, etc.) and a **draft**
-   GitHub Release per package.
+   creates the git tag (`core-v<version>`, `a14y-v<version>`, etc.) and a
+   **published** GitHub Release per package. The tag is what advances the
+   "already released" boundary, so these releases must publish, not sit as
+   drafts (see "Why not drafts?" below).
 2. The `publish` job in `.github/workflows/release.yml` matrix-fans
    across each released path (excluding `packages/apps/extension`,
    which isn't on npm).
@@ -56,11 +58,17 @@ secret. Each package needs its Trusted Publisher configured once on
 [npmjs.com](https://www.npmjs.com/), pointing at this repo + the
 `Release` workflow.
 
-**Why drafts?** The npm publish is the binding action; the GitHub
-Release is for human-readable notes. Drafts let you review and edit
-release-please's auto-generated notes before promoting them. To
-promote, open the [Releases](https://github.com/timothyjordan/a14y/releases)
-page and publish each draft.
+**Why not drafts?** These releases publish immediately rather than as
+drafts. A draft GitHub Release does not create its git tag (GitHub only
+creates the tag on publish), and release-please uses the latest per-package
+tag to find the "already released" boundary. When these packages were
+configured with `draft: true`, the tags froze at the last published version
+and every run re-derived the entire history as unreleased, opening a fresh
+release PR after every merge in an infinite loop. Publishing on merge keeps
+the tags current and the boundary correct. The npm publish is still the
+binding action; the GitHub Release is for human-readable notes, which you
+can edit on the [Releases](https://github.com/timothyjordan/a14y/releases)
+page anytime after they go out.
 
 **Lockfile note:** release-please bumps workspace `package.json`
 versions but does not update root `package-lock.json`, so the publish
