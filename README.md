@@ -190,7 +190,7 @@ npm run docs     # regenerate every README from docs/
 
 All user-facing READMEs in this repo (this one, `packages/apps/cli/README.md`, `packages/core/README.md`, and the alias READMEs) are generated from `docs/templates/` + `docs/fragments/`. Edit the source files and run `npm run docs` — never hand-edit a generated README.
 
-For contribution conventions (branching, tests, PR flow) see [CONTRIBUTING.md](./CONTRIBUTING.md). For the release flow (npm packages, Chrome extension, docs site) see [RELEASING.md](./RELEASING.md).
+For contribution conventions (branching, tests, PR flow) see [CONTRIBUTING.md](./CONTRIBUTING.md). For the release flow (npm packages, Chrome extension, docs site) see [RELEASING.md](./RELEASING.md). For the people behind a14y see [CONTRIBUTORS.md](./CONTRIBUTORS.md).
 
 ## Origins & Attribution
 
