@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  HTML_DERIVED_PAGES,
   resolvePagesSlug,
   renderShippedVersionsList,
   renderScorecardVersionChecks,
@@ -13,6 +14,33 @@ import {
 } from '../src/lib/scorecard-data';
 
 describe('markdown-mirrors helpers', () => {
+  describe('HTML_DERIVED_PAGES', () => {
+    // These data-driven / interactive .astro pages have no markdown
+    // source. They must be registered here so their mirrors are
+    // generated from the rendered HTML (full content) instead of
+    // falling through to the legacy stub fallback. Regression guard
+    // for the research case study, research index, leaderboard, and
+    // badge mirrors that used to be served as stubs.
+    it.each([
+      ['research', 'research/index.html'],
+      ['research/scorecard-evals', 'research/scorecard-evals/index.html'],
+      ['leaderboard', 'leaderboard/index.html'],
+      ['badge', 'badge/index.html'],
+      ['badge/how-to-embed', 'badge/how-to-embed/index.html'],
+    ])('routes %s to its rendered HTML', (cleanPath, htmlFile) => {
+      expect(HTML_DERIVED_PAGES[cleanPath]).toBe(htmlFile);
+    });
+
+    it('does not also claim these paths as pages-collection entries', () => {
+      // A page is either HTML-derived or pages-collection-backed, not
+      // both. resolvePagesSlug must stay null for the HTML-derived set
+      // so the integration takes the Turndown branch.
+      for (const cleanPath of Object.keys(HTML_DERIVED_PAGES)) {
+        expect(resolvePagesSlug(cleanPath)).toBeNull();
+      }
+    });
+  });
+
   describe('resolvePagesSlug', () => {
     it('returns null for HTML-derived pages (index, spec)', () => {
       // The landing page and /spec/ are authored as .astro and have
