@@ -5,7 +5,9 @@ import { FEATURE_ABLATION_PUBLISHED, formatPublishDate } from '~/lib/research-me
 // EMBARGOED (TJ-647 / TJ-652): per-feature ablation of the agent-readiness layer.
 // Stays on a local branch until launch. Numbers are from the 2026-06-04 benchmark
 // run (packages/benchmark/data/ablations/per-feature-2026-06-04, a14y-internal):
-// 24 variants x 3 agents x 3 reps = 216 runs. Claude dual-anchor deltas below.
+// 24 variants x 3 reps = 72 Claude runs (from a 4-agent attempt; only Claude is
+// clean enough to report; see the "Why this is Claude only" section). Claude
+// dual-anchor deltas below.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const published = formatPublishDate(FEATURE_ABLATION_PUBLISHED);
 
@@ -38,14 +40,13 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
     <div class="hero-text" style="grid-column: 1 / -1;">
       <div class="eyebrow">
         <span class="eyebrow-pin">v0.2.0</span>
-        <span>ablation · {published} · 24 variants, 3 agents</span>
+        <span>ablation · {published} · 24 variants</span>
       </div>
       <h1 id="paper-heading">Which agent-readiness features actually pay off</h1>
       <dl class="study-score-line" aria-label="Headline numbers">
         <div><dt>Full layer (Claude)</dt><dd><strong>−47%</strong><span class="study-score-detail"> tokens</span></dd></div>
         <div><dt>Best single feature</dt><dd><strong>−48.6%</strong><span class="study-score-detail"> md-mirrors</span></dd></div>
         <div><dt>Answer quality</dt><dd><strong>flat</strong><span class="study-score-detail"> ~75/100 across all variants</span></dd></div>
-        <div><dt>Agents</dt><dd><strong>3 tested</strong><span class="study-score-detail">, Claude reported</span></dd></div>
       </dl>
       <p class="study-summary-label">Summary</p>
       <p class="lead study-tldr">
@@ -94,8 +95,8 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
       <div><dt>Features</dt><dd>11 toggles: <code>llms-txt</code>, <code>robots-txt</code>, <code>sitemap-xml</code>, <code>sitemap-md</code>, <code>agents-md</code>, <code>agent-skills</code>, <code>md-mirrors</code>, <code>canonical-link</code>, <code>meta-description</code>, <code>og-tags</code>, <code>json-ld</code></dd></div>
       <div><dt>Variants</dt><dd><code>baseline</code> (all off), <code>only-X</code> (each feature alone), <code>all-except-X</code> (each removed from full), and <code>all</code> = 24 builds</dd></div>
       <div><dt>Sparse vs dense</dt><dd>Sparse = <code>only-X</code> vs baseline (what a feature buys from zero). Dense = <code>all-except-X</code> vs all (what removing it costs from a full site).</dd></div>
-      <div><dt>Runs</dt><dd>24 variants × 3 agents × 3 repeats = <strong>216 runs</strong>, ~6.7 hours wall-clock</dd></div>
-      <div><dt>Agents</dt><dd>Claude Code, Codex CLI, Cursor. Gemini omitted (CLI deprecated)</dd></div>
+      <div><dt>Runs</dt><dd>24 variants × 3 repeats = <strong>72 runs</strong></dd></div>
+      <div><dt>Agents</dt><dd>Claude Code, Codex CLI, Cursor, and Gemini. Only Claude is reported (see <a href="#agents-heading">Why this is Claude only</a>).</dd></div>
       <div><dt>Metrics</dt><dd>Tokens per run (efficiency) and a judge re-grade of answer quality against canonical answers (effectiveness)</dd></div>
       <div><dt>Date</dt><dd><time datetime={FEATURE_ABLATION_PUBLISHED}>{published}</time></dd></div>
     </dl>
@@ -205,22 +206,20 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
   <section class="section" aria-labelledby="agents-heading">
     <div class="section-head">
       <h2 id="agents-heading">Why this is Claude only</h2>
-      <p class="section-sub">We ran all three agents. Only one could be measured cleanly.</p>
     </div>
     <p class="study-prose">
-      The honest answer to "what about Codex and Cursor" is that we could not measure them cleanly on this study, so
-      we are not going to publish numbers we cannot stand behind. The reason is worth a sentence:
-      today's agent CLIs are still hard to benchmark in a controlled way.
+      We initially did this audit with four agents: Claude, Codex, Cursor, and Gemini. However, today's agent CLIs
+      are still hard to benchmark in a controlled way, and so only Claude could be measured cleanly.
     </p>
     <p class="study-prose">
       Codex calls a hosted <code>web_search</code> tool that cannot be turned off, so it reaches the open web (the
-      live a14y.dev included) instead of only the build we served. Its token counts measure that
-      off-target exploration, not the variant in front of it. Cursor, in headless mode, does not surface its fetches
-      at all, so we have no record of what it actually read; its answers looked reasonable, but we cannot attribute
-      its cost to any one feature. Gemini's CLI could not fetch our target and was dropped.
+      live a14y.dev included), not just the controlled build. Its token counts measure that off-target exploration,
+      not the variant in front of it. Cursor, in headless mode, does not surface its fetches at all, so we have no
+      record of what it actually read; its answers looked reasonable, but we cannot attribute its cost to any one
+      feature. Gemini's CLI could not fetch our target and was dropped.
     </p>
     <p class="study-prose study-prose--muted">
-      That leaves Claude as the only agent whose runs we can tie to the exact build it was given, which is why every
+      That left Claude as the only agent whose runs we can tie to the exact build it was given, which is why every
       number on this page is Claude's. The finding underneath stands on its own: agents differ a great deal in how
       they read a site, and the tooling to measure them rigorously is still catching up. We will fold other agents
       back in as their CLIs expose what they fetch. The caveats below list the specific instrumentation gaps.
@@ -283,8 +282,8 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
     <pre class="study-pre">npx a14y https://example.com</pre>
     <p class="study-prose study-prose--muted">
       The ablation builds the same site 24 ways by toggling each feature, then runs an identical retrieval probe
-      against each build across the three agents and aggregates tokens and judge-graded quality. Source data: the
-      2026-06-04 per-feature ablation, 216 runs.
+      against each build and aggregates tokens and judge-graded quality. Source data: the
+      2026-06-04 per-feature ablation.
     </p>
   </section>
 </BaseLayout>
