@@ -104,17 +104,6 @@
       "mergedAt": "2026-06-03T00:00:00.000Z"
     },
     {
-      "checkId": "sitemap-md.exists",
-      "kind": "bumped",
-      "fromImpl": "1.0.0",
-      "toImpl": "1.1.0",
-      "pr": 0,
-      "prUrl": "",
-      "author": "timothyjordan",
-      "authorUrl": "https://github.com/timothyjordan",
-      "mergedAt": "2026-06-22T00:00:00.000Z"
-    },
-    {
       "checkId": "agents-md.exists",
       "kind": "bumped",
       "fromImpl": "1.0.0",
@@ -127,6 +116,17 @@
     },
     {
       "checkId": "llms-txt.exists",
+      "kind": "bumped",
+      "fromImpl": "1.0.0",
+      "toImpl": "1.1.0",
+      "pr": 0,
+      "prUrl": "",
+      "author": "timothyjordan",
+      "authorUrl": "https://github.com/timothyjordan",
+      "mergedAt": "2026-06-22T00:00:00.000Z"
+    },
+    {
+      "checkId": "sitemap-md.exists",
       "kind": "bumped",
       "fromImpl": "1.0.0",
       "toImpl": "1.1.0",
