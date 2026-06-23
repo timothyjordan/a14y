@@ -205,16 +205,16 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
   <section class="section" aria-labelledby="agents-heading">
     <div class="section-head">
       <h2 id="agents-heading">Why this is Claude only</h2>
-      <p class="section-sub">We ran all three agents. Only one could be measured cleanly, and that is worth saying out loud.</p>
+      <p class="section-sub">We ran all three agents. Only one could be measured cleanly.</p>
     </div>
     <p class="study-prose">
       The honest answer to "what about Codex and Cursor" is that we could not measure them cleanly on this study, so
-      we are not going to publish numbers we cannot stand behind. The reason is instructive in its own right:
+      we are not going to publish numbers we cannot stand behind. The reason is worth a sentence:
       today's agent CLIs are still hard to benchmark in a controlled way.
     </p>
     <p class="study-prose">
       Codex calls a hosted <code>web_search</code> tool that cannot be turned off, so it reaches the open web (the
-      live a14y.dev included) instead of only the controlled build we served. Its token counts measure that
+      live a14y.dev included) instead of only the build we served. Its token counts measure that
       off-target exploration, not the variant in front of it. Cursor, in headless mode, does not surface its fetches
       at all, so we have no record of what it actually read; its answers looked reasonable, but we cannot attribute
       its cost to any one feature. Gemini's CLI could not fetch our target and was dropped.
