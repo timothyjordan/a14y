@@ -38,6 +38,10 @@ packages/apps/docs/dist-baseline/
 # Coverage reports
 coverage/
 
+# testbotpro adversarial-test work dir (scratch; generated tests are promoted
+# into each package's test/ dir and committed there)
+.testbotpro/
+
 # Misc
 *.tgz
 .npmrc
