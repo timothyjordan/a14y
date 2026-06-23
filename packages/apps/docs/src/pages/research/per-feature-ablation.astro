@@ -408,6 +408,13 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
   .agent-matrix[open] > summary { color: var(--text); }
   .agent-matrix .study-prose { margin-top: 8px; }
 
+  /* Press/print: reveal the collapsed agent matrices so a printed PDF carries
+     the full per-agent data, while they stay collapsed on screen. */
+  @media print {
+    .agent-matrix > p { display: block !important; }
+    .agent-matrix > table { display: table !important; }
+  }
+
   .study-implications { display: grid; gap: 32px; }
   .study-implication { max-width: 65ch; }
   .study-implication h3 { margin: 0 0 8px; font-size: 15px; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
