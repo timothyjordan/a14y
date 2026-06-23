@@ -20,6 +20,7 @@ const bulkScores = bulkLb ? bulkLb.entries.map((e) => e.s).sort((a, b) => a - b)
 const bulkMedian = bulkScores.length ? bulkScores[Math.floor(bulkScores.length / 2)] : 0;
 const surveyDate = formatPublishDate(STATE_OF_AGENT_READABILITY_PUBLISHED);
 const surveyUrl = `${base}/research/state-of-agent-readability/`;
+const bulkWebUrl = `${base}/research/web/`;
 
 const ablationDate = formatPublishDate(FEATURE_ABLATION_PUBLISHED);
 const ablationUrl = `${base}/research/per-feature-ablation/`;
@@ -60,7 +61,7 @@ const ablationUrl = `${base}/research/per-feature-ablation/`;
             (llms.txt, AGENTS.md, markdown mirrors) is mostly missing or only half-built.
           </p>
           <p class="case-study-card-cta">
-            <a href={surveyUrl}>Read the survey →</a>
+            <a href={surveyUrl}>Read the survey →</a> · <a href={bulkWebUrl}>Explore all {bulkTotal.toLocaleString('en-US')} sites →</a>
           </p>
         </li>
       )}
@@ -74,8 +75,8 @@ const ablationUrl = `${base}/research/per-feature-ablation/`;
         </h3>
         <p class="case-study-card-tldr">
           We toggled each of a14y's 11 agent-readiness features on and off to measure what each one is worth to an
-          AI agent. Markdown mirrors and meta descriptions do most of the work, the agent-skills directory actively
-          hurts, and different agents react completely differently.
+          AI agent. Markdown mirrors and meta descriptions do most of the work, and the agent-skills directory
+          actively hurts.
         </p>
         <p class="case-study-card-cta">
           <a href={ablationUrl}>Read the study →</a>
