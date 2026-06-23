@@ -27,43 +27,12 @@ const MATRIX = [
   { feature: 'sitemap-xml', sparse: -16.3, dense: 3.8, reading: 'Smallest effect' },
 ];
 
-// Codex and Cursor per-feature deltas, same source and dual-anchor method as the
-// Claude MATRIX above (sparse = only-X vs baseline, dense = all-except-X vs all),
-// from ablation-deltas.csv. Feature order matches the Claude table for comparison.
-const CODEX_MATRIX = [
-  { feature: 'md-mirrors', sparse: 24.7, dense: -42.1 },
-  { feature: 'agents-md', sparse: 9.8, dense: -52.4 },
-  { feature: 'meta-description', sparse: 23.4, dense: -30.1 },
-  { feature: 'canonical-link', sparse: 10.1, dense: -41.0 },
-  { feature: 'og-tags', sparse: 34.0, dense: -37.8 },
-  { feature: 'agent-skills', sparse: 25.7, dense: -42.6 },
-  { feature: 'llms-txt', sparse: 8.7, dense: -21.5 },
-  { feature: 'sitemap-md', sparse: 3.6, dense: -25.6 },
-  { feature: 'robots-txt', sparse: 21.8, dense: -31.0 },
-  { feature: 'json-ld', sparse: 12.4, dense: -45.4 },
-  { feature: 'sitemap-xml', sparse: -16.0, dense: -43.0 },
-];
-
-const CURSOR_MATRIX = [
-  { feature: 'md-mirrors', sparse: 87.5, dense: 61.7 },
-  { feature: 'agents-md', sparse: 119.9, dense: 85.5 },
-  { feature: 'meta-description', sparse: 69.6, dense: 162.3 },
-  { feature: 'canonical-link', sparse: 1.8, dense: 5.5 },
-  { feature: 'og-tags', sparse: -40.7, dense: 12.4 },
-  { feature: 'agent-skills', sparse: 64.1, dense: 47.0 },
-  { feature: 'llms-txt', sparse: 83.3, dense: 216.9 },
-  { feature: 'sitemap-md', sparse: 89.8, dense: -3.1 },
-  { feature: 'robots-txt', sparse: 45.3, dense: 18.7 },
-  { feature: 'json-ld', sparse: -7.4, dense: 72.4 },
-  { feature: 'sitemap-xml', sparse: 14.3, dense: 83.8 },
-];
-
 const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 ---
 
 <BaseLayout
   title="Which agent-readiness features actually pay off · a14y research"
-  description="A per-feature ablation of the agent-readiness layer. We toggled each of 11 features on and off and measured what each one is worth to an AI agent. Markdown mirrors and meta descriptions do most of the work; one feature actively hurts; and different agents react completely differently."
+  description="A per-feature ablation of the agent-readiness layer. We toggled each of 11 features on and off and measured what each one is worth to an AI agent. Markdown mirrors and meta descriptions do most of the work, and one feature actively hurts."
 >
   <section class="hero hero--compact" aria-labelledby="paper-heading">
     <div class="hero-text" style="grid-column: 1 / -1;">
@@ -76,7 +45,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         <div><dt>Full layer (Claude)</dt><dd><strong>−47%</strong><span class="study-score-detail"> tokens</span></dd></div>
         <div><dt>Best single feature</dt><dd><strong>−48.6%</strong><span class="study-score-detail"> md-mirrors</span></dd></div>
         <div><dt>Answer quality</dt><dd><strong>flat</strong><span class="study-score-detail"> ~75/100 across all variants</span></dd></div>
-        <div><dt>Agents tested</dt><dd><strong>3</strong><span class="study-score-detail"> and they disagree</span></dd></div>
+        <div><dt>Agents</dt><dd><strong>3 tested</strong><span class="study-score-detail">, Claude reported</span></dd></div>
       </dl>
       <p class="study-summary-label">Summary</p>
       <p class="lead study-tldr">
@@ -86,7 +55,8 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         about 47%, and a markdown mirror alone does most of that. But the features do not simply add up: some
         substitute for each other, one (the agent-skills directory) actively makes things worse, and a judge
         re-grade found the answers stayed exactly as accurate. The features make the agent faster and more
-        efficient, not smarter. And the picture changes entirely depending on which agent is reading.
+        efficient, not smarter. We ran the same probe through Codex and Cursor too, but only Claude's runs were
+        cleanly instrumented enough to quantify, which is a finding in itself (more on that below).
       </p>
       <p class="study-back"><a href={`${base}/research/`}>← All research</a></p>
     </div>
@@ -130,8 +100,9 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
       <div><dt>Date</dt><dd><time datetime={FEATURE_ABLATION_PUBLISHED}>{published}</time></dd></div>
     </dl>
     <p class="study-prose study-prose--muted">
-      The matrix below is Claude, the agent that behaved most coherently. Codex and Cursor come after, and they do
-      not agree with Claude or with each other.
+      The matrix below is Claude. We also ran Codex and Cursor, but only Claude's runs could be cleanly tied to the
+      build we served, so every number on this page is Claude's. The "Why this is Claude only" section explains what
+      went wrong with the other two.
     </p>
   </section>
 
@@ -233,69 +204,27 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
 
   <section class="section" aria-labelledby="agents-heading">
     <div class="section-head">
-      <h2 id="agents-heading">Different agents, different web</h2>
-      <p class="section-sub">The per-feature guidance above is Claude's. The other two agents tell different stories.</p>
+      <h2 id="agents-heading">Why this is Claude only</h2>
+      <p class="section-sub">We ran all three agents. Only one could be measured cleanly, and that is worth saying out loud.</p>
     </div>
     <p class="study-prose">
-      Claude is the only agent whose fully featured build beats its own stripped baseline. <strong>Codex goes the
-      other way: features make it 86% more expensive</strong> (its all-on build is its single worst configuration),
-      and the extra spend buys no accuracy. The judge scored Codex at 40.6 of 100, against Claude's 74.5 and
-      Cursor's 71.4. Codex seems to treat discovery files as a reading list rather than a jump list, so every
-      feature is another rabbit hole to follow.
+      The honest answer to "what about Codex and Cursor" is that we could not measure them cleanly on this study, so
+      we are not going to publish numbers we cannot stand behind. The reason is instructive in its own right:
+      today's agent CLIs are still hard to benchmark in a controlled way.
     </p>
     <p class="study-prose">
-      <strong>Cursor depends on one file.</strong> Its quality matches Claude's, but its cost is wildly variable,
-      and removing <code>llms.txt</code> from a full site triples it (+217%), the largest single effect anywhere in
-      the study. Cursor really does read llms.txt and lean on it to navigate. This is the black box again: a signal
-      one agent leans on hard, another barely notices.
+      Codex calls a hosted <code>web_search</code> tool that cannot be turned off, so it reaches the open web (the
+      live a14y.dev included) instead of only the controlled build we served. Its token counts measure that
+      off-target exploration, not the variant in front of it. Cursor, in headless mode, does not surface its fetches
+      at all, so we have no record of what it actually read; its answers looked reasonable, but we cannot attribute
+      its cost to any one feature. Gemini's CLI could not fetch our target and was dropped.
     </p>
-
-    <details class="agent-matrix">
-      <summary>Codex matrix: every feature is a cost</summary>
-      <p class="study-prose study-prose--muted">
-        Same columns as Claude's table (Alone = feature added to a stripped site; Removed = feature
-        taken out of a full site; negative means fewer tokens). For Codex the signs invert: almost every
-        feature adds tokens alone, and removing any one from the full build makes it cheaper, so the
-        all-on build is its single worst configuration.
-      </p>
-      <table class="study-table">
-        <thead>
-          <tr><th scope="col">Feature</th><th scope="col">Alone</th><th scope="col">Removed</th></tr>
-        </thead>
-        <tbody>
-          {CODEX_MATRIX.map((r) => (
-            <tr>
-              <th scope="row"><code>{r.feature}</code></th>
-              <td class="num">{pctFmt(r.sparse)}</td>
-              <td class="num">{pctFmt(r.dense)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </details>
-
-    <details class="agent-matrix">
-      <summary>Cursor matrix: large, erratic, anchored on llms.txt</summary>
-      <p class="study-prose study-prose--muted">
-        Cursor's effects are large and inconsistent. Removing <code>llms.txt</code> from the full build
-        is the single biggest effect anywhere in the study (+216.9%), evidence that Cursor really does
-        lean on that one file to navigate.
-      </p>
-      <table class="study-table">
-        <thead>
-          <tr><th scope="col">Feature</th><th scope="col">Alone</th><th scope="col">Removed</th></tr>
-        </thead>
-        <tbody>
-          {CURSOR_MATRIX.map((r) => (
-            <tr>
-              <th scope="row"><code>{r.feature}</code></th>
-              <td class="num">{pctFmt(r.sparse)}</td>
-              <td class="num">{pctFmt(r.dense)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </details>
+    <p class="study-prose study-prose--muted">
+      That leaves Claude as the only agent whose runs we can tie to the exact build it was given, which is why every
+      number on this page is Claude's. The finding underneath stands on its own: agents differ a great deal in how
+      they read a site, and the tooling to measure them rigorously is still catching up. We will fold other agents
+      back in as their CLIs expose what they fetch. The caveats below list the specific instrumentation gaps.
+    </p>
   </section>
 
   <section class="section" aria-labelledby="means-heading">
@@ -315,7 +244,7 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
         <h3>For agent and model builders</h3>
         <p>
           A discovery file can be read as a jump list or as a reading list, and those have very different cost
-          profiles for the same content, as Claude and Codex show. The outsized pull of the meta description
+          profiles for the same content (we saw both behaviors across the agents we ran). The outsized pull of the meta description
           suggests agents spend real effort early on "what is this page about"; surfacing that cheaply may matter
           more than richer discovery. And the agent-skills directory needs clearer semantics: more than one agent
           failed to benefit from it, and Claude was slowed by it.
@@ -340,10 +269,9 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
     <ul class="study-caveats">
       <li><strong>One task.</strong> A 5-question retrieval probe. Long-form summarization, code generation, or multi-hop reasoning could rank the features very differently. The defensible generalization is "for focused retrieval."</li>
       <li><strong>One site.</strong> Every variant serves the same a14y.dev content; only the discovery scaffolding changes. Whether the deltas hold on other sites is untested.</li>
-      <li><strong>Three agents.</strong> Claude, Codex, Cursor. Gemini was omitted (CLI deprecated). The "agents disagree" finding probably understates the real diversity.</li>
+      <li><strong>Only Claude is reported.</strong> We ran Codex and Cursor too, but Codex's hosted <code>web_search</code> cannot be disabled and reaches the open web, and Cursor's headless mode does not surface its fetches, so neither could be cleanly tied to the served build. Gemini was dropped (its CLI could not fetch). See "Why this is Claude only."</li>
       <li><strong>Rubric bug.</strong> The original strict-substring rubric scored a universally-wrong question as passing ("5%" inside "15%"). Quality figures here use the judge re-grade; the first-draft pass rates were inflated.</li>
       <li><strong>Mirror quality is a lower bound.</strong> The mirrors used v0.2.0-style output. v0.3.0-draft tightens mirror checks, so a fully compliant mirror could save more than 48.6%.</li>
-      <li><strong>Cursor's tool calls are missing.</strong> The adapter did not capture per-tool data, so Cursor's cost is interpretable but the "why" is not.</li>
     </ul>
   </section>
 
@@ -401,19 +329,6 @@ const pctFmt = (n: number): string => `${n > 0 ? '+' : ''}${n.toFixed(1)}%`;
   .study-table tbody th[scope='row'] { font-weight: 500; color: var(--text); }
   .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
   .study-table .behind { color: var(--text-muted); font-family: var(--font-sans, inherit); }
-
-  .agent-matrix { margin: 16px 0 0; border-top: 1px solid var(--border); }
-  .agent-matrix > summary { cursor: pointer; padding: 12px 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
-  .agent-matrix > summary:hover { color: var(--link); }
-  .agent-matrix[open] > summary { color: var(--text); }
-  .agent-matrix .study-prose { margin-top: 8px; }
-
-  /* Press/print: reveal the collapsed agent matrices so a printed PDF carries
-     the full per-agent data, while they stay collapsed on screen. */
-  @media print {
-    .agent-matrix > p { display: block !important; }
-    .agent-matrix > table { display: table !important; }
-  }
 
   .study-implications { display: grid; gap: 32px; }
   .study-implication { max-width: 65ch; }
