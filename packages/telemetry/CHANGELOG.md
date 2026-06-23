@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.33](https://github.com/timothyjordan/a14y/compare/telemetry-v0.1.32...telemetry-v0.1.33) (2026-06-23)
+
+
+### Bug Fixes
+
+* **telemetry:** drop compound IP keys from GA4 props (TJ-771) ([#91](https://github.com/timothyjordan/a14y/issues/91)) ([db31e7d](https://github.com/timothyjordan/a14y/commit/db31e7d2579b7b91d7c5d2364bfa133eaa219116))
+
 ## [0.1.32](https://github.com/timothyjordan/a14y/compare/telemetry-v0.1.31...telemetry-v0.1.32) (2026-06-22)
 
 
