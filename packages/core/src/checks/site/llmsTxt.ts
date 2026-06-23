@@ -1,6 +1,7 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
 import { wellKnownCandidates } from './_wellKnown';
+import { looksLikeHtml } from './_contentType';
 
 const SHARED_KEY = 'site:llms-txt';
 
@@ -75,6 +76,30 @@ export const llmsTxtExists: SiteCheckSpec = {
             status: 'fail',
             message:
               'No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/',
+          };
+        }
+        return {
+          status: 'pass',
+          message: `Found ${r.isFull ? 'llms-full.txt' : 'llms.txt'} at ${r.url}`,
+        };
+      },
+    },
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if llms.txt or llms-full.txt is reachable at /, /.well-known/, or /docs/ and is not an HTML page (a soft-200 SPA shell or styled 404 does not count).',
+      run: async (ctx) => {
+        const r = await loadLlmsTxt(ctx as SiteCheckContext);
+        if (!r.found) {
+          return {
+            status: 'fail',
+            message: 'No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/',
+          };
+        }
+        if (looksLikeHtml(r.body ?? '', r.contentType)) {
+          return {
+            status: 'fail',
+            message: `${r.url} returned an HTML page, not an llms.txt file`,
           };
         }
         return {

@@ -1,6 +1,7 @@
 import { registerCheck } from '../../scorecard/registry';
 import type { SiteCheckContext, SiteCheckSpec } from '../../scorecard/types';
 import { wellKnownCandidates } from './_wellKnown';
+import { looksLikeHtml } from './_contentType';
 
 const SHARED_KEY = 'site:sitemap-md';
 
@@ -10,6 +11,7 @@ export interface SitemapMdResource {
   found: boolean;
   url?: string;
   body?: string;
+  contentType?: string;
   headingCount?: number;
   linkCount?: number;
 }
@@ -29,6 +31,7 @@ export async function loadSitemapMd(ctx: SiteCheckContext): Promise<SitemapMdRes
           found: true,
           url: resp.url,
           body: resp.body,
+          contentType: resp.headers.get('content-type') ?? undefined,
           headingCount: headings,
           linkCount: links,
         };
@@ -57,6 +60,22 @@ export const sitemapMdExists: SiteCheckSpec = {
         return r.found
           ? { status: 'pass', message: r.url }
           : { status: 'fail', message: 'sitemap.md not reachable' };
+      },
+    },
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if /sitemap.md, /docs/sitemap.md, or /.well-known/sitemap.md returns a 2xx response that is not an HTML page (a soft-200 SPA shell or styled 404 does not count).',
+      run: async (ctx) => {
+        const r = await loadSitemapMd(ctx as SiteCheckContext);
+        if (!r.found) return { status: 'fail', message: 'sitemap.md not reachable' };
+        if (looksLikeHtml(r.body ?? '', r.contentType)) {
+          return {
+            status: 'fail',
+            message: `${r.url} returned an HTML page, not a sitemap.md file`,
+          };
+        }
+        return { status: 'pass', message: r.url };
       },
     },
   },
