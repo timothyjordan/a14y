@@ -24,7 +24,7 @@ import {
  * mirror integration reads the rendered HTML Astro just wrote to
  * `dist/<value>` and converts it via Turndown for these.
  */
-const HTML_DERIVED_PAGES: Record<string, string> = {
+export const HTML_DERIVED_PAGES: Record<string, string> = {
   '': 'index.html',
   spec: 'spec/index.html',
   // The chrome-extension page has dynamic content (version, file
@@ -40,6 +40,24 @@ const HTML_DERIVED_PAGES: Record<string, string> = {
   // the mirror from the rendered HTML keeps every part in sync
   // without duplicating any of them in a markdown source.
   press: 'press/index.html',
+  // The research index and each case study are data-driven `.astro`
+  // pages: the index lists case studies from `case-study-data.ts`
+  // and a study like scorecard-evals renders the full article from
+  // its `case-study.json`. There is no markdown source, so without
+  // this the mirror would fall through to the stub. Deriving it
+  // from the rendered HTML serves agents the full case study text
+  // (the entire point of the .md mirror) and stays in sync with the
+  // JSON snapshot automatically.
+  research: 'research/index.html',
+  'research/scorecard-evals': 'research/scorecard-evals/index.html',
+  // The leaderboard, badge generator, and badge embed guide are
+  // likewise data-driven / interactive `.astro` pages with no
+  // markdown source. Deriving their mirrors from the rendered HTML
+  // gives agents the real content (rankings, the four-step embed
+  // guide) instead of the stub.
+  leaderboard: 'leaderboard/index.html',
+  badge: 'badge/index.html',
+  'badge/how-to-embed': 'badge/how-to-embed/index.html',
 };
 
 /**

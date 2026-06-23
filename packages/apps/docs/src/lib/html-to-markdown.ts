@@ -188,6 +188,102 @@ function createService(): TurndownService {
     },
   });
 
+  // Definition lists (`<dl>`): the research case study's headline
+  // numbers and methodology table, plus the badge embed guide's
+  // "paste it in" list, are authored as `<dl>` with each `<dt>`/`<dd>`
+  // pair wrapped in a `<div>`. Turndown has no default rule for `<dl>`,
+  // so it would otherwise flatten the terms and definitions into one
+  // run of mashed-together text. Emit one clean line per pair as
+  // `**term** — definition`, turndown-ing each `<dd>` so inline
+  // `<code>` / `<strong>` / links survive.
+  td.addRule('definition-list', {
+    filter: (node) => isHtmlElement(node) && node.tagName === 'DL',
+    replacement: (_content, node) => {
+      const el = node as HTMLElement;
+      const terms = Array.from(el.querySelectorAll('dt'));
+      const lines = terms
+        .map((dt) => {
+          const term = (dt.textContent ?? '').trim().replace(/\s+/g, ' ');
+          // The matching `<dd>` is the next element sibling of the
+          // `<dt>` (they share a wrapping `<div>` in these pages, but
+          // querying the sibling works regardless of nesting).
+          const dd = dt.nextElementSibling;
+          const def =
+            dd && dd.tagName.toLowerCase() === 'dd'
+              ? td.turndown((dd as HTMLElement).innerHTML).trim().replace(/\s+/g, ' ')
+              : '';
+          if (!term && !def) return '';
+          if (!def) return `**${term}**`;
+          if (!term) return def;
+          return `**${term}** — ${def}`;
+        })
+        .filter(Boolean);
+      return lines.length ? `\n\n${lines.join('\n\n')}\n\n` : '';
+    },
+  });
+
+  // Tables (`<table>`): the research case study's Results, "what the
+  // audit caught", and per-run breakdown tables (and the leaderboard /
+  // press comp tables) are the evidence of those pages. Turndown core
+  // has no table rule, so it would otherwise flatten every cell onto
+  // its own line. Emit a GFM pipe table instead, turndown-ing each cell
+  // so inline `<code>` / `<strong>` survive.
+  td.addRule('gfm-table', {
+    filter: (node) => isHtmlElement(node) && node.tagName === 'TABLE',
+    replacement: (_content, node) => {
+      const el = node as HTMLElement;
+      const rows = Array.from(el.querySelectorAll('tr')).map((tr) =>
+        Array.from(tr.querySelectorAll('th, td')).map((cell) =>
+          // Collapse to a single line and escape pipes so cell content
+          // never breaks the table grid.
+          td
+            .turndown((cell as HTMLElement).innerHTML)
+            .replace(/\s+/g, ' ')
+            .replace(/\|/g, '\\|')
+            .trim(),
+        ),
+      );
+      const nonEmpty = rows.filter((r) => r.length > 0);
+      if (!nonEmpty.length) return '';
+      const colCount = Math.max(...nonEmpty.map((r) => r.length));
+      const pad = (r: string[]): string[] =>
+        r.concat(Array(colCount - r.length).fill(''));
+      const [header, ...body] = nonEmpty;
+      const lines = [
+        `| ${pad(header).join(' | ')} |`,
+        `| ${Array(colCount).fill('---').join(' | ')} |`,
+        ...body.map((r) => `| ${pad(r).join(' | ')} |`),
+      ];
+      return `\n\n${lines.join('\n')}\n\n`;
+    },
+  });
+
+  // Bare `<pre class="study-pre">`: the case study renders the verbatim
+  // prompt, the full agent responses, and the reproduce commands in
+  // preformatted blocks with no inner `<code>`, so Turndown's default
+  // code-block rules don't match them — it would emit the contents as
+  // flowing markdown, collapsing the whitespace and (worse) turning the
+  // `#`/`##` lines inside an agent's markdown answer into real document
+  // headings. Emit a fenced code block from the raw text so the block
+  // stays verbatim and never pollutes the mirror's heading outline.
+  td.addRule('study-pre', {
+    filter: (node) =>
+      isHtmlElement(node) &&
+      node.tagName === 'PRE' &&
+      node.classList.contains('study-pre'),
+    replacement: (_content, node) => {
+      const text = ((node as HTMLElement).textContent ?? '').replace(/\n+$/, '');
+      // Pick a fence longer than any run of backticks inside the block
+      // so embedded code samples can't terminate it early.
+      const longestRun = (text.match(/`+/g) ?? []).reduce(
+        (max, run) => Math.max(max, run.length),
+        0,
+      );
+      const fence = '`'.repeat(Math.max(3, longestRun + 1));
+      return `\n\n${fence}\n${text}\n${fence}\n\n`;
+    },
+  });
+
   return td;
 }
 
