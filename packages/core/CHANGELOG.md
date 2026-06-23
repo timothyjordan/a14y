@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.36](https://github.com/timothyjordan/a14y/compare/core-v0.3.35...core-v0.3.36) (2026-06-23)
+
+
+### Features
+
+* **core:** harden discovery *.exists checks vs soft-200 HTML (TJ-872) ([#92](https://github.com/timothyjordan/a14y/issues/92)) ([416a260](https://github.com/timothyjordan/a14y/commit/416a26096a091be44e0430eac38bef791d7e37dd))
+
 ## [0.3.35](https://github.com/timothyjordan/a14y/compare/core-v0.3.34...core-v0.3.35) (2026-06-22)
 
 
