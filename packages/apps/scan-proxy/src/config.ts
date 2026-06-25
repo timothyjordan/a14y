@@ -7,6 +7,33 @@ export const ALLOWED_ORIGINS: readonly string[] = [
   'http://localhost:3000', // alternate docs dev port
 ];
 
+/** Env var holding extra dev-only origins, comma-separated. */
+export const EXTRA_ORIGINS_ENV = 'PROXY_EXTRA_ORIGINS';
+
+/**
+ * Parse the comma-separated `PROXY_EXTRA_ORIGINS` value into a clean origin
+ * list: trimmed, with blanks dropped. Empty/undefined yields an empty list, so
+ * the allow-list stays exactly `ALLOWED_ORIGINS` unless the operator opts in.
+ */
+export function parseExtraOrigins(raw: string | undefined): string[] {
+  if (!raw) return [];
+  return raw
+    .split(',')
+    .map((o) => o.trim())
+    .filter((o) => o.length > 0);
+}
+
+/**
+ * The effective CORS allow-list for a given environment: the hardcoded
+ * `ALLOWED_ORIGINS` plus any `PROXY_EXTRA_ORIGINS` entries, de-duplicated.
+ * Production leaves the env var unset, so the result equals `ALLOWED_ORIGINS`.
+ */
+export function resolveAllowedOrigins(
+  env: { [key: string]: string | undefined } = {},
+): readonly string[] {
+  return [...new Set([...ALLOWED_ORIGINS, ...parseExtraOrigins(env[EXTRA_ORIGINS_ENV])])];
+}
+
 /** Largest upstream body we will relay, in bytes. */
 export const MAX_BODY_BYTES = 5 * 1024 * 1024; // 5 MB
 

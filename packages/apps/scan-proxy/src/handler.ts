@@ -15,6 +15,9 @@ export interface ProxyDeps {
   rateLimiter?: RateLimiter;
   /** Override the body cap (tests). Defaults to MAX_BODY_BYTES. */
   maxBodyBytes?: number;
+  /** CORS allow-list. Defaults to the hardcoded `ALLOWED_ORIGINS`; the server
+   *  passes the env-resolved list so `PROXY_EXTRA_ORIGINS` takes effect. */
+  allowedOrigins?: readonly string[];
 }
 
 /**
@@ -34,7 +37,8 @@ export interface ProxyDeps {
 export async function handleProxy(request: Request, deps: ProxyDeps = {}): Promise<Response> {
   const fetchImpl = deps.fetchImpl ?? fetch;
   const maxBodyBytes = deps.maxBodyBytes ?? MAX_BODY_BYTES;
-  const cors = corsHeaders(request.headers.get('origin'));
+  const allowedOrigins = deps.allowedOrigins ?? ALLOWED_ORIGINS;
+  const cors = corsHeaders(request.headers.get('origin'), allowedOrigins);
 
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: cors });
@@ -101,12 +105,12 @@ export async function handleProxy(request: Request, deps: ProxyDeps = {}): Promi
   return new Response(body as BodyInit | null, { status: 200, headers });
 }
 
-function corsHeaders(origin: string | null): Headers {
+function corsHeaders(origin: string | null, allowedOrigins: readonly string[]): Headers {
   const headers = new Headers({
     'access-control-allow-methods': 'GET, HEAD, OPTIONS',
     vary: 'Origin',
   });
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+  if (origin && allowedOrigins.includes(origin)) {
     headers.set('access-control-allow-origin', origin);
   }
   return headers;
