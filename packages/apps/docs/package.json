@@ -11,6 +11,7 @@
     "preview": "node scripts/preview.mjs",
     "pretest": "node ../../../scripts/inject-telemetry-config.mjs docs",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "build:og": "node scripts/build-og-image.mjs",
     "build:site-og": "tsx scripts/build-site-og.ts",
     "press:capture": "node scripts/capture-press-cli.mjs",
@@ -27,8 +28,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
+    "@playwright/test": "^1.61.1",
     "@types/turndown": "^5.0.6",
-    "playwright": "^1.49.0",
+    "playwright": "^1.61.1",
     "sharp": "^0.33.5",
     "tsx": "^4.19.2",
     "turndown": "^7.2.4",

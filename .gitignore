@@ -38,6 +38,11 @@ packages/apps/docs/dist-baseline/
 # Coverage reports
 coverage/
 
+# Playwright E2E artifacts
+test-results/
+playwright-report/
+.playwright/
+
 # testbotpro adversarial-test work dir (scratch; generated tests are promoted
 # into each package's test/ dir and committed there)
 .testbotpro/
