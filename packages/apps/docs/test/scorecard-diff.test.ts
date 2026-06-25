@@ -102,6 +102,9 @@ describe('diffScorecards', () => {
     //     as a spec-PR addition.
     //   - The modified-date pair was bumped 1.0.0 → 1.1.0 to require
     //     the value to parse as the spec-defined date format.
+    //   - The discovery-file existence trio (agents-md / llms-txt /
+    //     sitemap-md .exists) was bumped 1.0.0 → 1.1.0 to reject soft-200
+    //     responses, after the 50k bulk survey exposed 1.0.0 false positives.
     // If a future PR removes / further bumps these, update this assertion.
     const diff = getDraftDiff();
     expect(diff.added.map((a) => a.id).sort()).toEqual([
@@ -119,7 +122,10 @@ describe('diffScorecards', () => {
         .map((b) => ({ id: b.id, fromImpl: b.fromImpl, toImpl: b.toImpl }))
         .sort((a, b) => a.id.localeCompare(b.id)),
     ).toEqual([
+      { id: 'agents-md.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'html.json-ld.date-modified', fromImpl: '1.0.0', toImpl: '1.1.0' },
+      { id: 'llms-txt.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
+      { id: 'sitemap-md.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'sitemap-xml.has-lastmod', fromImpl: '1.0.0', toImpl: '1.1.0' },
     ]);
   });
@@ -132,14 +138,17 @@ describe('getDraftDiffEntries', () => {
       .map((e) => (e.kind === 'methodology-bumped' ? '' : e.id))
       .sort();
     expect(checkIds).toEqual([
+      'agents-md.exists',
       'discovery.in-page-link',
       'discovery.no-duplicate-content',
       'html.json-ld.date-modified',
       'html.ssr-content',
       'http.no-interstitial',
+      'llms-txt.exists',
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',
+      'sitemap-md.exists',
       'sitemap-xml.has-lastmod',
     ]);
   });
