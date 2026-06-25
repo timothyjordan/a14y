@@ -131,4 +131,20 @@ describe('handleProxy', () => {
     });
     expect(res.headers.get('access-control-allow-origin')).toBeNull();
   });
+
+  it('echoes an origin supplied via deps.allowedOrigins (env-extra path)', async () => {
+    const devOrigin = 'http://100.68.69.57:4330';
+    // Without the dep this origin is rejected; the server passes the
+    // env-resolved list here so PROXY_EXTRA_ORIGINS origins are allowed.
+    const rejected = await handleProxy(req('https://example.com/', { origin: devOrigin }), {
+      fetchImpl: stubFetch(new Response('ok', { status: 200 })).impl,
+    });
+    expect(rejected.headers.get('access-control-allow-origin')).toBeNull();
+
+    const allowed = await handleProxy(req('https://example.com/', { origin: devOrigin }), {
+      fetchImpl: stubFetch(new Response('ok', { status: 200 })).impl,
+      allowedOrigins: [ORIGIN, devOrigin],
+    });
+    expect(allowed.headers.get('access-control-allow-origin')).toBe(devOrigin);
+  });
 });

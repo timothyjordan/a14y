@@ -33,5 +33,12 @@ test('expanding a leaderboard row runs a scan and shows a score', async ({ page 
   const firstToggle = page.locator('.lb-scan-toggle').first();
   await firstToggle.click();
   await expect(firstToggle).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('.scan-score-num').first()).toBeVisible({ timeout: 30000 });
+  const scoreNum = page.locator('.scan-score-num').first();
+  await expect(scoreNum).toBeVisible({ timeout: 30000 });
+
+  // The shared scan-results stylesheet must load on the leaderboard, not just
+  // the homepage: the score number is 2.6rem (~41.6px) when styled, vs the
+  // ~16px browser default if the CSS is missing (the bug this guards against).
+  const fontSizePx = await scoreNum.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+  expect(fontSizePx).toBeGreaterThan(30);
 });

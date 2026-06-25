@@ -37,7 +37,7 @@ both work when running the server locally.)
 - **Body cap:** 5 MB per response (`MAX_BODY_BYTES`).
 - **Timeout:** 30s per upstream request.
 - **Rate limit:** per-IP token bucket (per instance).
-- **CORS allow-list:** only `a14y.dev`, `baseline.a14y.dev`, and localhost dev ports.
+- **CORS allow-list:** only `a14y.dev`, `baseline.a14y.dev`, and localhost dev ports (plus any `PROXY_EXTRA_ORIGINS` for local dev; unset in production).
 - **Privacy:** target URLs are never logged.
 
 Tunables live in `src/config.ts`.
@@ -53,6 +53,25 @@ npm run build && npm start
 ```
 
 Point the docs app at it with `PUBLIC_SCAN_PROXY_URL=http://localhost:8787`.
+
+### Scanning from a non-default origin (dev containers, LAN, Tailscale)
+
+The CORS allow-list in `src/config.ts` covers `a14y.dev` and the standard
+localhost docs ports. If you serve the docs app from another origin (a
+dev-container port, a LAN IP, or a Tailscale address like
+`http://100.68.69.57:4330`), the proxy will reject it and scans fail. Add that
+origin for the session with `PROXY_EXTRA_ORIGINS` (comma-separated, empty by
+default so production stays locked down):
+
+```bash
+# the proxy must be reachable from the browser, so bind/forward it accordingly
+PROXY_EXTRA_ORIGINS=http://100.68.69.57:4330 npm run dev
+# then start the docs app pointed at the proxy on that same host:
+PUBLIC_SCAN_PROXY_URL=http://100.68.69.57:8787 npm run dev   # in packages/apps/docs
+```
+
+The proxy logs how many extra origins it picked up at startup. Leave the var
+unset in production: the allow-list is then exactly the hardcoded set.
 
 Run the tests:
 

@@ -1,12 +1,21 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { handleProxy } from './handler.js';
 import { createRateLimiter } from './rate-limit.js';
-import { RATE_LIMIT_CAPACITY, RATE_LIMIT_REFILL_PER_SEC } from './config.js';
+import {
+  ALLOWED_ORIGINS,
+  EXTRA_ORIGINS_ENV,
+  RATE_LIMIT_CAPACITY,
+  RATE_LIMIT_REFILL_PER_SEC,
+  resolveAllowedOrigins,
+} from './config.js';
 
 const rateLimiter = createRateLimiter({
   capacity: RATE_LIMIT_CAPACITY,
   refillPerSec: RATE_LIMIT_REFILL_PER_SEC,
 });
+
+// Hardcoded allow-list plus any PROXY_EXTRA_ORIGINS (unset in production).
+const allowedOrigins = resolveAllowedOrigins(process.env);
 
 // Cloud Run injects PORT (8080). Fall back to 8787 for local dev.
 const port = Number(process.env.PORT ?? 8787);
@@ -32,7 +41,7 @@ async function writeResponse(res: ServerResponse, response: Response): Promise<v
 }
 
 const server = createServer((req, res) => {
-  handleProxy(toRequest(req), { rateLimiter })
+  handleProxy(toRequest(req), { rateLimiter, allowedOrigins })
     .then((response) => writeResponse(res, response))
     .catch(() => {
       res.statusCode = 500;
@@ -43,4 +52,6 @@ const server = createServer((req, res) => {
 server.listen(port, () => {
   // Coarse startup log only; never logs target URLs.
   console.log(`a14y scan-proxy listening on :${port}`);
+  const extra = allowedOrigins.length - ALLOWED_ORIGINS.length;
+  if (extra > 0) console.log(`  + ${extra} extra CORS origin(s) from ${EXTRA_ORIGINS_ENV}`);
 });
