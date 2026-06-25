@@ -289,6 +289,7 @@ const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
   .lb-scan-toggle { font: inherit; color: var(--link); background: none; border: none; padding: 0; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
   .lb-scan-toggle:hover { color: var(--link-hover); }
   .lb-scan-drawer { display: block; padding: 0.5rem 14px 1rem; border-top: 1px solid var(--border); }
+  .lb-scan-drawer[hidden] { display: none; }
 
   @media (max-width: 760px) {
     .lb-head { display: none; }
