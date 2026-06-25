@@ -9,6 +9,9 @@ import {
   getBulkLeaderboard,
   getDefaultBulkVersion,
 } from '~/lib/bulk-data';
+// Shared with the homepage ScanWidget: styles the scan drawer's results, which
+// run-scan.ts builds in JS when a leaderboard row is expanded.
+import '~/styles/scan-results.css';
 
 // EMBARGOED (TJ-549): web-scale bulk leaderboard. Stays on a local branch until
 // launch. Entries are pre-slimmed (host/score/signal-bitmask/top-2-failures) so
