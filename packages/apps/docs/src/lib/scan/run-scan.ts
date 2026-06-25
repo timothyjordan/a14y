@@ -14,6 +14,42 @@ import { classifyScanError, issueBucket, scoreBucket, trackEvent } from '../anal
 
 type StatusKind = 'busy' | 'error';
 
+export interface ScanIntoOptions {
+  url: string;
+  scorecardVersion?: string;
+  statusEl: HTMLElement;
+  resultsEl: HTMLElement;
+  onStateChange?: (running: boolean) => void;
+}
+
+/** Run a page-mode scan for a URL and render results into resultsEl.
+ *  Shared by the homepage widget and the leaderboard click-to-scan. */
+export async function scanInto(opts: ScanIntoOptions): Promise<void> {
+  const target = normalizeUrl(opts.url);
+  if (!target) {
+    trackEvent('scan_error', { error_class: 'invalid_url' });
+    showStatus(opts.statusEl, 'Enter a valid site URL, like example.com', 'error');
+    return;
+  }
+  if (!SCAN_PROXY_URL) {
+    showStatus(opts.statusEl, 'Scanning is not available right now. Try the CLI or extension below.', 'error');
+    return;
+  }
+  opts.onStateChange?.(true);
+  opts.resultsEl.hidden = true;
+  opts.resultsEl.replaceChildren();
+  showStatus(opts.statusEl, 'Loading the scan engine…', 'busy');
+  trackEvent('scan_started', { scorecard_version: opts.scorecardVersion ?? 'latest' });
+  try {
+    await runScan(target, opts.scorecardVersion, opts.statusEl, opts.resultsEl);
+  } catch (err) {
+    trackEvent('scan_error', { error_class: classifyScanError(err) });
+    showStatus(opts.statusEl, scanErrorMessage(err), 'error');
+  } finally {
+    opts.onStateChange?.(false);
+  }
+}
+
 export function initScanWidget(root: ParentNode = document): void {
   const form = root.querySelector<HTMLFormElement>('[data-scan-form]');
   if (!form) return;
@@ -36,29 +72,14 @@ export function initScanWidget(root: ParentNode = document): void {
       showStatus(statusEl, 'Enter a valid site URL, like example.com', 'error');
       return;
     }
-    if (!SCAN_PROXY_URL) {
-      showStatus(statusEl, 'Scanning is not available right now. Try the CLI or extension below.', 'error');
-      return;
-    }
 
-    const scorecardVersion = scorecardSelect?.value || undefined;
-
-    running = true;
-    setBusy(submit, true);
-    resultsEl.hidden = true;
-    resultsEl.replaceChildren();
-    showStatus(statusEl, 'Loading the scan engine…', 'busy');
-    trackEvent('scan_started', { scorecard_version: scorecardVersion ?? 'latest' });
-
-    void runScan(target, scorecardVersion, statusEl, resultsEl)
-      .catch((err) => {
-        trackEvent('scan_error', { error_class: classifyScanError(err) });
-        showStatus(statusEl, scanErrorMessage(err), 'error');
-      })
-      .finally(() => {
-        running = false;
-        setBusy(submit, false);
-      });
+    void scanInto({
+      url: input.value,
+      scorecardVersion: scorecardSelect?.value || undefined,
+      statusEl,
+      resultsEl,
+      onStateChange: (busy) => { running = busy; setBusy(submit, busy); },
+    });
   });
 }
 

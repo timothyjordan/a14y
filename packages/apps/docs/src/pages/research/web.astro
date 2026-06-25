@@ -1,0 +1,470 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import {
+  SIGNAL_BITS,
+  bulkAdoptionPct,
+  bulkHistogramBuckets,
+  bulkMeanScore,
+  getBulkLeaderboard,
+  getDefaultBulkVersion,
+} from '~/lib/bulk-data';
+
+// EMBARGOED (TJ-549): web-scale bulk leaderboard. Stays on a local branch until
+// launch. Entries are pre-slimmed (host/score/signal-bitmask/top-2-failures) so
+// the whole ~50k-row set embeds once and the table paginates + searches it
+// client-side; only ~50 rows live in the DOM at a time.
+const version = getDefaultBulkVersion();
+const lb = version ? getBulkLeaderboard(version) : null;
+
+// The CrUX most-visited list we sample (see fetch-crux.ts DEFAULT_CRUX_URL).
+const CRUX_LIST_URL = 'https://github.com/zakird/crux-top-lists/blob/main/data/global/current.csv.gz';
+
+const hist = lb ? bulkHistogramBuckets(lb) : [];
+const adoption = lb ? bulkAdoptionPct(lb) : { llmsTxt: 0, agentsMd: 0, sitemap: 0, robots: 0 };
+const meanScore = lb ? bulkMeanScore(lb) : 0;
+const generatedHuman = lb
+  ? new Date(lb.generatedAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC', // the batch's canonical (UTC) date, not the build machine's
+    })
+  : '';
+
+// The data the client renders from. `r` (rank) is the row's position in the
+// score-sorted set, so it stays meaningful while filtered.
+const rows = lb ? lb.entries.map((e, i) => ({ ...e, r: i + 1 })) : [];
+---
+
+<BaseLayout
+  title="Web leaderboard: agent readability at scale"
+  description="How AI-agent-ready is the web? Page-mode scores for the CrUX most-visited origins, with llms.txt / AGENTS.md / sitemap / robots.txt adoption."
+  wide={true}
+>
+  <section class="hero hero--compact">
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">bulk</span>
+        <span>web-scale · page mode{version ? ` · scorecard v${version}` : ''}</span>
+      </div>
+      <h1>How agent-ready is the web?</h1>
+      {lb ? (
+        <>
+          <p class="lead research-lead">
+            Page-mode agent-readability scores for <strong>{lb.totalScanned.toLocaleString()}</strong> of
+            the world's most-visited origins.
+          </p>
+          <ul class="hero-footnote">
+            <li>
+              The <a href={CRUX_LIST_URL} target="_blank" rel="noopener">CrUX 100k</a> most-visited list,
+              deduped to one per registrable domain and filtered for adult/gambling/spam.
+            </li>
+            <li>Generated {generatedHuman}.</li>
+          </ul>
+        </>
+      ) : (
+        <p class="lead research-lead">No bulk leaderboard data found in <code>src/data/bulk/</code>.</p>
+      )}
+    </div>
+  </section>
+
+  {lb && (
+    <>
+      <section class="research-stats">
+        <div class="stat">
+          <span class="stat-value">{lb.totalScanned.toLocaleString()}</span>
+          <span class="stat-label">Sites scored</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{meanScore}</span>
+          <span class="stat-label">Mean score</span>
+        </div>
+        {SIGNAL_BITS.map((s) => (
+          <div class="stat">
+            <span class="stat-value">{adoption[s.key]}%</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </section>
+
+      <section class="research-section" id="score-distribution">
+        <header class="section-header"><h2>Score distribution</h2></header>
+        <p class="section-lead">
+          Sites per 20-point score bucket. Most of the popular web scores low in page mode.
+          Agent-readiness signals are still rare at scale.
+        </p>
+        <ScoreHistogram buckets={hist} />
+      </section>
+
+      <section class="research-section" id="adoption">
+        <header class="section-header"><h2>Signal adoption</h2></header>
+        <p class="section-lead">Share of scored sites exposing each agent-readiness signal.</p>
+        <div class="adopt">
+          {SIGNAL_BITS.map((s) => (
+            <div class="adopt-row">
+              <span class="adopt-label">{s.label}</span>
+              <span class="adopt-track"><span class="adopt-fill" style={`width:${adoption[s.key]}%`}></span></span>
+              <span class="adopt-val">{adoption[s.key]}%</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="research-section" id="leaderboard">
+        <header class="section-header">
+          <h2>Leaderboard</h2>
+          <div class="filter-bar" data-research-filter>
+            <label class="search">
+              <span class="sr-only">Search by domain</span>
+              <input type="search" placeholder="Search domain…" data-filter-name autocomplete="off" />
+            </label>
+            <div class="sig-toggles">
+              {SIGNAL_BITS.map((s) => (
+                <label class="sig-toggle">
+                  <input type="checkbox" data-filter-signal value={s.bit} />
+                  has {s.label}
+                </label>
+              ))}
+            </div>
+            <button type="button" class="reset-btn" data-filter-reset hidden>Reset</button>
+          </div>
+        </header>
+        <p class="visible-count" data-visible-count>Loading…</p>
+        <p class="filter-empty" data-filter-empty hidden>
+          No sites match. <button type="button" class="linklike" data-filter-reset-link>Reset filters.</button>
+        </p>
+
+        <div class="lb-table" role="table" aria-label="Bulk leaderboard">
+          <div class="lb-head" role="row">
+            <span role="columnheader" class="col-rank">#</span>
+            <span role="columnheader" class="col-site">Domain</span>
+            <span role="columnheader" class="col-score">Score</span>
+            <span role="columnheader" class="col-signals">Signals</span>
+            <span role="columnheader" class="col-fails">Top failures</span>
+          </div>
+          <div class="lb-body" data-lb-body role="rowgroup"></div>
+        </div>
+
+        <nav class="pager" data-pager hidden>
+          <button type="button" class="pager-btn" data-pager-prev>Prev</button>
+          <span class="pager-status" data-pager-status></span>
+          <button type="button" class="pager-btn" data-pager-next>Next</button>
+        </nav>
+
+        {/* Embedded compact dataset the client paginates/searches over. */}
+        <script type="application/json" data-lb-data set:html={JSON.stringify(rows)} />
+      </section>
+
+      <section class="research-section research-method" id="how-this-is-built">
+        <header class="section-header"><h2>How this is built</h2></header>
+        <p class="section-lead">
+          Origins come from the CrUX most-visited list, deduped to one per registrable domain and
+          filtered for adult/gambling/spam. Each homepage is scored in page mode against scorecard
+          v{version}. Unreachable origins (DNS/TLS failures, bot/geo blocks) are dropped.
+        </p>
+      </section>
+    </>
+  )}
+</BaseLayout>
+
+<style>
+  .research-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 24px 0 32px;
+  }
+  .stat {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+  }
+
+  .research-section { margin: 40px 0; }
+  .section-header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .section-lead { max-width: 64ch; color: var(--text-muted); margin: 6px 0 16px; }
+
+  /* adoption bars */
+  .adopt { display: flex; flex-direction: column; gap: 10px; max-width: 560px; }
+  .adopt-row { display: grid; grid-template-columns: 90px 1fr 48px; align-items: center; gap: 12px; }
+  .adopt-label { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+  .adopt-track { height: 12px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .adopt-fill { display: block; height: 100%; background: color-mix(in oklch, var(--brand-ink) 45%, var(--surface)); }
+  :root[data-theme='dark'] .adopt-fill { background: color-mix(in oklch, var(--brand-cyan) 50%, var(--surface)); }
+  .adopt-val { font-family: var(--font-mono); font-size: 13px; text-align: right; }
+
+  /* filter bar */
+  .filter-bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .search input {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 6px 10px; font-size: 13px; min-width: 200px;
+  }
+  .sig-toggles { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+  .sig-toggle {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+    border: 1px solid var(--border); border-radius: 999px;
+    font-family: var(--font-mono); font-size: 12px; cursor: pointer;
+  }
+  .reset-btn, .linklike {
+    appearance: none; background: none; border: none; color: var(--brand-ink);
+    cursor: pointer; font: inherit; text-decoration: underline; padding: 0;
+  }
+  .visible-count { color: var(--text-subtle); font-size: 13px; margin: 14px 0 8px; }
+  .filter-empty { color: var(--text-muted); }
+
+  /* hero methodology footnote */
+  .hero-footnote {
+    list-style: none; margin: 10px 0 0; padding: 0; max-width: 64ch;
+    color: var(--text-subtle); font-size: 13px; line-height: 1.5;
+  }
+  .hero-footnote li { padding-left: 14px; position: relative; }
+  .hero-footnote li::before { content: '·'; position: absolute; left: 2px; }
+  .hero-footnote a { color: var(--brand-ink); }
+
+  /* Table/row styles live in the GLOBAL block below: the body rows are created
+     in JS (document.createElement), so they never receive Astro's scope
+     attribute and scoped selectors wouldn't match them. */
+
+  /* pager */
+  .pager { display: flex; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .pager[hidden] { display: none; }
+  .pager-btn {
+    appearance: none; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 6px 12px; font-family: var(--font-mono);
+    font-size: 12px; cursor: pointer;
+  }
+  .pager-btn:disabled { opacity: 0.4; cursor: default; }
+  .pager-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+</style>
+
+<!-- Global: the leaderboard body rows are built in JS (document.createElement),
+     so they never get Astro's scoped data attribute, so scoped selectors wouldn't
+     match them and the table would render unstyled. These class names are
+     page-specific, so global scope is safe. -->
+<style is:global>
+  .lb-table { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .lb-head, .lb-row {
+    display: grid;
+    grid-template-columns: 56px minmax(180px, 1.6fr) 64px minmax(220px, 1.2fr) minmax(160px, 1.4fr);
+    align-items: center; gap: 12px; padding: 8px 14px;
+  }
+  .lb-head {
+    background: var(--surface-alt); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-subtle); font-family: var(--font-mono);
+  }
+  .lb-row { border-top: 1px solid var(--border); font-size: 14px; }
+  .col-rank { font-family: var(--font-mono); color: var(--text-subtle); }
+  .col-site a { color: var(--text); text-decoration: none; }
+  .col-site a:hover { text-decoration: underline; }
+  .col-score { font-family: var(--font-mono); font-weight: 700; text-align: right; }
+  .band-excellent { color: #15803d; }
+  .band-good { color: #65a30d; }
+  .band-fair { color: #ca8a04; }
+  .band-poor { color: #dc2626; }
+  .col-signals { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+  .sig { font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); }
+  .sig.on { background: color-mix(in oklch, var(--brand-ink) 16%, var(--surface)); color: var(--text); border-color: color-mix(in oklch, var(--brand-ink) 40%, var(--border)); }
+  .sig.off { color: var(--text-subtle); opacity: 0.5; }
+  .col-fails { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .lb-scan-toggle { font: inherit; color: var(--link); background: none; border: none; padding: 0; cursor: pointer; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
+  .lb-scan-toggle:hover { color: var(--link-hover); }
+  .lb-scan-drawer { display: block; padding: 0.5rem 14px 1rem; border-top: 1px solid var(--border); }
+  .lb-scan-drawer[hidden] { display: none; }
+
+  @media (max-width: 760px) {
+    .lb-head { display: none; }
+    .lb-row { grid-template-columns: 40px 1fr 56px; row-gap: 4px; }
+    .col-signals, .col-fails { grid-column: 2 / -1; }
+  }
+</style>
+
+<script>
+  import { scanInto } from '~/lib/scan/run-scan';
+
+  const PAGE_SIZE = 50;
+  const node = document.querySelector('[data-lb-data]');
+  const body = document.querySelector('[data-lb-body]');
+  if (node && body) {
+    let DATA: Array<{ r: number; o: string; s: number; g: number; f?: string[] }> = [];
+    try { DATA = JSON.parse(node.textContent || '[]'); } catch (e) { DATA = []; }
+
+    // bit -> label, in display order (mirrors SIGNAL_BITS in bulk-data.ts)
+    const SIGS = [
+      { bit: 1, label: 'llms.txt' },
+      { bit: 2, label: 'AGENTS.md' },
+      { bit: 4, label: 'sitemap' },
+      { bit: 8, label: 'robots.txt' },
+    ];
+
+    const bar = document.querySelector('[data-research-filter]');
+    const nameInput = bar && bar.querySelector<HTMLInputElement>('[data-filter-name]');
+    const sigBoxes = bar ? bar.querySelectorAll<HTMLInputElement>('[data-filter-signal]') : ([] as HTMLInputElement[]);
+    const resetBtn = bar && bar.querySelector<HTMLButtonElement>('[data-filter-reset]');
+    const emptyMsg = document.querySelector<HTMLElement>('[data-filter-empty]');
+    const emptyResetLink = emptyMsg && emptyMsg.querySelector<HTMLButtonElement>('[data-filter-reset-link]');
+    const counter = document.querySelector<HTMLElement>('[data-visible-count]');
+    const pager = document.querySelector<HTMLElement>('[data-pager]');
+    const prevBtn = pager && pager.querySelector<HTMLButtonElement>('[data-pager-prev]');
+    const nextBtn = pager && pager.querySelector<HTMLButtonElement>('[data-pager-next]');
+    const pagerStatus = pager && pager.querySelector<HTMLElement>('[data-pager-status]');
+
+    let currentPage = 1;
+    const TOTAL = DATA.length;
+
+    function band(s: number): string { return s >= 85 ? 'excellent' : s >= 70 ? 'good' : s >= 50 ? 'fair' : 'poor'; }
+    function cell(cls: string, txt: string): HTMLSpanElement {
+      const el = document.createElement('span');
+      el.className = cls; el.setAttribute('role', 'cell'); el.textContent = txt;
+      return el;
+    }
+    function rowPair(e: { r: number; o: string; s: number; g: number; f?: string[] }): [HTMLDivElement, HTMLDivElement] {
+      const row = document.createElement('div');
+      row.className = 'lb-row'; row.setAttribute('role', 'row');
+      row.appendChild(cell('col-rank', String(e.r)));
+
+      const site = document.createElement('span');
+      site.className = 'col-site'; site.setAttribute('role', 'cell');
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lb-scan-toggle';
+      btn.textContent = e.o;
+      btn.setAttribute('aria-expanded', 'false');
+      site.appendChild(btn);
+      row.appendChild(site);
+
+      row.appendChild(cell('col-score band-' + band(e.s), String(e.s)));
+
+      const sig = document.createElement('span');
+      sig.className = 'col-signals'; sig.setAttribute('role', 'cell');
+      SIGS.forEach(function (s) {
+        const c = document.createElement('span');
+        c.className = 'sig ' + ((e.g & s.bit) ? 'on' : 'off');
+        c.title = s.label; c.textContent = s.label; sig.appendChild(c);
+      });
+      row.appendChild(sig);
+      row.appendChild(cell('col-fails', e.f && e.f.length ? e.f.join(', ') : 'none'));
+
+      const drawer = document.createElement('div');
+      drawer.className = 'lb-scan-drawer';
+      drawer.hidden = true;
+
+      const status = document.createElement('p');
+      status.className = 'scan-status';
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+      status.hidden = true;
+
+      const results = document.createElement('div');
+      results.className = 'scan-results';
+      results.hidden = true;
+
+      drawer.append(status, results);
+
+      let scanned = false;
+      btn.addEventListener('click', () => {
+        const open = drawer.hidden;
+        drawer.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        if (open && !scanned) {
+          scanned = true;
+          void scanInto({ url: 'https://' + e.o, statusEl: status, resultsEl: results });
+        }
+      });
+
+      return [row, drawer];
+    }
+
+    function activeBits(): number {
+      let bits = 0;
+      sigBoxes.forEach(function (cb) { if (cb.checked) bits |= parseInt(cb.value, 10); });
+      return bits;
+    }
+    function defaultsActive(): boolean {
+      if (nameInput && nameInput.value) return false;
+      for (let i = 0; i < sigBoxes.length; i++) if ((sigBoxes as NodeListOf<HTMLInputElement>)[i].checked) return false;
+      return true;
+    }
+
+    function render() {
+      const q = (nameInput && nameInput.value || '').trim().toLowerCase();
+      const need = activeBits();
+      let matching = DATA;
+      if (q !== '' || need !== 0) {
+        matching = DATA.filter(function (e) {
+          return (q === '' || e.o.indexOf(q) >= 0) && (e.g & need) === need;
+        });
+      }
+      const totalPages = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const slice = matching.slice(start, start + PAGE_SIZE);
+
+      const frag = document.createDocumentFragment();
+      slice.forEach(function (e) {
+        const [row, drawer] = rowPair(e);
+        frag.appendChild(row);
+        frag.appendChild(drawer);
+      });
+      (body as Element).replaceChildren(frag);
+
+      if (counter) {
+        if (matching.length === 0) counter.textContent = 'Showing 0 of ' + TOTAL.toLocaleString() + ' sites.';
+        else counter.textContent =
+          'Showing ' + (start + 1).toLocaleString() + '–' + (start + slice.length).toLocaleString() +
+          ' of ' + matching.length.toLocaleString() + (matching.length === TOTAL ? '' : ' filtered') + ' sites.';
+      }
+      if (emptyMsg) matching.length === 0 ? emptyMsg.removeAttribute('hidden') : emptyMsg.setAttribute('hidden', 'hidden');
+      if (resetBtn) defaultsActive() ? resetBtn.setAttribute('hidden', 'hidden') : resetBtn.removeAttribute('hidden');
+      if (pager) {
+        matching.length <= PAGE_SIZE ? pager.setAttribute('hidden', 'hidden') : pager.removeAttribute('hidden');
+        if (prevBtn) prevBtn.disabled = currentPage <= 1;
+        if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+        if (pagerStatus) pagerStatus.textContent = 'Page ' + currentPage + ' of ' + totalPages.toLocaleString();
+      }
+    }
+
+    function onFilter() { currentPage = 1; render(); }
+    function reset() {
+      if (nameInput) nameInput.value = '';
+      sigBoxes.forEach(function (cb) { cb.checked = false; });
+      currentPage = 1; render();
+      if (nameInput) nameInput.focus();
+    }
+    function changePage(d: number) {
+      currentPage += d; render();
+      const anchor = document.getElementById('leaderboard');
+      if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+
+    if (nameInput) nameInput.addEventListener('input', onFilter);
+    sigBoxes.forEach(function (cb) { cb.addEventListener('change', onFilter); });
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    if (emptyResetLink) emptyResetLink.addEventListener('click', reset);
+    if (prevBtn) prevBtn.addEventListener('click', function () { changePage(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { changePage(1); });
+
+    render();
+  }
+</script>

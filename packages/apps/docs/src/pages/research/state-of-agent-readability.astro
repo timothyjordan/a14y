@@ -1,0 +1,502 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import { getCaseStudy } from '~/lib/case-study-data';
+import {
+  bulkAdoptionPct,
+  bulkHistogramBuckets,
+  bulkMeanScore,
+  getBulkLeaderboard,
+  getDefaultBulkVersion,
+  listBulkVersions,
+  themeForCheck,
+  checkAdoptionPct,
+} from '~/lib/bulk-data';
+import { STATE_OF_AGENT_READABILITY_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
+
+// EMBARGOED (TJ-854 / TJ-549): web-scale "state of agent readability" paper.
+// Stays on a local branch until launch. Survey numbers are read live from the
+// bulk leaderboard data; the efficiency half is pulled from the scorecard-eval
+// case study so the two stay in sync.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const version = getDefaultBulkVersion();
+const lb = version ? getBulkLeaderboard(version) : null;
+const cs = getCaseStudy('agent-readiness-layer-2026-05-16');
+
+const entries = lb ? lb.entries : [];
+const total = lb ? lb.totalScanned : 0;
+const mean = lb ? bulkMeanScore(lb) : 0;
+const adoption = lb ? bulkAdoptionPct(lb) : { llmsTxt: 0, agentsMd: 0, sitemap: 0, robots: 0 };
+const hist = lb ? bulkHistogramBuckets(lb) : [];
+const generatedHuman = lb
+  ? new Date(lb.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+  : '';
+// Fixed publish date for the header (stays put across re-aggregations / edits);
+// generatedHuman remains the data-snapshot date used in caveats + reproduce.
+const publishedHuman = formatPublishDate(STATE_OF_AGENT_READABILITY_PUBLISHED);
+
+const pct = (n: number): number => (total ? Math.round((n / total) * 1000) / 10 : 0);
+const num = (n: number): string => n.toLocaleString('en-US');
+
+// Median + score bands (excellent ≥85, good 70–84, fair 50–69, poor <50).
+const sorted = entries.map((e) => e.s).sort((a, b) => a - b);
+const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 0;
+const bands = { excellent: 0, good: 0, fair: 0, poor: 0 };
+for (const s of sorted) {
+  if (s >= 85) bands.excellent++;
+  else if (s >= 70) bands.good++;
+  else if (s >= 50) bands.fair++;
+  else bands.poor++;
+}
+const topScore = sorted.length ? sorted[sorted.length - 1] : 0;
+
+// Signal combinations from the bitmask (1=llms.txt, 2=AGENTS.md, 4=sitemap, 8=robots).
+let allFour = 0;
+let none = 0;
+let noAgentLayer = 0; // neither llms.txt nor AGENTS.md
+for (const e of entries) {
+  if (e.g === 15) allFour++;
+  if (e.g === 0) none++;
+  if ((e.g & 3) === 0) noAgentLayer++;
+}
+
+const BAND_ROWS = [
+  { label: 'Excellent (85–100)', n: bands.excellent },
+  { label: 'Good (70–84)', n: bands.good },
+  { label: 'Fair (50–69)', n: bands.fair },
+  { label: 'Poor (0–49)', n: bands.poor },
+];
+
+const ca = lb ? lb.checkAdoption : [];
+const byId = new Map(ca.map((c) => [c.checkId, c]));
+const pctOfAll = (id: string): number => {
+  const c = byId.get(id);
+  return c ? checkAdoptionPct(c, total).ofAll : 0;
+};
+const THEME_ORDER = ['Discoverability', 'Markdown mirror', 'Structured data', 'Content structure', 'HTML metadata', 'HTTP'];
+const themed = THEME_ORDER.map((theme) => ({
+  theme,
+  rows: ca.filter((c) => themeForCheck(c.checkId) === theme && c.applicable > 0)
+    .map((c) => ({ ...c, ...checkAdoptionPct(c, total) }))
+    .sort((a, b) => a.ofAll - b.ofAll),
+})).filter((g) => g.rows.length);
+
+// The survey also scored the in-flight v0.3.0-draft scorecard, which adds
+// page-level checks v0.2.0 doesn't have (ssr-content, no-interstitial, the
+// markdown-quality checks). Pull it so the analysis can show those findings,
+// clearly tagged as coming from the draft.
+const DRAFT_VERSION = '0.3.0-draft';
+const draftLb = lb && listBulkVersions().includes(DRAFT_VERSION) ? getBulkLeaderboard(DRAFT_VERSION) : null;
+const draftBy = new Map((draftLb?.checkAdoption ?? []).map((c) => [c.checkId, c]));
+
+// share of ALL sites / share of APPLICABLE sites, per scorecard.
+const ofApp = (id: string): number => {
+  const c = byId.get(id);
+  return c ? checkAdoptionPct(c, total).ofApplicable : 0;
+};
+const draftOfAll = (id: string): number => {
+  const c = draftBy.get(id);
+  return c ? checkAdoptionPct(c, total).ofAll : 0;
+};
+// One-decimal variants, so sub-1% values read as "0.1%" not a blunt "0%".
+const ofAllP = (id: string): number => {
+  const c = byId.get(id);
+  return c && total ? Math.round((c.passing / total) * 1000) / 10 : 0;
+};
+const ofAppP = (id: string): number => {
+  const c = byId.get(id);
+  return c && c.applicable ? Math.round((c.passing / c.applicable) * 1000) / 10 : 0;
+};
+const draftOfAppP = (id: string): number => {
+  const c = draftBy.get(id);
+  return c && c.applicable ? Math.round((c.passing / c.applicable) * 1000) / 10 : 0;
+};
+
+// Curated highlights: the story-carrying signals, each paired with the quality
+// sub-check that reveals how much of the headline number is real. `from` tags
+// the source scorecard so the two are never conflated.
+const HIGHLIGHTS = [
+  { signal: 'robots.txt allows AI bots', value: pctOfAll('robots-txt.allows-ai-bots'),
+    behind: `${100 - pctOfAll('robots-txt.allows-ai-bots')}% block GPTBot, ClaudeBot, CCBot, or Google-Extended`, from: 'v0.2.0' },
+  { signal: 'llms.txt', value: pctOfAll('llms-txt.exists'),
+    behind: `${ofApp('llms-txt.non-empty')}% of them are non-empty, a real file`, from: 'v0.2.0' },
+  { signal: 'AGENTS.md', value: pctOfAll('agents-md.exists'),
+    behind: `only ${ofAppP('agents-md.has-min-sections')}% carry the expected sections`, from: 'v0.2.0' },
+  { signal: 'sitemap.md', value: pctOfAll('sitemap-md.exists'),
+    behind: `only ${ofAppP('sitemap-md.has-structure')}% are a real structured sitemap`, from: 'v0.2.0' },
+  { signal: 'Markdown mirror advertised', value: pctOfAll('markdown.mirror-suffix'),
+    behind: `${ofApp('markdown.content-negotiation')}% serve it on request via content negotiation`, from: 'v0.2.0' },
+  { signal: 'Mirror is valid markdown', value: draftOfAppP('markdown.valid-markdown'),
+    behind: 'of advertised mirrors are actually markdown, not HTML', from: 'v0.3.0-draft' },
+  { signal: 'Homepage server-renders content', value: draftOfAll('html.ssr-content'),
+    behind: `${100 - draftOfAll('html.ssr-content')}% are JavaScript shells, invisible to agents that don't run JS`, from: 'v0.3.0-draft' },
+  { signal: 'No consent interstitial', value: draftOfAll('http.no-interstitial'),
+    behind: `${100 - draftOfAll('http.no-interstitial')}% gate content behind a wall an agent can't click`, from: 'v0.3.0-draft' },
+  { signal: 'JSON-LD structured data', value: pctOfAll('html.json-ld'),
+    behind: `${pctOfAll('html.json-ld.date-modified')}% include a dateModified`, from: 'v0.2.0' },
+  { signal: 'Glossary link', value: ofAllP('html.glossary-link'),
+    behind: 'effectively nobody', from: 'v0.2.0' },
+];
+
+// Checks that exist only in the draft scorecard, for the full collapsible reference.
+const draftOnly = (draftLb?.checkAdoption ?? [])
+  .filter((c) => !byId.has(c.checkId) && c.applicable > 0)
+  .map((c) => ({ ...c, ...checkAdoptionPct(c, total) }))
+  .sort((a, b) => a.ofAll - b.ofAll);
+---
+
+<BaseLayout
+  title="The State of Agent Readability on the Web · a14y research"
+  description={`We scored the ${num(total)} most-visited websites for how ready they are for AI agents. The median scores ${median}/100, none scores 'excellent', and only about 1 in 4 ship an llms.txt.`}
+>
+  <section class="hero hero--compact" aria-labelledby="paper-heading">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">v{version}</span>
+        <span>web survey · {publishedHuman} · {num(total)} sites</span>
+      </div>
+      <h1 id="paper-heading">The State of Agent Readability on the Web</h1>
+      {lb ? (
+        <>
+          <dl class="study-score-line" aria-label="Headline numbers">
+            <div><dt>Sites scored</dt><dd><strong>{num(total)}</strong></dd></div>
+            <div><dt>Median score</dt><dd><strong>{median}</strong><span class="study-score-detail"> / 100</span></dd></div>
+            <div><dt>Scored "excellent"</dt><dd><strong>none</strong><span class="study-score-detail"> (best is {topScore})</span></dd></div>
+            <div><dt>llms.txt</dt><dd><strong>{adoption.llmsTxt}%</strong></dd></div>
+            <div><dt>AGENTS.md</dt><dd><strong>{adoption.agentsMd}%</strong></dd></div>
+          </dl>
+          <p class="study-summary-label">Summary</p>
+          <p class="lead study-tldr">
+            <strong>On most of the popular web, an AI agent burns roughly twice the tokens it should.</strong><br /><br />
+            We scored the {num(total)} most-visited websites for how well an agent can discover, parse, and
+            comprehend them. The plumbing search engines asked for is everywhere: {adoption.robots}% expose a
+            robots.txt. The layer agents need is not. Only {adoption.llmsTxt}% ship an <code>llms.txt</code> and
+            {' '}{adoption.agentsMd}% an <code>AGENTS.md</code>. The median site scores {median}/100, and not one
+            of the {num(total)} scored "excellent." Raising a site's a14y score roughly halves the tokens an
+            agent spends to use it. The web is wide open for improvement and 
+            <a href={`${base}/leaderboard/`}>very few</a> have moved.
+          </p>
+        </>
+      ) : (
+        <p class="lead">No bulk leaderboard data found in <code>src/data/bulk/</code>.</p>
+      )}
+      <p class="study-back"><a href={`${base}/research/`}>← All research</a></p>
+    </div>
+  </section>
+
+  {lb && (
+    <>
+      <section class="section section--tight" aria-labelledby="question-heading">
+        <div class="section-head"><h2 id="question-heading">The question</h2></div>
+        <p class="study-prose">
+          AI agents are becoming a primary way people reach the web. They read sites, follow links, and
+          synthesize answers on someone's behalf. That raises a concrete question for every site owner:
+          {' '}<strong>can an agent use my site efficiently?</strong> The a14y scorecard answers it for one site.
+          We ran it across the web at scale to ask the bigger version: is the <em>web</em> ready for agents?
+        </p>
+        <p class="study-prose study-prose--muted">
+          "Ready" here is mechanical, not subjective. Does the site expose what an agent needs to find and parse
+          it: a usable <code>llms.txt</code>, an <code>AGENTS.md</code>, a sitemap, clean robots rules, semantic
+          HTML, all measured by the v{cs.scorecardVersion} scorecard's checks. It does not judge the quality of
+          the content itself.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="method-heading">
+        <div class="section-head">
+          <h2 id="method-heading">Methodology</h2>
+          <p class="section-sub">
+            A single point-in-time scan of the CrUX most-visited list, scored in page mode against the
+            published scorecard. Run on cloud infrastructure, off any residential IP.
+          </p>
+        </div>
+        <dl class="kv-table">
+          <div><dt>Source</dt><dd>CrUX top-100k most-visited origins (<a href="https://github.com/zakird/crux-top-lists/blob/main/data/global/current.csv.gz" target="_blank" rel="noopener">zakird/crux-top-lists</a>, global)</dd></div>
+          <div><dt>Sample</dt><dd><strong>{num(total)}</strong> scored: 100,000 rows → {num(64746)} after dedup to one per registrable domain → {num(total)} reachable &amp; not adult/gambling/spam</dd></div>
+          <div><dt>Mode</dt><dd>Page mode: each site's homepage, not a full-site crawl</dd></div>
+          <div><dt>Scorecard</dt><dd>Published <code>v{cs.scorecardVersion}</code> (38 checks) and the in-flight <code>v{DRAFT_VERSION}</code> (45 checks), scored 0–100. Headline scores use v{cs.scorecardVersion}; the analysis below draws on both, tagged.</dd></div>
+          <div><dt>Tool</dt><dd><code>npx a14y</code> (the same audit anyone can run)</dd></div>
+          <div><dt>Infra</dt><dd>Sharded across 64 Cloud Run tasks; run data archived in object storage</dd></div>
+          <div><dt>Source label</dt><dd><code>{lb.source}</code></dd></div>
+          <div><dt>Date</dt><dd><time>{generatedHuman}</time></dd></div>
+        </dl>
+        <p class="study-prose study-prose--muted">
+          Page mode is deliberate. Scoring one homepage per site keeps a survey this size tractable and
+          comparable. It proxies a site's agent readiness; it does not capture readiness that lives deeper in
+          the site.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="dist-heading">
+        <div class="section-head">
+          <h2 id="dist-heading">Results: the web scores low</h2>
+          <p class="section-sub">
+            Distribution of agent-readability scores across all {num(total)} sites. Mean {mean}, median {median}.
+          </p>
+        </div>
+        <ScoreHistogram buckets={hist} />
+        <table class="study-table">
+          <thead>
+            <tr><th scope="col">Band</th><th scope="col">Sites</th><th scope="col">Share</th></tr>
+          </thead>
+          <tbody>
+            {BAND_ROWS.map((r) => (
+              <tr>
+                <th scope="row">{r.label}</th>
+                <td class="num">{num(r.n)}</td>
+                <td class="num">{pct(r.n)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="study-prose">
+          The popular web clusters in the middle and below. <strong>{pct(bands.poor)}%</strong> of sites score
+          under 50, and only <strong>{pct(bands.good + bands.excellent)}%</strong> clear 70. <strong>Not one site
+          in the top {num(total)} scored "excellent" (85 or above)</strong>; the single best managed {topScore}.
+          Whatever the web was optimized for, it wasn't agents.
+        </p>
+        <p class="study-prose">
+          <a href={`${base}/research/web/`}>Explore all {num(total)} sites on the web leaderboard →</a>
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="adopt-heading">
+        <div class="section-head">
+          <h2 id="adopt-heading">Results: the agent-era layer is missing</h2>
+          <p class="section-sub">
+            What the most-visited sites actually expose to agents, against the published v{cs.scorecardVersion}
+            {' '}scorecard and the in-flight v{DRAFT_VERSION}.
+          </p>
+        </div>
+        <p class="study-prose">
+          The signals search engines taught the web to ship are nearly everywhere: {pctOfAll('robots-txt.exists')}%
+          {' '}expose a robots.txt and {pctOfAll('sitemap-xml.exists')}% a sitemap. But only
+          {' '}{pctOfAll('robots-txt.allows-ai-bots')}% actually let the major AI crawlers in, so close to a fifth
+          {' '}of the most-visited sites block them outright.
+        </p>
+        <p class="study-prose">
+          The signals agents need are not just rare, they are often a mirage. {pctOfAll('llms-txt.exists')}% ship
+          {' '}an <code>llms.txt</code>, and most are real ({ofApp('llms-txt.non-empty')}% are non-empty). The
+          {' '}other agent files mostly answer with a 200 but not a usable document:
+          {' '}{pctOfAll('agents-md.exists')}% appear to have an <code>AGENTS.md</code> while only
+          {' '}{ofAppP('agents-md.has-min-sections')}% carry the expected sections, and {pctOfAll('sitemap-md.exists')}%
+          {' '}answer at <code>/sitemap.md</code> while only {ofAppP('sitemap-md.has-structure')}% are a real
+          {' '}structured sitemap.
+        </p>
+        <p class="study-prose">
+          The markdown mirror tells the same story, and the draft scorecard makes it sharper. {pctOfAll('markdown.mirror-suffix')}%
+          {' '}advertise one, but under v{DRAFT_VERSION} only {draftOfAppP('markdown.valid-markdown')}% of those
+          {' '}mirrors are actually markdown rather than HTML. And the page itself often needs a browser to read:
+          {' '}v{DRAFT_VERSION} finds {draftOfAll('html.ssr-content')}% serve real homepage content in the initial
+          {' '}HTML, which leaves about a quarter as JavaScript shells that agents without a JS engine (Claude,
+          {' '}Perplexity, OpenAI's SearchBot) see as blank.
+        </p>
+
+        <table class="study-table study-highlights">
+          <thead>
+            <tr><th scope="col">Signal</th><th scope="col">Sites</th><th scope="col">What's behind the number</th><th scope="col">From</th></tr>
+          </thead>
+          <tbody>
+            {HIGHLIGHTS.map((h) => (
+              <tr>
+                <th scope="row">{h.signal}</th>
+                <td class="num">{h.value}%</td>
+                <td class="behind">{h.behind}</td>
+                <td><code class="study-src">{h.from}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <details class="study-fullref">
+          <summary>Full reference: every check, by theme</summary>
+          <p class="study-prose study-prose--muted">
+            Adoption for all 38 v{cs.scorecardVersion} checks, plus the {draftOnly.length} checks v{DRAFT_VERSION}
+            {' '}adds. "Of applicable" excludes sites where a check does not apply (the markdown sub-checks, for
+            example, only apply once a mirror exists). Three crawl-dependent checks
+            {' '}(<code>discovery.in-page-link</code>, <code>discovery.indexed</code>,
+            {' '}<code>discovery.no-duplicate-content</code>) need a multi-page crawl and were not measured by this
+            {' '}single-page survey.
+          </p>
+          {themed.map((g) => (
+            <table class="study-table">
+              <thead>
+                <tr><th scope="col">{g.theme}</th><th scope="col">Of all</th><th scope="col">Of applicable</th></tr>
+              </thead>
+              <tbody>
+                {g.rows.map((r) => (
+                  <tr>
+                    <th scope="row"><code>{r.checkId}</code></th>
+                    <td class="num">{r.ofAll}%</td>
+                    <td class="num">{r.applicable < total ? `${r.ofApplicable}%` : 'n/a'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ))}
+          {draftOnly.length > 0 && (
+            <table class="study-table">
+              <thead>
+                <tr><th scope="col">Added in v{DRAFT_VERSION}</th><th scope="col">Of all</th><th scope="col">Of applicable</th></tr>
+              </thead>
+              <tbody>
+                {draftOnly.map((r) => (
+                  <tr>
+                    <th scope="row"><code>{r.checkId}</code></th>
+                    <td class="num">{r.ofAll}%</td>
+                    <td class="num">{r.applicable < total ? `${r.ofApplicable}%` : 'n/a'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </details>
+      </section>
+
+      <section class="section" aria-labelledby="fix-heading">
+        <div class="section-head">
+          <h2 id="fix-heading">And the fix works</h2>
+          <p class="section-sub">
+            The gap matters because closing it pays off. In a controlled A/B
+            (<a href={`${base}/research/scorecard-evals/`}>full case study</a>), serving the same site with the
+            agent-readiness layer, versus without it, sharply cut what an AI agent spent to use it, with no loss
+            in answer quality.
+          </p>
+        </div>
+        <dl class="study-score-line" aria-label="Efficiency result">
+          <div><dt>a14y score</dt><dd><strong>{cs.headline.baselineScore}</strong> → <strong>{cs.headline.a14yScore}</strong></dd></div>
+          <div><dt>Agent tokens</dt><dd><strong>−{cs.headline.tokenDecreasePct}%</strong></dd></div>
+          <div><dt>Tool calls</dt><dd><strong>−{cs.headline.toolCallDecreasePct}%</strong></dd></div>
+          <div><dt>Wall-clock</dt><dd><strong>−{cs.headline.wallClockDecreasePct}%</strong></dd></div>
+          <div><dt>Answer quality</dt><dd>tied <span class="study-score-detail">({cs.headline.judgeScoreBaseline.mean} vs {cs.headline.judgeScoreA14y.mean})</span></dd></div>
+        </dl>
+        <p class="study-prose">
+          Raising one site's a14y score from {cs.headline.baselineScore} to {cs.headline.a14yScore} cut the
+          agent's token use about {cs.headline.tokenDecreasePct}% and its tool calls about {cs.headline.toolCallDecreasePct}%,
+          while an independent judge rated the answers statistically indistinguishable. Put the two findings
+          together. <strong>The agent-readiness layer roughly halves what an agent spends to use a site, and
+          {' '}{100 - Math.round(adoption.llmsTxt)}% of the most-visited web hasn't shipped it.</strong>
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="means-heading">
+        <div class="section-head"><h2 id="means-heading">What it means</h2></div>
+        <div class="study-implications">
+          <article class="study-implication">
+            <h3>For site owners</h3>
+            <p>
+              Agent readiness is still a near-empty field. Roughly three in four popular sites haven't shipped
+              the layer, and none has it fully dialed in. That makes it a cheap, early-mover advantage: run
+              {' '}<code>npx a14y</code> on your site, ship the top fixes, and roughly halve what every agent
+              spends to use you.
+            </p>
+          </article>
+          <article class="study-implication">
+            <h3>For agent &amp; model builders</h3>
+            <p>
+              The signals you'd want to lean on can't be assumed yet. Only about 1 in 4 popular sites expose an
+              {' '}<code>llms.txt</code> or <code>AGENTS.md</code>, so most of the time agents still fall back to
+              the expensive path: fetching and parsing raw HTML. This dataset quantifies exactly where the gaps are.
+            </p>
+          </article>
+          <article class="study-implication">
+            <h3>For the a14y project</h3>
+            <p>
+              This is the baseline. We'll re-run the survey on each scorecard release and track whether the web's
+              agent readiness moves: a standing measure of how the agent-readable web is (or isn't) being built.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="caveats-heading">
+        <div class="section-head">
+          <h2 id="caveats-heading">Caveats</h2>
+          <p class="section-sub">What this survey does not show, and where to read the numbers with care.</p>
+        </div>
+        <ul class="study-caveats">
+          <li><strong>Page mode.</strong> Each site is scored on its homepage only, a proxy for the site rather than a full-crawl verdict. Sites whose agent readiness lives in deeper sections are understated.</li>
+          <li><strong>Point-in-time.</strong> A single snapshot ({generatedHuman}). Sites change; this is a frame, not a film.</li>
+          <li><strong>Popularity bias.</strong> CrUX skews toward large, heavily-trafficked sites; the long tail of the web likely looks different.</li>
+          <li><strong>Reachable sites only.</strong> Origins that didn't answer (DNS/TLS failures, bot or geo blocks) are dropped, so the sample is the reachable popular web.</li>
+          <li><strong>Scorecard-specific.</strong> Scores are against v{cs.scorecardVersion}'s 38 checks; a different scorecard shifts the absolute numbers (the leaderboard also carries a {`0.3.0-draft`} scoring for comparison).</li>
+          <li><strong>Filtered.</strong> Adult, gambling, and spam domains are removed by a heuristic denylist, which is imperfect.</li>
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="reproduce-heading">
+        <div class="section-head"><h2 id="reproduce-heading">Reproduce</h2></div>
+        <p class="study-prose study-prose--muted">
+          Score any single site with the same tool the survey uses:
+        </p>
+        <pre class="study-pre">npx a14y https://example.com --scorecard {cs.scorecardVersion}</pre>
+        <p class="study-prose study-prose--muted">
+          The survey itself is the same audit fanned out across the CrUX list. Batch provenance:
+          {' '}<code>{lb.source}</code>, {num(total)} sites, generated {generatedHuman}.
+        </p>
+      </section>
+    </>
+  )}
+</BaseLayout>
+
+<style>
+  /* Mirrors /research/scorecard-evals/, scoped, so copied here. */
+  .study-score-line {
+    margin: 24px 0 32px; padding: 16px 0; display: flex; flex-wrap: wrap; gap: 32px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 14px;
+  }
+  .study-summary-label {
+    margin: 0 0 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .study-tldr { margin-top: 0; }
+  .study-score-detail { color: var(--text-subtle); font-weight: 400; }
+  .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
+  .study-score-line dt { margin: 0; color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-score-line dd { margin: 0; color: var(--text); font-variant-numeric: tabular-nums; }
+  .study-score-line strong { font-weight: 600; color: var(--brand-ink); }
+  :root[data-theme='dark'] .study-score-line strong { color: var(--brand-cyan); }
+
+  .study-back { margin: 16px 0 0; font-family: var(--font-mono); font-size: 13px; }
+  .study-back a { color: var(--text-muted); text-decoration: none; }
+  .study-back a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 4px; }
+
+  .study-prose { max-width: 65ch; color: var(--text); line-height: 1.6; }
+  .study-prose--muted { color: var(--text-muted); }
+
+  .kv-table { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .kv-table > div { display: grid; grid-template-columns: minmax(140px, 200px) 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .kv-table > div:last-child { border-bottom: none; }
+  .kv-table dt { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); text-transform: lowercase; }
+  .kv-table dd { margin: 0; color: var(--text); }
+  .kv-table code { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+
+  .study-table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 14px; margin: 16px 0 0; }
+  .study-table th, .study-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: baseline; }
+  .study-table tbody tr:last-child th, .study-table tbody tr:last-child td { border-bottom: none; }
+  .study-table thead th { font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; border-bottom: 1px solid var(--border-strong); }
+  .study-table tbody th[scope='row'] { font-weight: 500; color: var(--text); }
+  .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .study-highlights { font-size: 13px; }
+  .study-highlights .behind { color: var(--text-muted); font-family: var(--font-sans, inherit); }
+  .study-src { font-size: 11px; color: var(--text-subtle); white-space: nowrap; }
+
+  .study-fullref { margin-top: 28px; }
+  .study-fullref > summary { cursor: pointer; font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); padding: 8px 0; list-style-position: inside; }
+  .study-fullref > summary:hover { color: var(--link); }
+  .study-fullref[open] > summary { margin-bottom: 4px; }
+  .study-fullref .study-table:first-of-type { margin-top: 8px; }
+
+  .study-implications { display: grid; gap: 32px; }
+  .study-implication { max-width: 65ch; }
+  .study-implication h3 { margin: 0 0 8px; font-size: 15px; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-implication p { margin: 0; color: var(--text); line-height: 1.6; }
+
+  .study-caveats { padding: 0; margin: 0; list-style: none; display: grid; gap: 12px; max-width: 65ch; color: var(--text-muted); line-height: 1.6; }
+  .study-caveats li { padding-left: 20px; position: relative; }
+  .study-caveats li::before { content: '·'; position: absolute; left: 6px; color: var(--text-subtle); font-weight: 700; }
+
+  .study-pre { font-family: var(--font-mono); font-size: 13px; line-height: 1.55; background: var(--surface-alt); border: 1px solid var(--border); padding: 16px; overflow-x: auto; white-space: pre-wrap; color: var(--text); margin: 8px 0; }
+</style>
