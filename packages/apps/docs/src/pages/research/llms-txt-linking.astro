@@ -40,7 +40,7 @@ const ARMS = [
       <p class="study-summary-label">Summary</p>
       <p class="lead study-tldr">
         <strong>Ship the discovery layer, then tell the agent to use it.</strong><br /><br />
-        Publishing an <code>llms.txt</code> is now nearly free, and adoption is climbing, though it is far from
+        Publishing an <code>llms.txt</code> is now nearly free and increasingly common, though far from
         universal: in our <a href={surveyUrl}>survey of the CrUX top-100k</a>, only about 1 in 4 sites (27% of the
         50,074 we reached) ship one. The harder part is getting an AI agent to actually read the file. In an earlier
         a14y benchmark, a clean discovery layer (an <code>llms.txt</code> index plus markdown mirrors) cut an agent's
@@ -55,15 +55,15 @@ const ARMS = [
   <section class="section section--tight" aria-labelledby="payoff-heading">
     <div class="section-head"><h2 id="payoff-heading">The payoff is real</h2></div>
     <p class="study-prose">
-      Start with the good news, because it is the reason any of this matters. We ran the same evaluation task twice
-      against the same site: once with the agent-discovery files served, once with them missing. Same content, same
-      prompt, same model. The discovery layer cut the cost about in half.
+      Start with the good news. In our earlier discovery-layer study, we ran the same evaluation task twice against
+      the same site: once with the agent-discovery files served, once with them missing. Same content, same prompt,
+      same model. The discovery layer cut the cost about in half.
     </p>
     <table class="study-table">
       <thead>
         <tr>
           <th scope="col">Condition</th>
-          <th scope="col">Median tokens</th>
+          <th scope="col">Tokens (mean)</th>
           <th scope="col">Tool calls</th>
           <th scope="col">Answer quality (judge)</th>
         </tr>
@@ -156,33 +156,31 @@ const ARMS = [
       Cursor serves an <code>llms.txt</code> for its own docs. Anthropic publishes one. Every site built on
       <a href="https://www.mintlify.com/docs/ai/llmstxt" target="_blank" rel="noopener">Mintlify</a> gets an
       <code>llms.txt</code> (and an <code>llms-full.txt</code>) automatically, zero maintenance, which is how
-      thousands of sites lit up overnight. That is a real and healthy trend. But publishing a file is not the same as
+      a whole category of docs sites gained one at once. That is a real and healthy trend. But publishing a file is not the same as
       an agent reading one, and on the consume side the record is close to empty.
     </p>
     <ul class="study-caveats">
       <li><a href="https://ahrefs.com/blog/llmstxt-study/" target="_blank" rel="noopener">Ahrefs</a> analyzed 137,210 domains. Of the roughly 38,000 with a valid <code>llms.txt</code>, <strong>97% received zero requests for that file</strong> in the month studied. Of the requests that did land, most were ordinary bots, not AI agents. No AI bot went looking for files that did not exist.</li>
       <li>Google's John Mueller has said, more than once, that no AI system currently uses <code>llms.txt</code>, that you can see in your server logs the bots do not even check for it, and that it is <a href="https://www.searchenginejournal.com/google-says-llms-txt-comparable-to-keywords-meta-tag/544804/" target="_blank" rel="noopener">"comparable to the keywords meta tag."</a> When <code>llms.txt</code> files showed up on Google's own developer properties, he said plainly it was a <a href="https://www.seroundtable.com/google-does-not-endorse-llms-txt-40789.html" target="_blank" rel="noopener">CMS artifact, not an endorsement</a>.</li>
-      <li>Google's official <a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide" target="_blank" rel="noopener">generative-AI search guidance</a> now states you do not need to create <code>llms.txt</code> or any special machine-readable files to appear in AI search, and that Search ignores them: they "won't harm (nor help)" rankings.</li>
+      <li>Google's official <a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide" target="_blank" rel="noopener">generative-AI search guidance</a> now states you do not need to create <code>llms.txt</code> or any special machine-readable files to appear in AI search, and that Search ignores them: keeping one is fine, it just "won't harm (nor help)" rankings.</li>
       <li>Independent server-log audits (<a href="https://www.longato.ch/llmstxt-2026-june/" target="_blank" rel="noopener">Adobe AEM</a>, <a href="https://otterly.ai/blog/the-llms-txt-experiment/" target="_blank" rel="noopener">OtterlyAI</a>) put verified LLM fetches of <code>llms.txt</code> at roughly 0.1% to 1% of traffic to those files. Most of the rest is scanners and auditors.</li>
     </ul>
     <p class="study-prose">
       And the tools people assume are quietly reading it? For GitHub Copilot, Windsurf, Cline, Aider, Continue, Devin,
       ChatGPT's browsing and Atlas modes, and Gemini's agent, we found <strong>no public statement either way</strong>
       (as of this research, mid-2026). Silence is not adoption. We also went in expecting to find that Claude Code
-      would fetch <code>llms.txt</code> when linked from the page. The hope did not survive verification. Claude-Code
-      does turn up in some server logs fetching <code>llms.txt</code>, but those fetches are prompt-directed, not
-      automatic, so they are consistent with what we saw: we don't have any evidence that any major agent fetches
-      <code>llms.txt</code> by default.
+      would fetch <code>llms.txt</code> when linked from the page. The hope did not survive verification. Claude Code
+      can show up in server logs fetching <code>llms.txt</code>, but only when a user or a prompt points it there, not
+      on its own. We don't have any evidence that any major agent fetches <code>llms.txt</code> by default.
     </p>
   </section>
 
   <section class="section" aria-labelledby="dowhat-heading">
     <div class="section-head"><h2 id="dowhat-heading">What to actually do with this</h2></div>
     <p class="study-prose">
-      This is where it would be easy to draw the wrong conclusion, so let's be precise. "Agents don't read
-      <code>llms.txt</code> on their own" is not "don't bother." The value of the discovery layer is real and
-      significant, and it lands whenever you control the agent or its instructions. Three situations where that is
-      true today.
+      The wrong conclusion here would be "don't bother." That is not what the data says: the value of the discovery
+      layer is real and significant, and it lands whenever you control the agent or its instructions. Three situations
+      where that is true today.
     </p>
     <div class="study-implications">
       <article class="study-implication">
