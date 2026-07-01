@@ -1,0 +1,317 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { LLMS_TXT_LINKING_PUBLISHED, formatPublishDate } from '~/lib/research-meta';
+
+// EMBARGOED (TJ-961): llms.txt linking / adoption study. Stays on a local branch
+// until launch. Numbers are from the a14y benchmark llms-txt-linking-2026-06-27
+// (a14y-internal): Claude 2.1.141, isolated Docker, n=5 per arm, adoption read
+// from the static server's request log filtered to the agent container IP.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const published = formatPublishDate(LLMS_TXT_LINKING_PUBLISHED);
+const surveyUrl = `${base}/research/state-of-agent-readability/`;
+
+// The five arms, all serving the identical page + discovery files; only the
+// signal (or the prompt) changes. Tokens are avg ± sd across 5 reps.
+const ARMS = [
+  { arm: 'no-link (control)', signal: null, fetched: '0 / 5', tokens: '266,591 ± 32,066', tools: '14.6', gets: '59', judge: '75.2 ± 6.8', pass: '80%' },
+  { arm: 'head link', signal: '<link rel="llms-txt">', fetched: '0 / 5', tokens: '257,743 ± 53,953', tools: '13.2', gets: '47', judge: '72.4 ± 8.3', pass: '80%' },
+  { arm: 'head link', signal: '<link rel="alternate" type="text/markdown">', fetched: '0 / 5', tokens: '254,641 ± 47,968', tools: '14.4', gets: '65', judge: '80.4 ± 5.5', pass: '100%' },
+  { arm: 'visible footer link', signal: '"For agents" block', fetched: '0 / 5', tokens: '251,741 ± 38,857', tools: '12.8', gets: '48', judge: '76.0 ± 3.3', pass: '100%' },
+  { arm: 'nudge', signal: 'prompt: "check /llms.txt first"', fetched: '5 / 5 (+4/5 sitemap.md)', tokens: '177,735 ± 32,131', tools: '17.0', gets: '91', judge: '88.8 ± 1.6', pass: '100%', emphasis: true },
+];
+---
+
+<BaseLayout
+  title="llms.txt saves tokens, if you tell the agent to read it · a14y research"
+  description="A controlled benchmark: a clean llms.txt discovery layer cuts an AI agent's tokens, but no in-page link (head tag or visible footer) got the agent to use it. One line in the prompt did. Publish versus consume, measured."
+>
+  <section class="hero hero--compact" aria-labelledby="paper-heading">
+    <div class="hero-text" style="grid-column: 1 / -1;">
+      <div class="eyebrow">
+        <span class="eyebrow-pin">v0.2.0</span>
+        <span>benchmark · {published} · 5 arms, 25 runs</span>
+      </div>
+      <h1 id="paper-heading">llms.txt saves an agent real tokens. But it won't read it unless you ask.</h1>
+      <dl class="study-score-line" aria-label="Headline numbers">
+        <div><dt>Page-side links</dt><dd><strong>0 / 20</strong><span class="study-score-detail"> reps used llms.txt</span></dd></div>
+        <div><dt>One line in the prompt</dt><dd><strong>5 / 5</strong><span class="study-score-detail"> reps used it</span></dd></div>
+        <div><dt>Tokens, with the nudge</dt><dd><strong>−33%</strong><span class="study-score-detail"> on the same page</span></dd></div>
+      </dl>
+      <p class="study-summary-label">Summary</p>
+      <p class="lead study-tldr">
+        <strong>Ship the discovery layer, then tell the agent to use it.</strong><br /><br />
+        Publishing an <code>llms.txt</code> is now nearly free, and adoption is climbing, though it is far from
+        universal: in our <a href={surveyUrl}>survey of the CrUX top-100k</a>, only about 1 in 4 sites (27% of the
+        50,074 we reached) ship one. The harder part is getting an AI agent to actually read the file. In an earlier
+        a14y benchmark, a clean discovery layer (an <code>llms.txt</code> index plus markdown mirrors) cut an agent's
+        token use roughly in half at the same answer quality. In a new benchmark, the agent captured that saving only
+        when we told it to look. Not one of the in-page signals we tried (a <code>&lt;head&gt;</code> tag, a visible
+        "For agents" footer link) got it to use <code>llms.txt</code> on its own. A single line in the prompt did.
+      </p>
+      <p class="study-back"><a href={`${base}/research/`}>← All research</a></p>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="payoff-heading">
+    <div class="section-head"><h2 id="payoff-heading">The payoff is real</h2></div>
+    <p class="study-prose">
+      Start with the good news, because it is the reason any of this matters. We ran the same evaluation task twice
+      against the same site: once with the agent-discovery files served, once with them missing. Same content, same
+      prompt, same model. The discovery layer cut the cost about in half.
+    </p>
+    <table class="study-table">
+      <thead>
+        <tr>
+          <th scope="col">Condition</th>
+          <th scope="col">Median tokens</th>
+          <th scope="col">Tool calls</th>
+          <th scope="col">Answer quality (judge)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Discovery layer present</th><td class="num">~123K</td><td class="num">~10</td><td class="behind">tied</td></tr>
+        <tr><th scope="row">Discovery layer absent</th><td class="num">~240K</td><td class="num">~20</td><td class="behind">tied</td></tr>
+      </tbody>
+    </table>
+    <p class="study-prose study-prose--muted">
+      Roughly 2x fewer tokens, about half the tool calls, no measurable drop in quality. When an agent can pull a
+      tight markdown index instead of crawling and re-parsing a pile of HTML, it does less work to reach the same
+      answer.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="linking-heading">
+    <div class="section-head">
+      <h2 id="linking-heading">But the agent won't take the payoff on its own</h2>
+      <p class="section-sub">
+        Five arms, identical content and identical discovery files (all returning 200). The only thing that changed
+        was how the page points at <code>/llms.txt</code>. Claude 2.1.141, isolated Docker, five reps each, adoption
+        read from the web server's request log.
+      </p>
+    </div>
+    <table class="study-table">
+      <thead>
+        <tr>
+          <th scope="col">Arm</th>
+          <th scope="col">Signal</th>
+          <th scope="col">Fetched /llms.txt</th>
+          <th scope="col">Tokens (avg ± sd)</th>
+          <th scope="col">Tools</th>
+          <th scope="col">Page GETs</th>
+          <th scope="col">Judge</th>
+          <th scope="col">Pass</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ARMS.map((r) => (
+          <tr>
+            <th scope="row">{r.arm}</th>
+            <td class="behind">{r.signal ? <code>{r.signal}</code> : 'none'}</td>
+            <td class={r.emphasis ? 'num strong-cell' : 'num'}>{r.fetched}</td>
+            <td class={r.emphasis ? 'num strong-cell' : 'num'}>{r.tokens}</td>
+            <td class="num">{r.tools}</td>
+            <td class="num">{r.gets}</td>
+            <td class="num">{r.judge}</td>
+            <td class="num">{r.pass}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="study-prose">
+      We tried three genuinely different ways to point the page at <code>/llms.txt</code>: a machine-readable
+      <code>&lt;link rel="llms-txt"&gt;</code> in the head, a standards-style
+      <code>&lt;link rel="alternate" type="text/markdown"&gt;</code>, and a plain visible "For agents" footer link a
+      human would click. The agent ignored all three. The four page arms cluster tightly, 252K to 267K tokens and 0
+      of 5 adoption, with the spread between link styles sitting well inside the noise (token sd of 32K to 54K, judge
+      sd of 3 to 8). The agent received the bytes (it fetched the homepage, head tags and all) and acted on none of
+      them.
+    </p>
+    <p class="study-prose">
+      It's not that we picked the wrong link format. Every link format failed. The lever is the instruction, not the
+      markup. We changed one line of the prompt and left the page exactly as it was, with no link at all. Adoption
+      went to five out of five (and four of five also pulled <code>sitemap.md</code>), and tokens dropped from
+      266,591 to 177,735. That is 88,856 fewer tokens, a 33% reduction on the <em>same page</em>, attributable purely
+      to the agent using a layer that was already there in every arm. Sitting next to the earlier ~2x, the two figures
+      bracket the opportunity: the prior study measured having the layer at all, this one measures actually using it,
+      isolated to a single line of prompt.
+    </p>
+    <p class="study-prose">A few details from the run that sharpen the picture:</p>
+    <ul class="study-caveats">
+      <li><strong>The cost is ingestion, not generation.</strong> Output tokens were tiny across every arm, roughly 5K to 9K per rep. Almost the entire bill is input plus cache, the cost of reading the site in. That is exactly the cost the discovery layer cuts, which is why "use the index" shows up as a token drop and not a quality drop.</li>
+      <li><strong>More fetches, far less content.</strong> The nudge arm actually made <em>more</em> requests than the control (91 page GETs versus 59), yet used fewer tokens. It pulled the lean <code>.md</code> mirrors (for example <code>/scorecards/0.2.0/checks/llms-txt.exists.md</code>) instead of full HTML pages. More round trips, a fraction of the bytes each.</li>
+      <li><strong>Quality went up, not down.</strong> The nudge arm posted the highest judge score (88.8) and the tightest spread (± 1.6) of any arm, at 100% pass. Using the structured index made the answers cheaper <em>and</em> more consistent.</li>
+      <li><strong>Clean measurement.</strong> Zero requests hit the live a14y.dev in any arm. Adoption was read from the static server's log, filtered to the agent container's IP, so there is no contamination from background traffic. (a14y.dev's own copy documents the <code>llms-txt.exists</code> check, so this was a friendly case for content-based discovery; adoption was still 0 of 5 without the nudge.)</li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="industry-heading">
+    <div class="section-head"><h2 id="industry-heading">This is not just a Claude quirk</h2></div>
+    <p class="study-prose">
+      It would be easy to write this off as one model's behavior on one site. It is not. When we went looking for
+      whether any major agent or crawler consumes <code>llms.txt</code> in the wild, the evidence pointed the same
+      direction.
+    </p>
+    <p class="study-prose">
+      The cleanest distinction to hold onto is <strong>publish versus consume</strong>. Almost everyone publishes.
+      Cursor serves an <code>llms.txt</code> for its own docs. Anthropic publishes one. Every site built on
+      <a href="https://www.mintlify.com/docs/ai/llmstxt" target="_blank" rel="noopener">Mintlify</a> gets an
+      <code>llms.txt</code> (and an <code>llms-full.txt</code>) automatically, zero maintenance, which is how
+      thousands of sites lit up overnight. That is a real and healthy trend. But publishing a file is not the same as
+      an agent reading one, and on the consume side the record is close to empty.
+    </p>
+    <ul class="study-caveats">
+      <li><a href="https://ahrefs.com/blog/llmstxt-study/" target="_blank" rel="noopener">Ahrefs</a> analyzed 137,210 domains. Of the roughly 38,000 with a valid <code>llms.txt</code>, <strong>97% received zero requests for that file</strong> in the month studied. Of the requests that did land, most were ordinary bots, not AI agents. No AI bot went looking for files that did not exist.</li>
+      <li>Google's John Mueller has said, more than once, that no AI system currently uses <code>llms.txt</code>, that you can see in your server logs the bots do not even check for it, and that it is <a href="https://www.searchenginejournal.com/google-says-llms-txt-comparable-to-keywords-meta-tag/544804/" target="_blank" rel="noopener">"comparable to the keywords meta tag."</a> When <code>llms.txt</code> files showed up on Google's own developer properties, he said plainly it was a <a href="https://www.seroundtable.com/google-does-not-endorse-llms-txt-40789.html" target="_blank" rel="noopener">CMS artifact, not an endorsement</a>.</li>
+      <li>Google's official <a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide" target="_blank" rel="noopener">generative-AI search guidance</a> now states you do not need to create <code>llms.txt</code> or any special machine-readable files to appear in AI search, and that Search ignores them: they "won't harm (nor help)" rankings.</li>
+      <li>Independent server-log audits (<a href="https://www.longato.ch/llmstxt-2026-june/" target="_blank" rel="noopener">Adobe AEM</a>, <a href="https://otterly.ai/blog/the-llms-txt-experiment/" target="_blank" rel="noopener">OtterlyAI</a>) put verified LLM fetches of <code>llms.txt</code> at roughly 0.1% to 1% of traffic to those files. Most of the rest is scanners and auditors.</li>
+    </ul>
+    <p class="study-prose">
+      And the tools people assume are quietly reading it? For GitHub Copilot, Windsurf, Cline, Aider, Continue, Devin,
+      ChatGPT's browsing and Atlas modes, and Gemini's agent, we found <strong>no public statement either way</strong>
+      (as of this research, mid-2026). Silence is not adoption. We also went in expecting to find that Claude Code
+      would fetch <code>llms.txt</code> when linked from the page. The hope did not survive verification. Claude-Code
+      does turn up in some server logs fetching <code>llms.txt</code>, but those fetches are prompt-directed, not
+      automatic, so they are consistent with what we saw: we don't have any evidence that any major agent fetches
+      <code>llms.txt</code> by default.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="dowhat-heading">
+    <div class="section-head"><h2 id="dowhat-heading">What to actually do with this</h2></div>
+    <p class="study-prose">
+      This is where it would be easy to draw the wrong conclusion, so let's be precise. "Agents don't read
+      <code>llms.txt</code> on their own" is not "don't bother." The value of the discovery layer is real and
+      significant, and it lands whenever you control the agent or its instructions. Three situations where that is
+      true today.
+    </p>
+    <div class="study-implications">
+      <article class="study-implication">
+        <h3>Your own agents</h3>
+        <p>
+          If you build a docs assistant, a support bot, an MCP server, or an internal coding agent that reads your
+          site, you write the prompt. Tell it to start from <code>/llms.txt</code>. This data says that a single
+          instruction is worth roughly a third of the tokens on the spot, and up to half against a no-discovery
+          baseline.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>Agentic tooling you can configure</h3>
+        <p>
+          A growing set of harnesses let the user or the project point the agent at a markdown index. The payoff shows
+          up the moment the pointer exists. Notably, Chrome's experimental
+          <a href="https://developer.chrome.com/docs/lighthouse/agentic-browsing/llms-txt" target="_blank" rel="noopener">"agentic browsing" audit in Lighthouse</a>
+          already checks for <code>llms.txt</code>, a hint that the consume side may start catching up to the publish
+          side.
+        </p>
+      </article>
+      <article class="study-implication">
+        <h3>Future-proofing at near-zero cost</h3>
+        <p>
+          Publishing the layer is cheap and mostly static. If and when agents start consuming it by default, you are
+          already done. If they never do, you have lost very little, and your own tooling benefited the whole time.
+        </p>
+      </article>
+    </div>
+    <p class="study-prose">
+      What the data definitely does not support is treating <code>llms.txt</code> as an SEO move for third-party AI
+      search. Today, the big crawlers mostly ignore it. Publish it because it makes the agents <em>you</em> point at
+      your content dramatically cheaper and more accurate, not because ChatGPT or Gemini will discover it on their own.
+    </p>
+    <p class="study-prose study-prose--muted">
+      Also, <code>llms.txt</code> is not a standard. It is a good idea that caught on, but a better convention may well
+      replace it. What the data backs is narrower and more durable: a clean and lean discovery layer saves real tokens,
+      and the way you capture that saving today is to tell the model to use it. So bet on the two things that hold no
+      matter how the conventions shake out, the token savings and the instruction, rather than on <code>llms.txt</code>
+      being the permanent answer.
+    </p>
+    <p class="study-prose"><strong>The one-sentence version: ship the discovery layer, and make sure something tells the agent to use it, because the file alone is a tree falling in an empty forest.</strong></p>
+  </section>
+
+  <section class="section" aria-labelledby="scorecard-heading">
+    <div class="section-head"><h2 id="scorecard-heading">Why keep this in the scorecard</h2></div>
+    <p class="study-prose">
+      At a14y we score sites on agent-readability, and <code>llms.txt</code> is part of that score. This research does
+      not weaken that, it sharpens it. A high score means your site is <em>ready</em> to be read cheaply by an agent.
+      Whether a given agent takes you up on it depends on how that agent was built or prompted, which is exactly the
+      variable we just isolated. We would rather tell you both sides than sell you one.
+    </p>
+    <p class="study-prose">
+      If you want to see the gap for yourself, run a14y against your docs, then point your own agent at the
+      <code>llms.txt</code> we find (or flag as missing) and watch the token count. That is the experiment that
+      convinced us, and it takes about ten minutes. We would genuinely like to see your numbers, especially if you can
+      get any agent to adopt <code>llms.txt</code> from a page-side link alone.
+    </p>
+    <pre class="study-pre">npx a14y https://example.com</pre>
+  </section>
+
+  <section class="section" aria-labelledby="caveats-heading">
+    <div class="section-head">
+      <h2 id="caveats-heading">Caveats</h2>
+      <p class="section-sub">Where to read these numbers with care.</p>
+    </div>
+    <ul class="study-caveats">
+      <li><strong>Small n, one setting.</strong> Five reps per arm (adoption is a low-frequency, near-binary event), a single retrieval prompt, a single model (Claude 2.1.141), and a single site. Treat the adoption pattern as directional, not the last word.</li>
+      <li><strong>One site's content.</strong> Every arm serves the same a14y.dev content; only the linking changes. And because a14y.dev documents its own discovery checks, it is a friendly case for content-based discovery. The relative ordering should generalize; the absolute numbers are tied to this content.</li>
+      <li><strong>A snapshot of a moving target.</strong> Agent behavior and vendor support change fast. The "no public statement" list and the "no agent fetches by default" finding are true as of mid-2026 and worth re-checking over time.</li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="method-heading">
+    <div class="section-head"><h2 id="method-heading">Method notes</h2></div>
+    <p class="study-prose study-prose--muted">
+      The page-side and nudge figures are from the a14y benchmark <code>llms-txt-linking-2026-06-27</code> (Claude
+      2.1.141, isolated Docker, n=5 per arm), with adoption read from the static server's request log filtered to the
+      agent container's IP. The ~2x figure is from the earlier discovery-layer <a href={`${base}/research/scorecard-evals/`}>case study</a>. The agent reached our
+      test build via in-container HTTP, so it received the full page including the head tags and chose not to act on
+      them. External claims are linked inline. Full data and the reproducible harness live in the a14y benchmark repo.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  /* House style shared with /research/per-feature-ablation/ and the survey; scoped, so copied here. */
+  .study-score-line {
+    margin: 24px 0 32px; padding: 16px 0; display: flex; flex-wrap: wrap; gap: 32px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 14px;
+  }
+  .study-summary-label {
+    margin: 0 0 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .study-tldr { margin-top: 0; }
+  .study-score-detail { color: var(--text-subtle); font-weight: 400; }
+  .study-score-line > div { display: flex; flex-direction: column; gap: 4px; }
+  .study-score-line dt { margin: 0; color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-score-line dd { margin: 0; color: var(--text); font-variant-numeric: tabular-nums; }
+  .study-score-line strong { font-weight: 600; color: var(--brand-ink); }
+  :root[data-theme='dark'] .study-score-line strong { color: var(--brand-cyan); }
+
+  .study-back { margin: 16px 0 0; font-family: var(--font-mono); font-size: 13px; }
+  .study-back a { color: var(--text-muted); text-decoration: none; }
+  .study-back a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 4px; }
+
+  .study-prose { max-width: 65ch; color: var(--text); line-height: 1.6; }
+  .study-prose--muted { color: var(--text-muted); }
+
+  .study-table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 14px; margin: 16px 0 0; }
+  .study-table th, .study-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: baseline; }
+  .study-table tbody tr:last-child th, .study-table tbody tr:last-child td { border-bottom: none; }
+  .study-table thead th { font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; border-bottom: 1px solid var(--border-strong); }
+  .study-table tbody th[scope='row'] { font-weight: 500; color: var(--text); }
+  .study-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .study-table .behind { color: var(--text-muted); font-family: var(--font-sans, inherit); }
+  .study-table .strong-cell { color: var(--brand-ink); font-weight: 600; }
+  :root[data-theme='dark'] .study-table .strong-cell { color: var(--brand-cyan); }
+
+  .study-implications { display: grid; gap: 32px; }
+  .study-implication { max-width: 65ch; }
+  .study-implication h3 { margin: 0 0 8px; font-size: 15px; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .study-implication p { margin: 0; color: var(--text); line-height: 1.6; }
+
+  .study-caveats { padding: 0; margin: 16px 0 0; list-style: none; display: grid; gap: 12px; max-width: 65ch; color: var(--text-muted); line-height: 1.6; }
+  .study-caveats li { padding-left: 20px; position: relative; }
+  .study-caveats li::before { content: '·'; position: absolute; left: 6px; color: var(--text-subtle); font-weight: 700; }
+
+  .study-pre { font-family: var(--font-mono); font-size: 13px; line-height: 1.55; background: var(--surface-alt); border: 1px solid var(--border); padding: 16px; overflow-x: auto; white-space: pre-wrap; color: var(--text); margin: 16px 0 0; }
+</style>

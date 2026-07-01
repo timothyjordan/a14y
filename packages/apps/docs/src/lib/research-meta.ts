@@ -12,6 +12,10 @@ export const STATE_OF_AGENT_READABILITY_PUBLISHED = '2026-06-25';
  *  fixed, not derived from the benchmark run timestamps. Update on launch. */
 export const FEATURE_ABLATION_PUBLISHED = '2026-06-25';
 
+/** Static publish date for the llms.txt linking / adoption study (TJ-961).
+ *  Fixed here, not derived from the benchmark run. Update on launch. */
+export const LLMS_TXT_LINKING_PUBLISHED = '2026-07-01';
+
 /** Format an ISO date (YYYY-MM-DD) as "Month DAY, YEAR" in UTC. */
 export function formatPublishDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', {
