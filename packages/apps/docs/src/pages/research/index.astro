@@ -5,6 +5,7 @@ import { getBulkLeaderboard, getDefaultBulkVersion } from '~/lib/bulk-data';
 import {
   STATE_OF_AGENT_READABILITY_PUBLISHED,
   FEATURE_ABLATION_PUBLISHED,
+  LLMS_TXT_LINKING_PUBLISHED,
   formatPublishDate,
 } from '~/lib/research-meta';
 
@@ -24,6 +25,9 @@ const bulkWebUrl = `${base}/research/web/`;
 
 const ablationDate = formatPublishDate(FEATURE_ABLATION_PUBLISHED);
 const ablationUrl = `${base}/research/per-feature-ablation/`;
+
+const linkingDate = formatPublishDate(LLMS_TXT_LINKING_PUBLISHED);
+const linkingUrl = `${base}/research/llms-txt-linking/`;
 ---
 
 <BaseLayout
@@ -46,6 +50,23 @@ const ablationUrl = `${base}/research/per-feature-ablation/`;
 
   <section class="section" aria-label="Case studies">
     <ul class="case-study-list" role="list">
+      <li class="case-study-card">
+        <div class="case-study-card-meta">
+          <span class="eyebrow-pin">v0.2.0</span>
+          <time datetime={LLMS_TXT_LINKING_PUBLISHED}>{linkingDate}</time>
+        </div>
+        <h3 class="case-study-card-title">
+          <a href={linkingUrl}>llms.txt saves an agent real tokens. But it won't read it unless you ask.</a>
+        </h3>
+        <p class="case-study-card-tldr">
+          A clean llms.txt discovery layer cuts an AI agent's tokens, but across five arms no in-page link (a head
+          tag or a visible footer link) got the agent to use it. One line in the prompt did, and cut tokens 33% on
+          the same page. The lever is the instruction, not the markup.
+        </p>
+        <p class="case-study-card-cta">
+          <a href={linkingUrl}>Read the study →</a>
+        </p>
+      </li>
       {bulkLb && (
         <li class="case-study-card">
           <div class="case-study-card-meta">
