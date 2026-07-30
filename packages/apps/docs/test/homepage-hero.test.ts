@@ -8,10 +8,10 @@ const page = readFileSync(
 );
 
 describe('homepage hero (TJ-439)', () => {
-  it('eyebrow pairs the version pin with the three-noun positioning line', () => {
+  it('eyebrow pairs the version pin with the AI-agent-readiness-checker positioning line', () => {
     expect(page).toMatch(/<span class="eyebrow-pin">v\{latest\}<\/span>/);
     expect(page).toMatch(
-      /<span>Open spec, open tools, public leaderboard\.<\/span>/,
+      /<span>The open source AI agent readiness checker for the web\.<\/span>/,
     );
     expect(page).not.toMatch(/Lighthouse for AI agents/);
   });
@@ -51,9 +51,16 @@ describe('homepage hero (TJ-439)', () => {
     expect(page).toMatch(/Sub-second per page, CI-friendly/);
   });
 
-  it('BaseLayout meta title is "a14y: Agent readability for the web"', () => {
-    expect(page).toMatch(/title="a14y: Agent readability for the web"/);
+  it('BaseLayout meta title carries both plain phrases: agent readability + AI agent readiness checker (TJ-1295)', () => {
+    expect(page).toMatch(/title="a14y: agent readability & AI agent readiness checker"/);
     expect(page).not.toMatch(/title="a14y · Lighthouse for AI agents"/);
+  });
+
+  it('homepage title, eyebrow, and meta description all carry the buyer phrase "AI agent readiness checker" (TJ-1295)', () => {
+    expect(page).toMatch(/title="[^"]*AI agent readiness checker[^"]*"/);
+    expect(page).toMatch(/description="[^"]*AI agent readiness checker[^"]*"/);
+    expect(page).toMatch(/description="[^"]*agent readability[^"]*"/);
+    expect(page).toMatch(/AI agent readiness checker for the web/);
   });
 
   it('does not import research-data on the homepage', () => {

@@ -239,7 +239,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               throw new Error(`Scorecard ${version} not found`);
             }
             const draftSuffix = isDraftScorecardVersion(sc.version) ? ' (draft)' : '';
-            title = `Scorecard v${sc.version}${draftSuffix} · a14y`;
+            title = `Scorecard v${sc.version}${draftSuffix} · a14y agent readability`;
             description = sc.description;
             const checksSection = renderScorecardVersionChecks(version);
             const diffSection = isDraftScorecardVersion(sc.version)
@@ -247,7 +247,7 @@ export function markdownMirrorsIntegration(): AstroIntegration {
               : '';
             body = `${sc.description}\n\n${checksSection}${diffSection}`;
           } else if (pagesSlug === 'scoring-index') {
-            title = 'Scoring methodologies · a14y';
+            title = 'Scoring methodologies · a14y agent readability';
             description =
               'Every scoring algorithm ever pinned by an a14y scorecard. Each scorecard freezes its methodology so historical scores stay reproducible.';
             body = renderScoringIndex();
