@@ -3,6 +3,7 @@ import { assertCoverageIntegration } from './src/lib/assert-coverage';
 import { markdownMirrorsIntegration } from './src/integrations/markdown-mirrors';
 import { discoveryFilesIntegration } from './src/integrations/discovery-files';
 import { remarkPageSubstitutions } from './src/integrations/page-substitutions-remark';
+import { listResearchRedirects } from './src/lib/site-routes';
 
 // Astro config for the a14y documentation site.
 //
@@ -24,6 +25,13 @@ export default defineConfig({
   site: isBaseline ? 'https://baseline.a14y.dev' : 'https://a14y.dev',
   output: 'static',
   trailingSlash: 'always',
+  // The per-site pages moved from /research/<slug>/ to /leaderboard/<slug>/
+  // (TJ-439); Google still crawls the old URLs and reports them as 404
+  // (TJ-1338). Redirect each old URL to its new home. Static output turns
+  // these into meta-refresh + rel=canonical + noindex stubs, so search
+  // engines consolidate onto the leaderboard page. The baseline benchmark
+  // variant needs none of this.
+  redirects: isBaseline ? {} : listResearchRedirects(),
   build: {
     // Astro inlines small stylesheets into <head> by default. Our
     // global.css is ~3.5 KB which is "small" but it bloats the

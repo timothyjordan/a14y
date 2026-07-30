@@ -56,3 +56,69 @@ restating them, so a new page cannot silently fall out of discovery again.
 - The function reads the filesystem and the site's data loaders. It takes no
   arguments, so there is no malformed-input domain to explore.
 - Out of scope: whether search engines actually index the pages.
+
+---
+
+# listLeaderboardSlugs
+
+> Returns the slug of every leaderboard site that actually builds a
+> `/leaderboard/<slug>/` page: the leaderboard entries whose full site run has
+> been published.
+
+Authored from intent (TJ-1338) before any test was written. This is the single
+source of truth shared by the `/leaderboard/[slug]/` sitemap expander and the
+`/research/<slug>/` redirect map, so both agree on exactly which sites exist.
+
+## Should
+
+- Return a `string[]` of bare slugs (no leading slash, no `/leaderboard/`
+  prefix, no trailing slash).
+- Include a slug for each leaderboard entry whose site run is published, and no
+  slug for a leaderboard entry without a published run. Same filter the
+  `/leaderboard/[slug]/` route's `getStaticPaths` applies.
+- Match the `/leaderboard/<slug>/` paths that `listSiteRoutes()` emits, one to
+  one: for each announced `/leaderboard/<slug>/` there is exactly one slug here,
+  and vice versa.
+- Contain no duplicates.
+- Throw when the leaderboard has entries but no site run resolves as published,
+  which signals the runs directory failed to load rather than that every site is
+  genuinely unpublished. Returning an empty list would silently drop every
+  per-site page.
+
+# listResearchRedirects
+
+> Returns the redirect map from the old `/research/<slug>/` per-site URLs to
+> their new `/leaderboard/<slug>/` homes, as an object of `{ from: to }` string
+> pairs.
+
+Authored from intent (TJ-1338) before any test was written. The per-site pages
+were renamed from `/research/<slug>/` to `/leaderboard/<slug>/` (TJ-439); Google
+still crawls the old URLs and reports them as 404. Each old URL must redirect to
+its new home so search engines consolidate onto the live page.
+
+## Should
+
+- Return an object whose keys are old `/research/<slug>/` paths and whose values
+  are the corresponding `/leaderboard/<slug>/` paths. Every key starts with
+  `/research/` and ends with `/`; every value starts with `/leaderboard/` and
+  ends with `/`.
+- For a key `/research/<slug>/`, the value is exactly `/leaderboard/<slug>/`
+  (same slug on both sides).
+- Include an entry for every published leaderboard slug (see
+  `listLeaderboardSlugs`), so an old per-site URL for any current site redirects
+  rather than 404s.
+- Point every value at a URL that `listSiteRoutes()` actually publishes. A
+  redirect whose target does not exist would send a crawler from one 404 to
+  another.
+- Never use a key that collides with a real `/research/` article page (the
+  static `src/pages/research/*.astro` routes such as `/research/web/`). A site
+  slug that happened to match an article name must not shadow the article with a
+  redirect.
+- Keep the source `/research/<slug>/` URLs out of `listSiteRoutes()`: a redirect
+  is not a page to announce in the sitemap.
+
+## Notes
+
+- Both functions take no arguments and read the filesystem and data loaders.
+- Out of scope: the HTML of the emitted redirect stub (Astro renders that from
+  the config `redirects` map); this unit only produces the map.
