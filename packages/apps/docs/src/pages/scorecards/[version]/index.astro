@@ -34,7 +34,7 @@ const isDraft = isDraftScorecardVersion(scorecard.version);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<BaseLayout title={`Scorecard v${scorecard.version} · a14y`} scorecardVersion={scorecard.version} showVersionSelector>
+<BaseLayout title={`Scorecard v${scorecard.version} · a14y agent readability`} scorecardVersion={scorecard.version} showVersionSelector>
   {isDraft && <DraftScorecardBanner />}
   {isDraft && <ScorecardDiff draftVersion={scorecard.version} />}
   <h1>Scorecard v{scorecard.version}</h1>
