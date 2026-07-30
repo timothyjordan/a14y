@@ -17,7 +17,10 @@
  * they may be absent on fresh checkouts and Vite would error on a
  * missing import.
  */
-import researchData from '~/data/research.json';
+// Relative, not the `~` alias: this module is now pulled in by the
+// discovery-files integration, and Vite resolves astro.config.ts before
+// Astro's tsconfig path aliases are in play, so `~/…` fails there.
+import researchData from '../data/research.json';
 import { BADGE_BASE_URL } from '@a14y/core';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';

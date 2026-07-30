@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { listAllScorecards } from '../lib/scorecard-data';
 import { getAllSkills, getSkillBody } from '../lib/skills-data';
 import { listCaseStudies, caseStudyUrl } from '../lib/case-study-data';
+import { listSiteRoutes } from '../lib/site-routes';
+import { RESEARCH_ARTICLE_TITLES } from '../lib/research-meta';
 
 /**
  * Astro integration that emits the site-level discovery files the
@@ -41,28 +43,9 @@ export function discoveryFilesIntegration(): AstroIntegration {
         const lastmodIso = new Date().toISOString().slice(0, 10);
         const scorecards = listAllScorecards();
 
-        const staticPaths = [
-          '/',
-          '/spec/',
-          '/glossary/',
-          '/release-notes/',
-          '/chrome-extension/',
-          '/privacy/',
-          '/press/',
-          '/scorecards/',
-          '/research/',
-        ];
-
-        const allPaths = [...staticPaths];
-        for (const card of scorecards) {
-          allPaths.push(`/scorecards/${card.version}/`);
-          for (const id of Object.keys(card.checks)) {
-            allPaths.push(`/scorecards/${card.version}/checks/${id}/`);
-          }
-        }
-        for (const study of listCaseStudies()) {
-          allPaths.push(caseStudyUrl(study.slug, ''));
-        }
+        // Every route the site builds, derived from src/pages/ rather
+        // than restated here. See src/lib/site-routes.ts for why.
+        const allPaths = listSiteRoutes();
 
         const xmlEntries = allPaths.map(
           (p) =>
@@ -86,12 +69,19 @@ export function discoveryFilesIntegration(): AstroIntegration {
         llmsLines.push(`- [Glossary](/glossary.md)`);
         llmsLines.push(`- [Release notes](/release-notes.md)`);
         llmsLines.push(`- [Chrome extension](/chrome-extension.md)`);
+        llmsLines.push(`- [Badge](/badge.md)`);
         llmsLines.push(`- [Press kit](/press.md)`);
         llmsLines.push(`- [Scorecards index](/scorecards.md)`);
+        // The leaderboard index only. Its 300+ per-site pages are real
+        // routes and belong in the sitemaps, but listing every one here
+        // would bury the docs in an index agents read start to finish.
+        // The "Full sitemap" pointer at the bottom covers them.
+        llmsLines.push(`- [Leaderboard](/leaderboard.md)`);
         llmsLines.push(`- [Research](/research.md)`);
-        for (const study of listCaseStudies()) {
-          const path = caseStudyUrl(study.slug, '').replace(/\/$/, '');
-          llmsLines.push(`- [${study.shortTitle}](${path}.md)`);
+        for (const url of allPaths) {
+          const slug = researchArticleSlug(url);
+          if (!slug) continue;
+          llmsLines.push(`- [${researchTitle(slug)}](/research/${slug}.md)`);
         }
         llmsLines.push('');
         for (const card of scorecards) {
@@ -237,6 +227,29 @@ export function discoveryFilesIntegration(): AstroIntegration {
       },
     },
   };
+}
+
+/**
+ * The article slug for a `/research/<slug>/` URL, or null for anything
+ * else (including the `/research/` index itself).
+ */
+function researchArticleSlug(url: string): string | null {
+  const match = /^\/research\/([^/]+)\/$/.exec(url);
+  return match ? match[1]! : null;
+}
+
+/**
+ * Link text for a research article. Case studies carry their title in
+ * the published snapshot; standalone articles declare one in
+ * research-meta. A slug with neither still gets listed, under a
+ * humanized fallback, because a clumsy label beats an invisible page.
+ */
+function researchTitle(slug: string): string {
+  const study = listCaseStudies().find(
+    (cs) => caseStudyUrl(cs.slug, '') === `/research/${slug}/`,
+  );
+  if (study) return study.shortTitle;
+  return RESEARCH_ARTICLE_TITLES[slug] ?? humanize(slug);
 }
 
 function humanize(segment: string): string {
