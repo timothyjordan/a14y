@@ -50,25 +50,10 @@ const SCORING_CONTENT_DIR = path.resolve(process.cwd(), 'src', 'content', 'scori
  * `getStaticPaths`.
  */
 const DYNAMIC_ROUTES: Record<string, () => string[]> = {
-  '/leaderboard/[slug]/': () => {
+  '/leaderboard/[slug]/': () =>
     // Mirrors pages/leaderboard/[slug]/index.astro: leaderboard entries
     // are only routable once their full site run has been published.
-    const entries = getLeaderboard();
-    const published = new Set(listSiteRunSlugs());
-    // A populated leaderboard with no published runs means the runs
-    // directory failed to load, not that every site is unpublished.
-    // Left alone that drops 300+ pages from the sitemap silently.
-    if (entries.length > 0 && published.size === 0) {
-      throw new Error(
-        `[site-routes] The leaderboard has ${entries.length} entries but no published site runs ` +
-          `resolved. src/data/runs/ is probably missing or unreadable. Refusing to build ` +
-          `discovery files that would silently drop every /leaderboard/<slug>/ page.`,
-      );
-    }
-    return entries
-      .filter((entry) => published.has(entry.slug))
-      .map((entry) => `/leaderboard/${entry.slug}/`);
-  },
+    listLeaderboardSlugs().map((slug) => `/leaderboard/${slug}/`),
 
   '/scorecards/[version]/': () =>
     listAllScorecards().map((card) => `/scorecards/${card.version}/`),
@@ -93,6 +78,58 @@ const DYNAMIC_ROUTES: Record<string, () => string[]> = {
 
   '/scorecards/scoring/[id]/': () => listScoringMethodologyIds().map((id) => `/scorecards/scoring/${id}/`),
 };
+
+/**
+ * Slugs of every leaderboard entry whose full site run has been
+ * published, i.e. exactly the sites that build a `/leaderboard/<slug>/`
+ * page. Mirrors the filter in pages/leaderboard/[slug]/index.astro's
+ * getStaticPaths so the two never diverge. Shared by the leaderboard
+ * route expander and the `/research/<slug>/` redirect map.
+ */
+export function listLeaderboardSlugs(): string[] {
+  const entries = getLeaderboard();
+  const published = new Set(listSiteRunSlugs());
+  // A populated leaderboard with no published runs means the runs
+  // directory failed to load, not that every site is unpublished. Left
+  // alone that drops 300+ pages from the sitemap silently.
+  if (entries.length > 0 && published.size === 0) {
+    throw new Error(
+      `[site-routes] The leaderboard has ${entries.length} entries but no published site runs ` +
+        `resolved. src/data/runs/ is probably missing or unreadable. Refusing to build ` +
+        `discovery files that would silently drop every /leaderboard/<slug>/ page.`,
+    );
+  }
+  return entries.filter((entry) => published.has(entry.slug)).map((entry) => entry.slug);
+}
+
+/**
+ * 301-style redirect map for the per-site pages that used to live at
+ * `/research/<slug>/`. That route was renamed to `/leaderboard/<slug>/`
+ * when the marketing site was rebuilt (TJ-439), but Google had already
+ * indexed the old URLs and now reports them as 404 (TJ-1338). Every
+ * current leaderboard slug gets a redirect to its new home, keyed and
+ * targeted with the site's `trailingSlash: 'always'` convention.
+ *
+ * Wired into astro.config.ts's `redirects`, not `src/pages/`, so these
+ * stubs (meta-refresh + rel=canonical + noindex, emitted by Astro for a
+ * static build) never enter the sitemap or llms.txt: a redirect is not a
+ * page to announce. Deriving the source slugs from the same loader the
+ * leaderboard route uses keeps the redirects self-syncing as sites are
+ * added or removed, and pointed only at pages the build really produces.
+ *
+ * A slug that collides with a real `/research/` article page is dropped,
+ * so a future site slug named after an article can never shadow it.
+ */
+export function listResearchRedirects(): Record<string, string> {
+  const reserved = new Set(listPageRoutes().filter((route) => route.startsWith('/research/')));
+  const redirects: Record<string, string> = {};
+  for (const slug of listLeaderboardSlugs()) {
+    const from = `/research/${slug}/`;
+    if (reserved.has(from)) continue;
+    redirects[from] = `/leaderboard/${slug}/`;
+  }
+  return redirects;
+}
 
 /**
  * Routes the site builds on purpose but deliberately keeps out of the
