@@ -7,9 +7,18 @@ interface Props {
   width?: number;
   /** SVG height for the chart area in user units. */
   height?: number;
+  /**
+   * Prefix for the <title>/<desc> ids this chart references via
+   * aria-labelledby. Only needs overriding when a page renders more
+   * than one histogram, since duplicate ids would point every chart at
+   * the first one's description.
+   */
+  id?: string;
 }
 
-const { buckets, width = 720, height = 220 } = Astro.props;
+const { buckets, width = 720, height = 220, id = 'hist' } = Astro.props;
+const titleId = `${id}-title`;
+const descId = `${id}-desc`;
 
 // Top padding has to clear the count label that sits *above* the tallest
 // bar (~14px tall at the rendered font size). 22px gives the label its full
@@ -29,6 +38,15 @@ const bars = buckets.map((b, i) => {
 });
 
 const totalSites = buckets.reduce((sum, b) => sum + b.n, 0);
+
+// Describe the buckets actually rendered. The previous text was
+// hardcoded to "each 10-point score bucket from 0-9 to 90-100", which
+// the published dataset has never matched: it ships five 20-point
+// buckets (0-19 … 80-100). A screen reader was being told something
+// false about the chart it could not see.
+const bucketRange =
+  buckets.length > 0 ? `${buckets[0]!.label} to ${buckets[buckets.length - 1]!.label}` : '';
+const chartDesc = `Number of sites in each score bucket, ${bucketRange}, across ${totalSites.toLocaleString('en-US')} sites.`;
 ---
 
 {totalSites === 0 ? (
@@ -37,14 +55,12 @@ const totalSites = buckets.reduce((sum, b) => sum + b.n, 0);
   <figure class="chart">
     <svg
       role="img"
-      aria-labelledby="hist-title hist-desc"
+      aria-labelledby={`${titleId} ${descId}`}
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMidYMid meet"
     >
-      <title id="hist-title">Score distribution</title>
-      <desc id="hist-desc">
-        Number of sites in each 10-point score bucket from 0–9 to 90–100.
-      </desc>
+      <title id={titleId}>Score distribution</title>
+      <desc id={descId}>{chartDesc}</desc>
       {bars.map((bar) => (
         <g>
           <rect

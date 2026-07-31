@@ -1680,3 +1680,117 @@ a.chip code { color: inherit; }
   text-decoration-color: var(--link);
   color: var(--link);
 }
+
+/* ─── Research findings (homepage) ──────────────────────────────────
+   TJ-1345. A destination section, not a related-links strip: each item
+   leads with the finding as a claim and carries the measured evidence
+   inline, so a reader who never clicks still leaves knowing what the
+   research says. The link is the affordance, not the content.
+
+   Deliberately not the .tool-card grid and not the .steps sequence.
+   Both already appear above on this page, and repeating either would
+   make the research read as one more row of teasers. Rules and rhythm
+   separate the findings instead of card chrome. */
+
+.research-findings .finding {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.research-findings .finding + .finding { margin-top: 0; }
+
+.finding-body h3 {
+  margin: 0 0 10px;
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.finding-body p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+/* Measured values carry the weight, matching the .lead strong idiom
+   the hero already uses for the study numbers. */
+.finding-body strong {
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+:root[data-theme='dark'] .finding-body strong { color: var(--brand-cyan); }
+
+.finding-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 14px !important;
+  font-size: 15px;
+}
+.finding-links a {
+  color: var(--link);
+  text-decoration: none;
+  font-weight: 500;
+}
+.finding-links a::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 0.35em;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.finding-links a:hover { color: var(--link-hover); }
+.finding-links a:hover::after { transform: translateX(3px); }
+
+/* The survey leads because it sets the stakes, and it is the one
+   finding with a picture of itself worth showing. */
+.finding--lead {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 32px;
+  align-items: start;
+}
+.finding-chart { margin: 0; }
+.finding-chart figcaption {
+  margin-top: 8px;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.finding-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.finding-more {
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.finding-more a {
+  font-weight: 500;
+  /* Keeps "All research →" from breaking between the words, and the
+     arrow from stranding on a line of its own on narrow screens. */
+  white-space: nowrap;
+}
+
+/* The chart is the first thing to go: the claim and its number carry
+   the finding on their own, and a 10-bar histogram squeezed into a
+   phone column is noise rather than evidence. */
+@media (max-width: 860px) {
+  .finding--lead { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 560px) {
+  .finding-body h3 { font-size: 19px; }
+  .finding-chart { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finding-links a::after { transition: none; }
+  .finding-links a:hover::after { transform: none; }
+}
