@@ -1,4 +1,4 @@
-name: E2E docs
+name: Docs tests
 
 on:
   pull_request:
@@ -17,6 +17,40 @@ on:
   workflow_dispatch:
 
 jobs:
+  # The docs unit suite had no CI runner at all: deploy-docs.yml only
+  # builds, this workflow only ran Playwright, and release.yml tests
+  # just the package being published (its "already verified by the
+  # per-PR test runs" comment did not hold for this workspace). So the
+  # assertions that guard generated content against the live catalog
+  # only ran when someone typed `npm test` locally.
+  #
+  # That matters most for data the research pipeline publishes into
+  # src/data/: the leaderboard title and description budgets and the
+  # DISCOVERY_FILES coupling are asserted against the real catalog, so a
+  # publish that introduces a 120-character site name should fail here
+  # rather than ship. Kept as its own job so a unit failure reports
+  # separately from an E2E failure, and because it needs no browser.
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build @a14y/core
+        run: npm run build --workspace @a14y/core
+
+      - name: Run unit tests
+        run: npm test --workspace @a14y/docs
+
   e2e:
     runs-on: ubuntu-latest
     steps:

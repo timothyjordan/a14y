@@ -29,6 +29,31 @@
 export const DISCOVERY_FILES = ['llms.txt', 'AGENTS.md', 'robots.txt', 'sitemap.xml'] as const;
 
 /**
+ * The scorecard check id behind each name in DISCOVERY_FILES, plus the
+ * discovery checks deliberately left out of the copy.
+ *
+ * This list is prose, so it cannot derive itself from the scorecard,
+ * but it must not drift from it either: a new site-level discovery
+ * check should force a decision about whether the copy mentions it
+ * rather than silently going stale. `test/leaderboard-meta.coupling.test.ts`
+ * asserts both directions against the live scorecard.
+ *
+ * `sitemap-md.exists` is omitted on purpose. `sitemap.md` is an a14y
+ * convention with essentially no search demand next to the other four,
+ * and the title and description budgets are already tight. That is a
+ * judgement about search, not a claim the check does not matter.
+ */
+export const DISCOVERY_FILE_CHECK_IDS: Record<(typeof DISCOVERY_FILES)[number], string> = {
+  'llms.txt': 'llms-txt.exists',
+  'AGENTS.md': 'agents-md.exists',
+  'robots.txt': 'robots-txt.exists',
+  'sitemap.xml': 'sitemap-xml.exists',
+};
+
+/** Discovery checks knowingly absent from the copy. See above. */
+export const DISCOVERY_CHECKS_OMITTED_FROM_COPY = ['sitemap-md.exists'] as const;
+
+/**
  * Google truncates around these lengths in the results page. Going over
  * is not fatal (the full value is still indexed and matched), so these
  * are budgets to design against rather than hard limits: a long site
