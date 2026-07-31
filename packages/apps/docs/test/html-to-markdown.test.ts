@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   renderPageMarkdown,
   extractMetadataFromHtml,
+  decodeHtmlEntities,
 } from '../src/lib/html-to-markdown';
 
 const SAMPLE_PAGE = `
@@ -118,5 +119,74 @@ describe('extractMetadataFromHtml', () => {
   it('returns empty strings when tags are missing', () => {
     const meta = extractMetadataFromHtml('<html><body></body></html>');
     expect(meta).toEqual({ title: '', description: '' });
+  });
+
+  // Regression (TJ-1348): these values land in markdown frontmatter,
+  // where `&amp;` is four literal characters rather than an escape. A
+  // site named "McKinsey & Company" was reaching the leaderboard
+  // mirrors escaped, and differently in each field, because Astro
+  // escapes element text and attribute values by different rules.
+  // Regression (TJ-1348): the description regex used to end its capture
+  // at whichever quote came first, so an apostrophe inside a
+  // double-quoted attribute truncated the value. The catalog entry
+  // "Lowe's" produced the description `Lowe`.
+  it('keeps an apostrophe inside a double-quoted description', () => {
+    const meta = extractMetadataFromHtml(
+      `<html><head><meta name="description" content="Lowe's scores 22/100. It's fine."></head></html>`,
+    );
+    expect(meta.description).toBe("Lowe's scores 22/100. It's fine.");
+  });
+
+  it('keeps a double quote inside a single-quoted description', () => {
+    const meta = extractMetadataFromHtml(
+      `<html><head><meta name='description' content='He said "hi" twice.'></head></html>`,
+    );
+    expect(meta.description).toBe('He said "hi" twice.');
+  });
+
+  it('stops at the closing quote rather than running into later attributes', () => {
+    const meta = extractMetadataFromHtml(
+      `<html><head><meta name="description" content="Short." data-other="not part of it"></head></html>`,
+    );
+    expect(meta.description).toBe('Short.');
+  });
+
+  it('decodes entities so callers get text, not markup', () => {
+    const meta = extractMetadataFromHtml(
+      '<html><head><title>McKinsey &amp; Company &#183; a14y</title>' +
+        '<meta name="description" content="McKinsey &#38; Company scores 29/100."></head></html>',
+    );
+    expect(meta.title).toBe('McKinsey & Company · a14y');
+    expect(meta.description).toBe('McKinsey & Company scores 29/100.');
+  });
+});
+
+describe('decodeHtmlEntities', () => {
+  it('decodes named, decimal, and hex forms of the same character', () => {
+    expect(decodeHtmlEntities('a &amp; b')).toBe('a & b');
+    expect(decodeHtmlEntities('a &#38; b')).toBe('a & b');
+    expect(decodeHtmlEntities('a &#x26; b')).toBe('a & b');
+  });
+
+  it('decodes the rest of the serializer-escaped set', () => {
+    expect(decodeHtmlEntities('&lt;tag&gt; &quot;quoted&quot; &apos;single&apos;')).toBe(
+      '<tag> "quoted" \'single\'',
+    );
+  });
+
+  it('leaves an unrecognised entity exactly as it was', () => {
+    // Mangling an entity we do not understand is worse than passing it
+    // through: the value still reads correctly to a human.
+    expect(decodeHtmlEntities('50 &notarealentity; 60')).toBe('50 &notarealentity; 60');
+  });
+
+  it('leaves a bare ampersand alone', () => {
+    expect(decodeHtmlEntities('Tom & Jerry')).toBe('Tom & Jerry');
+  });
+
+  it('does not re-decode a double-escaped value into markup', () => {
+    // `&amp;lt;` means the literal text "&lt;", not a less-than sign.
+    // One pass is correct; a recursive decoder would produce "<".
+    expect(decodeHtmlEntities('&amp;lt;')).toBe('&lt;');
   });
 });

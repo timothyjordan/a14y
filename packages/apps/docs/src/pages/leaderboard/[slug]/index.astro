@@ -17,6 +17,7 @@ import {
   loadSiteRun,
   scoreClass,
 } from '~/lib/site-run';
+import { leaderboardPageTitle, leaderboardPageDescription } from '~/lib/leaderboard-meta';
 
 export const getStaticPaths = (() => {
   // Return only the params + the lightweight LeaderboardEntry. The full
@@ -108,8 +109,8 @@ function methodologyUrl(methodology: string | undefined): string {
 ---
 
 <BaseLayout
-  title={`${entry.name} — a14y scorecard`}
-  description={`a14y scorecard for ${entry.name}: how well AI agents can discover, parse, and comprehend ${entry.url}. Score ${run.summary.score}/100 against scorecard v${run.scorecardVersion}.`}
+  title={leaderboardPageTitle(entry.name)}
+  description={leaderboardPageDescription(entry.name, entry.url, run.summary.score)}
   wide={true}
   ogImage={`${base}/leaderboard/${entry.slug}/og.png`}
 >

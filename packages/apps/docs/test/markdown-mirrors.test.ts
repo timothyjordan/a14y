@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeAll, afterAll } from 'vitest';
+import { promises as fs } from 'node:fs';
+import os from 'node:os';
+import nodePath from 'node:path';
 import {
   HTML_DERIVED_PAGES,
+  readRenderedMetadata,
   resolvePagesSlug,
   renderShippedVersionsList,
   renderScorecardVersionChecks,
@@ -189,4 +193,67 @@ describe('markdown-mirrors helpers', () => {
     });
   });
 
+});
+
+/**
+ * The fallback mirror branch (any page with no `pages` collection entry
+ * and no HTML_DERIVED_PAGES registration) used to derive frontmatter
+ * from the URL slug. All 326 /leaderboard/<slug>/ pages land there, so
+ * every one of them got `title: Stripe` and a boilerplate description,
+ * discarding the metadata the page had already worked out. TJ-1348
+ * makes the fallback read the rendered page instead.
+ */
+describe('readRenderedMetadata', () => {
+  let distDir: string;
+
+  beforeAll(async () => {
+    distDir = await fs.mkdtemp(nodePath.join(os.tmpdir(), 'a14y-mirror-test-'));
+    const write = async (cleanPath: string, html: string) => {
+      const dir = nodePath.join(distDir, cleanPath);
+      await fs.mkdir(dir, { recursive: true });
+      await fs.writeFile(nodePath.join(dir, 'index.html'), html, 'utf8');
+    };
+    await write(
+      'leaderboard/merriam-webster',
+      '<html><head><title>Merriam-Webster: llms.txt, robots.txt and sitemap.xml · a14y</title>' +
+        '<meta name="description" content="Merriam-Webster scores 52/100 for agent readability."></head></html>',
+    );
+    // A site name carrying an ampersand: the HTML is correctly escaped,
+    // and each field is escaped by a different rule.
+    await write(
+      'leaderboard/mckinsey',
+      '<html><head><title>McKinsey &amp; Company: llms.txt · a14y</title>' +
+        '<meta name="description" content="McKinsey &#38; Company scores 29/100."></head></html>',
+    );
+    await write('leaderboard/bare', '<html><body>no head metadata</body></html>');
+  });
+
+  afterAll(async () => {
+    await fs.rm(distDir, { recursive: true, force: true });
+  });
+
+  it('reads the rendered title and description for a built page', async () => {
+    const meta = await readRenderedMetadata(distDir, 'leaderboard/merriam-webster');
+    expect(meta).not.toBeNull();
+    expect(meta!.title).toBe('Merriam-Webster: llms.txt, robots.txt and sitemap.xml · a14y');
+    expect(meta!.description).toBe('Merriam-Webster scores 52/100 for agent readability.');
+  });
+
+  it('decodes entities so frontmatter carries text, not markup', async () => {
+    const meta = await readRenderedMetadata(distDir, 'leaderboard/mckinsey');
+    expect(meta!.title).toContain('McKinsey & Company');
+    expect(meta!.description).toContain('McKinsey & Company');
+    for (const entity of ['&amp;', '&#38;']) {
+      expect(meta!.title).not.toContain(entity);
+      expect(meta!.description).not.toContain(entity);
+    }
+  });
+
+  it('returns null for a route with no built HTML, so the caller can fall back', async () => {
+    expect(await readRenderedMetadata(distDir, 'leaderboard/does-not-exist')).toBeNull();
+  });
+
+  it('returns null when the page carries neither title nor description', async () => {
+    expect(await readRenderedMetadata(distDir, 'leaderboard/bare')).toBeNull();
+  });
 });
