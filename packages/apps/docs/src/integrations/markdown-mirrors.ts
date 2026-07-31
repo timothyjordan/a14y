@@ -305,8 +305,19 @@ export function markdownMirrorsIntegration(): AstroIntegration {
             // Fallback for any page added without a matching `pages`
             // collection entry: emit the legacy stub so the mirror
             // route still returns valid markdown.
-            title = humanizeSegment(cleanPath || 'a14y');
-            description = `a14y · agent readability for the web · ${title}`;
+            //
+            // Prefer the rendered page's own <title> and meta
+            // description over a slug-derived guess. The 326
+            // /leaderboard/<slug>/ pages land here, and deriving from
+            // the slug gave every one of them `title: Stripe` and a
+            // boilerplate description, discarding the metadata the page
+            // had already worked out. Reading dist keeps the mirror in
+            // step with the page for free, for any future fallback page
+            // too.
+            const renderedMeta = await readRenderedMetadata(distDir, cleanPath);
+            title = renderedMeta?.title || humanizeSegment(cleanPath || 'a14y');
+            description =
+              renderedMeta?.description || `a14y · agent readability for the web · ${title}`;
             const canonicalPath = cleanPath === '' ? '/' : `/${cleanPath}/`;
             body = `# ${title}\n\nThis is the markdown mirror of [${canonicalPath}](${canonicalPath}). Open the canonical page for the full rendered version with navigation, code blocks, and the version selector.\n`;
           }
@@ -421,6 +432,25 @@ async function readIfExists(filePath: string): Promise<string | null> {
     }
     throw err;
   }
+}
+
+/**
+ * `<title>` and meta description of the page Astro just wrote for this
+ * route, or null when there is no such file. Used by the fallback
+ * mirror branch so a page's own metadata wins over a slug-derived
+ * guess. Never throws: a mirror is worth emitting with a weaker title,
+ * and this runs across every page in the build.
+ */
+export async function readRenderedMetadata(
+  distDir: string,
+  cleanPath: string,
+): Promise<{ title: string; description: string } | null> {
+  const htmlPath = path.join(distDir, cleanPath, 'index.html');
+  const html = await readIfExists(htmlPath);
+  if (!html) return null;
+  const meta = extractMetadataFromHtml(html);
+  if (!meta.title && !meta.description) return null;
+  return meta;
 }
 
 function humanizeSegment(segmentPath: string): string {

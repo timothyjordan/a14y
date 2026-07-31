@@ -308,11 +308,57 @@ export function extractMetadataFromHtml(html: string): {
   description: string;
 } {
   const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+  // Match the attribute's closing quote to the one that opened it, via
+  // the \1 backreference. The previous `["']([^"']+)["']` ended the
+  // capture at whichever quote came first, so a description holding an
+  // apostrophe inside double quotes was truncated at it: a site named
+  // "Lowe's" produced the description `Lowe`.
   const descMatch = html.match(
-    /<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i,
+    /<meta\s+name=["']description["']\s+content=(["'])(.*?)\1/is,
   );
   return {
-    title: titleMatch ? titleMatch[1].trim() : '',
-    description: descMatch ? descMatch[1].trim() : '',
+    title: titleMatch ? decodeHtmlEntities(titleMatch[1].trim()) : '',
+    description: descMatch ? decodeHtmlEntities(descMatch[2].trim()) : '',
   };
+}
+
+/**
+ * Decode the entities an HTML serializer escapes, so extracted metadata
+ * is text rather than markup.
+ *
+ * Callers put these values into markdown frontmatter, where `&amp;` is
+ * not an escape but four literal characters. A site named
+ * "McKinsey & Company" was reaching the leaderboard mirrors as
+ * "McKinsey &amp; Company", and its description as "McKinsey &#38;
+ * Company", because Astro escapes text and attributes differently.
+ *
+ * Numeric forms are handled alongside the named ones for that reason:
+ * the same character arrives escaped both ways depending on context.
+ * Restricted to the characters a serializer actually escapes, so this
+ * stays a decoder for our own output rather than a general-purpose
+ * entity table.
+ */
+export function decodeHtmlEntities(value: string): string {
+  const named: Record<string, string> = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+  };
+  return value.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, body: string) => {
+    const token = body.toLowerCase();
+    if (token.startsWith('#x')) {
+      const code = Number.parseInt(token.slice(2), 16);
+      return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+    }
+    if (token.startsWith('#')) {
+      const code = Number.parseInt(token.slice(1), 10);
+      return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+    }
+    // An unrecognised entity is left exactly as it was: mangling it
+    // would be worse than passing it through.
+    return named[token] ?? match;
+  });
 }
