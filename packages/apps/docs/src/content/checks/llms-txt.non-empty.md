@@ -36,3 +36,13 @@ Put real content in your llms.txt, at minimum a heading and one or more linked p
 ```
 
 (A file that exists but contains only whitespace.)
+
+## What we measured
+
+The savings come from the contents, not the file.
+
+In our benchmark, an agent that read a populated `llms.txt` used **33% fewer tokens** on the same page (177,735 against 266,591), because the listed links sent it straight to the pages worth reading. An empty file has nothing to send it to, so there is nothing to save.
+
+Worth knowing before you invest in the contents: across four arms, a `<link rel="llms-txt">` tag, a `<link rel="alternate" type="text/markdown">` tag, a visible "For agents" footer link, and no signal at all, the agent fetched `llms.txt` **0 times out of 5**. Only a line in the prompt got it to look.
+
+[Read the study →](/research/llms-txt-linking/)

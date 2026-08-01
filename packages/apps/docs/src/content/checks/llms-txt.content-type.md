@@ -41,3 +41,11 @@ Content-Type: application/octet-stream
 # Example Docs
 - [Install](https://example.com/docs/install.md)
 ```
+
+## What we measured
+
+Our benchmark served `llms.txt` as `text/plain` throughout and never varied it, so the study below does not measure what a wrong content type costs. Treat the guidance above as convention, not as something we have put a number on.
+
+What it does measure is worth knowing anyway: when the agent read the file it used **33% fewer tokens** on the same page (177,735 against 266,591), but across four arms, a `<link rel="llms-txt">` tag, a `<link rel="alternate" type="text/markdown">` tag, a visible "For agents" footer link, and no signal at all, it fetched `llms.txt` **0 times out of 5**. Only a line in the prompt got it to look.
+
+[Read the study →](/research/llms-txt-linking/)

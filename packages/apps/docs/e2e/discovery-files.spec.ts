@@ -173,3 +173,46 @@ test.describe('discovery files', () => {
     expect(md).toContain('## Research');
   });
 });
+
+/**
+ * TJ-1344. The llms-txt.* check pages carry the linking study. These
+ * assert the link is reachable rather than just present in source: the
+ * check pages are generated for every scorecard version, so a broken
+ * target would break in a dozen places at once.
+ */
+test.describe('llms-txt check pages link the linking study', () => {
+  const CHECK_IDS = [
+    'llms-txt.exists',
+    'llms-txt.non-empty',
+    'llms-txt.content-type',
+    'llms-txt.md-extensions',
+  ];
+
+  for (const id of CHECK_IDS) {
+    test(`${id} links a study page that is actually served`, async ({ page, request }) => {
+      await page.goto(`/scorecards/0.2.0/checks/${id}/`);
+
+      const link = page.getByRole('link', { name: /Read the study/ });
+      await expect(link).toBeVisible();
+      const href = await link.getAttribute('href');
+      expect(href).toBe('/research/llms-txt-linking/');
+
+      const response = await request.get(href!);
+      expect(response.status(), `${href} should be served`).toBe(200);
+    });
+  }
+
+  test('the caveat is on the page, not just the headline number', async ({ page }) => {
+    await page.goto('/scorecards/0.2.0/checks/llms-txt.exists/');
+    const body = await page.locator('main').innerText();
+    expect(body).toContain('33% fewer tokens');
+    // The half that stops this reading as marketing for the check.
+    expect(body).toContain('0 times out of 5');
+  });
+
+  // The .md mirrors are not asserted here: they are written at
+  // astro:build:done and do not exist under `astro dev`. The check
+  // mirror forwards its source body verbatim, so the source-level
+  // assertion in test/llms-txt-research-link.test.ts covers them.
+
+});
