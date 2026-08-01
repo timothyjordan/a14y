@@ -9,6 +9,12 @@ import { buildBadgeHtml } from '~/lib/build-badge-html';
 import type { BadgeData } from '@a14y/core';
 import { getCaseStudy, caseStudyUrl } from '~/lib/case-study-data';
 import ScanWidget from '~/components/ScanWidget.astro';
+import ScoreHistogram from '~/components/research/ScoreHistogram.astro';
+import {
+  getBulkLeaderboard,
+  getDefaultBulkVersion,
+  bulkHistogramBuckets,
+} from '~/lib/bulk-data';
 
 const latest = getLatestScorecardVersion();
 const released = getScorecardByVersion(latest).releasedAt;
@@ -17,6 +23,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const evidenceStudy = getCaseStudy('agent-readiness-layer-2026-05-16');
 const evidenceUrl = caseStudyUrl(evidenceStudy.slug, base);
+
+// Survey headline numbers for the research section, read live from the
+// bulk dataset so the claim on the homepage can never drift from the
+// study it cites. Absent on a fresh checkout that has not run the bulk
+// publish, in which case the section drops that finding rather than
+// printing a zero.
+const bulkVersion = getDefaultBulkVersion();
+const bulkLb = bulkVersion ? getBulkLeaderboard(bulkVersion) : null;
+const bulkTotal = bulkLb?.totalScanned ?? 0;
+const bulkScores = bulkLb ? bulkLb.entries.map((e) => e.s).sort((a, b) => a - b) : [];
+const bulkMedian = bulkScores.length ? bulkScores[Math.floor(bulkScores.length / 2)] : 0;
+const bulkMax = bulkScores.length ? bulkScores[bulkScores.length - 1] : 0;
+const bulkBuckets = bulkLb ? bulkHistogramBuckets(bulkLb) : [];
 
 const runCmd = 'npx a14y your-site.com';
 const skillInstallCmd = 'npx skills add timothyjordan/a14y';
@@ -377,6 +396,84 @@ const heroBadgeDarkHtml = buildBadgeHtml(
         <p class="tool-note">Discoverable via <code>&lt;link rel="agent-skills"&gt;</code> on every page of this site.</p>
       </article>
     </div>
+  </section>
+
+  <section class="section research-findings" aria-labelledby="findings-heading">
+    <div class="section-head">
+      <h2 id="findings-heading">What actually moves a score</h2>
+      <p class="section-sub">
+        We run the scorecard against real websites and point real
+        coding agents at the results. Three findings worth knowing
+        before you start fixing anything.
+      </p>
+    </div>
+
+    {bulkLb && (
+      <article class="finding finding--lead" aria-labelledby="finding-survey">
+        <div class="finding-body">
+          <h3 id="finding-survey">Most of the web is not ready.</h3>
+          <p>
+            We scored the {bulkTotal.toLocaleString('en-US')} most-visited
+            websites. The median scores <strong>{bulkMedian} of 100</strong>,
+            the best of them managed <strong>{bulkMax}</strong>, and the
+            agent-era layer ({' '}<code>llms.txt</code>,
+            {' '}<code>AGENTS.md</code>, markdown mirrors) is mostly missing
+            or only half-built. The bar is low enough that a deliberate
+            afternoon puts you ahead of almost everyone.
+          </p>
+          <p class="finding-links">
+            <a href={`${base}/research/state-of-agent-readability/`}>Read the survey</a>
+            <a href={`${base}/research/web/`}>Explore all {bulkTotal.toLocaleString('en-US')} sites</a>
+          </p>
+        </div>
+        <figure class="finding-chart">
+          <ScoreHistogram buckets={bulkBuckets} />
+          <figcaption>
+            Sites per score bucket, scorecard v{bulkVersion}.
+          </figcaption>
+        </figure>
+      </article>
+    )}
+
+    <div class="finding-pair">
+      <article class="finding" aria-labelledby="finding-ablation">
+        <div class="finding-body">
+          <h3 id="finding-ablation">A few fixes do most of the work.</h3>
+          <p>
+            We toggled each of a14y's 11 agent-readiness features on and
+            off to measure what each one is worth to an agent. Markdown
+            mirrors and meta descriptions carry it. The agent-skills
+            directory actively hurts, which is not what we expected to
+            find and not what we would have guessed.
+          </p>
+          <p class="finding-links">
+            <a href={`${base}/research/per-feature-ablation/`}>Read the ablation study</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="finding" aria-labelledby="finding-llms">
+        <div class="finding-body">
+          <h3 id="finding-llms">Publishing a file is not the same as getting it read.</h3>
+          <p>
+            A clean <code>llms.txt</code> cuts an agent's token use. But
+            across five arms, no in-page link got the agent to open it:
+            not a <code>&lt;head&gt;</code> tag, not a visible footer
+            link. One line in the prompt did, and cut tokens
+            {' '}<strong>33%</strong> on the same page.
+          </p>
+          <p class="finding-links">
+            <a href={`${base}/research/llms-txt-linking/`}>Read the linking study</a>
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <p class="finding-more">
+      Every study ships its method, its raw per-run numbers, and the
+      command to reproduce it.
+      {' '}<a href={`${base}/research/`}>All research →</a>
+    </p>
   </section>
 
 </BaseLayout>
