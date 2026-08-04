@@ -5,13 +5,27 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:29:04.178Z",
-  "finishedAt": "2026-05-27T11:29:13.404Z",
+  "startedAt": "2026-08-01T13:04:16.648Z",
+  "finishedAt": "2026-08-01T13:04:23.738Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "fail",
-      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+      "status": "pass",
+      "message": "Found llms.txt at https://www.americanexpress.com/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
+      "status": "warn",
+      "message": "llms.txt contains no links to evaluate"
     },
     {
       "id": "robots-txt.exists",
@@ -103,7 +117,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.3%"
+          "message": "26.1%"
         },
         {
           "id": "html.glossary-link",
@@ -139,13 +153,13 @@
     }
   ],
   "summary": {
-    "passed": 14,
-    "failed": 9,
-    "warned": 0,
+    "passed": 17,
+    "failed": 8,
+    "warned": 1,
     "errored": 0,
-    "na": 15,
+    "na": 12,
     "total": 38,
-    "applicable": 23,
-    "score": 61
+    "applicable": 26,
+    "score": 65
   }
 }

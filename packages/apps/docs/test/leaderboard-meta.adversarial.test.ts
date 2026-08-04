@@ -106,12 +106,33 @@ describe('catalog fixture is non-vacuous', () => {
   });
 
   it('the catalog actually contains the hostile shapes these tests target', () => {
-    // If the catalog ever loses its ampersand entry, the no-& rule below stops
-    // being exercised by real data. Fail loudly rather than silently weaken.
+    // If the catalog ever loses one of these shapes, the matching rule below
+    // stops being exercised by real data. Fail loudly rather than silently
+    // weaken.
     const names = publishedEntries.map((e) => e.name);
-    expect(names.some((n) => n.includes('&')), 'expected an ampersand name').toBe(true);
     expect(names.some((n) => n.includes('-')), 'expected a hyphenated name').toBe(true);
     expect(names.some((n) => /['’]/.test(n)), 'expected an apostrophe name').toBe(true);
+  });
+
+  it('the ampersand rule stays exercised even with no ampersand in the catalog', () => {
+    // "McKinsey & Company" was the only ampersand name in the catalog, and it
+    // is now held out of the leaderboard because it crawls zero pages
+    // (TJ-1435), so the catalog sweep can no longer supply one.
+    //
+    // That is acceptable only because the catalog was never the real
+    // guarantee: the &-rules are pinned unconditionally by HOSTILE_NAMES,
+    // which carries "McKinsey & Company", "AT&T", and the already-escaped
+    // "AT&amp;T". Catalog composition changes for product reasons and is not
+    // a stable test input; the synthetic set is. Assert that here so the
+    // coverage claim is checked rather than assumed.
+    const hostile = HOSTILE_NAMES.map(([, name]) => name);
+    expect(hostile.some((n) => n.includes('&')), 'HOSTILE_NAMES must keep an ampersand case').toBe(
+      true,
+    );
+    expect(
+      hostile.some((n) => n.includes('&amp;')),
+      'HOSTILE_NAMES must keep a pre-escaped ampersand case',
+    ).toBe(true);
   });
 });
 

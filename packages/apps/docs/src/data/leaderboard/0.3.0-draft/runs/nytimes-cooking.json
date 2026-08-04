@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T07:37:32.203Z",
-  "finishedAt": "2026-05-27T07:37:34.078Z",
+  "startedAt": "2026-08-01T09:15:09.850Z",
+  "finishedAt": "2026-08-01T09:15:11.745Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -108,12 +108,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "204 headings"
+          "message": "207 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "30.8%"
+          "message": "31.2%"
         },
         {
           "id": "html.glossary-link",
@@ -134,28 +134,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "5073 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 12,
+        "passed": 14,
         "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 67
+        "total": 29,
+        "applicable": 20,
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 14,
+    "passed": 16,
     "failed": 11,
     "warned": 0,
     "errored": 0,
-    "na": 16,
-    "total": 41,
-    "applicable": 25,
-    "score": 56
+    "na": 18,
+    "total": 45,
+    "applicable": 27,
+    "score": 59
   }
 }

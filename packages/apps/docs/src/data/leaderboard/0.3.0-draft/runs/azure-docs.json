@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T05:59:24.784Z",
-  "finishedAt": "2026-05-27T05:59:25.770Z",
+  "startedAt": "2026-08-04T20:29:30.263Z",
+  "finishedAt": "2026-08-04T20:29:30.880Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,13 +15,13 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://learn.microsoft.com/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "message": "No robots.txt; defaults to allow all"
     },
     {
       "id": "robots-txt.allows-llms-txt",
@@ -41,6 +41,16 @@
       "id": "agents-md.exists",
       "status": "fail",
       "message": "No agent skill file found"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "pass",
+      "message": "1 URLs, no duplicate canonicals"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "fail",
+      "message": "no page links to an agent file in-page"
     }
   ],
   "pages": [
@@ -105,7 +115,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "47.6%"
+          "message": "46.1%"
         },
         {
           "id": "html.glossary-link",
@@ -131,28 +141,37 @@
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 8 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 3,
-        "failed": 14,
+        "passed": 4,
+        "failed": 15,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 18
+        "total": 29,
+        "applicable": 19,
+        "score": 21
       }
     }
   ],
   "summary": {
-    "passed": 6,
-    "failed": 18,
+    "passed": 7,
+    "failed": 21,
     "warned": 0,
     "errored": 0,
     "na": 17,
-    "total": 41,
-    "applicable": 24,
+    "total": 45,
+    "applicable": 28,
     "score": 25
   }
 }

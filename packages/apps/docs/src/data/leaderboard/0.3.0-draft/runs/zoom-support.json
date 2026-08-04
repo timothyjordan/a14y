@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T07:31:25.652Z",
-  "finishedAt": "2026-05-27T07:31:27.135Z",
+  "startedAt": "2026-08-04T20:55:18.384Z",
+  "finishedAt": "2026-08-04T20:55:19.994Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -39,8 +39,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://support.zoom.com/session_timeout.do"
+      "status": "fail",
+      "message": "https://support.zoom.com/session_timeout.do returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -49,13 +49,23 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://support.zoom.com/session_timeout.do"
+      "status": "fail",
+      "message": "https://support.zoom.com/session_timeout.do returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
       "status": "fail",
       "message": "Found only: (none)"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "pass",
+      "message": "1 URLs, no duplicate canonicals"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "fail",
+      "message": "no page links to an agent file in-page"
     }
   ],
   "pages": [
@@ -118,7 +128,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "61.7%"
+          "message": "61.6%"
         },
         {
           "id": "html.glossary-link",
@@ -167,34 +177,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "88.0% smaller (20722B vs 173087B)"
+          "message": "88.0% smaller (20722B vs 173308B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 7 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 14,
-        "failed": 9,
+        "passed": 15,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 4,
-        "total": 27,
-        "applicable": 23,
-        "score": 61
+        "total": 29,
+        "applicable": 25,
+        "score": 60
       }
     }
   ],
   "summary": {
     "passed": 20,
-    "failed": 13,
+    "failed": 17,
     "warned": 0,
     "errored": 0,
     "na": 8,
-    "total": 41,
-    "applicable": 33,
-    "score": 61
+    "total": 45,
+    "applicable": 37,
+    "score": 54
   }
 }

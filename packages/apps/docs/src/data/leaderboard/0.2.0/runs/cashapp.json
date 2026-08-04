@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:29:23.868Z",
-  "finishedAt": "2026-05-27T11:29:26.839Z",
+  "startedAt": "2026-08-01T13:04:33.663Z",
+  "finishedAt": "2026-08-01T13:04:36.257Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "143 entries with lastmod"
+      "message": "155 entries with lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -70,7 +70,7 @@
         {
           "id": "http.content-type-html",
           "status": "pass",
-          "message": "text/html; charset=utf-8; charset=utf-8"
+          "message": "text/html;charset=utf-8"
         },
         {
           "id": "http.no-noindex-noai",
@@ -117,12 +117,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "12 headings"
+          "message": "13 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "79.5%"
+          "message": "34.4%"
         },
         {
           "id": "html.glossary-link",
@@ -142,7 +142,7 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html; charset=utf-8; charset=utf-8"
+          "message": "application/json;charset=utf-8"
         }
       ],
       "summary": {

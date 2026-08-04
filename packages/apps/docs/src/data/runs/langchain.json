@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T08:04:03.584Z",
-  "finishedAt": "2026-05-27T08:04:04.872Z",
+  "startedAt": "2026-08-04T20:38:37.992Z",
+  "finishedAt": "2026-08-04T20:38:39.351Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -24,8 +24,8 @@
     },
     {
       "id": "llms-txt.md-extensions",
-      "status": "warn",
-      "message": "llms.txt contains no links to evaluate"
+      "status": "fail",
+      "message": "3/3 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -122,8 +122,18 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-07-26T11:03:07.648Z"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
@@ -147,8 +157,8 @@
         },
         {
           "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+          "status": "pass",
+          "message": "/oss/python/langchain/overview.md"
         },
         {
           "id": "markdown.frontmatter",
@@ -173,7 +183,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "1/1 blocks missing language"
+          "message": "10/10 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -182,25 +192,132 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 8,
+        "passed": 16,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 3,
+        "na": 1,
         "total": 24,
-        "applicable": 21,
-        "score": 62
+        "applicable": 23,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://interrupt.langchain.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "156 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "4 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "31.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
       }
     }
   ],
   "summary": {
-    "passed": 19,
-    "failed": 13,
-    "warned": 2,
+    "passed": 34,
+    "failed": 20,
+    "warned": 1,
     "errored": 0,
-    "na": 4,
-    "total": 38,
-    "applicable": 34,
-    "score": 56
+    "na": 7,
+    "total": 62,
+    "applicable": 55,
+    "score": 62
   }
 }

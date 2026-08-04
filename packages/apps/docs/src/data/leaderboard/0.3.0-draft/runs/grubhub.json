@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:40:22.228Z",
-  "finishedAt": "2026-05-27T11:40:23.252Z",
+  "startedAt": "2026-08-01T13:21:28.111Z",
+  "finishedAt": "2026-08-01T13:21:29.122Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.grubhub.com/llms.txt"
+      "status": "fail",
+      "message": "https://www.grubhub.com/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -48,8 +48,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.grubhub.com/docs/sitemap.md"
+      "status": "fail",
+      "message": "https://www.grubhub.com/docs/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -58,8 +58,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.grubhub.com/AGENTS.md"
+      "status": "fail",
+      "message": "https://www.grubhub.com/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -179,28 +179,37 @@
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 1 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 15,
+        "passed": 8,
+        "failed": 16,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 32
+        "total": 29,
+        "applicable": 24,
+        "score": 33
       }
     }
   ],
   "summary": {
-    "passed": 14,
-    "failed": 18,
+    "passed": 12,
+    "failed": 22,
     "warned": 2,
     "errored": 0,
-    "na": 7,
-    "total": 41,
-    "applicable": 34,
-    "score": 41
+    "na": 9,
+    "total": 45,
+    "applicable": 36,
+    "score": 33
   }
 }

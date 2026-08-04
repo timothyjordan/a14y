@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T08:04:03.584Z",
-  "finishedAt": "2026-05-27T08:04:04.872Z",
+  "startedAt": "2026-08-04T20:38:37.992Z",
+  "finishedAt": "2026-08-04T20:38:39.351Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://docs.langchain.com/oss/python/langchain/overview"
+      "status": "fail",
+      "message": "https://docs.langchain.com/oss/python/langchain/overview returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -24,8 +24,8 @@
     },
     {
       "id": "llms-txt.md-extensions",
-      "status": "warn",
-      "message": "llms.txt contains no links to evaluate"
+      "status": "fail",
+      "message": "3/3 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -54,8 +54,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://docs.langchain.com/oss/python/langchain/overview"
+      "status": "fail",
+      "message": "https://docs.langchain.com/oss/python/langchain/overview returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -64,13 +64,23 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://docs.langchain.com/oss/python/langchain/overview"
+      "status": "fail",
+      "message": "https://docs.langchain.com/oss/python/langchain/overview returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
       "status": "fail",
       "message": "Found only: (none)"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "pass",
+      "message": "2 URLs, no duplicate canonicals"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "pass",
+      "message": "a top-level page links to an agent file"
     }
   ],
   "pages": [
@@ -122,8 +132,18 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-07-26T11:03:07.648Z"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
@@ -147,8 +167,8 @@
         },
         {
           "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+          "status": "pass",
+          "message": "/oss/python/langchain/overview.md"
         },
         {
           "id": "markdown.frontmatter",
@@ -173,7 +193,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "1/1 blocks missing language"
+          "message": "10/10 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -187,34 +207,159 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "99.2% smaller (11070B vs 1371104B)"
+          "message": "98.8% smaller (11149B vs 938844B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
-          "message": "10.7% HTML markup"
+          "message": "10.5% HTML markup"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1013 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 16,
-        "failed": 8,
+        "passed": 21,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 3,
-        "total": 27,
-        "applicable": 24,
+        "na": 1,
+        "total": 29,
+        "applicable": 28,
+        "score": 75
+      }
+    },
+    {
+      "finalUrl": "https://interrupt.langchain.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "156 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "4 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "31.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "67 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 8,
+        "total": 29,
+        "applicable": 21,
         "score": 67
       }
     }
   ],
   "summary": {
-    "passed": 22,
-    "failed": 13,
-    "warned": 2,
+    "passed": 40,
+    "failed": 23,
+    "warned": 1,
     "errored": 0,
-    "na": 4,
-    "total": 41,
-    "applicable": 37,
-    "score": 59
+    "na": 10,
+    "total": 74,
+    "applicable": 64,
+    "score": 56
   }
 }

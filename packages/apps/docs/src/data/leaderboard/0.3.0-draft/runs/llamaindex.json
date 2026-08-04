@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T08:04:06.127Z",
-  "finishedAt": "2026-05-27T08:04:08.128Z",
+  "startedAt": "2026-08-01T09:53:29.897Z",
+  "finishedAt": "2026-08-01T09:53:32.524Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://developers.llamaindex.ai/python/framework/"
+      "status": "fail",
+      "message": "https://developers.llamaindex.ai/python/framework/ returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -54,8 +54,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://developers.llamaindex.ai/python/framework/"
+      "status": "fail",
+      "message": "https://developers.llamaindex.ai/python/framework/ returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -64,13 +64,23 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://developers.llamaindex.ai/python/framework/"
+      "status": "fail",
+      "message": "https://developers.llamaindex.ai/python/framework/ returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
       "status": "fail",
       "message": "Found only: (none)"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "fail",
+      "message": "1 canonical group(s) shared by multiple URLs (e.g. https://docs.llamaindex.ai/en/stable & https://docs.llamaindex.ai/e)"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "fail",
+      "message": "no page links to an agent file in-page"
     }
   ],
   "pages": [
@@ -133,8 +143,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -188,23 +198,32 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 268165B)"
+          "message": "96.2% smaller (10148B vs 263894B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
           "message": "0.0% HTML markup"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2631 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 11,
+        "passed": 16,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
-        "total": 27,
-        "applicable": 24,
-        "score": 54
+        "total": 29,
+        "applicable": 26,
+        "score": 62
       }
     },
     {
@@ -266,8 +285,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -321,23 +340,32 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 268165B)"
+          "message": "96.2% smaller (10148B vs 263894B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
           "message": "0.0% HTML markup"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2631 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 11,
+        "passed": 16,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
-        "total": 27,
-        "applicable": 24,
-        "score": 54
+        "total": 29,
+        "applicable": 26,
+        "score": 62
       }
     },
     {
@@ -399,8 +427,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -454,23 +482,32 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 268165B)"
+          "message": "96.2% smaller (10148B vs 263894B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
           "message": "0.0% HTML markup"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2631 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 11,
+        "passed": 16,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
-        "total": 27,
-        "applicable": 24,
-        "score": 54
+        "total": 29,
+        "applicable": 26,
+        "score": 62
       }
     },
     {
@@ -532,8 +569,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -587,23 +624,32 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 268165B)"
+          "message": "96.2% smaller (10148B vs 263894B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
           "message": "0.0% HTML markup"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2631 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 11,
+        "passed": 16,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
-        "total": 27,
-        "applicable": 24,
-        "score": 54
+        "total": 29,
+        "applicable": 26,
+        "score": 62
       }
     },
     {
@@ -690,28 +736,37 @@
         {
           "id": "discovery.indexed",
           "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2875 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 9,
+        "passed": 11,
         "failed": 8,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 53
+        "total": 29,
+        "applicable": 19,
+        "score": 58
       }
     }
   ],
   "summary": {
-    "passed": 67,
-    "failed": 58,
+    "passed": 78,
+    "failed": 59,
     "warned": 1,
     "errored": 0,
     "na": 23,
-    "total": 149,
-    "applicable": 126,
-    "score": 51
+    "total": 161,
+    "applicable": 138,
+    "score": 45
   }
 }

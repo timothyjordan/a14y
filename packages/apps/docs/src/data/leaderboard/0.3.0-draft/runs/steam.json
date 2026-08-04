@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:39:51.142Z",
-  "finishedAt": "2026-05-27T11:39:53.013Z",
+  "startedAt": "2026-08-01T13:20:55.482Z",
+  "finishedAt": "2026-08-01T13:20:57.321Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://store.steampowered.com/"
+      "status": "fail",
+      "message": "https://store.steampowered.com/ returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -53,8 +53,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://store.steampowered.com/"
+      "status": "fail",
+      "message": "https://store.steampowered.com/ returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -63,8 +63,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://store.steampowered.com/"
+      "status": "fail",
+      "message": "https://store.steampowered.com/ returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -126,13 +126,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "20 headings"
+          "status": "fail",
+          "message": "only 0 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "67.6%"
+          "message": "68.2%"
         },
         {
           "id": "html.glossary-link",
@@ -176,34 +176,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "only 0.0% smaller (860852B vs 860854B); need ≥ 30%"
+          "message": "only 0.0% smaller (1056771B vs 1056771B); need ≥ 30%"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2705 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 12,
-        "failed": 10,
+        "passed": 13,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 55
+        "total": 29,
+        "applicable": 24,
+        "score": 54
       }
     }
   ],
   "summary": {
-    "passed": 20,
-    "failed": 13,
+    "passed": 18,
+    "failed": 17,
     "warned": 2,
     "errored": 0,
-    "na": 6,
-    "total": 41,
-    "applicable": 35,
-    "score": 57
+    "na": 8,
+    "total": 45,
+    "applicable": 37,
+    "score": 49
   }
 }

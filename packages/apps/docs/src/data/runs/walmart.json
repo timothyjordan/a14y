@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T10:39:52.479Z",
-  "finishedAt": "2026-05-27T10:39:55.293Z",
+  "startedAt": "2026-08-01T12:13:40.415Z",
+  "finishedAt": "2026-08-01T12:13:42.833Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -30,7 +30,7 @@
     {
       "id": "sitemap-xml.exists",
       "status": "pass",
-      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=64e18aa4-59b8-11f1-847a-8e31cd626e0f&vid=&g=b"
+      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=6eaff7a3-8da2-11f1-a865-840fd6a5a8af&vid=&g=b"
     },
     {
       "id": "sitemap-xml.valid",
@@ -118,7 +118,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "66.4%"
+          "message": "67.5%"
         },
         {
           "id": "html.glossary-link",

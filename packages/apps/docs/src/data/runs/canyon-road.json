@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-06-03T07:14:59.655Z",
-  "finishedAt": "2026-06-03T07:15:02.921Z",
+  "startedAt": "2026-08-01T11:26:44.257Z",
+  "finishedAt": "2026-08-01T11:26:47.519Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -197,6 +197,118 @@
       }
     },
     {
+      "finalUrl": "https://www.canyonroad.ai/contact/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/contact/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "114 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/contact.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
       "finalUrl": "https://www.canyonroad.ai/how-it-works/",
       "checks": [
         {
@@ -306,128 +418,6 @@
         "total": 24,
         "applicable": 20,
         "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/products/agentsh/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/products/agentsh/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "157 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "12 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/products/agentsh.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 64
       }
     },
     {
@@ -543,7 +533,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/contact/",
+      "finalUrl": "https://www.canyonroad.ai/products/beacon/",
       "checks": [
         {
           "id": "http.status-200",
@@ -568,12 +558,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/contact/"
+          "message": "https://www.canyonroad.ai/products/beacon/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "114 chars"
+          "message": "172 chars"
         },
         {
           "id": "html.og-title",
@@ -590,18 +580,28 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
+          "status": "pass",
+          "message": "16 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.8%"
+          "status": "fail",
+          "message": "13.5%"
         },
         {
           "id": "html.glossary-link",
@@ -611,7 +611,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/contact.md"
+          "message": "https://www.canyonroad.ai/products/beacon.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -644,14 +644,136 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 7,
+        "passed": 14,
+        "failed": 8,
         "warned": 0,
         "errored": 0,
-        "na": 4,
+        "na": 2,
         "total": 24,
-        "applicable": 20,
-        "score": 65
+        "applicable": 22,
+        "score": 64
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/faq/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/faq/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "139 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/faq.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 64
       }
     },
     {
@@ -767,7 +889,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/faq/",
+      "finalUrl": "https://www.canyonroad.ai/products/agentsh/",
       "checks": [
         {
           "id": "http.status-200",
@@ -792,12 +914,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/faq/"
+          "message": "https://www.canyonroad.ai/products/agentsh/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "139 chars"
+          "message": "157 chars"
         },
         {
           "id": "html.og-title",
@@ -829,13 +951,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
+          "status": "pass",
+          "message": "12 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.8%"
+          "status": "fail",
+          "message": "14.7%"
         },
         {
           "id": "html.glossary-link",
@@ -845,7 +967,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/faq.md"
+          "message": "https://www.canyonroad.ai/products/agentsh.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -1011,372 +1133,6 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/products/beacon/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/products/beacon/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "172 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "16 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "13.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/products/beacon.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 64
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "191 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "12 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "40.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "133 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "11 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "43.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
       "finalUrl": "https://www.canyonroad.ai/blog/bugs-happen-agents-still-run/",
       "checks": [
         {
@@ -1456,499 +1212,6 @@
           "id": "markdown.mirror-suffix",
           "status": "pass",
           "message": "https://www.canyonroad.ai/blog/bugs-happen-agents-still-run.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "193 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "10 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "43.3%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "165 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "18 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "51.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "195 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "14 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "42.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "13 blocks"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 16,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 1,
-        "total": 24,
-        "applicable": 23,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "202 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "14 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "42.2%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -2119,7 +1382,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement/",
+      "finalUrl": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2144,7 +1407,251 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement/"
+          "message": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "165 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "18 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "51.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/breaking-the-agentic-kill-chain.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 15,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "202 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "14 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "42.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/intent-execution-audit-a-model-for-agent-control.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 15,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents/"
         },
         {
           "id": "html.meta-description",
@@ -2181,13 +1688,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
+          "status": "pass",
+          "message": "10 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "42.1%"
+          "message": "43.3%"
         },
         {
           "id": "html.glossary-link",
@@ -2197,7 +1704,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement.md"
+          "message": "https://www.canyonroad.ai/blog/the-most-surprising-trait-of-AI-coding-agents.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -2230,18 +1737,18 @@
         }
       ],
       "summary": {
-        "passed": 14,
-        "failed": 8,
+        "passed": 15,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 2,
         "total": 24,
         "applicable": 22,
-        "score": 64
+        "score": 68
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell/",
+      "finalUrl": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2266,12 +1773,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell/"
+          "message": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "203 chars"
+          "message": "191 chars"
         },
         {
           "id": "html.og-title",
@@ -2304,12 +1811,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "6 headings"
+          "message": "12 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "38.2%"
+          "message": "40.0%"
         },
         {
           "id": "html.glossary-link",
@@ -2319,7 +1826,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell.md"
+          "message": "https://www.canyonroad.ai/blog/when-an-ai-agent-complies.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -2347,151 +1854,19 @@
           "message": "no \"## Sitemap\" heading in mirror"
         },
         {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "1 blocks"
-        },
-        {
           "id": "discovery.indexed",
           "status": "pass"
         }
       ],
       "summary": {
-        "passed": 16,
+        "passed": 15,
         "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 1,
+        "na": 2,
         "total": 24,
-        "applicable": 23,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "225 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "38.3%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "1 blocks"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 16,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 1,
-        "total": 24,
-        "applicable": 23,
-        "score": 70
+        "applicable": 22,
+        "score": 68
       }
     },
     {
@@ -2744,6 +2119,631 @@
       }
     },
     {
+      "finalUrl": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "225 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "38.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/agentsh-v0-18-0-real-secrets-stay-out-of-the-agent.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "1 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 16,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "203 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "6 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "38.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/untrusted-text-trusted-shell.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "1 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 16,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "195 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "14 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "42.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/a-year-of-ai-tool-exploits-one-root-cause.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "13 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 16,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "193 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "42.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/rule-files-are-not-enforcement.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 64
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "133 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "11 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "43.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/the-control-gap-agents-move-faster-than-humans-can-supervise.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 15,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 68
+      }
+    },
+    {
       "finalUrl": "https://www.canyonroad.ai/blog/supply-chain-attacks-runtime-control/",
       "checks": [
         {
@@ -2868,6 +2868,352 @@
         "total": 24,
         "applicable": 23,
         "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/the-install-was-the-attack/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/the-install-was-the-attack/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "179 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "6 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "39.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/the-install-was-the-attack.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 15,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/ai-security/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/ai-security/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 29 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "18 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "31.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/ai-security.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/author/gur-brosh/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/author/gur-brosh/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 22 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "24.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/author/gur-brosh.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
       }
     },
     {
@@ -3051,7 +3397,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "48.4%"
+          "message": "48.3%"
         },
         {
           "id": "html.glossary-link",
@@ -3217,118 +3563,6 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/agentic-ai/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agentic-ai/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 28 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "19 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "31.9%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agentic-ai.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
       "finalUrl": "https://www.canyonroad.ai/blog/agentsh-policy-boundary-database-wire/",
       "checks": [
         {
@@ -3456,6 +3690,118 @@
       }
     },
     {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/agentic-ai/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/agentic-ai/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 28 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "19 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "31.9%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/agentic-ai.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
       "finalUrl": "https://www.canyonroad.ai/blog/copy-fail-block-the-path-not-the-paragraph/",
       "checks": [
         {
@@ -3578,7 +3924,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/the-install-was-the-attack/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/software-development/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3603,134 +3949,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-install-was-the-attack/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "179 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "6 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "39.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/the-install-was-the-attack.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 15,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/author/gur-brosh/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/author/gur-brosh/"
+          "message": "https://www.canyonroad.ai/blog/tag/software-development/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 22 chars"
+          "message": "only 38 chars"
         },
         {
           "id": "html.og-title",
@@ -3752,13 +3976,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
+          "status": "fail",
+          "message": "only 2 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.3%"
+          "message": "23.6%"
         },
         {
           "id": "html.glossary-link",
@@ -3768,7 +3992,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/author/gur-brosh.md"
+          "message": "https://www.canyonroad.ai/blog/tag/software-development.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -3801,462 +4025,14 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 7,
+        "passed": 12,
+        "failed": 8,
         "warned": 0,
         "errored": 0,
         "na": 4,
         "total": 24,
         "applicable": 20,
-        "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/ai-security/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/ai-security/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 29 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "18 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "31.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/ai-security.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/prompt-injection/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/prompt-injection/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 34 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "5 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "25.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/prompt-injection.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/runtime-security/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/runtime-security/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 34 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "18 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "31.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/runtime-security.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/agentsh/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agentsh/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 25 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "19 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "31.9%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agentsh.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
+        "score": 60
       }
     },
     {
@@ -4372,7 +4148,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/developer-tools/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/runtime-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4397,12 +4173,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/developer-tools/"
+          "message": "https://www.canyonroad.ai/blog/tag/runtime-security/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 33 chars"
+          "message": "only 34 chars"
         },
         {
           "id": "html.og-title",
@@ -4425,12 +4201,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "4 headings"
+          "message": "18 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.8%"
+          "message": "31.5%"
         },
         {
           "id": "html.glossary-link",
@@ -4440,7 +4216,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/developer-tools.md"
+          "message": "https://www.canyonroad.ai/blog/tag/runtime-security.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -4708,7 +4484,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/ai-safety/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/prompt-injection/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4733,124 +4509,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/ai-safety/"
+          "message": "https://www.canyonroad.ai/blog/tag/prompt-injection/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 27 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/ai-safety.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/beacon/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/beacon/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 24 chars"
+          "message": "only 34 chars"
         },
         {
           "id": "html.og-title",
@@ -4873,12 +4537,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "3 headings"
+          "message": "5 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.5%"
+          "message": "25.4%"
         },
         {
           "id": "html.glossary-link",
@@ -4888,7 +4552,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/beacon.md"
+          "message": "https://www.canyonroad.ai/blog/tag/prompt-injection.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -4932,7 +4596,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/execution-layer-security/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/developer-tools/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4957,12 +4621,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/execution-layer-security/"
+          "message": "https://www.canyonroad.ai/blog/tag/developer-tools/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 42 chars"
+          "message": "only 33 chars"
         },
         {
           "id": "html.og-title",
@@ -4985,12 +4649,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "15 headings"
+          "message": "4 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "30.5%"
+          "message": "24.8%"
         },
         {
           "id": "html.glossary-link",
@@ -5000,7 +4664,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/execution-layer-security.md"
+          "message": "https://www.canyonroad.ai/blog/tag/developer-tools.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -5044,7 +4708,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/software-development/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/agentsh/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5069,12 +4733,124 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/software-development/"
+          "message": "https://www.canyonroad.ai/blog/tag/agentsh/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 38 chars"
+          "message": "only 25 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "19 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "31.9%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/agentsh.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/mcp-security/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/mcp-security/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 30 chars"
         },
         {
           "id": "html.og-title",
@@ -5112,7 +4888,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/software-development.md"
+          "message": "https://www.canyonroad.ai/blog/tag/mcp-security.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -5265,6 +5041,342 @@
         "total": 24,
         "applicable": 20,
         "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/ai-safety/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/ai-safety/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 27 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/ai-safety.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/kill-chain/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/kill-chain/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 28 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/kill-chain.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/beacon/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/beacon/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 24 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "24.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/beacon.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
       }
     },
     {
@@ -5492,7 +5604,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/kill-chain/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/execution-layer-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5517,12 +5629,124 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/kill-chain/"
+          "message": "https://www.canyonroad.ai/blog/tag/execution-layer-security/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 28 chars"
+          "message": "only 42 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "15 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "30.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/execution-layer-security.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/secure-sandbox/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/secure-sandbox/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 32 chars"
         },
         {
           "id": "html.og-title",
@@ -5560,7 +5784,119 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/kill-chain.md"
+          "message": "https://www.canyonroad.ai/blog/tag/secure-sandbox.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/glassworm/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/glassworm/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 27 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/glassworm.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -5716,118 +6052,6 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 31 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
       "finalUrl": "https://www.canyonroad.ai/blog/tag/defense-in-depth/",
       "checks": [
         {
@@ -5940,7 +6164,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/secure-sandbox/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5965,12 +6189,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/secure-sandbox/"
+          "message": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 32 chars"
+          "message": "only 31 chars"
         },
         {
           "id": "html.og-title",
@@ -6008,231 +6232,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/secure-sandbox.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/mcp-security/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/mcp-security/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 30 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/mcp-security.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/typescript/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/typescript/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 28 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/typescript.md"
+          "message": "https://www.canyonroad.ai/blog/tag/vercel-ai-sdk.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -6500,7 +6500,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/kernel-security/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/typescript/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6525,12 +6525,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/kernel-security/"
+          "message": "https://www.canyonroad.ai/blog/tag/typescript/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 33 chars"
+          "message": "only 28 chars"
         },
         {
           "id": "html.og-title",
@@ -6558,7 +6558,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "23.7%"
+          "message": "23.6%"
         },
         {
           "id": "html.glossary-link",
@@ -6568,7 +6568,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/kernel-security.md"
+          "message": "https://www.canyonroad.ai/blog/tag/typescript.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -6724,7 +6724,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/command-injection/",
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/kernel-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6749,12 +6749,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/command-injection/"
+          "message": "https://www.canyonroad.ai/blog/tag/kernel-security/"
         },
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 35 chars"
+          "message": "only 33 chars"
         },
         {
           "id": "html.og-title",
@@ -6792,849 +6792,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/command-injection.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/agent-rules/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agent-rules/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 29 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/agent-rules.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/glassworm/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/glassworm/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 27 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/glassworm.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/release/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/release/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 25 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/release.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/execution-layer-security/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/how-it-works/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/use-cases/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/secrets-management/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/secrets-management/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 36 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/secrets-management.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/faq/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/vulnerability-research/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/vulnerability-research/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 40 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/vulnerability-research.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/blog/tag/zero-trust/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/zero-trust/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 28 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.canyonroad.ai/blog/tag/zero-trust.md"
+          "message": "https://www.canyonroad.ai/blog/tag/kernel-security.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -7790,6 +6948,882 @@
       }
     },
     {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/release/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/release/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 25 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/release.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/agent-rules/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/agent-rules/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 29 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/agent-rules.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/secrets-management/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/secrets-management/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 36 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/secrets-management.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/command-injection/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/command-injection/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 35 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/command-injection.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/vulnerability-research/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/vulnerability-research/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 40 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/vulnerability-research.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/how-it-works/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/execution-layer-security/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/use-cases/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/contact/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/faq/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/blog/tag/zero-trust/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/zero-trust/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 28 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.canyonroad.ai/blog/tag/zero-trust.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 60
+      }
+    },
+    {
       "finalUrl": "https://www.canyonroad.ai/blog/tag/database-security/",
       "checks": [
         {
@@ -7902,109 +7936,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/llms.txt",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/AGENTS.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/sitemap.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.canyonroad.ai/products/agentsh/index.md",
+      "finalUrl": "https://www.canyonroad.ai/robots.txt",
       "checks": [
         {
           "id": "http.status-200",
@@ -8072,7 +8004,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/products/watchtower/index.md",
+      "finalUrl": "https://www.canyonroad.ai/AGENTS.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -8106,7 +8038,75 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/contact/index.md",
+      "finalUrl": "https://www.canyonroad.ai/products/agentsh/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/sitemap.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.canyonroad.ai/llms.txt",
       "checks": [
         {
           "id": "http.status-200",
@@ -8174,7 +8174,7 @@
       }
     },
     {
-      "finalUrl": "https://www.canyonroad.ai/robots.txt",
+      "finalUrl": "https://www.canyonroad.ai/products/watchtower/index.md",
       "checks": [
         {
           "id": "http.status-200",

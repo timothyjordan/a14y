@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:32:21.044Z",
-  "finishedAt": "2026-05-27T11:32:23.376Z",
+  "startedAt": "2026-08-01T13:07:30.104Z",
+  "finishedAt": "2026-08-01T13:07:33.236Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.walgreens.com/request_error.jsp?redirect=/llms.txt"
+      "status": "fail",
+      "message": "https://www.walgreens.com/request_error.jsp?redirect=/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -53,8 +53,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.walgreens.com/request_error.jsp?redirect=/sitemap.md"
+      "status": "fail",
+      "message": "https://www.walgreens.com/request_error.jsp?redirect=/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -63,8 +63,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.walgreens.com/request_error.jsp?redirect=/agents.md"
+      "status": "fail",
+      "message": "https://www.walgreens.com/request_error.jsp?redirect=/agents.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -134,7 +134,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "55.3%"
+          "message": "51.4%"
         },
         {
           "id": "html.glossary-link",
@@ -179,34 +179,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (960912B vs 375021B)"
+          "message": "markdown is larger than HTML (961680B vs 348906B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "792 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 10,
+        "passed": 12,
         "failed": 12,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 45
+        "total": 29,
+        "applicable": 24,
+        "score": 50
       }
     }
   ],
   "summary": {
-    "passed": 18,
-    "failed": 15,
+    "passed": 17,
+    "failed": 18,
     "warned": 2,
     "errored": 0,
-    "na": 6,
-    "total": 41,
-    "applicable": 35,
-    "score": 51
+    "na": 8,
+    "total": 45,
+    "applicable": 37,
+    "score": 46
   }
 }

@@ -2,8 +2,10 @@
 import {
   CATEGORY_LABELS,
   checkDocsUrl,
+  formatDeltaSince,
   leaderboardEntryBadgeUrl,
   scoreBand,
+  scoreDelta,
   type LeaderboardEntry,
 } from '~/lib/research-data';
 import { siteRunUrl } from '~/lib/site-run';
@@ -39,6 +41,7 @@ function hostOf(url: string): string {
         <th scope="col" class="col-name">Site</th>
         <th scope="col" class="col-cat">Category</th>
         <th scope="col" class="col-score">Score</th>
+        <th scope="col" class="col-change">Change</th>
         <th scope="col" class="col-fail">Top failures</th>
         <th scope="col" class="col-badge">Badge</th>
       </tr>
@@ -65,6 +68,35 @@ function hostOf(url: string): string {
           </td>
           <td class="col-score">
             <span class={`score-pill score-${scoreBand(entry.score)}`}>{entry.score}</span>
+          </td>
+          <td class="col-change">
+            {(() => {
+              const d = scoreDelta(entry);
+              // No prior aggregate for this site: render nothing at all.
+              // An em dash or a zero here would claim the score held steady,
+              // which is a different (and unverified) statement.
+              if (!d) return <span class="sr-only">No previous scan</span>;
+              const since = formatDeltaSince(d.since);
+              const suffix = since ? ` since ${since}` : '';
+              if (d.direction === 'flat') {
+                return (
+                  <span class="lb-change lb-change-flat" title={`No change${suffix}`}>
+                    <span aria-hidden="true">0</span>
+                    <span class="sr-only">No change{suffix}</span>
+                  </span>
+                );
+              }
+              const word = d.direction === 'up' ? 'up' : 'down';
+              return (
+                <span class={`lb-change lb-change-${d.direction}`} title={`${d.label}${suffix}`}>
+                  {/* Arrow plus signed number, so direction survives greyscale
+                      and colour-blind viewing. Colour is reinforcement only. */}
+                  <span class="lb-change-arrow" aria-hidden="true">{d.direction === 'up' ? '▲' : '▼'}</span>
+                  <span aria-hidden="true">{d.label}</span>
+                  <span class="sr-only">{word} {Math.abs(d.delta)}{suffix}</span>
+                </span>
+              );
+            })()}
           </td>
           <td class="col-fail">
             {entry.topFailures.length === 0 ? (
@@ -152,6 +184,25 @@ function hostOf(url: string): string {
     text-align: right;
     font-variant-numeric: tabular-nums;
   }
+  .col-change {
+    width: 76px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .lb-change {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  /* Direction is carried by the arrow and the sign; colour only reinforces
+     it, so the column still reads correctly in greyscale. */
+  .lb-change-arrow { font-size: 9px; }
+  .lb-change-up { color: var(--score-good, #15803d); }
+  .lb-change-down { color: var(--score-bad, #b91c1c); }
+  .lb-change-flat { color: var(--text-subtle); }
   .col-badge {
     width: 1%;
     white-space: nowrap;
@@ -256,7 +307,14 @@ function hostOf(url: string): string {
      grid rule on tr.lb-row needs higher specificity than the
      .leaderboard tr block-display reset above it, otherwise the cards
      never engage. */
-  @media (max-width: 720px) {
+  /* 820px, not 720px: the Change column took the table to six columns and a
+     min-content width of ~784px, which with page padding needs ~812px. The
+     old 720px cut left a band from 721px to ~810px where the table no longer
+     fit and the document scrolled sideways (caught by the header e2e sweep at
+     767/799/800px). Cards are the better answer in that band anyway; the
+     alternative, an inner overflow-x container, would trade a scrolling page
+     for a scrolling table. */
+  @media (max-width: 820px) {
     .leaderboard, .leaderboard tbody, .leaderboard td { display: block; }
     .leaderboard thead { display: none; }
     .leaderboard tr.lb-row {
@@ -264,7 +322,7 @@ function hostOf(url: string): string {
       grid-template-columns: auto 1fr auto;
       grid-template-areas:
         "rank name  score"
-        "rank cat   score"
+        "rank cat   change"
         "fail fail  fail"
         "badge badge badge";
       gap: 6px 12px;
@@ -277,6 +335,7 @@ function hostOf(url: string): string {
     .col-name a { gap: 1px; }
     .col-cat  { grid-area: cat; width: auto; }
     .col-score { grid-area: score; align-self: center; text-align: right; width: auto; }
+    .col-change { grid-area: change; align-self: center; text-align: right; width: auto; }
     .col-fail  { grid-area: fail; }
     .col-fail .lb-fails { gap: 4px; }
     .lb-fail-id { font-size: 10px; padding: 2px 5px; }

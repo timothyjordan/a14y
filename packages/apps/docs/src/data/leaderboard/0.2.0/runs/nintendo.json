@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:39:57.744Z",
-  "finishedAt": "2026-05-27T11:40:00.779Z",
+  "startedAt": "2026-08-01T13:21:00.977Z",
+  "finishedAt": "2026-08-01T13:21:03.917Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -34,13 +34,8 @@
     },
     {
       "id": "sitemap-xml.valid",
-      "status": "pass",
-      "message": "urlset"
-    },
-    {
-      "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "35/35 entries missing <lastmod>"
+      "message": "sitemap.xml did not parse as urlset/sitemapindex"
     },
     {
       "id": "sitemap-md.exists",
@@ -118,12 +113,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "113 headings"
+          "message": "115 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "58.9%"
+          "message": "57.7%"
         },
         {
           "id": "html.glossary-link",
@@ -159,13 +154,13 @@
     }
   ],
   "summary": {
-    "passed": 16,
+    "passed": 15,
     "failed": 11,
     "warned": 0,
     "errored": 0,
-    "na": 11,
+    "na": 12,
     "total": 38,
-    "applicable": 27,
-    "score": 59
+    "applicable": 26,
+    "score": 58
   }
 }

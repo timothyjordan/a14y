@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T07:37:27.372Z",
-  "finishedAt": "2026-05-27T07:37:27.557Z",
+  "startedAt": "2026-08-01T09:15:04.615Z",
+  "finishedAt": "2026-08-01T09:15:04.938Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -35,12 +35,13 @@
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "status": "fail",
+      "message": "Blocks: GPTBot, ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "fail",
+      "message": "robots.txt disallows: https://www.imdb.com/llms.txt, https://www.imdb.com/.well-known/llms.txt"
     },
     {
       "id": "sitemap-xml.exists",
@@ -175,28 +176,37 @@
         {
           "id": "markdown.navigation-stripped",
           "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 0 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 5,
-        "failed": 15,
+        "passed": 6,
+        "failed": 16,
         "warned": 0,
         "errored": 0,
         "na": 7,
-        "total": 27,
-        "applicable": 20,
-        "score": 25
+        "total": 29,
+        "applicable": 22,
+        "score": 27
       }
     }
   ],
   "summary": {
-    "passed": 12,
-    "failed": 19,
+    "passed": 11,
+    "failed": 22,
     "warned": 2,
     "errored": 0,
-    "na": 8,
-    "total": 41,
-    "applicable": 33,
-    "score": 36
+    "na": 10,
+    "total": 45,
+    "applicable": 35,
+    "score": 31
   }
 }

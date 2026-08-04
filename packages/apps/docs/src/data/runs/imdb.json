@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T07:37:27.372Z",
-  "finishedAt": "2026-05-27T07:37:27.557Z",
+  "startedAt": "2026-08-01T09:15:04.615Z",
+  "finishedAt": "2026-08-01T09:15:04.938Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -35,12 +35,13 @@
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "status": "fail",
+      "message": "Blocks: GPTBot, ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "fail",
+      "message": "robots.txt disallows: https://www.imdb.com/llms.txt, https://www.imdb.com/.well-known/llms.txt"
     },
     {
       "id": "sitemap-xml.exists",
@@ -186,13 +187,13 @@
     }
   ],
   "summary": {
-    "passed": 11,
-    "failed": 19,
+    "passed": 9,
+    "failed": 21,
     "warned": 2,
     "errored": 0,
     "na": 6,
     "total": 38,
     "applicable": 32,
-    "score": 34
+    "score": 28
   }
 }

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T10:44:21.992Z",
-  "finishedAt": "2026-05-27T10:46:37.023Z",
+  "startedAt": "2026-08-01T12:20:59.167Z",
+  "finishedAt": "2026-08-01T12:21:00.254Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,18 +15,17 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "fail",
-      "message": "/robots.txt not reachable"
+      "status": "pass",
+      "message": "https://www.merriam-webster.com/robots.txt"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "No robots.txt; defaults to allow all"
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass",
-      "message": "No robots.txt"
+      "status": "pass"
     },
     {
       "id": "sitemap-xml.exists",
@@ -114,7 +113,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "3.4%"
+          "message": "3.5%"
         },
         {
           "id": "html.glossary-link",
@@ -133,30 +132,39 @@
         },
         {
           "id": "markdown.content-negotiation",
-          "status": "error",
-          "message": "Request to https://www.merriam-webster.com/ exceeded 60000ms timeout"
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "649 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 6,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
-        "errored": 1,
+        "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 61
+        "total": 29,
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 13,
+    "passed": 16,
     "failed": 11,
     "warned": 0,
-    "errored": 1,
-    "na": 16,
-    "total": 41,
-    "applicable": 25,
-    "score": 52
+    "errored": 0,
+    "na": 18,
+    "total": 45,
+    "applicable": 27,
+    "score": 59
   }
 }

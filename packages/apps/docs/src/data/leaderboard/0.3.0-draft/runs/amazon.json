@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T10:39:35.212Z",
-  "finishedAt": "2026-05-27T10:39:51.264Z",
+  "startedAt": "2026-08-01T12:13:26.288Z",
+  "finishedAt": "2026-08-01T12:13:39.113Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -69,13 +69,13 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://www.amazon.com/"
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "366 chars"
         },
         {
           "id": "html.og-title",
@@ -84,8 +84,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -99,13 +98,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 0 headings"
+          "status": "pass",
+          "message": "25 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.8%"
+          "message": "78.5%"
         },
         {
           "id": "html.glossary-link",
@@ -125,29 +124,38 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html"
+          "message": "text/html;charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "555 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 5,
-        "failed": 11,
+        "passed": 11,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 31
+        "total": 29,
+        "applicable": 18,
+        "score": 61
       }
     }
   ],
   "summary": {
-    "passed": 7,
-    "failed": 16,
+    "passed": 13,
+    "failed": 12,
     "warned": 0,
     "errored": 0,
-    "na": 18,
-    "total": 41,
-    "applicable": 23,
-    "score": 30
+    "na": 20,
+    "total": 45,
+    "applicable": 25,
+    "score": 52
   }
 }

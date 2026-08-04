@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:28:50.999Z",
-  "finishedAt": "2026-05-27T11:28:54.768Z",
+  "startedAt": "2026-08-01T13:04:03.136Z",
+  "finishedAt": "2026-08-01T13:04:07.212Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -39,8 +39,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.wellsfargo.com/sitemap/?utm_medium=www-redirect&utm_source=sitemap-md"
+      "status": "fail",
+      "message": "https://www.wellsfargo.com/sitemap/?utm_medium=www-redirect&utm_source=sitemap-md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -144,28 +144,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html;charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1851 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
+        "passed": 13,
         "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 61
+        "total": 29,
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 16,
-    "failed": 11,
+    "passed": 17,
+    "failed": 12,
     "warned": 0,
     "errored": 0,
-    "na": 14,
-    "total": 41,
-    "applicable": 27,
+    "na": 16,
+    "total": 45,
+    "applicable": 29,
     "score": 59
   }
 }

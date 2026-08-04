@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T10:39:52.479Z",
-  "finishedAt": "2026-05-27T10:39:55.293Z",
+  "startedAt": "2026-08-01T12:13:40.415Z",
+  "finishedAt": "2026-08-01T12:13:42.833Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -30,7 +30,7 @@
     {
       "id": "sitemap-xml.exists",
       "status": "pass",
-      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=64e18aa4-59b8-11f1-847a-8e31cd626e0f&vid=&g=b"
+      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=6eaff7a3-8da2-11f1-a865-840fd6a5a8af&vid=&g=b"
     },
     {
       "id": "sitemap-xml.valid",
@@ -118,7 +118,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "66.4%"
+          "message": "67.5%"
         },
         {
           "id": "html.glossary-link",
@@ -139,28 +139,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "406 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 12,
+        "passed": 14,
         "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 67
+        "total": 29,
+        "applicable": 20,
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 16,
+    "passed": 18,
     "failed": 10,
     "warned": 0,
     "errored": 0,
-    "na": 15,
-    "total": 41,
-    "applicable": 26,
-    "score": 62
+    "na": 17,
+    "total": 45,
+    "applicable": 28,
+    "score": 64
   }
 }

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:28:47.324Z",
-  "finishedAt": "2026-05-27T11:28:49.696Z",
+  "startedAt": "2026-08-01T13:03:59.400Z",
+  "finishedAt": "2026-08-01T13:04:01.831Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,23 +15,32 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "fail",
-      "message": "/robots.txt not reachable"
+      "status": "pass",
+      "message": "https://www.bankofamerica.com/robots.txt"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "No robots.txt; defaults to allow all"
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass",
-      "message": "No robots.txt"
+      "status": "pass"
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "fail",
-      "message": "sitemap.xml not reachable"
+      "status": "pass",
+      "message": "https://www.bankofamerica.com/sitemap_index.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "warn",
+      "message": "sitemap.xml has no <url> entries"
     },
     {
       "id": "sitemap-md.exists",
@@ -50,8 +59,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 403"
+          "status": "pass",
+          "message": "200"
         },
         {
           "id": "http.redirect-chain",
@@ -70,43 +79,51 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://www.bankofamerica.com/"
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "146 chars"
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "en-US"
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
+          "status": "pass",
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "53.6%"
+          "message": "24.8%"
         },
         {
           "id": "html.glossary-link",
@@ -127,28 +144,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "641 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 3,
-        "failed": 13,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 19
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 5,
-    "failed": 18,
-    "warned": 0,
+    "passed": 18,
+    "failed": 10,
+    "warned": 1,
     "errored": 0,
-    "na": 18,
-    "total": 41,
-    "applicable": 23,
-    "score": 22
+    "na": 16,
+    "total": 45,
+    "applicable": 29,
+    "score": 62
   }
 }

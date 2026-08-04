@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:33:02.250Z",
-  "finishedAt": "2026-05-27T11:33:03.884Z",
+  "startedAt": "2026-08-01T13:08:09.533Z",
+  "finishedAt": "2026-08-01T13:08:11.393Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "11118/11118 links are not .md/.mdx"
+      "message": "8064/8064 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -54,7 +54,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "44643/44643 entries missing <lastmod>"
+      "message": "46794/46794 entries missing <lastmod>"
     },
     {
       "id": "sitemap-md.exists",
@@ -99,7 +99,7 @@
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "192 chars"
+          "message": "188 chars"
         },
         {
           "id": "html.og-title",
@@ -137,7 +137,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.8%"
+          "message": "19.6%"
         },
         {
           "id": "html.glossary-link",

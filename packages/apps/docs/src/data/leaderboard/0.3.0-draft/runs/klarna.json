@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:32:03.025Z",
-  "finishedAt": "2026-05-27T11:32:05.484Z",
+  "startedAt": "2026-08-01T13:07:13.131Z",
+  "finishedAt": "2026-08-01T13:07:13.374Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,17 +15,18 @@
     },
     {
       "id": "llms-txt.content-type",
-      "status": "pass",
-      "message": "text/plain"
+      "status": "warn",
+      "message": "Content-Type is \"text/html; charset=utf-8\", expected text/plain"
     },
     {
       "id": "llms-txt.non-empty",
-      "status": "pass"
+      "status": "fail",
+      "message": "llms.txt is empty"
     },
     {
       "id": "llms-txt.md-extensions",
-      "status": "fail",
-      "message": "31/31 links are not .md/.mdx"
+      "status": "warn",
+      "message": "llms.txt contains no links to evaluate"
     },
     {
       "id": "robots-txt.exists",
@@ -43,33 +44,48 @@
     },
     {
       "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://www.klarna.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
       "status": "fail",
-      "message": "sitemap.xml not reachable"
+      "message": "sitemap.xml did not parse as urlset/sitemapindex"
     },
     {
       "id": "sitemap-md.exists",
+      "status": "pass",
+      "message": "https://www.klarna.com/sitemap.md"
+    },
+    {
+      "id": "sitemap-md.has-structure",
       "status": "fail",
-      "message": "sitemap.md not reachable"
+      "message": "sitemap.md is missing headings or links"
     },
     {
       "id": "agents-md.exists",
+      "status": "pass",
+      "message": "https://www.klarna.com/AGENTS.md"
+    },
+    {
+      "id": "agents-md.has-min-sections",
       "status": "fail",
-      "message": "No agent skill file found"
+      "message": "Found only: (none)"
     }
   ],
   "pages": [
     {
-      "finalUrl": "https://www.klarna.com/us/?grs=%2F&grr=empty",
+      "finalUrl": "https://www.klarna.com/",
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 202"
         },
         {
           "id": "http.redirect-chain",
           "status": "pass",
-          "message": "1 hops"
+          "message": "0 hops"
         },
         {
           "id": "http.content-type-html",
@@ -83,13 +99,13 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.klarna.com/us/"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "124 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
@@ -103,8 +119,8 @@
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
@@ -113,13 +129,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "20 headings"
+          "status": "fail",
+          "message": "only 0 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "83.4%"
+          "status": "fail",
+          "message": "0.0%"
         },
         {
           "id": "html.glossary-link",
@@ -128,8 +144,8 @@
         },
         {
           "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
+          "status": "pass",
+          "message": "https://www.klarna.com/index.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -137,31 +153,59 @@
           "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
         },
         {
+          "id": "markdown.frontmatter",
+          "status": "fail",
+          "message": "missing: title, description, doc_version, last_updated"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "no Link header"
+        },
+        {
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "fail",
+          "message": "no \"## Sitemap\" heading in mirror"
+        },
+        {
+          "id": "markdown.navigation-stripped",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 0 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 9,
-        "failed": 7,
+        "passed": 6,
+        "failed": 16,
         "warned": 0,
         "errored": 0,
-        "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 56
+        "na": 7,
+        "total": 29,
+        "applicable": 22,
+        "score": 27
       }
     }
   ],
   "summary": {
-    "passed": 15,
-    "failed": 11,
-    "warned": 0,
+    "passed": 13,
+    "failed": 20,
+    "warned": 2,
     "errored": 0,
-    "na": 15,
-    "total": 41,
-    "applicable": 26,
-    "score": 58
+    "na": 10,
+    "total": 45,
+    "applicable": 35,
+    "score": 37
   }
 }

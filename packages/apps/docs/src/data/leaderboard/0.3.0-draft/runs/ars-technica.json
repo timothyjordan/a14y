@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T10:40:17.084Z",
-  "finishedAt": "2026-05-27T10:40:53.518Z",
+  "startedAt": "2026-08-01T12:14:07.593Z",
+  "finishedAt": "2026-08-01T12:15:01.132Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "135449 entries with valid lastmod"
+      "message": "183322 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -59,8 +59,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 403"
+          "status": "pass",
+          "message": "200"
         },
         {
           "id": "http.redirect-chain",
@@ -69,8 +69,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
         },
         {
           "id": "http.no-noindex-noai",
@@ -79,43 +79,51 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://arstechnica.com/"
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "144 chars"
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "en"
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
+          "status": "pass",
+          "message": "41 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "11.0%"
+          "message": "4.7%"
         },
         {
           "id": "html.glossary-link",
@@ -135,29 +143,38 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html"
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1492 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 2,
-        "failed": 14,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 13
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 7,
-    "failed": 18,
+    "passed": 18,
+    "failed": 11,
     "warned": 0,
     "errored": 0,
     "na": 16,
-    "total": 41,
-    "applicable": 25,
-    "score": 28
+    "total": 45,
+    "applicable": 29,
+    "score": 62
   }
 }
