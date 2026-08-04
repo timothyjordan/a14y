@@ -55,9 +55,19 @@
   --agent-accent: var(--brand-cyan);
 
   /* Geometry */
-  --max-width:        72ch;     /* reading column */
   --max-width-wide:   1120px;
-  --max-width-prose:  68ch;
+  /* The reading column, in px on purpose. This was `68ch`, which ties
+     the page container's width to the current font's `0` glyph:
+     Atkinson Hyperlegible Next is wide enough that every prose page
+     rendered at 693px on the system-ui fallback and then snapped to
+     748px when the webfont landed, a 55px reflow on 15 pages. 748px is
+     that settled width, so the rendered design is unchanged; it just no
+     longer depends on font loading.
+
+     Inner text blocks (leads, captions, paragraph measures) still use
+     `ch` deliberately. Tracking the font is the point there, and they
+     sit inside this container so they cannot move the page width. */
+  --max-width-prose:  748px;
   --site-header-height: 64px;
   --radius:    8px;
   --radius-lg: 14px;
