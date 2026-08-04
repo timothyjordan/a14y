@@ -59,8 +59,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
-  title={`${entry.data.title} · v${resolvedVersion}`}
-  description={entry.data.why}
+  title={`${id} check · a14y scorecard v${resolvedVersion}`}
+  description={`${entry.data.title}. ${entry.data.why}`}
   scorecardVersion={resolvedVersion}
   showVersionSelector
 >
