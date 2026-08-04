@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:33:05.124Z",
-  "finishedAt": "2026-05-27T11:33:06.950Z",
+  "startedAt": "2026-08-01T13:08:12.675Z",
+  "finishedAt": "2026-08-01T13:08:14.528Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.khanacademy.org/llms.txt"
+      "status": "fail",
+      "message": "https://www.khanacademy.org/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -58,8 +58,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.khanacademy.org/sitemap.md"
+      "status": "fail",
+      "message": "https://www.khanacademy.org/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -68,8 +68,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.khanacademy.org/AGENTS.md"
+      "status": "fail",
+      "message": "https://www.khanacademy.org/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -183,34 +183,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (297295B vs 297279B)"
+          "message": "markdown is larger than HTML (320100B vs 320084B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 0 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 15,
+        "passed": 8,
+        "failed": 16,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 32
+        "total": 29,
+        "applicable": 24,
+        "score": 33
       }
     }
   ],
   "summary": {
-    "passed": 16,
-    "failed": 18,
+    "passed": 14,
+    "failed": 22,
     "warned": 2,
     "errored": 0,
-    "na": 5,
-    "total": 41,
-    "applicable": 36,
-    "score": 44
+    "na": 7,
+    "total": 45,
+    "applicable": 38,
+    "score": 37
   }
 }

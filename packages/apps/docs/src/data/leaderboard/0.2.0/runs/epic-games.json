@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:39:54.249Z",
-  "finishedAt": "2026-05-27T11:39:56.539Z",
+  "startedAt": "2026-08-01T13:20:58.682Z",
+  "finishedAt": "2026-08-01T13:20:59.709Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,8 +15,8 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://www.epicgames.com/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
@@ -106,7 +106,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "12.8%"
+          "message": "12.9%"
         },
         {
           "id": "html.glossary-link",
@@ -142,13 +142,13 @@
     }
   ],
   "summary": {
-    "passed": 6,
-    "failed": 17,
+    "passed": 5,
+    "failed": 18,
     "warned": 0,
     "errored": 0,
     "na": 15,
     "total": 38,
     "applicable": 23,
-    "score": 26
+    "score": 22
   }
 }

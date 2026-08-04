@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T08:04:06.127Z",
-  "finishedAt": "2026-05-27T08:04:08.128Z",
+  "startedAt": "2026-08-01T09:53:29.897Z",
+  "finishedAt": "2026-08-01T09:53:32.524Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -133,8 +133,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -183,14 +183,14 @@
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 11,
+        "passed": 11,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 48
+        "score": 52
       }
     },
     {
@@ -252,8 +252,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -302,14 +302,14 @@
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 11,
+        "passed": 11,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 48
+        "score": 52
       }
     },
     {
@@ -371,8 +371,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -421,14 +421,14 @@
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 11,
+        "passed": 11,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 48
+        "score": 52
       }
     },
     {
@@ -490,8 +490,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
+          "status": "pass",
+          "message": "15.7%"
         },
         {
           "id": "html.glossary-link",
@@ -540,14 +540,14 @@
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 11,
+        "passed": 11,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 48
+        "score": 52
       }
     },
     {
@@ -649,13 +649,13 @@
     }
   ],
   "summary": {
-    "passed": 55,
-    "failed": 58,
+    "passed": 59,
+    "failed": 54,
     "warned": 1,
     "errored": 0,
     "na": 20,
     "total": 134,
     "applicable": 114,
-    "score": 48
+    "score": 52
   }
 }

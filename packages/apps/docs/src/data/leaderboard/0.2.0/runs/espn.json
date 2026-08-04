@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T07:37:19.430Z",
-  "finishedAt": "2026-05-27T07:37:19.631Z",
+  "startedAt": "2026-08-01T09:14:43.923Z",
+  "finishedAt": "2026-08-01T09:14:44.155Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -35,8 +35,8 @@
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "status": "fail",
+      "message": "Blocks: GPTBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
@@ -186,13 +186,13 @@
     }
   ],
   "summary": {
-    "passed": 11,
-    "failed": 19,
+    "passed": 10,
+    "failed": 20,
     "warned": 2,
     "errored": 0,
     "na": 6,
     "total": 38,
     "applicable": 32,
-    "score": 34
+    "score": 31
   }
 }

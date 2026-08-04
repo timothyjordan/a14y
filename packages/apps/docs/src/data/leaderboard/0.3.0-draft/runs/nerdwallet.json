@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:31:59.427Z",
-  "finishedAt": "2026-05-27T11:32:01.755Z",
+  "startedAt": "2026-08-01T13:07:09.569Z",
+  "finishedAt": "2026-08-01T13:07:11.849Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -92,18 +92,28 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "2 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "53 headings"
+          "message": "52 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "2.9%"
+          "message": "2.8%"
         },
         {
           "id": "html.glossary-link",
@@ -124,28 +134,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2989 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 6,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 63
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 12,
-    "failed": 11,
+    "passed": 15,
+    "failed": 12,
     "warned": 0,
     "errored": 0,
     "na": 18,
-    "total": 41,
-    "applicable": 23,
-    "score": 52
+    "total": 45,
+    "applicable": 27,
+    "score": 56
   }
 }

@@ -5,13 +5,27 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T08:17:05.236Z",
-  "finishedAt": "2026-05-27T08:17:08.117Z",
+  "startedAt": "2026-08-01T10:12:49.945Z",
+  "finishedAt": "2026-08-01T10:12:53.349Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://rollupjs.org/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain; charset=utf-8"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+      "message": "13/13 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -42,214 +56,19 @@
       "id": "agents-md.exists",
       "status": "fail",
       "message": "No agent skill file found"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "pass",
+      "message": "19 URLs, no duplicate canonicals"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "fail",
+      "message": "no page links to an agent file in-page"
     }
   ],
   "pages": [
-    {
-      "finalUrl": "https://rollupjs.org/introduction",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "12 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "22.2%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "6/6 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "23.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
-      }
-    },
     {
       "finalUrl": "https://rollupjs.org/introduction/",
       "checks": [
@@ -311,7 +130,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "22.2%"
+          "message": "22.3%"
         },
         {
           "id": "html.glossary-link",
@@ -340,23 +159,31 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "688 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 11,
+        "passed": 10,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
+        "total": 29,
+        "applicable": 20,
+        "score": 50
       }
     },
     {
-      "finalUrl": "https://rollupjs.org/repl/",
+      "finalUrl": "https://rollupjs.org/migration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -411,12 +238,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "3 headings"
+          "message": "15 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "22.5%"
+          "message": "32.1%"
         },
         {
           "id": "html.glossary-link",
@@ -439,20 +266,33 @@
           "message": "text/html; charset=utf-8"
         },
         {
-          "id": "discovery.indexed",
+          "id": "code.language-tags",
           "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1432 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
+        "passed": 10,
         "failed": 10,
         "warned": 0,
         "errored": 0,
-        "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 50
       }
     },
     {
@@ -516,7 +356,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.2%"
+          "message": "17.3%"
         },
         {
           "id": "html.glossary-link",
@@ -545,19 +385,27 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "546 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 11,
+        "passed": 10,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
+        "total": 29,
+        "applicable": 20,
+        "score": 50
       }
     },
     {
@@ -621,7 +469,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "13.8%"
+          "message": "13.9%"
         },
         {
           "id": "html.glossary-link",
@@ -650,124 +498,27 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1706 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 6,
-        "failed": 12,
+        "passed": 9,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/browser/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "5.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "7/7 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
@@ -860,19 +611,27 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "3419 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 6,
-        "failed": 12,
+        "passed": 9,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
@@ -936,7 +695,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "5.3%"
+          "message": "5.4%"
         },
         {
           "id": "html.glossary-link",
@@ -965,23 +724,257 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1893 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 6,
-        "failed": 12,
+        "passed": 9,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
-      "finalUrl": "https://rollupjs.org/migration/",
+      "finalUrl": "https://rollupjs.org/browser/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "5.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "7/7 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "528 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 45
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/faqs/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "12 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "25.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "3/3 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1126 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/troubleshooting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1041,7 +1034,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "32.0%"
+          "message": "23.9%"
         },
         {
           "id": "html.glossary-link",
@@ -1066,23 +1059,144 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "1/1 blocks missing language"
+          "message": "5/5 blocks missing language"
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1210 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
+        "passed": 10,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/tools/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "11 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "8.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "20/20 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "970 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 9,
         "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
@@ -1172,21 +1286,143 @@
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 41 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 10,
+        "passed": 8,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
+        "total": 29,
+        "applicable": 19,
+        "score": 42
       }
     },
     {
-      "finalUrl": "https://rollupjs.org/faqs/",
+      "finalUrl": "https://rollupjs.org/configuration-options/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "89 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "104/104 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "13587 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 9,
+        "total": 29,
+        "applicable": 20,
+        "score": 45
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/introduction",
       "checks": [
         {
           "id": "http.status-200",
@@ -1246,7 +1482,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "25.2%"
+          "message": "22.3%"
         },
         {
           "id": "html.glossary-link",
@@ -1271,27 +1507,36 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "3/3 blocks missing language"
+          "message": "6/6 blocks missing language"
         },
         {
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "688 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
+        "passed": 9,
         "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
-      "finalUrl": "https://rollupjs.org/troubleshooting/",
+      "finalUrl": "https://rollupjs.org/repl/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1346,12 +1591,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "15 headings"
+          "message": "3 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "23.6%"
+          "message": "22.5%"
         },
         {
           "id": "html.glossary-link",
@@ -1374,25 +1619,137 @@
           "message": "text/html; charset=utf-8"
         },
         {
-          "id": "code.language-tags",
+          "id": "discovery.indexed",
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
           "status": "fail",
-          "message": "5/5 blocks missing language"
+          "message": "only 41 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 9,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 10,
+        "total": 29,
+        "applicable": 19,
+        "score": 47
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "23.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
         },
         {
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "199 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 11,
+        "passed": 9,
+        "failed": 10,
         "warned": 0,
         "errored": 0,
-        "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 39
+        "na": 10,
+        "total": 29,
+        "applicable": 19,
+        "score": 47
       }
     },
     {
@@ -1485,429 +1842,27 @@
         },
         {
           "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
+          "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "14946 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 6,
-        "failed": 12,
+        "passed": 9,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/repl/?shareable=JTdCJTIybW9kdWxlcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJtYWluLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmltcG9ydCUyMCcuJTJGcG9seWZpbGwuanMnJTNCJTVDbmltcG9ydCUyMCdleHRlcm5hbCclM0IlNUNuY29uc29sZS5sb2coJ21haW4nKSUzQiUyMiUyQyUyMmlzRW50cnklMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMnBvbHlmaWxsLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmNvbnNvbGUubG9nKCdwb2x5ZmlsbCcpJTNCJTIyJTJDJTIyaXNFbnRyeSUyMiUzQWZhbHNlJTdEJTVEJTJDJTIyb3B0aW9ucyUyMiUzQSU3QiUyMmZvcm1hdCUyMiUzQSUyMmVzbSUyMiUyQyUyMm5hbWUlMjIlM0ElMjJteUJ1bmRsZSUyMiUyQyUyMmFtZCUyMiUzQSU3QiUyMmlkJTIyJTNBJTIyJTIyJTdEJTJDJTIyZ2xvYmFscyUyMiUzQSU3QiU3RCU3RCUyQyUyMmV4YW1wbGUlMjIlM0FudWxsJTdE",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "22.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/configuration-options/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "89 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "103/103 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/tools/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "11 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "8.3%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "20/20 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://rollupjs.org/repl/?shareable=JTdCJTIybW9kdWxlcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJtYWluLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmltcG9ydCUyMCcuJTJGcG9seWZpbGwuanMnJTNCJTVDbmltcG9ydCUyMCdleHRlcm5hbCclM0IlNUNuY29uc29sZS5sb2coJ21haW4nKSUzQiUyMiUyQyUyMmlzRW50cnklMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMnBvbHlmaWxsLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmNvbnNvbGUubG9nKCdwb2x5ZmlsbCcpJTNCJTIyJTJDJTIyaXNFbnRyeSUyMiUzQXRydWUlN0QlNUQlMkMlMjJvcHRpb25zJTIyJTNBJTdCJTIyZm9ybWF0JTIyJTNBJTIyZXNtJTIyJTJDJTIybmFtZSUyMiUzQSUyMm15QnVuZGxlJTIyJTJDJTIyYW1kJTIyJTNBJTdCJTIyaWQlMjIlM0ElMjIlMjIlN0QlMkMlMjJnbG9iYWxzJTIyJTNBJTdCJTdEJTdEJTJDJTIyZXhhbXBsZSUyMiUzQW51bGwlN0Q=",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 15 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "22.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
+        "total": 29,
+        "applicable": 20,
+        "score": 45
       }
     },
     {
@@ -1997,28 +1952,255 @@
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 41 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 10,
+        "passed": 8,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 41
+        "total": 29,
+        "applicable": 19,
+        "score": 42
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/repl/?shareable=JTdCJTIybW9kdWxlcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJtYWluLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmltcG9ydCUyMCcuJTJGcG9seWZpbGwuanMnJTNCJTVDbmltcG9ydCUyMCdleHRlcm5hbCclM0IlNUNuY29uc29sZS5sb2coJ21haW4nKSUzQiUyMiUyQyUyMmlzRW50cnklMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMnBvbHlmaWxsLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmNvbnNvbGUubG9nKCdwb2x5ZmlsbCcpJTNCJTIyJTJDJTIyaXNFbnRyeSUyMiUzQXRydWUlN0QlNUQlMkMlMjJvcHRpb25zJTIyJTNBJTdCJTIyZm9ybWF0JTIyJTNBJTIyZXNtJTIyJTJDJTIybmFtZSUyMiUzQSUyMm15QnVuZGxlJTIyJTJDJTIyYW1kJTIyJTNBJTdCJTIyaWQlMjIlM0ElMjIlMjIlN0QlMkMlMjJnbG9iYWxzJTIyJTNBJTdCJTdEJTdEJTJDJTIyZXhhbXBsZSUyMiUzQW51bGwlN0Q=",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "22.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 41 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 10,
+        "total": 29,
+        "applicable": 19,
+        "score": 42
+      }
+    },
+    {
+      "finalUrl": "https://rollupjs.org/repl/?shareable=JTdCJTIybW9kdWxlcyUyMiUzQSU1QiU3QiUyMm5hbWUlMjIlM0ElMjJtYWluLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmltcG9ydCUyMCcuJTJGcG9seWZpbGwuanMnJTNCJTVDbmltcG9ydCUyMCdleHRlcm5hbCclM0IlNUNuY29uc29sZS5sb2coJ21haW4nKSUzQiUyMiUyQyUyMmlzRW50cnklMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMnBvbHlmaWxsLmpzJTIyJTJDJTIyY29kZSUyMiUzQSUyMmNvbnNvbGUubG9nKCdwb2x5ZmlsbCcpJTNCJTIyJTJDJTIyaXNFbnRyeSUyMiUzQWZhbHNlJTdEJTVEJTJDJTIyb3B0aW9ucyUyMiUzQSU3QiUyMmZvcm1hdCUyMiUzQSUyMmVzbSUyMiUyQyUyMm5hbWUlMjIlM0ElMjJteUJ1bmRsZSUyMiUyQyUyMmFtZCUyMiUzQSU3QiUyMmlkJTIyJTNBJTIyJTIyJTdEJTJDJTIyZ2xvYmFscyUyMiUzQSU3QiU3RCU3RCUyQyUyMmV4YW1wbGUlMjIlM0FudWxsJTdE",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 15 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "22.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 41 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 10,
+        "total": 29,
+        "applicable": 19,
+        "score": 42
       }
     }
   ],
   "summary": {
-    "passed": 128,
-    "failed": 215,
+    "passed": 178,
+    "failed": 208,
     "warned": 0,
     "errored": 0,
-    "na": 184,
-    "total": 527,
-    "applicable": 343,
-    "score": 35
+    "na": 181,
+    "total": 567,
+    "applicable": 386,
+    "score": 47
   }
 }

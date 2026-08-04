@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T10:40:05.168Z",
-  "finishedAt": "2026-05-27T10:40:07.806Z",
+  "startedAt": "2026-08-01T12:13:52.435Z",
+  "finishedAt": "2026-08-01T12:13:55.363Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.spotify.com/us/llms.txt"
+      "status": "fail",
+      "message": "https://www.spotify.com/us/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -54,12 +54,12 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "1733 missing <lastmod> of 1733 entries"
+      "message": "1738 missing <lastmod> of 1738 entries"
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.spotify.com/us/sitemap.md"
+      "status": "fail",
+      "message": "https://www.spotify.com/us/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -68,8 +68,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.spotify.com/us/AGENTS.md"
+      "status": "fail",
+      "message": "https://www.spotify.com/us/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -137,7 +137,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.4%"
+          "message": "21.3%"
         },
         {
           "id": "html.glossary-link",
@@ -158,28 +158,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "146 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
+        "passed": 13,
         "failed": 5,
         "warned": 0,
         "errored": 0,
         "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 69
+        "total": 29,
+        "applicable": 18,
+        "score": 72
       }
     }
   ],
   "summary": {
-    "passed": 20,
-    "failed": 8,
+    "passed": 19,
+    "failed": 11,
     "warned": 2,
     "errored": 0,
-    "na": 11,
-    "total": 41,
-    "applicable": 30,
-    "score": 67
+    "na": 13,
+    "total": 45,
+    "applicable": 32,
+    "score": 59
   }
 }

@@ -5,51 +5,33 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:32:10.954Z",
-  "finishedAt": "2026-05-27T11:32:12.316Z",
+  "startedAt": "2026-08-01T13:07:19.583Z",
+  "finishedAt": "2026-08-01T13:07:20.767Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.mayoclinic.org/llms.txt"
-    },
-    {
-      "id": "llms-txt.content-type",
-      "status": "warn",
-      "message": "Content-Type is \"text/html; charset=utf-8\", expected text/plain"
-    },
-    {
-      "id": "llms-txt.non-empty",
-      "status": "pass"
-    },
-    {
-      "id": "llms-txt.md-extensions",
-      "status": "warn",
-      "message": "llms.txt contains no links to evaluate"
+      "status": "fail",
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://www.mayoclinic.org/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "message": "No robots.txt; defaults to allow all"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "pass",
+      "message": "No robots.txt"
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "pass",
-      "message": "https://www.mayoclinic.org/sitemap.xml"
-    },
-    {
-      "id": "sitemap-xml.valid",
       "status": "fail",
-      "message": "sitemap.xml did not parse as urlset/sitemapindex"
+      "message": "sitemap.xml not reachable"
     },
     {
       "id": "sitemap-md.exists",
@@ -58,13 +40,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.mayoclinic.org/llms-full.txt"
-    },
-    {
-      "id": "agents-md.has-min-sections",
       "status": "fail",
-      "message": "Found only: (none)"
+      "message": "No agent skill file found"
     }
   ],
   "pages": [
@@ -73,8 +50,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -83,8 +60,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
+          "status": "fail",
+          "message": "text/html"
         },
         {
           "id": "http.no-noindex-noai",
@@ -93,8 +70,8 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.mayoclinic.org"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
@@ -103,7 +80,8 @@
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
@@ -112,32 +90,23 @@
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
+          "message": "no parseable JSON-LD found"
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "28 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "26.9%"
+          "message": "52.7%"
         },
         {
           "id": "html.glossary-link",
@@ -157,29 +126,38 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "message": "text/html"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 7,
+        "passed": 4,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
-        "na": 9,
-        "total": 27,
+        "na": 11,
+        "total": 29,
         "applicable": 18,
-        "score": 61
+        "score": 22
       }
     }
   ],
   "summary": {
-    "passed": 18,
-    "failed": 10,
-    "warned": 2,
+    "passed": 6,
+    "failed": 19,
+    "warned": 0,
     "errored": 0,
-    "na": 11,
-    "total": 41,
-    "applicable": 30,
-    "score": 60
+    "na": 20,
+    "total": 45,
+    "applicable": 25,
+    "score": 24
   }
 }

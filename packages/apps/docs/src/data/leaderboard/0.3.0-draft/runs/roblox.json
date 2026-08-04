@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:40:02.081Z",
-  "finishedAt": "2026-05-27T11:40:04.357Z",
+  "startedAt": "2026-08-01T13:21:05.248Z",
+  "finishedAt": "2026-08-01T13:21:06.729Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "35 missing <lastmod> of 35 entries"
+      "message": "40 missing <lastmod> of 40 entries"
     },
     {
       "id": "sitemap-md.exists",
@@ -144,28 +144,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 0 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 8,
+        "passed": 11,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 56
+        "total": 29,
+        "applicable": 20,
+        "score": 55
       }
     }
   ],
   "summary": {
-    "passed": 15,
-    "failed": 12,
+    "passed": 16,
+    "failed": 13,
     "warned": 0,
     "errored": 0,
-    "na": 14,
-    "total": 41,
-    "applicable": 27,
-    "score": 56
+    "na": 16,
+    "total": 45,
+    "applicable": 29,
+    "score": 55
   }
 }

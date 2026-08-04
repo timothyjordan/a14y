@@ -8,8 +8,11 @@ import CheckResultCard from '~/components/research/CheckResultCard.astro';
 import PageDetails from '~/components/research/PageDetails.astro';
 import {
   CATEGORY_LABELS,
+  formatDeltaSince,
   getLatestAvailableScorecard,
   getLeaderboard,
+  getResearchDataFor,
+  scoreDelta,
 } from '~/lib/research-data';
 import {
   listSiteRunSlugs,
@@ -88,6 +91,45 @@ if (isMultiScorecard) {
       // sites that only ran under the older scorecard).
     }
   }
+}
+
+/**
+ * Movement for one scorecard version.
+ *
+ * `entry` (from getStaticPaths) always comes from the promoted leaderboard,
+ * while `run` renders whichever version is newest, so the two can describe
+ * different scorecards. Reading the delta off `entry` directly would
+ * attribute the promoted version's history to the displayed version's score.
+ * Look the entry up in the version being shown instead.
+ */
+function deltaForVersion(version: string) {
+  try {
+    const versioned = getResearchDataFor(version).sites.find((s) => s.slug === entry.slug);
+    return versioned ? scoreDelta(versioned) : null;
+  } catch {
+    // Version has no published leaderboard file. Nothing to compare.
+    return null;
+  }
+}
+
+const activeDelta = deltaForVersion(run.scorecardVersion);
+
+// Per-version deltas for the client-side switcher, so flipping scorecard
+// swaps the movement along with the score rather than leaving a stale one.
+const deltasByVersion: Record<
+  string,
+  { label: string; direction: string; previousScore: number; since: string | null } | null
+> = {};
+for (const vs of versionedSummaries) {
+  const d = deltaForVersion(vs.scorecardVersion);
+  deltasByVersion[vs.scorecardVersion] = d
+    ? {
+        label: d.label,
+        direction: d.direction,
+        previousScore: d.previousScore,
+        since: formatDeltaSince(d.since),
+      }
+    : null;
 }
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -172,6 +214,25 @@ function methodologyUrl(methodology: string | undefined): string {
       data-active-score
       data-score-class={scoreClass(run.summary.score)}
     >{run.summary.score}</span>
+    {/* Always rendered so the switcher has a node to write into; hidden
+        when the active version has nothing to compare against. */}
+    <p
+      class={`score-change score-change-${activeDelta?.direction ?? 'none'}`}
+      data-score-change
+      hidden={!activeDelta}
+    >
+      {activeDelta && (activeDelta.direction === 'flat'
+        ? <>No change{formatDeltaSince(activeDelta.since) ? ` since ${formatDeltaSince(activeDelta.since)}` : ''}</>
+        : (
+          <>
+            <span class="score-change-arrow" aria-hidden="true">{activeDelta.direction === 'up' ? '▲' : '▼'}</span>
+            <span aria-hidden="true">{activeDelta.label}</span>
+            <span class="sr-only">{activeDelta.direction} {Math.abs(activeDelta.delta)}</span>
+            {' '}from {activeDelta.previousScore}
+            {formatDeltaSince(activeDelta.since) ? ` on ${formatDeltaSince(activeDelta.since)}` : ''}
+          </>
+        ))}
+    </p>
     <p class="score-meta">
       out of 100 <span class="dot">·</span>
       scorecard v<span data-active-version>{run.scorecardVersion}</span> <span class="dot">·</span>
@@ -203,6 +264,7 @@ function methodologyUrl(methodology: string | undefined): string {
         methodologyBase: `${base}/scorecards/scoring/`,
         leaderboardBase: `${base}/leaderboard/`,
         summaries: versionedSummaries,
+        deltas: deltasByVersion,
       })}
     />
   )}
@@ -428,6 +490,19 @@ function methodologyUrl(methodology: string | undefined): string {
   .score-pass { color: var(--status-pass); }
   .score-warn { color: var(--status-warn); }
   .score-fail { color: var(--status-fail); }
+  /* Direction is carried by the arrow and the sign, so the line still
+     reads correctly in greyscale; colour only reinforces it. */
+  .score-change {
+    margin: 4px 0 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .score-change[hidden] { display: none; }
+  .score-change-arrow { font-size: 10px; }
+  .score-change-up { color: var(--status-pass); }
+  .score-change-down { color: var(--status-fail); }
+  .score-change-flat { color: var(--text-subtle); }
   .score-meta {
     margin: 0;
     color: var(--text-muted);
@@ -582,6 +657,28 @@ function methodologyUrl(methodology: string | undefined): string {
         var newClass = scoreClass(s.summary.score);
         scoreEl.classList.add('score-' + newClass);
         scoreEl.setAttribute('data-score-class', newClass);
+      }
+      // Movement since the previous scan, which differs per scorecard
+      // version. Hidden outright when the newly selected version has no
+      // prior score, so a delta from the old version is never left behind
+      // next to the new version's number.
+      var changeEl = document.querySelector('[data-score-change]');
+      if (changeEl) {
+        var d = (payload.deltas || {})[version];
+        changeEl.className = 'score-change score-change-' + (d ? d.direction : 'none');
+        if (!d) {
+          changeEl.hidden = true;
+          changeEl.textContent = '';
+        } else {
+          changeEl.hidden = false;
+          var sinceText = d.since ? ' on ' + d.since : '';
+          if (d.direction === 'flat') {
+            changeEl.textContent = 'No change' + (d.since ? ' since ' + d.since : '');
+          } else {
+            var arrow = d.direction === 'up' ? '▲' : '▼';
+            changeEl.textContent = arrow + ' ' + d.label + ' from ' + d.previousScore + sinceText;
+          }
+        }
       }
       setAllText('[data-active-version]', version);
       setText('[data-active-passed]', s.summary.passed);

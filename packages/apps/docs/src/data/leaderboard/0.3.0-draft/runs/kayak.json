@@ -5,13 +5,27 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:42:06.501Z",
-  "finishedAt": "2026-05-27T11:42:10.248Z",
+  "startedAt": "2026-08-01T13:26:26.382Z",
+  "finishedAt": "2026-08-01T13:26:29.916Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.kayak.com/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+      "message": "45/45 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -123,7 +137,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "83.0%"
+          "message": "83.8%"
         },
         {
           "id": "html.glossary-link",
@@ -144,28 +158,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html;charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "2405 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 12,
+        "passed": 14,
         "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 67
+        "total": 29,
+        "applicable": 20,
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 17,
+    "passed": 22,
     "failed": 9,
     "warned": 1,
     "errored": 0,
-    "na": 14,
-    "total": 41,
-    "applicable": 27,
-    "score": 63
+    "na": 13,
+    "total": 45,
+    "applicable": 32,
+    "score": 69
   }
 }

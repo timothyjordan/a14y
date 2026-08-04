@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:39:28.615Z",
-  "finishedAt": "2026-05-27T11:39:30.491Z",
+  "startedAt": "2026-08-01T13:20:35.690Z",
+  "finishedAt": "2026-08-01T13:20:36.361Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://x.com/llms.txt"
+      "status": "fail",
+      "message": "https://x.com/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -54,8 +54,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://x.com/sitemap.md"
+      "status": "fail",
+      "message": "https://x.com/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -64,8 +64,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://x.com/AGENTS.md"
+      "status": "fail",
+      "message": "https://x.com/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -99,23 +99,21 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://x.com/"
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "109 chars"
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -130,12 +128,12 @@
         {
           "id": "html.headings",
           "status": "fail",
-          "message": "only 0 headings"
+          "message": "only 2 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "89.7%"
+          "status": "fail",
+          "message": "6.6%"
         },
         {
           "id": "html.glossary-link",
@@ -179,34 +177,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "only 0.1% smaller (268436B vs 268659B); need ≥ 30%"
+          "message": "markdown is larger than HTML (272073B vs 34399B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 37 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 8,
-        "failed": 14,
+        "passed": 12,
+        "failed": 12,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 36
+        "total": 29,
+        "applicable": 24,
+        "score": 50
       }
     }
   ],
   "summary": {
-    "passed": 14,
-    "failed": 20,
+    "passed": 15,
+    "failed": 21,
     "warned": 1,
     "errored": 0,
-    "na": 6,
-    "total": 41,
-    "applicable": 35,
-    "score": 40
+    "na": 8,
+    "total": 45,
+    "applicable": 37,
+    "score": 41
   }
 }

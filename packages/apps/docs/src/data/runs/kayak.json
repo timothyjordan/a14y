@@ -5,13 +5,27 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-05-27T11:42:06.501Z",
-  "finishedAt": "2026-05-27T11:42:10.248Z",
+  "startedAt": "2026-08-01T13:26:26.382Z",
+  "finishedAt": "2026-08-01T13:26:29.916Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.kayak.com/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+      "message": "45/45 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -123,7 +137,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "83.0%"
+          "message": "83.8%"
         },
         {
           "id": "html.glossary-link",
@@ -159,13 +173,13 @@
     }
   ],
   "summary": {
-    "passed": 17,
+    "passed": 20,
     "failed": 9,
     "warned": 1,
     "errored": 0,
-    "na": 11,
+    "na": 8,
     "total": 38,
-    "applicable": 27,
-    "score": 63
+    "applicable": 30,
+    "score": 67
   }
 }

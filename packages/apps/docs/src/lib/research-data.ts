@@ -52,6 +52,56 @@ export interface LeaderboardEntry {
   };
   topFailures: string[];
   scannedAt: string;
+  /**
+   * Score in the previous aggregate for the same scorecard version, when
+   * one exists. Absent for sites new to the catalog and for the first
+   * aggregate of a version, so absent means "nothing to compare against"
+   * and must not be read as an unchanged score.
+   */
+  previousScore?: number;
+  /** `generatedAt` of the aggregate `previousScore` came from. */
+  previousScannedAt?: string;
+}
+
+/**
+ * How a site's score moved since the previous scan.
+ *
+ * `null` means there is nothing to show: no prior aggregate contained this
+ * site. That is deliberately distinct from a delta of 0, which means the
+ * score was measured before and did not move. Collapsing the two would make
+ * every newly added site read as flat.
+ */
+export interface ScoreDelta {
+  delta: number;
+  direction: 'up' | 'down' | 'flat';
+  /** Signed, display-ready: "+7", "-12", "0". */
+  label: string;
+  previousScore: number;
+  /** ISO timestamp of the comparison point, when the artifact carried one. */
+  since?: string;
+}
+
+export function scoreDelta(entry: LeaderboardEntry): ScoreDelta | null {
+  const prev = entry.previousScore;
+  if (typeof prev !== 'number' || !Number.isFinite(prev)) return null;
+  const delta = entry.score - prev;
+  return {
+    delta,
+    direction: delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat',
+    // Explicit sign on gains. A bare "7" next to a score column reads as a
+    // second score at a glance; "+7" cannot.
+    label: delta > 0 ? `+${delta}` : String(delta),
+    previousScore: prev,
+    since: entry.previousScannedAt,
+  };
+}
+
+/** "22 Jun 2026", for the "since ..." caption. Falls back to the raw value. */
+export function formatDeltaSince(iso: string | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 export interface CategoryStat {

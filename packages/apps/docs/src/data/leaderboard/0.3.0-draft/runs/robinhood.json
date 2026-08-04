@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:29:16.921Z",
-  "finishedAt": "2026-05-27T11:29:20.352Z",
+  "startedAt": "2026-08-01T13:04:28.053Z",
+  "finishedAt": "2026-08-01T13:04:29.857Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,12 +40,12 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "8 missing <lastmod> of 46760 entries"
+      "message": "48 missing <lastmod> of 554 entries"
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://robinhood.com/sitemap.md"
+      "status": "fail",
+      "message": "https://robinhood.com/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -54,8 +54,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://robinhood.com/AGENTS.md"
+      "status": "fail",
+      "message": "https://robinhood.com/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -118,12 +118,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "9 headings"
+          "message": "12 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "38.2%"
+          "message": "39.2%"
         },
         {
           "id": "html.glossary-link",
@@ -144,28 +144,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "1469 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
+        "passed": 13,
         "failed": 5,
         "warned": 0,
         "errored": 0,
         "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 69
+        "total": 29,
+        "applicable": 18,
+        "score": 72
       }
     }
   ],
   "summary": {
     "passed": 18,
-    "failed": 9,
+    "failed": 11,
     "warned": 0,
     "errored": 0,
-    "na": 14,
-    "total": 41,
-    "applicable": 27,
-    "score": 67
+    "na": 16,
+    "total": 45,
+    "applicable": 29,
+    "score": 62
   }
 }

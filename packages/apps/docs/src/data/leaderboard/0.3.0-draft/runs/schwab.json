@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:31:41.143Z",
-  "finishedAt": "2026-05-27T11:31:41.476Z",
+  "startedAt": "2026-08-01T13:06:49.394Z",
+  "finishedAt": "2026-08-01T13:06:49.853Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.schwab.com/llms.txt"
+      "status": "fail",
+      "message": "https://www.schwab.com/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -53,8 +53,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.schwab.com/sitemap.md"
+      "status": "fail",
+      "message": "https://www.schwab.com/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -63,8 +63,8 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.schwab.com/AGENTS.md"
+      "status": "fail",
+      "message": "https://www.schwab.com/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -134,7 +134,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "40.4%"
+          "message": "40.6%"
         },
         {
           "id": "html.glossary-link",
@@ -178,34 +178,43 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "only 0.0% smaller (499B vs 499B); need ≥ 30%"
+          "message": "only 0.0% smaller (500B vs 500B); need ≥ 30%"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "fail",
           "message": "looks like HTML (HTML prologue at top of body)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 26 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 15,
+        "passed": 8,
+        "failed": 16,
         "warned": 0,
         "errored": 0,
         "na": 5,
-        "total": 27,
-        "applicable": 22,
-        "score": 32
+        "total": 29,
+        "applicable": 24,
+        "score": 33
       }
     }
   ],
   "summary": {
-    "passed": 15,
-    "failed": 18,
+    "passed": 13,
+    "failed": 22,
     "warned": 2,
     "errored": 0,
-    "na": 6,
-    "total": 41,
-    "applicable": 35,
-    "score": 43
+    "na": 8,
+    "total": 45,
+    "applicable": 37,
+    "score": 35
   }
 }

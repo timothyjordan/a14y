@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T07:37:20.882Z",
-  "finishedAt": "2026-05-27T07:37:26.123Z",
+  "startedAt": "2026-08-01T09:14:45.418Z",
+  "finishedAt": "2026-08-01T09:15:03.279Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "64/69 links are not .md/.mdx"
+      "message": "70/75 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -43,8 +43,18 @@
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "fail",
-      "message": "sitemap.xml not reachable"
+      "status": "pass",
+      "message": "https://weather.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "45575 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -121,13 +131,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "38 headings"
+          "status": "fail",
+          "message": "only 2 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "94.0%"
+          "message": "74.6%"
         },
         {
           "id": "html.glossary-link",
@@ -148,28 +158,37 @@
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "pass",
+          "message": "87 words in initial HTML"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 5,
+        "passed": 14,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
-        "total": 27,
-        "applicable": 18,
-        "score": 72
+        "total": 29,
+        "applicable": 20,
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 18,
+    "passed": 22,
     "failed": 10,
     "warned": 0,
     "errored": 0,
     "na": 13,
-    "total": 41,
-    "applicable": 28,
-    "score": 64
+    "total": 45,
+    "applicable": 32,
+    "score": 69
   }
 }

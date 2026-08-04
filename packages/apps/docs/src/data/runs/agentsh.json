@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-06-03T07:14:56.049Z",
-  "finishedAt": "2026-06-03T07:14:58.254Z",
+  "startedAt": "2026-08-01T11:26:40.742Z",
+  "finishedAt": "2026-08-01T11:26:42.952Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -132,7 +132,7 @@
         {
           "id": "html.json-ld.date-modified",
           "status": "pass",
-          "message": "2026-05-22"
+          "message": "2026-06-08"
         },
         {
           "id": "html.json-ld.breadcrumb",
@@ -146,7 +146,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.7%"
+          "message": "17.6%"
         },
         {
           "id": "html.glossary-link",
@@ -250,7 +250,7 @@
         {
           "id": "html.json-ld.date-modified",
           "status": "pass",
-          "message": "2026-05-19"
+          "message": "2026-06-08"
         },
         {
           "id": "html.json-ld.breadcrumb",
@@ -264,12 +264,11 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.0%"
+          "message": "15.1%"
         },
         {
           "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
+          "status": "pass"
         },
         {
           "id": "markdown.mirror-suffix",
@@ -283,23 +282,21 @@
         },
         {
           "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
+          "status": "pass"
         },
         {
           "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+          "status": "pass",
+          "message": "<https://www.agentsh.org/agent-shell/>; rel=\"canonical\""
         },
         {
           "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
         },
         {
           "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
+          "status": "pass"
         },
         {
           "id": "discovery.indexed",
@@ -307,14 +304,137 @@
         }
       ],
       "summary": {
-        "passed": 17,
-        "failed": 5,
+        "passed": 22,
+        "failed": 0,
         "warned": 0,
         "errored": 0,
         "na": 2,
         "total": 24,
         "applicable": 22,
-        "score": 77
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/docs/database-proxy/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/database-proxy/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "150 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-05-22"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "14 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "42.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/database-proxy.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/docs/database-proxy/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/docs/database-proxy/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "6 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 23,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 100
       }
     },
     {
@@ -423,377 +543,6 @@
           "id": "code.language-tags",
           "status": "pass",
           "message": "6 blocks"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 23,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 1,
-        "total": 24,
-        "applicable": 23,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/docs/database-proxy/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/database-proxy/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "150 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-05-22"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "14 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "42.2%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/database-proxy.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/docs/database-proxy/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "6 blocks"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 19,
-        "failed": 4,
-        "warned": 0,
-        "errored": 0,
-        "na": 1,
-        "total": 24,
-        "applicable": 23,
-        "score": 83
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/docs/observability/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/observability/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "152 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-05-22"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "14 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "40.9%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/observability.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/docs/observability/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "pass",
-          "message": "<https://www.agentsh.org/docs/observability/>; rel=\"canonical\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "pass"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "15 blocks"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 23,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 1,
-        "total": 24,
-        "applicable": 23,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/docs/setup/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/setup/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "130 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-05-22"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "28 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "37.9%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/docs/setup.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/docs/setup/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "pass",
-          "message": "<https://www.agentsh.org/docs/setup/>; rel=\"canonical\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "pass"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "pass",
-          "message": "29 blocks"
         },
         {
           "id": "discovery.indexed",
@@ -935,7 +684,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/features/",
+      "finalUrl": "https://www.agentsh.org/docs/setup/",
       "checks": [
         {
           "id": "http.status-200",
@@ -960,12 +709,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.agentsh.org/docs/features/"
+          "message": "https://www.agentsh.org/docs/setup/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "134 chars"
+          "message": "130 chars"
         },
         {
           "id": "html.og-title",
@@ -997,12 +746,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "37 headings"
+          "message": "28 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "39.9%"
+          "message": "37.9%"
         },
         {
           "id": "html.glossary-link",
@@ -1011,12 +760,12 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.agentsh.org/docs/features.md"
+          "message": "https://www.agentsh.org/docs/setup.md"
         },
         {
           "id": "markdown.alternate-link",
           "status": "pass",
-          "message": "/docs/features/index.md"
+          "message": "/docs/setup/index.md"
         },
         {
           "id": "markdown.frontmatter",
@@ -1025,7 +774,7 @@
         {
           "id": "markdown.canonical-header",
           "status": "pass",
-          "message": "<https://www.agentsh.org/docs/features/>; rel=\"canonical\""
+          "message": "<https://www.agentsh.org/docs/setup/>; rel=\"canonical\""
         },
         {
           "id": "markdown.content-negotiation",
@@ -1039,7 +788,130 @@
         {
           "id": "code.language-tags",
           "status": "pass",
-          "message": "35 blocks"
+          "message": "29 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 23,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/docs/observability/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/observability/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "152 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-05-22"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "14 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "41.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/observability.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/docs/observability/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/docs/observability/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "16 blocks"
         },
         {
           "id": "discovery.indexed",
@@ -1120,12 +992,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "32 headings"
+          "message": "36 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "44.6%"
+          "message": "45.4%"
         },
         {
           "id": "html.glossary-link",
@@ -1162,7 +1034,130 @@
         {
           "id": "code.language-tags",
           "status": "pass",
-          "message": "32 blocks"
+          "message": "33 blocks"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 23,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 1,
+        "total": 24,
+        "applicable": 23,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/docs/features/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/features/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "134 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-05-22"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "38 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "40.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/docs/features.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/docs/features/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/docs/features/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "pass",
+          "message": "35 blocks"
         },
         {
           "id": "discovery.indexed",
@@ -1243,12 +1238,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "14 headings"
+          "message": "15 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "33.4%"
+          "message": "35.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1417,7 +1412,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/mitigations/",
+      "finalUrl": "https://www.agentsh.org/examples/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1442,12 +1437,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.agentsh.org/mitigations/"
+          "message": "https://www.agentsh.org/examples/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "119 chars"
+          "message": "190 chars"
         },
         {
           "id": "html.og-title",
@@ -1470,7 +1465,7 @@
         {
           "id": "html.json-ld.date-modified",
           "status": "pass",
-          "message": "2026-05-18"
+          "message": "2026-06-05"
         },
         {
           "id": "html.json-ld.breadcrumb",
@@ -1484,7 +1479,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "16.0%"
+          "message": "15.0%"
         },
         {
           "id": "html.glossary-link",
@@ -1493,12 +1488,12 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://www.agentsh.org/mitigations.md"
+          "message": "https://www.agentsh.org/examples.md"
         },
         {
           "id": "markdown.alternate-link",
           "status": "pass",
-          "message": "/mitigations/index.md"
+          "message": "/examples/index.md"
         },
         {
           "id": "markdown.frontmatter",
@@ -1507,7 +1502,7 @@
         {
           "id": "markdown.canonical-header",
           "status": "pass",
-          "message": "<https://www.agentsh.org/mitigations/>; rel=\"canonical\""
+          "message": "<https://www.agentsh.org/examples/>; rel=\"canonical\""
         },
         {
           "id": "markdown.content-negotiation",
@@ -1654,6 +1649,276 @@
         "na": 1,
         "total": 24,
         "applicable": 23,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/mitigations/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/mitigations/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "119 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-05-18"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "16.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/mitigations.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/mitigations/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/mitigations/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 22,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/secure-sandbox/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/secure-sandbox/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "322 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-06-05"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/secure-sandbox.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/secure-sandbox/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/secure-sandbox/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 22,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
         "score": 100
       }
     },
@@ -1899,242 +2164,6 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/examples/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/examples/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "178 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-04-08"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/examples.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/examples/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "pass",
-          "message": "<https://www.agentsh.org/examples/>; rel=\"canonical\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "pass"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 22,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/secure-sandbox/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/secure-sandbox/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "310 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-04-08"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/secure-sandbox.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/secure-sandbox/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "pass",
-          "message": "<https://www.agentsh.org/secure-sandbox/>; rel=\"canonical\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "pass"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 22,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 100
-      }
-    },
-    {
       "finalUrl": "https://www.agentsh.org/mitigations/demo-cve-2026-46243/",
       "checks": [
         {
@@ -2220,23 +2249,21 @@
         },
         {
           "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: title, description, doc_version, last_updated"
+          "status": "pass"
         },
         {
           "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "<https://fonts.googleapis.com>; rel=\"preconnect\""
+          "status": "pass",
+          "message": "<https://www.agentsh.org/mitigations/demo-cve-2026-46243/>; rel=\"canonical\""
         },
         {
           "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
         },
         {
           "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
+          "status": "pass"
         },
         {
           "id": "discovery.indexed",
@@ -2244,14 +2271,14 @@
         }
       ],
       "summary": {
-        "passed": 18,
-        "failed": 4,
+        "passed": 22,
+        "failed": 0,
         "warned": 0,
         "errored": 0,
         "na": 2,
         "total": 24,
         "applicable": 22,
-        "score": 82
+        "score": 100
       }
     },
     {
@@ -2407,75 +2434,41 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/features/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/index.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
-    },
-    {
       "finalUrl": "https://www.agentsh.org/agent-shell/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/docs/database-proxy/index.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2543,6 +2536,40 @@
       }
     },
     {
+      "finalUrl": "https://www.agentsh.org/docs/features/index.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 100
+      }
+    },
+    {
       "finalUrl": "https://www.agentsh.org/docs/setup/index.md",
       "checks": [
         {
@@ -2577,125 +2604,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/mitigations/demo-cve-2026-31431/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.agentsh.org/mitigations/demo-cve-2026-31431/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "152 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "pass",
-          "message": "2026-05-18"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "5 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "56.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://www.agentsh.org/mitigations/demo-cve-2026-31431.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/mitigations/demo-cve-2026-31431/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "pass",
-          "message": "<https://www.agentsh.org/mitigations/demo-cve-2026-31431/>; rel=\"canonical\""
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "pass",
-          "message": "text/markdown; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "pass"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 22,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 2,
-        "total": 24,
-        "applicable": 22,
-        "score": 100
-      }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/docs/database-proxy/index.md",
+      "finalUrl": "https://www.agentsh.org/docs/policy-reference/index.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2965,7 +2874,125 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/secrets/index.md",
+      "finalUrl": "https://www.agentsh.org/mitigations/demo-cve-2026-31431/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.agentsh.org/mitigations/demo-cve-2026-31431/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "152 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "pass",
+          "message": "2026-05-18"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "5 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "56.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "pass",
+          "message": "https://www.agentsh.org/mitigations/demo-cve-2026-31431.md"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "pass",
+          "message": "/mitigations/demo-cve-2026-31431/index.md"
+        },
+        {
+          "id": "markdown.frontmatter",
+          "status": "pass"
+        },
+        {
+          "id": "markdown.canonical-header",
+          "status": "pass",
+          "message": "<https://www.agentsh.org/mitigations/demo-cve-2026-31431/>; rel=\"canonical\""
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "pass",
+          "message": "text/markdown; charset=utf-8"
+        },
+        {
+          "id": "markdown.sitemap-section",
+          "status": "pass"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 22,
+        "failed": 0,
+        "warned": 0,
+        "errored": 0,
+        "na": 2,
+        "total": 24,
+        "applicable": 22,
+        "score": 100
+      }
+    },
+    {
+      "finalUrl": "https://www.agentsh.org/AGENTS.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3033,7 +3060,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/mcp-security/index.md",
+      "finalUrl": "https://www.agentsh.org/docs/secure-sandbox/index.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3067,7 +3094,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/AGENTS.md",
+      "finalUrl": "https://www.agentsh.org/llms.txt",
       "checks": [
         {
           "id": "http.status-200",
@@ -3101,7 +3128,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/policy-reference/index.md",
+      "finalUrl": "https://www.agentsh.org/docs/secrets/index.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3169,7 +3196,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/sitemap.xml",
+      "finalUrl": "https://www.agentsh.org/docs/mcp-security/index.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3203,7 +3230,7 @@
       }
     },
     {
-      "finalUrl": "https://www.agentsh.org/docs/secure-sandbox/index.md",
+      "finalUrl": "https://www.agentsh.org/sitemap.xml",
       "checks": [
         {
           "id": "http.status-200",
@@ -3269,50 +3296,16 @@
         "applicable": 4,
         "score": 100
       }
-    },
-    {
-      "finalUrl": "https://www.agentsh.org/llms.txt",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 0,
-        "warned": 0,
-        "errored": 0,
-        "na": 20,
-        "total": 24,
-        "applicable": 4,
-        "score": 100
-      }
     }
   ],
   "summary": {
-    "passed": 562,
-    "failed": 13,
+    "passed": 575,
+    "failed": 0,
     "warned": 0,
     "errored": 0,
     "na": 375,
     "total": 950,
     "applicable": 575,
-    "score": 98
+    "score": 100
   }
 }

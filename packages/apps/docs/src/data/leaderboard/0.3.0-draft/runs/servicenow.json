@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T09:58:52.138Z",
-  "finishedAt": "2026-05-27T09:59:01.936Z",
+  "startedAt": "2026-08-04T20:50:47.252Z",
+  "finishedAt": "2026-08-04T20:50:48.156Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms-full.txt at https://www.servicenow.com/docs/llms-full.txt"
+      "status": "fail",
+      "message": "https://www.servicenow.com/docs/llms-full.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -49,8 +49,8 @@
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.servicenow.com/docs/sitemap.md"
+      "status": "fail",
+      "message": "https://www.servicenow.com/docs/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -59,13 +59,23 @@
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.servicenow.com/docs/AGENTS.md"
+      "status": "fail",
+      "message": "https://www.servicenow.com/docs/AGENTS.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
       "status": "fail",
       "message": "Found only: (none)"
+    },
+    {
+      "id": "discovery.no-duplicate-content",
+      "status": "pass",
+      "message": "2 URLs, no duplicate canonicals"
+    },
+    {
+      "id": "discovery.in-page-link",
+      "status": "fail",
+      "message": "no page links to an agent file in-page"
     }
   ],
   "pages": [
@@ -155,17 +165,26 @@
         {
           "id": "discovery.indexed",
           "status": "pass"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 4,
-        "failed": 13,
+        "passed": 5,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 24
+        "total": 29,
+        "applicable": 19,
+        "score": 26
       }
     },
     {
@@ -255,28 +274,37 @@
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 3,
-        "failed": 14,
+        "passed": 4,
+        "failed": 15,
         "warned": 0,
         "errored": 0,
         "na": 10,
-        "total": 27,
-        "applicable": 17,
-        "score": 18
+        "total": 29,
+        "applicable": 19,
+        "score": 21
       }
     }
   ],
   "summary": {
     "passed": 14,
-    "failed": 31,
+    "failed": 37,
     "warned": 1,
     "errored": 0,
     "na": 22,
-    "total": 68,
-    "applicable": 46,
-    "score": 36
+    "total": 74,
+    "applicable": 52,
+    "score": 29
   }
 }

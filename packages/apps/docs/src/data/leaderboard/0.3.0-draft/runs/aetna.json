@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-05-27T11:32:49.858Z",
-  "finishedAt": "2026-05-27T11:32:52.661Z",
+  "startedAt": "2026-08-01T13:07:57.015Z",
+  "finishedAt": "2026-08-01T13:07:58.490Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "563 missing <lastmod> of 563 entries"
+      "message": "447 missing <lastmod> of 447 entries"
     },
     {
       "id": "sitemap-md.exists",
@@ -59,8 +59,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -69,8 +69,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html;charset=utf-8"
+          "status": "fail",
+          "message": "text/html"
         },
         {
           "id": "http.no-noindex-noai",
@@ -79,26 +79,28 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.aetna.com/"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "216 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
@@ -107,13 +109,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "58 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "27.8%"
+          "message": "52.3%"
         },
         {
           "id": "html.glossary-link",
@@ -133,29 +135,38 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html;charset=utf-8"
+          "message": "text/html"
+        },
+        {
+          "id": "html.ssr-content",
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
+        },
+        {
+          "id": "http.no-interstitial",
+          "status": "pass"
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 5,
+        "passed": 4,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
         "na": 11,
-        "total": 27,
-        "applicable": 16,
-        "score": 69
+        "total": 29,
+        "applicable": 18,
+        "score": 22
       }
     }
   ],
   "summary": {
-    "passed": 16,
-    "failed": 9,
+    "passed": 9,
+    "failed": 18,
     "warned": 0,
     "errored": 0,
-    "na": 16,
-    "total": 41,
-    "applicable": 25,
-    "score": 64
+    "na": 18,
+    "total": 45,
+    "applicable": 27,
+    "score": 33
   }
 }
