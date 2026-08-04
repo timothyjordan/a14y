@@ -40,3 +40,13 @@ Served at `https://example.com/llms.txt`.
 ### Fail
 
 No file at any of the well-known paths, `GET /llms.txt`, `GET /.well-known/llms.txt`, `GET /docs/llms.txt`, and the `llms-full.txt` variants all return 404.
+
+## What we measured
+
+Publishing the file and getting an agent to read it are two different problems, and this check only measures the first one.
+
+We benchmarked a clean `llms.txt` discovery layer against a coding agent, five runs per arm, everything else held identical. When the agent read the file, it used **33% fewer tokens** on the same page (177,735 against 266,591). But it only read the file when the prompt told it to. Across four other arms, a `<link rel="llms-txt">` tag, a `<link rel="alternate" type="text/markdown">` tag, a visible "For agents" footer link, and no signal at all, the agent fetched `llms.txt` **0 times out of 5**.
+
+Publish it anyway. It is the half you control, the savings are real once something does read it, and the ingesters that look for it by convention will find it. Just do not expect the file on its own to change how an agent behaves, and if you are the one writing the prompt, say where to look.
+
+[Read the study →](/research/llms-txt-linking/)
