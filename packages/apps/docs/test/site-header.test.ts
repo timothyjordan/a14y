@@ -94,3 +94,30 @@ describe('shrinkable grid and flex items (TJ-1349)', () => {
     );
   });
 });
+
+describe('scorecard sub-header (TJ-1433)', () => {
+  const block = css.slice(css.indexOf('.scorecard-subheader-meta::before'));
+
+  it('wraps rather than overflowing on phones', () => {
+    // The label, selector and release date need about 380px between
+    // them. At 320px the row had 264px and ran off the edge, taking the
+    // document's horizontal scroll with it, on every check page.
+    expect(block).toMatch(
+      /@media \(max-width: 640px\)[\s\S]*?\.scorecard-subheader-inner \{[\s\S]*?flex-wrap: wrap;/,
+    );
+  });
+
+  it('drops the leading separator dot once the row can wrap', () => {
+    // It reads as a separator only inline; on a wrapped line it would
+    // appear as a bullet.
+    expect(block).toMatch(
+      /@media \(max-width: 640px\)[\s\S]*?\.scorecard-subheader-meta::before \{ content: none; \}/,
+    );
+  });
+
+  it('keeps pinning below the header, whose height is per-breakpoint', () => {
+    expect(css).toMatch(
+      /\.scorecard-subheader \{[\s\S]*?top: var\(--site-header-height\)/,
+    );
+  });
+});

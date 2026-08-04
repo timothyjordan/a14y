@@ -1374,6 +1374,31 @@ a.chip code { color: inherit; }
   margin-right: 14px;
   color: var(--text-subtle);
 }
+
+/* TJ-1433. The label, the version selector and the release date need
+   about 380px between them; at 320px the row had 264px and simply ran
+   off the edge, taking the document's horizontal scroll with it. Every
+   check page carries this bar, and check pages are the site's
+   highest-impression surface, so it was the worst place to still be
+   overflowing after TJ-1349.
+
+   Wrapping is enough: the bar is metadata, so a second line costs
+   nothing. `top: var(--site-header-height)` already tracks the header
+   per breakpoint, so a taller bar still pins correctly beneath it.
+   Padding matches the site header's own mobile value. */
+@media (max-width: 640px) {
+  .scorecard-subheader-inner {
+    flex-wrap: wrap;
+    padding: 8px 18px;
+    gap: 8px 12px;
+    font-size: 12.5px;
+  }
+  /* The leading dot reads as a separator only when the meta sits on the
+     same line as what precedes it. Once the row can wrap it would
+     appear as a bullet at the start of a line, so the gap does the
+     separating instead. */
+  .scorecard-subheader-meta::before { content: none; }
+}
 .version-selector {
   font: inherit;
   font-family: var(--font-mono);
