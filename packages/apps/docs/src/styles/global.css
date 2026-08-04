@@ -188,8 +188,14 @@ hr {
   padding: 14px 28px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  /* The theme toggle is a sibling of <nav>, not a child of it: it is a
+     display preference rather than a primary destination, and keeping
+     it out of `<nav aria-label="Primary">` lets it stay on the brand
+     row when the nav wraps below (see the 559px breakpoint).
+     `margin-left: auto` on the nav does what `justify-content:
+     space-between` used to, but with three children instead of two, so
+     the gap below governs only the nav-to-toggle spacing. */
+  gap: 22px;
 }
 .site-header a.brand {
   display: inline-flex;
@@ -226,7 +232,17 @@ hr {
 .site-nav {
   display: flex;
   align-items: center;
+  margin-left: auto;
   gap: 22px;
+  /* Both are safety nets rather than layout for any current width.
+     The breakpoints below keep the nav inside the viewport at every
+     supported size; if a future nav item breaks that budget, these make
+     it wrap onto another line instead of pushing the whole document
+     sideways, which is what TJ-1349 was. Wrapping is preferred over
+     `overflow-x: auto` here because a scroll container would clip the
+     focus ring on the links it contains. */
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .site-nav a {
   color: var(--text-muted);
@@ -235,14 +251,58 @@ hr {
   font-weight: 500;
 }
 .site-nav a:hover { color: var(--text); }
+
+/* The full nav needs 779px: 557px of links plus a 146px brand, 56px of
+   padding and the 20px gap. Below that the three secondary
+   destinations (Tools, Press, GitHub) step aside; all three are
+   reachable from the pages that remain. This threshold used to be
+   640px, which left 641-767px overflowing by up to 51px: a band that
+   covers tablets and half-width laptop windows. */
+@media (max-width: 799px) {
+  .site-nav a[data-secondary] { display: none; }
+  .site-nav { gap: 18px; }
+}
+
 @media (max-width: 640px) {
   .site-nav { gap: 14px; }
   .site-nav a { font-size: 13px; }
-  .site-nav a[data-secondary] { display: none; }
   .site-header-inner { padding: 12px 18px; }
   .site-header a.brand { gap: 8px; font-size: 16px; }
   .site-header .brand-version { font-size: 10px; padding: 1px 5px; }
 }
+
+/* Below this the brand and the four remaining links cannot share a
+   row, so the nav takes its own. Every destination stays visible and
+   tappable, which a disclosure menu would not manage without adding
+   JavaScript, focus management, and motion to a header that currently
+   needs none of them. */
+@media (max-width: 559px) {
+  /* Must track the rendered height of the two-row header. It offsets
+     in-page anchor targets (`scroll-margin-top`) and positions the
+     leaderboard's sticky table head, both of which would sit under the
+     header if this stayed at the one-row 64px.
+     `test/site-header.test.ts` and the E2E measure the real header and
+     fail if these drift. */
+  :root { --site-header-height: 95px; }
+
+  .site-header-inner {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  /* Brand and toggle share the first row, nav takes the second. The
+     toggle keeps its DOM position (after the nav) and is pulled back
+     up by ordering the nav last, so the reading order stays
+     brand, destinations, preference. */
+  .site-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .theme-toggle { margin-left: auto; }
+}
+
 
 .theme-toggle {
   display: inline-flex;
@@ -811,6 +871,18 @@ main.container h2[id] {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Grid and flex items default to `min-width: auto`, which refuses to
+     shrink below the widest thing inside. The longest command
+     (`npx skills add timothyjordan/a14y`) held these cards at 379px, so
+     the homepage scrolled sideways below about 435px: +87px at 320px.
+     The .tool-cmd blocks already scroll on their own overflow-x, so
+     letting the card shrink hands the overflow to them instead of to
+     the document. */
+  min-width: 0;
+}
+.tool-card .tool-cmd-block,
+.tool-card .tool-cmd-wrap {
+  min-width: 0;
 }
 .tool-card .tool-head {
   display: flex;
@@ -894,6 +966,33 @@ main.container h2[id] {
   cursor: pointer;
   transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
 }
+/* Once the card is allowed to shrink (see .tool-card min-width), the
+   absolutely-positioned Copy button starts sitting on top of the
+   command it copies: `npx a14y your-site.com` is wider than what is
+   left of a 320px card, and the text scrolls underneath the button
+   rather than stopping short of it. Below this width the button drops
+   out of the overlay and sits under the block instead, which keeps the
+   whole command readable without horizontal scrolling inside a box
+   that is already inside a narrow page. */
+@media (max-width: 560px) {
+  .tool-card .tool-cmd-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .tool-card .tool-cmd-wrap .tool-cmd {
+    width: 100%;
+    padding-right: 14px;
+  }
+  .tool-card .tool-cmd-copy {
+    position: static;
+    background: var(--surface-alt);
+    border-color: var(--border);
+    color: var(--text-muted);
+  }
+}
+
 .tool-card .tool-cmd-copy:hover {
   color: oklch(1 0 0 / 1);
   border-color: oklch(1 0 0 / 0.34);
@@ -1771,7 +1870,12 @@ a.chip code { color: inherit; }
 
 .finding-pair {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* `min(300px, 100%)` rather than a bare 300px: below about 336px the
+     content box is narrower than the track minimum, and a bare value
+     would hold the track at 300px and push the document sideways
+     (+8px at 320px). The min() lets the track collapse to the
+     container on the narrowest screens. */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 32px;
 }
 

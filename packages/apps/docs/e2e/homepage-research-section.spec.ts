@@ -110,13 +110,8 @@ test.describe('homepage research section', () => {
     ).toBeVisible();
   });
 
-  test('the section itself never overflows the viewport at phone width', async ({ page }) => {
+  test('the section never overflows the viewport at phone width', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    // Scoped to this section on purpose. The page as a whole does
-    // overflow at 390px, but the offender is nav.site-nav in the shared
-    // header, which predates this work and affects every page. Asserting
-    // document-level here would make this spec fail for someone else's
-    // bug and hide a regression of our own.
     const overflow = await page.evaluate(() => {
       const limit = document.documentElement.clientWidth;
       const offenders: string[] = [];
@@ -129,5 +124,15 @@ test.describe('homepage research section', () => {
       return offenders;
     });
     expect(overflow).toEqual([]);
+
+    // The document as a whole is guarded too, now that TJ-1349 fixed
+    // the header nav (and, with it, the tool cards and this section's
+    // own grid track minimum). e2e/site-header.spec.ts sweeps this
+    // across every breakpoint; the check here keeps it local to the
+    // page this spec owns.
+    const documentOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(documentOverflow).toBeLessThanOrEqual(0);
   });
 });
