@@ -17,6 +17,7 @@ import {
   loadSiteRun,
   scoreClass,
 } from '~/lib/site-run';
+import { buildSiteNarrative } from '~/lib/site-narrative';
 import { leaderboardPageTitle, leaderboardPageDescription } from '~/lib/leaderboard-meta';
 
 export const getStaticPaths = (() => {
@@ -98,6 +99,12 @@ const scannedAt = (() => {
 const passSiteChecks = run.siteChecks.filter((c) => c.status === 'pass').length;
 const runMethodology = (run as SiteRun & { scoringMethodology?: string }).scoringMethodology;
 
+// Unique, plain-language summary of this site's result (TJ-1430), so the
+// page carries substantive prose above the templated check lists. Describes
+// the statically rendered default version; the client-side scorecard switcher
+// updates the hero numbers but not this paragraph.
+const narrative = buildSiteNarrative(run, entry.name);
+
 const PAGE_SIZE = 50;
 const totalPages = run.pages.length;
 const isPaginated = totalPages > PAGE_SIZE;
@@ -178,6 +185,12 @@ function methodologyUrl(methodology: string | undefined): string {
       aria-label={`Embed Agent-Ready badge for ${entry.name}`}
     >Embed your badge ↗</a>
   </section>
+
+  {narrative.length > 0 && (
+    <section class="site-summary" aria-label={`Summary of ${entry.name}'s agent readability`}>
+      <p>{narrative.join(' ')}</p>
+    </section>
+  )}
 
   {isMultiScorecard && versionedSummaries.length > 1 && (
     <script
@@ -274,6 +287,19 @@ function methodologyUrl(methodology: string | undefined): string {
     border: 0;
     border-top: 1px solid var(--border);
     margin: 28px 0 32px;
+  }
+
+  /* Plain-language, per-site summary (TJ-1430). Substantive prose above
+     the templated check lists, so the page reads as unique content. */
+  .site-summary {
+    margin: 0 0 36px;
+    max-width: 68ch;
+  }
+  .site-summary p {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--text);
   }
   .scorecard-page-header h1 {
     margin: 0;
