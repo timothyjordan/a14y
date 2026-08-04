@@ -15,9 +15,20 @@ import { test, expect } from '@playwright/test';
 
 const WIDTHS = [320, 360, 390, 414, 480, 559, 560, 640, 700, 767, 799, 800, 900, 1024, 1440];
 
-// One of each layout family: prose, wide, and a data-heavy page whose
-// own content is the most likely thing to overflow independently.
-const PAGES = ['/spec/', '/', '/leaderboard/'];
+// One of each layout family: prose, wide, a data-heavy page whose own
+// content is the most likely thing to overflow independently, and a
+// check page. The check page is here because leaving it out is exactly
+// how TJ-1433 shipped: this sweep was green while every check page
+// still scrolled sideways, on the site's highest-impression surface.
+// A check page carries chrome the others do not, the sticky scorecard
+// sub-header, so "one prose page is representative" was wrong.
+const PAGES = [
+  '/spec/',
+  '/',
+  '/leaderboard/',
+  '/scorecards/0.2.0/checks/llms-txt.exists/',
+  '/scorecards/0.2.0/',
+];
 
 test.describe('the document never scrolls horizontally', () => {
   for (const width of WIDTHS) {
