@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-08-01T09:13:08.064Z",
-  "finishedAt": "2026-08-01T09:13:09.057Z",
+  "startedAt": "2026-09-01T07:37:40.129Z",
+  "finishedAt": "2026-09-01T07:37:41.591Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -51,7 +51,7 @@
         {
           "id": "http.status-200",
           "status": "fail",
-          "message": "Got 403"
+          "message": "Got 429"
         },
         {
           "id": "http.redirect-chain",
@@ -106,7 +106,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "54.8%"
+          "message": "58.2%"
         },
         {
           "id": "html.glossary-link",

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T13:26:35.445Z",
-  "finishedAt": "2026-08-01T13:26:39.029Z",
+  "startedAt": "2026-09-01T11:35:26.815Z",
+  "finishedAt": "2026-09-01T11:35:30.474Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "17 missing <lastmod> of 36172 entries"
+      "message": "9 missing <lastmod> of 36201 entries"
     },
     {
       "id": "sitemap-md.exists",
@@ -97,8 +97,8 @@
         },
         {
           "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "en"
         },
         {
           "id": "html.json-ld",
@@ -108,7 +108,7 @@
         {
           "id": "html.json-ld.date-modified",
           "status": "pass",
-          "message": "2026-07-27T13:33:54Z"
+          "message": "2026-08-27T15:03:26Z"
         },
         {
           "id": "html.json-ld.breadcrumb",
@@ -122,7 +122,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "14.7%"
+          "message": "14.9%"
         },
         {
           "id": "html.glossary-link",
@@ -166,7 +166,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (106557B vs 59795B)"
+          "message": "markdown is larger than HTML (109637B vs 60092B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -176,7 +176,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "876 words in initial HTML"
+          "message": "897 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -184,25 +184,25 @@
         }
       ],
       "summary": {
-        "passed": 17,
-        "failed": 9,
+        "passed": 18,
+        "failed": 8,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 29,
         "applicable": 26,
-        "score": 65
+        "score": 69
       }
     }
   ],
   "summary": {
-    "passed": 22,
-    "failed": 13,
+    "passed": 23,
+    "failed": 12,
     "warned": 0,
     "errored": 0,
     "na": 10,
     "total": 45,
     "applicable": 35,
-    "score": 63
+    "score": 66
   }
 }

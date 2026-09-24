@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T13:07:22.051Z",
-  "finishedAt": "2026-08-01T13:07:25.576Z",
+  "startedAt": "2026-09-01T11:15:18.134Z",
+  "finishedAt": "2026-09-01T11:15:21.397Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -54,7 +54,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "40414 entries with valid lastmod"
+      "message": "40728 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -117,7 +117,7 @@
         {
           "id": "html.json-ld",
           "status": "pass",
-          "message": "2 block(s)"
+          "message": "1 block(s)"
         },
         {
           "id": "html.json-ld.date-modified",
@@ -132,12 +132,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "32 headings"
+          "message": "34 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.2%"
+          "status": "pass",
+          "message": "53.5%"
         },
         {
           "id": "html.glossary-link",
@@ -162,7 +162,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "834 words in initial HTML"
+          "message": "752 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -170,25 +170,25 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 7,
+        "passed": 14,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
         "total": 29,
         "applicable": 20,
-        "score": 65
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 22,
-    "failed": 10,
+    "passed": 23,
+    "failed": 9,
     "warned": 0,
     "errored": 0,
     "na": 13,
     "total": 45,
     "applicable": 32,
-    "score": 69
+    "score": 72
   }
 }

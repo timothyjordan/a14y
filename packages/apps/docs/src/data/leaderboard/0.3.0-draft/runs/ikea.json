@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T12:13:44.122Z",
-  "finishedAt": "2026-08-01T12:13:48.835Z",
+  "startedAt": "2026-09-01T10:30:25.423Z",
+  "finishedAt": "2026-09-01T10:30:30.345Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -108,12 +108,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "50 headings"
+          "message": "49 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "83.6%"
+          "message": "76.6%"
         },
         {
           "id": "html.glossary-link",
@@ -138,7 +138,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "1412 words in initial HTML"
+          "message": "1494 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",

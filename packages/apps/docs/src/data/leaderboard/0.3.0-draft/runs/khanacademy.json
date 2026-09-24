@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T13:08:12.675Z",
-  "finishedAt": "2026-08-01T13:08:14.528Z",
+  "startedAt": "2026-09-01T11:16:11.114Z",
+  "finishedAt": "2026-09-01T11:16:12.902Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -183,7 +183,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (320100B vs 320084B)"
+          "message": "markdown is larger than HTML (225940B vs 225924B)"
         },
         {
           "id": "markdown.valid-markdown",

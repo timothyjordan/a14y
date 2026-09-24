@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T09:53:29.897Z",
-  "finishedAt": "2026-08-01T09:53:32.524Z",
+  "startedAt": "2026-09-01T08:19:44.484Z",
+  "finishedAt": "2026-09-01T08:19:47.311Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -75,7 +75,7 @@
     {
       "id": "discovery.no-duplicate-content",
       "status": "fail",
-      "message": "1 canonical group(s) shared by multiple URLs (e.g. https://docs.llamaindex.ai/en/stable & https://docs.llamaindex.ai/e)"
+      "message": "1 canonical group(s) shared by multiple URLs (e.g. https://docs.llamaindex.ai/e & https://docs.llamaindex.ai/)"
     },
     {
       "id": "discovery.in-page-link",
@@ -198,7 +198,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 263894B)"
+          "message": "96.2% smaller (10148B vs 264964B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -208,7 +208,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2631 words in initial HTML"
+          "message": "2678 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -340,7 +340,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 263894B)"
+          "message": "96.2% smaller (10148B vs 264964B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -350,7 +350,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2631 words in initial HTML"
+          "message": "2678 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -482,7 +482,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 263894B)"
+          "message": "96.2% smaller (10148B vs 264964B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -492,7 +492,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2631 words in initial HTML"
+          "message": "2678 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -624,7 +624,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 263894B)"
+          "message": "96.2% smaller (10148B vs 264964B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -634,7 +634,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2631 words in initial HTML"
+          "message": "2678 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -740,7 +740,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2875 words in initial HTML"
+          "message": "2867 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",

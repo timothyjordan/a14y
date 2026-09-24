@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-08-01T12:26:54.437Z",
-  "finishedAt": "2026-08-01T12:27:32.940Z",
+  "startedAt": "2026-09-01T10:40:12.327Z",
+  "finishedAt": "2026-09-01T10:40:41.781Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "18/5121 entries missing <lastmod>"
+      "message": "18/5089 entries missing <lastmod>"
     },
     {
       "id": "sitemap-md.exists",
@@ -55,7 +55,7 @@
   ],
   "pages": [
     {
-      "finalUrl": "https://www.oracle.com/products/",
+      "finalUrl": "https://www.oracle.com/education/how-to-videos/",
       "checks": [
         {
           "id": "http.status-200",
@@ -80,7 +80,214 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/products/"
+          "message": "https://www.oracle.com/education/how-to-videos/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "12 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "6.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 53
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/education/contact/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/education/contact/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "10 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "5.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 8,
+        "failed": 9,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 47
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/education/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/education/"
         },
         {
           "id": "html.meta-description",
@@ -117,12 +324,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "12 headings"
+          "message": "19 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "5.7%"
+          "message": "9.9%"
         },
         {
           "id": "html.glossary-link",
@@ -161,7 +368,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-korean/",
+      "finalUrl": "https://www.oracle.com/education/skills-development/private-training-events/",
       "checks": [
         {
           "id": "http.status-200",
@@ -186,7 +393,7 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-korean/"
+          "message": "https://www.oracle.com/education/skills-development/private-training-events/"
         },
         {
           "id": "html.meta-description",
@@ -195,13 +402,11 @@
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -210,13 +415,22 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
         },
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "7 headings"
+          "message": "13 headings"
         },
         {
           "id": "html.text-ratio",
@@ -249,520 +463,18 @@
         }
       ],
       "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 9,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 53
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-german/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-german/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "13.3%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "12 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 10,
+        "passed": 12,
         "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 59
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-dutch/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-dutch/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "12.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/erp/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/erp/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "6.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 10,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
         "na": 5,
         "total": 24,
         "applicable": 19,
-        "score": 53
+        "score": 63
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-french/",
+      "finalUrl": "https://www.oracle.com/education/certification/",
       "checks": [
         {
           "id": "http.status-200",
@@ -787,106 +499,7 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-french/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "13.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/ai-data-platform/isg-buyers-guide/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/ai-data-platform/isg-buyers-guide/"
+          "message": "https://www.oracle.com/education/certification/"
         },
         {
           "id": "html.meta-description",
@@ -922,13 +535,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
+          "status": "pass",
+          "message": "24 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.9%"
+          "status": "pass",
+          "message": "16.8%"
         },
         {
           "id": "html.glossary-link",
@@ -956,18 +569,18 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 8,
+        "passed": 13,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 5,
         "total": 24,
         "applicable": 19,
-        "score": 58
+        "score": 68
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-portuguese/",
+      "finalUrl": "https://www.oracle.com/education/skills-development/",
       "checks": [
         {
           "id": "http.status-200",
@@ -992,106 +605,7 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-portuguese/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/ai-data-platform/ai-data-platform-ai-transformation-oci/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/ai-data-platform/ai-data-platform-ai-transformation-oci/"
+          "message": "https://www.oracle.com/education/skills-development/"
         },
         {
           "id": "html.meta-description",
@@ -1127,13 +641,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
+          "status": "pass",
+          "message": "11 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "10.7%"
+          "message": "11.0%"
         },
         {
           "id": "html.glossary-link",
@@ -1161,18 +675,18 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 8,
+        "passed": 12,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 5,
         "total": 24,
         "applicable": 19,
-        "score": 58
+        "score": 63
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/ai-data-platform/workbench/",
+      "finalUrl": "https://www.oracle.com/education/certification/exam-prep/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1197,7 +711,113 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/ai-data-platform/workbench/"
+          "message": "https://www.oracle.com/education/certification/exam-prep/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "21 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/education/certification/guidelines/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/education/certification/guidelines/"
         },
         {
           "id": "html.meta-description",
@@ -1238,213 +858,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "11.2%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 12,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 63
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-japanese/",
-      "checks": [
-        {
-          "id": "http.status-200",
           "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-japanese/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "6.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 8,
-        "failed": 9,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 47
-      }
-    },
-    {
-      "finalUrl": "https://www.oracle.com/ai-infrastructure/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.oracle.com/ai-infrastructure/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "18 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "17.1%"
+          "message": "24.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1483,7 +898,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-spanish/",
+      "finalUrl": "https://www.oracle.com/education/guided-learning/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1508,7 +923,7 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/products/financing/policies/financing-legal-policies-spanish/"
+          "message": "https://www.oracle.com/education/guided-learning/"
         },
         {
           "id": "html.meta-description",
@@ -1517,13 +932,11 @@
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -1532,18 +945,27 @@
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
         },
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "7 headings"
+          "message": "17 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "13.6%"
+          "message": "13.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1571,18 +993,18 @@
         }
       ],
       "summary": {
-        "passed": 8,
-        "failed": 9,
+        "passed": 12,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 7,
+        "na": 5,
         "total": 24,
-        "applicable": 17,
-        "score": 47
+        "applicable": 19,
+        "score": 63
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/ai-data-platform/",
+      "finalUrl": "https://www.oracle.com/careers/background-check/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1607,7 +1029,7 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://www.oracle.com/ai-data-platform/"
+          "message": "https://www.oracle.com/careers/background-check/"
         },
         {
           "id": "html.meta-description",
@@ -1635,12 +1057,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "59 headings"
+          "message": "17 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "33.8%"
+          "message": "32.6%"
         },
         {
           "id": "html.glossary-link",
@@ -1679,12 +1101,420 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/ai-ml/",
+      "finalUrl": "https://www.oracle.com/education/training/buy/",
       "checks": [
         {
           "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/education/training/buy/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "12 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "6.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/careers/life-at-oracle/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "6.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/careers/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/careers/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "19 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "6.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 10,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 59
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/careers/data-center-technician/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/careers/data-center-technician/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
           "status": "fail",
-          "message": "Got 403"
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "18 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 58
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/careers/careers-at-oracle/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
         },
         {
           "id": "http.redirect-chain",
@@ -1693,8 +1523,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
         },
         {
           "id": "http.no-noindex-noai",
@@ -1703,8 +1533,8 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://www.oracle.com/careers/careers-at-oracle/"
         },
         {
           "id": "html.meta-description",
@@ -1718,28 +1548,240 @@
         },
         {
           "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "24 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "22.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 11,
+        "failed": 8,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 58
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/education/training/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/education/training/"
+        },
+        {
+          "id": "html.meta-description",
           "status": "fail",
           "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "21 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 12,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 63
+      }
+    },
+    {
+      "finalUrl": "https://www.oracle.com/careers/campus-recruiting/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://www.oracle.com/careers/campus-recruiting/"
+        },
+        {
+          "id": "html.meta-description",
           "status": "fail",
           "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
         },
         {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en-US"
+        },
+        {
           "id": "html.json-ld",
           "status": "fail",
           "message": "no parseable JSON-LD found"
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 0 headings"
+          "status": "pass",
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "30.9%"
+          "status": "fail",
+          "message": "4.5%"
         },
         {
           "id": "html.glossary-link",
@@ -1767,18 +1809,18 @@
         }
       ],
       "summary": {
-        "passed": 4,
-        "failed": 13,
+        "passed": 10,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 7,
         "total": 24,
         "applicable": 17,
-        "score": 24
+        "score": 59
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/",
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/social-impact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1877,7 +1919,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/ai-infrastructure/gpu-scanner/",
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/benefits/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1976,7 +2018,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/analytics-ai-challenge/",
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/training/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2075,7 +2117,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/prepare/",
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/people-with-disabilities/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2174,7 +2216,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/connect/",
+      "finalUrl": "https://www.oracle.com/careers/life-at-oracle/veterans/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2273,7 +2315,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/corporate-functions/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2372,7 +2414,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/deployment/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/data-center-jobs/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2471,7 +2513,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/consumption/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/health-careers/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2570,7 +2612,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/model/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/consulting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2669,7 +2711,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/connectors/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/netsuite/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2768,7 +2810,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/capabilities/visualize/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/getting-hired/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2867,7 +2909,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/customers/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/security-clearance-jobs-onsr/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2966,7 +3008,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/cross-departmental-analytics/kpis-metrics/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/engineering-development/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3065,7 +3107,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/embedded-analytics/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/oracle-cloud-infrastructure/hiringleaders/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3164,7 +3206,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/cross-departmental-analytics/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/oracle-cloud-infrastructure/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3263,7 +3305,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/data-analytics-challenges/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/oracle-cloud-infrastructure-jobs-nashville/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3362,7 +3404,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/essbase.html",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/sales/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3461,7 +3503,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/demos/",
+      "finalUrl": "https://www.oracle.com/careers/opportunities/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3560,7 +3602,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/data-analytics/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3659,7 +3701,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/geo-layers/",
+      "finalUrl": "https://www.oracle.com/careers/software-engineer/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3758,7 +3800,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/extensions/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/development-engineering/internships/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3857,7 +3899,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/examples/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/development-engineering/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3956,7 +3998,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/machine-learning/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/implementation-consulting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4055,7 +4097,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/idc-marketscape-bi-analytics-platforms/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/sales-consulting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4154,7 +4196,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/obia/",
+      "finalUrl": "https://www.oracle.com/careers/students-grads/internships/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4253,7 +4295,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/integrating-data-multiple-data-sources/",
+      "finalUrl": "https://www.oracle.com/careers/terms-conditions/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4352,7 +4394,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/self-service-analytics-best-practices/",
+      "finalUrl": "https://www.oracle.com/careers/work-we-do/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4451,7 +4493,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/motel-6/",
+      "finalUrl": "https://www.oracle.com/corporate/accessibility/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4550,7 +4592,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/obiee/",
+      "finalUrl": "https://www.oracle.com/corporate/accessibility/learning-support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4649,7 +4691,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/mobile/",
+      "finalUrl": "https://www.oracle.com/corporate/accessibility/policy/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4748,7 +4790,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/spreadsheet-risks/",
+      "finalUrl": "https://www.oracle.com/corporate/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4847,7 +4889,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/what-is-analytics/",
+      "finalUrl": "https://www.oracle.com/corporate/accessibility/vpats/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4946,7 +4988,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/videos/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/adi-insights/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5045,7 +5087,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5144,7 +5186,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/what-is-machine-learning-for-analytics/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/aconex/conject-log-in.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -5243,7 +5285,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/what-is-data-visualization/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5342,7 +5384,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/cloud-shell/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/hisp-practices-statement/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5441,7 +5483,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/analytics/what-is-business-analytics/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/direct-policy-certificates/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5540,7 +5582,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/ai-blueprints/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/hrservicecenter/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5639,7 +5681,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/apex/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/ehra-developer-code-of-conduct/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5738,7 +5780,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/ai-blueprints/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5837,7 +5879,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/code-editor/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/dyn/support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -5936,7 +5978,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/connector-hub/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/farapp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6035,7 +6077,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/developerstudio/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cernerenviza/privacy/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6134,7 +6176,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/connector-hub/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/cerner/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6233,7 +6275,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/logging/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/foex/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6332,7 +6374,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/email-delivery/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/federos/letter/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6431,7 +6473,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/email-delivery/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/federos/training/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6530,7 +6572,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/logging/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/federos/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6629,7 +6671,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/logging/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/gloriafood/letter/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6728,7 +6770,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/netbeans/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/gloriafood/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6827,7 +6869,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/low-code/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/gloriafood/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6926,7 +6968,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/omdia-universe-no-low-pro-appdev-platforms/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/micros/retail-support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -7025,7 +7067,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/no-code/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/foex/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7124,7 +7166,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/what-is-application-development/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/managed-cloud-services-support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7223,7 +7265,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/visual-builder-studio/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/livedatautilities/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7322,7 +7364,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/visual-builder/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/livedatautilities/letter.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -7421,7 +7463,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/visual-builder/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/micros/support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -7520,7 +7562,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/11-ways-ai-will-deliver-business-value/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/netsuite/support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -7619,7 +7661,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/accelerate-ai-time-to-value-amd-instinct-mi300x/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/next-technik/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7718,7 +7760,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/next-technik/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7817,7 +7859,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/application-development/what-is-devops/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/siebel/crm-on-demand-support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -7916,7 +7958,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-accelerator-packs/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/next-technik/training/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8015,7 +8057,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/agentic-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/rightnow/support.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -8114,7 +8156,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-agents/ai-agents-hr/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/nor1/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8213,7 +8255,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-agents/ai-agent-use-cases/",
+      "finalUrl": "https://www.oracle.com/corporate/acquisitions/nor1/letter/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8312,7 +8354,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-agents/oracle-announces-ai-agent-marketplace/",
+      "finalUrl": "https://www.oracle.com/corporate/analyst-reports/cloud/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8411,7 +8453,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-agents/",
+      "finalUrl": "https://www.oracle.com/corporate/analyst-reports/applications/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8510,7 +8552,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-center-excellence/",
+      "finalUrl": "https://www.oracle.com/corporate/analyst-reports/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8609,7 +8651,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-automation/",
+      "finalUrl": "https://www.oracle.com/corporate/analyst-reports/industries/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8708,7 +8750,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-cloud-computing/",
+      "finalUrl": "https://www.oracle.com/corporate/cloud-compliance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8807,7 +8849,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-in-action/",
+      "finalUrl": "https://www.oracle.com/corporate/awards/specialized-partner-of-the-year/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8906,7 +8948,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-inference/",
+      "finalUrl": "https://www.oracle.com/corporate/conflict-in-ukraine/russia/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9005,7 +9047,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-local-government/",
+      "finalUrl": "https://www.oracle.com/corporate/conflict-in-ukraine/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9104,7 +9146,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-model-training-challenges/",
+      "finalUrl": "https://www.oracle.com/corporate/connect/childrens-health-oracle-technology/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9203,7 +9245,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-isvs/",
+      "finalUrl": "https://www.oracle.com/corporate/connect/grupo-bimbo-oracle-cloud-migration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9302,7 +9344,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-poisoning/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/global.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -9401,7 +9443,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-operational-efficiency/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9500,7 +9542,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-open-weights-models/",
+      "finalUrl": "https://www.oracle.com/corporate/connect/taylor-corp-change-management-blueprint/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9599,7 +9641,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-model-training/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/field-offices/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9698,7 +9740,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-solutions-for-image-intelligence/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/employment-verification/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9797,7 +9839,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-startup-challenges/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/acs/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9896,7 +9938,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-services/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/help.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -9995,7 +10037,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-solutions-for-knowledge-assistants/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/postmaster/",
       "checks": [
         {
           "id": "http.status-200",
@@ -10094,7 +10136,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-use-cases-ebook/",
+      "finalUrl": "https://www.oracle.com/corporate/contact/postmaster-thankyou/",
       "checks": [
         {
           "id": "http.status-200",
@@ -10193,7 +10235,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-translation/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/acs/policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10292,7 +10334,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-vector-search/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/",
       "checks": [
         {
           "id": "http.status-200",
@@ -10391,7 +10433,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-vector-search-with-node/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/acs/service-descriptions.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10490,7 +10532,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-vector-search-in-apex/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/cloud-services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -10589,7 +10631,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-vs-gen-ai-vs-ml/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/cloud-services/contracts.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10688,7 +10730,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/ai-vision-for-object-detection/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/cloud-services/hosting-delivery-policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10787,7 +10829,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/aiops/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/consulting/policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10886,7 +10928,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/answer-domain-specific-questions-with-heatwave-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/cloud-services/service-descriptions.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10985,7 +11027,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/artificial-intelligence-analytics/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/consulting/service-descriptions.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11084,7 +11126,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/automate-defect-detection-with-drones/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/consulting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -11183,7 +11225,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/automate-invoice-processing/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/cloud-services-agreement-archive.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11282,7 +11324,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/anomaly-detection/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/",
       "checks": [
         {
           "id": "http.status-200",
@@ -11381,7 +11423,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/automate-meeting-transcriptions/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/cloud-services-agreement.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11480,7 +11522,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-a-meal-recommendation-engine-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/license-services-agreement.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11579,7 +11621,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/banking-genai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/license-definitions-rules-archive.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11678,7 +11720,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/autonomous-database-select-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/license-definitions-rules.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11777,7 +11819,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-a-movie-recommendation-app/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/data-agreement.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11876,7 +11918,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-ai-chatbot-with-oracle-database-23ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/contracts.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -11975,7 +12017,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-ai-powered-marketing-management-campaign/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/services-agreement.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12074,7 +12116,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-ai-powered-photo-analysis-app/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/master-agreement-archive.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12173,7 +12215,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-an-ai-powered-financial-interface/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/contract-documents/master-agreement.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12272,7 +12314,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-ai-powered-peoplesoft-chat-assistant/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -12371,7 +12413,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-competency-development-system-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/privacy-policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12470,7 +12512,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-an-enterprise-chatbot-with-ai-solutions/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/software-hardware/license-rules.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12569,7 +12611,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-database-chatbots-with-sql/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/software-hardware/",
       "checks": [
         {
           "id": "http.status-200",
@@ -12668,7 +12710,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-multicloud-ai-chatbot-with-google/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/inbound-security-documents.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12767,7 +12809,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-generative-ai-infrastructure-with-terraform/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/service-descriptions.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12866,7 +12908,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-low-code-chatbot-solutions-with-oci/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/software-hardware/hardware.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -12965,7 +13007,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-rag-chatbot/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/data-services/hosting-delivery-policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -13064,7 +13106,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-multiagent-rag-solution-on-oci/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/software-hardware/software.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -13163,7 +13205,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/build-smarter-knowledge-management-systems/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/support-services/contracts.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -13262,7 +13304,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/composite-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -13361,7 +13403,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/chatbot-with-rag/",
+      "finalUrl": "https://www.oracle.com/corporate/corporate-governance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -13460,7 +13502,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/cohere-aidan-gomez-interview/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/",
       "checks": [
         {
           "id": "http.status-200",
@@ -13559,7 +13601,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/cloudworld-genai-cloud-applications/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/support-services/renewals.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -13658,7 +13700,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/business-case-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/support-services/policies.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -13757,7 +13799,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/create-an-ai-powered-recipe-generator/",
+      "finalUrl": "https://www.oracle.com/corporate/contracts/support-services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -13856,7 +13898,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/create-an-ai-driven-accounts-payable-system/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/oci/",
       "checks": [
         {
           "id": "http.status-200",
@@ -13955,7 +13997,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/create-apex-apps-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/cx/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14054,7 +14096,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/create-a-chatbot-with-unstructured-data/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/references/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14153,7 +14195,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/data-infrastructure-ai-success/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/sustainability/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14252,7 +14294,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/data-intelligence/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/hcm/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14351,7 +14393,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/create-podcasts-with-generative-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/customer-reviews/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14450,7 +14492,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/data-science/features/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/awards/erp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14549,7 +14591,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/data-science/ai-quick-actions/",
+      "finalUrl": "https://www.oracle.com/corporate/events-app/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14648,7 +14690,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/data-science/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14747,7 +14789,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/deploy-llms-with-hugging-face-and-kubernetes/",
+      "finalUrl": "https://www.oracle.com/corporate/events/oracle-communications-mbx.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -14846,7 +14888,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/database-machine-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/events/financial-analyst-meeting-2019/",
       "checks": [
         {
           "id": "http.status-200",
@@ -14945,7 +14987,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/deploy-nvidia-holoscan/",
+      "finalUrl": "https://www.oracle.com/corporate/executive-briefing-center/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15044,7 +15086,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/deploy-ai-apps-fast/",
+      "finalUrl": "https://www.oracle.com/corporate/customers/rewards-announcement/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15143,7 +15185,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/deploy-an-oracle-digital-assistant-chatbot/",
+      "finalUrl": "https://www.oracle.com/corporate/events/financial-analyst-meeting-2018/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15242,7 +15284,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/distributed-multinode-training-on-oci/",
+      "finalUrl": "https://www.oracle.com/corporate/doing-business/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15341,7 +15383,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/develop-ai-powered-pdf-search-tool/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/awo-ablo/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15440,7 +15482,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/document-understanding/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/alistair-green/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15539,7 +15581,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/document-understanding/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15638,7 +15680,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/document-summarization/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/bruce-chizen/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15737,7 +15779,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/document-understanding/features/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/andrew-morawski/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15836,7 +15878,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/easily-build-a-rag-solution/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/jeffrey-berg/",
       "checks": [
         {
           "id": "http.status-200",
@@ -15935,7 +15977,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/early-detection-cancer-with-oci-vision/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/charles-moorman/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16034,7 +16076,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enhance-content-with-ai-in-heatwave-mysql/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/michael-boskin/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16133,7 +16175,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enhance-engagement-with-gen-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/jeffrey-henley/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16232,7 +16274,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enhancing-medical-transcription-with-oci-speech/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/tomislav-mihaljevic/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16331,7 +16373,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enterprise-ai/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/cetin-ozbutun/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16430,7 +16472,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enterprise-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/stephen-rusckowski/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16529,7 +16571,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enterprise-ai/features/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/board-of-directors/rona-fairhead/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16628,7 +16670,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/evaluating-document/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/clay-magouyrk/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16727,7 +16769,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enterprise-artificial-intelligence/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/cormac-watters/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16826,7 +16868,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/enterprise-knowledge/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/colleen-cassity/",
       "checks": [
         {
           "id": "http.status-200",
@@ -16925,7 +16967,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/fine-tuning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/chris-chelliah/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17024,7 +17066,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/fine-tune-llms/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/chris-leone/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17123,7 +17165,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/flag-pii-in-siebel-crm/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/doug-kehring/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17222,7 +17264,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/genai-story-subtask-automation/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/derek-gittoes/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17321,7 +17363,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generate-sql-with-natural-language/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/evan-goldberg/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17420,7 +17462,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/explore-procurement-with-genai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/garrett-ilg/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17519,7 +17561,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generate-sql-queries-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/hilary-maxson/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17618,7 +17660,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/apex-genai-businesses/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/greg-pavlik/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17717,7 +17759,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/agents/fusion-cloud-hcm-employee-performance/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/han-chung-heng/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17816,7 +17858,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generate-summaries-with-heatwave-genai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/jenny-lam/",
       "checks": [
         {
           "id": "http.status-200",
@@ -17915,7 +17957,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-retail/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/gary-miller/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18014,7 +18056,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/joyce-westerdahl/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18113,7 +18155,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-software-development/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/jae-evans/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18212,7 +18254,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/retrieval-augmented-generation-rag/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/karen-yip/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18311,7 +18353,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/healthcare-center-excellence-coe/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/juan-loaiza/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18410,7 +18452,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/retrieval-augmented-generation-rag/rag-fine-tuning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/kim-lynch/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18509,7 +18551,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/successfully-navigating-the-complexities/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/juan-jones/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18608,7 +18650,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/generative-ai/what-is-generative-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/maria-smith/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18707,7 +18749,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/host-llms-with-nvidia-gpus-in-oci/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/mahesh-thiagarajan/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18806,7 +18848,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/integrate-oci-ai-oracle-apex-for-smart-apps/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/larry-ellison/",
       "checks": [
         {
           "id": "http.status-200",
@@ -18905,7 +18947,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/language/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/luiz-meisler/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19004,7 +19046,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/identify-damaged-packages-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/matt-stirrup/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19103,7 +19145,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/last-mile-training/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/mark-hura/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19202,7 +19244,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/larry-ellison-cloudworld-genai-strategy/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/mike-sicilia/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19301,7 +19343,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/large-language-model/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/maz-songerwala/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19400,7 +19442,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/language/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/paco-aubrejuan/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19499,7 +19541,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/llmops/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/richard-allison/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19598,7 +19640,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/reinforcement-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/rajan-krishnan/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19697,7 +19739,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/low-code-modular-rag/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/rodger-smith/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19796,7 +19838,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/supervised-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/rob-duhart/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19895,7 +19937,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning-with-kubeflow/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/seema-verma/",
       "checks": [
         {
           "id": "http.status-200",
@@ -19994,7 +20036,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/semi-supervised-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/shailender-kumar/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20093,7 +20135,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/simon-de-montfort-walker/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20192,7 +20234,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/what-is-machine-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/safra-catz/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20291,7 +20333,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/what-is-machine-learning/machine-learning-examples/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/tk-anand/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20390,7 +20432,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/manage-incoming-email-tickets-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/stephen-bovis/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20489,7 +20531,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/unsupervised-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/stuart-levey/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20588,7 +20630,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/multiagent-rag-system-with-agent2agent/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/traci-wade/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20687,7 +20729,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/machine-learning/what-is-deep-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/vipin-samar/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20786,7 +20828,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/migrate-mongodb-application-oracle-database/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/william-hardie/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20885,7 +20927,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/optimize-investment-data-analysis/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -20984,7 +21026,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/natural-language-processing/",
+      "finalUrl": "https://www.oracle.com/corporate/features/connect-analyze-integrate.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -21083,7 +21125,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/migrate-data-create-powerful-knowledge-hub/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/vivian-wong/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21182,7 +21224,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/oci-multiple-document-translation-made-simple/",
+      "finalUrl": "https://www.oracle.com/corporate/executives/wim-coekaerts/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21281,7 +21323,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/onnx-for-pdf-vectorization/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/lifecycle/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21380,7 +21422,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/processing-invoices-in-email/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/migration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21479,7 +21521,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/prompt-engineering/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/tooling/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21578,7 +21620,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/personalized-offer-creation-select-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/finops/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21677,7 +21719,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/oracle-ai-business-process-transformation/",
+      "finalUrl": "https://www.oracle.com/corporate/insight/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21776,7 +21818,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/real-time-customer-sentiment-insights-with-oci-language/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/contacts/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21875,7 +21917,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/root-cause-analysis-in-supply-chain/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -21974,7 +22016,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/sales-orchestration/",
+      "finalUrl": "https://www.oracle.com/corporate/global-licensing-advisory-services/vsam-program/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22073,7 +22115,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/recommendation-engine-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/resources/customer-center/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22172,7 +22214,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/real-time-email-categorization/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/faqs/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22271,7 +22313,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/sailgp-pilots-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/resources/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22370,7 +22412,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/scale-ai-in-business/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/resources/subscription-contract-and-order-referencing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22469,7 +22511,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/semantic-data-search-with-vector-search/",
+      "finalUrl": "https://www.oracle.com/corporate/license-management-services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22568,7 +22610,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/scale-nvidia-nim-inference/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/resources/pay-invoice/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22667,7 +22709,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/simplify-ai-integration-in-java-projects/",
+      "finalUrl": "https://www.oracle.com/corporate/invoicing/resources/understand-invoice/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22766,7 +22808,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/scale-text-analysis-and-translation/",
+      "finalUrl": "https://www.oracle.com/corporate/license-management-services/services/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22865,7 +22907,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/sovereign-ai/customer-owned-gpu/",
+      "finalUrl": "https://www.oracle.com/corporate/license-management-services/contact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -22964,7 +23006,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/secure-ai-document-search-with-oracle-database-23ai/",
+      "finalUrl": "https://www.oracle.com/corporate/license-management-services/faq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23063,7 +23105,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/sovereign-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/resources/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23162,7 +23204,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/small-language-models/",
+      "finalUrl": "https://www.oracle.com/corporate/license-management-services/tooling/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23261,7 +23303,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/solutions/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23360,7 +23402,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/speech/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/publishing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23459,7 +23501,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/speak-with-ai-about-data-using-real-time/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23558,7 +23600,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/speech/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23657,7 +23699,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/task-automation-with-rag-llms/",
+      "finalUrl": "https://www.oracle.com/corporate/rss/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23756,7 +23798,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/speech/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/archived-certifications/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23855,7 +23897,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/transcribe-calls-oci-speech-siebel/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/",
       "checks": [
         {
           "id": "http.status-200",
@@ -23954,7 +23996,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/text-translation/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/configuration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24053,7 +24095,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/using-generative-ai-to-create-job/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/ethical-hacking/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24152,7 +24194,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/transform-database-management-with-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/common-criteria/certifications/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24251,7 +24293,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/vision/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/common-criteria/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24350,7 +24392,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/translating-csv-and-json-files-with-oci/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/fips/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24449,7 +24491,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/vision/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/external-security-evaluations/fips/certifications/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24548,7 +24590,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-ai/ai-in-healthcare/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/development/third-party-software/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24647,7 +24689,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/source-code-protection/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24746,7 +24788,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/vision/features/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/vulnerability/disclosure/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24845,7 +24887,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/web-summarization-with-gen-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/vulnerability/",
       "checks": [
         {
           "id": "http.status-200",
@@ -24944,7 +24986,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-ai/intelligent-applications/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/vulnerability/security-fixing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25043,7 +25085,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-ai/ai-vs-machine-learning/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/cloud/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25142,7 +25184,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-ai/get-started/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25241,7 +25283,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-sovereign-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/assurance/vulnerability/reporting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25340,7 +25382,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/data-protection/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25439,7 +25481,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/a2a-server/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/communications-operations-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25538,7 +25580,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/artificial-intelligence/what-is-document-understanding/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25637,7 +25679,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/apache-iceberg-tables/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/access-control/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25736,7 +25778,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-ai-lakehouse/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/global-physical-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25835,7 +25877,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/apache-iceberg/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/global-information-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -25934,7 +25976,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-ai-lakehouse/pricing/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/global-product-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26033,7 +26075,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-database-on-dedicated-infrastructure/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/business-assessment-audit/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26132,7 +26174,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-data-warehouse/get-started/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/security-architecture/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26231,7 +26273,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-data-warehouse/oracle-vs-redshift/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/human-resources-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26330,7 +26372,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-data-warehouse/oracle-vs-snowflake/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/governance/global-trade-compliance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26429,7 +26471,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-database-on-exadata-cloud-at-customer/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/information-assets-classification/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26528,7 +26570,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-database-on-dedicated-infrastructure/pricing/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/laptop-mobile-devices/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26627,7 +26669,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/data-studio/certifications/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/resilience-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26726,7 +26768,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-json-database/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/physical-environmental/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26825,7 +26867,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-json-database/oracle-json-vs-mongodb-atlas/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/network-communications-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -26924,7 +26966,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/autonomous-transaction-processing/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/supply-chain/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27023,7 +27065,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/data-studio/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/resilience-management/program-structure/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27122,7 +27164,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/distributed-autonomous-database/faq/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/resilience-management/business-continuity/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27221,7 +27263,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/data-studio/features/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/resilience-management/disaster-recovery/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27320,7 +27362,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/data-warehouse-awareness/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/security-incident-response/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27419,7 +27461,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/distributed-autonomous-database/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/supply-chain/suppliers/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27518,7 +27560,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/free-trial/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/adoption/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27617,7 +27659,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/features/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27716,7 +27758,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/get-started/",
+      "finalUrl": "https://www.oracle.com/corporate/security-practices/corporate/supply-chain/hardware-security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27815,7 +27857,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/distributed-autonomous-database/pricing/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/integration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -27914,7 +27956,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/distributed-autonomous-database/features/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/lifecyle/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28013,7 +28055,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/pricing/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/review/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28112,7 +28154,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/prebuilt-ai-agents/",
+      "finalUrl": "https://www.oracle.com/corporate/software-investment-advisory/migration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28211,7 +28253,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/graph/get-started/",
+      "finalUrl": "https://www.oracle.com/corporate/subcontractors/health-contracts/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28310,7 +28352,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/mcp-server/",
+      "finalUrl": "https://www.oracle.com/corporate/standards/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28409,7 +28451,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/select-ai/natural-language/",
+      "finalUrl": "https://www.oracle.com/corporate/subcontractors/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28508,7 +28550,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/third-party-applications/",
+      "finalUrl": "https://www.oracle.com/corporate/subcontractors/resources/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28607,7 +28649,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/select-ai/",
+      "finalUrl": "https://www.oracle.com/corporate/suppliers/virtual-payments/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28706,7 +28748,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/tools/",
+      "finalUrl": "https://www.oracle.com/corporate/suppliers/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28805,7 +28847,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/upgrade-standard-edition-byol/",
+      "finalUrl": "https://www.oracle.com/corporate/suppliers/invoicing-options/",
       "checks": [
         {
           "id": "http.status-200",
@@ -28904,7 +28946,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/upgrade-standard-edition-byol/compare-tco/",
+      "finalUrl": "https://www.oracle.com/corporate/suppliers/invoicing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29003,7 +29045,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-autonomous-database/",
+      "finalUrl": "https://www.oracle.com/products/financing/erp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29102,7 +29144,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-graph-database/",
+      "finalUrl": "https://www.oracle.com/products/financing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29201,7 +29243,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-data-mart/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29300,7 +29342,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-managed-database/",
+      "finalUrl": "https://www.oracle.com/products/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29399,7 +29441,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-cloud-data-platform/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-french/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29498,7 +29540,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/autonomous-database/what-is-geospatial-database/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-japanese/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29597,7 +29639,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-german/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29696,7 +29738,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/big-data-service/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-dutch/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29795,7 +29837,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/data-catalog/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-spanish/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29894,7 +29936,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/big-data-management-healthcare/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-korean/",
       "checks": [
         {
           "id": "http.status-200",
@@ -29993,7 +30035,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/data-catalog/what-is-a-data-catalog/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30092,7 +30134,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/data-flow/",
+      "finalUrl": "https://www.oracle.com/products/financing/policies/financing-legal-policies-portuguese/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30191,7 +30233,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/structured-vs-unstructured-data/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/database-appliance/next-generation-oda/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30290,7 +30332,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/migration/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/database-appliance/faq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30389,7 +30431,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/what-is-data-lakehouse/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/database-appliance/features/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30488,7 +30530,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/what-is-data-lake/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/database-appliance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30587,7 +30629,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/what-is-big-data/open-source/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/cloud-at-customer/pricing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30686,7 +30728,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/what-is-big-data/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/database-machine/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30785,7 +30827,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/big-data/what-is-data-mining/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/cloud-at-customer/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30884,7 +30926,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/cloud-platform/faq/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/",
       "checks": [
         {
           "id": "http.status-200",
@@ -30983,7 +31025,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/cloud-platform/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/database-service/faq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31082,7 +31124,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/blockchain-platform-enterprise-edition/features/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/database-service/features/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31181,7 +31223,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/blockchain-platform-enterprise-edition/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/database-service/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31280,7 +31322,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/exascale/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31379,7 +31421,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/cloud-platform/features/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/exadata/database-service/cost-estimator/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31478,7 +31520,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/what-is-blockchain/blockchain-in-healthcare/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31577,7 +31619,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/what-is-blockchain/blockchain-for-supply-chain/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/zero-data-loss-recovery-appliance/faq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31676,7 +31718,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/what-is-blockchain/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/zero-data-loss-recovery-appliance/features/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31775,7 +31817,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/digital-assistant-for-erp-scm/",
+      "finalUrl": "https://www.oracle.com/engineered-systems/zero-data-loss-recovery-appliance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -31874,7 +31916,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/oracle-server-x8-2-power-calc.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -31973,7 +32015,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/digital-assistant-for-cx/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/oracle-server-x8-8-power-calc.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -32072,7 +32114,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/features/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32171,7 +32213,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/what-is-a-digital-assistant/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/oracle-server-x8-2l-power-calc.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -32270,7 +32312,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/blockchain/what-is-blockchain/smart-contracts-blockchain/",
+      "finalUrl": "https://www.oracle.com/linux/autonomous-linux/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32369,7 +32411,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/faq/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/oracle-server-x9-2-power-calc/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32468,7 +32510,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/chatbots/what-is-a-chatbot/",
+      "finalUrl": "https://www.oracle.com/linux/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32567,7 +32609,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/ai-world-oci-roundup/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/take-back-and-recycling/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32666,7 +32708,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/ai-token-economics-tokenomics/",
+      "finalUrl": "https://www.oracle.com/linux/security/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32765,7 +32807,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/alloy/",
+      "finalUrl": "https://www.oracle.com/it-infrastructure/power-calculators/oracle-server-x9-2l-power-calc/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32864,7 +32906,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/",
+      "finalUrl": "https://www.oracle.com/linux/support/",
       "checks": [
         {
           "id": "http.status-200",
@@ -32963,7 +33005,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/amd/",
+      "finalUrl": "https://www.oracle.com/servers/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33062,7 +33104,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/apache-kafka/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/linux/what-is-linux/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33161,7 +33203,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/apache-kafka/features/",
+      "finalUrl": "https://www.oracle.com/linux/cloud-native-environment/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33260,7 +33302,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/apache-kafka/faq/",
+      "finalUrl": "https://www.oracle.com/servers/eol/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33359,7 +33401,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/apache-kafka/",
+      "finalUrl": "https://www.oracle.com/servers/x86/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33458,7 +33500,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/pricing/",
+      "finalUrl": "https://www.oracle.com/servers/network-adapters/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33557,7 +33599,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/faq/",
+      "finalUrl": "https://www.oracle.com/servers/sparc/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33656,7 +33698,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/",
+      "finalUrl": "https://www.oracle.com/solaris/non-oracle-x86/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33755,7 +33797,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/architecture-center/",
+      "finalUrl": "https://www.oracle.com/storage/tape-storage/key-manager-3/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33854,7 +33896,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/interconnect/",
+      "finalUrl": "https://www.oracle.com/storage/",
       "checks": [
         {
           "id": "http.status-200",
@@ -33953,7 +33995,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/solutions/",
+      "finalUrl": "https://www.oracle.com/storage/nas/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34052,7 +34094,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/interconnect/",
+      "finalUrl": "https://www.oracle.com/solaris/solaris11/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34151,7 +34193,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/services/",
+      "finalUrl": "https://www.oracle.com/storage/tape-storage/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34250,7 +34292,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/aws/videos/",
+      "finalUrl": "https://www.oracle.com/virtualization/virtualization-explained/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34349,7 +34391,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/",
+      "finalUrl": "https://www.oracle.com/virtualization/virtualbox/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34448,7 +34490,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/faq/",
+      "finalUrl": "https://www.oracle.com/applications/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34547,7 +34589,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/interconnect/pricing/",
+      "finalUrl": "https://www.oracle.com/virtualization/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34646,7 +34688,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/interconnect/faq/",
+      "finalUrl": "https://www.oracle.com/applications/ai-changes-everything/video-series/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34745,7 +34787,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/",
+      "finalUrl": "https://www.oracle.com/applications/apps-benchmarks/e-business-suite/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34844,7 +34886,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/pricing/",
+      "finalUrl": "https://www.oracle.com/applications/ai-now-mindset/",
       "checks": [
         {
           "id": "http.status-200",
@@ -34943,7 +34985,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/solutions/",
+      "finalUrl": "https://www.oracle.com/applications/apps-benchmarks/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35042,7 +35084,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/videos/",
+      "finalUrl": "https://www.oracle.com/applications/applications-unlimited/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35141,7 +35183,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-at-azure/services/",
+      "finalUrl": "https://www.oracle.com/applications/agents-that-know-your-business/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35240,7 +35282,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/backup-and-disaster-recovery/what-is-disaster-recovery/",
+      "finalUrl": "https://www.oracle.com/applications/cloud-apps-on-oci/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35339,7 +35381,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-for-azure/features/",
+      "finalUrl": "https://www.oracle.com/applications/apps-benchmarks/peoplesoft/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35438,7 +35480,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-for-azure/",
+      "finalUrl": "https://www.oracle.com/applications/autovue/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35537,7 +35579,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/azure/oracle-database-for-azure/faq/",
+      "finalUrl": "https://www.oracle.com/applications/contact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35636,7 +35678,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/backup-and-disaster-recovery/",
+      "finalUrl": "https://www.oracle.com/applications/crm-customer-engagement-center-gartner-mq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35735,7 +35777,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/bill-comparison/",
+      "finalUrl": "https://www.oracle.com/applications/crmondemand-current-release/system-requirements/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35834,7 +35876,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cache/",
+      "finalUrl": "https://www.oracle.com/applications/crmondemand-current-release/",
       "checks": [
         {
           "id": "http.status-200",
@@ -35933,7 +35975,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/bring-your-own-license/faq/",
+      "finalUrl": "https://www.oracle.com/applications/crystalball/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36032,7 +36074,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cache/features/",
+      "finalUrl": "https://www.oracle.com/applications/customer2cloud/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36131,7 +36173,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cache/faq/",
+      "finalUrl": "https://www.oracle.com/applications/dawn-of-ai-enterprise-agent-workforce/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36230,7 +36272,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cio-ai-strategies/",
+      "finalUrl": "https://www.oracle.com/applications/documaker/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36329,7 +36371,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/carvana/",
+      "finalUrl": "https://www.oracle.com/applications/customer-success-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36428,7 +36470,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-and-ai-power-digital-unicorn/",
+      "finalUrl": "https://www.oracle.com/applications/effective-ai-strategies/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36527,7 +36569,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-adoption-framework/",
+      "finalUrl": "https://www.oracle.com/applications/enterprise-resource-planning/roles/vp-erp-systems.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -36626,7 +36668,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-at-customer/",
+      "finalUrl": "https://www.oracle.com/applications/embarking-on-a-new-era-of-ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36725,7 +36767,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-at-customer/dedicated-region/",
+      "finalUrl": "https://www.oracle.com/applications/ebusiness/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36824,7 +36866,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-at-customer/dedicated-region/features/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/ai-agent-marketplace/",
       "checks": [
         {
           "id": "http.status-200",
@@ -36923,7 +36965,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-computing-cost/",
+      "finalUrl": "https://www.oracle.com/applications/finance-ai-advantage/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37022,7 +37064,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-at-customer/dedicated-region/faq/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37121,7 +37163,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-economics-explained/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/how-to-create-ai-agent/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37220,7 +37262,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-infrastructure/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/generative-ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37319,7 +37361,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-cost-optimization/",
+      "finalUrl": "https://www.oracle.com/applications/events/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37418,7 +37460,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-cost-management/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/ai-agents/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37517,7 +37559,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-migration/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/custom-ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37616,7 +37658,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-cloud-demo-environment/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37715,7 +37757,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/native-ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37814,7 +37856,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/industry-apis/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/rise-of-autonomous-enterprise/",
       "checks": [
         {
           "id": "http.status-200",
@@ -37913,7 +37955,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-lift/",
+      "finalUrl": "https://www.oracle.com/applications/fusion-ai/steve-miranda-ai-agents-business-productivity/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38012,7 +38054,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/what-is-api/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/human-capital/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38111,7 +38153,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/container-instances/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/agribusiness/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38210,7 +38252,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/customer-relationship-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38309,7 +38351,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/cloud-native-time-is-now/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38408,7 +38450,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/what-is-api/how-to-build-an-api/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/asset-lifecycle-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38507,7 +38549,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/api-management/what-is-api/apis-and-messaging-differences/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/financial-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38606,7 +38648,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/container-instances/features/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/manufacturing-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38705,7 +38747,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/container-registry/faq/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/project-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38804,7 +38846,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/container-registry/what-is-docker/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/solution-logistics/",
       "checks": [
         {
           "id": "http.status-200",
@@ -38903,7 +38945,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/container-registry/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/order-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39002,7 +39044,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/functions/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-world/financial-management/expense-management/resources.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -39101,7 +39143,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/devops-service/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/tools-technology/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39200,7 +39242,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/functions/what-is-serverless/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-world/financial-management/expense-management/features.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -39299,7 +39341,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/devops-service/faq/",
+      "finalUrl": "https://www.oracle.com/applications/modern-best-practice/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39398,7 +39440,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/devops-service/features/",
+      "finalUrl": "https://www.oracle.com/applications/jd-edwards-enterpriseone/supply-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39497,7 +39539,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/devops-service/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/applications/peoplesoft/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39596,7 +39638,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/",
+      "finalUrl": "https://www.oracle.com/applications/saas-integration/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39695,7 +39737,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/applications/robotic-process-automation-rpa/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39794,7 +39836,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/iot-platform/",
+      "finalUrl": "https://www.oracle.com/applications/rightnow/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39893,7 +39935,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/features/",
+      "finalUrl": "https://www.oracle.com/applications/resources/",
       "checks": [
         {
           "id": "http.status-200",
@@ -39992,7 +40034,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/how-kubernetes-works/",
+      "finalUrl": "https://www.oracle.com/applications/products/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40091,7 +40133,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/cluster/",
+      "finalUrl": "https://www.oracle.com/applications/siebel/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40190,7 +40232,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/",
+      "finalUrl": "https://www.oracle.com/applications/user-productivity-kit/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40289,7 +40331,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/security/",
+      "finalUrl": "https://www.oracle.com/applications/soar/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40388,7 +40430,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/monitoring/",
+      "finalUrl": "https://www.oracle.com/cx/contact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40487,7 +40529,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/vs-docker-swarm/",
+      "finalUrl": "https://www.oracle.com/cx/customer-data-platform/unity-integrations/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40586,7 +40628,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/kubernetes-engine/what-is-kubernetes/kubernetes-vs-docker/",
+      "finalUrl": "https://www.oracle.com/applications/what-is-saas/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40685,7 +40727,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/monitoring/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/ai/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40784,7 +40826,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/monitoring/faq/",
+      "finalUrl": "https://www.oracle.com/cx/customer-data-platform/forrester-opportunity-snapshot/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40883,7 +40925,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/notifications/",
+      "finalUrl": "https://www.oracle.com/applications/what-is-saas/comparison-saas/",
       "checks": [
         {
           "id": "http.status-200",
@@ -40982,7 +41024,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/resource-manager/",
+      "finalUrl": "https://www.oracle.com/cx/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41081,7 +41123,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/self-managed-kubernetes/",
+      "finalUrl": "https://www.oracle.com/cx/customer-data-platform/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41180,7 +41222,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/resource-manager/faq/",
+      "finalUrl": "https://www.oracle.com/cx/customer-data-platform/what-is-cdp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41279,7 +41321,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/notifications/faq/",
+      "finalUrl": "https://www.oracle.com/cx/demo/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41378,7 +41420,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/service-mesh/",
+      "finalUrl": "https://www.oracle.com/cx/customer-experience-challenges/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41477,7 +41519,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/what-is-cloud-native/",
+      "finalUrl": "https://www.oracle.com/cx/customers-into-fans/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41576,7 +41618,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/service-mesh/faq/",
+      "finalUrl": "https://www.oracle.com/cx/ecommerce/b2b/product-tour/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41675,7 +41717,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloud-native/service-mesh/what-is-a-service-mesh/",
+      "finalUrl": "https://www.oracle.com/cx/customer-data-platform/use-cases/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41774,7 +41816,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/arm/",
+      "finalUrl": "https://www.oracle.com/cx/improve-customer-experience/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41873,7 +41915,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/",
+      "finalUrl": "https://www.oracle.com/cx/insights/",
       "checks": [
         {
           "id": "http.status-200",
@@ -41972,7 +42014,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cloudflare-at-oci/",
+      "finalUrl": "https://www.oracle.com/cx/industry/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42071,7 +42113,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/caltech-cancer-research/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42170,7 +42212,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/arm/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/ecommerce/what-is-ecommerce/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42269,7 +42311,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/batch/faq/",
+      "finalUrl": "https://www.oracle.com/cx/isv-partners/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42368,7 +42410,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/batch/features/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/automation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42467,7 +42509,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/bare-metal/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/automation/eloqua-scalability-reliability/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42566,7 +42608,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/batch/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/content-marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42665,7 +42707,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/bare-metal/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/automation/what-is-marketing-automation/statistics/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42764,7 +42806,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/nissan-high-performance/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/campaign-management/what-is-campaign-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42863,7 +42905,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-desktop/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/campaign-analytics/",
       "checks": [
         {
           "id": "http.status-200",
@@ -42962,7 +43004,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/faq/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/data-management-platform/what-is-dmp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43061,7 +43103,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/gpu/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/demand-generation/what-is-lead-generation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43160,7 +43202,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/digital-marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43259,7 +43301,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/os-management/faq/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/demand-generation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43358,7 +43400,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/cross-channel-marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43457,7 +43499,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/os-management/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/lead-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43556,7 +43598,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/os/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/mobile-marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43655,7 +43697,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/email-marketing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43754,7 +43796,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines-data-science/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/lead-management/what-is-lead-nurturing/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43853,7 +43895,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/migration/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/gartner-mq-customer-data-platforms/",
       "checks": [
         {
           "id": "http.status-200",
@@ -43952,7 +43994,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/migration/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/marketing-roi/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44051,7 +44093,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/what-is-virtual-machine/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/what-is-lead-scoring/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44150,7 +44192,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/migration/faq/",
+      "finalUrl": "https://www.oracle.com/cx/marketing/patient-engagement-solutions/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44249,7 +44291,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/what-is-virtual-machine/free-virtual-machine/",
+      "finalUrl": "https://www.oracle.com/cx/platform/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44348,7 +44390,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/vmware/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/cx/sales/cpq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44447,7 +44489,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/virtual-machines/what-is-virtual-machine/vm-software/",
+      "finalUrl": "https://www.oracle.com/cx/sales/cpq/configure-price-quote-gartner-mq/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44546,7 +44588,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/vmware/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-enablement/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44645,7 +44687,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/connected-data/",
+      "finalUrl": "https://www.oracle.com/cx/sales/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44744,7 +44786,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/compute/vmware/faq/",
+      "finalUrl": "https://www.oracle.com/cx/sales/partner-relationship-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44843,7 +44885,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/console/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-force-automation/what-is-sfa/",
       "checks": [
         {
           "id": "http.status-200",
@@ -44942,7 +44984,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/connected-data-ecosystem/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-force-automation/nucleus-sfa-tech-value-matrix/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45041,7 +45083,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/cost-management-and-governance/cloud-advisor/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-performance-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45140,7 +45182,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/console/features/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-force-automation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45239,7 +45281,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/customers/xerox/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-performance-management/incentive-compensation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45338,7 +45380,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/console/faq/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-planning/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45437,7 +45479,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/data-egress-costs/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-territory-optimization/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45536,7 +45578,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/data-center-strategy/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-territory-planning/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45635,7 +45677,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/data-egress/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-performance-management/what-is-sales-performance-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45734,7 +45776,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/data-center-exit/",
+      "finalUrl": "https://www.oracle.com/cx/sales/sales-quota-setting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45833,7 +45875,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/database-migration/oracle-database/",
+      "finalUrl": "https://www.oracle.com/cx/sales/subscription-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -45932,7 +45974,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/database-migration/mysql/",
+      "finalUrl": "https://www.oracle.com/cx/service/digital-customer-service/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46031,7 +46073,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/database-migration/",
+      "finalUrl": "https://www.oracle.com/cx/service/contact-center/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46130,7 +46172,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/digital-sovereignty/",
+      "finalUrl": "https://www.oracle.com/cx/service/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46229,7 +46271,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/deutsche-bank-technology-transformation-oracle-private-database-cloud/",
+      "finalUrl": "https://www.oracle.com/cx/service/field-service-management/what-is-field-service/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46328,7 +46370,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/dedicated-cloud/",
+      "finalUrl": "https://www.oracle.com/cx/service/field-service-management/contingent-worker/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46427,7 +46469,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/dedicated-cloud/gartner-research-private-cloud/",
+      "finalUrl": "https://www.oracle.com/cx/service/knowledge-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46526,7 +46568,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/oci-leading-distributed-cloud/",
+      "finalUrl": "https://www.oracle.com/cx/service/field-service-management/forecasting-datasheet/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46625,7 +46667,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/",
+      "finalUrl": "https://www.oracle.com/cx/service/field-service-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46724,7 +46766,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/gartner-leadership-report/",
+      "finalUrl": "https://www.oracle.com/cx/service/what-is-customer-service/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46823,7 +46865,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/digital-transformation/",
+      "finalUrl": "https://www.oracle.com/cx/service/knowledge-management/what-is-knowledge-management/",
       "checks": [
         {
           "id": "http.status-200",
@@ -46922,7 +46964,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/economics/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-crm/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47021,7 +47063,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/services-comparison/",
+      "finalUrl": "https://www.oracle.com/cx/service/knowledge-management/knowledge-advanced/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47120,7 +47162,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/service-availability/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-crm/best-crm/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47219,7 +47261,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/distributed-cloud/solutions/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-crm/types-of-crm/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47318,7 +47360,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/eu-sovereign-cloud/starter-checklist-for-sovereign-cloud-initiatives/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-cx/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47417,7 +47459,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/energy-resources/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-crm/implementation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47516,7 +47558,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/events-service/",
+      "finalUrl": "https://www.oracle.com/cx/what-is-crm/why-crm-is-important/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47615,7 +47657,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/events/",
+      "finalUrl": "https://www.oracle.com/erp/ai-driven-financial-planning-and-analysis/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47714,7 +47756,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/economics/modern-cloud-economics/",
+      "finalUrl": "https://www.oracle.com/erp/ai-financials/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47813,7 +47855,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/finops-cost-management-and-governance/",
+      "finalUrl": "https://www.oracle.com/erp/",
       "checks": [
         {
           "id": "http.status-200",
@@ -47912,7 +47954,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/financial-services-resources/",
+      "finalUrl": "https://www.oracle.com/erp/ai-driven-finance-future-iterative-transformation/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48011,7 +48053,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/fleet-application-management/cost-estimator/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/cao-vs-controller/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48110,7 +48152,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/fleet-application-management/",
+      "finalUrl": "https://www.oracle.com/erp/ai-financials/what-is-ai-in-finance/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48209,7 +48251,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/free/",
+      "finalUrl": "https://www.oracle.com/erp/ai-financials/what-is-the-metaverse/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48308,7 +48350,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/full-stack-disaster-recovery/faq/",
+      "finalUrl": "https://www.oracle.com/erp/b2b/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48407,7 +48449,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/full-stack-disaster-recovery/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/cfo-kpis/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48506,7 +48548,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/free/faq/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48605,7 +48647,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/gartner-mq-strategic-cloud-platform-services-leader/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/financial-modeling/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48704,7 +48746,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/interconnect/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/revenue-forecasting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48803,7 +48845,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/full-stack-disaster-recovery/tutorials/",
+      "finalUrl": "https://www.oracle.com/erp/cfo/what-is-a-cfo/",
       "checks": [
         {
           "id": "http.status-200",
@@ -48902,7 +48944,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/full-stack-disaster-recovery/pricing/",
+      "finalUrl": "https://www.oracle.com/erp/erp-finance-module/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49001,7 +49043,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/interconnect/pricing/",
+      "finalUrl": "https://www.oracle.com/erp/erp-finance-accounting/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49100,7 +49142,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/oracle-database-at-google-cloud/faq/",
+      "finalUrl": "https://www.oracle.com/erp/erp-features/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49199,7 +49241,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/oracle-database-at-google-cloud/",
+      "finalUrl": "https://www.oracle.com/erp/contact/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49298,7 +49340,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/interconnect/faq/",
+      "finalUrl": "https://www.oracle.com/erp/erp-vs-crm/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49397,7 +49439,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/oracle-database-at-google-cloud/pricing/",
+      "finalUrl": "https://www.oracle.com/erp/erp-modules/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49496,7 +49538,7 @@
       }
     },
     {
-      "finalUrl": "https://www.oracle.com/cloud/google/oracle-database-at-google-cloud/services/",
+      "finalUrl": "https://www.oracle.com/erp/erp-implementation-project-plan/",
       "checks": [
         {
           "id": "http.status-200",
@@ -49596,13 +49638,13 @@
     }
   ],
   "summary": {
-    "passed": 2096,
-    "failed": 6425,
+    "passed": 2128,
+    "failed": 6405,
     "warned": 0,
     "errored": 0,
-    "na": 3493,
+    "na": 3481,
     "total": 12014,
-    "applicable": 8521,
+    "applicable": 8533,
     "score": 25
   }
 }
