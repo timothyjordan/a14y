@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T11:29:07.903Z",
-  "finishedAt": "2026-09-01T11:29:09.030Z",
+  "startedAt": "2026-10-01T10:39:44.183Z",
+  "finishedAt": "2026-10-01T10:39:45.317Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",

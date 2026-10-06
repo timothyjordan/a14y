@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T07:37:28.908Z",
-  "finishedAt": "2026-09-01T07:37:31.588Z",
+  "startedAt": "2026-10-01T07:21:03.516Z",
+  "finishedAt": "2026-10-01T07:21:05.716Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -139,7 +139,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "1334 words in initial HTML"
+          "message": "1342 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",

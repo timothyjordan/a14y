@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T10:31:06.875Z",
-  "finishedAt": "2026-09-01T10:31:31.552Z",
+  "startedAt": "2026-10-01T09:44:06.444Z",
+  "finishedAt": "2026-10-01T09:44:07.595Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -29,28 +29,13 @@
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "pass",
-      "message": "https://apnews.com/ap-sitemap.xml"
-    },
-    {
-      "id": "sitemap-xml.valid",
-      "status": "pass",
-      "message": "sitemapindex"
-    },
-    {
-      "id": "sitemap-xml.has-lastmod",
-      "status": "pass",
-      "message": "1203426 entries with lastmod"
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://apnews.com/ap-sitemap.xml"
-    },
-    {
-      "id": "sitemap-md.has-structure",
       "status": "fail",
-      "message": "sitemap.md is missing headings or links"
+      "message": "sitemap.md not reachable"
     },
     {
       "id": "agents-md.exists",
@@ -65,7 +50,7 @@
         {
           "id": "http.status-200",
           "status": "fail",
-          "message": "Got 429"
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -120,7 +105,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "58.0%"
+          "message": "58.2%"
         },
         {
           "id": "html.glossary-link",
@@ -156,13 +141,13 @@
     }
   ],
   "summary": {
-    "passed": 11,
-    "failed": 15,
+    "passed": 7,
+    "failed": 16,
     "warned": 0,
     "errored": 0,
-    "na": 12,
+    "na": 15,
     "total": 38,
-    "applicable": 26,
-    "score": 42
+    "applicable": 23,
+    "score": 30
   }
 }

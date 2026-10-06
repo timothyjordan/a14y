@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T11:13:15.988Z",
-  "finishedAt": "2026-09-01T11:13:16.879Z",
+  "startedAt": "2026-10-01T10:23:13.851Z",
+  "finishedAt": "2026-10-01T10:23:14.406Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "24/28 links are not .md/.mdx"
+      "message": "32/38 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -54,12 +54,12 @@
     {
       "id": "agents-md.exists",
       "status": "pass",
-      "message": "https://www.coinbase.com/agents.md"
+      "message": "https://www.coinbase.com/llms-full.txt"
     },
     {
       "id": "agents-md.has-min-sections",
-      "status": "fail",
-      "message": "Found only: usage"
+      "status": "pass",
+      "message": "Found: installation, configuration, usage"
     }
   ],
   "pages": [
@@ -160,13 +160,13 @@
     }
   ],
   "summary": {
-    "passed": 12,
-    "failed": 15,
+    "passed": 13,
+    "failed": 14,
     "warned": 0,
     "errored": 0,
     "na": 11,
     "total": 38,
     "applicable": 27,
-    "score": 44
+    "score": 48
   }
 }

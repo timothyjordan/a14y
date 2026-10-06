@@ -5,27 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T11:12:43.385Z",
-  "finishedAt": "2026-09-01T11:12:45.038Z",
+  "startedAt": "2026-10-01T10:22:43.805Z",
+  "finishedAt": "2026-10-01T10:22:45.504Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
       "status": "fail",
-      "message": "https://www.chase.com/digital/resources/oops.html returned an HTML page, not an llms.txt file"
-    },
-    {
-      "id": "llms-txt.content-type",
-      "status": "warn",
-      "message": "Content-Type is \"text/html; charset=utf-8\", expected text/plain"
-    },
-    {
-      "id": "llms-txt.non-empty",
-      "status": "pass"
-    },
-    {
-      "id": "llms-txt.md-extensions",
-      "status": "fail",
-      "message": "1/1 links are not .md/.mdx"
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
     },
     {
       "id": "robots-txt.exists",
@@ -54,27 +40,17 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "6169 missing <lastmod> of 6169 entries"
+      "message": "6233 missing <lastmod> of 6233 entries"
     },
     {
       "id": "sitemap-md.exists",
       "status": "fail",
-      "message": "https://www.chase.com/digital/resources/oops.html returned an HTML page, not a sitemap.md file"
-    },
-    {
-      "id": "sitemap-md.has-structure",
-      "status": "fail",
-      "message": "sitemap.md is missing headings or links"
+      "message": "sitemap.md not reachable"
     },
     {
       "id": "agents-md.exists",
       "status": "fail",
-      "message": "https://www.chase.com/digital/resources/oops.html returned an HTML page, not an agent skill file"
-    },
-    {
-      "id": "agents-md.has-min-sections",
-      "status": "fail",
-      "message": "Found only: (none)"
+      "message": "No agent skill file found"
     }
   ],
   "pages": [
@@ -184,7 +160,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "only 26.8% smaller (229913B vs 314197B); need ≥ 30%"
+          "message": "only 24.8% smaller (236257B vs 314139B); need ≥ 30%"
         },
         {
           "id": "markdown.valid-markdown",
@@ -214,13 +190,13 @@
     }
   ],
   "summary": {
-    "passed": 18,
-    "failed": 19,
-    "warned": 1,
+    "passed": 17,
+    "failed": 16,
+    "warned": 0,
     "errored": 0,
-    "na": 7,
+    "na": 12,
     "total": 45,
-    "applicable": 38,
-    "score": 47
+    "applicable": 33,
+    "score": 52
   }
 }

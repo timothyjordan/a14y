@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T07:38:18.182Z",
-  "finishedAt": "2026-09-01T07:38:25.777Z",
+  "startedAt": "2026-10-01T07:21:48.227Z",
+  "finishedAt": "2026-10-01T07:21:54.107Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "70/75 links are not .md/.mdx"
+      "message": "73/78 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -35,7 +35,7 @@
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "fail",
-      "message": "Blocks: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "message": "Blocks: CCBot"
     },
     {
       "id": "robots-txt.allows-llms-txt",
@@ -54,7 +54,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "46232 entries with valid lastmod"
+      "message": "46876 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -131,13 +131,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "70.1%"
+          "message": "72.8%"
         },
         {
           "id": "html.glossary-link",
@@ -162,7 +162,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "194 words in initial HTML"
+          "message": "95 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -170,25 +170,25 @@
         }
       ],
       "summary": {
-        "passed": 15,
-        "failed": 5,
+        "passed": 14,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 9,
         "total": 29,
         "applicable": 20,
-        "score": 75
+        "score": 70
       }
     }
   ],
   "summary": {
-    "passed": 23,
-    "failed": 9,
+    "passed": 22,
+    "failed": 10,
     "warned": 0,
     "errored": 0,
     "na": 13,
     "total": 45,
     "applicable": 32,
-    "score": 72
+    "score": 69
   }
 }

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T07:37:45.808Z",
-  "finishedAt": "2026-09-01T07:37:48.604Z",
+  "startedAt": "2026-10-01T07:21:18.653Z",
+  "finishedAt": "2026-10-01T07:21:20.832Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -49,8 +49,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -60,7 +60,7 @@
         {
           "id": "http.content-type-html",
           "status": "pass",
-          "message": "text/html; charset=utf-8"
+          "message": "text/html;charset=utf-8"
         },
         {
           "id": "http.no-noindex-noai",
@@ -69,21 +69,23 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.nytimes.com"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "267 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
@@ -92,28 +94,18 @@
         },
         {
           "id": "html.json-ld",
-          "status": "pass",
-          "message": "2 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
+          "message": "no parseable JSON-LD found"
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "15 headings"
+          "status": "fail",
+          "message": "only 0 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "69.7%"
+          "message": "57.6%"
         },
         {
           "id": "html.glossary-link",
@@ -133,29 +125,29 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "message": "text/html;charset=utf-8"
         }
       ],
       "summary": {
-        "passed": 12,
-        "failed": 6,
+        "passed": 5,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
-        "na": 6,
+        "na": 8,
         "total": 24,
-        "applicable": 18,
-        "score": 67
+        "applicable": 16,
+        "score": 31
       }
     }
   ],
   "summary": {
-    "passed": 14,
-    "failed": 11,
+    "passed": 7,
+    "failed": 16,
     "warned": 0,
     "errored": 0,
-    "na": 13,
+    "na": 15,
     "total": 38,
-    "applicable": 25,
-    "score": 56
+    "applicable": 23,
+    "score": 30
   }
 }

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T08:19:40.810Z",
-  "finishedAt": "2026-09-01T08:19:43.127Z",
+  "startedAt": "2026-10-01T07:52:37.291Z",
+  "finishedAt": "2026-10-01T07:52:38.602Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -138,7 +138,7 @@
         {
           "id": "html.json-ld.date-modified",
           "status": "pass",
-          "message": "2026-07-26T11:03:07.648Z"
+          "message": "2026-09-23T15:32:46.927Z"
         },
         {
           "id": "html.json-ld.breadcrumb",
@@ -153,7 +153,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "78.5%"
+          "message": "78.7%"
         },
         {
           "id": "html.glossary-link",
@@ -178,7 +178,7 @@
         {
           "id": "markdown.canonical-header",
           "status": "fail",
-          "message": "no Link header"
+          "message": "</llms.txt>; rel=\"llms-txt\", </llms-full.txt>; rel=\"llms-full-txt\", </.well-known/api-catalog>; rel=\"api-catalog\", </.well-known/mcp/server-card.json>; rel=\"mcp-server-card\", </.well-known/agent-card.json>; rel=\"agent-card\", </.well-known/agent-skills/index.json>; rel=\"agent-skills\""
         },
         {
           "id": "markdown.content-negotiation",
@@ -207,17 +207,17 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "98.9% smaller (11149B vs 983209B)"
+          "message": "98.9% smaller (11145B vs 1005491B)"
         },
         {
           "id": "markdown.valid-markdown",
           "status": "pass",
-          "message": "10.5% HTML markup"
+          "message": "10.6% HTML markup"
         },
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "1015 words in initial HTML"
+          "message": "998 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -236,7 +236,7 @@
       }
     },
     {
-      "finalUrl": "https://interrupt.langchain.com/",
+      "finalUrl": "https://interrupt.langchain.com/london",
       "checks": [
         {
           "id": "http.status-200",
@@ -304,7 +304,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "31.5%"
+          "message": "23.9%"
         },
         {
           "id": "html.glossary-link",
@@ -333,7 +333,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "67 words in initial HTML"
+          "message": "574 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",

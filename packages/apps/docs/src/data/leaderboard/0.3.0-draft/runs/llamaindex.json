@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T08:19:44.484Z",
-  "finishedAt": "2026-09-01T08:19:47.311Z",
+  "startedAt": "2026-10-01T07:52:39.689Z",
+  "finishedAt": "2026-10-01T07:52:41.598Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -75,7 +75,7 @@
     {
       "id": "discovery.no-duplicate-content",
       "status": "fail",
-      "message": "1 canonical group(s) shared by multiple URLs (e.g. https://docs.llamaindex.ai/e & https://docs.llamaindex.ai/)"
+      "message": "1 canonical group(s) shared by multiple URLs (e.g. https://docs.llamaindex.ai/e & https://docs.llamaindex.ai/en/stable)"
     },
     {
       "id": "discovery.in-page-link",
@@ -114,8 +114,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -123,8 +123,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -139,12 +138,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -164,7 +163,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -198,7 +197,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 264964B)"
+          "message": "96.8% smaller (8212B vs 257323B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -208,7 +207,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2678 words in initial HTML"
+          "message": "2238 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -216,14 +215,14 @@
         }
       ],
       "summary": {
-        "passed": 16,
-        "failed": 10,
+        "passed": 17,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 29,
         "applicable": 26,
-        "score": 62
+        "score": 65
       }
     },
     {
@@ -256,8 +255,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -265,8 +264,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -281,12 +279,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -306,7 +304,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -340,7 +338,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 264964B)"
+          "message": "96.8% smaller (8212B vs 257323B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -350,7 +348,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2678 words in initial HTML"
+          "message": "2238 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -358,14 +356,14 @@
         }
       ],
       "summary": {
-        "passed": 16,
-        "failed": 10,
+        "passed": 17,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 29,
         "applicable": 26,
-        "score": 62
+        "score": 65
       }
     },
     {
@@ -398,8 +396,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -407,8 +405,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -423,12 +420,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -448,7 +445,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -482,7 +479,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "96.2% smaller (10148B vs 264964B)"
+          "message": "96.8% smaller (8212B vs 257323B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -492,7 +489,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2678 words in initial HTML"
+          "message": "2238 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -500,156 +497,14 @@
         }
       ],
       "summary": {
-        "passed": 16,
-        "failed": 10,
+        "passed": 17,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 29,
         "applicable": 26,
-        "score": 62
-      }
-    },
-    {
-      "finalUrl": "https://developers.llamaindex.ai/python/framework/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "1 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://developers.llamaindex.ai/python/framework/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "17 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://developers.llamaindex.ai/python/framework/index.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/python/framework/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "no Link header"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "2/2 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        },
-        {
-          "id": "markdown.navigation-stripped",
-          "status": "pass"
-        },
-        {
-          "id": "markdown.size-reduction",
-          "status": "pass",
-          "message": "96.2% smaller (10148B vs 264964B)"
-        },
-        {
-          "id": "markdown.valid-markdown",
-          "status": "pass",
-          "message": "0.0% HTML markup"
-        },
-        {
-          "id": "html.ssr-content",
-          "status": "pass",
-          "message": "2678 words in initial HTML"
-        },
-        {
-          "id": "http.no-interstitial",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 16,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 3,
-        "total": 29,
-        "applicable": 26,
-        "score": 62
+        "score": 65
       }
     },
     {
@@ -740,7 +595,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "2867 words in initial HTML"
+          "message": "2880 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -760,13 +615,13 @@
     }
   ],
   "summary": {
-    "passed": 78,
-    "failed": 59,
+    "passed": 65,
+    "failed": 46,
     "warned": 1,
     "errored": 0,
-    "na": 23,
-    "total": 161,
-    "applicable": 138,
-    "score": 45
+    "na": 20,
+    "total": 132,
+    "applicable": 112,
+    "score": 47
   }
 }

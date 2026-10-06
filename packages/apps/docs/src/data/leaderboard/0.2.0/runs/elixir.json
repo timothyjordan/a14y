@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T07:38:46.781Z",
-  "finishedAt": "2026-09-01T07:38:57.145Z",
+  "startedAt": "2026-10-01T07:22:13.831Z",
+  "finishedAt": "2026-10-01T07:22:23.418Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -167,7 +167,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/",
+      "finalUrl": "https://elixir-lang.org/blog/2012/08/01/elixir-v0-6-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -192,12 +192,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/"
+          "message": "https://elixir-lang.org/blog/2012/08/01/elixir-v0-6-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "153 chars"
+          "message": "182 chars"
         },
         {
           "id": "html.og-title",
@@ -215,7 +215,7 @@
         {
           "id": "html.json-ld",
           "status": "pass",
-          "message": "1 block(s)"
+          "message": "3 block(s)"
         },
         {
           "id": "html.json-ld.date-modified",
@@ -224,18 +224,17 @@
         },
         {
           "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
+          "status": "pass"
         },
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "78 headings"
+          "message": "4 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "12.9%"
+          "message": "11.0%"
         },
         {
           "id": "html.glossary-link",
@@ -263,14 +262,231 @@
         }
       ],
       "summary": {
-        "passed": 12,
-        "failed": 7,
+        "passed": 13,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 5,
         "total": 24,
         "applicable": 19,
-        "score": 63
+        "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2012/12/04/elixir-v0-7-2-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2012/12/04/elixir-v0-7-2-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "96 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "200 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "6 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 5,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 74
       }
     },
     {
@@ -341,7 +557,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "16.2%"
+          "message": "16.3%"
         },
         {
           "id": "html.glossary-link",
@@ -496,7 +712,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2012/08/01/elixir-v0-6-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2012/10/20/elixir-v0-7-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -521,12 +737,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2012/08/01/elixir-v0-6-0-released/"
+          "message": "https://elixir-lang.org/blog/2012/10/20/elixir-v0-7-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "182 chars"
+          "message": "79 chars"
         },
         {
           "id": "html.og-title",
@@ -558,12 +774,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "4 headings"
+          "message": "3 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "11.0%"
+          "message": "10.7%"
         },
         {
           "id": "html.glossary-link",
@@ -708,7 +924,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2012/10/20/elixir-v0-7-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/",
       "checks": [
         {
           "id": "http.status-200",
@@ -733,12 +949,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2012/10/20/elixir-v0-7-0-released/"
+          "message": "https://elixir-lang.org/blog/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "79 chars"
+          "message": "153 chars"
         },
         {
           "id": "html.og-title",
@@ -756,7 +972,7 @@
         {
           "id": "html.json-ld",
           "status": "pass",
-          "message": "3 block(s)"
+          "message": "1 block(s)"
         },
         {
           "id": "html.json-ld.date-modified",
@@ -765,17 +981,18 @@
         },
         {
           "id": "html.json-ld.breadcrumb",
-          "status": "pass"
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "3 headings"
+          "message": "78 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "10.7%"
+          "message": "12.9%"
         },
         {
           "id": "html.glossary-link",
@@ -803,18 +1020,18 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 6,
+        "passed": 12,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 5,
         "total": 24,
         "applicable": 19,
-        "score": 68
+        "score": 63
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2013/05/23/elixir-v0-9-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -839,12 +1056,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/"
+          "message": "https://elixir-lang.org/blog/2013/05/23/elixir-v0-9-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "200 chars"
+          "message": "150 chars"
         },
         {
           "id": "html.og-title",
@@ -876,118 +1093,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "6 headings"
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 5,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 74
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2012/12/04/elixir-v0-7-2-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2012/12/04/elixir-v0-7-2-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "96 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.6%"
+          "message": "16.2%"
         },
         {
           "id": "html.glossary-link",
@@ -1012,7 +1123,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "1/1 blocks missing language"
+          "message": "7/7 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -1020,14 +1131,14 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 7,
+        "passed": 14,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
         "na": 4,
         "total": 24,
         "applicable": 20,
-        "score": 65
+        "score": 70
       }
     },
     {
@@ -1137,117 +1248,6 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2013/12/15/elixir-v0-12-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2013/12/15/elixir-v0-12-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "103 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "13.2%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
       "finalUrl": "https://elixir-lang.org/blog/2013/04/29/elixir-v0-8-2-released/",
       "checks": [
         {
@@ -1315,7 +1315,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "11.0%"
+          "message": "11.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1356,228 +1356,6 @@
         "total": 24,
         "applicable": 20,
         "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2013/07/13/elixir-v0-10-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2013/07/13/elixir-v0-10-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "111 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "14.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "5/5 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 7,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 65
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2013/05/23/elixir-v0-9-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2013/05/23/elixir-v0-9-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "150 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "16.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "7/7 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
       }
     },
     {
@@ -1648,7 +1426,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.8%"
+          "message": "17.9%"
         },
         {
           "id": "html.glossary-link",
@@ -1759,7 +1537,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "13.5%"
+          "message": "13.6%"
         },
         {
           "id": "html.glossary-link",
@@ -1803,7 +1581,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2013/12/11/elixir-s-new-continuable-enumerators/",
+      "finalUrl": "https://elixir-lang.org/blog/2013/07/13/elixir-v0-10-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1828,12 +1606,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2013/12/11/elixir-s-new-continuable-enumerators/"
+          "message": "https://elixir-lang.org/blog/2013/07/13/elixir-v0-10-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "72 chars"
+          "message": "111 chars"
         },
         {
           "id": "html.og-title",
@@ -1865,12 +1643,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "8 headings"
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "16.0%"
+          "status": "fail",
+          "message": "14.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1903,14 +1681,14 @@
         }
       ],
       "summary": {
-        "passed": 14,
-        "failed": 6,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
         "na": 4,
         "total": 24,
         "applicable": 20,
-        "score": 70
+        "score": 65
       }
     },
     {
@@ -1981,7 +1759,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.9%"
+          "message": "16.0%"
         },
         {
           "id": "html.glossary-link",
@@ -2007,6 +1785,445 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "2/2 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2015/09/28/elixir-v1-1-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2015/09/28/elixir-v1-1-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "90 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "13.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2013/12/15/elixir-v0-12-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2013/12/15/elixir-v0-12-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "103 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "13.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 7,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 65
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2014/06/17/elixir-v0-14-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2014/06/17/elixir-v0-14-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "110 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "13/13 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2013/12/11/elixir-s-new-continuable-enumerators/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2013/12/11/elixir-s-new-continuable-enumerators/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "72 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "16.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "5/5 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2136,7 +2353,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2015/09/28/elixir-v1-1-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2014/09/18/elixir-v1-0-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2161,12 +2378,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2015/09/28/elixir-v1-1-0-released/"
+          "message": "https://elixir-lang.org/blog/2014/09/18/elixir-v1-0-0-released/"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "90 chars"
+          "status": "fail",
+          "message": "only 27 chars"
         },
         {
           "id": "html.og-title",
@@ -2198,12 +2415,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "3 headings"
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "13.3%"
+          "status": "pass",
+          "message": "16.0%"
         },
         {
           "id": "html.glossary-link",
@@ -2239,6 +2456,228 @@
         "total": 24,
         "applicable": 19,
         "score": 68
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "98 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "9/9 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2014/08/07/elixir-v0-15-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2014/08/07/elixir-v0-15-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "145 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.9%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "7/7 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
       }
     },
     {
@@ -2309,7 +2748,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.9%"
+          "message": "19.0%"
         },
         {
           "id": "html.glossary-link",
@@ -2420,7 +2859,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.4%"
+          "message": "15.5%"
         },
         {
           "id": "html.glossary-link",
@@ -2464,7 +2903,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2014/08/07/elixir-v0-15-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2017/07/25/elixir-v1-5-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2489,12 +2928,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2014/08/07/elixir-v0-15-0-released/"
+          "message": "https://elixir-lang.org/blog/2017/07/25/elixir-v1-5-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "145 chars"
+          "message": "122 chars"
         },
         {
           "id": "html.og-title",
@@ -2526,12 +2965,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "8 headings"
+          "message": "10 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.8%"
+          "message": "18.5%"
         },
         {
           "id": "html.glossary-link",
@@ -2557,117 +2996,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "7/7 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2014/06/17/elixir-v0-14-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2014/06/17/elixir-v0-14-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "110 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "17.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "13/13 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2797,7 +3125,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2822,12 +3150,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/"
+          "message": "https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "98 chars"
+          "message": "151 chars"
         },
         {
           "id": "html.og-title",
@@ -2859,12 +3187,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "9 headings"
+          "message": "10 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.2%"
+          "message": "18.1%"
         },
         {
           "id": "html.glossary-link",
@@ -2889,7 +3217,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "9/9 blocks missing language"
+          "message": "7/7 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2905,112 +3233,6 @@
         "total": 24,
         "applicable": 20,
         "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2014/09/18/elixir-v1-0-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2014/09/18/elixir-v1-0-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 27 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "16.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 68
       }
     },
     {
@@ -3125,7 +3347,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2017/07/25/elixir-v1-5-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2019/02/25/mint-a-new-http-library-for-elixir/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3150,12 +3372,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2017/07/25/elixir-v1-5-0-released/"
+          "message": "https://elixir-lang.org/blog/2019/02/25/mint-a-new-http-library-for-elixir/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "122 chars"
+          "message": "114 chars"
         },
         {
           "id": "html.og-title",
@@ -3187,12 +3409,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "10 headings"
+          "message": "8 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.4%"
+          "message": "16.9%"
         },
         {
           "id": "html.glossary-link",
@@ -3217,7 +3439,229 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "7/7 blocks missing language"
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2018/07/25/elixir-v1-7-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2018/07/25/elixir-v1-7-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "143 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "6/6 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2019/01/14/elixir-v1-8-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2019/01/14/elixir-v1-8-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "182 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "5/5 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -3329,561 +3773,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "4/4 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "151 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "10 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "7/7 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2019/06/24/elixir-v1-9-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2019/06/24/elixir-v1-9-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "74 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "10 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "20.9%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2019/01/14/elixir-v1-8-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2019/01/14/elixir-v1-8-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "182 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "17.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "5/5 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2019/02/25/mint-a-new-http-library-for-elixir/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2019/02/25/mint-a-new-http-library-for-elixir/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "114 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "16.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2018/07/25/elixir-v1-7-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2018/07/25/elixir-v1-7-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "143 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "9 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "17.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "6/6 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -4075,7 +3964,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.3%"
+          "message": "15.4%"
         },
         {
           "id": "html.glossary-link",
@@ -4181,224 +4070,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "12/12 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2020/10/27/delivering-social-change-with-elixir-at-change.org/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2020/10/27/delivering-social-change-with-elixir-at-change.org/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "55 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "9 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "20.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 5,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 74
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2020/10/06/elixir-v1-11-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2020/10/06/elixir-v1-11-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "94 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "9 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "21.3%"
+          "message": "17.2%"
         },
         {
           "id": "html.glossary-link",
@@ -4509,7 +4181,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.3%"
+          "message": "21.4%"
         },
         {
           "id": "html.glossary-link",
@@ -4545,6 +4217,440 @@
         "total": 24,
         "applicable": 19,
         "score": 74
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2019/06/24/elixir-v1-9-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2019/06/24/elixir-v1-9-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "74 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "10 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2020/10/06/elixir-v1-11-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2020/10/06/elixir-v1-11-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "94 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "12/12 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2020/10/27/delivering-social-change-with-elixir-at-change.org/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2020/10/27/delivering-social-change-with-elixir-at-change.org/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "55 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 5,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 74
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2021/01/13/orchestrating-computer-vision-with-elixir-at-v7/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2021/01/13/orchestrating-computer-vision-with-elixir-at-v7/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 47 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 13,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 68
       }
     },
     {
@@ -4651,112 +4757,6 @@
         "total": 24,
         "applicable": 19,
         "score": 74
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2021/01/13/orchestrating-computer-vision-with-elixir-at-v7/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2021/01/13/orchestrating-computer-vision-with-elixir-at-v7/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 47 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 68
       }
     },
     {
@@ -4972,117 +4972,6 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "158 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "9 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "3/3 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 4,
-        "total": 24,
-        "applicable": 20,
-        "score": 70
-      }
-    },
-    {
       "finalUrl": "https://elixir-lang.org/blog/2021/04/02/marketing-and-sales-intelligence-with-elixir-at-pepsico/",
       "checks": [
         {
@@ -5150,7 +5039,224 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.5%"
+          "message": "18.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 5,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 74
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "158 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "3/3 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2021/06/02/social-virtual-spaces-with-elixir-at-mozilla/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2021/06/02/social-virtual-spaces-with-elixir-at-mozilla/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "52 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.5%"
         },
         {
           "id": "html.glossary-link",
@@ -5256,219 +5362,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 5,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 74
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2021/11/10/embracing-open-data-with-elixir-at-the-ministry-of-ecological-transition-in-france/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2021/11/10/embracing-open-data-with-elixir-at-the-ministry-of-ecological-transition-in-france/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "92 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "20.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 14,
-        "failed": 5,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 74
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2021/06/02/social-virtual-spaces-with-elixir-at-mozilla/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2021/06/02/social-virtual-spaces-with-elixir-at-mozilla/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "52 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.4%"
+          "message": "19.8%"
         },
         {
           "id": "html.glossary-link",
@@ -5618,6 +5512,112 @@
       }
     },
     {
+      "finalUrl": "https://elixir-lang.org/blog/2021/11/10/embracing-open-data-with-elixir-at-the-ministry-of-ecological-transition-in-france/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2021/11/10/embracing-open-data-with-elixir-at-the-ministry-of-ecological-transition-in-france/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "92 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 5,
+        "warned": 0,
+        "errored": 0,
+        "na": 5,
+        "total": 24,
+        "applicable": 19,
+        "score": 74
+      }
+    },
+    {
       "finalUrl": "https://elixir-lang.org/blog/2021/12/03/elixir-v1-13-0-released/",
       "checks": [
         {
@@ -5685,7 +5685,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.3%"
+          "message": "19.4%"
         },
         {
           "id": "html.glossary-link",
@@ -5711,6 +5711,117 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "5/5 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 14,
+        "failed": 6,
+        "warned": 0,
+        "errored": 0,
+        "na": 4,
+        "total": 24,
+        "applicable": 20,
+        "score": 70
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2022/12/22/cheatsheets-and-8-other-features-in-exdoc-that-improve-the-developer-experience/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "pass",
+          "message": "https://elixir-lang.org/blog/2022/12/22/cheatsheets-and-8-other-features-in-exdoc-that-improve-the-developer-experience/"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "218 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "pass"
+        },
+        {
+          "id": "html.og-description",
+          "status": "pass"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "pass",
+          "message": "3 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
+          "status": "fail",
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "pass"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "15 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -5796,7 +5907,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.3%"
+          "message": "24.4%"
         },
         {
           "id": "html.glossary-link",
@@ -5840,7 +5951,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/",
+      "finalUrl": "https://elixir-lang.org/blog/2023/06/19/elixir-v1-15-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5865,12 +5976,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/"
+          "message": "https://elixir-lang.org/blog/2023/06/19/elixir-v1-15-0-released/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "71 chars"
+          "message": "61 chars"
         },
         {
           "id": "html.og-title",
@@ -5902,118 +6013,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "5 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "15.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 13,
-        "failed": 6,
-        "warned": 0,
-        "errored": 0,
-        "na": 5,
-        "total": 24,
-        "applicable": 19,
-        "score": 68
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2022/12/22/cheatsheets-and-8-other-features-in-exdoc-that-improve-the-developer-experience/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://elixir-lang.org/blog/2022/12/22/cheatsheets-and-8-other-features-in-exdoc-that-improve-the-developer-experience/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "218 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "pass",
-          "message": "3 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
-          "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "pass"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "15 headings"
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.6%"
+          "message": "16.9%"
         },
         {
           "id": "html.glossary-link",
@@ -6038,7 +6043,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "1/1 blocks missing language"
+          "message": "5/5 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -6163,7 +6168,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2023/06/19/elixir-v1-15-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6188,12 +6193,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2023/06/19/elixir-v1-15-0-released/"
+          "message": "https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "61 chars"
+          "message": "71 chars"
         },
         {
           "id": "html.og-title",
@@ -6225,12 +6230,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "7 headings"
+          "message": "5 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "16.8%"
+          "message": "15.0%"
         },
         {
           "id": "html.glossary-link",
@@ -6253,24 +6258,19 @@
           "message": "text/html; charset=utf-8"
         },
         {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "5/5 blocks missing language"
-        },
-        {
           "id": "discovery.indexed",
           "status": "pass"
         }
       ],
       "summary": {
         "passed": 14,
-        "failed": 6,
+        "failed": 5,
         "warned": 0,
         "errored": 0,
-        "na": 4,
+        "na": 5,
         "total": 24,
-        "applicable": 20,
-        "score": 70
+        "applicable": 19,
+        "score": 74
       }
     },
     {
@@ -6341,7 +6341,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "17.0%"
+          "message": "17.1%"
         },
         {
           "id": "html.glossary-link",
@@ -6496,7 +6496,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/",
+      "finalUrl": "https://elixir-lang.org/blog/2024/08/28/typing-lists-and-tuples/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6521,12 +6521,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/"
+          "message": "https://elixir-lang.org/blog/2024/08/28/typing-lists-and-tuples/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "50 chars"
+          "message": "115 chars"
         },
         {
           "id": "html.og-title",
@@ -6558,12 +6558,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "11 headings"
+          "message": "8 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.0%"
+          "message": "22.1%"
         },
         {
           "id": "html.glossary-link",
@@ -6586,19 +6586,24 @@
           "message": "text/html; charset=utf-8"
         },
         {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "9/9 blocks missing language"
+        },
+        {
           "id": "discovery.indexed",
           "status": "pass"
         }
       ],
       "summary": {
         "passed": 14,
-        "failed": 5,
+        "failed": 6,
         "warned": 0,
         "errored": 0,
-        "na": 5,
+        "na": 4,
         "total": 24,
-        "applicable": 19,
-        "score": 74
+        "applicable": 20,
+        "score": 70
       }
     },
     {
@@ -6669,7 +6674,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.7%"
+          "message": "18.8%"
         },
         {
           "id": "html.glossary-link",
@@ -6775,7 +6780,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.1%"
+          "message": "18.2%"
         },
         {
           "id": "html.glossary-link",
@@ -6819,7 +6824,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2024/08/28/typing-lists-and-tuples/",
+      "finalUrl": "https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/",
       "checks": [
         {
           "id": "http.status-200",
@@ -6844,12 +6849,12 @@
         {
           "id": "html.canonical-link",
           "status": "pass",
-          "message": "https://elixir-lang.org/blog/2024/08/28/typing-lists-and-tuples/"
+          "message": "https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/"
         },
         {
           "id": "html.meta-description",
           "status": "pass",
-          "message": "115 chars"
+          "message": "50 chars"
         },
         {
           "id": "html.og-title",
@@ -6881,12 +6886,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "8 headings"
+          "message": "11 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "22.0%"
+          "message": "24.1%"
         },
         {
           "id": "html.glossary-link",
@@ -6909,24 +6914,19 @@
           "message": "text/html; charset=utf-8"
         },
         {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "9/9 blocks missing language"
-        },
-        {
           "id": "discovery.indexed",
           "status": "pass"
         }
       ],
       "summary": {
         "passed": 14,
-        "failed": 6,
+        "failed": 5,
         "warned": 0,
         "errored": 0,
-        "na": 4,
+        "na": 5,
         "total": 24,
-        "applicable": 20,
-        "score": 70
+        "applicable": 19,
+        "score": 74
       }
     },
     {
@@ -6997,7 +6997,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "12.7%"
+          "message": "12.8%"
         },
         {
           "id": "html.glossary-link",
@@ -7103,7 +7103,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.4%"
+          "message": "21.5%"
         },
         {
           "id": "html.glossary-link",
@@ -7209,7 +7209,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.6%"
+          "message": "19.7%"
         },
         {
           "id": "html.glossary-link",
@@ -7320,7 +7320,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "24.6%"
+          "message": "24.7%"
         },
         {
           "id": "html.glossary-link",
@@ -7359,7 +7359,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2025/08/18/interop-and-portability/",
+      "finalUrl": "https://elixir-lang.org/blog/2025/08/05/global-elixir-meetups/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7557,7 +7557,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2025/08/05/global-elixir-meetups/",
+      "finalUrl": "https://elixir-lang.org/blog/2025/08/18/interop-and-portability/",
       "checks": [
         {
           "id": "http.status-200",
@@ -7755,204 +7755,6 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 24
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/2026/02/26/eager-literal-intersections/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 24
-      }
-    },
-    {
       "finalUrl": "https://elixir-lang.org/blog/2026/01/09/type-inference-of-all-and-next-15/",
       "checks": [
         {
@@ -8052,7 +7854,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/2026/06/03/elixir-v1-20-0-released/",
+      "finalUrl": "https://elixir-lang.org/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8250,7 +8052,205 @@
       }
     },
     {
+      "finalUrl": "https://elixir-lang.org/blog/2026/02/26/eager-literal-intersections/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 24
+      }
+    },
+    {
       "finalUrl": "https://elixir-lang.org/cases/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 24
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/2026/06/03/elixir-v1-20-0-released/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8448,105 +8448,6 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/docs/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 24
-      }
-    },
-    {
       "finalUrl": "https://elixir-lang.org/install/",
       "checks": [
         {
@@ -8646,7 +8547,106 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/trademarks/",
+      "finalUrl": "https://elixir-lang.org/docs/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 24
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/stewards/",
       "checks": [
         {
           "id": "http.status-200",
@@ -8944,7 +8944,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/stewards/",
+      "finalUrl": "https://elixir-lang.org/trademarks/",
       "checks": [
         {
           "id": "http.status-200",
@@ -9040,106 +9040,6 @@
         "total": 24,
         "applicable": 17,
         "score": 24
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/blog/?category=Internals",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 14,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 18
       }
     },
     {
@@ -9243,207 +9143,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/?category=Elixir%20in%20Production",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 14,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 18
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/docs/v1.1/elixir/String.html",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 14,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 18
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/docs/v1.1/elixir/Task.html",
+      "finalUrl": "https://elixir-lang.org/blog/?category=Elixir+in+Production",
       "checks": [
         {
           "id": "http.status-200",
@@ -9643,7 +9343,507 @@
       }
     },
     {
+      "finalUrl": "https://elixir-lang.org/blog/?category=Internals",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/docs/v1.1/elixir/String.html",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/blog/?category=Elixir%20in%20Production",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/docs/v1.1/elixir/Task.html",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
       "finalUrl": "https://elixir-lang.org/docs/v1.1/elixir/Enum.html",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "10.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html; charset=utf-8"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 14,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 18
+      }
+    },
+    {
+      "finalUrl": "https://elixir-lang.org/docs/v1.1/mix/Mix.Tasks.App.Start.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -9943,7 +10143,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/blog/?category=Elixir+in+Production",
+      "finalUrl": "https://elixir-lang.org/install.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10043,7 +10243,7 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/docs/v1.1/mix/Mix.Tasks.App.Start.html",
+      "finalUrl": "https://elixir-lang.org/cases.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10144,106 +10344,6 @@
     },
     {
       "finalUrl": "https://elixir-lang.org/development.html",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 14,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 18
-      }
-    },
-    {
-      "finalUrl": "https://elixir-lang.org/install.html",
       "checks": [
         {
           "id": "http.status-200",
@@ -10543,106 +10643,6 @@
       }
     },
     {
-      "finalUrl": "https://elixir-lang.org/cases.html",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 14,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 18
-      }
-    },
-    {
       "finalUrl": "https://elixir-lang.org/images/contents/livebook-code-intellisense.mp4",
       "checks": [
         {
@@ -10744,8 +10744,8 @@
     }
   ],
   "summary": {
-    "passed": 1041,
-    "failed": 859,
+    "passed": 1042,
+    "failed": 858,
     "warned": 0,
     "errored": 0,
     "na": 538,

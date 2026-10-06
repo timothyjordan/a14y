@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T11:13:02.883Z",
-  "finishedAt": "2026-09-01T11:13:08.212Z",
+  "startedAt": "2026-10-01T10:23:02.229Z",
+  "finishedAt": "2026-10-01T10:23:06.586Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -24,8 +24,8 @@
     },
     {
       "id": "llms-txt.md-extensions",
-      "status": "warn",
-      "message": "llms.txt contains no links to evaluate"
+      "status": "fail",
+      "message": "1/1 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -117,7 +117,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "25.3%"
+          "message": "26.8%"
         },
         {
           "id": "html.glossary-link",
@@ -163,8 +163,8 @@
   ],
   "summary": {
     "passed": 19,
-    "failed": 8,
-    "warned": 1,
+    "failed": 9,
+    "warned": 0,
     "errored": 0,
     "na": 17,
     "total": 45,
