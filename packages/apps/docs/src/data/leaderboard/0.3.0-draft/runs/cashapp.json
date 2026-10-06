@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T11:13:18.296Z",
-  "finishedAt": "2026-09-01T11:13:21.175Z",
+  "startedAt": "2026-10-01T10:23:15.521Z",
+  "finishedAt": "2026-10-01T10:23:17.561Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "164 entries with valid lastmod"
+      "message": "179 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T11:12:55.297Z",
-  "finishedAt": "2026-09-01T11:13:01.495Z",
+  "startedAt": "2026-10-01T10:22:55.474Z",
+  "finishedAt": "2026-10-01T10:23:01.099Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "pass",
-      "message": "3520 entries with valid lastmod"
+      "message": "3545 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -118,12 +118,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "32 headings"
+          "message": "31 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "48.6%"
+          "message": "48.1%"
         },
         {
           "id": "html.glossary-link",
@@ -148,7 +148,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "725 words in initial HTML"
+          "message": "688 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",

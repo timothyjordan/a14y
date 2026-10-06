@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T10:13:31.803Z",
-  "finishedAt": "2026-09-01T10:13:35.101Z",
+  "startedAt": "2026-10-01T09:31:21.890Z",
+  "finishedAt": "2026-10-01T09:31:27.193Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -29,8 +29,13 @@
     },
     {
       "id": "sitemap-xml.exists",
+      "status": "pass",
+      "message": "https://ramp.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
       "status": "fail",
-      "message": "sitemap.xml not reachable"
+      "message": "sitemap.xml did not parse as urlset/sitemapindex"
     },
     {
       "id": "sitemap-md.exists",
@@ -91,13 +96,13 @@
     }
   ],
   "summary": {
-    "passed": 7,
+    "passed": 8,
     "failed": 6,
     "warned": 0,
     "errored": 0,
-    "na": 32,
+    "na": 31,
     "total": 45,
-    "applicable": 13,
-    "score": 54
+    "applicable": 14,
+    "score": 57
   }
 }

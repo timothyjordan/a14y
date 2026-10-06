@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T08:19:44.484Z",
-  "finishedAt": "2026-09-01T08:19:47.311Z",
+  "startedAt": "2026-10-01T07:52:39.689Z",
+  "finishedAt": "2026-10-01T07:52:41.598Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -104,8 +104,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -113,8 +113,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -129,12 +128,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -154,7 +153,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -183,14 +182,14 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 10,
+        "passed": 12,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 52
+        "score": 57
       }
     },
     {
@@ -223,8 +222,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -232,8 +231,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -248,12 +246,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -273,7 +271,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -302,14 +300,14 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 10,
+        "passed": 12,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 52
+        "score": 57
       }
     },
     {
@@ -342,8 +340,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "170 chars"
         },
         {
           "id": "html.og-title",
@@ -351,8 +349,7 @@
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
@@ -367,12 +364,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "17 headings"
+          "message": "9 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
+          "status": "fail",
+          "message": "10.6%"
         },
         {
           "id": "html.glossary-link",
@@ -392,7 +389,7 @@
         {
           "id": "markdown.frontmatter",
           "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
+          "message": "missing: doc_version, last_updated"
         },
         {
           "id": "markdown.canonical-header",
@@ -421,133 +418,14 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 10,
+        "passed": 12,
+        "failed": 9,
         "warned": 0,
         "errored": 0,
         "na": 3,
         "total": 24,
         "applicable": 21,
-        "score": 52
-      }
-    },
-    {
-      "finalUrl": "https://developers.llamaindex.ai/python/framework/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "1 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://developers.llamaindex.ai/python/framework/"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "17 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "15.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "pass",
-          "message": "https://developers.llamaindex.ai/python/framework/index.md"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "pass",
-          "message": "/python/framework/index.md"
-        },
-        {
-          "id": "markdown.frontmatter",
-          "status": "fail",
-          "message": "missing: description, doc_version, last_updated"
-        },
-        {
-          "id": "markdown.canonical-header",
-          "status": "fail",
-          "message": "no Link header"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "markdown.sitemap-section",
-          "status": "fail",
-          "message": "no \"## Sitemap\" heading in mirror"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "2/2 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 11,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 3,
-        "total": 24,
-        "applicable": 21,
-        "score": 52
+        "score": 57
       }
     },
     {
@@ -649,13 +527,13 @@
     }
   ],
   "summary": {
-    "passed": 59,
-    "failed": 54,
+    "passed": 51,
+    "failed": 41,
     "warned": 1,
     "errored": 0,
-    "na": 20,
-    "total": 134,
-    "applicable": 114,
-    "score": 52
+    "na": 17,
+    "total": 110,
+    "applicable": 93,
+    "score": 55
   }
 }

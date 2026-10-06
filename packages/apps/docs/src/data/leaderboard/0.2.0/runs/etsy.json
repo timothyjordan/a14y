@@ -5,13 +5,27 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T07:38:40.856Z",
-  "finishedAt": "2026-09-01T07:38:42.611Z",
+  "startedAt": "2026-10-01T07:22:08.709Z",
+  "finishedAt": "2026-10-01T07:22:10.043Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
+      "status": "pass",
+      "message": "Found llms.txt at https://www.etsy.com/llms.txt"
+    },
+    {
+      "id": "llms-txt.content-type",
+      "status": "pass",
+      "message": "text/plain; charset=utf-8"
+    },
+    {
+      "id": "llms-txt.non-empty",
+      "status": "pass"
+    },
+    {
+      "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
+      "message": "75/75 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -141,13 +155,13 @@
     }
   ],
   "summary": {
-    "passed": 8,
+    "passed": 11,
     "failed": 15,
     "warned": 0,
     "errored": 0,
-    "na": 15,
+    "na": 12,
     "total": 38,
-    "applicable": 23,
-    "score": 35
+    "applicable": 26,
+    "score": 42
   }
 }

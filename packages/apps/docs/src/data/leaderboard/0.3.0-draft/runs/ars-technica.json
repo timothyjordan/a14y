@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T10:30:50.339Z",
-  "finishedAt": "2026-09-01T10:30:50.827Z",
+  "startedAt": "2026-10-01T09:43:18.919Z",
+  "finishedAt": "2026-10-01T09:43:57.364Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,23 +15,32 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "fail",
-      "message": "/robots.txt not reachable"
+      "status": "pass",
+      "message": "https://arstechnica.com/robots.txt"
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "pass",
-      "message": "No robots.txt; defaults to allow all"
+      "status": "fail",
+      "message": "Blocks: ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass",
-      "message": "No robots.txt"
+      "status": "pass"
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "fail",
-      "message": "sitemap.xml not reachable"
+      "status": "pass",
+      "message": "https://arstechnica.com/sitemap.xml"
+    },
+    {
+      "id": "sitemap-xml.valid",
+      "status": "pass",
+      "message": "sitemapindex"
+    },
+    {
+      "id": "sitemap-xml.has-lastmod",
+      "status": "pass",
+      "message": "184226 entries with valid lastmod"
     },
     {
       "id": "sitemap-md.exists",
@@ -50,8 +59,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 403"
+          "status": "pass",
+          "message": "200"
         },
         {
           "id": "http.redirect-chain",
@@ -60,8 +69,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
+          "status": "pass",
+          "message": "text/html; charset=utf-8"
         },
         {
           "id": "http.no-noindex-noai",
@@ -70,43 +79,51 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "https://arstechnica.com/"
         },
         {
           "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "144 chars"
         },
         {
           "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass"
         },
         {
           "id": "html.lang-attribute",
-          "status": "fail",
-          "message": "missing"
+          "status": "pass",
+          "message": "en"
         },
         {
           "id": "html.json-ld",
+          "status": "pass",
+          "message": "1 block(s)"
+        },
+        {
+          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no parseable JSON-LD found"
+          "message": "no dateModified anywhere in JSON-LD"
+        },
+        {
+          "id": "html.json-ld.breadcrumb",
+          "status": "fail",
+          "message": "no BreadcrumbList node"
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
+          "status": "pass",
+          "message": "41 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "11.0%"
+          "message": "4.6%"
         },
         {
           "id": "html.glossary-link",
@@ -126,12 +143,12 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html"
+          "message": "text/html; charset=utf-8"
         },
         {
           "id": "html.ssr-content",
-          "status": "fail",
-          "message": "only 2 words in initial HTML (looks like a JS-rendered shell)"
+          "status": "pass",
+          "message": "1428 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -139,25 +156,25 @@
         }
       ],
       "summary": {
-        "passed": 3,
-        "failed": 15,
+        "passed": 13,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 11,
+        "na": 9,
         "total": 29,
-        "applicable": 18,
-        "score": 17
+        "applicable": 20,
+        "score": 65
       }
     }
   ],
   "summary": {
-    "passed": 5,
-    "failed": 20,
+    "passed": 18,
+    "failed": 11,
     "warned": 0,
     "errored": 0,
-    "na": 20,
+    "na": 16,
     "total": 45,
-    "applicable": 25,
-    "score": 20
+    "applicable": 29,
+    "score": 62
   }
 }

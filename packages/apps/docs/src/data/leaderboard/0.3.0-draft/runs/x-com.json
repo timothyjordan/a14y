@@ -5,13 +5,13 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T11:28:29.011Z",
-  "finishedAt": "2026-09-01T11:28:29.845Z",
+  "startedAt": "2026-10-01T10:39:08.029Z",
+  "finishedAt": "2026-10-01T10:39:10.006Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
       "status": "fail",
-      "message": "https://x.com/llms.txt returned an HTML page, not an llms.txt file"
+      "message": "https://x.com/.well-known/llms.txt returned an HTML page, not an llms.txt file"
     },
     {
       "id": "llms-txt.content-type",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "6/6 links are not .md/.mdx"
+      "message": "3/3 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -44,18 +44,13 @@
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "pass",
-      "message": "https://x.com/sitemap.xml"
-    },
-    {
-      "id": "sitemap-xml.valid",
       "status": "fail",
-      "message": "sitemap.xml did not parse as urlset/sitemapindex"
+      "message": "sitemap.xml not reachable"
     },
     {
       "id": "sitemap-md.exists",
       "status": "fail",
-      "message": "https://x.com/sitemap.md returned an HTML page, not a sitemap.md file"
+      "message": "https://x.com/docs/sitemap.md returned an HTML page, not a sitemap.md file"
     },
     {
       "id": "sitemap-md.has-structure",
@@ -65,7 +60,7 @@
     {
       "id": "agents-md.exists",
       "status": "fail",
-      "message": "https://x.com/AGENTS.md returned an HTML page, not an agent skill file"
+      "message": "https://x.com/.well-known/agents.md returned an HTML page, not an agent skill file"
     },
     {
       "id": "agents-md.has-min-sections",
@@ -132,8 +127,8 @@
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "10.3%"
+          "status": "pass",
+          "message": "16.8%"
         },
         {
           "id": "html.glossary-link",
@@ -143,7 +138,7 @@
         {
           "id": "markdown.mirror-suffix",
           "status": "pass",
-          "message": "https://x.com/index.md"
+          "message": "https://x.com/index/index.md"
         },
         {
           "id": "markdown.alternate-link",
@@ -177,7 +172,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (287991B vs 32711B)"
+          "message": "markdown is larger than HTML (304315B vs 35199B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -195,25 +190,25 @@
         }
       ],
       "summary": {
-        "passed": 12,
-        "failed": 12,
+        "passed": 13,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
         "na": 5,
         "total": 29,
         "applicable": 24,
-        "score": 50
+        "score": 54
       }
     }
   ],
   "summary": {
     "passed": 15,
-    "failed": 21,
+    "failed": 20,
     "warned": 1,
     "errored": 0,
-    "na": 8,
+    "na": 9,
     "total": 45,
-    "applicable": 37,
-    "score": 41
+    "applicable": 36,
+    "score": 42
   }
 }

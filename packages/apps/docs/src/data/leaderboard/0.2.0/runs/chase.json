@@ -5,27 +5,13 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T11:12:43.385Z",
-  "finishedAt": "2026-09-01T11:12:45.038Z",
+  "startedAt": "2026-10-01T10:22:43.805Z",
+  "finishedAt": "2026-10-01T10:22:45.504Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
-      "status": "pass",
-      "message": "Found llms.txt at https://www.chase.com/digital/resources/oops.html"
-    },
-    {
-      "id": "llms-txt.content-type",
-      "status": "warn",
-      "message": "Content-Type is \"text/html; charset=utf-8\", expected text/plain"
-    },
-    {
-      "id": "llms-txt.non-empty",
-      "status": "pass"
-    },
-    {
-      "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "1/1 links are not .md/.mdx"
+      "message": "No llms.txt or llms-full.txt found at /, /.well-known/, or /docs/"
     },
     {
       "id": "robots-txt.exists",
@@ -54,27 +40,17 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "6169/6169 entries missing <lastmod>"
+      "message": "6233/6233 entries missing <lastmod>"
     },
     {
       "id": "sitemap-md.exists",
-      "status": "pass",
-      "message": "https://www.chase.com/digital/resources/oops.html"
-    },
-    {
-      "id": "sitemap-md.has-structure",
       "status": "fail",
-      "message": "sitemap.md is missing headings or links"
+      "message": "sitemap.md not reachable"
     },
     {
       "id": "agents-md.exists",
-      "status": "pass",
-      "message": "https://www.chase.com/digital/resources/oops.html"
-    },
-    {
-      "id": "agents-md.has-min-sections",
       "status": "fail",
-      "message": "Found only: (none)"
+      "message": "No agent skill file found"
     }
   ],
   "pages": [
@@ -190,13 +166,13 @@
     }
   ],
   "summary": {
-    "passed": 19,
+    "passed": 15,
     "failed": 13,
-    "warned": 1,
+    "warned": 0,
     "errored": 0,
-    "na": 5,
+    "na": 10,
     "total": 38,
-    "applicable": 33,
-    "score": 58
+    "applicable": 28,
+    "score": 54
   }
 }

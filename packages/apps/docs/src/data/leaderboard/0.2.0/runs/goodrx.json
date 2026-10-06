@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-09-01T11:15:59.353Z",
-  "finishedAt": "2026-09-01T11:16:03.402Z",
+  "startedAt": "2026-10-01T10:26:54.364Z",
+  "finishedAt": "2026-10-01T10:26:57.688Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -40,7 +40,7 @@
     {
       "id": "sitemap-xml.has-lastmod",
       "status": "fail",
-      "message": "12528/37217 entries missing <lastmod>"
+      "message": "12561/37171 entries missing <lastmod>"
     },
     {
       "id": "sitemap-md.exists",

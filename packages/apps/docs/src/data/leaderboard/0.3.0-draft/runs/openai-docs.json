@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-09-01T05:52:21.315Z",
-  "finishedAt": "2026-09-01T05:52:31.020Z",
+  "startedAt": "2026-10-01T05:46:47.490Z",
+  "finishedAt": "2026-10-01T05:46:58.186Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -25,7 +25,7 @@
     {
       "id": "llms-txt.md-extensions",
       "status": "fail",
-      "message": "1/181 links are not .md/.mdx"
+      "message": "1/234 links are not .md/.mdx"
     },
     {
       "id": "robots-txt.exists",
@@ -79,7 +79,7 @@
     {
       "id": "discovery.no-duplicate-content",
       "status": "pass",
-      "message": "185 URLs, no duplicate canonicals"
+      "message": "238 URLs, no duplicate canonicals"
     },
     {
       "id": "discovery.in-page-link",
@@ -149,7 +149,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "45.7%"
+          "message": "45.6%"
         },
         {
           "id": "html.glossary-link",
@@ -197,163 +197,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/actions/data-retrieval.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/actions/sending-files.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/actions/authentication.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/llms-full.txt",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/actions/actions-library.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -431,45 +275,6 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/actions/production.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/actions/getting-started.md",
       "checks": [
         {
@@ -509,7 +314,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/changelog.md",
+      "finalUrl": "https://developers.openai.com/api/docs/actions/sending-files.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -548,7 +353,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/assistants/migration.md",
+      "finalUrl": "https://developers.openai.com/api/docs/actions/production.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -587,7 +392,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/concepts.md",
+      "finalUrl": "https://developers.openai.com/api/docs/actions/actions-library.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -626,7 +431,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/bots.md",
+      "finalUrl": "https://developers.openai.com/api/docs/actions/data-retrieval.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -665,202 +470,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/deprecations.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/gpts/release-notes.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/chatkit-actions.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/advanced-usage.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/define-agents.md",
+      "finalUrl": "https://developers.openai.com/api/docs/llms-full.txt",
       "checks": [
         {
           "id": "http.status-200",
@@ -938,7 +548,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/custom-chatkit.md",
+      "finalUrl": "https://developers.openai.com/api/docs/gpts/release-notes.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -977,7 +587,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/background.md",
+      "finalUrl": "https://developers.openai.com/api/docs/assistants/migration.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1016,7 +626,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/developer-mode.md",
+      "finalUrl": "https://developers.openai.com/api/docs/changelog.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1055,7 +665,202 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/deployment-checklist.md",
+      "finalUrl": "https://developers.openai.com/api/docs/bots.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/concepts.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/chatkit-actions.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/deprecations.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/advanced-usage.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/quickstart.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1133,7 +938,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-apply-patch.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1172,7 +977,202 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/batch.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/define-agents.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/overview.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/custom-chatkit.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/sdk.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/audio-chat-completions.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-apply-patch.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1250,7 +1250,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-code-interpreter.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/organization-blocking.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1289,7 +1289,397 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/federation-rules.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/architecture.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/aws.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/async-tool-calling.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/deployment-checklist.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/batch.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/bedrock-managed-agents.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/citation-formatting.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/developer-mode.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/chatkit.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/background.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/blaxel.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1406,7 +1796,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/code-generation.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/federation-rules.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1445,7 +1835,46 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/citation-formatting.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/cloudflare.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/code-generation.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1523,45 +1952,6 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/chatkit.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/tools-computer-use.md",
       "checks": [
         {
@@ -1601,7 +1991,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/x509.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/computer-use.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1640,7 +2030,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/github-actions.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-code-interpreter.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1718,7 +2108,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/microsoft-azure.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/configuration.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1796,124 +2186,163 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/microsoft-azure.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-computer-use-integration.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/github-actions.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/x509.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/google-cloud.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/oracle-cloud.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/your-data.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/conversation-state.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -1991,85 +2420,46 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/content-provenance.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks/cybersecurity.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/token-counting.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-latency-cost.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2147,6 +2537,123 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/content-provenance.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/oracle-cloud.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/conversation-state.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/spiffe.md",
       "checks": [
         {
@@ -2186,7 +2693,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-evals.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks/cybersecurity.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2225,163 +2732,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/evaluation-best-practices.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/file-inputs.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/fast-mode.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/deep-research.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/error-codes.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/digitalocean.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2459,6 +2810,318 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/your-data.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/daytona.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/deep-research.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live-delegation.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/custom-voices.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/error-codes.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/evaluation-best-practices.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/errors.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/external-models.md",
       "checks": [
         {
@@ -2498,7 +3161,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/speech-to-text.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/sessions/events.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2537,7 +3200,85 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/function-calling.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/fast-mode.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-evals.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/e2b.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2615,7 +3356,85 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/evaluation-getting-started.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/frontend-prompt.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/speech-to-text.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/file-inputs.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2693,45 +3512,6 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/graders.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/fine-tuning-best-practices.md",
       "checks": [
         {
@@ -2771,7 +3551,358 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/frontend-prompt.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/function-calling.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/files.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/functions.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/evaluation-getting-started.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/graders.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live-partner-integrations.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/image-generation.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/guardrails-approvals.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2849,7 +3980,85 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/import-and-reconcile.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/image-cost-calculator.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/ip-addresses.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -2966,85 +4175,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/guardrails-approvals.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/import-and-reconcile.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/image-generation.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/image-prompting.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3122,84 +4253,6 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-costs.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/service-accounts.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/latency-optimization.md",
       "checks": [
         {
@@ -3239,46 +4292,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/projects-and-access.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-local-shell.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/mcp.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3356,7 +4370,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/ip-addresses.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/service-accounts.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3395,7 +4409,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation/admin-api.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-local-shell.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3434,7 +4448,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live-conversations.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3473,7 +4487,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/model-selection.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/projects-and-access.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3512,7 +4526,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/migrate-to-responses.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/sessions/manage.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3551,7 +4565,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/models.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live-migration.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3590,85 +4604,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/project-controls.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder/migrate-from-agent-builder.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/model-optimization.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3746,7 +4682,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/orchestration.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/steering.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3785,7 +4721,163 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/node-reference.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/migrate-to-responses.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/modal.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder/migrate-from-agent-builder.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/multi-agent.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3863,7 +4955,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/optimizing-llm-accuracy.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/model-selection.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -3902,7 +4994,124 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/predicted-outputs.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/moderation.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/model-optimization.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/terraform/project-controls.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/models.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4019,7 +5228,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/moderation.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/openai-hosted.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4058,7 +5267,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-caching.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/observability.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4097,7 +5306,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-programmatic-tool-calling.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/orchestration.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4136,7 +5345,163 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-optimizer.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/node-reference.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/oci.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/optimizing-llm-accuracy.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/plugins.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/predicted-outputs.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4214,7 +5579,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/production-best-practices.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-caching/diagnostics.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4253,7 +5618,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/private-link.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-programmatic-tool-calling.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4331,7 +5696,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/prompting.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/production-best-practices.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4370,7 +5735,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-caching.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4409,85 +5774,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/rate-limits.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "fail",
-          "message": "Contains: noindex"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-websocket.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/private-link.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4604,7 +5891,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-webrtc.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/live-prompting.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4643,7 +5930,163 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-sip.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/prompting.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-optimizer.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/prompt-guidance-gpt-5p6.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "fail",
+          "message": "Contains: noindex"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/rate-limits.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-prompting.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4721,46 +6164,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/reasoning.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-translation.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-transcription.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4838,45 +6242,6 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-conversations.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-mcp.md",
       "checks": [
         {
@@ -4916,7 +6281,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-transcription.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-translation.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -4994,7 +6359,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder-safety.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/reasoning.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5033,124 +6398,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-best-practices.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/sandboxes.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/running-agents.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-conversations.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5228,7 +6476,202 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-best-practices.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/sessions.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/running-agents.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/retrieval.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/runloop.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5306,7 +6749,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/structured-outputs.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/self-hosted.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5345,7 +6788,85 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-skills.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/security.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-server-controls.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/lifecycle.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5423,7 +6944,85 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/streaming-responses.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents/sandboxes.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/sessions/webhooks.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agent-builder-safety.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5540,7 +7139,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-shell.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-skills.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5618,7 +7217,124 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-tool-search.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/structured-outputs.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-sip.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/streaming-responses.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-shell.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5658,84 +7374,6 @@
     },
     {
       "finalUrl": "https://developers.openai.com/api/docs/guides/trace-grading.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/text.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks/under-18-api-guidance.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5852,6 +7490,84 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/ultrafast-mode.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools-tool-search.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/chatkit-themes.md",
       "checks": [
         {
@@ -5891,7 +7607,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.1.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/text.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5930,7 +7646,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/upgrading-to-gpt-5p4.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tracing.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -5969,7 +7685,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/upgrading-to-gpt-5p5.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/safety-checks/under-18-api-guidance.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6008,46 +7724,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.2.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.3-codex.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/daybreak.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6164,6 +7841,123 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/upgrading-to-gpt-5p4.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/upgrading-to-gpt-5p5.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.1.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.md",
       "checks": [
         {
@@ -6203,7 +7997,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.5.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6242,85 +8036,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/tools.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.4.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-models-prompting.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.2.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6398,7 +8114,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/embeddings.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.3-codex.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6437,7 +8153,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/video-generation.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/tools.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6476,7 +8192,85 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/vision-fine-tuning.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.5.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/vaults.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/latest-model/gpt-5.4.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6554,124 +8348,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-vad.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-server-controls.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/webhooks.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/websocket-mode.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/vision-fine-tuning.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -6749,202 +8426,202 @@
       }
     },
     {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/webhooks.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/embeddings.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-vad.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/environments/providers/vercel.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/agents-api/tools/web-search.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
       "finalUrl": "https://developers.openai.com/api/docs/guides/evals.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/pricing.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/models/all.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/models.md",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 4,
-        "failed": 1,
-        "warned": 0,
-        "errored": 0,
-        "na": 24,
-        "total": 29,
-        "applicable": 5,
-        "score": 80
-      }
-    },
-    {
-      "finalUrl": "https://developers.openai.com/api/docs/models/compare.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -7022,7 +8699,7 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/libraries/openai-cli.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/workload-identity-federation.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -7061,7 +8738,280 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/mcp.md",
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-webrtc.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/voice-websockets.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/websocket-mode.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/realtime-webrtc-warp.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/guides/private-safety-processing.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/pricing.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/supported-countries.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/libraries/openai-cli.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -7139,7 +9089,124 @@
       }
     },
     {
-      "finalUrl": "https://developers.openai.com/api/docs/supported-countries.md",
+      "finalUrl": "https://developers.openai.com/api/docs/mcp.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/models/compare.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/models.md",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 4,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 24,
+        "total": 29,
+        "applicable": 5,
+        "score": 80
+      }
+    },
+    {
+      "finalUrl": "https://developers.openai.com/api/docs/models/all.md",
       "checks": [
         {
           "id": "http.status-200",
@@ -7309,12 +9376,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "101 headings"
+          "message": "109 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.3%"
+          "message": "17.9%"
         },
         {
           "id": "html.glossary-link",
@@ -7372,7 +9439,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "pass",
-          "message": "90.8% smaller (33902B vs 367125B)"
+          "message": "89.0% smaller (43250B vs 394560B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -7382,7 +9449,7 @@
         {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "1968 words in initial HTML"
+          "message": "2261 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -7621,13 +9688,13 @@
     }
   ],
   "summary": {
-    "passed": 767,
-    "failed": 238,
+    "passed": 979,
+    "failed": 291,
     "warned": 0,
     "errored": 0,
-    "na": 4376,
-    "total": 5381,
-    "applicable": 1005,
+    "na": 5648,
+    "total": 6918,
+    "applicable": 1270,
     "score": 56
   }
 }
