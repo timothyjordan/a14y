@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T13:20:35.690Z",
-  "finishedAt": "2026-08-01T13:20:36.361Z",
+  "startedAt": "2026-09-01T11:28:29.011Z",
+  "finishedAt": "2026-09-01T11:28:29.845Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -133,7 +133,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "6.6%"
+          "message": "10.3%"
         },
         {
           "id": "html.glossary-link",
@@ -177,7 +177,7 @@
         {
           "id": "markdown.size-reduction",
           "status": "fail",
-          "message": "markdown is larger than HTML (272073B vs 34399B)"
+          "message": "markdown is larger than HTML (287991B vs 32711B)"
         },
         {
           "id": "markdown.valid-markdown",
@@ -187,7 +187,7 @@
         {
           "id": "html.ssr-content",
           "status": "fail",
-          "message": "only 37 words in initial HTML (looks like a JS-rendered shell)"
+          "message": "only 39 words in initial HTML (looks like a JS-rendered shell)"
         },
         {
           "id": "http.no-interstitial",

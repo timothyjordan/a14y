@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T13:08:33.968Z",
-  "finishedAt": "2026-08-01T13:08:37.350Z",
+  "startedAt": "2026-09-01T11:16:34.163Z",
+  "finishedAt": "2026-09-01T11:16:35.007Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,17 +15,18 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://www.w3schools.com/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
+      "message": "No robots.txt; defaults to allow all"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "pass",
+      "message": "No robots.txt"
     },
     {
       "id": "sitemap-xml.exists",
@@ -49,8 +50,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -79,16 +80,18 @@
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-US"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
@@ -97,13 +100,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "90 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "15.7%"
+          "message": "52.8%"
         },
         {
           "id": "html.glossary-link",
@@ -127,8 +130,8 @@
         },
         {
           "id": "html.ssr-content",
-          "status": "pass",
-          "message": "1435 words in initial HTML"
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
         },
         {
           "id": "http.no-interstitial",
@@ -136,25 +139,25 @@
         }
       ],
       "summary": {
-        "passed": 10,
-        "failed": 8,
+        "passed": 4,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
         "na": 11,
         "total": 29,
         "applicable": 18,
-        "score": 56
+        "score": 22
       }
     }
   ],
   "summary": {
-    "passed": 13,
-    "failed": 12,
+    "passed": 6,
+    "failed": 19,
     "warned": 0,
     "errored": 0,
     "na": 20,
     "total": 45,
     "applicable": 25,
-    "score": 52
+    "score": 24
   }
 }

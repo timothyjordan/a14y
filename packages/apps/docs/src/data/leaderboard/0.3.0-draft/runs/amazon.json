@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T12:13:26.288Z",
-  "finishedAt": "2026-08-01T12:13:39.113Z",
+  "startedAt": "2026-09-01T10:30:01.610Z",
+  "finishedAt": "2026-09-01T10:30:20.262Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -69,13 +69,13 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.amazon.com/"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "366 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
@@ -84,7 +84,8 @@
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
@@ -98,13 +99,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "25 headings"
+          "status": "fail",
+          "message": "only 0 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "78.5%"
+          "status": "fail",
+          "message": "3.8%"
         },
         {
           "id": "html.glossary-link",
@@ -124,12 +125,12 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html;charset=utf-8"
+          "message": "text/html"
         },
         {
           "id": "html.ssr-content",
-          "status": "pass",
-          "message": "555 words in initial HTML"
+          "status": "fail",
+          "message": "only 21 words in initial HTML (looks like a JS-rendered shell)"
         },
         {
           "id": "http.no-interstitial",
@@ -137,25 +138,25 @@
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 7,
+        "passed": 5,
+        "failed": 13,
         "warned": 0,
         "errored": 0,
         "na": 11,
         "total": 29,
         "applicable": 18,
-        "score": 61
+        "score": 28
       }
     }
   ],
   "summary": {
-    "passed": 13,
-    "failed": 12,
+    "passed": 7,
+    "failed": 18,
     "warned": 0,
     "errored": 0,
     "na": 20,
     "total": 45,
     "applicable": 25,
-    "score": 52
+    "score": 28
   }
 }

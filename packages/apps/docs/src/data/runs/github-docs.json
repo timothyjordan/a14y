@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-08-04T19:50:48.881Z",
-  "finishedAt": "2026-08-04T19:50:53.806Z",
+  "startedAt": "2026-09-01T05:48:18.516Z",
+  "finishedAt": "2026-09-01T05:48:23.861Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -60,6 +60,172 @@
   "pages": [
     {
       "finalUrl": "https://docs.github.com/api/pagelist/versions",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/api/article/body",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/api/pagelist/languages",
       "checks": [
         {
           "id": "http.status-200",
@@ -191,89 +357,6 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/api/article/body",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
       "finalUrl": "https://docs.github.com/api/search/v1",
       "checks": [
         {
@@ -318,90 +401,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/api/pagelist/languages",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/github-cli/github-cli/quickstart",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server",
       "checks": [
         {
           "id": "http.status-200",
@@ -518,7 +518,46 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/graphql",
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/create-custom-agents-in-your-ide",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/github-cli/github-cli/quickstart",
       "checks": [
         {
           "id": "http.status-200",
@@ -596,7 +635,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server",
+      "finalUrl": "https://docs.github.com/en/graphql",
       "checks": [
         {
           "id": "http.status-200",
@@ -635,85 +674,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/create-custom-agents-in-your-ide",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/concepts/billing/individual-plans",
+      "finalUrl": "https://docs.github.com/en/actions",
       "checks": [
         {
           "id": "http.status-200",
@@ -753,6 +714,45 @@
     },
     {
       "finalUrl": "https://docs.github.com/en/copilot/get-started/features",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/models/auto-model-selection",
       "checks": [
         {
           "id": "http.status-200",
@@ -869,7 +869,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/copilot/concepts/models/auto-model-selection",
+      "finalUrl": "https://docs.github.com/en/copilot",
       "checks": [
         {
           "id": "http.status-200",
@@ -908,7 +908,163 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/actions",
+      "finalUrl": "https://docs.github.com/en/copilot/concepts/billing/individual-plans",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/quickstart",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/plans",
       "checks": [
         {
           "id": "http.status-200",
@@ -986,7 +1142,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies",
+      "finalUrl": "https://docs.github.com/en/copilot/get-started/what-is-github-copilot",
       "checks": [
         {
           "id": "http.status-200",
@@ -1065,162 +1221,6 @@
     },
     {
       "finalUrl": "https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/get-started/plans",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/get-started/quickstart",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/copilot/get-started/what-is-github-copilot",
       "checks": [
         {
           "id": "http.status-200",
@@ -1381,45 +1381,6 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
       "finalUrl": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
       "checks": [
         {
@@ -1464,46 +1425,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started/git-basics/about-remote-repositories",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings",
+      "finalUrl": "https://docs.github.com/en/get-started",
       "checks": [
         {
           "id": "http.status-200",
@@ -1581,7 +1503,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings",
       "checks": [
         {
           "id": "http.status-200",
@@ -1620,241 +1542,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started/git-basics/managing-remote-repositories",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/downloading-files-from-github",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/githubs-plans",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/git-basics/set-up-git",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/hello-world",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/about-remote-repositories",
       "checks": [
         {
           "id": "http.status-200",
@@ -1946,12 +1634,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "57 headings"
+          "message": "56 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "48.5%"
+          "message": "47.0%"
         },
         {
           "id": "html.glossary-link",
@@ -1995,7 +1683,280 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started/using-github/github-mobile",
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/managing-remote-repositories",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/downloading-files-from-github",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/githubs-plans",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/hello-world",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/git-basics/set-up-git",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts",
       "checks": [
         {
           "id": "http.status-200",
@@ -2112,84 +2073,6 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/what-is-github",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
       "finalUrl": "https://docs.github.com/en/get-started/using-github-docs/about-versions-of-github-docs",
       "checks": [
         {
@@ -2229,7 +2112,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys",
+      "finalUrl": "https://docs.github.com/en/get-started/start-your-journey/what-is-github",
       "checks": [
         {
           "id": "http.status-200",
@@ -2307,7 +2190,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github",
+      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent",
       "checks": [
         {
           "id": "http.status-200",
@@ -2346,7 +2229,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/sudo-mode",
+      "finalUrl": "https://docs.github.com/en/get-started/using-github/github-mobile",
       "checks": [
         {
           "id": "http.status-200",
@@ -2385,7 +2268,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys",
+      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys",
       "checks": [
         {
           "id": "http.status-200",
@@ -2463,7 +2346,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits",
+      "finalUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github",
       "checks": [
         {
           "id": "http.status-200",
@@ -2580,7 +2463,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication-recovery-methods",
+      "finalUrl": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/sudo-mode",
       "checks": [
         {
           "id": "http.status-200",
@@ -2619,7 +2502,85 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/recovering-your-account-if-you-lose-your-2fa-credentials",
+      "finalUrl": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication-recovery-methods",
       "checks": [
         {
           "id": "http.status-200",
@@ -2697,7 +2658,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/changing-your-primary-email-address",
+      "finalUrl": "https://docs.github.com/en/account-and-profile/concepts/username-changes",
       "checks": [
         {
           "id": "http.status-200",
@@ -2737,84 +2698,6 @@
     },
     {
       "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/account-settings/manage-cookie-preferences",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/account-and-profile/concepts/username-changes",
       "checks": [
         {
           "id": "http.status-200",
@@ -2931,7 +2814,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site",
+      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/changing-your-primary-email-address",
       "checks": [
         {
           "id": "http.status-200",
@@ -2970,7 +2853,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages",
+      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/account-settings/manage-cookie-preferences",
       "checks": [
         {
           "id": "http.status-200",
@@ -3009,46 +2892,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address",
+      "finalUrl": "https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/recovering-your-account-if-you-lose-your-2fa-credentials",
       "checks": [
         {
           "id": "http.status-200",
@@ -3088,6 +2932,45 @@
     },
     {
       "finalUrl": "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site",
       "checks": [
         {
           "id": "http.status-200",
@@ -3170,7 +3053,85 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/verifying-your-email-address",
+      "finalUrl": "https://docs.github.com/en/pages",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages",
       "checks": [
         {
           "id": "http.status-200",
@@ -3248,7 +3209,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site",
+      "finalUrl": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/verifying-your-email-address",
       "checks": [
         {
           "id": "http.status-200",
@@ -3287,46 +3248,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll",
+      "finalUrl": "https://docs.github.com/en/pages/quickstart",
       "checks": [
         {
           "id": "http.status-200",
@@ -3443,45 +3365,6 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
       "finalUrl": "https://docs.github.com/en/actions/how-tos/manage-runners/github-hosted-runners",
       "checks": [
         {
@@ -3521,7 +3404,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pages/quickstart",
+      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
       "checks": [
         {
           "id": "http.status-200",
@@ -3560,95 +3443,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories",
+      "finalUrl": "https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll",
       "checks": [
         {
           "id": "http.status-200",
@@ -3687,7 +3482,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository",
+      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site",
       "checks": [
         {
           "id": "http.status-200",
@@ -3726,46 +3521,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/actions/tutorials/migrate-to-github-actions/manual-migrations/migrate-from-circleci",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes",
+      "finalUrl": "https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site",
       "checks": [
         {
           "id": "http.status-200",
@@ -3882,6 +3638,484 @@
       }
     },
     {
+      "finalUrl": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/actions/tutorials/migrate-to-github-actions/manual-migrations/migrate-from-circleci",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/authorizing-oauth-apps",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/organizations/managing-organization-settings/verifying-or-approving-a-domain-for-your-organization",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
       "finalUrl": "https://docs.github.com/en/apps/using-github-apps/authorizing-github-apps",
       "checks": [
         {
@@ -3960,7 +4194,51 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases",
+      "finalUrl": "https://docs.github.com/en/pull-requests/reference/pull-requests",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/billing/how-tos/set-up-payment/manage-payment-info",
       "checks": [
         {
           "id": "http.status-200",
@@ -3999,7 +4277,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo",
+      "finalUrl": "https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens",
       "checks": [
         {
           "id": "http.status-200",
@@ -4038,7 +4316,51 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps",
+      "finalUrl": "https://docs.github.com/en/code-security/reference/code-scanning/codeql/codeql-queries/actions-built-in-queries",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "api.schema-link",
+          "status": "fail",
+          "message": "no openapi/swagger/schema link found"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "pass"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 3,
+        "warned": 0,
+        "errored": 0,
+        "na": 18,
+        "total": 24,
+        "applicable": 6,
+        "score": 50
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api",
       "checks": [
         {
           "id": "http.status-200",
@@ -4077,85 +4399,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/organizations/managing-organization-settings/verifying-or-approving-a-domain-for-your-organization",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/authorizing-oauth-apps",
+      "finalUrl": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
       "checks": [
         {
           "id": "http.status-200",
@@ -4277,7 +4521,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/pull-requests/reference/pull-requests",
+      "finalUrl": "https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects",
       "checks": [
         {
           "id": "http.status-200",
@@ -4300,189 +4544,63 @@
           "message": "no x-robots-tag"
         },
         {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
           "id": "discovery.indexed",
           "status": "pass"
         }
       ],
       "summary": {
         "passed": 3,
+        "failed": 2,
+        "warned": 0,
+        "errored": 0,
+        "na": 19,
+        "total": 24,
+        "applicable": 5,
+        "score": 60
+      }
+    },
+    {
+      "finalUrl": "https://docs.github.com/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "fail",
+          "message": "Got 429"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/plain"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 2,
         "failed": 3,
         "warned": 0,
         "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/code-security/reference/code-scanning/codeql/codeql-queries/actions-built-in-queries",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "api.schema-link",
-          "status": "fail",
-          "message": "no openapi/swagger/schema link found"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 18,
-        "total": 24,
-        "applicable": 6,
-        "score": 50
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
         "na": 19,
         "total": 24,
         "applicable": 5,
-        "score": 60
+        "score": 40
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/billing/how-tos/set-up-payment/manage-payment-info",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api",
+      "finalUrl": "https://docs.github.com/en/search-github/github-code-search/understanding-github-code-search-syntax",
       "checks": [
         {
           "id": "http.status-200",
@@ -4561,47 +4679,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 2,
-        "failed": 3,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 40
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/migrations/importing-source-code/using-github-importer/about-github-importer",
+      "finalUrl": "https://docs.github.com/en/codespaces",
       "checks": [
         {
           "id": "http.status-200",
@@ -4718,7 +4796,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/codespaces",
+      "finalUrl": "https://docs.github.com/en/migrations/importing-source-code/using-github-importer/about-github-importer",
       "checks": [
         {
           "id": "http.status-200",
@@ -4757,85 +4835,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/en/search-github/github-code-search/understanding-github-code-search-syntax",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "fail",
-          "message": "Got 429"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/plain"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "pass"
-        }
-      ],
-      "summary": {
-        "passed": 3,
-        "failed": 2,
-        "warned": 0,
-        "errored": 0,
-        "na": 19,
-        "total": 24,
-        "applicable": 5,
-        "score": 60
-      }
-    },
-    {
-      "finalUrl": "https://docs.github.com/site-policy/privacy-policies/github-privacy-statement",
+      "finalUrl": "https://docs.github.com/site-policy/github-terms/github-terms-of-service",
       "checks": [
         {
           "id": "http.status-200",
@@ -4875,7 +4875,7 @@
       }
     },
     {
-      "finalUrl": "https://docs.github.com/site-policy/github-terms/github-terms-of-service",
+      "finalUrl": "https://docs.github.com/site-policy/privacy-policies/github-privacy-statement",
       "checks": [
         {
           "id": "http.status-200",

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T12:21:08.579Z",
-  "finishedAt": "2026-08-01T12:21:10.726Z",
+  "startedAt": "2026-09-01T10:34:01.228Z",
+  "finishedAt": "2026-09-01T10:34:02.507Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -49,8 +49,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -69,8 +69,8 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://www.cdc.gov/index.html"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
@@ -79,7 +79,8 @@
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
@@ -88,8 +89,8 @@
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en-us"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
@@ -98,13 +99,13 @@
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "5 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "fail",
-          "message": "9.0%"
+          "status": "pass",
+          "message": "52.1%"
         },
         {
           "id": "html.glossary-link",
@@ -128,8 +129,8 @@
         },
         {
           "id": "html.ssr-content",
-          "status": "pass",
-          "message": "764 words in initial HTML"
+          "status": "fail",
+          "message": "only 15 words in initial HTML (looks like a JS-rendered shell)"
         },
         {
           "id": "http.no-interstitial",
@@ -137,25 +138,25 @@
         }
       ],
       "summary": {
-        "passed": 9,
-        "failed": 9,
+        "passed": 4,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
         "na": 11,
         "total": 29,
         "applicable": 18,
-        "score": 50
+        "score": 22
       }
     }
   ],
   "summary": {
-    "passed": 12,
-    "failed": 13,
+    "passed": 7,
+    "failed": 18,
     "warned": 0,
     "errored": 0,
     "na": 20,
     "total": 45,
     "applicable": 25,
-    "score": 48
+    "score": 28
   }
 }

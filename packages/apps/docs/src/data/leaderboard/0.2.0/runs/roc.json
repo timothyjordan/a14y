@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-08-04T19:50:55.092Z",
-  "finishedAt": "2026-08-04T19:51:14.226Z",
+  "startedAt": "2026-09-01T07:47:59.936Z",
+  "finishedAt": "2026-09-01T07:48:33.391Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -44,6 +44,106 @@
     }
   ],
   "pages": [
+    {
+      "finalUrl": "https://www.roc-lang.org/donate",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "63 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "24.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
     {
       "finalUrl": "https://www.roc-lang.org/",
       "checks": [
@@ -105,7 +205,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "9.7%"
+          "message": "9.4%"
         },
         {
           "id": "html.glossary-link",
@@ -205,7 +305,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "52.9%"
+          "message": "53.3%"
         },
         {
           "id": "html.glossary-link",
@@ -242,206 +342,6 @@
         "total": 24,
         "applicable": 17,
         "score": 41
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/friendly",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "64 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "6 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "45.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 41
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/donate",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "63 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 1 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "24.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 35
       }
     },
     {
@@ -505,107 +405,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "60.3%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 41
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/faq",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "62 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "18 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "71.8%"
+          "message": "60.7%"
         },
         {
           "id": "html.glossary-link",
@@ -698,7 +498,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "45.6%"
+          "message": "43.2%"
         },
         {
           "id": "html.glossary-link",
@@ -740,6 +540,206 @@
         "total": 24,
         "applicable": 17,
         "score": 53
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "69 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 1 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 29
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/faq",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "62 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "18 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "75.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
       }
     },
     {
@@ -803,7 +803,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "4.7%"
+          "message": "4.8%"
         },
         {
           "id": "html.glossary-link",
@@ -903,207 +903,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "39.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 35
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/foundation",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "52 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 7,
-        "failed": 10,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 41
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/install/windows",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "only 34 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.9%"
+          "message": "39.7%"
         },
         {
           "id": "html.glossary-link",
@@ -1203,7 +1003,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.3%"
+          "message": "18.8%"
         },
         {
           "id": "html.glossary-link",
@@ -1243,7 +1043,107 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/install/unix",
+      "finalUrl": "https://www.roc-lang.org/foundation",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "52 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "7 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/platforms/",
       "checks": [
         {
           "id": "http.status-200",
@@ -1273,7 +1173,412 @@
         {
           "id": "html.meta-description",
           "status": "fail",
-          "message": "only 40 chars"
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "13 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 33
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/friendly",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "64 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "6 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "53.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/functional",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "66 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "45.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/FizzBuzz/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 49 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/HelloWorld/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "51 chars"
         },
         {
           "id": "html.og-title",
@@ -1303,7 +1608,1112 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "9.8%"
+          "message": "6.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/AllSyntax/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "50 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "27.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/IngestFiles/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "52 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/Tuples/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 47 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/platforms/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "13 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "1/1 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 33
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/PatternMatching/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "56 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "16.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ImportFromDirectory/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "60 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/BasicDict/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "50 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "5 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ErrorHandlingBasic/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "59 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ErrorHandlingRealWorld/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "63 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "25.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ImportPackageFromModule/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "64 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/Json/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 45 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "13.0%"
         },
         {
           "id": "html.glossary-link",
@@ -1340,6 +2750,1606 @@
         "total": 24,
         "applicable": 17,
         "score": 29
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/MultipleRocFiles/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "57 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "13.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/CommandLineArgsFile/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "60 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/CommandLineArgs/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "56 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "15.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/TryOperatorDesugaring/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "62 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/RandomNumbers/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "54 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "4 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "24.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/GraphTraversal/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "55 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/SafeMath/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 49 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "22.7%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/Commands/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 49 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/LoopEffect/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "51 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/LeastSquares/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "53 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "16.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/RecordBuilder/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "54 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "8 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "25.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/Parser/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 47 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/Snake/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 46 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/EncodeDecode/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "53 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "4 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/CustomInspect/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "54 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/install/windows",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "only 34 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
       }
     },
     {
@@ -1403,7 +4413,7 @@
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "13.4%"
+          "message": "13.1%"
         },
         {
           "id": "html.glossary-link",
@@ -1443,7 +4453,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/functional",
+      "finalUrl": "https://www.roc-lang.org/install/unix",
       "checks": [
         {
           "id": "http.status-200",
@@ -1472,8 +4482,8 @@
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "66 chars"
+          "status": "fail",
+          "message": "only 40 chars"
         },
         {
           "id": "html.og-title",
@@ -1498,12 +4508,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "7 headings"
+          "message": "3 headings"
         },
         {
           "id": "html.text-ratio",
-          "status": "pass",
-          "message": "46.4%"
+          "status": "fail",
+          "message": "9.7%"
         },
         {
           "id": "html.glossary-link",
@@ -1532,14 +4542,114 @@
         }
       ],
       "summary": {
-        "passed": 7,
-        "failed": 10,
+        "passed": 5,
+        "failed": 12,
         "warned": 0,
         "errored": 0,
         "na": 7,
         "total": 24,
         "applicable": 17,
-        "score": 41
+        "score": 29
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/TowersOfHanoi/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "1 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "54 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "fail",
+          "message": "14.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
       }
     },
     {
@@ -1603,7 +4713,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.0%"
+          "message": "18.4%"
         },
         {
           "id": "html.glossary-link",
@@ -1629,111 +4739,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "8/8 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 5,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 28
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/platforms/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "fail",
-          "message": "2 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "13 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -1813,7 +4818,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.0%"
+          "message": "18.4%"
         },
         {
           "id": "html.glossary-link",
@@ -1839,216 +4844,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "4/4 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 5,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 28
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/platforms/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "1 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "13 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/Dict/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.5%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "53/53 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2128,7 +4923,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.1%"
+          "message": "18.6%"
         },
         {
           "id": "html.glossary-link",
@@ -2173,7 +4968,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/Encoding/",
+      "finalUrl": "https://www.roc-lang.org/docs/main/Str/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2183,7 +4978,7 @@
         {
           "id": "http.redirect-chain",
           "status": "pass",
-          "message": "0 hops"
+          "message": "1 hops"
         },
         {
           "id": "http.content-type-html",
@@ -2228,7 +5023,7 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "13 headings"
+          "message": "3 headings"
         },
         {
           "id": "html.text-ratio",
@@ -2258,7 +5053,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "214/214 blocks missing language"
+          "message": "75/75 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2338,7 +5133,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.9%"
+          "message": "18.4%"
         },
         {
           "id": "html.glossary-link",
@@ -2383,7 +5178,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/ScannedJsonString/",
+      "finalUrl": "https://www.roc-lang.org/docs/main/Encoding/",
       "checks": [
         {
           "id": "http.status-200",
@@ -2437,113 +5232,13 @@
         },
         {
           "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
+          "status": "pass",
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 5,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 29
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/List/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "20.5%"
+          "message": "18.9%"
         },
         {
           "id": "html.glossary-link",
@@ -2568,7 +5263,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "149/149 blocks missing language"
+          "message": "125/125 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2577,14 +5272,14 @@
         }
       ],
       "summary": {
-        "passed": 5,
-        "failed": 13,
+        "passed": 6,
+        "failed": 12,
         "warned": 0,
         "errored": 0,
         "na": 6,
         "total": 24,
         "applicable": 18,
-        "score": 28
+        "score": 33
       }
     },
     {
@@ -2648,7 +5343,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.5%"
+          "message": "18.8%"
         },
         {
           "id": "html.glossary-link",
@@ -2673,7 +5368,217 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "42/42 blocks missing language"
+          "message": "32/32 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 28
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/List/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "20.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "161/161 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 28
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/Dict/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.2%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "65/65 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -2703,7 +5608,7 @@
         {
           "id": "http.redirect-chain",
           "status": "pass",
-          "message": "1 hops"
+          "message": "0 hops"
         },
         {
           "id": "http.content-type-html",
@@ -2753,7 +5658,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "20.1%"
+          "message": "19.6%"
         },
         {
           "id": "html.glossary-link",
@@ -2795,6 +5700,106 @@
         "total": 24,
         "applicable": 18,
         "score": 33
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/ScannedJsonString/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 29
       }
     },
     {
@@ -2858,7 +5863,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.0%"
+          "message": "18.5%"
         },
         {
           "id": "html.glossary-link",
@@ -2884,421 +5889,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "6/6 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 5,
-        "failed": 13,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 28
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/Str/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "20.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "75/75 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/Num/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "24 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "26.4%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "2610/2610 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.0%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 35
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/Set/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "19.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "27/27 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -3378,7 +5968,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.4%"
+          "message": "18.9%"
         },
         {
           "id": "html.glossary-link",
@@ -3420,6 +6010,106 @@
         "total": 24,
         "applicable": 18,
         "score": 28
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.5%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 11,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 35
       }
     },
     {
@@ -3483,7 +6173,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.4%"
+          "message": "18.9%"
         },
         {
           "id": "html.glossary-link",
@@ -3528,7 +6218,112 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/functions/",
+      "finalUrl": "https://www.roc-lang.org/docs/main/Set/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "35/35 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 13,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 28
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/Num/",
       "checks": [
         {
           "id": "http.status-200",
@@ -3583,12 +6378,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "15 headings"
+          "message": "25 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.5%"
+          "message": "26.0%"
         },
         {
           "id": "html.glossary-link",
@@ -3613,7 +6408,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "3/3 blocks missing language"
+          "message": "2693/2693 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -3693,7 +6488,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.9%"
+          "message": "18.4%"
         },
         {
           "id": "html.glossary-link",
@@ -3798,7 +6593,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.8%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -3903,7 +6698,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.6%"
+          "message": "18.1%"
         },
         {
           "id": "html.glossary-link",
@@ -3940,6 +6735,111 @@
         "total": 24,
         "applicable": 17,
         "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/functions/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "15 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "19.0%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "3/3 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 33
       }
     },
     {
@@ -4003,7 +6903,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.0%"
+          "message": "20.6%"
         },
         {
           "id": "html.glossary-link",
@@ -4028,7 +6928,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "29/29 blocks missing language"
+          "message": "30/30 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -4048,7 +6948,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/platforms/",
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/naming/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4103,12 +7003,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "13 headings"
+          "message": "16 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.8%"
+          "message": "18.2%"
         },
         {
           "id": "html.glossary-link",
@@ -4131,11 +7031,6 @@
           "message": "text/html"
         },
         {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "1/1 blocks missing language"
-        },
-        {
           "id": "discovery.indexed",
           "status": "fail",
           "message": "orphaned (not announced by any index)"
@@ -4143,13 +7038,13 @@
       ],
       "summary": {
         "passed": 6,
-        "failed": 12,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
-        "na": 6,
+        "na": 7,
         "total": 24,
-        "applicable": 18,
-        "score": 33
+        "applicable": 17,
+        "score": 35
       }
     },
     {
@@ -4213,7 +7108,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.4%"
+          "message": "18.9%"
         },
         {
           "id": "html.glossary-link",
@@ -4318,7 +7213,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.7%"
+          "message": "19.3%"
         },
         {
           "id": "html.glossary-link",
@@ -4360,106 +7255,6 @@
         "total": 24,
         "applicable": 18,
         "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/naming/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "16 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.7%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 35
       }
     },
     {
@@ -4523,7 +7318,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.8%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -4549,111 +7344,6 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "3/3 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/tuples/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "7 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.8%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "8/8 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -4733,7 +7423,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.8%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -4773,7 +7463,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/tag-unions/",
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/tuples/",
       "checks": [
         {
           "id": "http.status-200",
@@ -4828,117 +7518,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "14 headings"
+          "message": "7 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "code.language-tags",
-          "status": "fail",
-          "message": "8/8 blocks missing language"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 6,
-        "total": 24,
-        "applicable": 18,
-        "score": 33
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/loops/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "8 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.9%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -5043,7 +7628,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.8%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -5069,6 +7654,216 @@
           "id": "code.language-tags",
           "status": "fail",
           "message": "3/3 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 33
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/loops/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "9 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.4%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "9/9 blocks missing language"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 6,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 6,
+        "total": 24,
+        "applicable": 18,
+        "score": 33
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/tag-unions/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "14 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.6%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "code.language-tags",
+          "status": "fail",
+          "message": "8/8 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -5148,7 +7943,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.6%"
+          "message": "18.1%"
         },
         {
           "id": "html.glossary-link",
@@ -5248,107 +8043,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 5,
-        "failed": 12,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 29
-      }
-    },
-    {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/parsers/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "fail",
-          "message": "only 2 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.6%"
+          "message": "18.1%"
         },
         {
           "id": "html.glossary-link",
@@ -5448,7 +8143,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.6%"
+          "message": "19.2%"
         },
         {
           "id": "html.glossary-link",
@@ -5493,7 +8188,7 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/foundationDocs/990N2025.pdf",
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/packages/",
       "checks": [
         {
           "id": "http.status-200",
@@ -5506,9 +8201,74 @@
           "message": "0 hops"
         },
         {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
           "id": "http.no-noindex-noai",
           "status": "pass",
           "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
         },
         {
           "id": "discovery.indexed",
@@ -5517,18 +8277,18 @@
         }
       ],
       "summary": {
-        "passed": 3,
-        "failed": 1,
+        "passed": 6,
+        "failed": 11,
         "warned": 0,
         "errored": 0,
-        "na": 20,
+        "na": 7,
         "total": 24,
-        "applicable": 4,
-        "score": 75
+        "applicable": 17,
+        "score": 35
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/foundationDocs/1023EZ.pdf",
+      "finalUrl": "https://www.roc-lang.org/foundationDocs/990N2025.pdf",
       "checks": [
         {
           "id": "http.status-200",
@@ -5598,106 +8358,6 @@
       }
     },
     {
-      "finalUrl": "https://www.roc-lang.org/docs/main/langref/packages/",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "0 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-title",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.og-description",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "3 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "pass",
-          "message": "18.6%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 6,
-        "failed": 11,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 35
-      }
-    },
-    {
       "finalUrl": "https://www.roc-lang.org/different-names",
       "checks": [
         {
@@ -5758,7 +8418,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "21.0%"
+          "message": "21.4%"
         },
         {
           "id": "html.glossary-link",
@@ -5795,6 +8455,141 @@
         "total": 24,
         "applicable": 17,
         "score": 35
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/foundationDocs/1023EZ.pdf",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 1,
+        "warned": 0,
+        "errored": 0,
+        "na": 20,
+        "total": 24,
+        "applicable": 4,
+        "score": 75
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/docs/main/langref/parsers/",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "fail",
+          "message": "only 2 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "18.1%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 5,
+        "failed": 12,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 29
       }
     },
     {
@@ -5858,7 +8653,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "19.5%"
+          "message": "19.0%"
         },
         {
           "id": "html.glossary-link",
@@ -5899,6 +8694,306 @@
         "total": 24,
         "applicable": 18,
         "score": 39
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ErrorHandlingRealWorld/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "63 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "25.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/ErrorHandlingBasic/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "59 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "17.8%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
+      }
+    },
+    {
+      "finalUrl": "https://www.roc-lang.org/examples/TryOperatorDesugaring/README",
+      "checks": [
+        {
+          "id": "http.status-200",
+          "status": "pass",
+          "message": "200"
+        },
+        {
+          "id": "http.redirect-chain",
+          "status": "pass",
+          "message": "0 hops"
+        },
+        {
+          "id": "http.content-type-html",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "http.no-noindex-noai",
+          "status": "pass",
+          "message": "no x-robots-tag"
+        },
+        {
+          "id": "html.canonical-link",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.meta-description",
+          "status": "pass",
+          "message": "62 chars"
+        },
+        {
+          "id": "html.og-title",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.og-description",
+          "status": "fail",
+          "message": "missing"
+        },
+        {
+          "id": "html.lang-attribute",
+          "status": "pass",
+          "message": "en"
+        },
+        {
+          "id": "html.json-ld",
+          "status": "fail",
+          "message": "no parseable JSON-LD found"
+        },
+        {
+          "id": "html.headings",
+          "status": "pass",
+          "message": "3 headings"
+        },
+        {
+          "id": "html.text-ratio",
+          "status": "pass",
+          "message": "21.3%"
+        },
+        {
+          "id": "html.glossary-link",
+          "status": "fail",
+          "message": "no glossary/terminology link"
+        },
+        {
+          "id": "markdown.mirror-suffix",
+          "status": "fail",
+          "message": "no .md/.mdx mirror found"
+        },
+        {
+          "id": "markdown.alternate-link",
+          "status": "fail",
+          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
+        },
+        {
+          "id": "markdown.content-negotiation",
+          "status": "fail",
+          "message": "text/html"
+        },
+        {
+          "id": "discovery.indexed",
+          "status": "fail",
+          "message": "orphaned (not announced by any index)"
+        }
+      ],
+      "summary": {
+        "passed": 7,
+        "failed": 10,
+        "warned": 0,
+        "errored": 0,
+        "na": 7,
+        "total": 24,
+        "applicable": 17,
+        "score": 41
       }
     },
     {
@@ -5962,7 +9057,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "20.5%"
+          "message": "20.6%"
         },
         {
           "id": "html.glossary-link",
@@ -5987,7 +9082,7 @@
         {
           "id": "code.language-tags",
           "status": "fail",
-          "message": "149/149 blocks missing language"
+          "message": "161/161 blocks missing language"
         },
         {
           "id": "discovery.indexed",
@@ -6067,7 +9162,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "18.8%"
+          "message": "18.3%"
         },
         {
           "id": "html.glossary-link",
@@ -6110,114 +9205,16 @@
         "applicable": 18,
         "score": 33
       }
-    },
-    {
-      "finalUrl": "https://github.com/roc-lang/roc/blob/main/test/echo/all_syntax_test.roc",
-      "checks": [
-        {
-          "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
-        },
-        {
-          "id": "http.redirect-chain",
-          "status": "pass",
-          "message": "1 hops"
-        },
-        {
-          "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "http.no-noindex-noai",
-          "status": "pass",
-          "message": "no x-robots-tag"
-        },
-        {
-          "id": "html.canonical-link",
-          "status": "fail",
-          "message": "missing"
-        },
-        {
-          "id": "html.meta-description",
-          "status": "pass",
-          "message": "111 chars"
-        },
-        {
-          "id": "html.og-title",
-          "status": "pass"
-        },
-        {
-          "id": "html.og-description",
-          "status": "pass"
-        },
-        {
-          "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
-        },
-        {
-          "id": "html.json-ld",
-          "status": "fail",
-          "message": "no parseable JSON-LD found"
-        },
-        {
-          "id": "html.headings",
-          "status": "pass",
-          "message": "13 headings"
-        },
-        {
-          "id": "html.text-ratio",
-          "status": "fail",
-          "message": "12.1%"
-        },
-        {
-          "id": "html.glossary-link",
-          "status": "fail",
-          "message": "no glossary/terminology link"
-        },
-        {
-          "id": "markdown.mirror-suffix",
-          "status": "fail",
-          "message": "no .md/.mdx mirror found"
-        },
-        {
-          "id": "markdown.alternate-link",
-          "status": "fail",
-          "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
-        },
-        {
-          "id": "markdown.content-negotiation",
-          "status": "fail",
-          "message": "text/html; charset=utf-8"
-        },
-        {
-          "id": "discovery.indexed",
-          "status": "fail",
-          "message": "orphaned (not announced by any index)"
-        }
-      ],
-      "summary": {
-        "passed": 9,
-        "failed": 8,
-        "warned": 0,
-        "errored": 0,
-        "na": 7,
-        "total": 24,
-        "applicable": 17,
-        "score": 53
-      }
     }
   ],
   "summary": {
-    "passed": 357,
-    "failed": 698,
+    "passed": 551,
+    "failed": 1013,
     "warned": 0,
     "errored": 0,
-    "na": 447,
-    "total": 1502,
-    "applicable": 1055,
-    "score": 34
+    "na": 658,
+    "total": 2222,
+    "applicable": 1564,
+    "score": 35
   }
 }

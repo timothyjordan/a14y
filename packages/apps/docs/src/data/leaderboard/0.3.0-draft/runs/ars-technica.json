@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T12:14:07.593Z",
-  "finishedAt": "2026-08-01T12:15:01.132Z",
+  "startedAt": "2026-09-01T10:30:50.339Z",
+  "finishedAt": "2026-09-01T10:30:50.827Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,32 +15,23 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://arstechnica.com/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "fail",
-      "message": "Blocks: ClaudeBot, CCBot, Google-Extended"
+      "status": "pass",
+      "message": "No robots.txt; defaults to allow all"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "pass",
+      "message": "No robots.txt"
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "pass",
-      "message": "https://arstechnica.com/sitemap.xml"
-    },
-    {
-      "id": "sitemap-xml.valid",
-      "status": "pass",
-      "message": "sitemapindex"
-    },
-    {
-      "id": "sitemap-xml.has-lastmod",
-      "status": "pass",
-      "message": "183322 entries with valid lastmod"
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
     },
     {
       "id": "sitemap-md.exists",
@@ -59,8 +50,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -69,8 +60,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
+          "status": "fail",
+          "message": "text/html"
         },
         {
           "id": "http.no-noindex-noai",
@@ -79,51 +70,43 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://arstechnica.com/"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "144 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
+          "message": "no parseable JSON-LD found"
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "41 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "4.7%"
+          "message": "11.0%"
         },
         {
           "id": "html.glossary-link",
@@ -143,12 +126,12 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "message": "text/html"
         },
         {
           "id": "html.ssr-content",
-          "status": "pass",
-          "message": "1492 words in initial HTML"
+          "status": "fail",
+          "message": "only 2 words in initial HTML (looks like a JS-rendered shell)"
         },
         {
           "id": "http.no-interstitial",
@@ -156,25 +139,25 @@
         }
       ],
       "summary": {
-        "passed": 13,
-        "failed": 7,
+        "passed": 3,
+        "failed": 15,
         "warned": 0,
         "errored": 0,
-        "na": 9,
+        "na": 11,
         "total": 29,
-        "applicable": 20,
-        "score": 65
+        "applicable": 18,
+        "score": 17
       }
     }
   ],
   "summary": {
-    "passed": 18,
-    "failed": 11,
+    "passed": 5,
+    "failed": 20,
     "warned": 0,
     "errored": 0,
-    "na": 16,
+    "na": 20,
     "total": 45,
-    "applicable": 29,
-    "score": 62
+    "applicable": 25,
+    "score": 20
   }
 }

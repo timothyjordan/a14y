@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-04T20:29:30.263Z",
-  "finishedAt": "2026-08-04T20:29:30.880Z",
+  "startedAt": "2026-09-01T05:37:03.106Z",
+  "finishedAt": "2026-09-01T05:37:04.413Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,13 +15,13 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "fail",
-      "message": "/robots.txt not reachable"
+      "status": "pass",
+      "message": "https://learn.microsoft.com/robots.txt"
     },
     {
       "id": "robots-txt.allows-ai-bots",
       "status": "pass",
-      "message": "No robots.txt; defaults to allow all"
+      "message": "Allowed: GPTBot, ClaudeBot, CCBot, Google-Extended"
     },
     {
       "id": "robots-txt.allows-llms-txt",
@@ -115,7 +115,7 @@
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "46.1%"
+          "message": "47.6%"
         },
         {
           "id": "html.glossary-link",
@@ -165,13 +165,13 @@
     }
   ],
   "summary": {
-    "passed": 7,
-    "failed": 21,
+    "passed": 8,
+    "failed": 20,
     "warned": 0,
     "errored": 0,
     "na": 17,
     "total": 45,
     "applicable": 28,
-    "score": 25
+    "score": 29
   }
 }

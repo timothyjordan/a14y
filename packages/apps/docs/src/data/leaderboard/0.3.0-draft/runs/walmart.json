@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-01T12:13:40.415Z",
-  "finishedAt": "2026-08-01T12:13:42.833Z",
+  "startedAt": "2026-09-01T10:30:21.684Z",
+  "finishedAt": "2026-09-01T10:30:24.003Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -30,7 +30,7 @@
     {
       "id": "sitemap-xml.exists",
       "status": "pass",
-      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=6eaff7a3-8da2-11f1-a865-840fd6a5a8af&vid=&g=b"
+      "message": "https://www.walmart.com/blocked?url=L3NpdGVtYXAueG1s&uuid=22d64c1f-a5f0-11f1-8ba1-8b249f379df4&vid=&g=b"
     },
     {
       "id": "sitemap-xml.valid",
@@ -113,12 +113,12 @@
         {
           "id": "html.headings",
           "status": "pass",
-          "message": "14 headings"
+          "message": "8 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "pass",
-          "message": "67.5%"
+          "message": "67.9%"
         },
         {
           "id": "html.glossary-link",
@@ -136,14 +136,24 @@
           "message": "no <link rel=\"alternate\" type=\"text/markdown\">"
         },
         {
+          "id": "markdown.canonical-header",
+          "status": "fail",
+          "message": "no Link header"
+        },
+        {
           "id": "markdown.content-negotiation",
           "status": "fail",
           "message": "text/html; charset=utf-8"
         },
         {
+          "id": "markdown.size-reduction",
+          "status": "pass",
+          "message": "96.2% smaller (15195B vs 403628B)"
+        },
+        {
           "id": "html.ssr-content",
           "status": "pass",
-          "message": "406 words in initial HTML"
+          "message": "337 words in initial HTML"
         },
         {
           "id": "http.no-interstitial",
@@ -151,25 +161,25 @@
         }
       ],
       "summary": {
-        "passed": 14,
-        "failed": 6,
+        "passed": 15,
+        "failed": 7,
         "warned": 0,
         "errored": 0,
-        "na": 9,
+        "na": 7,
         "total": 29,
-        "applicable": 20,
-        "score": 70
+        "applicable": 22,
+        "score": 68
       }
     }
   ],
   "summary": {
-    "passed": 18,
-    "failed": 10,
+    "passed": 19,
+    "failed": 11,
     "warned": 0,
     "errored": 0,
-    "na": 17,
+    "na": 15,
     "total": 45,
-    "applicable": 28,
-    "score": 64
+    "applicable": 30,
+    "score": 63
   }
 }

@@ -5,8 +5,8 @@
   "scorecardVersion": "0.2.0",
   "scorecardReleasedAt": "2026-04-06",
   "scoringMethodology": "flat-pool-v1",
-  "startedAt": "2026-08-01T12:14:07.593Z",
-  "finishedAt": "2026-08-01T12:15:01.132Z",
+  "startedAt": "2026-09-01T10:30:50.339Z",
+  "finishedAt": "2026-09-01T10:30:50.827Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
@@ -15,32 +15,23 @@
     },
     {
       "id": "robots-txt.exists",
-      "status": "pass",
-      "message": "https://arstechnica.com/robots.txt"
+      "status": "fail",
+      "message": "/robots.txt not reachable"
     },
     {
       "id": "robots-txt.allows-ai-bots",
-      "status": "fail",
-      "message": "Blocks: ClaudeBot, CCBot, Google-Extended"
+      "status": "pass",
+      "message": "No robots.txt; defaults to allow all"
     },
     {
       "id": "robots-txt.allows-llms-txt",
-      "status": "pass"
+      "status": "pass",
+      "message": "No robots.txt"
     },
     {
       "id": "sitemap-xml.exists",
-      "status": "pass",
-      "message": "https://arstechnica.com/sitemap.xml"
-    },
-    {
-      "id": "sitemap-xml.valid",
-      "status": "pass",
-      "message": "sitemapindex"
-    },
-    {
-      "id": "sitemap-xml.has-lastmod",
-      "status": "pass",
-      "message": "183322 entries with lastmod"
+      "status": "fail",
+      "message": "sitemap.xml not reachable"
     },
     {
       "id": "sitemap-md.exists",
@@ -59,8 +50,8 @@
       "checks": [
         {
           "id": "http.status-200",
-          "status": "pass",
-          "message": "200"
+          "status": "fail",
+          "message": "Got 403"
         },
         {
           "id": "http.redirect-chain",
@@ -69,8 +60,8 @@
         },
         {
           "id": "http.content-type-html",
-          "status": "pass",
-          "message": "text/html; charset=utf-8"
+          "status": "fail",
+          "message": "text/html"
         },
         {
           "id": "http.no-noindex-noai",
@@ -79,51 +70,43 @@
         },
         {
           "id": "html.canonical-link",
-          "status": "pass",
-          "message": "https://arstechnica.com/"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.meta-description",
-          "status": "pass",
-          "message": "144 chars"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-title",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.og-description",
-          "status": "pass"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.lang-attribute",
-          "status": "pass",
-          "message": "en"
+          "status": "fail",
+          "message": "missing"
         },
         {
           "id": "html.json-ld",
-          "status": "pass",
-          "message": "1 block(s)"
-        },
-        {
-          "id": "html.json-ld.date-modified",
           "status": "fail",
-          "message": "no dateModified anywhere in JSON-LD"
-        },
-        {
-          "id": "html.json-ld.breadcrumb",
-          "status": "fail",
-          "message": "no BreadcrumbList node"
+          "message": "no parseable JSON-LD found"
         },
         {
           "id": "html.headings",
-          "status": "pass",
-          "message": "41 headings"
+          "status": "fail",
+          "message": "only 1 headings"
         },
         {
           "id": "html.text-ratio",
           "status": "fail",
-          "message": "4.7%"
+          "message": "11.0%"
         },
         {
           "id": "html.glossary-link",
@@ -143,29 +126,29 @@
         {
           "id": "markdown.content-negotiation",
           "status": "fail",
-          "message": "text/html; charset=utf-8"
+          "message": "text/html"
         }
       ],
       "summary": {
-        "passed": 11,
-        "failed": 7,
+        "passed": 2,
+        "failed": 14,
         "warned": 0,
         "errored": 0,
-        "na": 6,
+        "na": 8,
         "total": 24,
-        "applicable": 18,
-        "score": 61
+        "applicable": 16,
+        "score": 13
       }
     }
   ],
   "summary": {
-    "passed": 16,
-    "failed": 11,
+    "passed": 4,
+    "failed": 19,
     "warned": 0,
     "errored": 0,
-    "na": 11,
+    "na": 15,
     "total": 38,
-    "applicable": 27,
-    "score": 59
+    "applicable": 23,
+    "score": 17
   }
 }

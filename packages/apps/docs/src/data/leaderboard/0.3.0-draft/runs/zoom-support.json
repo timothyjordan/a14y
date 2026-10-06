@@ -5,8 +5,8 @@
   "scorecardVersion": "0.3.0-draft",
   "scorecardReleasedAt": "unreleased",
   "scoringMethodology": "per-check-mean-v1",
-  "startedAt": "2026-08-04T20:55:18.384Z",
-  "finishedAt": "2026-08-04T20:55:19.994Z",
+  "startedAt": "2026-09-01T07:30:53.061Z",
+  "finishedAt": "2026-09-01T07:30:54.858Z",
   "siteChecks": [
     {
       "id": "llms-txt.exists",
