@@ -21,6 +21,13 @@ export interface FakeRoute {
    * resolving in the same microtask. Defaults to 0 (synchronous-ish).
    */
   delayMs?: number;
+  /**
+   * Serve this route by following a redirect to another URL in the route
+   * map, as a redirect-following client would: the response carries the
+   * target's status, headers, and body, with `url` set to the target and
+   * `originalUrl` to the requested URL. One hop only.
+   */
+  redirectTo?: string;
 }
 
 /**
@@ -30,14 +37,16 @@ export interface FakeRoute {
 export function fakeHttpClient(routes: Record<string, FakeRoute>): HttpClient {
   const get = (url: string): FakeRoute => routes[url] ?? { status: 404, body: '' };
   const buildResponse = (url: string): HttpResponse => {
-    const r = get(url);
+    const hop = get(url).redirectTo;
+    const finalUrl = hop ?? url;
+    const r = get(finalUrl);
     return {
-      url,
+      url: finalUrl,
       originalUrl: url,
       status: r.status ?? 200,
       headers: new Headers(r.headers ?? {}),
       body: r.body ?? '',
-      redirectChain: [],
+      redirectChain: hop ? [url] : [],
     };
   };
   const maybeDelay = async (url: string): Promise<void> => {

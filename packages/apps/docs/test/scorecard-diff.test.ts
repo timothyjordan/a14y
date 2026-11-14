@@ -105,6 +105,9 @@ describe('diffScorecards', () => {
     //   - The discovery-file existence trio (agents-md / llms-txt /
     //     sitemap-md .exists) was bumped 1.0.0 → 1.1.0 to reject soft-200
     //     responses, after the 50k bulk survey exposed 1.0.0 false positives.
+    //   - robots-txt.allows-ai-bots / .allows-llms-txt were bumped
+    //     1.0.0 → 1.1.0 to apply robots.txt to the scanned host when
+    //     /robots.txt redirects to another host.
     // If a future PR removes / further bumps these, update this assertion.
     const diff = getDraftDiff();
     expect(diff.added.map((a) => a.id).sort()).toEqual([
@@ -125,6 +128,8 @@ describe('diffScorecards', () => {
       { id: 'agents-md.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'html.json-ld.date-modified', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'llms-txt.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
+      { id: 'robots-txt.allows-ai-bots', fromImpl: '1.0.0', toImpl: '1.1.0' },
+      { id: 'robots-txt.allows-llms-txt', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'sitemap-md.exists', fromImpl: '1.0.0', toImpl: '1.1.0' },
       { id: 'sitemap-xml.has-lastmod', fromImpl: '1.0.0', toImpl: '1.1.0' },
     ]);
@@ -148,6 +153,8 @@ describe('getDraftDiffEntries', () => {
       'markdown.navigation-stripped',
       'markdown.size-reduction',
       'markdown.valid-markdown',
+      'robots-txt.allows-ai-bots',
+      'robots-txt.allows-llms-txt',
       'sitemap-md.exists',
       'sitemap-xml.has-lastmod',
     ]);

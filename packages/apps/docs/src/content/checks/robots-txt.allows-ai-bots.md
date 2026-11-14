@@ -23,6 +23,8 @@ references:
 
 The check parses your robots.txt with [`robots-parser`](https://github.com/samclarke/robots-parser) and asks each of `GPTBot`, `ClaudeBot`, `CCBot`, and `Google-Extended` whether the site root (`/`) is allowed. Passes if all four are allowed. Fails (with a list of blocked bots) if any are disallowed. If no robots.txt exists at all, the check passes, no robots.txt implies allow-all.
 
+robots.txt is fetched from the scanned site, following redirects. Its rules apply to the host you scanned, even when `/robots.txt` redirects to another host (for example `example.com` → `www.example.com`), the same way [RFC 9309](https://www.rfc-editor.org/rfc/rfc9309#section-2.3.1.2) tells crawlers to treat a redirected robots.txt.
+
 ## How to implement it
 
 Either omit named AI bot user-agents entirely (the global `User-agent: *` rule applies) or add explicit allow rules for them. Don't add `User-agent: GPTBot\nDisallow: /` unless you've decided you actively don't want to be in a corpus.
@@ -34,6 +36,10 @@ User-agent: *
 Allow: /
 
 Sitemap: https://example.com/sitemap.xml
+```
+
+```text
+# A robots.txt with only comments and no rules allows everything.
 ```
 
 ### Fail
