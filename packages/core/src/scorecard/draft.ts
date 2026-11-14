@@ -47,6 +47,13 @@ export const SCORECARD_DRAFT: ScorecardManifest = {
     'sitemap-md.exists': '1.1.0',
     'agents-md.exists': '1.1.0',
     'llms-txt.exists': '1.1.0',
+    // Bumped to 1.1.0: robots.txt rules now apply to the scanned host even
+    // when /robots.txt redirects to another host (apex -> www). 1.0.0 checked
+    // apex URLs against a parser bound to the redirect target, which
+    // robots-parser answers with "not my host" -- read as "disallowed", so
+    // every bot and llms.txt looked blocked by any robots.txt at all.
+    'robots-txt.allows-ai-bots': '1.1.0',
+    'robots-txt.allows-llms-txt': '1.1.0',
     'markdown.navigation-stripped': '1.0.0',
     'markdown.size-reduction': '1.0.0',
     'markdown.valid-markdown': '1.0.0',
