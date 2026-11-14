@@ -86,6 +86,28 @@ export const robotsTxtAllowsAiBots: SiteCheckSpec = {
             };
       },
     },
+    // Stub: verbatim copy of 1.0.0 so the draft pin resolves. The impl PR
+    // replaces this with the redirect-aware handler the check page describes.
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if robots.txt does not disallow GPTBot, ClaudeBot, CCBot, or Google-Extended from fetching the site root, applying the rules to the scanned host even when robots.txt redirects to another host.',
+      run: async (ctx) => {
+        const r = await loadRobotsTxt(ctx as SiteCheckContext);
+        if (!r.found || !r.parser) {
+          return { status: 'pass', message: 'No robots.txt; defaults to allow all' };
+        }
+        const root = new URL('/', (ctx as SiteCheckContext).baseUrl).toString();
+        const blocked = AI_BOTS.filter((bot) => r.parser!.isDisallowed(root, bot));
+        return blocked.length === 0
+          ? { status: 'pass', message: `Allowed: ${AI_BOTS.join(', ')}` }
+          : {
+              status: 'fail',
+              message: `Blocks: ${blocked.join(', ')}`,
+              details: { blocked },
+            };
+      },
+    },
   },
 };
 
@@ -99,6 +121,27 @@ export const robotsTxtAllowsLlmsTxt: SiteCheckSpec = {
       version: '1.0.0',
       description:
         'Pass if /llms.txt and /.well-known/llms.txt are reachable to all user-agents per robots.txt rules.',
+      run: async (ctx) => {
+        const r = await loadRobotsTxt(ctx as SiteCheckContext);
+        if (!r.found || !r.parser) return { status: 'pass', message: 'No robots.txt' };
+        const checks = ['/llms.txt', '/.well-known/llms.txt'].map((p) =>
+          new URL(p, (ctx as SiteCheckContext).baseUrl).toString(),
+        );
+        const blocked = checks.filter((u) => r.parser!.isDisallowed(u, '*'));
+        return blocked.length === 0
+          ? { status: 'pass' }
+          : {
+              status: 'fail',
+              message: `robots.txt disallows: ${blocked.join(', ')}`,
+            };
+      },
+    },
+    // Stub: verbatim copy of 1.0.0 so the draft pin resolves. The impl PR
+    // replaces this with the redirect-aware handler the check page describes.
+    '1.1.0': {
+      version: '1.1.0',
+      description:
+        'Pass if /llms.txt and /.well-known/llms.txt are reachable to all user-agents per robots.txt rules, applying the rules to the scanned host even when robots.txt redirects to another host.',
       run: async (ctx) => {
         const r = await loadRobotsTxt(ctx as SiteCheckContext);
         if (!r.found || !r.parser) return { status: 'pass', message: 'No robots.txt' };
