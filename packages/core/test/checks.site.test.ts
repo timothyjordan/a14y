@@ -153,6 +153,40 @@ describe('site/robotsTxt', () => {
   });
 });
 
+describe('site/robotsTxt behind a cross-host redirect', () => {
+  // fastmail.com's shape: the apex /robots.txt 302s to www, and the scan
+  // targets the apex.
+  async function expectRedirectedRobots(
+    version: string,
+    robots: string,
+    expected: { aiBots: string; llmsTxt: string },
+  ) {
+    const ctx = makeSiteCtx('https://example.com/', {
+      'https://example.com/robots.txt': { redirectTo: 'https://www.example.com/robots.txt' },
+      'https://www.example.com/robots.txt': { body: robots },
+    });
+    expect({
+      aiBots: (await robotsTxtAllowsAiBots.implementations[version].run(ctx)).status,
+      llmsTxt: (await robotsTxtAllowsLlmsTxt.implementations[version].run(ctx)).status,
+    }).toEqual(expected);
+  }
+
+  const commentsOnly = '# Content signals live here, but there are no rules.\n';
+
+  it('1.1.0 passes a comment-only robots.txt', () =>
+    expectRedirectedRobots('1.1.0', commentsOnly, { aiBots: 'pass', llmsTxt: 'pass' }));
+
+  it('1.1.0 still enforces rules served from the redirect target', () =>
+    expectRedirectedRobots(
+      '1.1.0',
+      'User-agent: ClaudeBot\nDisallow: /\n\nUser-agent: *\nDisallow: /llms.txt\n',
+      { aiBots: 'fail', llmsTxt: 'fail' },
+    ));
+
+  it('1.0.0 keeps its frozen behavior and reports everything blocked', () =>
+    expectRedirectedRobots('1.0.0', commentsOnly, { aiBots: 'fail', llmsTxt: 'fail' }));
+});
+
 describe('site/sitemapXml', () => {
   const urlset = `<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url><loc>https://example.com/a</loc><lastmod>2026-01-01</lastmod></url>
